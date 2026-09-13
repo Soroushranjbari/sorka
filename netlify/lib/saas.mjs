@@ -95,6 +95,7 @@ export async function readJson(req) {
 export function accessOf(acct) {
   const plan = acct?.plan || 'trial';
   const now = Date.now();
+  if (acct?.sub_status === 'suspended') return { status: 'suspended', plan };
   if (acct?.sub_status === 'active' && acct?.sub_ends_at && now < acct.sub_ends_at) {
     return { status: 'active', plan };
   }

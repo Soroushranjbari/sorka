@@ -99,8 +99,10 @@ async function handlePut(st, req, code) {
         const access = accessOf(acc);
         const incoming = countSeats(data);
         const current = await metaOf(st, ws).then((m) => countSeats(m && m.data));
-        if (access.status === 'expired' && incoming >= current) {
-          return j(402, { ok: false, error: 'sub-expired' });
+        if (access.status === 'expired' || access.status === 'suspended') {
+          if (incoming >= current) {
+            return j(402, { ok: false, error: access.status === 'suspended' ? 'sub-suspended' : 'sub-expired' });
+          }
         }
         const plan = planOf(acc);
         if (incoming > plan.maxClients && incoming >= current) {

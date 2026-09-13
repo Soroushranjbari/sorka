@@ -7,6 +7,14 @@
 import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf } from '../lib/saas.mjs';
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
 
+async function pushIdx(st, key, v) {
+  try {
+    const a = (await st.get(key, { type: 'json' })) || [];
+    a.unshift(v);
+    await st.setJSON(key, a.slice(0, 2000));
+  } catch {}
+}
+
 async function meBilling(req, st) {
   const s = await sessionOf(st, bearerOf(req));
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
@@ -56,6 +64,7 @@ async function redeem(req, st) {
     provider: 'coupon', tracking: code, status: 'paid',
     startsAt: acct.sub_started_at, endsAt: acct.sub_ends_at, createdAt: Date.now()
   });
+  await pushIdx(st, 'index:payments', payId);
   let seats = 0;
   try {
     if (acct.workspaceId) {
@@ -91,6 +100,7 @@ async function createCoupon(req, st) {
     expiresAt: expiresInDays > 0 ? Date.now() + expiresInDays * 86400000 : null,
     createdAt: Date.now()
   });
+  await pushIdx(st, 'index:coupons', code);
   return j(200, { ok: true, coupon: { code, planId, durationDays, maxUses } });
 }
 
@@ -109,6 +119,7 @@ async function requestPay(req, st) {
     provider: 'manual', tracking: '', status: 'pending',
     startsAt: null, endsAt: null, createdAt: Date.now()
   });
+  await pushIdx(st, 'index:payments', payId);
   return j(200, { ok: true, payment: { id: payId, planId, amount: pr, currency: 'IRT', status: 'pending' } });
 }
 
