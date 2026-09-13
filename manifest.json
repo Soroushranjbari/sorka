@@ -1,0 +1,14 @@
+{
+  "name": "Coach OS — Coach & Client Workspace",
+  "short_name": "Coach OS",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F6F4",
+  "theme_color": "#12151B",
+  "description": "One workspace for every client — workouts, nutrition, progress and messages.",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

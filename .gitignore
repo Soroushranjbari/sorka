@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# environment / secrets
+.env
+.env.local
+.env.*.local
+
+# netlify local state
+.netlify/
+.netlify/state/
+
+# logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# editor clutter
+.vscode/
+.idea/
+
+# misc
+*.tmp

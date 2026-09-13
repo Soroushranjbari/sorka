@@ -1,0 +1,20 @@
+{
+  "name": "coach-os",
+  "private": true,
+  "version": "16.1.0",
+  "type": "module",
+  "description": "Coach OS — SaaS backend (Netlify Functions + portable KV: Supabase Postgres / Netlify Blobs) with Phase-2 billing",
+  "scripts": {
+    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check scripts/migrate-blobs-to-supabase.mjs && node --check scripts/create-admin.mjs && echo FUNCTIONS_SYNTAX_OK",
+    "migrate:dry": "node ./scripts/migrate-blobs-to-supabase.mjs --dry-run",
+    "migrate": "node ./scripts/migrate-blobs-to-supabase.mjs",
+    "admin:create": "node ./scripts/create-admin.mjs",
+    "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

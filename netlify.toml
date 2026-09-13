@@ -1,0 +1,53 @@
+# Coach OS — Netlify config
+# برای استقرار: کل این پوشه را در https://app.netlify.com/drop رها کنید
+# یا به مخزن گیت وصل کنید. (publish یعنی خود ریشه‌ی پروژه مستقیماً میزبانی می‌شود)
+
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["netlify/lib/**"]
+  node_bundler = "esbuild"
+
+# مسیر تمیز برای API همگام‌سازی (با config.path داخل data.mjs هم‌خوان است؛
+# این ریدایرکت برای سازگاری با دیپلوی‌های قدیمی‌تر هم نگه داشته شده)
+[[redirects]]
+  from = "/api/auth/*"
+  to = "/.netlify/functions/auth/:splat"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/api/billing/*"
+  to = "/.netlify/functions/billing/:splat"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/api/data"
+  to = "/.netlify/functions/data"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = false
+
+# index.html و sw.js نباید کش بلندمدت شوند تا کاربران همیشه آخرین نسخه را بگیرند
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
