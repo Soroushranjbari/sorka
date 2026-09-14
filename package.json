@@ -5,7 +5,9 @@
   "type": "module",
   "description": "Coach OS — SaaS backend (Netlify Functions + portable KV: Supabase Postgres / Netlify Blobs) with Phase-2 billing",
   "scripts": {
-    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check scripts/migrate-blobs-to-supabase.mjs && node --check scripts/create-admin.mjs && echo FUNCTIONS_SYNTAX_OK",
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check scripts/migrate-blobs-to-supabase.mjs && node --check scripts/create-admin.mjs && node --check server.mjs && echo FUNCTIONS_SYNTAX_OK",
     "migrate:dry": "node ./scripts/migrate-blobs-to-supabase.mjs --dry-run",
     "migrate": "node ./scripts/migrate-blobs-to-supabase.mjs",
     "admin:create": "node ./scripts/create-admin.mjs",
