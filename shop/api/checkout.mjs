@@ -8,16 +8,22 @@
 //   3. THEN call issueCoupon()  -> store code with the order, email it
 // Never trust the browser for "payment succeeded".
 import { createHash } from 'node:crypto';
+import { kv } from '../../netlify/lib/db.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || '';
 const PRICES = { basic: 290000, professional: 790000, club: 2490000 };
+/* Order registry — every purchase is recorded here so support/accounting can
+   reconcile payments, and the buyer's account page can list their purchases. */
+const orders = kv('shop-orders');
 
 /** Demo payment — always succeeds. Swap for ZarinPal/… verification.
  *  ref is derived deterministically from email+plan so retries of the same
  *  order map to the same payment reference (and thus the same coupon). */
-function simulatePayment({ planId, email }) {
+function simulatePayment({ planId, email, name, phone }) {
   if (!PRICES[planId]) return { ok: false, error: 'bad-plan' };
+  if (String(name || '').trim().length < 3) return { ok: false, error: 'bad-name' };
+  if (!/^\+?\d{10,13}$/.test(String(phone || '').replace(/[\s-]/g, ''))) return { ok: false, error: 'bad-phone' };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email || ''))) return { ok: false, error: 'bad-email' };
   const ref = 'DEMO-' + createHash('sha256').update(`${email}:${planId}`).digest('hex').slice(0, 12).toUpperCase();
   return { ok: true, ref };
@@ -62,10 +68,25 @@ export default async (req) => {
   try { body = await req.json(); } catch { return j(400, { ok: false, error: 'bad json' }); }
   const planId = String(body?.planId || '');
   const email = String(body?.email || '').trim().toLowerCase();
-  const pay = simulatePayment({ planId, email });
+  const pay = simulatePayment({ planId, email, name: body?.name, phone: body?.phone });
   if (!pay.ok) return j(400, { ok: false, error: pay.error });
   const out = await issueCoupon(planId, codeFor(pay.ref, planId));
   if (!out.ok) return j(502, { ok: false, error: out.error });
+  // Record the order (buyer specs + coupon) for the account page & support.
+  try {
+    const order = {
+      ref: pay.ref, email: email.toLowerCase(),
+      name: String(body?.name || '').trim().slice(0, 80),
+      phone: String(body?.phone || '').replace(/[^\d+]/g, '').slice(0, 16),
+      planId, amount: PRICES[planId], currency: 'IRT',
+      coupon: out.coupons[0], durationDays: 30, status: 'paid',
+      demo: !!out.demo, createdAt: Date.now()
+    };
+    await orders.setJSON(`order:${pay.ref}`, order);
+    const idx = (await orders.get(`idx:${email.toLowerCase()}`, { type: 'json' })) || [];
+    if (!idx.includes(pay.ref)) idx.unshift(pay.ref);
+    await orders.setJSON(`idx:${email.toLowerCase()}`, idx.slice(0, 200));
+  } catch (e) { console.error('[shop] order save failed:', e.message); }
   return j(200, { ok: true, coupons: out.coupons, demo: !!out.demo, ref: pay.ref });
 };
 

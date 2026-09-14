@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account — Coach OS</title>
+<meta name="description" content="Your Coach OS subscription: remaining days, plan details and purchase history.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="%23050506"/><g transform="translate(10 0) skewX(-10)"><path fill="white" d="M99 16H47C24 16 10 31 10 52V68C10 89 24 104 47 104H99L85 88H52C43 88 38 82 38 73V47C38 38 43 32 52 32H85Z"/><path fill="white" d="M38 58L98 47L90 68H38Z"/></g></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#07080a; --bg2:#0b0d10;
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --txt:#eef1f4; --mut:#9aa3ad; --dim:#6b7480;
+  --acc:#C6F14E; --acc-ink:#161c04; --acc-dim:rgba(198,241,78,.12); --acc-line:rgba(198,241,78,.42);
+  --green:#16A34A; --red:#DC2626; --amber:#C77414;
+  --disp:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+  --e:cubic-bezier(.22,.61,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);font-size:16px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+html[dir="rtl"] body{font-family:"Vazirmatn","Segoe UI",Tahoma,var(--body)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wm{font-family:var(--disp);font-style:italic;font-weight:700;letter-spacing:.025em;white-space:nowrap;transform:skewX(-8deg);transform-origin:left center}
+.wm b{color:#aeb2b4}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-size:13px}
+.logo .mark{width:21px;height:21px;color:#fff}
+.back{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.back:hover{color:var(--txt)}
+main{flex:1;width:100%;max-width:960px;margin:0 auto;padding:40px 20px 80px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--acc)}
+h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spacing:-.015em;font-size:clamp(26px,4vw,44px);margin:14px 0 6px}
+.sub{color:var(--mut);font-size:14.5px}
+.card{border:1px solid var(--line);border-radius:20px;padding:26px;background:rgba(255,255,255,.02)}
+.card h2{font-family:var(--disp);font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:22px;margin-top:30px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.field input{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:13px 15px;color:var(--txt);font-size:14px;font-family:inherit;outline:none;transition:border-color .25s}
+.field input:focus{border-color:var(--acc-line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 26px;border-radius:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transition:transform .3s var(--e),box-shadow .3s,opacity .3s;cursor:pointer}
+.btn.acc{background:var(--acc);color:var(--acc-ink);width:100%}
+.btn.acc:hover{transform:translateY(-2px);box-shadow:0 12px 44px -8px var(--acc-line)}
+.btn.acc:disabled{opacity:.55;cursor:wait;transform:none;box-shadow:none}
+.btn.line{border:1px solid var(--line2);color:var(--txt)}
+.btn.line:hover{background:rgba(255,255,255,.06)}
+.err{color:#f87171;font-size:12.5px;margin-top:10px;display:none}
+.err.show{display:block}
+.note{font-size:11.5px;color:var(--dim);margin-top:14px;line-height:1.7}
+/* dashboard */
+.dash{display:none}
+.dash.show{display:block}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:30px}
+.who{display:flex;align-items:center;gap:14px}
+.ava{width:52px;height:52px;border-radius:50%;background:var(--acc-dim);border:1px solid var(--acc-line);display:grid;place-items:center;font-weight:800;color:var(--acc);font-size:18px}
+.who b{font-size:17px;display:block}
+.who span{font-size:12.5px;color:var(--mut)}
+.subcard{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:760px){.subcard{grid-template-columns:1fr}}
+.planbig{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.planbig .pn{font-family:var(--disp);font-size:26px;font-weight:700;text-transform:uppercase}
+.bdg{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.06em}
+.bdg-green{background:rgba(22,163,74,.15);color:#4ade80;border:1px solid rgba(22,163,74,.4)}
+.bdg-lime{background:var(--acc-dim);color:var(--acc);border:1px solid var(--acc-line)}
+.bdg-amber{background:rgba(199,116,20,.15);color:#fbbf24;border:1px solid rgba(199,116,20,.4)}
+.bdg-red{background:rgba(220,38,38,.15);color:#f87171;border:1px solid rgba(220,38,38,.4)}
+.days{margin:18px 0 6px;display:flex;align-items:baseline;gap:8px}
+.days b{font-family:var(--disp);font-size:44px;font-weight:700;color:var(--acc)}
+.days span{color:var(--mut);font-size:13px}
+.pbar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),#8fb51e);transition:width .6s var(--e)}
+.kv{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px solid var(--line)}
+.kv:last-child{border-bottom:none}
+.kv span{color:var(--mut)}
+.kv b{text-align:end}
+.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.actions .btn{width:auto;flex:1;min-width:150px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:start;color:var(--dim);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+.code{font-family:var(--disp);letter-spacing:.08em;font-weight:600;color:var(--acc)}
+.empty{color:var(--dim);font-size:13px;text-align:center;padding:24px 0}
+.spin{width:15px;height:15px;border:2px solid rgba(22,28,4,.25);border-top-color:var(--acc-ink);border-radius:50%;animation:sp .7s linear infinite;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.btn.loading .spin{display:block}
+#langToggle{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;color:var(--mut);font-size:11px;font-weight:700;letter-spacing:.08em}
+#langToggle:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/shop/">
+    <svg class="mark" viewBox="0 0 120 100" style="width:21px;height:21px"><path fill="currentColor" d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z"/></svg>
+    <span class="wm">COACH <b>OS</b></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button id="langToggle" type="button">FA</button>
+    <a class="back" href="/shop/">← Shop</a>
+  </div>
+</header>
+<main>
+  <!-- LOGIN -->
+  <div id="login-view">
+    <span class="eyebrow" id="t-eyebrow">My account</span>
+    <h1 id="t-title">Sign in to your account</h1>
+    <p class="sub" id="t-sub">Use the same email and password as the Coach OS app.</p>
+    <div class="card" style="max-width:460px;margin-top:26px">
+      <div class="field"><label id="t-email" for="email">Email</label><input id="email" type="email" placeholder="coach@studio.com" autocomplete="email"></div>
+      <div class="field"><label id="t-pass" for="pass">Password</label><input id="pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="err" id="err"></div>
+      <button class="btn acc" id="loginBtn"><span class="spin"></span><span id="t-login">Sign in</span></button>
+      <p class="note" id="t-note">No account yet? <a href="/index.html" style="color:var(--acc)">Create one in the app</a>, or buy a plan — the code links to your email automatically.</p>
+    </div>
+  </div>
+  <!-- DASHBOARD -->
+  <div class="dash" id="dash-view">
+    <div class="toprow">
+      <div class="who"><div class="ava" id="ava">—</div><div><b id="cname">—</b><span id="cemail">—</span></div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn line" style="padding:11px 18px" href="/index.html" id="t-openapp">Open the app</a>
+        <button class="btn line" style="padding:11px 18px" id="logoutBtn" id="t-logout">Log out</button>
+      </div>
+    </div>
+    <div class="subcard">
+      <div class="card">
+        <h2 id="t-subh">Subscription</h2>
+        <div class="planbig"><span class="pn" id="planName">—</span><span class="bdg bdg-lime" id="statusBdg">—</span></div>
+        <div class="days"><b id="daysLeft">—</b><span id="t-days">days remaining</span></div>
+        <div class="pbar"><i id="daysBar" style="width:0%"></i></div>
+        <div style="margin-top:16px">
+          <div class="kv"><span id="t-ends">Valid until</span><b id="endsAt">—</b></div>
+          <div class="kv"><span id="t-seats">Clients</span><b id="seats">—</b></div>
+          <div class="kv"><span id="t-ws">Workspace code</span><b id="wsCode" class="code">—</b></div>
+        </div>
+        <div class="actions">
+          <a class="btn acc" id="renewBtn" href="/shop/checkout.html">Renew</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2 id="t-hist">Purchase history</h2>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th id="t-th-date">Date</th><th id="t-th-plan">Plan</th><th id="t-th-amt">Amount</th><th id="t-th-code">Code</th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+          <div class="empty" id="ordersEmpty" style="display:none" id="t-noorders">No purchases yet</div>
+        </div>
+        <p class="note" id="t-histnote">Codes are single-use. Redeem in the app: Settings → Account → Coupon.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer><span>© 2026 Coach OS</span><span id="t-secure">🔒 Secure</span></footer>
+<script>
+const FA={
+  'My account':'حساب کاربری من','Sign in to your account':'ورود به حساب کاربری','Use the same email and password as the Coach OS app.':'از همان ایمیل و رمز عبور اپ Coach OS استفاده کنید.',
+  'Email':'ایمیل','Password':'رمز عبور','Sign in':'ورود',
+  'No account yet? Create one in the app, or buy a plan — the code links to your email automatically.':'حساب ندارید؟ از اپ بسازید، یا یک پلن بخرید — کد به‌طور خودکار به ایمیل شما متصل می‌شود.',
+  'Subscription':'اشتراک','days remaining':'روز باقی‌مانده','Valid until':'اعتبار تا','Clients':'شاگردان','Workspace code':'کد فضای کاری','Renew':'تمدید',
+  'Purchase history':'تاریخچه خرید','Date':'تاریخ','Plan':'پلن','Amount':'مبلغ','Code':'کد','No purchases yet':'هنوز خریدی ثبت نشده',
+  'Codes are single-use. Redeem in the app: Settings → Account → Coupon.':'کدها تک‌مصرف‌اند. در اپ ریدیم کنید: تنظیمات → حساب → کوپن.',
+  'Open the app':'باز کردن اپ','Log out':'خروج','🔒 Secure':'🔒 امن',
+  'Enter email and password':'ایمیل و رمز را وارد کنید','Wrong email or password':'ایمیل یا رمز اشتباه است','Could not reach server':'ارتباط با سرور برقرار نشد',
+  'Active':'فعال','Trial':'آزمایشی','Expired':'منقضی','Suspended':'معلق',
+  'basic':'پایه','professional':'حرفه‌ای','club':'باشگاه','trial':'آزمایشی'
+};
+const $=id=>document.getElementById(id);
+let lang='en';try{lang=localStorage.getItem('coach-os-locale')||'en'}catch(e){}
+const t=k=>lang==='fa'?(FA[k]??k):k;
+const nf=v=>lang==='fa'?String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):String(v);
+function applyLang(){
+  const fa=lang==='fa';
+  document.documentElement.lang=fa?'fa':'en';
+  document.documentElement.dir=fa?'rtl':'ltr';
+  $('langToggle').textContent=fa?'EN':'FA';
+  document.querySelectorAll('[id^="t-"]').forEach(el=>{
+    const key=el.dataset.k||(el.dataset.k=el.textContent.trim());
+    if(FA[key]||!fa)el.textContent=fa?(FA[key]??key):key;
+  });
+  try{localStorage.setItem('coach-os-locale',lang)}catch(e){}
+  if(TOKEN)render();
+}
+$('langToggle').addEventListener('click',()=>{lang=lang==='fa'?'en':'fa';applyLang()});
+
+let TOKEN='';try{TOKEN=localStorage.getItem('coach-os-shop-token')||''}catch(e){}
+const showErr=m=>{const e=$('err');e.textContent=t(m);e.classList.add('show')};
+const planName=p=>t(p||'trial');
+const daysLeftOf=b=>{if(!b)return null;const end=b.subEndsAt||b.trialEndsAt;return end?Math.max(0,Math.ceil((end-Date.now())/86400000)):null};
+
+function renderDash(d){
+  $('login-view').style.display='none';
+  $('dash-view').classList.add('show');
+  const c=d.coach||{};
+  $('ava').textContent=(c.name||c.email||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  $('cname').textContent=c.name||'—';
+  $('cemail').textContent=c.email||'—';
+  const b=d.billing||{},st=b.status||'trial';
+  $('planName').textContent=planName(b.plan);
+  const bdg=$('statusBdg');
+  bdg.textContent=t(st==='active'?'Active':st==='trial'?'Trial':st==='suspended'?'Suspended':'Expired');
+  bdg.className='bdg '+(st==='active'?'bdg-green':st==='trial'?'bdg-lime':st==='suspended'?'bdg-red':'bdg-amber');
+  const dl=daysLeftOf(b);
+  $('daysLeft').textContent=dl==null?'—':nf(dl);
+  $('daysBar').style.width=(dl==null?0:Math.min(100,Math.round(dl/30*100)))+'%';
+  $('daysBar').style.background=dl!=null&&dl<=3?'var(--red)':dl!=null&&dl<=7?'var(--amber)':'linear-gradient(90deg,var(--acc),#8fb51e)';
+  const end=b.subEndsAt||b.trialEndsAt;
+  $('endsAt').textContent=end?new Date(end).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—';
+  const q=d.quota||{};
+  $('seats').textContent=q.used!=null?`${nf(q.used)} / ${nf(q.max)}`:'—';
+  $('wsCode').textContent=(d.workspace&&d.workspace.code)||'—';
+  $('renewBtn').href='/shop/checkout.html?plan='+(b.plan&&b.plan!=='trial'?b.plan:'professional');
+}
+function renderOrders(orders){
+  const tb=$('ordersBody');tb.innerHTML='';
+  if(!orders||!orders.length){$('ordersEmpty').style.display='block';return}
+  $('ordersEmpty').style.display='none';
+  orders.forEach(o=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${new Date(o.createdAt).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</td>
+      <td>${planName(o.planId)}</td><td>${nf(o.amount.toLocaleString('en-US'))} IRT</td>
+      <td class="code">${o.coupon||'—'}</td>`;
+    tb.appendChild(tr);
+  });
+}
+async function loadDash(){
+  try{
+    const s=await fetch('/shop/api/account/session',{headers:{authorization:'Bearer '+TOKEN}});
+    if(s.status===401){TOKEN='';try{localStorage.removeItem('coach-os-shop-token')}catch(e){};return}
+    const sd=await s.json();
+    if(sd&&sd.ok){renderDash(sd);renderOrders([])}
+    const o=await fetch('/shop/api/account/orders',{headers:{authorization:'Bearer '+TOKEN}});
+    const od=await o.json();
+    if(od&&od.ok)renderOrders(od.orders);
+  }catch(e){}
+}
+$('loginBtn').addEventListener('click',async()=>{
+  $('err').classList.remove('show');
+  const email=$('email').value.trim(),password=$('pass').value;
+  if(!email||!password){showErr('Enter email and password');return}
+  const btn=$('loginBtn');btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await fetch('/shop/api/account/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,password})});
+    const d=await r.json().catch(()=>null);
+    if(!r.ok||!d||!d.ok){showErr(r.status===401?'Wrong email or password':'Could not reach server');return}
+    TOKEN=d.token;try{localStorage.setItem('coach-os-shop-token',TOKEN)}catch(e){}
+    renderDash(d);
+    const o=await fetch('/shop/api/account/orders',{headers:{authorization:'Bearer '+TOKEN}});
+    const od=await o.json();
+    if(od&&od.ok)renderOrders(od.orders);
+  }catch(e){showErr('Could not reach server')}
+  finally{btn.classList.remove('loading');btn.disabled=false}
+});
+$('logoutBtn').addEventListener('click',()=>{TOKEN='';try{localStorage.removeItem('coach-os-shop-token')}catch(e){};location.reload()});
+if(TOKEN)loadDash();
+applyLang();
+</script>
+</body>
+</html>

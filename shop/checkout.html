@@ -116,6 +116,14 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
         <h2 id="t-plan">1 — Choose your plan</h2>
         <div class="plans" id="plans"></div>
         <div class="field">
+          <label id="t-name" for="cname">Full name</label>
+          <input id="cname" type="text" placeholder="Sara Ahmadi" autocomplete="name">
+        </div>
+        <div class="field">
+          <label id="t-phone" for="cphone">Mobile number</label>
+          <input id="cphone" type="tel" placeholder="0912 345 6789" autocomplete="tel" dir="ltr">
+        </div>
+        <div class="field">
           <label id="t-email" for="email">Email (the code will be linked to it)</label>
           <input id="email" type="email" placeholder="coach@studio.com" autocomplete="email">
         </div>
@@ -145,6 +153,7 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
       <div class="row">
         <button id="copyBtn" type="button" id="t-copy">Copy</button>
         <a class="btn acc" style="margin-top:0;width:auto;padding:10px 18px" id="appLink" href="/index.html">Open the app</a>
+        <a class="btn" style="margin-top:0;width:auto;padding:10px 18px;border:1px solid var(--acc-line);color:var(--acc)" href="/shop/account.html" id="t-acct">My account</a>
       </div>
     </div>
     <div class="steps">
@@ -183,6 +192,7 @@ const FA={
   'Go to Settings → Account → Coupon / payment code':'به تنظیمات → حساب → کوپن / کد پرداخت بروید',
   'Paste the code and press Activate — your plan unlocks instantly':'کد را بچسبانید و فعال‌سازی را بزنید — پلن فوراً باز می‌شود',
   '🔒 Secure checkout':'🔒 پرداخت امن','Enter a valid email':'ایمیل معتبر وارد کنید','Processing…':'در حال پردازش…',
+  'Full name':'نام و نام خانوادگی','Mobile number':'شماره موبایل','Enter your full name':'نام و نام خانوادگی را وارد کنید','Enter a valid mobile number':'شماره موبایل معتبر وارد کنید','My account':'حساب کاربری من',
   'Copied ✓':'کپی شد ✓','month':'ماه'
 };
 const $=id=>document.getElementById(id);
@@ -226,16 +236,20 @@ $('email').value='';try{$('email').value=localStorage.getItem('coach-os-email')|
 function showErr(m){const e=$('err');e.textContent=m;e.classList.add('show')}
 $('payBtn').addEventListener('click',async()=>{
   $('err').classList.remove('show');
+  const name=$('cname').value.trim();
+  const phone=$('cphone').value.replace(/[\s-]/g,'');
   const email=$('email').value.trim();
+  if(name.length<3){showErr(t('Enter your full name'));return}
+  if(!/^\+?\d{10,13}$/.test(phone)){showErr(t('Enter a valid mobile number'));return}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){showErr(t('Enter a valid email'));return}
   try{localStorage.setItem('coach-os-email',email)}catch(e){}
   const btn=$('payBtn');btn.classList.add('loading');btn.disabled=true;
   $('t-pay').textContent=t('Processing…');
   try{
     /* PRODUCTION: redirect to the gateway here; the coupon is issued in the
-       payment callback (server-side, see shop/checkout-api.mjs). Demo: call
+       payment callback (server-side, see shop/api/checkout.mjs). Demo: call
        the checkout API directly to simulate a successful payment. */
-    const r=await fetch((API_BASE||'')+'/shop/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({planId:plan,email})});
+    const r=await fetch((API_BASE||'')+'/shop/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({planId:plan,email,name,phone})});
     const d=await r.json().catch(()=>null);
     if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
     $('code').textContent=d.coupons[0];
