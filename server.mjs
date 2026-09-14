@@ -19,7 +19,7 @@ import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP, SECURITY_HEADERS } from './netlify/lib/guard.mjs';
 
-const ROOT = fileURLToPath(new URL('.', import.meta.url));
+const ROOT = fileURLToPath(new URL('.', import.meta.url)).replace(/[\\/]+$/, '');
 const PORT = Number(process.env.PORT) || 8888;
 const HOST = process.env.HOST || '0.0.0.0';
 
@@ -28,6 +28,7 @@ const authFn = await import('./netlify/functions/auth.mjs');
 const billingFn = await import('./netlify/functions/billing.mjs');
 const dataFn = await import('./netlify/functions/data.mjs');
 const healthFn = await import('./netlify/functions/health.mjs');
+const shopCheckoutFn = await import('./shop/api/checkout.mjs');
 
 // Netlify maps "/api/auth/signup" -> handler URL "/api/auth/signup" (config.path
 // with a wildcard), so the handler sees the full path. Reproduce that here.
@@ -35,7 +36,8 @@ const ROUTES = [
   { re: /^\/api\/auth\/(.*)$/, fn: authFn.default },
   { re: /^\/api\/billing\/(.*)$/, fn: billingFn.default },
   { re: /^\/api\/data\/?$/, fn: dataFn.default },
-  { re: /^\/api\/health\/?$/, fn: healthFn.default }
+  { re: /^\/api\/health\/?$/, fn: healthFn.default },
+  { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default }
 ];
 
 async function handleApi(req, res, url) {
@@ -95,9 +97,13 @@ async function serveStatic(req, res, url) {
   }
   let p = decodeURIComponent(url.pathname);
   if (p === '/') p = '/index.html';
-  // Resolve inside ROOT only (path traversal guard).
+  // The shop landing page lives under /shop with a long filename — make /shop
+  // and /shop/ resolve to it so links stay short.
+  if (p === '/shop' || p === '/shop/') p = '/shop/index.html';
+  // Resolve inside ROOT only (path traversal guard). ROOT has no trailing
+  // separator here, so every allowed file is ROOT + sep + relative path.
   const file = normalize(join(ROOT, p));
-  if (!file.startsWith(ROOT + sep) && file !== join(ROOT, 'index.html')) {
+  if (!file.startsWith(ROOT + sep)) {
     res.statusCode = 403; res.end('forbidden'); return;
   }
   try {

@@ -51,15 +51,22 @@ async function handleGet(st, req, code) {
   if (!ws && !legacy) {
     return j(200, { ok: true, rev: 0, data: null, exists: false, owned: false, mine: false });
   }
+  /* Cheap poll: ?rev=N returns {unchanged:true} (no payload) when the caller
+     already has the current revision — cuts ~95% of polling bandwidth at
+     hundreds of connected coaches/clients. */
+  const want = Number(new URL(req.url).searchParams.get('rev')) || 0;
   if (ws) {
     const m = await metaOf(st, ws);
+    const rev = (m && m.rev) || 0;
+    if (want && rev === want) return j(200, { ok: true, rev, unchanged: true });
     const coach = await coachOf(st, req);
     return j(200, {
-      ok: true, rev: (m && m.rev) || 0, data: (m && m.data) || null,
+      ok: true, rev, data: (m && m.data) || null,
       exists: true, owned: !!ws.owner,
       mine: !!(coach && ws.owner && ws.owner === ownerOf(coach))
     });
   }
+  if (want && (legacy.rev || 0) === want) return j(200, { ok: true, rev: legacy.rev || 0, unchanged: true });
   return j(200, { ok: true, rev: legacy.rev || 0, data: legacy.data || null, exists: true, owned: false, mine: false, legacy: true });
 }
 

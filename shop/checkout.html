@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — Coach OS</title>
+<meta name="description" content="Complete your Coach OS purchase and get your activation code.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="%23050506"/><g transform="translate(10 0) skewX(-10)"><path fill="white" d="M99 16H47C24 16 10 31 10 52V68C10 89 24 104 47 104H99L85 88H52C43 88 38 82 38 73V47C38 38 43 32 52 32H85Z"/><path fill="white" d="M38 58L98 47L90 68H38Z"/></g></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#07080a; --bg2:#0b0d10;
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+  --txt:#eef1f4; --mut:#9aa3ad; --dim:#6b7480;
+  --acc:#C6F14E; --acc-ink:#161c04; --acc-dim:rgba(198,241,78,.12); --acc-line:rgba(198,241,78,.42);
+  --green:#16A34A; --red:#DC2626;
+  --disp:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --body:'Inter','Segoe UI',system-ui,sans-serif;
+  --e:cubic-bezier(.22,.61,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--body);font-size:16px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+html[dir="rtl"] body{font-family:"Vazirmatn","Segoe UI",Tahoma,var(--body)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wm{font-family:var(--disp);font-style:italic;font-weight:700;letter-spacing:.025em;white-space:nowrap;transform:skewX(-8deg);transform-origin:left center}
+.wm b{color:#aeb2b4}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-size:13px}
+.logo .mark{width:21px;height:21px;color:#fff}
+.back{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.back:hover{color:var(--txt)}
+main{flex:1;width:100%;max-width:960px;margin:0 auto;padding:40px 20px 80px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--acc)}
+h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spacing:-.015em;font-size:clamp(26px,4vw,44px);margin:14px 0 6px}
+.sub{color:var(--mut);font-size:14.5px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:30px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:20px;padding:26px;background:rgba(255,255,255,.02)}
+.card h2{font-family:var(--disp);font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.plans{display:flex;flex-direction:column;gap:10px}
+.plan{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;transition:border-color .25s,background .25s}
+.plan:hover{border-color:var(--line2)}
+.plan.on{border-color:var(--acc-line);background:var(--acc-dim)}
+.plan .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line2);flex:none;transition:.2s}
+.plan.on .dot{border-color:var(--acc);background:var(--acc);box-shadow:inset 0 0 0 3px var(--bg)}
+.plan .nm{flex:1;min-width:0}
+.plan .nm b{display:block;font-size:14.5px}
+.plan .nm span{font-size:12px;color:var(--dim)}
+.plan .pr{text-align:end}
+.plan .pr b{font-family:var(--disp);font-size:17px}
+.plan .pr span{display:block;font-size:11px;color:var(--dim)}
+.field{margin-top:18px}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.field input{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:13px 15px;color:var(--txt);font-size:14px;font-family:inherit;outline:none;transition:border-color .25s}
+.field input:focus{border-color:var(--acc-line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border-radius:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;transition:transform .3s var(--e),box-shadow .3s,opacity .3s;width:100%;margin-top:20px}
+.btn.acc{background:var(--acc);color:var(--acc-ink)}
+.btn.acc:hover{transform:translateY(-2px);box-shadow:0 12px 44px -8px var(--acc-line)}
+.btn.acc:disabled{opacity:.55;cursor:wait;transform:none;box-shadow:none}
+.summary{position:sticky;top:24px}
+.srow{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;color:var(--mut)}
+.srow b{color:var(--txt)}
+.srow.total{border-top:1px solid var(--line);margin-top:8px;padding-top:14px;font-size:15px}
+.srow.total b{font-family:var(--disp);font-size:20px;color:var(--acc)}
+.note{font-size:11.5px;color:var(--dim);margin-top:14px;line-height:1.7}
+.err{color:#f87171;font-size:12.5px;margin-top:10px;display:none}
+.err.show{display:block}
+/* success view */
+#done{display:none;text-align:center;padding:30px 0}
+#done.show{display:block}
+#done .ok{width:64px;height:64px;border-radius:50%;background:var(--acc-dim);border:1px solid var(--acc-line);display:grid;place-items:center;margin:0 auto 18px;color:var(--acc)}
+#done .ok .ic{width:28px;height:28px}
+#done h2{font-family:var(--disp);font-size:22px;text-transform:uppercase;margin-bottom:8px}
+#done p{color:var(--mut);font-size:14px;max-width:420px;margin:0 auto}
+.codebox{margin:24px auto 0;max-width:420px;border:1px dashed var(--acc-line);border-radius:16px;padding:20px;background:var(--acc-dim)}
+.codebox .lbl{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.codebox .code{font-family:var(--disp);font-size:26px;font-weight:700;letter-spacing:.14em;color:var(--acc)}
+.codebox .row{display:flex;gap:10px;margin-top:14px}
+.codebox button{flex:1;border:1px solid var(--acc-line);border-radius:10px;padding:10px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);transition:background .25s}
+.codebox button:hover{background:rgba(198,241,78,.1)}
+.steps{margin-top:22px;text-align:start;max-width:420px;margin-inline:auto;display:flex;flex-direction:column;gap:10px}
+.steps div{display:flex;gap:10px;font-size:12.5px;color:var(--mut);align-items:flex-start}
+.steps .n{width:20px;height:20px;border-radius:50%;background:var(--acc-dim);color:var(--acc);font-size:10.5px;font-weight:700;display:grid;place-items:center;flex:none;margin-top:1px}
+footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim)}
+#langToggle{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;color:var(--mut);font-size:11px;font-weight:700;letter-spacing:.08em;transition:color .3s,background .3s}
+#langToggle:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+.spin{width:15px;height:15px;border:2px solid rgba(22,28,4,.25);border-top-color:var(--acc-ink);border-radius:50%;animation:sp .7s linear infinite;display:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.btn.loading .spin{display:block}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/shop/">
+    <svg class="mark" viewBox="0 0 120 100" style="width:21px;height:21px"><path fill="currentColor" d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z"/></svg>
+    <span class="wm">COACH <b>OS</b></span>
+  </a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button id="langToggle" type="button">FA</button>
+    <a class="back" href="/shop/#pricing">← Shop</a>
+  </div>
+</header>
+<main>
+  <div id="form-view">
+    <span class="eyebrow">Checkout</span>
+    <h1 id="t-title">Complete your purchase</h1>
+    <p class="sub" id="t-sub">Pay securely, then receive your activation code instantly.</p>
+    <div class="grid">
+      <div class="card">
+        <h2 id="t-plan">1 — Choose your plan</h2>
+        <div class="plans" id="plans"></div>
+        <div class="field">
+          <label id="t-email" for="email">Email (the code will be linked to it)</label>
+          <input id="email" type="email" placeholder="coach@studio.com" autocomplete="email">
+        </div>
+        <div class="err" id="err"></div>
+        <button class="btn acc" id="payBtn">
+          <span class="spin"></span><span id="t-pay">Pay & get code</span>
+        </button>
+        <p class="note" id="t-note">Demo gateway — no real charge. In production this step hands off to ZarinPal/… and the code is issued by the payment callback.</p>
+      </div>
+      <div class="card summary">
+        <h2 id="t-sum">Order summary</h2>
+        <div class="srow"><span id="t-item">Plan</span><b id="s-plan">—</b></div>
+        <div class="srow"><span id="t-dur">Duration</span><b id="t-1m">1 month</b></div>
+        <div class="srow"><span id="t-clients">Clients</span><b id="s-max">—</b></div>
+        <div class="srow total"><span id="t-total">Total</span><b id="s-total">—</b></div>
+        <p class="note" id="t-sumnote">The activation code is single-use and valid for 1 year. Redeem it in the app: Settings → Account → Coupon.</p>
+      </div>
+    </div>
+  </div>
+  <div id="done">
+    <div class="ok"><svg class="ic"><use href="#i-check"/></svg></div>
+    <h2 id="t-done">Payment successful</h2>
+    <p id="t-donesub">This is your activation code — keep it safe. It activates your plan inside the app.</p>
+    <div class="codebox">
+      <div class="lbl" id="t-code">Activation code</div>
+      <div class="code" id="code">—</div>
+      <div class="row">
+        <button id="copyBtn" type="button" id="t-copy">Copy</button>
+        <a class="btn acc" style="margin-top:0;width:auto;padding:10px 18px" id="appLink" href="/index.html">Open the app</a>
+      </div>
+    </div>
+    <div class="steps">
+      <div><span class="n">1</span><span id="t-s1">Open the app and sign up / sign in with this email</span></div>
+      <div><span class="n">2</span><span id="t-s2">Go to Settings → Account → Coupon / payment code</span></div>
+      <div><span class="n">3</span><span id="t-s3">Paste the code and press Activate — your plan unlocks instantly</span></div>
+    </div>
+  </div>
+</main>
+<footer><span>© 2026 Coach OS</span><span id="t-secure">🔒 Secure checkout</span></footer>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></symbol>
+</defs></svg>
+<script>
+/* ====== CONFIG ======
+   API base of the Coach OS deployment (same origin when served by server.mjs).
+   The ADMIN_API_KEY must NEVER live here — coupon issuing happens server-side
+   (see shop/checkout-api.mjs example). This page calls that backend, which
+   forwards to /api/billing/issue-coupon. */
+const API_BASE=''; // '' = same origin
+const PLANS={
+  basic:{name:'Basic',nameFa:'پایه',amount:290000,max:5},
+  professional:{name:'Professional',nameFa:'حرفه‌ای',amount:790000,max:30},
+  club:{name:'Club',nameFa:'باشگاه',amount:2490000,max:200}
+};
+const FA={
+  'Complete your purchase':'تکمیل خرید','Pay securely, then receive your activation code instantly.':'پرداخت امن، سپس کد فعال‌سازی بلافاصله دریافت می‌شود.',
+  '1 — Choose your plan':'۱ — انتخاب پلن','Email (the code will be linked to it)':'ایمیل (کد به آن متصل می‌شود)','Pay & get code':'پرداخت و دریافت کد',
+  'Demo gateway — no real charge. In production this step hands off to ZarinPal/… and the code is issued by the payment callback.':'درگاه نمایشی است — پرداخت واقعی نمی‌شود. در نسخه نهایی این مرحله به زرین‌پال/… واگذار می‌شود و کد در callback پرداخت صادر می‌شود.',
+  'Order summary':'خلاصه سفارش','Plan':'پلن','Duration':'مدت','1 month':'۱ ماه','Clients':'شاگردان','Total':'مجموع',
+  'The activation code is single-use and valid for 1 year. Redeem it in the app: Settings → Account → Coupon.':'کد فعال‌سازی تک‌مصرف است و یک سال اعتبار دارد. در اپ ریدیم کنید: تنظیمات → حساب → کوپن.',
+  'Payment successful':'پرداخت موفق','This is your activation code — keep it safe. It activates your plan inside the app.':'این کد فعال‌سازی شماست — آن را نگه دارید. پلن شما را در اپ فعال می‌کند.',
+  'Activation code':'کد فعال‌سازی','Copy':'کپی','Open the app':'باز کردن اپ',
+  'Open the app and sign up / sign in with this email':'اپ را باز کنید و با همین ایمیل ثبت‌نام/ورود کنید',
+  'Go to Settings → Account → Coupon / payment code':'به تنظیمات → حساب → کوپن / کد پرداخت بروید',
+  'Paste the code and press Activate — your plan unlocks instantly':'کد را بچسبانید و فعال‌سازی را بزنید — پلن فوراً باز می‌شود',
+  '🔒 Secure checkout':'🔒 پرداخت امن','Enter a valid email':'ایمیل معتبر وارد کنید','Processing…':'در حال پردازش…',
+  'Copied ✓':'کپی شد ✓','month':'ماه'
+};
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+let plan=PLANS[params.get('plan')]?params.get('plan'):'professional';
+let lang='en';try{lang=localStorage.getItem('coach-os-locale')||'en'}catch(e){}
+const nf=v=>lang==='fa'?String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):String(v);
+const money=v=>nf(v.toLocaleString('en-US'));
+function renderPlans(){
+  $('plans').innerHTML=Object.entries(PLANS).map(([id,p])=>`
+    <div class="plan ${id===plan?'on':''}" data-plan="${id}" role="button" tabindex="0">
+      <span class="dot"></span>
+      <span class="nm"><b>${lang==='fa'?p.nameFa:p.name}</b><span>${nf(p.max)} ${lang==='fa'?'شاگرد':'clients'}</span></span>
+      <span class="pr"><b>${money(p.amount)}</b><span>${nf('IRT')} / ${t('month')}</span></span>
+    </div>`).join('');
+  document.querySelectorAll('.plan').forEach(el=>el.addEventListener('click',()=>{plan=el.dataset.plan;renderPlans();renderSummary()}));
+  renderSummary();
+}
+const t=k=>lang==='fa'?(FA[k]??k):k;
+function renderSummary(){
+  const p=PLANS[plan];
+  $('s-plan').textContent=lang==='fa'?p.nameFa:p.name;
+  $('s-max').textContent=nf(p.max);
+  $('s-total').textContent=money(p.amount)+' IRT';
+}
+function applyLang(){
+  const fa=lang==='fa';
+  document.documentElement.lang=fa?'fa':'en';
+  document.documentElement.dir=fa?'rtl':'ltr';
+  $('langToggle').textContent=fa?'EN':'FA';
+  ['t-title','t-sub','t-plan','t-email','t-pay','t-note','t-sum','t-item','t-dur','t-1m','t-clients','t-total','t-sumnote','t-done','t-donesub','t-code','t-copy','t-s1','t-s2','t-s3','t-secure'].forEach(id=>{
+    const el=$(id);if(!el)return;
+    const key=el.dataset.k||(el.dataset.k=el.textContent.trim());
+    el.textContent=t(key);
+  });
+  try{localStorage.setItem('coach-os-locale',lang)}catch(e){}
+  renderPlans();
+}
+$('langToggle').addEventListener('click',()=>{lang=lang==='fa'?'en':'fa';applyLang()});
+$('email').value='';try{$('email').value=localStorage.getItem('coach-os-email')||''}catch(e){}
+function showErr(m){const e=$('err');e.textContent=m;e.classList.add('show')}
+$('payBtn').addEventListener('click',async()=>{
+  $('err').classList.remove('show');
+  const email=$('email').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){showErr(t('Enter a valid email'));return}
+  try{localStorage.setItem('coach-os-email',email)}catch(e){}
+  const btn=$('payBtn');btn.classList.add('loading');btn.disabled=true;
+  $('t-pay').textContent=t('Processing…');
+  try{
+    /* PRODUCTION: redirect to the gateway here; the coupon is issued in the
+       payment callback (server-side, see shop/checkout-api.mjs). Demo: call
+       the checkout API directly to simulate a successful payment. */
+    const r=await fetch((API_BASE||'')+'/shop/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({planId:plan,email})});
+    const d=await r.json().catch(()=>null);
+    if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
+    $('code').textContent=d.coupons[0];
+    $('appLink').href='/index.html';
+    $('form-view').style.display='none';
+    $('done').classList.add('show');
+    window.scrollTo({top:0});
+  }catch(e){
+    showErr(t('Could not reach server'));
+  }finally{
+    btn.classList.remove('loading');btn.disabled=false;
+    $('t-pay').textContent=t('Pay & get code');
+  }
+});
+$('copyBtn').addEventListener('click',()=>{
+  const v=$('code').textContent;
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(()=>{$('copyBtn').textContent=t('Copied ✓');setTimeout(()=>{$('copyBtn').textContent=t('Copy')},1600)});
+});
+applyLang();
+</script>
+</body>
+</html>

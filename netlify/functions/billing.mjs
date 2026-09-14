@@ -152,7 +152,9 @@ async function adminOverview(req, st) {
   }
   const idx = (await st.get('index:coaches', { type: 'json' })) || [];
   const coaches = [];
-  for (const id of idx.slice(0, 500)) {
+  // No hard cap: at 500+ coaches the loop is still bounded by the index
+  // length; reads are per-coach KV gets (cheap on Supabase/file backends).
+  for (const id of idx.slice(0, 5000)) {
     try {
       const ptr = await st.get(`acct-by-id:${id}`, { type: 'json' });
       if (!ptr) continue;
@@ -281,8 +283,11 @@ export default async (req) => {
   const segs = new URL(req.url).pathname.split('/').filter(Boolean);
   const action = (segs[2] || '').toLowerCase();
   // Brute-force guard on code entry points (redeem guesses, coupon abuse).
+  // issue-coupon is authenticated by ADMIN_API_KEY (server-to-server from the
+  // shop) and creates — not guesses — codes, so it gets a roomier window.
   if (req.method === 'POST') {
-    const r = rateLimit(`billing:${action}:${ipOf(req)}`, 20, 60_000);
+    const [limit, win] = action === 'issue-coupon' ? [120, 60_000] : [20, 60_000];
+    const r = rateLimit(`billing:${action}:${ipOf(req)}`, limit, win);
     if (!r.ok) return tooMany(r.retryAfter);
   }
   try {

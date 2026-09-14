@@ -221,3 +221,30 @@ curl -X POST https://app.coachos.example/api/billing/issue-coupon \
 Alternative (direct grant): if the buyer already has a Coach OS account and
 the shop knows their email, the shop backend can call `admin-grant` with an
 admin session instead — but the coupon flow avoids sharing credentials.
+
+### Point the in-app buy buttons at the shop
+
+In `index.html` set:
+
+```js
+const SHOP_URL='https://shop.coachos.example';
+```
+
+The plan buttons in Settings → Account become **Buy** buttons that open
+`SHOP_URL?plan=professional` (plan preselected via query param). The shop
+reads `?plan=`, takes payment, issues the coupon, and tells the customer to
+paste it in the app. Leave `SHOP_URL=''` to keep the legacy manual flow
+(in-app request + tracking code).
+
+### Shop integration checklist
+
+1. Generate `ADMIN_API_KEY` (24+ random bytes) and set it on the Coach OS
+   deployment — never in browser code.
+2. Shop backend: after the payment gateway confirms, call `issue-coupon` with
+   `{planId, durationDays, maxUses:1, count:1}` and store the returned code
+   with the order (retry-safe: pass your own `code` derived from the order id
+   to make retries idempotent — duplicates return `409 code-exists`).
+3. Deliver the code on-screen + by email.
+4. Customer redeems in the app; the plan activates instantly.
+5. Optional: reconcile daily — `admin-overview` shows every coach's plan and
+   days remaining, so mismatches are easy to spot.

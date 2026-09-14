@@ -14,6 +14,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.pathname.startsWith('/api/')) return; // never intercept the sync API
+  if (url.pathname.startsWith('/shop')) return; // shop is online-only marketing — no SW, no cache collisions (?plan=…)
   if (e.request.mode === 'navigate' || url.origin === location.origin) {
     e.respondWith(
       caches.match(e.request, { ignoreSearch: true }).then(r => r || fetch(e.request).then(res => {
