@@ -6,6 +6,16 @@
 //   GET  /api/billing/admin-overview (Bearer admin) -> {ok, coaches:[...]}  (ADMIN_EMAILS)
 import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf } from '../lib/saas.mjs';
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
+import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
+
+/* Billing bodies are tiny (codes/plan ids) — 64 KB is generous. */
+const BILL_MAX_BYTES = 64_000;
+async function readSmall(req) {
+  const { data, tooLarge: big, bad } = await readJsonCapped(req, BILL_MAX_BYTES);
+  if (big) return { err: tooLarge(BILL_MAX_BYTES) };
+  if (bad) return { err: badJson() };
+  return { data };
+}
 
 async function pushIdx(st, key, v) {
   try {
@@ -38,7 +48,8 @@ async function redeem(req, st) {
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
-  const body = await readJson(req);
+  const { data: body, err } = await readSmall(req);
+  if (err) return err;
   const code = normCoupon(body?.code);
   if (!code) return j(400, { ok: false, error: 'bad-code' });
   const c = await st.get(`coupon:${code}`, { type: 'json' });
@@ -85,7 +96,9 @@ async function createCoupon(req, st) {
   if (acct.role !== 'admin' && (!admins.length || !admins.includes((s.email || '').toLowerCase()))) {
     return j(403, { ok: false, error: 'forbidden' });
   }
-  const body = (await readJson(req)) || {};
+  const { data: cbody, err: err1 } = await readSmall(req);
+  if (err1) return err1;
+  const body = cbody || {};
   const code = normCoupon(body.code);
   if (code.length < 4 || !/^[A-Z0-9-]{4,32}$/.test(code)) {
     return j(400, { ok: false, error: 'bad-code' });
@@ -109,7 +122,8 @@ async function requestPay(req, st) {
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
-  const body = await readJson(req);
+  const { data: body, err: err2 } = await readSmall(req);
+  if (err2) return err2;
   const planId = String(body?.planId || 'professional');
   if (!PLANS[planId] || planId === 'trial') return j(400, { ok: false, error: 'bad-plan' });
   const payId = newPayId();
@@ -151,12 +165,17 @@ export default async (req) => {
   const st = store();
   const segs = new URL(req.url).pathname.split('/').filter(Boolean);
   const action = (segs[2] || '').toLowerCase();
+  // Brute-force guard on code entry points (redeem guesses, coupon abuse).
+  if (req.method === 'POST') {
+    const r = rateLimit(`billing:${action}:${ipOf(req)}`, 20, 60_000);
+    if (!r.ok) return tooMany(r.retryAfter);
+  }
   try {
-    if (req.method === 'GET' && action === 'me') return await meBilling(req, st);
-    if (req.method === 'POST' && action === 'redeem') return await redeem(req, st);
-    if (req.method === 'POST' && action === 'coupon') return await createCoupon(req, st);
-    if (req.method === 'POST' && action === 'request') return await requestPay(req, st);
-    if (req.method === 'GET' && action === 'admin-overview') return await adminOverview(req, st);
+    if (req.method === 'GET' && action === 'me') return secure(await meBilling(req, st));
+    if (req.method === 'POST' && action === 'redeem') return secure(await redeem(req, st));
+    if (req.method === 'POST' && action === 'coupon') return secure(await createCoupon(req, st));
+    if (req.method === 'POST' && action === 'request') return secure(await requestPay(req, st));
+    if (req.method === 'GET' && action === 'admin-overview') return secure(await adminOverview(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     return j(500, { ok: false, error: 'server-error' });

@@ -10,6 +10,11 @@ import {
   ownerOf, accessOf, CODE_RE, newId
 } from '../lib/saas.mjs';
 import { planOf, countSeats } from '../lib/billing.mjs';
+import { readJsonCapped, tooLarge, badJson, secure } from '../lib/guard.mjs';
+
+/* Workspace payload cap (default 5 MB — hundreds of clients with workouts,
+   notes and measurements fit comfortably). Override with DATA_MAX_BYTES. */
+const DATA_MAX_BYTES = Number(process.env.DATA_MAX_BYTES) || 5_000_000;
 
 const legacyStore = () => legacyBlobs();
 
@@ -59,8 +64,9 @@ async function handleGet(st, req, code) {
 }
 
 async function handlePut(st, req, code) {
-  let body;
-  try { body = await req.json(); } catch { return j(400, { ok: false, error: 'bad json' }); }
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, DATA_MAX_BYTES);
+  if (big) return tooLarge(DATA_MAX_BYTES);
+  if (bad) return badJson();
   const data = body && body.data;
   if (!data || typeof data !== 'object') return j(400, { ok: false, error: 'missing data' });
   const want = Number(body.rev) || 0;
@@ -154,8 +160,8 @@ export default async (req) => {
   const url = new URL(req.url);
   const code = normCode(url.searchParams.get('code'));
   if (!CODE_RE.test(code)) return j(400, { ok: false, error: 'bad code' });
-  if (req.method === 'GET') return handleGet(st, req, code);
-  if (req.method === 'PUT') return handlePut(st, req, code);
+  if (req.method === 'GET') return secure(handleGet(st, req, code));
+  if (req.method === 'PUT') return secure(handlePut(st, req, code));
   return j(405, { ok: false, error: 'method not allowed' });
 };
 

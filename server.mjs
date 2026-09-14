@@ -17,6 +17,7 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CSP, SECURITY_HEADERS } from './netlify/lib/guard.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 const PORT = Number(process.env.PORT) || 8888;
@@ -53,6 +54,7 @@ async function handleApi(req, res, url) {
       const out = await r.fn(webReq);
       res.statusCode = out.status;
       out.headers.forEach((v, k) => { if (k !== 'content-length') res.setHeader(k, v); });
+      for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
       const buf = out.body ? Buffer.from(await out.arrayBuffer()) : null;
       if (buf) res.setHeader('content-length', buf.length);
       res.end(buf || undefined);
@@ -104,6 +106,10 @@ async function serveStatic(req, res, url) {
     const body = await readFile(file);
     res.statusCode = 200;
     res.setHeader('content-type', MIME[extname(file).toLowerCase()] || 'application/octet-stream');
+    for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
+    // CSP on HTML documents (the app shell). Inline script/style is required
+    // by the single-file architecture; everything else is locked down.
+    if (extname(file).toLowerCase() === '.html') res.setHeader('content-security-policy', CSP);
     // index.html / sw.js / manifest must always be fresh (same as netlify.toml).
     if (['/index.html', '/sw.js', '/manifest.json'].includes(url.pathname)) {
       res.setHeader('cache-control', 'public, max-age=0, must-revalidate');

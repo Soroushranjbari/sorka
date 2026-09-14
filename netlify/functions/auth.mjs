@@ -4,10 +4,29 @@ import {
   sessionOf, accountById, accessOf, ownerOf,
   CODE_RE, newId
 } from '../lib/saas.mjs';
-import { signup, login, publicWs, importLegacy } from '../lib/auth-shared.mjs';
+import {
+  signup, login, publicWs, importLegacy,
+  requestPasswordReset, performPasswordReset
+} from '../lib/auth-shared.mjs';
 import { legacyBlobs } from '../lib/saas.mjs';
+import { rateLimit, ipOf, originOf, readJsonCapped, tooMany, tooLarge, badJson, secure } from '../lib/guard.mjs';
 
 const legacyStore = () => legacyBlobs();
+
+/* Rate limits (per IP, fixed window):
+   login 10/min · signup 5/min · forgot 3/10min · reset 10/10min · claim 10/min */
+const RL = {
+  login: [10, 60_000],
+  signup: [5, 60_000],
+  forgot: [3, 600_000],
+  reset: [10, 600_000],
+  claim: [10, 60_000]
+};
+function limited(req, kind) {
+  const [limit, win] = RL[kind];
+  const r = rateLimit(`${kind}:${ipOf(req)}`, limit, win);
+  return r.ok ? null : tooMany(r.retryAfter);
+}
 
 async function me(req, st) {
   const s = await sessionOf(st, bearerOf(req));
@@ -59,16 +78,46 @@ async function claim(req, st) {
   return j(200, { ok: true, workspace: publicWs(ws), imported });
 }
 
+async function forgot(req, st) {
+  const lim = limited(req, 'forgot');
+  if (lim) return lim;
+  const { data, tooLarge: big, bad } = await readJsonCapped(req, 10_000);
+  if (big) return tooLarge(10_000);
+  if (bad) return badJson();
+  const email = String(data?.email || '').trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return j(400, { ok: false, error: 'bad-email' });
+  const out = await requestPasswordReset(st, email, originOf(req));
+  // Never reveal whether the account exists.
+  const resp = { ok: true, message: 'If the account exists, a reset link has been sent' };
+  if (out.sent && out.delivery === 'return') resp.resetLink = out.link; // self-host/dev mode only
+  if (out.sent && out.delivery === 'email') resp.delivered = 'email';
+  return j(200, resp);
+}
+
+async function reset(req, st) {
+  const lim = limited(req, 'reset');
+  if (lim) return lim;
+  const { data, tooLarge: big, bad } = await readJsonCapped(req, 10_000);
+  if (big) return tooLarge(10_000);
+  if (bad) return badJson();
+  const token = String(data?.token || '').trim();
+  const out = await performPasswordReset(st, token, data?.password);
+  if (!out.ok) return j(400, { ok: false, error: out.error || 'bad-token' });
+  return j(200, { ok: true, message: 'Password updated — sign in with your new password' });
+}
+
 export default async (req) => {
   const st = store();
   const segs = new URL(req.url).pathname.split('/').filter(Boolean);
   const action = (segs[2] || '').toLowerCase();
   try {
-    if (req.method === 'POST' && action === 'signup') return await signup(req, st);
-    if (req.method === 'POST' && action === 'login') return await login(req, st);
-    if (req.method === 'POST' && action === 'logout') return await logout(req, st);
-    if (req.method === 'GET' && action === 'me') return await me(req, st);
-    if (req.method === 'POST' && action === 'claim') return await claim(req, st);
+    if (req.method === 'POST' && action === 'signup') { const lim = limited(req, 'signup'); return secure(lim || await signup(req, st)); }
+    if (req.method === 'POST' && action === 'login') { const lim = limited(req, 'login'); return secure(lim || await login(req, st)); }
+    if (req.method === 'POST' && action === 'logout') return secure(await logout(req, st));
+    if (req.method === 'GET' && action === 'me') return secure(await me(req, st));
+    if (req.method === 'POST' && action === 'claim') { const lim = limited(req, 'claim'); return secure(lim || await claim(req, st)); }
+    if (req.method === 'POST' && action === 'forgot') return secure(await forgot(req, st));
+    if (req.method === 'POST' && action === 'reset') return secure(await reset(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     return j(500, { ok: false, error: 'server-error' });

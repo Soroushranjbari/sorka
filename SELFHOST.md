@@ -150,3 +150,23 @@ guide is additive — the Netlify path keeps working.
   (e.g. Cloudflare Workers free plan).
 - `server.mjs` guards against path traversal and mirrors the cache headers
   from `netlify.toml`.
+
+## Built-in hardening (Phase 3)
+
+| Protection | Where | Detail |
+|---|---|---|
+| Rate limiting | `netlify/lib/guard.mjs` | login 10/min · signup 5/min · forgot 3/10min · reset 10/10min · billing POSTs 20/min — per IP, fixed window, `429 + Retry-After` |
+| Body size caps | all POST/PUT handlers | auth 10 KB · billing 64 KB · workspace data 5 MB (`DATA_MAX_BYTES`) — `413` over the cap |
+| Security headers | handlers + `netlify.toml` + `server.mjs` | `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `HSTS`, CSP on HTML |
+| Password reset | `/api/auth/forgot` + `/api/auth/reset` | 1-hour single-use token; **revokes all sessions** of the coach on success |
+
+### Password reset delivery
+
+| Env | Behavior |
+|---|---|
+| `RESEND_API_KEY=re_…` | real email via Resend (zero-dependency HTTP API) |
+| `RESET_DELIVERY=return` | link returned in the API response — **self-host/dev only** |
+| neither | link printed to the server console |
+
+The reset UI is built in: “Forgot password?” opens a dialog, and opening the
+app with `#reset=<token>` shows the new-password form.

@@ -441,6 +441,7 @@ const FA={
 'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
 '"Coach OS replaced four different tools for me. Everything about my clients finally lives in one place."':'«Coach OS چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
 'Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Sign in to Coach OS':'ورود به Coach OS','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
 "Here's what's happening with your clients today.":'خلاصه‌ی امروز شاگردانت این‌جاست.','Wed, Jul 8 2026':'چهارشنبه، ۱۷ تیر ۱۴۰۵',
 'Total Clients':'کل شاگردان','Active Clients':'شاگردان فعال','Sessions Today':'جلسات امروز','Upcoming Sessions':'جلسات پیش‌رو','This week':'این هفته',
@@ -1054,6 +1055,40 @@ async function authLogout(){
   try{if(AUTH.token)await authApi('/api/auth/logout',{method:'POST'})}catch(e){}
   authSet('');AUTH.coach=null;AUTH.ws=null;AUTH.access=null;
 }
+function forgotModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Forgot password?')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" id="fp-email" type="email" placeholder="coach@studio.com"></div>
+    <div class="muted" style="font-size:12px">${t('We will send a reset link to this address if it exists')}</div>
+    <div id="fp-out"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="forgot-send">${ic('check',15)} ${t('Send reset link')}</button></div>`);
+}
+async function authForgotSend(){
+  const email=($('fp-email')?.value||'').trim();
+  if(!email){toast(t('Enter email and password'));return}
+  const out=$('fp-out');if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px">${t('Checking…')}</div>`;
+  try{
+    const {status,ok,d}=await authApi('/api/auth/forgot',{method:'POST',body:JSON.stringify({email})});
+    if(!ok){if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px;color:var(--red)">${t(authErrMsg(d,status))}</div>`;return}
+    let html=`<div class="muted" style="font-size:12px;margin-top:10px;color:var(--green)">${t('Reset link sent to your email')}</div>`;
+    if(d&&d.resetLink)html+=`<div class="card" style="padding:10px;margin-top:10px;background:var(--bg2)"><div class="muted" style="font-size:11px;margin-bottom:6px">${t('Self-hosted mode — reset link')}</div><div class="row" style="gap:6px"><input class="inp" readonly value="${esc(d.resetLink)}" style="font-size:11px"><button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(d.resetLink)}">${ic('copy',13)}</button></div></div>`;
+    if(out)out.innerHTML=html;
+  }catch(e){if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px">${t('Could not reach server')}</div>`}
+}
+async function authResetDo(){
+  const p1=$('rs-pass')?.value||'',p2=$('rs-pass2')?.value||'';
+  if(p1.length<8){toast(t('Password must be 8+ characters'));return}
+  if(p1!==p2){toast(t('Confirm'));return}
+  try{
+    const {status,ok,d}=await authApi('/api/auth/reset',{method:'POST',body:JSON.stringify({token:S.resetToken,password:p1})});
+    if(!ok){toast(t(d&&d.error==='bad-token'?'Invalid or expired reset link':authErrMsg(d,status)));return}
+    S.resetToken=null;S.authMode='login';
+    try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+    render();toast(t('Password updated — sign in with your new password'));
+  }catch(e){toast(t('Could not reach server'))}
+}
 async function authMe(){
   if(!AUTH.token)return false;
   try{
@@ -1417,12 +1452,19 @@ function coachLogin(){return `
     <h1 style="font-size:24px;margin-top:10px">${S.authMode==='signup'?t('Create coach account'):t('Coach sign in')}</h1>
     <p class="muted" style="font-size:12px;margin:4px 0 20px">${S.authMode==='signup'?t('14-day free trial · no card required'):t('Welcome back to your workspace')}</p>
     ${S.authMode==='signup'?`<label class="lbl">${t('Full name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:14px">`:''}
-    <label class="lbl">${t('Email')}</label><input class="inp" id="${S.authMode==='signup'?'su-email':'li-email'}" type="email" autocomplete="email" placeholder="coach@studio.com" style="margin-bottom:14px">
-    <label class="lbl">${t('Password')}</label><input class="inp" id="${S.authMode==='signup'?'su-pass':'li-pass'}" type="password" autocomplete="${S.authMode==='signup'?'new-password':'current-password'}" placeholder="${S.authMode==='signup'?t('8+ characters'):'••••••••'}" style="margin-bottom:12px">
-    ${S.authMode==='signup'
-      ?`<button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
+    ${S.resetToken?`
+    <div class="card" style="padding:12px 14px;margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft)"><b style="font-size:13px">${t('Set a new password')}</b></div>
+    <label class="lbl">${t('New Password')}</label><input class="inp" id="rs-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:14px">
+    <label class="lbl">${t('Confirm')}</label><input class="inp" id="rs-pass2" type="password" autocomplete="new-password" style="margin-bottom:12px">
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="reset-do">${t('Update Password')} ${ic('arrowR',15)}</button>`
+    :S.authMode==='signup'
+      ?`<label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" style="margin-bottom:14px">
+    <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
         <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>`
-      :`<div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="toast" data-msg="Reset link sent to your email">${t('Forgot password?')}</a></div>
+      :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" style="margin-bottom:14px">
+    <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
+    <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${t('Sign In')} ${ic('arrowR',15)}</button>
         <div class="divider"><span>${t('or')}</span></div>
         <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
@@ -3488,6 +3530,9 @@ document.addEventListener('click',e=>{
     case 'auth-goto-signup':S.role=null;S.loginRole='coach';S.authMode='signup';S.view='login';render();break;
     case 'signup':authSignup();break;
     case 'login':authLogin();break;
+    case 'forgot':forgotModal();break;
+    case 'forgot-send':authForgotSend();break;
+    case 'reset-do':authResetDo();break;
     case 'bill-redeem':billRedeem();break;
     case 'bill-request':billRequest(el.dataset.p);break;
     case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
@@ -3959,7 +4004,8 @@ document.addEventListener('keydown',e=>{
 });
 let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
-(()=>{const m=location.hash.match(/join=([A-Za-z0-9]{4,12})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}})();
+(()=>{const m=location.hash.match(/join=([A-Za-z0-9]{4,12})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
+const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}})();
 loadPrefs();
 applyLang();
 applyAccent(PREFS.accent);

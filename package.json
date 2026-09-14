@@ -11,7 +11,7 @@
     "migrate:dry": "node ./scripts/migrate-blobs-to-supabase.mjs --dry-run",
     "migrate": "node ./scripts/migrate-blobs-to-supabase.mjs",
     "admin:create": "node ./scripts/create-admin.mjs",
-    "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs"
+    "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs && node ./scripts/test-guard.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^8.0.0"

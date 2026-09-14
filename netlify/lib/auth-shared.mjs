@@ -6,7 +6,10 @@ import {
   accessOf, ownerOf,
   EMAIL_RE, TRIAL_DAYS
 } from './saas.mjs';
+import { randomBytes } from 'node:crypto';
 import { adminEmails } from './billing.mjs';
+
+export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 export const publicCoach = (a) =>
   a ? { id: a.id, email: a.email, name: a.name, plan: a.plan || 'trial', role: a.role || 'coach' } : null;
@@ -21,7 +24,84 @@ export async function issueSession(st, acct) {
     coachId: acct.id, email: acct.email,
     createdAt: now, expiresAt: now + 1000 * 60 * 60 * 24 * 30
   });
+  // Per-coach session index so a password reset can revoke every session.
+  try {
+    const idx = (await st.get(`sess-idx:${acct.id}`, { type: 'json' })) || [];
+    if (!idx.includes(token)) idx.push(token);
+    await st.setJSON(`sess-idx:${acct.id}`, idx.slice(-50));
+  } catch {}
   return token;
+}
+
+/** Revoke every active session of a coach (used after a password reset). */
+export async function killSessions(st, coachId) {
+  try {
+    const idx = (await st.get(`sess-idx:${coachId}`, { type: 'json' })) || [];
+    for (const t of idx) { try { await st.delete(`sess:${t}`); } catch {} }
+    await st.delete(`sess-idx:${coachId}`);
+  } catch {}
+}
+
+/* ---------- Password reset ---------- */
+
+/** Delivery: RESEND_API_KEY -> real email; RESET_DELIVERY=return -> link in
+ *  the API response (self-host/dev only); otherwise -> server console log. */
+async function deliverResetLink(email, link) {
+  const key = process.env.RESEND_API_KEY;
+  if (key) {
+    const from = process.env.RESET_FROM || 'Coach OS <onboarding@resend.dev>';
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        from, to: [email],
+        subject: 'Coach OS — password reset',
+        html: `<p>Click the link below to choose a new password (valid for 1 hour):</p>
+               <p><a href="${link}">${link}</a></p>
+               <p>If you did not request this, ignore this email.</p>`
+      })
+    });
+    if (!r.ok) throw new Error(`resend ${r.status}`);
+    return 'email';
+  }
+  if ((process.env.RESET_DELIVERY || '').toLowerCase() === 'return') return 'return';
+  console.log(`[coach-os] password reset link for ${email}: ${link}`);
+  return 'log';
+}
+
+/** Create a reset token for the email (if the account exists).
+ *  @returns {sent:boolean, delivery?:string, link?:string} */
+export async function requestPasswordReset(st, email, origin) {
+  const acct = await st.get(`acct:${email}`, { type: 'json' });
+  if (!acct) return { sent: false };
+  const token = 'rs_' + randomBytes(24).toString('hex');
+  await st.setJSON(`reset:${token}`, {
+    coachId: acct.id, email,
+    expiresAt: Date.now() + RESET_TTL_MS
+  });
+  const link = `${origin}/#reset=${token}`;
+  const delivery = await deliverResetLink(email, link);
+  return { sent: true, delivery, link: delivery === 'return' ? link : undefined };
+}
+
+/** Consume a reset token and set the new password. Revokes all sessions.
+ *  @returns {ok:boolean, error?:string} */
+export async function performPasswordReset(st, token, password) {
+  const rec = await st.get(`reset:${token}`, { type: 'json' });
+  if (!rec || !rec.coachId) return { ok: false, error: 'bad-token' };
+  if (rec.expiresAt && Date.now() > rec.expiresAt) {
+    try { await st.delete(`reset:${token}`); } catch {}
+    return { ok: false, error: 'bad-token' };
+  }
+  if (String(password || '').length < 8) return { ok: false, error: 'weak-password' };
+  const acct = await st.get(`acct:${rec.email}`, { type: 'json' });
+  if (!acct || acct.id !== rec.coachId) return { ok: false, error: 'bad-token' };
+  acct.pass = hashPassword(password);
+  acct.pwChangedAt = Date.now();
+  await st.setJSON(`acct:${acct.email}`, acct);
+  try { await st.delete(`reset:${token}`); } catch {}
+  await killSessions(st, acct.id);
+  return { ok: true };
 }
 
 /** Ensure the coach owns a workspace; create one on first signup. */
