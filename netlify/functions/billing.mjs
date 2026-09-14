@@ -4,10 +4,12 @@
 //   POST /api/billing/request (Bearer, {planId}) -> {ok, payment:{id,planId,amount,...}} (manual flow)
 //   POST /api/billing/coupon  (Bearer admin, {code,planId,durationDays,maxUses,expiresInDays}) -> {ok, coupon}
 //   GET  /api/billing/admin-overview (Bearer admin) -> {ok, coaches:[...]}  (ADMIN_EMAILS)
+//   POST /api/billing/admin-grant    (Bearer admin, {email|id, planId, days}) -> grant/extend sub
+//   POST /api/billing/admin-suspend  (Bearer admin, {email|id, suspended})    -> freeze/restore access
+//   POST /api/billing/issue-coupon   (x-api-key: ADMIN_API_KEY, shop server-to-server) -> {coupons:[...]}
 import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf } from '../lib/saas.mjs';
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
-
 /* Billing bodies are tiny (codes/plan ids) — 64 KB is generous. */
 const BILL_MAX_BYTES = 64_000;
 async function readSmall(req) {
@@ -155,10 +157,123 @@ async function adminOverview(req, st) {
       const ptr = await st.get(`acct-by-id:${id}`, { type: 'json' });
       if (!ptr) continue;
       const a = await st.get(`acct:${String(ptr.email).toLowerCase()}`, { type: 'json' });
-      if (a) coaches.push({ id: a.id, email: a.email, name: a.name, plan: a.plan, role: a.role || 'coach', access: accessOf(a), createdAt: a.createdAt });
+      if (!a) continue;
+      // Seats used in the coach's workspace (for the admin table).
+      let seats = null;
+      try {
+        if (a.workspaceId) {
+          const m = await st.get(`ws-meta:${a.workspaceId}`, { type: 'json' });
+          if (m && m.data) seats = countSeats(m.data);
+        }
+      } catch {}
+      const access = accessOf(a);
+      const endsAt = a.sub_ends_at || a.trialEndsAt || null;
+      coaches.push({
+        id: a.id, email: a.email, name: a.name, plan: a.plan,
+        role: a.role || 'coach', access,
+        suspended: a.sub_status === 'suspended',
+        subEndsAt: endsAt,
+        daysLeft: endsAt ? Math.max(0, Math.ceil((endsAt - Date.now()) / 86400000)) : null,
+        seats, maxSeats: planOf(a).maxClients,
+        createdAt: a.createdAt
+      });
     } catch {}
   }
   return j(200, { ok: true, count: coaches.length, coaches });
+}
+
+/** Resolve a coach account by email or id (admin helpers). */
+async function coachByRef(st, ref) {
+  const email = String(ref?.email || '').trim().toLowerCase();
+  if (email) return st.get(`acct:${email}`, { type: 'json' });
+  if (ref?.id) {
+    const ptr = await st.get(`acct-by-id:${String(ref.id)}`, { type: 'json' });
+    if (ptr && ptr.email) return st.get(`acct:${String(ptr.email).toLowerCase()}`, { type: 'json' });
+  }
+  return null;
+}
+
+/** POST /api/billing/admin-grant {email|id, planId, days} — grant/extend a
+ *  subscription. Days stack on top of any remaining time (renewal semantics). */
+async function adminGrant(req, st) {
+  const s = await sessionOf(st, bearerOf(req));
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const admin = await accountById(st, s.coachId);
+  if (!admin || admin.role !== 'admin') return j(403, { ok: false, error: 'forbidden' });
+  const { data: body, err } = await readSmall(req);
+  if (err) return err;
+  const target = await coachByRef(st, body || {});
+  if (!target) return j(404, { ok: false, error: 'coach-not-found' });
+  const planId = String(body?.planId || '');
+  if (!PLANS[planId] || planId === 'trial') return j(400, { ok: false, error: 'bad-plan' });
+  const days = Math.max(1, Math.min(3650, Number(body?.days) || 30));
+  grantSub(target, { planId, days, provider: 'admin', tracking: `by:${admin.email}` });
+  target.sub_status = 'active'; // a grant always re-activates
+  await st.setJSON(`acct:${target.email}`, target);
+  return j(200, {
+    ok: true, coach: { email: target.email, plan: target.plan },
+    subEndsAt: target.sub_ends_at,
+    daysLeft: Math.max(0, Math.ceil((target.sub_ends_at - Date.now()) / 86400000))
+  });
+}
+
+/** POST /api/billing/admin-suspend {email|id, suspended:bool} — freeze or
+ *  restore a coach's write access (data stays intact, read-only while frozen). */
+async function adminSuspend(req, st) {
+  const s = await sessionOf(st, bearerOf(req));
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const admin = await accountById(st, s.coachId);
+  if (!admin || admin.role !== 'admin') return j(403, { ok: false, error: 'forbidden' });
+  const { data: body, err } = await readSmall(req);
+  if (err) return err;
+  const target = await coachByRef(st, body || {});
+  if (!target) return j(404, { ok: false, error: 'coach-not-found' });
+  if (target.role === 'admin') return j(400, { ok: false, error: 'cannot-suspend-admin' });
+  const suspended = !!body?.suspended;
+  target.sub_status = suspended ? 'suspended' : (target.sub && target.sub.status === 'active' ? 'active' : target.sub_status === 'active' ? 'active' : target.sub_status);
+  if (!suspended && target.sub_status !== 'active') {
+    // Un-suspending without an active sub falls back to trial/expiry logic.
+    delete target.sub_status;
+  }
+  await st.setJSON(`acct:${target.email}`, target);
+  return j(200, { ok: true, coach: { email: target.email }, suspended, access: accessOf(target) });
+}
+
+/** POST /api/billing/issue-coupon — server-to-server coupon creation for the
+ *  external shop site. Auth: `x-api-key: ADMIN_API_KEY` (NOT a user session).
+ *  Body: {code?, planId, durationDays?, maxUses?, expiresInDays?, count?}
+ *  Returns the coupon code(s) so the shop can deliver them after payment. */
+async function issueCoupon(req, st) {
+  const key = String(req.headers.get('x-api-key') || '');
+  const expected = String(process.env.ADMIN_API_KEY || '');
+  if (!expected || key.length < 16 || key !== expected) return j(403, { ok: false, error: 'forbidden' });
+  const { data: body, err } = await readSmall(req);
+  if (err) return err;
+  const planId = String(body?.planId || '');
+  if (!PLANS[planId] || planId === 'trial') return j(400, { ok: false, error: 'bad-plan' });
+  const durationDays = Math.max(1, Math.min(3650, Number(body?.durationDays) || 30));
+  const maxUses = Math.max(1, Math.min(1000, Number(body?.maxUses) || 1));
+  const expiresInDays = Number(body?.expiresInDays) || 0;
+  const count = Math.max(1, Math.min(50, Number(body?.count) || 1));
+  const C = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const gen = () => {
+    let c = ''; for (let i = 0; i < 10; i++) c += C[Math.floor(Math.random() * C.length)];
+    return `${planId.slice(0, 3).toUpperCase()}-${c}`;
+  };
+  const out = [];
+  for (let i = 0; i < count; i++) {
+    const code = normCoupon(body?.code && i === 0 ? body.code : gen());
+    if (code.length < 4 || !/^[A-Z0-9-]{4,32}$/.test(code)) return j(400, { ok: false, error: 'bad-code' });
+    if (await st.get(`coupon:${code}`, { type: 'json' })) return j(409, { ok: false, error: 'code-exists', code });
+    await st.setJSON(`coupon:${code}`, {
+      code, planId, durationDays, maxUses, usedCount: 0, isActive: true,
+      expiresAt: expiresInDays > 0 ? Date.now() + expiresInDays * 86400000 : null,
+      createdAt: Date.now(), issuedBy: 'shop-api'
+    });
+    await pushIdx(st, 'index:coupons', code);
+    out.push(code);
+  }
+  return j(200, { ok: true, coupons: out, planId, durationDays, maxUses });
 }
 
 export default async (req) => {
@@ -176,6 +291,9 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'coupon') return secure(await createCoupon(req, st));
     if (req.method === 'POST' && action === 'request') return secure(await requestPay(req, st));
     if (req.method === 'GET' && action === 'admin-overview') return secure(await adminOverview(req, st));
+    if (req.method === 'POST' && action === 'admin-grant') return secure(await adminGrant(req, st));
+    if (req.method === 'POST' && action === 'admin-suspend') return secure(await adminSuspend(req, st));
+    if (req.method === 'POST' && action === 'issue-coupon') return secure(await issueCoupon(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     return j(500, { ok: false, error: 'server-error' });

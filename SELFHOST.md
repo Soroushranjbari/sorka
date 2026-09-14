@@ -170,3 +170,54 @@ guide is additive — the Netlify path keeps working.
 
 The reset UI is built in: “Forgot password?” opens a dialog, and opening the
 app with `#reset=<token>` shows the new-password form.
+
+## Admin controls & the external shop site
+
+### What the platform admin can do (Settings → Admin)
+
+| Action | Endpoint | Effect |
+|---|---|---|
+| See all coaches | `GET /api/billing/admin-overview` | plan, **days remaining** (with color bar), seats used/max, status |
+| Grant / extend a subscription | `POST /api/billing/admin-grant` `{email, planId, days}` | days **stack** on remaining time; also un-suspends |
+| Suspend / restore access | `POST /api/billing/admin-suspend` `{email, suspended}` | suspended coach becomes read-only (data intact, `402` on writes) |
+| Create a coupon manually | `POST /api/billing/coupon` (admin session) | code, plan, duration, max uses |
+
+Admins are the emails in `ADMIN_EMAILS` (auto-promoted on login).
+
+### Connecting the separate marketing/shop site
+
+Recommended flow — **coupons** (no shared database, works before the buyer
+even registers):
+
+```
+Shop site                          Coach OS
+─────────                          ────────
+1. customer pays (ZarinPal/…)
+2. POST /api/billing/issue-coupon
+   header: x-api-key: ADMIN_API_KEY
+   body: {planId, durationDays, maxUses, count}
+                                →  returns {coupons:["PRO-XXXXXXXXXX", …]}
+3. show / email the code to the customer
+4. customer signs up in Coach OS,
+   enters the code in Settings → Account → Coupon
+                                →  POST /api/billing/redeem activates the plan
+```
+
+Example (from the shop backend):
+
+```bash
+curl -X POST https://app.coachos.example/api/billing/issue-coupon \
+  -H "x-api-key: $ADMIN_API_KEY" -H "content-type: application/json" \
+  -d '{"planId":"professional","durationDays":30,"maxUses":1,"count":1}'
+```
+
+- Generate the key: `node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"`
+- Set it as `ADMIN_API_KEY` on the Coach OS deployment; share it only with
+  the shop backend (never the browser).
+- Leave `ADMIN_API_KEY` empty to disable the shop endpoint entirely.
+- Rate limited (20 POSTs/min/IP) like every billing route; codes are
+  prefixed with the plan (`PRO-…`, `BAS-…`, `CLU-…`) for easy triage.
+
+Alternative (direct grant): if the buyer already has a Coach OS account and
+the shop knows their email, the shop backend can call `admin-grant` with an
+admin session instead — but the coupon flow avoids sharing credentials.
