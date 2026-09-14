@@ -534,6 +534,8 @@ const FA={
 'Data storage':'ذخیره داده‌ها','On this device (auto-save)':'روی همین دستگاه (ذخیره خودکار)','Reset demo data':'بازنشانی داده‌های دمو','Are you sure? Click again':'مطمئنی؟ دوباره کلیک کن','Feedback':'بازخورد',
 'Invite Client (Code)':'دعوت شاگرد (کد)','Invite':'دعوت','Invite code':'کد دعوت','Invite link':'لینک دعوت','Join with invite code':'اتصال با کد دعوت','Connect':'اتصال','Client name (optional)':'نام شاگرد (اختیاری)','New Client':'شاگرد جدید','Regenerate':'تولید مجدد','Create invite':'ایجاد دعوت','Invite created — share the code':'دعوت ساخته شد — کد را بفرست','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','joined via invite code':'با کد دعوت وصل شد','Copy':'کپی','Copied ✓':'کپی شد ✓','Waiting to join':'در انتظار اتصال','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
 'List':'لیست','No events this day':'این روز رویدادی نیست','Session updated ✓':'جلسه به‌روزرسانی شد ✓','Event deleted':'رویداد حذف شد','Duplicated ✓':'تکثیر شد ✓','Delete':'حذف','Edit Session':'ویرایش جلسه','Calendar exported (.ics)':'تقویم خروجی گرفته شد (.ics)','Sessions This Week':'جلسات این هفته','Total Hours':'مجموع ساعت‌ها','Busiest Day':'شلوغ‌ترین روز','⚠️ This client already has an event at this time':'⚠️ این شاگرد در این ساعت رویداد دیگری دارد','⚠️ You already have another event at this time':'⚠️ خودت در این ساعت رویداد دیگری داری','✓ No conflicts':'✓ تداخلی نیست','Export (.ics)':'خروجی (.ics)','All Clients':'همه شاگردان',
+'Working Hours':'ساعات کاری','Work starts':'شروع کار','Work ends':'پایان کار','Set the hours you coach — the calendar grid and session time pickers use this range':'ساعات کاری‌ات را تعیین کن — شبکه تقویم و ساعت‌های انتخاب جلسه از این بازه استفاده می‌کنند','Sessions outside this range are still shown — the grid stretches to fit them.':'جلسات بیرون از این بازه هم نمایش داده می‌شوند — شبکه تقویم خودش را بزرگ می‌کند تا جا شوند.','Quick presets':'پیش‌فرض‌های سریع','Current range':'بازه فعلی','Calendar shows sessions from {a} to {b}':'تقویم جلسات را از {a} تا {b} نشان می‌دهد','h / day':'ساعت / روز','Working hours updated':'ساعات کاری به‌روزرسانی شد',
+'Calendar Type':'نوع تقویم','Auto (follow language)':'خودکار (هماهنگ با زبان)','Gregorian (Miladi)':'میلادی','Jalali (Shamsi)':'شمسی (جلالی)','Calendar type updated':'نوع تقویم به‌روزرسانی شد',
 'Hours This Week':'ساعت‌های این هفته','All clients on track ✓':'همه شاگردها سر جایشان هستند ✓','Workout awaiting client':'تمرین در انتظار شاگرد','No nutrition plan':'بدون برنامه تغذیه','Check-in with a note':'با یک یادداشت پیگیری کن','Re-engage with a message':'با یک پیام دوباره درگیرش کن',
 'Attendance':'حضور و غیبت','Attended':'حاضر','Missed':'غایب','Not marked':'ثبت نشده','Attendance Rate':'نرخ حضور','Marked attended ✓':'حضور ثبت شد ✓','Marked missed — client flagged':'غیبت ثبت شد — شاگرد علامت خورد','Attendance cleared':'ثبت حضور پاک شد','Delete client':'حذف شاگرد','Client deleted':'شاگرد حذف شد','At least one client required':'حداقل یک شاگرد لازم است','Attendance history':'تاریخچه حضور و غیبت',
 'You were invited with code':'با این کد دعوت شدی','Current Program':'برنامه فعلی','Measurement':'اندازه‌گیری','Sets × Reps × Weight':'ست × تکرار × وزن','New message':'پیام جدید','You':'شما','Create Plan':'ساخت برنامه','Add Phase':'افزودن فاز','Create Meal Template':'ساخت قالب وعده','Use':'استفاده','Apply to client':'اعمال روی شاگرد','then customize':'و سپس سفارشی کن','View':'مشاهده','Phase name':'نام فاز','Weeks':'هفته‌ها','120 min':'۱۲۰ دقیقه','sent you a message':'برایت پیام فرستاد','New Template':'قالب جدید','Please check my form on this set':'لطفاً فرم این ست را بررسی کن','12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.':'۱۲ سال تجربه در برنامه‌نویسی هایپرتروفی و قدرت برای ورزشکاران حرفه‌ای و علاقه‌مند.','No clients yet':'هنوز شاگردی نیست','Workspace sync code':'کد همگام‌سازی فضای کاری','Clients join with this code — data syncs live across devices':'شاگرد با همین کد وصل می‌شود — داده‌ها زنده بین دستگاه‌ها همگام می‌شوند','Live sync active — data is shared across devices':'همگام‌سازی زنده فعال است — داده‌ها بین دستگاه‌ها مشترک‌اند',
@@ -557,7 +559,8 @@ const defPrefs=()=>({units:'Metric',accent:0,theme:'Light',resp:'~4 h',
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
   wk:{rpe:true,adv:true,dup:true,rest:'120'},
   priv:{own:true,photos:true,others:false,consent:true},
-  sec:{tfa:true}});
+  sec:{tfa:true},
+  cal:{start:7,end:21,type:'auto'}});
 let PREFS=defPrefs();
 function loadPrefs(){
   try{
@@ -566,10 +569,25 @@ function loadPrefs(){
       notifs:{...defPrefs().notifs,...(d.notifs||{})},
       wk:{...defPrefs().wk,...(d.wk||{})},
       priv:{...defPrefs().priv,...(d.priv||{})},
-      sec:{...defPrefs().sec,...(d.sec||{})}};
+      sec:{...defPrefs().sec,...(d.sec||{})},
+      cal:{...defPrefs().cal,...(d.cal||{})}};
   }catch(e){}
 }
 function savePrefs(){try{localStorage.setItem(PREFS_KEY,JSON.stringify(PREFS))}catch(e){}}
+/* Coach-configurable calendar working hours (e.g. 08:00 → 24:00).
+   Sanitizes stored values: start 0–23.5, end start+1…24, always on the half hour. */
+function calHours(){
+  const q=v=>{const n=Math.round((+v)*2)/2;return Number.isFinite(n)?n:null};
+  let s=q(PREFS.cal&&PREFS.cal.start);if(s==null)s=7;
+  let e=q(PREFS.cal&&PREFS.cal.end);if(e==null)e=21;
+  s=Math.max(0,Math.min(23.5,s));
+  e=Math.max(s+1,Math.min(24,e));
+  return {start:s,end:e};
+}
+/* <option> list of half-hour times; end=24 renders as 24:00 (midnight) */
+const hourOpts=(sel,min,max)=>Array.from({length:Math.round((max-min)*2)},(_,i)=>{
+  const v=Math.round((min+i*0.5)*2)/2,l=v===24?'24:00':fmtT(v);
+  return `<option value="${v}" ${+sel===v?'selected':''}>${nf(l)}</option>`}).join('');
 const setP=(o,k,v)=>{const p=k.split('.');let c=o;for(let i=0;i<p.length-1;i++)c=c[p[i]];c[p[p.length-1]]=v};
 const getP=(o,k)=>k.split('.').reduce((a,x)=>a&&a[x],o);
 /* units — storage stays metric; display converts */
@@ -697,12 +715,100 @@ const TODAY=2;
 const NOW=10.5;
 const WDN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const dayDate=(i,off=S.weekOff)=>new Date(2026,6,6+off*7+i);
-const fmtNum=d=>lang==='fa'?d.toLocaleDateString('fa-IR',{day:'numeric'}):String(d.getDate());
+/* ================= JALALI (SHAMSI) CALENDAR =================
+   Standard 33-year cycle algorithm (jalaali-js, MIT) — accurate 1178–1633 AP. */
+const JMONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const JMONTHS_EN=['Farvardin','Ordibehesht','Khordad','Tir','Mordad','Shahrivar','Mehr','Aban','Azar','Dey','Bahman','Esfand'];
+const jDiv=(a,b)=>~~(a/b),jMod=(a,b)=>a-jDiv(a,b)*b;
+function jalCal(jy){
+  const breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+  let leapJ=-14,jp=breaks[0],jump=0,n;
+  for(let i=1;i<breaks.length;i++){const jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ+=jDiv(jump,33)*8+jDiv(jMod(jump,33),4);jp=jm}
+  n=jy-jp;
+  leapJ+=jDiv(n,33)*8+jDiv(jMod(n,33)+3,4);
+  if(jMod(jump,33)===4&&jump-n===4)leapJ++;
+  const gy=jy+621,leapG=jDiv(gy,4)-jDiv((jDiv(gy,100)+1)*3,4)-150;
+  if(jump-n<6)n=n-jump+jDiv(jump+4,33)*33;
+  let leap=jMod(jMod(n+1,33)-1,4);if(leap===-1)leap=4;
+  return{leap,gy,march:20+leapJ-leapG};
+}
+function g2d(gy,gm,gd){
+  let d=jDiv((gy+jDiv(gm-8,6)+100100)*1461,4)+jDiv(153*jMod(gm+9,12)+2,5)+gd-34840408;
+  return d-jDiv(jDiv(gy+100100+jDiv(gm-8,6),100)*3,4)+752;
+}
+function d2g(jdn){
+  let j=4*jdn+139361631;
+  j=j+jDiv(jDiv(4*jdn+183187720,146097)*3,4)*4-3908;
+  const i=jDiv(jMod(j,1461),4)*5+308;
+  const gd=jDiv(jMod(i,153),5)+1,gm=jMod(jDiv(i,153),12)+1;
+  return{gy:jDiv(j,1461)-100100+jDiv(8-gm,6),gm,gd};
+}
+function j2d(jy,jm,jd){const r=jalCal(jy);return g2d(r.gy,3,r.march)+(jm-1)*31-jDiv(jm,7)*(jm-7)+jd-1}
+const toJalaali=(gy,gm,gd)=>{
+  const jdn=g2d(gy,gm,gd),g=d2g(jdn);
+  let jy=g.gy-621;const r=jalCal(jy);let k=jdn-g2d(g.gy,3,r.march);
+  let jm,jd;
+  if(k>=0){if(k<=185){jm=1+jDiv(k,31);jd=jMod(k,31)+1;return{jy,jm,jd}}k-=186}
+  else{jy--;k+=179;if(r.leap===1)k++}
+  jm=7+jDiv(k,30);jd=jMod(k,30)+1;return{jy,jm,jd};
+};
+const toGregorian=(jy,jm,jd)=>d2g(j2d(jy,jm,jd));
+const jIsLeap=jy=>jalCal(jy).leap===0;
+const jMonthLen=(jy,jm)=>jm<=6?31:jm<=11?30:(jIsLeap(jy)?30:29);
+/* Calendar type pref: 'auto' follows UI language (fa → Jalali), or forced 'greg'/'jal' */
+const isJal=()=>{const ty=PREFS.cal&&PREFS.cal.type;return ty==='jal'||((!ty||ty==='auto')&&lang==='fa')};
+const jOf=d=>toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());
+const jMonthName=jm=>lang==='fa'?JMONTHS_FA[jm-1]:JMONTHS_EN[jm-1];
+const fmtNum=d=>nf(String(isJal()?jOf(d).jd:d.getDate()));
 const dayLbl=i=>`${t(WDN[i])} ${fmtNum(dayDate(i))}`;
+/* Locale for Intl date formatting. fa-IR defaults to the Persian calendar,
+   so an explicit Gregorian choice must force -u-ca-gregory. */
+const dLoc=()=>lang==='fa'?(isJal()?'fa-IR':'fa-IR-u-ca-gregory'):'en-US';
 function weekRange(){
   const a=dayDate(0),b=dayDate(6);
-  const f=d=>d.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'short',day:'numeric'});
+  if(isJal()){
+    const ja=jOf(a),jb=jOf(b),yr=lang==='fa'?' '+nf(jb.jy):', '+jb.jy;
+    if(ja.jm===jb.jm)return lang==='fa'
+      ?`${nf(ja.jd)} – ${nf(jb.jd)} ${jMonthName(jb.jm)}${yr}`
+      :`${jMonthName(ja.jm)} ${ja.jd} – ${jb.jd}${yr}`;
+    return lang==='fa'
+      ?`${nf(ja.jd)} ${jMonthName(ja.jm)} — ${nf(jb.jd)} ${jMonthName(jb.jm)}${yr}`
+      :`${jMonthName(ja.jm)} ${ja.jd} — ${jMonthName(jb.jm)} ${jb.jd}${yr}`;
+  }
+  const f=d=>d.toLocaleDateString(dLoc(),{month:'short',day:'numeric'});
   return `${f(a)} — ${f(b)}${lang==='fa'?'':', '+b.getFullYear()}`;
+}
+/* Full date line, e.g. «چهارشنبه، ۱۷ تیر ۱۴۰۵» / "Wednesday, Tir 17, 1405" */
+function fmtFullDate(d){
+  if(isJal()){
+    const j=jOf(d),wd=d.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{weekday:'long'});
+    return lang==='fa'?`${wd}، ${nf(j.jd)} ${jMonthName(j.jm)} ${nf(j.jy)}`:`${wd}, ${jMonthName(j.jm)} ${j.jd}, ${j.jy}`;
+  }
+  return d.toLocaleDateString(dLoc(),{weekday:'long',month:'long',day:'numeric'});
+}
+/* Short date for tables/charts, e.g. «۱۷ تیر ۱۴۰۵» / "Tir 17, 1405" */
+function fmtShortDate(d){
+  if(isJal()){const j=jOf(d);return lang==='fa'?`${nf(j.jd)} ${jMonthName(j.jm)} ${nf(j.jy)}`:`${jMonthName(j.jm)} ${j.jd}, ${j.jy}`}
+  return d.toLocaleDateString(dLoc());
+}
+/* Real month grid (35 or 42 cells) for the month containing the displayed week */
+function monthCells(){
+  const base=dayDate(0);let first,len,pm;
+  if(isJal()){
+    const j=jOf(base);len=jMonthLen(j.jy,j.jm);
+    const g=toGregorian(j.jy,j.jm,1);first=new Date(g.gy,g.gm-1,g.gd);
+    const p=j.jm===1?{y:j.jy-1,m:12}:{y:j.jy,m:j.jm-1};pm=jMonthLen(p.y,p.m);
+  }else{
+    const y=base.getFullYear(),m=base.getMonth();
+    first=new Date(y,m,1);len=new Date(y,m+1,0).getDate();pm=new Date(y,m,0).getDate();
+  }
+  const lead=(first.getDay()+6)%7,cells=[];
+  const add=(n,cur,off)=>{const d2=new Date(first);d2.setDate(first.getDate()+off);cells.push({n,cur,date:d2})};
+  for(let i=0;i<lead;i++)add(pm-lead+1+i,false,i-lead);
+  for(let d=1;d<=len;d++)add(d,true,d-1);
+  const trail=Math.ceil((lead+len)/7)*7-(lead+len);
+  for(let d=1;d<=trail;d++)add(d,false,len+d-1);
+  return cells;
 }
 function layoutDay(evs){
   const list=[...evs].sort((a,b)=>a.start-b.start);
@@ -724,7 +830,7 @@ return `<svg width="86" height="26" viewBox="0 0 86 26">${arr.map((v,i)=>{const 
 const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
 const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
 const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
-const fmtD=dstr=>pd(dstr).toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'short',day:'numeric'});
+const fmtD=dstr=>fmtShortDate(pd(dstr));
 const daysSince=dstr=>Math.round((TDATE-pd(dstr))/864e5);
 const lastM=cid=>{const ms=(DB[cid]||{}).measures||[];return ms[ms.length-1]||null};
 const prevM=cid=>{const ms=(DB[cid]||{}).measures||[];return ms[ms.length-2]||null};
@@ -1884,7 +1990,12 @@ function vCalendar(){
   const FE=EVENTS.filter(e=>(S.calfType==='All'||e.type===S.calfType)&&(S.calfClient==='All'||e.client===S.calfClient));
   const byDay=d=>FE.filter(e=>e.day===d).sort((a,b)=>a.start-b.start);
   let busiest='—',bc=0;for(let i=0;i<7;i++){const c=byDay(i).length;if(c>bc){bc=c;busiest=dayLbl(i)}}
-  const hours=Array.from({length:14},(_,i)=>7+i);
+  /* Working hours from Settings → Calendar. The grid always stretches to
+     include any session scheduled outside the configured range. */
+  const CH=calHours();let calS=CH.start,calE=CH.end;
+  FE.forEach(e=>{if(e.start<calS)calS=Math.floor(e.start);if(e.start+e.dur>calE)calE=Math.ceil(e.start+e.dur)});
+  calE=Math.max(calS+1,Math.min(24,calE));
+  const hours=Array.from({length:Math.round(calE-calS)},(_,i)=>calS+i);
   const head=`<div class="page-h"><div><h1>${t('Calendar')}</h1><div class="sub">${weekRange()}</div></div>
   <div class="row" style="flex-wrap:wrap">
     <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="-1">${ic('chevL',15)}</button>
@@ -1911,21 +2022,26 @@ function vCalendar(){
       <div>${hours.map((h,i)=>`<div class="cal-time" style="${i%2?'':'background:var(--cal-alt)'}">${nf(fmtT(h))}</div>`).join('')}</div>
       ${[0,1,2,3,4,5,6].map(i=>`<div class="cal-col" data-day="${i}" data-act="slot-new" style="background:${i===TODAY&&S.weekOff===0?'var(--accent-soft)':i>4?'var(--cal-alt)':''}">
         ${hours.map((h,ix)=>`<div style="height:48px;border-top:1px solid var(--line2)"></div>`).join('')}
-        ${layoutDay(byDay(i)).map(({ev,lane,total})=>`
-        <div class="ev ev-${ev.type}" draggable="true" data-eid="${ev.id}" data-act="ev-open" style="top:${((ev.start-7)*48+1).toFixed(0)}px;height:${(ev.dur*48-5).toFixed(0)}px;left:calc(${lane} * (100% / ${total}) + 4px);width:calc(${100/total}% - 8px)">
+        ${layoutDay(byDay(i)).map(({ev,lane,total})=>{
+          const top=Math.max(0,ev.start-calS)*48+1;
+          const vis=Math.min(calE,ev.start+ev.dur)-Math.max(calS,ev.start);
+          const h=Math.max(20,vis*48-5);
+          return `<div class="ev ev-${ev.type}" draggable="true" data-eid="${ev.id}" data-act="ev-open" style="top:${top.toFixed(0)}px;height:${h.toFixed(0)}px;left:calc(${lane} * (100% / ${total}) + 4px);width:calc(${100/total}% - 8px)">
           <b>${t(ev.label)}${ev.att==='done'?' ✓':ev.att==='miss'?' ✗':''}</b><small>${nf(fmtT(ev.start))} · ${t(ev.client)}</small>
-        </div>`).join('')}
-        ${i===TODAY&&S.weekOff===0?`<div class="nowline" style="top:168px"></div>`:''}
+        </div>`}).join('')}
+        ${i===TODAY&&S.weekOff===0&&NOW>=calS&&NOW<calE?`<div class="nowline" style="top:${((NOW-calS)*48).toFixed(0)}px"></div>`:''}
       </div>`).join('')}
     </div>`;
   }
   if(S.calV==='Month'){
+    const cells=monthCells(),wk=[0,1,2,3,4,5,6].map(i=>+dayDate(i));
+    const dotC={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
     return head+`
     <div class="mcal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="mh">${t(d)}</div>`).join('')}
-      ${[29,30,...Array.from({length:31},(_,i)=>i+1),1,2].map((d,ix)=>{const dm=ix>1&&ix<33?d:0;
-      const idx=dm?(dm>=6&&dm<=12?dm-6:(dm-1)%7):0;
-      const dots=dm?byDay(idx).slice(0,3).map(e=>e.type==='session'?'var(--accent-deep)':e.type==='assess'?'var(--blue)':e.type==='meas'?'var(--purple)':'var(--amber)'):[];
-      return `<div class="mday click ${dm===8&&S.weekOff===0?'today':''}" ${dm?`data-act="cal-day" data-day="${idx}"`:''}>${dm?nf(dm):`<span style="opacity:.3">${nf(d)}</span>`}${dots.length?`<div class="mdots">${dots.map(cl=>`<span class="mdot" style="background:${cl}"></span>`).join('')}</div>`:''}</div>`}).join('')}
+      ${cells.map(c=>{const ts=+c.date,wi=wk.indexOf(ts);
+      const dots=wi>=0?byDay(wi).slice(0,3).map(e=>dotC[e.type]):[];
+      const today=c.cur&&ts===+dayDate(TODAY)&&S.weekOff===0;
+      return `<div class="mday ${wi>=0?'click':''} ${today?'today':''}" ${wi>=0?`data-act="cal-day" data-day="${wi}"`:''}>${c.cur?nf(c.n):`<span style="opacity:.3">${nf(c.n)}</span>`}${dots.length?`<div class="mdots">${dots.map(cl=>`<span class="mdot" style="background:${cl}"></span>`).join('')}</div>`:''}</div>`}).join('')}
     </div>`;
   }
   if(S.calV==='Day'){
@@ -1935,7 +2051,7 @@ function vCalendar(){
       <div class="card-h">
         <div class="row">
           <button class="btn btn-ghost btn-icon back-ic" data-act="day-nav" data-d="-1" ${i<=0?'disabled style="opacity:.4"':''}>${ic('chevL',16)}</button>
-          <div style="text-align:center;min-width:170px"><b>${dayLbl(i)}</b><div class="muted" style="font-size:12px">${dayDate(i).toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{weekday:'long',month:'long',day:'numeric'})}</div></div>
+          <div style="text-align:center;min-width:170px"><b>${dayLbl(i)}</b><div class="muted" style="font-size:12px">${fmtFullDate(dayDate(i))}</div></div>
           <button class="btn btn-ghost btn-icon" data-act="day-nav" data-d="1" ${i>=6?'disabled style="opacity:.4"':''}>${ic('chevR',16)}</button>
         </div>
         <span class="bdg bdg-gray">${nf(list.length)} ${t('Sessions')}</span>
@@ -1974,7 +2090,10 @@ window.evConflict=function(exId){const el=$('ev-conflict');if(!el||!$('ev-day'))
   el.innerHTML=evBanner(c.msg,c.bad?'var(--red-soft)':'var(--green-soft)',c.bad?'var(--red)':'var(--green)')};
 function eventModal(id){
   const ev=EVENTS.find(x=>x.id===id);if(!ev)return;
-  const times=Array.from({length:29},(_,i)=>7+i*0.5);
+  const CH=calHours();
+  const times=Array.from({length:Math.round((CH.end-CH.start)*2)},(_,i)=>CH.start+i*0.5);
+  if(!times.some(v=>Math.abs(v-ev.start)<1e-9))times.push(Math.round(ev.start*2)/2);
+  times.sort((a,b)=>a-b);
   const cc=CLIENTS.find(c=>c.name===ev.client);
   openModal(`
   <div class="modal-h"><h3>${t('Edit Session')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
@@ -2020,7 +2139,7 @@ function vMeasureGlobal(){
 }
 /* v15.7 — every switch/select here is bound to PREFS and persisted */
 function vSettings(){
-  const tabs=[['profile','Profile'],['account','Account'],['notifications','Notifications'],['appearance','Appearance'],['workout','Workout Settings'],['units','Units'],['privacy','Privacy'],['security','Security'],...(AUTH.coach&&AUTH.coach.role==='admin'?[['admin','Admin']]:[])];
+  const tabs=[['profile','Profile'],['account','Account'],['notifications','Notifications'],['appearance','Appearance'],['calendar','Calendar'],['workout','Workout Settings'],['units','Units'],['privacy','Privacy'],['security','Security'],...(AUTH.coach&&AUTH.coach.role==='admin'?[['admin','Admin']]:[])];
   const sw=(path,on)=>`<label class="sw"><input type="checkbox" ${on?'checked':''} data-act="pref-sw" data-k="${path}"><i></i></label>`;
   const panels={
   profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px">${av(t('Coach Soroush'),56,3)}<div><b style="font-size:16px">${t('Soroush Karimi')}</b><div class="muted" style="font-size:12.5px">${t('Certified Strength & Conditioning Coach')}</div></div></div>
@@ -2058,6 +2177,27 @@ function vSettings(){
     <div class="row" style="gap:10px">
       ${ACCENTS.map((A,ix)=>`<button data-act="accent" data-ix="${ix}" style="width:38px;height:38px;border-radius:50%;background:${A.a};border:2px solid ${PREFS.accent===ix?'var(--ink)':'var(--line)'};box-shadow:inset 0 -8px 12px rgba(0,0,0,.12)"></button>`).join('')}
     </div></div>`,
+  calendar:(()=>{const CH=calHours();
+    const presets=[['07:00 – 21:00',7,21],['08:00 – 24:00',8,24],['09:00 – 18:00',9,18],['10:00 – 22:00',10,22],['06:00 – 23:00',6,23]];
+    return `<div class="card" style="padding:22px">
+    <div class="card-t" style="margin-bottom:2px">${t('Working Hours')}</div>
+    <div class="sub" style="margin:0 0 16px">${t('Set the hours you coach — the calendar grid and session time pickers use this range')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Work starts')}</label><select class="sel" data-change="calhour" data-k="cal.start">${hourOpts(PREFS.cal.start,0,23.5)}</select></div>
+      <div class="field"><label class="lbl">${t('Work ends')}</label><select class="sel" data-change="calhour" data-k="cal.end">${hourOpts(PREFS.cal.end,0.5,24)}</select></div>
+    </div>
+    <div class="field" style="margin-top:4px"><label class="lbl">${t('Calendar Type')}</label><select class="sel" data-change="caltype">
+      <option value="auto" ${(PREFS.cal.type||'auto')==='auto'?'selected':''}>${t('Auto (follow language)')}</option>
+      <option value="greg" ${PREFS.cal.type==='greg'?'selected':''}>${t('Gregorian (Miladi)')}</option>
+      <option value="jal" ${PREFS.cal.type==='jal'?'selected':''}>${t('Jalali (Shamsi)')}</option>
+    </select></div>
+    <div class="sub" style="margin:2px 0 14px">${t('Sessions outside this range are still shown — the grid stretches to fit them.')}</div>
+    <div class="card-t" style="margin-bottom:10px">${t('Quick presets')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      ${presets.map(([l,s,e])=>`<button class="fchip ${CH.start===s&&CH.end===e?'on':''}" data-act="cal-preset" data-s="${s}" data-e="${e}">${nf(l)}</button>`).join('')}
+    </div>
+    <div class="set-row" style="margin-top:18px;border-top:1px solid var(--line2);padding-top:14px"><div><span class="t">${t('Current range')}</span><div class="d">${t('Calendar shows sessions from {a} to {b}').replace('{a}',nf(fmtT(CH.start))).replace('{b}',nf(CH.end===24?'24:00':fmtT(CH.end)))}</div></div><span class="bdg bdg-lime">${nf(Math.round((CH.end-CH.start)*10)/10)} ${t('h / day')}</span></div>
+  </div>`})(),
   workout:`<div class="card" style="padding:8px 22px">
     <div class="set-row"><div><span class="t">${t('Default rest timer')}</span><div class="d">${t('120 seconds between sets')}</div></div><select class="sel" style="width:140px" data-change="pref" data-k="wk.rest">${['60','120','180'].map(s=>`<option value="${s}" ${PREFS.wk.rest===s?'selected':''}>${t(s+' sec')}</option>`).join('')}</select></div>
     <div class="set-row"><div><span class="t">${t('Show RPE & RIR fields')}</span><div class="d">${t('On all exercise blocks')}</div></div>${sw('wk.rpe',PREFS.wk.rpe)}</div>
@@ -2088,7 +2228,7 @@ function vSettings(){
             + BILL.adminCoaches.map(c=>{
                 const st=c.access&&c.access.status||'trial';
                 const badge=st==='active'?'bdg-green':(st==='trial'?'bdg-lime':'bdg-amber');
-                return `<tr><td>${av(c.name||c.email,30)}<b style="font-size:13px">${esc(c.name||'—')}</b><div class="muted" style="font-size:11.5px">${esc(c.email)}${c.role==='admin'?' · '+t('Admin'):''}</div></td><td>${esc(c.plan||'trial')}</td><td><span class="bdg ${badge}" style="font-size:11px">${t(st==='active'?'Active':(st==='trial'?'Trial':'Expired'))}</span></td><td class="muted">${nf(new Date(c.createdAt||Date.now()).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'))}</td></tr>`
+                return `<tr><td>${av(c.name||c.email,30)}<b style="font-size:13px">${esc(c.name||'—')}</b><div class="muted" style="font-size:11.5px">${esc(c.email)}${c.role==='admin'?' · '+t('Admin'):''}</div></td><td>${esc(c.plan||'trial')}</td><td><span class="bdg ${badge}" style="font-size:11px">${t(st==='active'?'Active':(st==='trial'?'Trial':'Expired'))}</span></td><td class="muted">${esc(fmtShortDate(new Date(c.createdAt||Date.now())))}</td></tr>`
               }).join('')+`</tbody></table></div>`
           : `<div class="muted">${t('No coaches yet')}</div>`)
     }
@@ -2688,7 +2828,7 @@ function mToday(){
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
   const att=attentionList();
   return `<div class="mstack">
-    <div class="ccard cstat"><div><b style="font-size:15.5px">${t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${t('Wed, Jul 8 2026')}</div></div>
+    <div class="ccard cstat"><div><b style="font-size:15.5px">${t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
     <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
     <div class="ccard" style="padding:6px 14px">
       <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
@@ -3248,10 +3388,11 @@ function quickNoteModal(pre,nt){
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="qn-add">${ic('check',15)} ${t('Save Note')}</button></div>`)}
 function newSessionModal(){
-  const times=Array.from({length:29},(_,i)=>7+i*0.5);
+  const CH=calHours();
+  const times=Array.from({length:Math.round((CH.end-CH.start)*2)},(_,i)=>CH.start+i*0.5);
   const cur=client(S.cid).name;
   const pre=S.nsPre||{};S.nsPre=null;
-  const pday=pre.day??TODAY,pstart=pre.start??9;
+  const pday=pre.day??TODAY,pstart=Math.min(Math.max(pre.start??Math.min(9,CH.end-1),CH.start),CH.end-0.5);
   openModal(`
   <div class="modal-h"><h3>${t('New Session')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
@@ -3478,7 +3619,7 @@ document.addEventListener('click',e=>{
     case 'np-save':{const name=$('np-name').value.trim()||t('New Nutrition Plan');const cl=$('np-client').value;
       const kcal=+$('np-kcal').value||2600,p=+$('np-p').value||170,c=+$('np-c').value||300,f=+$('np-f').value||80;
       const std=$('np-type').value==='std';const scale=kcal/2772;
-      const dt=new Date($('np-date').value||'2026-07-08');const start=dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      const dt=new Date($('np-date').value||'2026-07-08');const start=fmtShortDate(dt);
       const rest=std?{kcal,p,c,f}:{kcal:Math.round(kcal*0.9),p,c:Math.round(c*0.8),f};
       const types=std?[1,1,1,1,1,1,1]:D01;
       const days=DAYS.map((_,i)=>({type:types[i]?'train':'rest',meals:JSON.parse(JSON.stringify(types[i]?scM(TRAIN_T,scale):scM(REST_T,scale)))}));
@@ -3658,10 +3799,12 @@ document.addEventListener('click',e=>{
     case 'cal-day':S.selDay=+el.dataset.day;if(!isNarrow())S.calV='Day';render();break;
     case 'day-nav':S.selDay=Math.max(0,Math.min(6,S.selDay+(+el.dataset.d)));render();break;
     case 'calf-type':S.calfType=el.dataset.t;render();break;
+    case 'cal-preset':{PREFS.cal={start:+el.dataset.s,end:+el.dataset.e};savePrefs();render();toast(t('Working hours updated'));break}
     case 'slot-new':{if(S.calV!=='Week')break;
       const rect=el.getBoundingClientRect();
-      const slot=Math.max(0,Math.min(27,Math.floor((e.clientY-rect.top)/24)));
-      S.nsPre={day:+el.dataset.day,start:7+slot*0.5};
+      const CH=calHours(),slots=Math.round((CH.end-CH.start)*2);
+      const slot=Math.max(0,Math.min(slots-1,Math.floor((e.clientY-rect.top)/24)));
+      S.nsPre={day:+el.dataset.day,start:CH.start+slot*0.5};
       newSessionModal();break}
     case 'ev-open':eventModal(+el.dataset.eid);break;
     case 'ev-save':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
@@ -3674,7 +3817,7 @@ document.addEventListener('click',e=>{
       const cl=EVENTS[i].client;markDead('EVENTS',EVENTS[i].id);EVENTS.splice(i,1);syncClientSessions(cl);
       closeModal();render();toast('Event deleted');break}
     case 'ev-dup':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
-      const cp={...ev,id:uid(),start:Math.min(20.5,ev.start+ev.dur)};
+      const cp={...ev,id:uid(),start:Math.min(calHours().end-0.5,ev.start+ev.dur)};
       EVENTS.push(cp);syncClientSessions(cp.client);
       closeModal();render();toast('Duplicated ✓');break}
     case 'ics':icsExport();break;
@@ -3776,6 +3919,12 @@ document.addEventListener('change',e=>{
   if(el.dataset.change==='calclient'){S.calfClient=el.value;render()}
   /* v15.7 — persisted selects (rest timer, response time) */
   if(el.dataset.change==='pref'){setP(PREFS,el.dataset.k,el.value);savePrefs();toast('Setting saved')}
+  /* calendar working hours — numeric, sanitized, re-renders the grid */
+  if(el.dataset.change==='calhour'){setP(PREFS,el.dataset.k,parseFloat(el.value));
+    const CH=calHours();PREFS.cal.start=CH.start;PREFS.cal.end=CH.end;
+    savePrefs();render();toast(t('Working hours updated'))}
+  /* calendar type — Jalali (Shamsi) / Gregorian / auto */
+  if(el.dataset.change==='caltype'){PREFS.cal.type=el.value;savePrefs();render();toast(t('Calendar type updated'))}
 });
 document.addEventListener('input',e=>{
   if(e.target.matches('.exb [data-bf]')){
@@ -3818,8 +3967,9 @@ document.addEventListener('drop',e=>{
   const col=e.target.closest('.cal-col');
   if(drag.t==='ev'&&col){const ev=EVENTS.find(x=>x.id===drag.id);
     const rect=col.getBoundingClientRect();
-    const slot=Math.max(0,Math.min(27,Math.floor((e.clientY-rect.top)/24)));
-    ev.day=+col.dataset.day;ev.start=7+slot*0.5;
+    const CH=calHours(),slots=Math.round((CH.end-CH.start)*2);
+    const slot=Math.max(0,Math.min(slots-1,Math.floor((e.clientY-rect.top)/24)));
+    ev.day=+col.dataset.day;ev.start=CH.start+slot*0.5;
     syncClientSessions(ev.client);
     render();toast(t('Rescheduled to')+' '+dayLbl(ev.day)+' · '+nf(fmtT(ev.start)));return}
   const wc=e.target.closest('.wcol');
