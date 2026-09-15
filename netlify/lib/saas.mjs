@@ -12,6 +12,9 @@
 //   ws-meta:<wid>          -> { rev, data, owner, code, updatedAt }
 //   index:coaches          -> [coachId, ...]  (admin list, Phase-4)
 import { createHash, randomBytes, pbkdf2Sync, timingSafeEqual } from 'node:crypto';
+
+// Re-exported so handlers can do timing-safe secret comparisons.
+export { timingSafeEqual };
 import { kv } from './db.mjs';
 
 export const STORE_NAME = 'coach-os-saas';
