@@ -153,7 +153,7 @@ async function adminOverview(req, st) {
   const idx = (await st.get('index:coaches', { type: 'json' })) || [];
   const coaches = [];
   // No hard cap: at 500+ coaches the loop is still bounded by the index
-  // length; reads are per-coach KV gets (cheap on Supabase/file backends).
+  // length; reads are per-coach KV gets (cheap on Postgres/file backends).
   for (const id of idx.slice(0, 5000)) {
     try {
       const ptr = await st.get(`acct-by-id:${id}`, { type: 'json' });

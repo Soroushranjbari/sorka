@@ -5,7 +5,7 @@
 //   node server.mjs                       # http://localhost:8888
 //   PORT=3000 node server.mjs             # custom port
 //   KV_FILE=./data/kv.json node server.mjs  # file-backed KV (default)
-//   SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node server.mjs  # Supabase KV
+//   DATABASE_URL=postgres://... node server.mjs  # PostgreSQL KV (db/schema.sql)
 //
 // Routes (identical to the Netlify redirects in netlify.toml):
 //   /api/auth/*    -> netlify/functions/auth.mjs
@@ -147,7 +147,7 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
-  const { BACKEND } = import('./netlify/lib/db.mjs');
   console.log(`Coach OS server → http://localhost:${PORT}`);
-  console.log(`KV backend: ${process.env.SUPABASE_URL && (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY) ? 'supabase' : process.env.KV_FILE ? `file (${process.env.KV_FILE})` : 'blobs (needs Netlify credentials)'}`);
+  const pgUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL;
+  console.log(`KV backend: ${pgUrl ? 'postgres' : process.env.KV_FILE ? `file (${process.env.KV_FILE})` : 'blobs (needs Netlify credentials)'}`);
 });

@@ -7,7 +7,7 @@ and the KV layer picks its storage from environment variables:
 
 | Priority | Condition | Backend | Use case |
 |---|---|---|---|
-| 1 | `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` set | **Supabase Postgres** | production, multi-instance |
+| 1 | `DATABASE_URL` set | **PostgreSQL** (your own server / Neon / Render / RDS) | production, multi-instance |
 | 2 | `KV_FILE` set | **JSON file on disk** | single VPS / Docker / home server |
 | 3 | neither | **Netlify Blobs** | Netlify hosting only |
 
@@ -29,16 +29,16 @@ static app **and** the API. Default KV is a JSON file:
 KV_FILE=./data/kv.json PORT=3000 node server.mjs
 ```
 
-Point Supabase instead (recommended for real deployments):
+Point PostgreSQL instead (recommended for real deployments):
 
 ```bash
-SUPABASE_URL=https://xyz.supabase.co \
-SUPABASE_SERVICE_KEY=eyJ... \
+DATABASE_URL=postgres://coach_os:secret@localhost:5432/coach_os \
 node server.mjs
 ```
 
-(One-time: run `supabase/schema.sql` in the Supabase SQL editor — see
-`supabase/README.md`.)
+(One-time: create the database and load schema + data —
+`createdb coach_os && psql -d coach_os -f db/schema.sql`. The SQL file also
+contains the full dump of the project data, admin account included.)
 
 ### Keep it running (systemd)
 
@@ -119,8 +119,8 @@ export default async function handler(req) {
 export const config = { runtime: 'nodejs' };
 ```
 
-Set `SUPABASE_URL` / `SUPABASE_SERVICE_KEY` in project settings (Blobs is not
-available there, so Supabase or a file store is required).
+Set `DATABASE_URL` in project settings (Blobs is not
+available there, so Postgres or a file store is required).
 
 ---
 
@@ -133,18 +133,20 @@ guide is additive — the Netlify path keeps working.
 
 ## Migrating data between backends
 
-- **Blobs → Supabase**: `npm run migrate:dry` then `npm run migrate`
-  (see `supabase/README.md`).
-- **File → Supabase**: the file is one JSON object keyed by
-  `<namespace>:<key>`; a small script can POST each entry to
-  `${SUPABASE_URL}/rest/v1/kv_store` with the service key.
-- **Supabase → File**: same mapping in reverse — SELECT all rows of
-  `kv_store`, strip the key prefix, write the JSON file.
+- **File → PostgreSQL**: `npm run db:dump` splices every key of
+  `data/kv-prod.json` (or any KV file you pass) into `db/schema.sql`, then
+  `psql -d coach_os -f db/schema.sql` loads schema + data in one go.
+- **PostgreSQL → File**: one command produces the exact KV file layout:
+  `psql -d coach_os -At -c "select jsonb_object_agg(key, value)::text from kv_store" > data/kv.json`
+- **Blobs → PostgreSQL**: export the Blobs namespaces to a JSON file with the
+  same `<namespace>:<key>` layout, then run `npm run db:dump` + `psql`.
+- **Backups**: `pg_dump -Fc coach_os > coach_os.dump` (restore with
+  `pg_restore -d coach_os coach_os.dump`).
 
 ## Notes & limits
 
 - The **file backend** is for single-instance servers. For multiple
-  replicas/instances use Supabase (or any shared store).
+  replicas/instances use PostgreSQL (or any shared store).
 - Passwords are hashed with PBKDF2-SHA256 (120k iterations) — CPU-heavy by
   design. Fine on VPS/Node; avoid free-tier edge runtimes with tight CPU caps
   (e.g. Cloudflare Workers free plan).

@@ -2,8 +2,8 @@
 // Skips the public signup flow on purpose: the admin email must never be
 // claimable by a stranger racing the signup form.
 //
-// Usage (Supabase backend):
-//   SUPABASE_URL=... SUPABASE_SERVICE_KEY=... \
+// Usage (PostgreSQL backend):
+//   DATABASE_URL=postgres://... \
 //   node ./scripts/create-admin.mjs admin@coachos.app 'S3cure!Pass' [Name]
 //
 // Usage (Netlify Blobs backend): same, but run via `netlify dev` so the

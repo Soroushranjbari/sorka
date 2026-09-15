@@ -15,12 +15,16 @@ const title = (s) => console.log(`\n== ${s} ==`);
 
 /* ---------- 1. KV backend ---------- */
 title('KV backend');
-const supa = has('SUPABASE_URL') && (has('SUPABASE_SERVICE_KEY') || has('SUPABASE_SERVICE_ROLE_KEY'));
+const pgUrl = env('DATABASE_URL') || env('POSTGRES_URL') || env('PGURL');
 const file = has('KV_FILE');
-if (supa) {
-  info.push(`KV: Supabase (${env('SUPABASE_URL')})`);
-  if (!env('SUPABASE_URL').startsWith('https://')) problems.push('SUPABASE_URL must start with https://');
-  if (env('SUPABASE_SERVICE_KEY', ) === env('SUPABASE_ANON_KEY')) problems.push('SUPABASE_SERVICE_KEY looks like the anon key — use service_role (server-only)');
+if (pgUrl) {
+  let host = '?';
+  try { host = new URL(pgUrl).host; } catch {}
+  info.push(`KV: PostgreSQL (${host})`);
+  if (!/^postgres(ql)?:\/\//.test(pgUrl)) problems.push('DATABASE_URL must start with postgres:// or postgresql://');
+  if (/@(localhost|127\.0\.0\.1)[:/]/.test(pgUrl) && env('NODE_ENV') === 'production') {
+    warnings.push('DATABASE_URL points at localhost in production — confirm this is intended');
+  }
 } else if (file) {
   info.push(`KV: file (${env('KV_FILE')})`);
   if (existsSync(env('KV_FILE'))) {
@@ -36,7 +40,7 @@ if (supa) {
   }
   if (env('KV_FILE').includes(' ')) warnings.push('KV_FILE path contains spaces — quoted paths required in service files');
 } else {
-  problems.push('No KV backend configured. Set KV_FILE=/path/kv.json (single server) or SUPABASE_URL + SUPABASE_SERVICE_KEY (multi-instance).');
+  problems.push('No KV backend configured. Set KV_FILE=/path/kv.json (single server) or DATABASE_URL=postgres://... (multi-instance).');
 }
 
 /* ---------- 2. Secrets ---------- */
