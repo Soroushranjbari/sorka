@@ -453,6 +453,7 @@ const FA={
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
+'Could not load coaches':'بارگذاری مربی‌ها ناموفق بود','Admin error':'خطای ادمین','Retry':'تلاش دوباره','Search by name or email':'جستجو با نام یا ایمیل',
 'Sign in to Coach OS':'ورود به Coach OS','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
 "Here's what's happening with your clients today.":'خلاصه‌ی امروز شاگردانت این‌جاست.','Wed, Jul 8 2026':'چهارشنبه، ۱۷ تیر ۱۴۰۵',
 'Total Clients':'کل شاگردان','Active Clients':'شاگردان فعال','Sessions Today':'جلسات امروز','Upcoming Sessions':'جلسات پیش‌رو','This week':'این هفته',
@@ -1026,6 +1027,25 @@ const AUTH={token:'',coach:null,ws:null,access:null};
 try{AUTH.token=localStorage.getItem('co-auth')||''}catch(e){}
 const authHeaders=()=>AUTH.token?{'authorization':'Bearer '+AUTH.token}:{};
 const authSet=t=>{AUTH.token=t||'';try{t?localStorage.setItem('co-auth',t):localStorage.removeItem('co-auth')}catch(e){}};
+/* Full cloud-state reset — MUST run whenever the active account changes,
+   otherwise the next coach's sync keeps targeting the previous coach's
+   workspace (403 foreign) and pulls foreign data over local rows. */
+function cloudReset(){
+  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;
+  clearTimeout(CLOUD.pushT);
+  try{localStorage.removeItem('co-ws')}catch(e){}
+}
+/* Empty in-memory workspace — used when a NEW account is created so coaches
+   start clean instead of inheriting the demo seed (which also instantly
+   exceeds the trial quota and silently blocks adding clients). */
+function freshWorkspace(){
+  CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
+  FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
+  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;FOODS.length=0;
+  Object.keys(DB).forEach(k=>delete DB[k]);
+  Object.keys(DEAD).forEach(k=>DEAD[k].length=0);
+  S.cid=1;S.pickCid=1;S.msgThread=null;S.nplan=0;
+}
 async function authApi(path,opts){
   const o=opts||{};
   o.headers=Object.assign({'content-type':'application/json'},authHeaders(),o.headers||{});
@@ -1043,6 +1063,9 @@ async function authSignup(){
     const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify({name,email,password:pw})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    // New account: drop the local demo seed and any previous tenant's cloud
+    // state, so the coach starts with an empty, correctly-owned workspace.
+    cloudReset();freshWorkspace();saveData();
     S.role='coach';S.view='dash';render();
     toast(t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
@@ -1057,6 +1080,9 @@ async function authLogin(){
     const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    // Account switched in this tab: drop the previous tenant's cloud target
+    // so sync never touches (or merges) another coach's workspace.
+    if(CLOUD.code&&CLOUD.code!==((d.workspace&&d.workspace.code)||''))cloudReset();
     S.role='coach';S.view='dash';render();
     toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
@@ -1065,6 +1091,10 @@ async function authLogin(){
 async function authLogout(){
   try{if(AUTH.token)await authApi('/api/auth/logout',{method:'POST'})}catch(e){}
   authSet('');AUTH.coach=null;AUTH.ws=null;AUTH.access=null;
+  cloudReset(); // never let the next session reuse this tenant's sync target
+  // Admin/billing state belongs to the signed-out account — clear it so a
+  // different account on this device never sees stale rows.
+  BILL.info=null;BILL.quota=null;BILL.adminCoaches=null;BILL.adminLoaded=false;BILL.adminError=null;BILL.redeemCode='';
 }
 function forgotModal(){
   openModal(`
@@ -1131,22 +1161,23 @@ const authErrMsg=(d,st)=>{
    separate shop domain put the full URL (https://shop.example.com).
    Leave '' to use the legacy manual flow (in-app request + tracking code). */
 const SHOP_URL='/shop/checkout.html';
-const BILL={info:null,quota:null,redeemCode:'',adminCoaches:null,adminLoaded:false};
+const BILL={info:null,quota:null,redeemCode:'',adminCoaches:null,adminLoaded:false,adminError:null};
 async function billAdminLoad(){
   if(!AUTH.token||!AUTH.coach||AUTH.coach.role!=='admin')return;
   try{
     const {ok,d}=await authApi('/api/billing/admin-overview');
-    if(ok&&d&&d.ok){BILL.adminCoaches=d.coaches;BILL.adminLoaded=true;render()}
-  }catch(e){}
+    if(ok&&d&&d.ok){BILL.adminCoaches=d.coaches;BILL.adminLoaded=true;BILL.adminError=null;render()}
+    else{BILL.adminLoaded=true;BILL.adminError=(d&&d.error)||'forbidden';render()}
+  }catch(e){BILL.adminLoaded=true;BILL.adminError='network';render()}
 }
-function admGrantModal(email,plan,days){
+function admGrantModal(email,plan){
   openModal(`
   <div class="modal-h"><h3>${t('Extend subscription')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="muted" style="font-size:12.5px;margin-bottom:12px">${esc(email)}</div>
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('Plan')}</label><select class="sel" id="ag-plan">${['basic','professional','club'].map(p=>`<option value="${p}" ${p===plan?'selected':''}>${t(p==='basic'?'Basic':p==='professional'?'Professional':'Club')}</option>`).join('')}</select></div>
-      <div class="field"><label class="lbl">${t('Days')}</label><select class="sel" id="ag-days">${[7,14,30,60,90,180,365].map(d=>`<option value="${d}" ${d===+days?'selected':''}>${nf(d)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Days')}</label><select class="sel" id="ag-days">${[7,14,30,60,90,180,365].map(d=>`<option value="${d}" ${d===30?'selected':''}>${nf(d)}</option>`).join('')}</select></div>
     </div>
     <div class="muted" style="font-size:11.5px">${t('Days stack on top of any remaining time — granting also restores suspended access')}</div>
   </div>
@@ -2354,15 +2385,20 @@ function vSettings(){
     <button class="btn btn-dark btn-sm" data-act="toast" data-msg="Password updated">${t('Update Password')}</button>
     <div class="set-row" style="margin-top:10px"><div><span class="t">${t('Two-Factor Authentication')}</span><div class="d">${t('Extra security for your coach account')}</div></div>${sw('sec.tfa',PREFS.sec.tfa)}</div>
     <div class="set-row"><div><span class="t">${t('Active sessions')}</span><div class="d">${t('MacBook Pro · Tehran · current')}</div></div><button class="btn btn-outline btn-sm" data-act="toast" data-msg="Signed out of all other devices">${t('Sign out others')}</button></div></div>`,
-  admin:`<div class="card" style="padding:16px 22px">
+  admin:(()=>{const q=(S.admQ||'').toLowerCase();
+    const list=(BILL.adminCoaches||[]).filter(c=>!q||(c.email||'').toLowerCase().includes(q)||(c.name||'').toLowerCase().includes(q));
+    return `<div class="card" style="padding:16px 22px">
     <div class="card-t" style="margin-bottom:2px">${t('Platform admin')}</div>
     <div class="sub" style="margin:0 0 12px">${t('All coaches on this platform — plans, remaining days & access control')}</div>
     ${
       !BILL.adminLoaded
         ? `<div class="muted">${t('Loading…')}</div>`
-        : (BILL.adminCoaches&&BILL.adminCoaches.length
-          ? `<div class="tbl" style="margin-top:2px;overflow-x:auto"><table style="font-size:12.5px;min-width:760px"><thead><tr><th>${t('Coach')}</th><th>${t('Plan')}</th><th>${t('Remaining')}</th><th>${t('Seats')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead><tbody>`
-            + BILL.adminCoaches.map(c=>{
+        : BILL.adminError
+          ? `<div class="card" style="padding:16px;background:var(--red-soft);border-color:var(--red);margin-bottom:12px"><b style="font-size:13px;color:var(--red)">${t('Could not load coaches')}</b><div class="muted" style="font-size:12px;margin-top:4px">${t('Admin error')}: ${esc(BILL.adminError)}</div></div><button class="btn btn-outline btn-sm" data-act="admin-refresh">${ic('refresh',13)} ${t('Retry')}</button>`
+          : (list.length
+          ? `<div class="row" style="margin-bottom:10px;gap:8px"><div class="searchbox sm" style="flex:1;max-width:320px;cursor:text">${ic('search',14)} <input id="adm-q" value="${esc(S.admQ||'')}" placeholder="${t('Search by name or email')}" style="border:none;outline:none;flex:1;background:none;font-size:12.5px;color:var(--ink)" oninput="admFilter(this.value)"></div><span class="bdg bdg-gray" style="font-size:11px">${nf(list.length)} / ${nf(BILL.adminCoaches.length)}</span></div>`
+          + `<div class="tbl" style="margin-top:2px;overflow-x:auto"><table style="font-size:12.5px;min-width:760px"><thead><tr><th>${t('Coach')}</th><th>${t('Plan')}</th><th>${t('Remaining')}</th><th>${t('Seats')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead><tbody>`
+            + list.map(c=>{
                 const st=c.access&&c.access.status||'trial';
                 const badge=c.suspended?'bdg-red':st==='active'?'bdg-green':(st==='trial'?'bdg-lime':'bdg-amber');
                 const dl=c.daysLeft;
@@ -2377,17 +2413,21 @@ function vSettings(){
                   <td>${seatCol}</td>
                   <td><span class="bdg ${badge}" style="font-size:11px">${t(c.suspended?'Suspended':st==='active'?'Active':(st==='trial'?'Trial':'Expired'))}</span></td>
                   <td style="text-align:end;white-space:nowrap">
-                    <button class="btn btn-outline btn-sm" data-act="adm-grant" data-email="${esc(c.email)}" data-plan="${esc(c.plan||'trial')}" data-days="${dl!=null&&dl>0?Math.min(30,dl):30}">${ic('plus',12)} ${t('Extend')}</button>
+                    <button class="btn btn-outline btn-sm" data-act="adm-grant" data-email="${esc(c.email)}" data-plan="${esc(c.plan||'trial')}">${ic('plus',12)} ${t('Extend')}</button>
                     ${c.role==='admin'?'':`<button class="btn btn-ghost btn-icon" title="${t(c.suspended?'Restore access':'Suspend access')}" data-act="adm-suspend" data-email="${esc(c.email)}" data-s="${c.suspended?'1':''}" style="color:${c.suspended?'var(--green)':'var(--red)'}">${ic(c.suspended?'check':'pause',14)}</button>`}
                   </td></tr>`
               }).join('')+`</tbody></table></div>`
-          : `<div class="muted">${t('No coaches yet')}</div>`)
+          : `<div class="muted">${t(BILL.adminCoaches.length?'No results found.':'No coaches yet')}</div>`)
     }
     <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">
       <button class="btn btn-outline btn-sm" data-act="admin-refresh">${ic('refresh',13)} ${t('Refresh')}</button>
       <button class="btn btn-outline btn-sm" data-act="adm-coupon">${ic('copy',13)} ${t('Create coupon')}</button>
     </div>
-  </div>`};
+  </div>`})()};
+window.admFilter=v=>{S.admQ=v;const p=$('adm-q');if(!p)return;
+  const pos=p.selectionStart;render();
+  const np=$('adm-q');if(np){np.focus();try{np.setSelectionRange(pos,pos)}catch(e){}}
+};
   return `
   <div class="page-h"><div><h1>${t('Settings')}</h1><div class="sub">${t('Manage your workspace')}</div></div></div>
   <div class="sgrid">
@@ -4017,7 +4057,7 @@ document.addEventListener('click',e=>{
     case 'markread':NOTIFS.forEach(n=>n.un=false);render();toast('All notifications marked as read');break;
     case 'stab':S.stab=el.dataset.k;render();if(el.dataset.k==='admin')billAdminLoad();break;
     case 'admin-refresh':billAdminLoad();break;
-    case 'adm-grant':admGrantModal(el.dataset.email,el.dataset.plan,el.dataset.days);break;
+    case 'adm-grant':admGrantModal(el.dataset.email,el.dataset.plan);break;
     case 'adm-grant-do':admGrantDo(el.dataset.email);break;
     case 'adm-suspend':admSuspendToggle(el.dataset.email,el.dataset.s==='1');break;
     case 'adm-coupon':admCouponModal();break;

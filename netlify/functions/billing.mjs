@@ -7,7 +7,7 @@
 //   POST /api/billing/admin-grant    (Bearer admin, {email|id, planId, days}) -> grant/extend sub
 //   POST /api/billing/admin-suspend  (Bearer admin, {email|id, suspended})    -> freeze/restore access
 //   POST /api/billing/issue-coupon   (x-api-key: ADMIN_API_KEY, shop server-to-server) -> {coupons:[...]}
-import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf } from '../lib/saas.mjs';
+import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf, timingSafeEqual } from '../lib/saas.mjs';
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
 /* Billing bodies are tiny (codes/plan ids) — 64 KB is generous. */
@@ -246,9 +246,12 @@ async function adminSuspend(req, st) {
  *  Body: {code?, planId, durationDays?, maxUses?, expiresInDays?, count?}
  *  Returns the coupon code(s) so the shop can deliver them after payment. */
 async function issueCoupon(req, st) {
-  const key = String(req.headers.get('x-api-key') || '');
-  const expected = String(process.env.ADMIN_API_KEY || '');
-  if (!expected || key.length < 16 || key !== expected) return j(403, { ok: false, error: 'forbidden' });
+  const key = Buffer.from(String(req.headers.get('x-api-key') || ''));
+  const expected = Buffer.from(String(process.env.ADMIN_API_KEY || ''));
+  // Timing-safe compare + length check (length equality required by timingSafeEqual).
+  if (!expected.length || key.length !== expected.length || !timingSafeEqual(key, expected)) {
+    return j(403, { ok: false, error: 'forbidden' });
+  }
   const { data: body, err } = await readSmall(req);
   if (err) return err;
   const planId = String(body?.planId || '');
@@ -262,11 +265,20 @@ async function issueCoupon(req, st) {
     let c = ''; for (let i = 0; i < 10; i++) c += C[Math.floor(Math.random() * C.length)];
     return `${planId.slice(0, 3).toUpperCase()}-${c}`;
   };
-  const out = [];
+  // Phase 1 — resolve ALL codes first (explicit code + collisions checked
+  // up-front) so a mid-loop failure can never leave a partial batch behind.
+  const codes = [];
   for (let i = 0; i < count; i++) {
     const code = normCoupon(body?.code && i === 0 ? body.code : gen());
     if (code.length < 4 || !/^[A-Z0-9-]{4,32}$/.test(code)) return j(400, { ok: false, error: 'bad-code' });
+    if (codes.includes(code)) return j(400, { ok: false, error: 'duplicate-code', code });
     if (await st.get(`coupon:${code}`, { type: 'json' })) return j(409, { ok: false, error: 'code-exists', code });
+    codes.push(code);
+  }
+  // Phase 2 — create (collision between phases is theoretically possible but
+  // astronomically unlikely with a 50-char random space).
+  const out = [];
+  for (const code of codes) {
     await st.setJSON(`coupon:${code}`, {
       code, planId, durationDays, maxUses, usedCount: 0, isActive: true,
       expiresAt: expiresInDays > 0 ? Date.now() + expiresInDays * 86400000 : null,
