@@ -14,7 +14,7 @@ server.mjs          ← سرور مستقل
 netlify/            ← بک‌اند (lib + functions)
 shop/               ← سایت فروش (index.html, checkout.html, api/, assets/)
 scripts/            ← create-admin و تست‌ها
-supabase/           ← schema.sql (اگر Supabase می‌خواهید)
+db/                 ← schema.sql (اسکیمای PostgreSQL + داده‌های پروژه)
 package.json        ← برای npm install
 netlify.toml        ← برای دیپلوی Netlify (اختیاری)
 sw.js, manifest.json, icons/
@@ -47,7 +47,7 @@ node --check server.mjs   # سلامت فایل‌ها
 | متغیر | الزامی؟ | توضیح |
 |---|---|---|
 | `KV_FILE` | یکی از دو گزینه | مسیر فایل KV (تک‌سرور). مثال: `/opt/coach-os/data/kv.json` — فایل خالی باشد خودش می‌سازد |
-| `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` | یا این | برای production و آینده‌ی چند-سروری توصیه می‌شود (schema.sql را یک‌بار در Supabase اجرا کنید) |
+| `DATABASE_URL` | یا این | رشته اتصال PostgreSQL خودتان (توصیه‌شده برای production و چند-سروری). اسکیمای `db/schema.sql` را یک‌بار اجرا کنید: `psql "$DATABASE_URL" -f db/schema.sql` |
 | `ADMIN_API_KEY` | ✅ الزامی | کلید سرور-به-سرور سایت فروش برای صدور کوپن. بدون آن endpoint فروش غیرفعال است |
 | `COACH_OS_URL` | ✅ الزامی | آدرس عمومی اپ (مثلاً `https://app.coachos.ir`) — checkout سایت با آن کوپن صادر می‌کند |
 | `ADMIN_EMAILS` | ✅ الزامی | ایمیل ادمین اصلی (با کاما جدا کنید اگر چند نفرند) |
@@ -88,7 +88,7 @@ node ./scripts/create-admin.mjs admin@yourdomain.com 'رمز-قوی-جدید' 'M
 ```bash
 # ۱. سلامت
 curl https://yourdomain.com/api/health
-# → باید "backend":"supabase" یا "file" بدهد
+# → باید "backend":"postgres" یا "file" بدهد
 
 # ۲. ثبت‌نام یک مربی آزمایشی از UI
 # ۳. خرید آزمایشی: /shop → Buy Now → کد بگیرید → در اپ ریدیم کنید
@@ -102,7 +102,7 @@ curl https://yourdomain.com/api/health
 
 | کار | دوره |
 |---|---|
-| بکاپ `data/kv.json` (اگر file backend) | روزانه — یک cron ساده کافی است |
+| بکاپ `data/kv.json` (اگر file backend) یا `pg_dump -Fc coach_os` (اگر PostgreSQL) | روزانه — یک cron ساده کافی است |
 | چک `/api/health` | مانیتور uptime (مثلاً UptimeRobot مجانی) |
 | reconcile پلن مربی‌ها با سفارش‌های فروشگاه | هفتگی — از تب Admin |
 | rotate کردن `ADMIN_API_KEY` | هر ۶ ماه یا بعد از هر خروج اعضای تیم |

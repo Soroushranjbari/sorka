@@ -1,20 +1,18 @@
-// Coach OS — portable KV backend (Phase 1.5).
+// Coach OS — portable KV backend (PostgreSQL edition, Supabase-free).
 // Same get/setJSON/delete surface the Phase-1 code already uses, but the
-// bytes can now live in EITHER Netlify Blobs OR Supabase Postgres (kv_store)
-// OR a plain JSON file (self-hosted standalone server, zero services).
+// bytes can live in EITHER your own PostgreSQL (kv_store table), a plain
+// JSON file (self-hosted standalone server), or Netlify Blobs.
 //
 // Backend selection (env):
-//   SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY present -> Supabase (primary).
-//   KV_FILE present                                  -> JSON file on disk.
-//   Otherwise                                        -> Netlify Blobs.
+//   DATABASE_URL present -> PostgreSQL via the `pg` driver (primary;
+//                           multi-instance safe, direct connection — no
+//                           Supabase, no PostgREST, no service keys).
+//   KV_FILE present      -> JSON file on disk.
+//   Otherwise            -> Netlify Blobs.
 //
-// During migration BOTH are read (Supabase first, Blobs as fallback) and all
-// writes go to Supabase, so no data is lost when you flip the switch.
-// After migration is verified, Blobs becomes a dead fallback you can delete.
-//
-// Zero extra dependencies: Supabase is reached via its PostgREST HTTP API
-// with the global fetch (Node 18+). Blobs is lazy-imported so Supabase-only
-// environments (and contract tests) never need the package at import time.
+// Schema lives in db/schema.sql (kv_store + normalized mirror tables).
+// `pg` is lazy-imported so file/blobs environments (and contract tests)
+// never need the package at import time.
 import { readFileSync, writeFileSync, renameSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
@@ -24,17 +22,63 @@ async function blobs(ns) {
   return _blobsMod.getStore({ name: ns, consistency: 'strong' });
 }
 
-const SUPA_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
-const SUPA_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const DATABASE_URL = (process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL || '').trim();
 const KV_FILE = (process.env.KV_FILE || '').trim();
-export const BACKEND = SUPA_URL && SUPA_KEY ? 'supabase' : KV_FILE ? 'file' : 'blobs';
-export const isSupabase = () => BACKEND === 'supabase';
+
+export const BACKEND = DATABASE_URL ? 'postgres' : KV_FILE ? 'file' : 'blobs';
+export const isPostgres = () => BACKEND === 'postgres';
 const isFile = () => BACKEND === 'file';
+
+/* ---------- Postgres primitives (table: public.kv_store) ---------- */
+let _pool = null;
+async function pool() {
+  if (!_pool) {
+    const pg = await import('pg');
+    // Managed Postgres (Neon/Render/RDS/…) usually requires TLS; localhost
+    // does not. An explicit sslmode= in the URL always wins.
+    const local = /@(localhost|127\.0\.0\.1|\[::1\])[:/]/.test(DATABASE_URL);
+    // Serverless (Netlify Functions/Lambda): every container gets its own
+    // pool, so max must stay at 1 or concurrent containers exhaust the
+    // database connection limit. Use the provider's POOLED connection
+    // string (pgBouncer/Supavisor/Neon pooler) in that environment.
+    const serverless = !!(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
+    _pool = new pg.default.Pool({
+      connectionString: DATABASE_URL,
+      max: serverless ? 1 : 5,
+      idleTimeoutMillis: serverless ? 10000 : 30000,
+      allowExitOnIdle: serverless,
+      connectionTimeoutMillis: 10000,
+      ssl: local || /sslmode=/.test(DATABASE_URL) ? undefined : { rejectUnauthorized: false }
+    });
+    _pool.on('error', (e) => console.error('[kv] pg pool error:', e.message));
+  }
+  return _pool;
+}
+
+async function pgGet(fullKey) {
+  const r = await (await pool()).query(
+    'select value from public.kv_store where key = $1 limit 1',
+    [fullKey]
+  );
+  return r.rows.length ? r.rows[0].value : null; // jsonb comes back pre-parsed
+}
+
+async function pgSet(fullKey, value) {
+  await (await pool()).query(
+    `insert into public.kv_store (key, value) values ($1, $2::jsonb)
+     on conflict (key) do update set value = excluded.value, updated_at = now()`,
+    [fullKey, JSON.stringify(value ?? null)]
+  );
+}
+
+async function pgDel(fullKey) {
+  await (await pool()).query('delete from public.kv_store where key = $1', [fullKey]);
+}
 
 /* ---------- File primitives (self-hosted single-instance server) ----------
    One JSON document holds every namespaced key: { "<ns>:<key>": value }.
    Writes are atomic (tmp file + rename). Perfect for one Node process on a
-   VPS/Docker; for multi-instance deployments use Supabase instead. */
+   VPS/Docker; for multi-instance deployments use PostgreSQL instead. */
 let _fileCache = null;
 function fileData() {
   if (_fileCache) return _fileCache;
@@ -61,60 +105,27 @@ async function fileDel(fullKey) {
   if (Object.prototype.hasOwnProperty.call(d, fullKey)) { delete d[fullKey]; fileFlush(); }
 }
 
-const supaHeaders = () => ({
-  apikey: SUPA_KEY,
-  authorization: `Bearer ${SUPA_KEY}`,
-  'content-type': 'application/json'
-});
-
-/* ---------- Supabase primitives (table: public.kv_store) ---------- */
-async function supaGet(fullKey) {
-  const r = await fetch(
-    `${SUPA_URL}/rest/v1/kv_store?key=eq.${encodeURIComponent(fullKey)}&select=value`,
-    { headers: { apikey: SUPA_KEY, authorization: `Bearer ${SUPA_KEY}` } }
-  );
-  if (!r.ok) throw new Error(`supabase-get ${r.status}`);
-  const rows = await r.json();
-  if (!rows || !rows.length) return null;
-  return rows[0].value ?? null;
-}
-
-async function supaSet(fullKey, value) {
-  const r = await fetch(`${SUPA_URL}/rest/v1/kv_store?on_conflict=key`, {
-    method: 'POST',
-    headers: { ...supaHeaders(), prefer: 'resolution=merge-duplicates' },
-    body: JSON.stringify({ key: fullKey, value })
-  });
-  if (!r.ok) throw new Error(`supabase-set ${r.status}: ${await r.text().catch(() => '')}`);
-}
-
-async function supaDel(fullKey) {
-  await fetch(`${SUPA_URL}/rest/v1/kv_store?key=eq.${encodeURIComponent(fullKey)}`, {
-    method: 'DELETE',
-    headers: { apikey: SUPA_KEY, authorization: `Bearer ${SUPA_KEY}` }
-  });
-}
-
-/* ---------- Blobs primitives (pre-migration backend, lazy) ---------- */
+/* ---------- Blobs primitives (fallback backend, lazy) ---------- */
 
 /**
  * Namespaced KV store with the exact surface Phase-1 expects:
  *   get(key, {type:'json'}), setJSON(key, val), delete(key)
- * Supabase keys are namespaced as "<ns>:<key>" inside ONE table.
+ * Postgres keys are namespaced as "<ns>:<key>" inside ONE table (kv_store).
  */
 export function kv(ns) {
   const prefix = `${ns}:`;
   return {
     async get(key, opts) {
       if (isFile()) return fileGet(prefix + key);
-      if (isSupabase()) {
+      if (isPostgres()) {
         try {
-          const v = await supaGet(prefix + key);
+          const v = await pgGet(prefix + key);
           if (v !== null && v !== undefined) return v;
+          return null;
         } catch (e) {
-          console.error('[kv] supabase read failed, trying blobs fallback:', e.message);
+          console.error('[kv] postgres read failed, trying blobs fallback:', e.message);
         }
-        // Migration fallback: old bytes may still live in Blobs.
+        // Fallback: old bytes may still live in Blobs.
         try {
           return await (await blobs(ns)).get(key, opts);
         } catch {
@@ -129,17 +140,16 @@ export function kv(ns) {
     },
     async setJSON(key, val) {
       if (isFile()) return fileSet(prefix + key, val);
-      if (isSupabase()) {
-        await supaSet(prefix + key, val);
+      if (isPostgres()) {
+        await pgSet(prefix + key, val);
         return;
       }
       await (await blobs(ns)).setJSON(key, val);
     },
     async delete(key) {
       if (isFile()) return fileDel(prefix + key);
-      if (isSupabase()) {
-        try { await supaDel(prefix + key); } catch {}
-        try { await (await blobs(ns)).delete(key); } catch {}
+      if (isPostgres()) {
+        try { await pgDel(prefix + key); } catch {}
         return;
       }
       try { await (await blobs(ns)).delete(key); } catch {}
@@ -149,10 +159,14 @@ export function kv(ns) {
 
 /** Health info for the /api/health endpoint (no secrets leaked). */
 export function dbInfo() {
+  let host = null;
+  if (DATABASE_URL) {
+    try { host = new URL(DATABASE_URL).host; } catch { host = '?'; }
+  }
   return {
     backend: BACKEND,
-    supabaseConfigured: !!(SUPA_URL && SUPA_KEY),
-    supabaseUrlHost: SUPA_URL ? (() => { try { return new URL(SUPA_URL).host; } catch { return '?'; } })() : null,
+    postgresConfigured: !!DATABASE_URL,
+    postgresHost: host,
     fileConfigured: !!KV_FILE
   };
 }
