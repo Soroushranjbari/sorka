@@ -74,6 +74,12 @@ try {
   const noAuth = await j('/api/billing/me');
   ok('GET /api/billing/me (no token) -> 401', noAuth.status === 401, noAuth.status);
 
+  // AI assistant endpoints: auth comes before everything (no key needed to 401)
+  const aiQ = await j('/api/ai/quota');
+  ok('GET /api/ai/quota (no token) -> 401', aiQ.status === 401, aiQ.status);
+  const aiD = await j('/api/ai/draft', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
+  ok('POST /api/ai/draft (no token) -> 401', aiD.status === 401, aiD.status);
+
   const badCode = await j('/api/data?code=nope!');
   ok('GET /api/data?code=<invalid> -> 400', badCode.status === 400, badCode.status);
 

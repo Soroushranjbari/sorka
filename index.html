@@ -383,10 +383,26 @@ body.sb-c .sprof{justify-content:center}
 @media(max-width:520px){.clientwrap{padding:0}.phone{width:100%;height:100vh;height:100dvh;border:none;border-radius:0}.notch{display:none}.chead{padding-top:calc(14px + env(safe-area-inset-top,0px))}.cphead{padding-top:calc(14px + env(safe-area-inset-top,0px))}}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;display:none}
 body.sb-open .scrim{display:block}
+/* v16.8 — AI chat assistant */
+.ai-fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:60;width:52px;height:52px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer;border:none;box-shadow:0 10px 30px -6px rgba(0,0,0,.35);transition:transform .25s}
+.ai-fab:hover{transform:translateY(-3px)}
+.ai-ovl{position:fixed;inset:0;z-index:98;background:rgba(8,10,6,.45);backdrop-filter:blur(3px)}
+.ai-panel{position:fixed;bottom:0;inset-inline-end:0;z-index:99;width:min(430px,100vw);height:min(660px,94vh);background:var(--bg);border:1px solid var(--line);border-bottom:none;border-radius:18px 18px 0 0;display:flex;flex-direction:column;box-shadow:0 -12px 44px -10px rgba(0,0,0,.4)}
+.ai-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line2);font-size:13.5px}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.ai-m{max-width:86%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.ai-m.u{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.ai-m.a{align-self:flex-start;background:var(--bg2);border:1px solid var(--line2);border-bottom-left-radius:4px}
+.ai-typing{display:flex;gap:4px;align-items:center}
+.ai-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink3);animation:aib 1.2s infinite}
+.ai-typing span:nth-child(2){animation-delay:.2s}.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes aib{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.ai-in{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line2)}
+.ai-in .inp{flex:1}
 </style>
 </head>
 <body>
-<div id="app"></div><div id="modal-root"></div><div id="pal-root"></div>
+<div id="app"></div><div id="modal-root"></div><div id="pal-root"></div><div id="ai-chat-root"></div>
 <div class="scrim" data-act="scrim"></div><div id="toasts"></div>
 
 <script>
@@ -454,7 +470,7 @@ const FA={
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
 'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
 '"Coach OS replaced four different tools for me. Everything about my clients finally lives in one place."':'«Coach OS چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
-'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','sees your whole workspace':'به کل ورک‌اسپیس شما دسترسی دارد','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
@@ -2084,6 +2100,7 @@ function vBuilder(){
       <div class="card" style="padding:14px 18px">
         <div class="row" style="flex-wrap:wrap"><span class="muted" style="font-size:12.5px">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</span><span class="sp"></span>
         <button class="btn btn-ghost" data-act="toast" data-msg="Done">${t('Cancel')}</button>
+        <button class="btn btn-outline" data-act="ai-draft" title="${t('AI Workout Assistant')}">${ic('zap',15)} ${t('AI Draft')}</button>
         <button class="btn btn-outline" data-act="b-tpl">${S.tplEdit!=null?t('Update Template'):t('Save as Template')}</button>
         <button class="btn btn-primary" data-act="b-save">${ic('check',15)} ${t('Save Workout')}</button></div>
       </div>
@@ -3155,6 +3172,103 @@ function clientCodeModal(c){
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="copy-code" data-code="${esc(code)}">${ic('copy',14)} ${t('Copy')}</button></div>`);
 }
+/* v16.6 — AI drafting assistant (Phase 1: workout drafts via /api/ai/*).
+   Draft-only by design: the app's promise is "the coach decides" — the model's
+   output lands in the builder as an EDITABLE draft and nothing publishes
+   without the coach. The API key stays server-side; the request carries only a
+   privacy-safe profile (goal/level/limitations — no names or contacts). */
+async function aiModal(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const c=client(S.cid);
+  openModal(`
+  <div class="modal-h"><h3>${t('AI Workout Assistant')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.')}</div>
+    <div class="row" style="margin-bottom:12px">${avC(c.name,38)}<div><b style="font-size:13.5px">${t(c.name)}</b><div class="muted" style="font-size:11.5px">${t(c.goal||'—')} · ${t(c.freq||'—')}</div></div></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="ai-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option ${g===(c.goal||'Muscle Gain')?'selected':''}>${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel" id="ai-level">${['Beginner','Intermediate','Advanced'].map(l=>`<option ${l==='Intermediate'?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><select class="sel" id="ai-dur">${[30,45,60,75,90].map(m=>`<option value="${m}" ${m===60?'selected':''}>${nf(m)} min</option>`).join('')}</select></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Focus / limitations')}</label><textarea class="ta" id="ai-focus" placeholder="${t('e.g. knee pain on deep squats · dumbbells only')}"></textarea></div>
+    <div class="muted" id="ai-quota" style="font-size:11.5px">${t('AI credits this month')}: …</div>
+    <div class="muted" id="ai-err" style="font-size:12px;color:var(--red);margin-top:6px;display:none"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" id="ai-go" data-act="ai-generate">${ic('zap',15)} ${t('Generate draft')}</button></div>`);
+  try{
+    const {ok,d}=await authApi('/api/ai/quota');
+    const el=$('ai-quota');
+    if(el)el.textContent=(ok&&d&&d.ok&&d.enabled)?`${t('AI credits this month')}: ${nf(d.used)} / ${nf(d.max)}`:t('AI is not configured on the server');
+  }catch(e){}
+}
+async function aiGenerate(){
+  const btn=$('ai-go'),err=$('ai-err');
+  const fail=m=>{if(err){err.textContent=m;err.style.display='block'}if(btn){btn.disabled=false;btn.innerHTML=`${ic('zap',15)} ${t('Generate draft')}`}};
+  if(btn){btn.disabled=true;btn.innerHTML=`${ic('zap',15)} ${t('Generating…')}`}
+  if(err)err.style.display='none';
+  const cat=EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}));
+  const ctx={goal:$('ai-goal')?.value||'Muscle Gain',level:$('ai-level')?.value||'Intermediate',freq:client(S.cid).freq||'3x / week',durMin:+($('ai-dur')?.value)||60,focus:($('ai-focus')?.value||'').slice(0,300),lang};
+  try{
+    const {status,ok,d}=await authApi('/api/ai/draft',{method:'POST',body:JSON.stringify({catalog:cat,ctx})});
+    if(!ok||!d||!d.ok){
+      const e=d&&d.error;
+      fail(e==='ai-quota'?t('AI monthly quota reached'):e==='ai-not-configured'?t('AI is not configured on the server'):t('AI service unavailable — try again'));
+      return;
+    }
+    const c=client(S.cid);
+    BUILDER.length=0;
+    (d.draft.exercises||[]).forEach(x=>BUILDER.push({ex:x.i,sets:x.sets,reps:x.reps,kg:x.kg,rest:x.rest,rpe:'RPE '+x.rpe,rir:'RIR 2',tempo:'2-0-1-0',note:x.note||''}));
+    S.wname=(d.draft.name||'AI Draft')+' — '+c.name;
+    S.wday=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].includes(d.draft.day)?d.draft.day:'Monday';
+    S.wdur=d.draft.dur||(ctx.durMin+' min');
+    S.wnote=d.draft.note||'';
+    closeModal();render();
+    toast(t('AI draft loaded — review, edit, then publish'));
+  }catch(e){fail(t('Could not reach server'))}
+}
+/* v16.8 — AI chat assistant: the coach asks ANYTHING about their workspace
+   (client details, workout loads, meals, measurements, messages, billing…).
+   The SERVER builds the context from the live KV data, so answers cite real
+   numbers. History is kept locally per device. */
+const AI_CHAT_KEY='co-ai-chat';
+let AI_CHAT=[];try{AI_CHAT=JSON.parse(localStorage.getItem(AI_CHAT_KEY)||'[]')}catch(e){AI_CHAT=[]}
+let AI_WAITING=false;
+const aiChatSave=()=>{try{localStorage.setItem(AI_CHAT_KEY,JSON.stringify(AI_CHAT.slice(-80)))}catch(e){}};
+const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',22)}</button>`;
+function aiChatOpen(){S.aiOpen=true;renderAiChat()}
+function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
+function renderAiChat(){
+  const root=$('ai-chat-root');if(!root)return;
+  if(!S.aiOpen){root.innerHTML='';return}
+  const msgs=AI_CHAT.map(m=>`<div class="ai-m ${m.role==='user'?'u':'a'}">${esc(m.content)}</div>`).join('')
+    +(AI_WAITING?`<div class="ai-m a ai-typing"><span></span><span></span><span></span></div>`:'');
+  root.innerHTML=`<div class="ai-ovl" data-act="ai-chat-close"></div>
+  <div class="ai-panel">
+    <div class="ai-hd"><div class="row" style="gap:8px">${ic('zap',16)}<b>${t('AI Assistant')}</b><span class="muted" style="font-size:11px">${t('sees your whole workspace')}</span></div>
+      <div class="row" style="gap:2px"><button class="btn btn-ghost btn-icon" title="${t('Clear chat')}" data-act="ai-chat-clear">${ic('trash',15)}</button><button class="btn btn-ghost btn-icon" data-act="ai-chat-close">${ic('x',17)}</button></div></div>
+    <div class="ai-msgs" id="ai-msgs">${msgs||`<div class="muted" style="text-align:center;padding:30px 20px;font-size:12.5px">${t('Ask anything — clients, workouts, meals, measurements, messages, billing…')}</div>`}</div>
+    <div class="ai-in">
+      <input class="inp" id="ai-chat-inp" placeholder="${t('Ask the AI assistant…')}" onkeydown="if(event.key==='Enter')window.aiSend()">
+      <button class="btn btn-primary btn-icon" data-act="ai-chat-send">${ic('arrowR',17)}</button>
+    </div>
+  </div>`;
+  const box=$('ai-msgs');if(box)box.scrollTop=box.scrollHeight;
+  const inp=$('ai-chat-inp');if(inp&&!AI_WAITING)inp.focus();
+}
+window.aiSend=async function(){
+  const inp=$('ai-chat-inp');const q=(inp&&inp.value||'').trim();if(!q||AI_WAITING)return;
+  AI_CHAT.push({role:'user',content:q});aiChatSave();
+  AI_WAITING=true;renderAiChat();
+  try{
+    const {ok,d}=await authApi('/api/ai/chat',{method:'POST',body:JSON.stringify({
+      question:q,
+      history:AI_CHAT.slice(-9,-1).map(m=>({role:m.role,content:m.content})),
+      catalog:EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}))
+    })});
+    AI_CHAT.push({role:'assistant',content:(ok&&d&&d.ok&&d.answer)?d.answer:(d&&d.error==='ai-quota'?t('AI daily quota reached'):t('AI service unavailable — try again'))});
+  }catch(e){AI_CHAT.push({role:'assistant',content:t('Could not reach server')})}
+  AI_WAITING=false;aiChatSave();renderAiChat();
+};
 function tplPreview(i){
   const tp=TEMPLATES[i];if(!tp)return;
   const exRow=e=>{const ex=EXERCISES[e.ex];
@@ -3239,6 +3353,7 @@ function renderMobile(){
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
+    ${aiFab()}
     <div class="cnav">
       ${[['today','Today','zap'],['clients','Clients','users'],['messages','Messages','mail'],['more','More','more']].map(([k,l,i])=>`
       <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='messages'&&unreadN?'<span class="cdot"></span>':''}</button>`).join('')}
@@ -3368,6 +3483,7 @@ function mMore(){
     </div>
     <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
     <div class="ccard" style="padding:6px">
+      <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       ${rows.map(([l,i,act])=>`<div class="mrow" data-act="${act}">${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
       <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
     </div>
@@ -3699,6 +3815,7 @@ function shell(inner){
       ${av(coachName(),34,3)}
     </div>
     <div class="content">${inner}</div>
+    ${aiFab()}
   </div></div>`;
 }
 function renderInner(){
@@ -3954,6 +4071,12 @@ document.addEventListener('click',e=>{
     case 'signup':authSignup();break;
     case 'login':authLogin();break;
     case 'profile-save':authProfile();break;
+    case 'ai-draft':aiModal();break;
+    case 'ai-generate':aiGenerate();break;
+    case 'ai-chat-fab':aiChatOpen();break;
+    case 'ai-chat-close':aiChatClose();break;
+    case 'ai-chat-send':window.aiSend();break;
+    case 'ai-chat-clear':AI_CHAT=[];aiChatSave();renderAiChat();break;
     case 'forgot':forgotModal();break;
     case 'forgot-send':authForgotSend();break;
     case 'reset-do':authResetDo();break;

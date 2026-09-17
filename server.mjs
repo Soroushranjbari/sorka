@@ -42,12 +42,14 @@ const dataFn = await import('./netlify/functions/data.mjs');
 const healthFn = await import('./netlify/functions/health.mjs');
 const shopCheckoutFn = await import('./netlify/functions/shop-checkout.mjs');
 const shopAccountFn = await import('./netlify/functions/shop-account.mjs');
+const aiFn = await import('./netlify/functions/ai.mjs');
 
 // Netlify maps "/api/auth/signup" -> handler URL "/api/auth/signup" (config.path
 // with a wildcard), so the handler sees the full path. Reproduce that here.
 const ROUTES = [
   { re: /^\/api\/auth\/(.*)$/, fn: authFn.default },
   { re: /^\/api\/billing\/(.*)$/, fn: billingFn.default },
+  { re: /^\/api\/ai\/(.*)$/, fn: aiFn.default },
   { re: /^\/api\/data\/?$/, fn: dataFn.default },
   { re: /^\/api\/health\/?$/, fn: healthFn.default },
   { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default },
