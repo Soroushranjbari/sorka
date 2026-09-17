@@ -454,7 +454,7 @@ const FA={
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
 'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
 '"Coach OS replaced four different tools for me. Everything about my clients finally lives in one place."':'«Coach OS چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
-'Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
@@ -996,10 +996,31 @@ const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
 const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[]};
 let __lastPack='';
+/* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
+   coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
+   held A's clients, and the first sync "seeded" B's empty workspace with them
+   — so A's clients appeared under B too. Every saved payload now carries the
+   coach id it belongs to; on login/signup as a DIFFERENT coach the local
+   workspace is wiped (and the previous account's parked codes dropped) before
+   any sync can run. Same coach returning to the device keeps offline edits. */
+let DATA_OWNER=null;
+function adoptAccount(acct){
+  const id=(acct&&acct.id)||'';
+  if(!id)return;
+  if(!DATA_OWNER||DATA_OWNER!==id){
+    // No owner stamp (fresh device / demo seed) or a DIFFERENT coach was last:
+    // the local bytes must never reach the new coach's workspace.
+    freshWorkspace();
+    try{localStorage.removeItem('co-legacy-ws')}catch(e){}
+    if(DATA_OWNER&&DATA_OWNER!==id){try{localStorage.removeItem('co-ws')}catch(e){}}
+  }
+  DATA_OWNER=id;
+  saveData();
+}
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1021,6 +1042,8 @@ function loadData(){
       try{if(!localStorage.getItem(STORE_KEY+'-backup'))localStorage.setItem(STORE_KEY+'-backup',raw)}catch(e){}
       return false;
     }
+    DATA_OWNER=d.owner||null; // whose tenant these local bytes belong to
+    WS_OWNER=d.ownerName||''; // coach display name (shown on client devices)
     const repl=(arr,val)=>{arr.length=0;(val||[]).forEach(x=>arr.push(x))};
     repl(CLIENTS,d.CLIENTS);repl(EVENTS,d.EVENTS);repl(NOTES,d.NOTES);repl(MSGS,d.MSGS);
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
@@ -1051,6 +1074,16 @@ const AUTH={token:'',coach:null,ws:null,access:null};
 try{AUTH.token=localStorage.getItem('co-auth')||''}catch(e){}
 const authHeaders=()=>AUTH.token?{'authorization':'Bearer '+AUTH.token}:{};
 const authSet=t=>{AUTH.token=t||'';try{t?localStorage.setItem('co-auth',t):localStorage.removeItem('co-auth')}catch(e){}};
+/* v16.5 — the signed-in coach's REAL identity. The UI used to hardcode the
+   demo persona "Soroush Karimi / soroush@coachos.app" in the sidebar, topbar
+   and profile, so the name chosen at signup never appeared anywhere (it WAS
+   saved server-side — only the display was wrong). Falls back to the persona
+   in demo mode. */
+const coachName=()=>(AUTH.coach&&AUTH.coach.name)||'Coach Soroush';
+const coachFirst=()=>coachName().trim().split(/\s+/)[0]||'Coach';
+const coachEmail=()=>(AUTH.coach&&AUTH.coach.email)||'soroush@coachos.app';
+let WS_OWNER=''; // coach display name carried inside the workspace payload
+const wsOwnerName=()=>WS_OWNER||coachName();
 /* Full cloud-state reset — MUST run whenever the active account changes,
    otherwise the next coach's sync keeps targeting the previous coach's
    workspace (403 foreign) and pulls foreign data over local rows. */
@@ -1100,7 +1133,7 @@ async function authSignup(){
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
     // New account: drop the local demo seed and any previous tenant's cloud
     // state, so the coach starts with an empty, correctly-owned workspace.
-    cloudReset();freshWorkspace();saveData();
+    cloudReset();adoptAccount(d.coach);
     S.role='coach';S.view='dash';render();
     toast(t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
@@ -1115,15 +1148,20 @@ async function authLogin(){
     const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
-    // Account switched in this tab: drop the previous tenant's cloud target
-    // so sync never touches (or merges) another coach's workspace.
-    if(CLOUD.code&&CLOUD.code!==((d.workspace&&d.workspace.code)||''))cloudReset();
+    // Account switched in this tab: reset the sync target AND wipe local data
+    // that belongs to the previous coach — otherwise the first sync pushes the
+    // previous coach's clients into this coach's (empty) workspace.
+    cloudReset();adoptAccount(d.coach);
     S.role='coach';S.view='dash';render();
     toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
   }catch(e){toast(t('Could not reach server'))}
 }
 async function authLogout(){
+  // Flush pending local edits BEFORE tearing down the sync target — a quick
+  // add-client → sign-out otherwise loses them (cloudReset drops the dirty
+  // flag and the next account's adoptAccount wipes the local bytes).
+  if(CLOUD.on&&CLOUD.dirty){try{await cloudPush()}catch(e){}}
   try{if(AUTH.token)await authApi('/api/auth/logout',{method:'POST'})}catch(e){}
   authSet('');AUTH.coach=null;AUTH.ws=null;AUTH.access=null;
   cloudReset(); // never let the next session reuse this tenant's sync target
@@ -1173,6 +1211,21 @@ async function authMe(){
     AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
     return true;
   }catch(e){return false}
+}
+/* v16.5 — rename the signed-in coach. The profile form used to be dead
+   (Save just toasted) and every screen showed the hardcoded demo persona,
+   which is why the signup name seemed "not registered". */
+async function authProfile(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const fn=($('pf-fn')?.value||'').trim(),ln=($('pf-ln')?.value||'').trim();
+  const name=(fn+' '+ln).trim().slice(0,80);
+  if(name.length<2){toast(t('Enter your name'));return}
+  try{
+    const {ok,d}=await authApi('/api/auth/profile',{method:'POST',body:JSON.stringify({name})});
+    if(!ok||!d||!d.ok){toast(t(authErrMsg(d,0)));return}
+    if(AUTH.coach)AUTH.coach.name=d.coach.name;
+    render();toast(t('Profile saved'));
+  }catch(e){toast(t('Could not reach server'))}
 }
 const authPlanLabel=()=>{
   const a=AUTH.access||{};
@@ -1340,7 +1393,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (Netlify Functions + Netlify Blobs) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1380,6 +1433,9 @@ const cloudPut=async data=>{
 function cloudMerge(d,adopt){
   if(!d||typeof d!=='object')return false;
   let ch=false;const take=!!adopt&&!CLOUD.dirty;
+  // The coach's display name rides the payload so CLIENT devices can greet
+  // the right coach (they have no account of their own).
+  if(typeof d.ownerName==='string'&&d.ownerName.trim()&&d.ownerName!==WS_OWNER){WS_OWNER=d.ownerName;ch=true}
   Object.keys(DEAD).forEach(k=>{const set=new Set(DEAD[k].map(String));((d.DEAD||{})[k]||[]).forEach(x=>{const s=String(x);if(!set.has(s)){set.add(s);DEAD[k].push(s);ch=true}})});
   const deadSets={};Object.keys(DEAD).forEach(k=>deadSets[k]=new Set(DEAD[k].map(String)));
   ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
@@ -1799,7 +1855,7 @@ function vDash(){
      :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
-  <div class="page-h"><div><h1>${t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${t('Wed, Jul 8 2026')}</div></div>
+  <div class="page-h"><div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${t('Wed, Jul 8 2026')}</div></div>
   <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
   <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div></div>
   <div class="stats">${stats.map(([k,v,sub,vis,i])=>`
@@ -2475,11 +2531,11 @@ function vSettings(){
   const tabs=[['profile','Profile'],['account','Account'],['notifications','Notifications'],['appearance','Appearance'],['calendar','Calendar'],['workout','Workout Settings'],['units','Units'],['privacy','Privacy'],['security','Security'],...(AUTH.coach&&AUTH.coach.role==='admin'?[['admin','Admin']]:[])];
   const sw=(path,on)=>`<label class="sw"><input type="checkbox" ${on?'checked':''} data-act="pref-sw" data-k="${path}"><i></i></label>`;
   const panels={
-  profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px">${av(t('Coach Soroush'),56,3)}<div><b style="font-size:16px">${t('Soroush Karimi')}</b><div class="muted" style="font-size:12.5px">${t('Certified Strength & Conditioning Coach')}</div></div></div>
-    <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" value="${t('Soroush Karimi').split(' ')[0]}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" value="${t('Soroush Karimi').split(' ')[1]||''}"></div>
-    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="soroush@coachos.app"></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
+  profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px">${av(coachName(),56,3)}<div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div></div></div>
+    <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
+    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
-    <button class="btn btn-primary" data-act="toast" data-msg="Profile saved">${t('Save Changes')}</button></div>`,
+    <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
   account:`<div class="card" style="padding:22px">
     <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line2)"><div><b>${t('Plan')}</b><div class="sub">${AUTH.access?esc(authPlanLabel()):t('Coach OS Pro · Unlimited clients')}</div></div><span class="bdg bdg-lime">${AUTH.access?esc((AUTH.access.status||'trial').toUpperCase()):'PRO'}</span></div>
     ${AUTH.token?`
@@ -3179,7 +3235,7 @@ function renderMobile(){
       <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACH&nbsp;<b>OS</b></span></div>
       <div class="row" style="gap:4px">
         <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
-        <div style="cursor:pointer" data-act="mtab" data-t="more">${av(t('Coach Soroush'),34,3)}</div>
+        <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
@@ -3217,7 +3273,7 @@ function mToday(){
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
   const att=attentionList();
   return `<div class="mstack">
-    <div class="ccard cstat"><div><b style="font-size:15.5px">${t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
+    <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
     <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
     <div class="ccard" style="padding:6px 14px">
       <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
@@ -3306,8 +3362,8 @@ function mMore(){
     ['Nutrition','utensils','mnut']];
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
-      ${av(t('Coach Soroush'),46,3)}
-      <div style="flex:1;min-width:0"><b>${t('Soroush Karimi')}</b><div class="muted" style="font-size:11.5px">${t('PRO PLAN')}</div></div>
+      ${av(coachName(),46,3)}
+      <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div>
       ${langBtn('btn-outline btn-sm')}
     </div>
     <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
@@ -3518,8 +3574,8 @@ function cChat(){
   const c=client(S.cid);
   const ms=MSGS.filter(m=>m.client===c.name);
   return `<div class="cbody" style="padding-bottom:20px">
-    <div class="ccard" style="display:flex;align-items:center;gap:10px;border-color:var(--acc-line2)">${av(t('Coach Soroush'),42,3)}
-      <div style="flex:1;min-width:0"><b>${t('Coach Soroush')}</b><div class="muted" style="font-size:11px">${t('Certified Strength & Conditioning Coach')}</div></div>
+    <div class="ccard" style="display:flex;align-items:center;gap:10px;border-color:var(--acc-line2)">${av(wsOwnerName(),42,3)}
+      <div style="flex:1;min-width:0"><b>${esc(wsOwnerName())}</b><div class="muted" style="font-size:11px">${t('Certified Strength & Conditioning Coach')}</div></div>
       <span class="bdg bdg-lime" style="font-size:10px">${t('Replies within ~4h')}</span>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;padding:2px 0">
@@ -3612,7 +3668,7 @@ function shell(inner){
       <div class="nav-it ${S.view==='settings'?'on':''}" data-act="nav" data-view="settings">${ic('gear',17)}<span class="txt">${t('Settings')}</span></div>
       <div class="nav-it" data-act="toast" data-msg="Help center — docs & shortcuts">${ic('help',17)}<span class="txt">${t('Help')}</span></div>
       <div class="mwrap" data-mw>
-        <div class="sprof" data-act="mw">${av(t('Coach Soroush'),34,3)}<div><div class="n">${t('Soroush Karimi')}</div><div class="p">${t('PRO PLAN')}</div></div></div>
+        <div class="sprof" data-act="mw">${av(coachName(),34,3)}<div><div class="n">${esc(coachName())}</div><div class="p">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div></div>
         <div class="menu">
           <div class="menu-it" data-act="nav" data-view="settings">${ic('gear',15)} ${t('Settings')}</div>
           <div class="menu-it" data-act="switch-role">${ic('users',15)} ${t('Switch role')}</div>
@@ -3640,7 +3696,7 @@ function shell(inner){
         ${NOTIFS.map(n=>`<div class="menu-it" style="align-items:flex-start" data-act="toast" data-msg="${esc(n.t)}"><span style="width:8px;height:8px;border-radius:50%;background:${n.un?'var(--accent-deep)':'var(--line)'};margin-top:6px;flex:none"></span><div><div style="font-weight:${n.un?600:500}">${t(n.t)}</div><div class="muted" style="font-size:11.5px">${t(n.d)}</div></div></div>`).join('')}
         </div>
       </div>
-      ${av(t('Coach Soroush'),34,3)}
+      ${av(coachName(),34,3)}
     </div>
     <div class="content">${inner}</div>
   </div></div>`;
@@ -3897,6 +3953,7 @@ document.addEventListener('click',e=>{
     case 'auth-goto-signup':S.role=null;S.loginRole='coach';S.authMode='signup';S.view='login';render();break;
     case 'signup':authSignup();break;
     case 'login':authLogin();break;
+    case 'profile-save':authProfile();break;
     case 'forgot':forgotModal();break;
     case 'forgot-send':authForgotSend();break;
     case 'reset-do':authResetDo();break;
@@ -4414,6 +4471,12 @@ loadData();
 (async()=>{ // Phase-1 bootstrap: session first, then tenant-owned code
   try{
     if(AUTH.token)await authMe();
+    // v16.4 — the local payload must belong to the signed-in coach. On a
+    // shared device (or two tabs) STORE_KEY may still hold the PREVIOUS
+    // coach's clients; without this wipe the first sync pushes them into this
+    // coach's workspace (the exact cross-tenant leak adoptAccount fixes at
+    // login — this covers the reload path too).
+    if(AUTH.coach)adoptAccount(AUTH.coach);
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.
     let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
@@ -4421,7 +4484,11 @@ loadData();
       // `co-legacy-ws` holds the pre-account anonymous code that cloudReset()
       // parks before clearing `co-ws` on sign-in (see cloudReset()).
       const saved=(localStorage.getItem('co-legacy-ws')||localStorage.getItem('co-ws')||'').toUpperCase().trim();
-      if(!code)code=saved;
+      // Fall back to a parked code ONLY when it cannot belong to someone else:
+      // an anonymous device (no token), or an authenticated coach with no
+      // workspace (legacy claim). A token whose authMe FAILED must never sync
+      // into a parked code — it may be the previous coach's workspace.
+      if(!code&&(!AUTH.token||(AUTH.coach&&!AUTH.ws)))code=saved;
       // One-time legacy import: an old anonymous device code moves under the
       // coach's tenant on first authenticated push (server binds ownership).
       if(code&&AUTH.coach&&(!AUTH.ws||!AUTH.ws.code)&&saved){
