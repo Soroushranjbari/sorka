@@ -128,7 +128,7 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
       <div class="who"><div class="ava" id="ava">—</div><div><b id="cname">—</b><span id="cemail">—</span></div></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <a class="btn line" style="padding:11px 18px" href="/index.html" id="t-openapp">Open the app</a>
-        <button class="btn line" style="padding:11px 18px" id="logoutBtn" id="t-logout">Log out</button>
+        <button class="btn line" style="padding:11px 18px" id="logoutBtn"><span id="t-logout">Log out</span></button>
       </div>
     </div>
     <div class="subcard">
@@ -153,7 +153,11 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
             <thead><tr><th id="t-th-date">Date</th><th id="t-th-plan">Plan</th><th id="t-th-amt">Amount</th><th id="t-th-code">Code</th></tr></thead>
             <tbody id="ordersBody"></tbody>
           </table>
-          <div class="empty" id="ordersEmpty" style="display:none" id="t-noorders">No purchases yet</div>
+          <!-- one id per element: a repeated id attribute is ignored by the HTML
+               parser, so the old id="ordersEmpty" id="t-noorders" pair meant
+               getElementById('t-noorders') was always null and the message was
+               never translated. -->
+          <div class="empty" id="ordersEmpty" style="display:none"><span id="t-noorders">No purchases yet</span></div>
         </div>
         <p class="note" id="t-histnote">Codes are single-use. Redeem in the app: Settings → Account → Coupon.</p>
       </div>
@@ -188,13 +192,19 @@ function applyLang(){
     if(FA[key]||!fa)el.textContent=fa?(FA[key]??key):key;
   });
   try{localStorage.setItem('coach-os-locale',lang)}catch(e){}
-  if(TOKEN)render();
+  // applyLang() is also called on page load; render() does not exist in this
+  // file, so a signed-in reload threw ReferenceError here and the dashboard
+  // silently stopped re-rendering on every language switch.
+  if(TOKEN)loadDash();
 }
 $('langToggle').addEventListener('click',()=>{lang=lang==='fa'?'en':'fa';applyLang()});
 
 let TOKEN='';try{TOKEN=localStorage.getItem('coach-os-shop-token')||''}catch(e){}
 const showErr=m=>{const e=$('err');e.textContent=t(m);e.classList.add('show')};
-const planName=p=>t(p||'trial');
+/* t() returns the key unchanged in English, and the key is the raw plan id
+   ('professional', 'club'), so the dashboard used to show lowercase names. */
+const EN_PLAN={trial:'Trial',basic:'Basic',professional:'Professional',club:'Club'};
+const planName=p=>lang==='fa'?t(p||'trial'):(EN_PLAN[p]||EN_PLAN.trial);
 const daysLeftOf=b=>{if(!b)return null;const end=b.subEndsAt||b.trialEndsAt;return end?Math.max(0,Math.ceil((end-Date.now())/86400000)):null};
 
 function renderDash(d){
@@ -226,9 +236,14 @@ function renderOrders(orders){
   $('ordersEmpty').style.display='none';
   orders.forEach(o=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${new Date(o.createdAt).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</td>
-      <td>${planName(o.planId)}</td><td>${nf(o.amount.toLocaleString('en-US'))} IRT</td>
-      <td class="code">${o.coupon||'—'}</td>`;
+    // Built with textContent, not innerHTML: order records live in the KV store
+    // and can be seeded/edited outside this app, so their values must not be
+    // able to inject markup into the page.
+    const td=()=>{const x=document.createElement('td');tr.appendChild(x);return x};
+    td().textContent=new Date(o.createdAt).toLocaleDateString(lang==='fa'?'fa-IR':'en-US');
+    td().textContent=planName(o.planId);
+    td().textContent=`${nf((o.amount||0).toLocaleString('en-US'))} IRT`;
+    const code=td();code.className='code';code.textContent=o.coupon||'—';
     tb.appendChild(tr);
   });
 }
@@ -236,12 +251,16 @@ async function loadDash(){
   try{
     const s=await fetch('/shop/api/account/session',{headers:{authorization:'Bearer '+TOKEN}});
     if(s.status===401){TOKEN='';try{localStorage.removeItem('coach-os-shop-token')}catch(e){};return}
-    const sd=await s.json();
+    // Anything other than 401 used to be swallowed by an empty catch: a network
+    // failure or a 503 (account-service-not-configured) showed the bare login
+    // form with no explanation at all.
+    if(!s.ok){showErr('Could not reach server');return}
+    const sd=await s.json().catch(()=>null);
     if(sd&&sd.ok){renderDash(sd);renderOrders([])}
     const o=await fetch('/shop/api/account/orders',{headers:{authorization:'Bearer '+TOKEN}});
-    const od=await o.json();
+    const od=await o.json().catch(()=>null);
     if(od&&od.ok)renderOrders(od.orders);
-  }catch(e){}
+  }catch(e){showErr('Could not reach server')}
 }
 $('loginBtn').addEventListener('click',async()=>{
   $('err').classList.remove('show');
@@ -261,7 +280,8 @@ $('loginBtn').addEventListener('click',async()=>{
   finally{btn.classList.remove('loading');btn.disabled=false}
 });
 $('logoutBtn').addEventListener('click',()=>{TOKEN='';try{localStorage.removeItem('coach-os-shop-token')}catch(e){};location.reload()});
-if(TOKEN)loadDash();
+// applyLang() itself calls loadDash() when a token is present — calling it here
+// as well would fire two identical session+orders round-trips on every load.
 applyLang();
 </script>
 </body>

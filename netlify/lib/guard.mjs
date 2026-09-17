@@ -33,6 +33,35 @@ export function rateLimit(key, limit, windowMs) {
   };
 }
 
+/* ---------- Per-key async mutex ----------
+   Serializes critical read-modify-write sections (coupon redemption, account
+   creation, workspace claiming, data PUTs) within one process. Without it,
+   two concurrent requests can both read the same counter/revision before
+   either write lands (check-then-act race): e.g. a multi-use coupon redeemed
+   twice by racing requests, or two PUTs with the same rev both passing the
+   optimistic-concurrency check. Like the rate limiter above this is
+   per-instance; multi-instance deployments get the same guarantee only within
+   each instance (a DB-level lock would be needed for global serialization).
+   Lock ordering: callers may nest locks only in a consistent order
+   (coupon → account); no code path acquires them in the opposite order. */
+const locks = new Map(); // key -> tail promise of the wait chain
+
+export async function withLock(key, fn) {
+  const prev = locks.get(key) || Promise.resolve();
+  let release;
+  const gate = new Promise((res) => { release = res; });
+  const tail = prev.then(() => gate);
+  locks.set(key, tail);
+  await prev; // wait for every prior holder of this key
+  try {
+    return await fn();
+  } finally {
+    release();
+    // Drop the entry when nobody queued behind us, so the map stays small.
+    queueMicrotask(() => { if (locks.get(key) === tail) locks.delete(key); });
+  }
+}
+
 /** Best-effort client IP (proxy headers first, as on Netlify/Vercel/nginx). */
 export function ipOf(req) {
   const h = req.headers || new Headers();
@@ -112,6 +141,16 @@ export const badJson = () =>
 export const CSP =
   "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
   "font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; " +
+  "media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
+
+// The shop landing page legitimately loads @fontsource CSS + three.js from
+// CDNs. Applying CSP above to it silently blocked both, so it gets its own
+// (still locked-down) policy. Mirrored in netlify.toml for /shop/*.
+export const CSP_SHOP =
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; " +
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
+  "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; " +
+  "img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; " +
   "media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
 
 export const SECURITY_HEADERS = {

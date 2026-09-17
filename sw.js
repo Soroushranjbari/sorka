@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v16-1';
+const CACHE = 'co-os-v16-2';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
@@ -12,6 +12,9 @@ self.addEventListener('activate', e => {
   );
 });
 self.addEventListener('fetch', e => {
+  // Only GET is cacheable (cache.put rejects for POST/PUT/… with an unhandled
+  // rejection) and a cached response must never answer a mutating request.
+  if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   if (url.pathname.startsWith('/api/')) return; // never intercept the sync API
   if (url.pathname.startsWith('/shop')) return; // shop is online-only marketing — no SW, no cache collisions (?plan=…)

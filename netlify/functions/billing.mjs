@@ -7,11 +7,22 @@
 //   POST /api/billing/admin-grant    (Bearer admin, {email|id, planId, days}) -> grant/extend sub
 //   POST /api/billing/admin-suspend  (Bearer admin, {email|id, suspended})    -> freeze/restore access
 //   POST /api/billing/issue-coupon   (x-api-key: ADMIN_API_KEY, shop server-to-server) -> {coupons:[...]}
-import { store, j, bearerOf, readJson, sessionOf, accountById, accessOf, ownerOf, timingSafeEqual } from '../lib/saas.mjs';
+import { store, j, bearerOf, sessionOf, accountById, accessOf, timingSafeEqual } from '../lib/saas.mjs';
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
-import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
+import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure, withLock } from '../lib/guard.mjs';
 /* Billing bodies are tiny (codes/plan ids) — 64 KB is generous. */
 const BILL_MAX_BYTES = 64_000;
+
+/** Admin predicate used by EVERY admin endpoint: durable role flag OR an
+ *  explicit ADMIN_EMAILS allow-list (empty list = role flag only). Previously
+ *  admin-grant/admin-suspend accepted ONLY the role flag while admin-overview
+ *  and coupon creation also accepted the list — inconsistent behaviour when
+ *  ADMIN_EMAILS changed after signup but the coach had not logged in since. */
+const isAdmin = (acct, email) => {
+  if (acct?.role === 'admin') return true;
+  const admins = adminEmails();
+  return admins.length > 0 && admins.includes(String(email || '').toLowerCase());
+};
 async function readSmall(req) {
   const { data, tooLarge: big, bad } = await readJsonCapped(req, BILL_MAX_BYTES);
   if (big) return { err: tooLarge(BILL_MAX_BYTES) };
@@ -54,39 +65,47 @@ async function redeem(req, st) {
   if (err) return err;
   const code = normCoupon(body?.code);
   if (!code) return j(400, { ok: false, error: 'bad-code' });
-  const c = await st.get(`coupon:${code}`, { type: 'json' });
-  if (!c || c.isActive === false) return j(404, { ok: false, error: 'unknown-code' });
-  if (c.expiresAt && Date.now() > c.expiresAt) return j(410, { ok: false, error: 'code-expired' });
-  if ((c.usedCount || 0) >= (c.maxUses || 1)) return j(409, { ok: false, error: 'code-used-up' });
-  if (!PLANS[c.planId]) return j(500, { ok: false, error: 'bad-plan' });
-  c.usedCount = (c.usedCount || 0) + 1;
-  await st.setJSON(`coupon:${code}`, c);
-  grantSub(acct, { planId: c.planId, days: c.durationDays || 30, provider: 'coupon', tracking: code });
-  await st.setJSON(`acct:${acct.email}`, acct);
-  // Keep the owned workspace row in sync with the new plan (same rule as
-  // requestPayment flow below — ws.plan/status mirror the subscription).
-  try {
-    if (acct.workspaceId) {
-      const w = await st.get(`ws:${acct.workspaceId}`, { type: 'json' });
-      if (w) { w.plan = acct.plan; w.status = 'active'; await st.setJSON(`ws:${acct.workspaceId}`, w); }
-    }
-  } catch {}
-  const payId = newPayId();
-  await st.setJSON(`pay:${payId}`, {
-    id: payId, coachId: acct.id, planId: c.planId, amount: 0, currency: 'IRT',
-    provider: 'coupon', tracking: code, status: 'paid',
-    startsAt: acct.sub_started_at, endsAt: acct.sub_ends_at, createdAt: Date.now()
-  });
-  await pushIdx(st, 'index:payments', payId);
-  let seats = 0;
-  try {
-    if (acct.workspaceId) {
-      const m = await st.get(`ws-meta:${acct.workspaceId}`, { type: 'json' });
-      if (m && m.data) seats = countSeats(m.data);
-    }
-  } catch {}
-  const plan = planOf(acct);
-  return j(200, { ok: true, billing: publicBilling(acct), quota: { plan: plan.id, max: plan.maxClients, used: seats } });
+  // Redemption is a check-then-increment on coupon.usedCount plus a
+  // read-modify-write on the account — both must be serialized or two racing
+  // requests can redeem the same last use twice (and lose one subscription
+  // extension). Lock order: coupon → account (no path locks them reversed).
+  return withLock(`coupon:${code}`, () => withLock(`acct:${acct.email}`, async () => {
+    // Re-read the account inside the lock — it may have changed since.
+    const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
+    const c = await st.get(`coupon:${code}`, { type: 'json' });
+    if (!c || c.isActive === false) return j(404, { ok: false, error: 'unknown-code' });
+    if (c.expiresAt && Date.now() > c.expiresAt) return j(410, { ok: false, error: 'code-expired' });
+    if ((c.usedCount || 0) >= (c.maxUses || 1)) return j(409, { ok: false, error: 'code-used-up' });
+    if (!PLANS[c.planId]) return j(500, { ok: false, error: 'bad-plan' });
+    c.usedCount = (c.usedCount || 0) + 1;
+    await st.setJSON(`coupon:${code}`, c);
+    grantSub(cur, { planId: c.planId, days: c.durationDays || 30, provider: 'coupon', tracking: code });
+    await st.setJSON(`acct:${cur.email}`, cur);
+    // Keep the owned workspace row in sync with the new plan (same rule as
+    // requestPayment flow below — ws.plan/status mirror the subscription).
+    try {
+      if (cur.workspaceId) {
+        const w = await st.get(`ws:${cur.workspaceId}`, { type: 'json' });
+        if (w) { w.plan = cur.plan; w.status = 'active'; await st.setJSON(`ws:${cur.workspaceId}`, w); }
+      }
+    } catch {}
+    const payId = newPayId();
+    await st.setJSON(`pay:${payId}`, {
+      id: payId, coachId: cur.id, planId: c.planId, amount: 0, currency: 'IRT',
+      provider: 'coupon', tracking: code, status: 'paid',
+      startsAt: cur.sub_started_at, endsAt: cur.sub_ends_at, createdAt: Date.now()
+    });
+    await pushIdx(st, 'index:payments', payId);
+    let seats = 0;
+    try {
+      if (cur.workspaceId) {
+        const m = await st.get(`ws-meta:${cur.workspaceId}`, { type: 'json' });
+        if (m && m.data) seats = countSeats(m.data);
+      }
+    } catch {}
+    const plan = planOf(cur);
+    return j(200, { ok: true, billing: publicBilling(cur), quota: { plan: plan.id, max: plan.maxClients, used: seats } });
+  }));
 }
 
 async function createCoupon(req, st) {
@@ -94,10 +113,7 @@ async function createCoupon(req, st) {
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
-  const admins = adminEmails();
-  if (acct.role !== 'admin' && (!admins.length || !admins.includes((s.email || '').toLowerCase()))) {
-    return j(403, { ok: false, error: 'forbidden' });
-  }
+  if (!isAdmin(acct, s.email)) return j(403, { ok: false, error: 'forbidden' });
   const { data: cbody, err: err1 } = await readSmall(req);
   if (err1) return err1;
   const body = cbody || {};
@@ -110,13 +126,21 @@ async function createCoupon(req, st) {
   const durationDays = Math.max(1, Math.min(3650, Number(body.durationDays) || 30));
   const maxUses = Math.max(1, Math.min(1000, Number(body.maxUses) || 1));
   const expiresInDays = Number(body.expiresInDays) || 0;
-  await st.setJSON(`coupon:${code}`, {
-    code, planId, durationDays, maxUses, usedCount: 0, isActive: true,
-    expiresAt: expiresInDays > 0 ? Date.now() + expiresInDays * 86400000 : null,
-    createdAt: Date.now()
+  // Creating is serialized with the shop's issue-coupon endpoint, and an
+  // existing code is rejected instead of silently overwritten — the old
+  // behaviour reset usedCount to 0, turning a spent single-use code live.
+  return withLock('coupons', async () => {
+    if (await st.get(`coupon:${code}`, { type: 'json' })) {
+      return j(409, { ok: false, error: 'code-exists', code });
+    }
+    await st.setJSON(`coupon:${code}`, {
+      code, planId, durationDays, maxUses, usedCount: 0, isActive: true,
+      expiresAt: expiresInDays > 0 ? Date.now() + expiresInDays * 86400000 : null,
+      createdAt: Date.now()
+    });
+    await pushIdx(st, 'index:coupons', code);
+    return j(200, { ok: true, coupon: { code, planId, durationDays, maxUses } });
   });
-  await pushIdx(st, 'index:coupons', code);
-  return j(200, { ok: true, coupon: { code, planId, durationDays, maxUses } });
 }
 
 async function requestPay(req, st) {
@@ -144,10 +168,8 @@ async function adminOverview(req, st) {
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
-  const admins = adminEmails();
-  const me = (s.email || '').toLowerCase();
   // Auth: durable role flag OR explicit ADMIN_EMAILS allow-list.
-  if (acct.role !== 'admin' && (!admins.length || !admins.includes(me))) {
+  if (!isAdmin(acct, s.email)) {
     return j(403, { ok: false, error: 'forbidden' });
   }
   const idx = (await st.get('index:coaches', { type: 'json' })) || [];
@@ -201,7 +223,7 @@ async function adminGrant(req, st) {
   const s = await sessionOf(st, bearerOf(req));
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const admin = await accountById(st, s.coachId);
-  if (!admin || admin.role !== 'admin') return j(403, { ok: false, error: 'forbidden' });
+  if (!admin || !isAdmin(admin, s.email)) return j(403, { ok: false, error: 'forbidden' });
   const { data: body, err } = await readSmall(req);
   if (err) return err;
   const target = await coachByRef(st, body || {});
@@ -225,15 +247,18 @@ async function adminSuspend(req, st) {
   const s = await sessionOf(st, bearerOf(req));
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const admin = await accountById(st, s.coachId);
-  if (!admin || admin.role !== 'admin') return j(403, { ok: false, error: 'forbidden' });
+  if (!admin || !isAdmin(admin, s.email)) return j(403, { ok: false, error: 'forbidden' });
   const { data: body, err } = await readSmall(req);
   if (err) return err;
   const target = await coachByRef(st, body || {});
   if (!target) return j(404, { ok: false, error: 'coach-not-found' });
   if (target.role === 'admin') return j(400, { ok: false, error: 'cannot-suspend-admin' });
   const suspended = !!body?.suspended;
-  target.sub_status = suspended ? 'suspended' : (target.sub && target.sub.status === 'active' ? 'active' : target.sub_status === 'active' ? 'active' : target.sub_status);
-  if (!suspended && target.sub_status !== 'active') {
+  if (suspended) {
+    target.sub_status = 'suspended';
+  } else if (target.sub && target.sub.status === 'active') {
+    target.sub_status = 'active';
+  } else if (target.sub_status === 'suspended') {
     // Un-suspending without an active sub falls back to trial/expiry logic.
     delete target.sub_status;
   }
@@ -265,6 +290,9 @@ async function issueCoupon(req, st) {
     let c = ''; for (let i = 0; i < 10; i++) c += C[Math.floor(Math.random() * C.length)];
     return `${planId.slice(0, 3).toUpperCase()}-${c}`;
   };
+  // Serialize with admin coupon creation so the exists-check + write pair
+  // cannot interleave with another issuer creating the same explicit code.
+  return withLock('coupons', async () => {
   // Phase 1 — resolve ALL codes first (explicit code + collisions checked
   // up-front) so a mid-loop failure can never leave a partial batch behind.
   const codes = [];
@@ -288,6 +316,7 @@ async function issueCoupon(req, st) {
     out.push(code);
   }
   return j(200, { ok: true, coupons: out, planId, durationDays, maxUses });
+  });
 }
 
 export default async (req) => {

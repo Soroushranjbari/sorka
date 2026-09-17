@@ -1,6 +1,6 @@
 // Coach OS — guard contract tests: rate limiter, body cap, security headers.
 // No network, no services — pure logic over mocked Request objects.
-import { rateLimit, readBody, readJsonCapped, secure, ipOf, SECURITY_HEADERS, CSP } from '../netlify/lib/guard.mjs';
+import { rateLimit, readBody, readJsonCapped, secure, ipOf, withLock, SECURITY_HEADERS, CSP } from '../netlify/lib/guard.mjs';
 
 let pass = 0, fail = 0;
 const A = (name, cond) => { if (cond) { pass++; console.log('  PASS', name); } else { fail++; console.log('  FAIL', name); } };
@@ -42,6 +42,26 @@ console.log('== ip extraction ==');
   const req = new Request('http://x/', { headers: { 'x-forwarded-for': '1.2.3.4, 5.6.7.8' } });
   A('xff first ip', ipOf(req) === '1.2.3.4');
   A('missing ip -> local', ipOf(new Request('http://x/')) === 'local');
+}
+console.log('== withLock (per-key mutex) ==');
+{
+  let running = 0, maxConcurrent = 0;
+  const task = () => withLock('L', async () => {
+    running++; maxConcurrent = Math.max(maxConcurrent, running);
+    await new Promise((r) => setTimeout(r, 5));
+    running--;
+  });
+  await Promise.all([task(), task(), task(), task()]);
+  A('serializes concurrent sections', maxConcurrent === 1);
+  A('returns the callback value', (await withLock('L2', async () => 42)) === 42);
+  let threw = false;
+  try { await withLock('L3', async () => { throw new Error('boom'); }); } catch { threw = true; }
+  A('propagates callback errors', threw);
+  A('releases the lock after an error', (await withLock('L3', async () => 'ok')) === 'ok');
+  // Independent keys must not block each other.
+  const t0 = Date.now();
+  await Promise.all([withLock('K1', () => new Promise((r) => setTimeout(r, 30))), withLock('K2', () => new Promise((r) => setTimeout(r, 30)))]);
+  A('independent keys run in parallel', Date.now() - t0 < 55);
 }
 
 console.log(`GUARD: ${pass} pass, ${fail} fail`);

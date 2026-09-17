@@ -10,7 +10,7 @@ import {
   ownerOf, accessOf, CODE_RE, newId
 } from '../lib/saas.mjs';
 import { planOf, countSeats } from '../lib/billing.mjs';
-import { readJsonCapped, tooLarge, badJson, secure } from '../lib/guard.mjs';
+import { readJsonCapped, tooLarge, badJson, secure, withLock } from '../lib/guard.mjs';
 
 /* Workspace payload cap (default 5 MB — hundreds of clients with workouts,
    notes and measurements fit comfortably). Override with DATA_MAX_BYTES. */
@@ -71,6 +71,16 @@ async function handleGet(st, req, code) {
 }
 
 async function handlePut(st, req, code) {
+  // Serialize all writes per workspace code. The rev comparison below is
+  // optimistic concurrency — two concurrent PUTs carrying the same rev must
+  // not BOTH pass the check (lost update), and two racing "create" paths
+  // must not both build a workspace for one code. The per-code lock gives
+  // both guarantees within an instance (multi-instance deployments still
+  // rely on the KV store's last-write-wins semantics).
+  return withLock(`data:${code}`, () => handlePutLocked(st, req, code));
+}
+
+async function handlePutLocked(st, req, code) {
   const { data: body, tooLarge: big, bad } = await readJsonCapped(req, DATA_MAX_BYTES);
   if (big) return tooLarge(DATA_MAX_BYTES);
   if (bad) return badJson();

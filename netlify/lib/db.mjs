@@ -157,15 +157,24 @@ export function kv(ns) {
   };
 }
 
-/** Health info for the /api/health endpoint (no secrets leaked). */
+/**
+ * Health info for the public /api/health endpoint.
+ * IMPORTANT: this endpoint is unauthenticated, so it must not hand out
+ * internal infrastructure details. The database host used to be returned
+ * unconditionally (e.g. `ep-xxx-pooler.c-7.us-east-2.aws.neon.tech`), which
+ * tells an attacker exactly which cloud/region/DB is behind the app. It is
+ * now only reported outside production.
+ */
 export function dbInfo() {
+  const isProd = (process.env.NODE_ENV || '').toLowerCase() === 'production';
   let host = null;
-  if (DATABASE_URL) {
+  if (DATABASE_URL && !isProd) {
     try { host = new URL(DATABASE_URL).host; } catch { host = '?'; }
   }
   return {
     backend: BACKEND,
     postgresConfigured: !!DATABASE_URL,
+    // null in production (see above); callers should treat it as optional.
     postgresHost: host,
     fileConfigured: !!KV_FILE
   };

@@ -434,7 +434,12 @@ target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle c
 mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
 globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
 flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
-play:'<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/>'};
+play:'<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/>',
+// These three were referenced by the admin panel / file list but missing from
+// the map, so ic() silently emitted an empty <svg> (blank buttons).
+refresh:'<path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/>',
+pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m21 15-5-5L5 21"/>'};
 const ic=(n,s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${P[n]||''}</svg>`;
 const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg>`;
 
@@ -990,18 +995,32 @@ let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
 const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[]};
+let __lastPack='';
 function saveData(){
+  let payload='';
   try{
-    localStorage.setItem(STORE_KEY,JSON.stringify({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB,DEAD}));
+    payload=JSON.stringify({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
+    localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
-  if(CLOUD.on)cloudSchedule(); // schedule cloud push (debounced)
+  // render() runs on EVERY interaction, so without this comparison even a pure
+  // view switch marked the workspace dirty and scheduled a full-payload PUT.
+  // Only actual data changes should reach the network.
+  if(payload&&payload!==__lastPack){
+    __lastPack=payload;
+    if(CLOUD.on)cloudSchedule();
+  }
 }
 function loadData(){
   try{
     const raw=localStorage.getItem(STORE_KEY);
     if(!raw)return false;
     const d=JSON.parse(raw);
-    if(!d||d.v!==13)return false;
+    if(!d||d.v!==13){
+      // Don't silently throw away a payload we can't read. Park it under a
+      // backup key so it can be recovered/migrated instead of vanishing.
+      try{if(!localStorage.getItem(STORE_KEY+'-backup'))localStorage.setItem(STORE_KEY+'-backup',raw)}catch(e){}
+      return false;
+    }
     const repl=(arr,val)=>{arr.length=0;(val||[]).forEach(x=>arr.push(x))};
     repl(CLIENTS,d.CLIENTS);repl(EVENTS,d.EVENTS);repl(NOTES,d.NOTES);repl(MSGS,d.MSGS);
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
@@ -1009,13 +1028,18 @@ function loadData(){
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
     Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
     Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
-    if(!EVENTS.some(e=>e.att)){EVENTS.forEach(e=>{if(e.day<TODAY)e.att='done'})}
+    /* NOTE: this used to run `if(!EVENTS.some(e=>e.att)) EVENTS.forEach(e=>e.day<TODAY&&(e.att='done'))`
+       — i.e. EVERY past session was silently marked "Attended" the first time a
+       workspace had no recorded attendance. That fabricated history fed the
+       attendance-rate KPI, the "Missed session" list and what clients see, and
+       was unrecoverable once pushed. Attendance must only be set explicitly. */
     if(TEMPLATES.some(tp=>!tp.exs&&!tp.parts)){
       const seeds=defaultTemplates();
       TEMPLATES.forEach((tp,i)=>{if(!tp.exs&&!tp.parts){const sd=seeds.find(s=>s.n===tp.n);if(sd)TEMPLATES[i]=JSON.parse(JSON.stringify(sd))}});
     }
     CLIENTS.forEach(c=>{if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:c.done||0,missed:c.missed||0},nutrition:null,measures:(MSEED[c.id]||[]).map(x=>({...x}))}});
     Object.keys(DB).forEach(k=>{if(!DB[k].measures){DB[k].measures=(MSEED[k]||[]).map(x=>({...x}))}});
+    scrubNames(); // stored payload may predate the escaping fix — strip markup from names
     return true;
   }catch(e){return false}
 }
@@ -1033,7 +1057,18 @@ const authSet=t=>{AUTH.token=t||'';try{t?localStorage.setItem('co-auth',t):local
 function cloudReset(){
   CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;
   clearTimeout(CLOUD.pushT);
-  try{localStorage.removeItem('co-ws')}catch(e){}
+  // The 7s poll used to be started with a bare setInterval() and never cleared,
+  // so every sign-out/sign-in left another live interval behind — N accounts
+  // meant N × /api/data GETs every 7 seconds, forever, in a long-lived PWA.
+  clearInterval(CLOUD.pollT);CLOUD.pollT=null;
+  // Preserve the pre-account workspace code before dropping it: the one-time
+  // /api/auth/claim import in the bootstrap reads it, and this reset used to
+  // delete it, making that import permanently unreachable.
+  try{
+    const legacy=localStorage.getItem('co-ws');
+    if(legacy&&!localStorage.getItem('co-legacy-ws'))localStorage.setItem('co-legacy-ws',legacy);
+    localStorage.removeItem('co-ws');
+  }catch(e){}
 }
 /* Empty in-memory workspace — used when a NEW account is created so coaches
    start clean instead of inheriting the demo seed (which also instantly
@@ -1229,12 +1264,22 @@ async function billRefresh(){
   if(!AUTH.token)return;
   try{
     const {ok,d}=await authApi('/api/billing/me');
-    if(ok&&d&&d.ok){BILL.info=d.billing;BILL.quota={used:billSeats(),max:planMaxClients()};AUTH.access={status:d.billing.status,plan:d.billing.plan}}
+    if(ok&&d&&d.ok){
+      BILL.info=d.billing;
+      // Prefer the server's seat count (it's authoritative and counts the
+      // STORED workspace payload). The local re-computation is only a fallback
+      // for the very first render before /api/billing/me has answered.
+      BILL.quota=d.quota||{used:billSeats(),max:planMaxClients()};
+      AUTH.access=Object.assign({},AUTH.access,{status:d.billing.status,plan:d.billing.plan});
+    }
   }catch(e){}
 }
 const billSeats=()=>CLIENTS.filter(c=>c&&c.status!=='Archived').length;
 const planMaxClients=()=>({trial:5,basic:5,professional:30,club:200}[(AUTH.access&&AUTH.access.plan)||'trial']||5);
-const billExpired=()=>!!(AUTH.token&&AUTH.access&&AUTH.access.status==='expired');
+/* 'suspended' is a distinct access status (admin freeze) that the server also
+   enforces with 402 sub-suspended — it must count as read-only here too, or the
+   coach gets no warning before editing and then a misleading quota toast. */
+const billExpired=()=>!!(AUTH.token&&AUTH.access&&(AUTH.access.status==='expired'||AUTH.access.status==='suspended'));
 const billOverQuota=()=>billSeats()>=planMaxClients();
 function billGuard(kind){
   if(billExpired()){toast(t('Subscription expired — renew to keep editing (data is safe, read-only)'));return true}
@@ -1248,8 +1293,8 @@ async function billRedeem(){
   try{
     const {ok,d}=await authApi('/api/billing/redeem',{method:'POST',body:JSON.stringify({code})});
     if(!ok||!d||!d.ok){toast(t(billErr(d)));billRefresh();return}
-    AUTH.access={status:d.billing.status,plan:d.billing.plan};
-    BILL.info=d.billing;BILL.quota={used:billSeats(),max:planMaxClients()};
+    AUTH.access=Object.assign({},AUTH.access,{status:d.billing.status,plan:d.billing.plan});
+    BILL.info=d.billing;BILL.quota=d.quota||{used:billSeats(),max:planMaxClients()};
     render();toast(t('Plan activated ✓ — welcome to ')+d.billing.plan);
   }catch(e){toast(t('Could not reach server'))}
 }
@@ -1278,13 +1323,24 @@ const billErr=d=>{
   if(e==='code-used-up')return 'This code was already used';
   if(e==='code-expired')return 'This code has expired';
   if(e==='bad-code')return 'Enter a coupon or payment code';
-  return 'Could not reach server';
+  if(e==='bad-plan')return 'That plan is not available — pick a plan and retry';
+  if(e==='forbidden')return 'Your account is not allowed to do that';
+  if(e==='code-exists'||e==='duplicate-code')return 'That code already exists — choose another';
+  if(e==='coach-not-found')return 'No coach found with that email or ID';
+  if(e==='cannot-suspend-admin')return 'Admin accounts cannot be suspended';
+  if(e==='rate-limited')return 'Too many attempts — wait a minute and retry';
+  if(e==='sub-suspended')return 'Access suspended — contact support';
+  if(e==='sub-expired')return 'Subscription expired — renew to keep editing';
+  if(e==='quota-exceeded')return 'Client limit reached — upgrade your plan or archive a client';
+  // Fall back to the raw server code instead of a generic network message,
+  // which used to be shown for every unmapped error (including 429s).
+  return e||'Could not reach server';
 };
 
 /* ============ CLOUD SYNC (Netlify Functions + Netlify Blobs) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
-const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,started:false};
-const cloudPack=()=>({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB,DEAD});
+const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
+const cloudPack=()=>({v:13,CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1304,9 +1360,14 @@ const cloudPut=async data=>{
       CLOUD.dirty=false;
       if(AUTH.token){
         billRefresh();
+        // Branch on the actual server code: 'sub-suspended' and 'quota-exceeded'
+        // both fell into the quota message before, telling a suspended coach to
+        // "upgrade your plan or archive a client".
         toast(t(o.error==='sub-expired'
           ?'Subscription expired — renew to keep syncing (data is safe, read-only)'
-          :'Client limit reached — upgrade your plan or archive a client'));
+          :o.error==='sub-suspended'
+            ?'Access suspended — contact support (data is safe, read-only)'
+            :'Client limit reached — upgrade your plan or archive a client'));
       }
       return false;
     }
@@ -1383,6 +1444,7 @@ function cloudMerge(d,adopt){
     if(R.stats){if(!L.stats)L.stats={done:0,missed:0};['done','missed'].forEach(f=>{if((R.stats[f]||0)>(L.stats[f]||0)){L.stats[f]=R.stats[f];ch=true}})}
     if(!L.nutrition&&R.nutrition){L.nutrition=R.nutrition;ch=true}
   });
+  if(ch)scrubNames(); // remote data is untrusted too (another device wrote it)
   return ch;
 }
 const cloudResync=()=>CLIENTS.forEach(c=>syncClientSessions(c.name));
@@ -1411,7 +1473,8 @@ async function cloudPush(){
 function cloudStart(){
   if(CLOUD.started||!CLOUD.on)return;
   CLOUD.started=true;
-  setInterval(()=>{if(!document.hidden)cloudPull()},7000);
+  // Handle stored on CLOUD so cloudReset() can stop it (see cloudReset).
+  CLOUD.pollT=setInterval(()=>{if(!document.hidden)cloudPull()},7000);
 }
 async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legacy code
   if(CLOUD.on){cloudStart();return}
@@ -1456,9 +1519,19 @@ async function cloudJoinCode(){ // client: connect with the coach workspace code
   const out=await cloudFetch(v);
   if(!out||!out.ok){toast('Invalid code');return}
   if(out.exists===false){toast(t('Invalid code'));return}
+  /* Joining a workspace must start from a CLEAN slate. Previously the local
+     arrays were kept, so a device already synced to coach A that entered coach
+     B's code merged A's clients/notes/messages into B's workspace and then
+     pushed the union — the unauthenticated "student device" PUT path happily
+     accepts it. Wiping first is what cloudReset()'s own contract requires. */
+  cloudReset();
+  freshWorkspace();
   CLOUD.code=v;
-  if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true)}
-  else if(!await cloudPut(cloudPack())){toast('Could not reach workspace');return}
+  CLOUD.rev=out.rev||0;
+  if(out.data)cloudMerge(out.data,true);
+  /* If the workspace exists but holds no bytes yet, do NOT push this device's
+     local/demo data into someone else's workspace — just wait for the coach's
+     first push (cloudPull picks it up). */
   CLOUD.on=true;cloudStart();
   try{localStorage.setItem('co-ws',v)}catch(e){}
   cloudResync();render();
@@ -1472,15 +1545,62 @@ cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
 nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null};
 const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/</g,'&lt;');
+/* HTML escaper. This previously escaped ONLY "<", which was unsafe in two ways:
+   (a) any value placed in a quoted attribute (data-c="${esc(c.name)}", …) could
+       break out with a double quote and inject an event handler;
+   (b) "&", ">" and "'" rendered incorrectly. Everything rendered from user data
+       goes through this, so it must escape all five HTML-significant chars. */
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Defence-in-depth for stored data written before the escaping above existed
+   (or arriving from another device via cloud sync): client names are pure
+   display text, so strip the markup characters instead of rendering them. */
+const scrubName=s=>String(s==null?'':s).replace(/[<>]/g,'').slice(0,80);
+function scrubNames(){
+  const fix=v=>{if(v&&typeof v==='object'&&typeof v.name==='string')v.name=scrubName(v.name)};
+  CLIENTS.forEach(fix);TEMPLATES.forEach(fix);FOODS.forEach(fix);
+  [NOTES,MSGS,EVENTS,FILES,ACTIVITY,NOTIFS].forEach(arr=>arr.forEach(x=>{if(x&&typeof x.client==='string')x.client=scrubName(x.client)}));
+}
 const av=(name,s=36,hi)=>{const i=(hi??[...name].reduce((a,c)=>a+c.charCodeAt(0),0))%HUES.length;const init=name.split(' ').map(w=>w[0]).slice(0,2).join('');return `<div class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:${HUES[i%HUES.length]}">${init}</div>`};
 const avC=(raw,s=36)=>{const f=CLIENTS.find(c=>c.name===raw||t(c.name)===raw);return av(t(f?f.name:raw),s,f?f.id-1:9)};
 const stBdg=s=>({Active:`<span class="bdg bdg-green">● ${t('Active')}</span>`,Inactive:`<span class="bdg bdg-gray">● ${t('Inactive')}</span>`,'On Hold':`<span class="bdg bdg-amber">● ${t('On Hold')}</span>`,Paused:`<span class="bdg bdg-amber">● ${t('Paused')}</span>`,Archived:`<span class="bdg bdg-gray">📦 ${t('Archived')}</span>`,Pending:`<span class="bdg bdg-lime">⏳ ${t('Pending')}</span>`})[s];
 const fmtT=s=>String(Math.floor(s)).padStart(2,'0')+':'+(s%1?'30':'00');
 const fmtMS=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
 const toast=m=>{const d=document.createElement('div');d.className='toast';d.innerHTML=`${ic('check',16)}${esc(t(m))}`;$('toasts').appendChild(d);setTimeout(()=>{d.style.opacity='0';d.style.transition='.3s';setTimeout(()=>d.remove(),300)},2600)};
-const client=id=>CLIENTS.find(c=>c.id===id)||CLIENTS[0];
-const nextId=()=>CLIENTS.reduce((m,c)=>Math.max(m,+c.id||0),0)+1;
+/* Safe stand-in for "there is no client yet" (brand-new coach account).
+   client() used to return CLIENTS[0] — i.e. undefined on an empty roster — and
+   views like vBuilder/vMeasure/measModal immediately did `c.name` and
+   `DB[c.id].workouts`. The throw happened inside render(), inside the delegated
+   click listener, so the view was never replaced and every later render threw
+   too: the app was bricked until a reload. */
+const NO_CLIENT={id:0,name:'—',goal:'—',prog:'—',status:'Active',freq:'—',next:'—',nextW:'—',last:'—',streak:0,done:0,missed:0,week:0,weight:0,bf:0,h:0,email:''};
+const client=id=>{
+  const c=CLIENTS.find(x=>x.id===id)||CLIENTS[0];
+  if(c)return c;
+  // Empty roster: hand back the placeholder and make sure its DB bucket exists
+  // so the `DB[c.id].x` accesses in the per-client views cannot throw.
+  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
+  return NO_CLIENT;
+};
+/* DB buckets are keyed by client id. The placeholder bucket (id 0) and any
+   bucket whose client was deleted are memory-only — never serialized. */
+const packDB=()=>{
+  const ids=new Set(CLIENTS.map(c=>String(c.id)));
+  const out={};Object.keys(DB).forEach(k=>{if(ids.has(k))out[k]=DB[k]});
+  return out;
+};
+/* Client ids. A plain max+1 sequence collides across devices: two offline
+   devices each adding a client to the same 8-client roster both produce id 9,
+   cloudMerge unions CLIENTS by id, and the second one is treated as an
+   existing row — so one client SILENTLY disappears (and DB[9] is overwritten).
+   Client ids are only used as object keys / for lookup / for the avatar hue
+   (which is taken modulo), so a time+counter id is safe — and it keeps
+   "newest first" ordering (CLIENTS.sort by id desc) working. */
+let __nextIdSeq=0;
+const nextId=()=>{
+  const seq=CLIENTS.reduce((m,c)=>Math.max(m,+c.id||0),0)+1;
+  const uniq=Date.now()*1000+(__nextIdSeq=(__nextIdSeq+1)%1000);
+  return Math.max(seq,uniq);
+};
 const isNarrow=()=>window.innerWidth<760;
 const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
 const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
@@ -1778,8 +1898,8 @@ function vCOverview(){
   <div class="card">
     <div class="card-h"><span class="card-t">${ic('note',14)} ${t('Recent Notes')}</span><button class="btn btn-ghost btn-sm" data-act="tab" data-tab="notes">${t('All notes')} ${ic('arrowR',13)}</button></div>
     ${NOTES.filter(n=>n.client===c.name||n.pin).slice(0,3).map(n=>`
-    <div class="tl-row" style="align-items:flex-start"><div style="flex:1"><div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(n.title)}</b><span class="bdg bdg-gray">${t(n.type)}</span>${n.from==='client'?`<span class="bdg bdg-blue">${ic('users',11)} ${t('Client')}</span>`:''}${n.shared===false?`<span class="bdg bdg-gray">${ic('lock',11)} ${t('Private')}</span>`:''}${n.pin?`<span class="ic" style="color:var(--accent-deep)">${ic('pin',13)}</span>`:''}</div>
-    <div class="muted" style="font-size:12.5px;margin-top:3px">${t(n.body)}</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">${t(n.client)} · ${t(n.date)}</div></div></div>`).join('')}
+    <div class="tl-row" style="align-items:flex-start"><div style="flex:1"><div class="row" style="gap:8px;flex-wrap:wrap"><b>${esc(t(n.title))}</b><span class="bdg bdg-gray">${esc(t(n.type))}</span>${n.from==='client'?`<span class="bdg bdg-blue">${ic('users',11)} ${t('Client')}</span>`:''}${n.shared===false?`<span class="bdg bdg-gray">${ic('lock',11)} ${t('Private')}</span>`:''}${n.pin?`<span class="ic" style="color:var(--accent-deep)">${ic('pin',13)}</span>`:''}</div>
+    <div class="muted" style="font-size:12.5px;margin-top:3px">${esc(t(n.body))}</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(t(n.client))} · ${esc(t(n.date))}</div></div></div>`).join('')}
   </div>`;
 }
 function vCAttend(){
@@ -2029,14 +2149,14 @@ function vMeasure(){
 function noteRow(n,global){
   return `<div class="tl-row" style="align-items:flex-start;${n.arch?'opacity:.5':''}">
     <div style="flex:1;min-width:0">
-      <div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(n.title)}</b><span class="bdg ${n.type==='Injury / Restriction'?'bdg-red':n.type==='Nutrition'?'bdg-blue':n.type==='Progress'?'bdg-purple':'bdg-gray'}">${t(n.type)}</span>
+      <div class="row" style="gap:8px;flex-wrap:wrap"><b>${esc(t(n.title))}</b><span class="bdg ${n.type==='Injury / Restriction'?'bdg-red':n.type==='Nutrition'?'bdg-blue':n.type==='Progress'?'bdg-purple':'bdg-gray'}">${esc(t(n.type))}</span>
       ${n.from==='client'?`<span class="bdg bdg-blue">${ic('users',11)} ${t('Client')}</span>`:''}
-      ${global?`<span class="chip">${t(n.client)}</span>`:''}
+      ${global?`<span class="chip">${esc(t(n.client))}</span>`:''}
       ${n.from==='coach'&&n.shared===false?`<span class="bdg bdg-gray">${ic('lock',11)} ${t('Private')}</span>`:''}
       ${n.from==='coach'&&n.shared?`<span class="bdg bdg-lime">${ic('users',11)} ${t('Visible to client')}</span>`:''}
       ${n.pin?`<span class="ic" style="color:var(--accent-deep)">${ic('pin',13)}</span>`:''}</div>
-      <div class="sub" style="margin-top:4px">${t(n.body)}</div>
-      <div style="font-size:11px;color:var(--ink3);margin-top:5px">${t(n.date)}</div>
+      <div class="sub" style="margin-top:4px">${esc(t(n.body))}</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:5px">${esc(t(n.date))}</div>
     </div>
     <div class="row" style="gap:2px">
       <button class="btn btn-ghost btn-icon" data-act="note-pin" data-id="${n.id}" style="${n.pin?'color:var(--accent-deep)':''}">${ic('pin',15)}</button>
@@ -2137,7 +2257,9 @@ function evBadge(tp){return `<span class="bdg ${tp==='session'?'bdg-lime':tp==='
 function icsExport(){
   const pad=n=>String(n).padStart(2,'0');
   const dstr=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
-  const tstr=t2=>{const h=Math.min(23,Math.floor(t2)),m=(Math.min(23.983,t2)-h)*60;return `${pad(h)}${pad(Math.min(45,Math.round(m/15)*15))}00`};
+  // Minutes were clamped to 45 and snapped to 15-minute steps, so a 09:50 or
+  // 09:05 session exported as 09:45. Keep the hour and round the real minutes.
+  const tstr=t2=>{const h=Math.min(23,Math.floor(t2)),m=(t2-h)*60;return `${pad(h)}${pad(Math.min(59,Math.round(m)))}00`};
   let out=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Coach OS//Calendar//EN','CALSCALE:GREGORIAN'];
   EVENTS.forEach(ev=>{
     const d=dayDate(ev.day,0);
@@ -2597,7 +2719,7 @@ function nPlanner(){
       <button class="btn btn-outline" style="width:100%;justify-content:center;border-style:dashed;padding:13px" data-act="madd">${ic('plus',15)} ${t('Add Meal')}</button>
       <div class="card" style="padding:16px 18px">
         <div class="card-t" style="margin-bottom:8px">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</div>
-        ${NOTES.filter(n=>n.client===p.client&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${t(n.title)}</b><div class="muted" style="font-size:12px">${t(n.body)}</div></div>`).join('')||`<div class="muted" style="font-size:12.5px;padding:4px 0">${t('No results found.')}</div>`}
+        ${NOTES.filter(n=>n.client===p.client&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b><div class="muted" style="font-size:12px">${esc(t(n.body))}</div></div>`).join('')||`<div class="muted" style="font-size:12.5px;padding:4px 0">${t('No results found.')}</div>`}
         <button class="btn btn-ghost btn-sm" style="margin-top:8px" data-act="qn-open" data-c="${esc(p.client)}" data-nt="Nutrition Note">${ic('plus',13)} ${t('Add Note')}</button>
       </div>
     </div>
@@ -2767,7 +2889,7 @@ function wNutrition(){
     </div>
   </div>
   <div class="card"><div class="card-h"><span class="card-t">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</span></div>
-    ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div class="tl-row" style="align-items:flex-start"><div style="flex:1"><b style="font-size:13px">${t(n.title)}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${t(n.body)}</div><div style="font-size:10.5px;color:var(--ink3);margin-top:3px">${t(n.date)}</div></div></div>`).join('')||`<div style="padding:16px 20px;color:var(--ink3);font-size:12.5px">${t('No results found.')}</div>`}
+    ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div class="tl-row" style="align-items:flex-start"><div style="flex:1"><b style="font-size:13px">${esc(t(n.title))}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div><div style="font-size:10.5px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}</div></div></div>`).join('')||`<div style="padding:16px 20px;color:var(--ink3);font-size:12.5px">${t('No results found.')}</div>`}
   </div>`;
 }
 function fpOpen(mi){
@@ -3156,9 +3278,9 @@ function mClientView(){
       ${wChart(c.id,150)}</div>
     <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Recent Notes')}</div>
       ${NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,2).map(n=>`
-      <div style="padding:9px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${t(n.title)}</b>
-      <div class="muted" style="font-size:11.5px;margin-top:2px">${t(n.body)}</div>
-      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${t(n.date)}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
+      <div style="padding:9px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
+      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
       ||`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`}
     </div>
     <div class="row" style="gap:8px;flex-wrap:wrap">
@@ -3223,9 +3345,9 @@ function cToday(){
       ${attBadge(up)||`<span class="bdg ${up.type==='session'?'bdg-lime':up.type==='assess'?'bdg-blue':up.type==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[up.type])}</span>`}</div></div>`:''}
     ${notes.length?`<div class="ccard"><div class="card-t">${ic('note',14)} ${t('Coach notes')}</div>
       ${notes.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line2);${n===notes[notes.length-1]?'border-bottom:none':''}">
-        <b style="font-size:13px">${t(n.title)}</b>
-        <div class="muted" style="font-size:12.5px;margin-top:2px">${t(n.body)}</div>
-        <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${t(n.date)} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
+        <b style="font-size:13px">${esc(t(n.title))}</b>
+        <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div>
+        <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${esc(t(n.date))} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
       </div>`).join('')}</div>`:''}
     <div class="ccard">
       <div class="card-t">${ic('activity',14)} ${t('Quick check-in')}</div>
@@ -3301,7 +3423,7 @@ function cNutrition(){
       </div>`).join('')}
     </div>
     ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).length?`<div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</div>
-      ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${t(n.title)}</b><div class="muted" style="font-size:12px">${t(n.body)}</div></div>`).join('')}
+      ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b><div class="muted" style="font-size:12px">${esc(t(n.body))}</div></div>`).join('')}
     </div>`:''}
   </div>`;
 }
@@ -3834,8 +3956,11 @@ document.addEventListener('click',e=>{
     case 'fpsel':S.fp.fi=+el.dataset.i;S.fp.custom=false;fpRender();break;
     case 'fpqty':S.fp.g=+el.dataset.g;fpRender();break;
     case 'fpcustom':S.fp.custom=true;fpRender();break;
-    case 'fpcadd':{const n=$('fc-n').value.trim()||'Custom Food';
-      FOODS.push({n,cat:$('fc-cat').textContent||'Other',kcal:+$('fc-k').value||100,p:+$('fc-p').value||10,c:+$('fc-c').value||0,f:+$('fc-f').value||2,alt:[]});
+    case 'fpcadd':{const n=scrubName($('fc-n').value.trim())||'Custom Food';
+      // #fc-cat is a <select>: .textContent returns EVERY option label
+      // concatenated ("MeatChickenFish…"), so the saved category was garbage
+      // and never matched a real category filter. .value is the selection.
+      FOODS.push({n,cat:$('fc-cat').value||'Other',kcal:+$('fc-k').value||100,p:+$('fc-p').value||10,c:+$('fc-c').value||0,f:+$('fc-f').value||2,alt:[]});
       S.fp.fi=FOODS.length-1;S.fp.custom=false;fpRender();toast('Custom food added');break}
     case 'fpadd':{const p=NPLANS[S.nplan];const it={fi:S.fp.fi,g:S.fp.g};
       p.days[S.nday].meals[S.fp.mi].foods.push(it);
@@ -3948,7 +4073,10 @@ document.addEventListener('click',e=>{
       ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
       clearInterval(restIv);S.player=null;S.ptab='today';render();toast('Workout completed 💪');break}
     case 'add-client':addClientModal();break;
-    case 'save-client':{if(billGuard('client'))break;const fn=$('nc-fn').value.trim()||'New',ln=$('nc-ln').value.trim()||'Client';
+    case 'save-client':{if(billGuard('client'))break;
+      // Names are inserted into HTML all over the app and into quoted
+      // attributes — strip markup chars at the source as well as at render.
+      const fn=scrubName($('nc-fn').value.trim())||'New',ln=scrubName($('nc-ln').value.trim())||'Client';
       const nc={id:nextId(),name:fn+' '+ln,goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com'};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
@@ -4073,7 +4201,11 @@ document.addEventListener('click',e=>{
       const day=+$('ns-day').value,st=parseFloat($('ns-time').value),du=parseFloat($('ns-dur').value);
       const label=$('ns-label').value.trim()||({session:t('Training Session'),assess:t('Assessment'),meas:t('Measurement'),appt:t('Appointment')})[ty]||t('Training Session');
       const conf=conflictInfo(null);
-      EVENTS.push({id:uid()+Math.floor(Math.random()*1000),day,start:st,dur:du,client:cl,label,type:ty});
+      // uid() already encodes ms + a rolling counter; adding a random offset on
+      // top could collide with a uid() minted microseconds later, and a
+      // collision makes edit/delete/duplicate act on the wrong event (and makes
+      // cloudMerge silently drop one of the two rows).
+      EVENTS.push({id:uid(),day,start:st,dur:du,client:cl,label,type:ty});
       syncClientSessions(cl);
       ACTIVITY.unshift({w:'Just now',i:'calendar',h:lang==='fa'?`<b>شما</b> <b>${esc(label)}</b> را برای <b>${t(cl)}</b> زمان‌بندی کردید`:`<b>You</b> scheduled <b>${esc(label)}</b> for <b>${t(cl)}</b>`});
       closeModal();render();toast(conf.bad?conf.msg:'Session scheduled ✓');break}
@@ -4201,7 +4333,9 @@ loadData();
     // A signed-in coach always syncs their OWN workspace — never a stale code.
     let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
     try{
-      const saved=(localStorage.getItem('co-ws')||'').toUpperCase().trim();
+      // `co-legacy-ws` holds the pre-account anonymous code that cloudReset()
+      // parks before clearing `co-ws` on sign-in (see cloudReset()).
+      const saved=(localStorage.getItem('co-legacy-ws')||localStorage.getItem('co-ws')||'').toUpperCase().trim();
       if(!code)code=saved;
       // One-time legacy import: an old anonymous device code moves under the
       // coach's tenant on first authenticated push (server binds ownership).
@@ -4209,7 +4343,7 @@ loadData();
         try{
           await authApi('/api/auth/claim',{method:'POST',body:JSON.stringify({legacyCode:saved})});
           const m=await authMe();
-          if(m&&AUTH.ws&&AUTH.ws.code)code=AUTH.ws.code;
+          if(m&&AUTH.ws&&AUTH.ws.code){code=AUTH.ws.code;try{localStorage.removeItem('co-legacy-ws')}catch(e){}}
         }catch(e){}
       }
     }catch(e){}
