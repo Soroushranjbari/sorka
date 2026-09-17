@@ -550,7 +550,7 @@ const FA={
 'Meals':'وعده‌ها',
 "Today's Meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
 'Data storage':'ذخیره داده‌ها','On this device (auto-save)':'روی همین دستگاه (ذخیره خودکار)','Reset demo data':'بازنشانی داده‌های دمو','Are you sure? Click again':'مطمئنی؟ دوباره کلیک کن','Feedback':'بازخورد',
-'Connect Client (Code)':'اتصال شاگرد (کد)','Connect':'اتصال','Connection code':'کد اتصال','Connection link':'لینک اتصال','Join with connection code':'اتصال با کد مربی','Connected with code':'اتصال با کد','One code for your whole workspace — every client joins with it':'یک کد برای کل فضای کاری‌ات — همه‌ی شاگردها با همین کد وصل می‌شوند','Your clients join your workspace with this code — only your data, only your clients':'شاگردانت با این کد به فضای کاری تو وصل می‌شوند — فقط داده‌های تو، فقط شاگردهای تو','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','Copy':'کپی','Copied ✓':'کپی شد ✓','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
+'Connect Client (Code)':'اتصال شاگرد (کد)','Connect':'اتصال','Connection code':'کد اتصال','Connection link':'لینک اتصال','Join with connection code':'اتصال با کد مربی','Connected with code':'اتصال با کد','Client connection codes':'کدهای اتصال شاگردها','Each client has a personal code — share only theirs':'هر شاگرد کد اختصاصی خودش را دارد — فقط کد خودش را برایش بفرست','Personal connection code':'کد اتصال اختصاصی','Personal code':'کد اختصاصی','The client enters this code on the login screen — their profile opens with everything you registered':'شاگرد این کد را در صفحه ورود وارد می‌کند — پروفایلش با همه‌ی مشخصاتی که ثبت کرده‌ای باز می‌شود','Client added ✓':'شاگرد اضافه شد ✓','added to your clients':'به شاگردانت اضافه شد','Code regenerated ✓':'کد جدید صادر شد ✓','Regenerate':'بازتولید کد','Enter the personal code your coach gave you':'کد اختصاصی‌ای که مربی‌ات به تو داده را وارد کن','Connected as':'وصل شدی به‌عنوان','Copy connection code':'کپی کد اتصال','Link':'لینک','Code':'کد','One code for your whole workspace — every client joins with it':'یک کد برای کل فضای کاری‌ات — همه‌ی شاگردها با همین کد وصل می‌شوند','Your clients join your workspace with this code — only your data, only your clients':'شاگردانت با این کد به فضای کاری تو وصل می‌شوند — فقط داده‌های تو، فقط شاگردهای تو','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','Copy':'کپی','Copied ✓':'کپی شد ✓','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
 'List':'لیست','No events this day':'این روز رویدادی نیست','Session updated ✓':'جلسه به‌روزرسانی شد ✓','Event deleted':'رویداد حذف شد','Duplicated ✓':'تکثیر شد ✓','Delete':'حذف','Edit Session':'ویرایش جلسه','Calendar exported (.ics)':'تقویم خروجی گرفته شد (.ics)','Sessions This Week':'جلسات این هفته','Total Hours':'مجموع ساعت‌ها','Busiest Day':'شلوغ‌ترین روز','⚠️ This client already has an event at this time':'⚠️ این شاگرد در این ساعت رویداد دیگری دارد','⚠️ You already have another event at this time':'⚠️ خودت در این ساعت رویداد دیگری داری','✓ No conflicts':'✓ تداخلی نیست','Export (.ics)':'خروجی (.ics)','All Clients':'همه شاگردان',
 'Working Hours':'ساعات کاری','Work starts':'شروع کار','Work ends':'پایان کار','Set the hours you coach — the calendar grid and session time pickers use this range':'ساعات کاری‌ات را تعیین کن — شبکه تقویم و ساعت‌های انتخاب جلسه از این بازه استفاده می‌کنند','Sessions outside this range are still shown — the grid stretches to fit them.':'جلسات بیرون از این بازه هم نمایش داده می‌شوند — شبکه تقویم خودش را بزرگ می‌کند تا جا شوند.','Quick presets':'پیش‌فرض‌های سریع','Current range':'بازه فعلی','Calendar shows sessions from {a} to {b}':'تقویم جلسات را از {a} تا {b} نشان می‌دهد','h / day':'ساعت / روز','Working hours updated':'ساعات کاری به‌روزرسانی شد',
 'Calendar Type':'نوع تقویم','Auto (follow language)':'خودکار (هماهنگ با زبان)','Gregorian (Miladi)':'میلادی','Jalali (Shamsi)':'شمسی (جلالی)','Calendar type updated':'نوع تقویم به‌روزرسانی شد',
@@ -1509,9 +1509,32 @@ async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legac
     toast('Cloud sync on — workspace '+code);
   }catch(e){}
 }
-async function cloudJoinCode(){ // client: connect with the coach workspace code
+async function cloudJoinCode(){ // client: connect with a connection code
   const v=($('join-code')?.value||'').toUpperCase().trim();
   if(!v){toast('Invalid code');return}
+  /* v16.3 — personal code "<workspace>-<client>": resolves the tenant AND the
+     exact profile, then binds this device straight to it. A bare 6-char code
+     keeps the legacy workspace-wide behaviour for old invites. */
+  const parts=parseJoinCode(v);
+  if(parts){
+    const out=await cloudFetch(parts.ws);
+    if(!out||!out.ok||out.exists===false){toast(t('Invalid code'));return}
+    /* Joining must start from a CLEAN slate (see the legacy path below). */
+    cloudReset();
+    freshWorkspace();
+    CLOUD.code=parts.ws;
+    CLOUD.rev=out.rev||0;
+    if(out.data)cloudMerge(out.data,true);
+    const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+    if(!me){toast(t('Invalid code'));return}
+    CLOUD.on=true;cloudStart();
+    S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;S.joinCode=v;
+    try{localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:me.id,pcode:v}))}catch(e){}
+    try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
+    cloudResync();render();
+    toast(t('Connected as')+' '+t(me.name)+' ✓');
+    return;
+  }
   if(CLOUD.on&&CLOUD.code===v){
     S.role='client';S.cid=S.pickCid||(CLIENTS[0]&&CLIENTS[0].id)||1;S.ptab='today';S.player=null;S.joinCode=null;
     render();toast('Connected to your coach ✓');return;
@@ -1604,8 +1627,24 @@ const nextId=()=>{
 const isNarrow=()=>window.innerWidth<760;
 const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
 const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
-const genCode=()=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<6;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
+const genCode=(n=6)=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<n;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
 const inviteLink=code=>location.origin+location.pathname+'#join='+code;
+/* ---- Per-student connection codes (v16.3) ----
+   Every client owns a PERSONAL 8-char code (c.code) the coach issues. The
+   string a student enters is "<workspaceCode>-<personalCode>" so ONE code
+   resolves both the tenant and the exact profile — it rides the existing
+   /api/data sync, no server-side index needed. The coach shares only that
+   student's code, and joining binds the device straight to that profile
+   (no client picker, no access to other students' views). */
+const clientCode=c=>{
+  if(c.code)return String(c.code).toUpperCase();
+  c.code=genCode(8);
+  if(CLOUD.on)cloudSchedule(); // persist the freshly minted code
+  return c.code;
+};
+const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
+const joinCodeOf=c=>{const ws=wsCode();return ws?ws+'-'+clientCode(c):clientCode(c)};
+const parseJoinCode=v=>{const i=String(v||'').indexOf('-');return i>0?{ws:String(v).slice(0,i),pc:String(v).slice(i+1)}:null};
 const itK=it=>Math.round(FOODS[it.fi].kcal*it.g/100);
 const itM=(it,k)=>Math.round(FOODS[it.fi][k]*it.g/100);
 const mealKcal=m=>m.foods.length?m.foods.reduce((a,x)=>a+FOODS[x.fi].kcal*x.g/100,0):(m.mk?m.mk.kcal:0);
@@ -1704,7 +1743,11 @@ function coachLogin(){return `
     <div class="row" style="justify-content:center;margin-top:20px">${langBtn('btn-outline btn-sm')}</div>
   </form></div>
 </div>`}
-function clientPicker(){return `
+function clientPicker(){
+  /* Personal-code device: only the bound profile is offered — the student can
+     never land in another student's view. */
+  const bound=(S.joinCode&&parseJoinCode(S.joinCode)&&S.pickCid)?CLIENTS.filter(c=>c.id===S.pickCid):CLIENTS;
+  return `
 <div class="login-right" style="min-height:100vh">
   <div class="login-card" style="max-width:520px">
     <div class="row" style="justify-content:space-between"><a class="lnk" style="font-size:12.5px" data-act="back-role">← ${t('Back')}</a>${langBtn('btn-outline btn-sm')}</div>
@@ -1713,12 +1756,13 @@ function clientPicker(){return `
     <div class="card" style="padding:14px;margin-top:16px;border-color:var(--acc-line)">
       <div class="card-t">${ic('users',14)} ${t('Join with connection code')}</div>
       <div class="row" style="margin-top:10px">
-        <input class="inp" id="join-code" placeholder="K7F39Q" value="${S.joinCode||''}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700">
+        <input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${S.joinCode||''}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700">
         <button class="btn btn-primary" data-act="join-code">${t('Connect')}</button>
       </div>
+      <div class="muted" style="font-size:11.5px;margin-top:8px">${t('Enter the personal code your coach gave you')}</div>
       ${S.joinCode?`<div class="muted" style="font-size:11.5px;margin-top:8px">${t('Connected with code')} <b>${S.joinCode}</b></div>`:''}
     </div>
-    <div class="pickgrid">${CLIENTS.map(c=>`
+    <div class="pickgrid">${bound.map(c=>`
       <button class="pickc ${S.pickCid===c.id?'on':''}" data-act="pick-client" data-cid="${c.id}">${avC(c.name,44)}<span>${t(c.name)}</span></button>`).join('')}
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="continue-client">${t('Continue')} ${ic('arrowR',15)}</button>
@@ -1825,6 +1869,7 @@ function vClients(){
       <td class="hide-md">${c.streak?`${nf(c.streak)} ${t('wk')} 🔥`:'—'}</td>
       <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
       <td style="text-align:end;white-space:nowrap">
+        <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
         <button class="btn btn-ghost btn-sm" data-act="open-client" data-cid="${c.id}">${t('Open Workspace')} ${ic('arrowR',13)}</button>
@@ -2447,8 +2492,8 @@ function vSettings(){
     </div>
     <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="COACH-…" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
     <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
-    <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Your clients join your workspace with this code — only your data, only your clients')}</div></div>
-      ${(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)?`<div class="row" style="gap:8px"><span class="chip" style="font-weight:800;letter-spacing:.14em;font-size:13px">${esc((CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code))}</span><button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc((CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code))}">${ic('copy',13)} ${t('Copy')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
+    <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
+      ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
     <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
     <div class="set-row"><div><span class="t">${t('Response time')}</span><div class="d">${t('Shown to clients in chat')}</div></div><select class="sel" style="width:160px" data-change="pref" data-k="resp">${['~1 h','~4 h','~24 h'].map(r=>`<option value="${r}" ${PREFS.resp===r?'selected':''}>${r}</option>`).join('')}</select></div>
     <div class="set-row"><div><span class="t">${t('Data storage')}</span><div class="d">${t('On this device (auto-save)')}</div></div><button class="btn btn-outline btn-sm" data-act="reset-demo">${ic('trash',14)} ${t('Reset demo data')}</button></div></div>`,
@@ -3005,26 +3050,55 @@ function phaseModal(i){
   </div></div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="ph-save" data-i="${i==null?-1:i}">${ic('check',15)} ${t('Save')}</button></div>`)}
 function inviteModal(){
-  /* One connection code per coach — owned by the signed-in account
-     (server-generated at signup/login). No per-client codes anymore. */
-  const code=(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
+  /* v16.3 — one PERSONAL code per client. The coach hands each student their
+     own "<workspace>-<personal>" string; joining binds that device to exactly
+     that profile (no shared workspace code, no client picker). */
+  const ws=wsCode();
+  if(!ws){
+    openModal(`
+  <div class="modal-h"><h3>${t('Client connection codes')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="card" style="padding:22px;text-align:center;background:var(--bg2)">
+    <div class="muted" style="font-size:12.5px">${t('Simulated in demo — works across devices once backend is live')}</div></div></div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+    return;
+  }
+  const row=c=>{const code=joinCodeOf(c),link=inviteLink(code);
+    return `<div class="card" style="padding:12px 14px;margin-bottom:10px">
+      <div class="row" style="gap:10px">
+        ${avC(c.name,38)}
+        <div style="flex:1;min-width:0"><b style="font-size:13.5px">${t(c.name)}</b>
+          <div style="font-weight:800;letter-spacing:.12em;font-size:15px;color:var(--accent-ink);margin-top:2px">${esc(code)}</div></div>
+        <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Copy')}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Connection link')}" data-act="copy-code" data-code="${esc(link)}">${ic('copy',14)}</button>
+      </div></div>`};
   openModal(`
-  <div class="modal-h"><h3>${t('Connect Client (Code)')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3>${t('Client connection codes')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
-    ${code?`
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Each client has a personal code — share only theirs')}</div>
+    ${CLIENTS.length?CLIENTS.map(row).join(''):`<div class="card" style="padding:22px;text-align:center;background:var(--bg2)"><div class="muted" style="font-size:12.5px">${t('No clients yet')}</div></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* Success modal right after adding a client — surfaces the personal join code
+   immediately so the coach can copy/share it without hunting for it. */
+function clientCodeModal(c){
+  const code=joinCodeOf(c),link=inviteLink(code);
+  openModal(`
+  <div class="modal-h"><h3>${t('Client added ✓')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:14px">${avC(c.name,46)}<div><b style="font-size:15px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t('added to your clients')}</div></div></div>
     <div class="card" style="padding:18px;text-align:center;background:var(--accent-soft);border-color:var(--acc-line)">
-      <div class="muted" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${t('Connection code')}</div>
-      <div style="font-size:34px;font-weight:800;letter-spacing:.14em;margin:6px 0;color:var(--accent-ink)">${esc(code)}</div>
-      <div class="muted" style="font-size:11.5px">${t('One code for your whole workspace — every client joins with it')}</div>
+      <div class="muted" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${t('Personal connection code')}</div>
+      <div style="font-size:30px;font-weight:800;letter-spacing:.12em;margin:6px 0;color:var(--accent-ink)">${esc(code)}</div>
+      <div class="muted" style="font-size:11.5px">${t('The client enters this code on the login screen — their profile opens with everything you registered')}</div>
     </div>
     <div class="field" style="margin-top:14px"><label class="lbl">${t('Connection link')}</label>
-      <div class="row"><input class="inp" readonly value="${esc(inviteLink(code))}" style="font-size:12px">
-      <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(inviteLink(code))}">${ic('copy',13)} ${t('Copy')}</button></div></div>
-    <div class="muted" style="font-size:11.5px">${t('Clients join with this code — data syncs live across devices')}</div>`
-    :`<div class="card" style="padding:22px;text-align:center;background:var(--bg2)">
-      <div class="muted" style="font-size:12.5px">${t('Simulated in demo — works across devices once backend is live')}</div></div>`}
+      <div class="row"><input class="inp" readonly value="${esc(link)}" style="font-size:12px">
+      <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Code')}</button>
+      <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(link)}">${ic('copy',13)} ${t('Link')}</button></div></div>
   </div>
-  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`)}
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="copy-code" data-code="${esc(code)}">${ic('copy',14)} ${t('Copy')}</button></div>`);
+}
 function tplPreview(i){
   const tp=TEMPLATES[i];if(!tp)return;
   const exRow=e=>{const ex=EXERCISES[e.ex];
@@ -3307,7 +3381,7 @@ function vClient(){
     <div class="phone"><div class="notch"></div>
       <div class="capp" id="capp">
         <div class="chead">
-          <div class="row">${avC(c.name,40)}<div><div style="font-weight:800;font-size:16px">${t('Hi')} ${esc(t(c.name).split(' ')[0])} 👋</div><div class="muted" style="font-size:11.5px">${t('Wed, Jul 8 2026')}</div></div></div>
+          <div class="row">${avC(c.name,40)}<div><div style="font-weight:800;font-size:16px">${t('Hi')} ${esc(t(c.name).split(' ')[0])} 👋</div><div class="muted" style="font-size:11.5px">${t('Wed, Jul 8 2026')}${c.code?` · ${t('Code')} <b style="letter-spacing:.1em">${esc(joinCodeOf(c))}</b>`:''}</div></div></div>
           <span class="bdg gbadge">✓ ${t('Synced')}</span>
         </div>
         ${body}
@@ -3612,6 +3686,11 @@ function editClientModal(name){
       <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" type="number" step="0.1" id="ec-bf" value="${c.bf}"></div>
     </div>
     <div style="margin-top:6px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:6px">${t('Personal connection code')}</div>
+      <div class="row" style="gap:8px;margin-bottom:8px"><span class="chip" style="font-weight:800;letter-spacing:.12em;font-size:14px">${esc(joinCodeOf(c))}</span>
+        <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',13)} ${t('Copy')}</button>
+        <button class="btn btn-outline btn-sm" data-act="client-regen" data-c="${esc(c.name)}">${ic('refresh',13)} ${t('Regenerate')}</button></div>
+      <div class="muted" style="font-size:11.5px;margin-bottom:14px">${t('The client enters this code on the login screen — their profile opens with everything you registered')}</div>
       <button class="btn btn-outline btn-sm" style="color:var(--red);border-color:var(--red-soft)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete client')}</button>
     </div>
   </div>
@@ -3854,6 +3933,9 @@ document.addEventListener('click',e=>{
       closeModal();render();toast('Client updated ✓');break}
     case 'client-arch':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
       c.status='Archived';render();toast('Client archived');break}
+    case 'client-regen':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
+      // Issue a fresh personal code (old one stops working on next pull).
+      c.code=genCode(8);cloudSchedule();editClientModal(c.name);toast(t('Code regenerated ✓'));break}
     case 'client-del':{const name=el.dataset.c;
       if(el.dataset.arm!=='1'){
         el.dataset.arm='1';el.style.color='var(--red)';
@@ -4077,10 +4159,13 @@ document.addEventListener('click',e=>{
       // Names are inserted into HTML all over the app and into quoted
       // attributes — strip markup chars at the source as well as at render.
       const fn=scrubName($('nc-fn').value.trim())||'New',ln=scrubName($('nc-ln').value.trim())||'Client';
-      const nc={id:nextId(),name:fn+' '+ln,goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com'};
+      // v16.3 — every client gets a PERSONAL connection code at creation; the
+      // coach shares it and the student's device binds straight to this profile.
+      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com'};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
-      closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();toast(fn+' '+ln+' '+t('added to your clients'));break}
+      closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
+      clientCodeModal(nc);break}
     case 'copy-code':{const v=el.dataset.code||'';
       if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(()=>toast('Copied ✓')).catch(()=>toast(v))}
       else toast(v);break}
@@ -4318,7 +4403,7 @@ document.addEventListener('keydown',e=>{
 });
 let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
-(()=>{const m=location.hash.match(/join=([A-Za-z0-9]{4,12})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
+(()=>{const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
 const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}})();
 loadPrefs();
 applyLang();
@@ -4352,7 +4437,7 @@ loadData();
       const out=await cloudFetch(code);
       if(out&&out.ok){
         CLOUD.code=code;CLOUD.on=true;
-        if(join){S.joinCode=code;if(join.cid)S.pickCid=join.cid}
+        if(join){S.joinCode=join.pcode||code;if(join.cid)S.pickCid=join.cid}
         if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync()}
         else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
       }
