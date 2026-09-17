@@ -13,8 +13,12 @@
 import { kv } from '../netlify/lib/db.mjs';
 import { STORE_NAME, newId, hashPassword } from '../netlify/lib/saas.mjs';
 
-const [, , emailArg = '', passArg = '', nameArg = ''] = process.argv;
-const FORCE = process.argv.includes('--force');
+// Flags must be stripped BEFORE positional parsing. Reading argv[3]/argv[4]
+// directly meant `create-admin.mjs a@b.c 'password' --force` silently created
+// an admin whose display name was the literal string "--force".
+const argv = process.argv.slice(2);
+const FORCE = argv.includes('--force');
+const [emailArg = '', passArg = '', nameArg = ''] = argv.filter((a) => !a.startsWith('--'));
 const email = String(emailArg).trim().toLowerCase();
 const password = String(passArg);
 const name = String(nameArg || '').trim() || 'Main Admin';
@@ -62,5 +66,7 @@ if (!acct.workspaceId) {
   console.log(`Workspace code (shareable with clients): ${code}`);
 }
 
-console.log(`Main admin ready -> ${email} (role=admin, plan=club, ${existing ? (FORCE ? 'updated' : 'unchanged') : 'created'})`);
+// `existing` implies FORCE (without --force we already exited above), so the
+// old `existing ? (FORCE ? 'updated' : 'unchanged')` branch was unreachable.
+console.log(`Main admin ready -> ${email} (role=admin, plan=club, ${existing ? 'updated' : 'created'})`);
 console.log('Now log in from the app with this email + password.');

@@ -2,12 +2,13 @@
 // Bundled via relative import (netlify/lib), NOT a deployed function.
 import {
   store, j, normEmail, newId, newToken,
-  hashPassword, verifyPassword, readJson,
+  hashPassword, verifyPassword,
   accessOf, ownerOf,
-  EMAIL_RE, TRIAL_DAYS
+  EMAIL_RE, TRIAL_DAYS, SESSION_TTL_MS
 } from './saas.mjs';
 import { randomBytes } from 'node:crypto';
 import { adminEmails } from './billing.mjs';
+import { readJsonCapped, tooLarge, badJson, withLock } from './guard.mjs';
 
 export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
@@ -22,7 +23,7 @@ export async function issueSession(st, acct) {
   const now = Date.now();
   await st.setJSON(`sess:${token}`, {
     coachId: acct.id, email: acct.email,
-    createdAt: now, expiresAt: now + 1000 * 60 * 60 * 24 * 30
+    createdAt: now, expiresAt: now + SESSION_TTL_MS
   });
   // Per-coach session index so a password reset can revoke every session.
   try {
@@ -49,20 +50,27 @@ export async function killSessions(st, coachId) {
 async function deliverResetLink(email, link) {
   const key = process.env.RESEND_API_KEY;
   if (key) {
-    const from = process.env.RESET_FROM || 'Coach OS <onboarding@resend.dev>';
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-      body: JSON.stringify({
-        from, to: [email],
-        subject: 'Coach OS — password reset',
-        html: `<p>Click the link below to choose a new password (valid for 1 hour):</p>
-               <p><a href="${link}">${link}</a></p>
-               <p>If you did not request this, ignore this email.</p>`
-      })
-    });
-    if (!r.ok) throw new Error(`resend ${r.status}`);
-    return 'email';
+    try {
+      const from = process.env.RESET_FROM || 'Coach OS <onboarding@resend.dev>';
+      const r = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          from, to: [email],
+          subject: 'Coach OS — password reset',
+          html: `<p>Click the link below to choose a new password (valid for 1 hour):</p>
+                 <p><a href="${link}">${link}</a></p>
+                 <p>If you did not request this, ignore this email.</p>`
+        })
+      });
+      if (!r.ok) throw new Error(`resend ${r.status}`);
+      return 'email';
+    } catch (e) {
+      // Delivery failure used to bubble up as a 500 AFTER the token was stored,
+      // leaving the user with an error and no link anywhere. Fall back to the
+      // console log so the link is at least retrieable on the server.
+      console.error('[coach-os] reset email delivery failed:', e.message, '— logging link instead');
+    }
   }
   if ((process.env.RESET_DELIVERY || '').toLowerCase() === 'return') return 'return';
   console.log(`[coach-os] password reset link for ${email}: ${link}`);
@@ -104,7 +112,9 @@ export async function performPasswordReset(st, token, password) {
   return { ok: true };
 }
 
-/** Ensure the coach owns a workspace; create one on first signup. */
+/** Ensure the coach owns a workspace; create one on first signup.
+ *  Callers (signup/login) MUST hold the `acct:<email>` withLock — this
+ *  mutates the account record and creates workspace rows. */
 export async function ensureWorkspace(st, acct) {
   if (acct.workspaceId) {
     const w = await st.get(`ws:${acct.workspaceId}`, { type: 'json' });
@@ -133,40 +143,54 @@ export async function ensureWorkspace(st, acct) {
   throw new Error('code-exhausted');
 }
 
+/* Auth bodies are tiny ({name,email,password}) — 16 KB is generous. Every
+   other endpoint reads via readJsonCapped; signup/login previously used an
+   UNCAPPED req.json(), letting a multi-megabyte body be buffered and parsed. */
+const AUTH_BODY_MAX = 16_000;
+
 export async function signup(req, st) {
-  const body = await readJson(req);
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, AUTH_BODY_MAX);
+  if (big) return tooLarge(AUTH_BODY_MAX);
+  if (bad) return badJson();
   const email = normEmail(body?.email);
   const name = String(body?.name || '').trim().slice(0, 80);
   const password = String(body?.password || '');
   if (!EMAIL_RE.test(email)) return j(400, { ok: false, error: 'bad-email' });
   if (!name) return j(400, { ok: false, error: 'bad-name' });
   if (password.length < 8) return j(400, { ok: false, error: 'weak-password' });
-  if (await st.get(`acct:${email}`, { type: 'json' })) {
-    return j(409, { ok: false, error: 'email-taken' });
-  }
-  const now = Date.now();
-  const acct = {
-    id: newId('coach'), email, name,
-    pass: hashPassword(password),
-    plan: 'trial', workspaceId: null,
-    role: adminEmails().includes(email) ? 'admin' : 'coach',
-    sub: null, trialEndsAt: now + TRIAL_DAYS * 86400000,
-    createdAt: now
-  };
-  await st.setJSON(`acct:${email}`, acct);
-  await st.setJSON(`acct-by-id:${acct.id}`, { email });
-  const ws = await ensureWorkspace(st, acct);
-  const token = await issueSession(st, acct);
-  return j(200, {
-    ok: true, token,
-    coach: publicCoach(acct),
-    workspace: publicWs(ws),
-    access: accessOf(acct)
+  // The existence check + account/workspace creation must be atomic per
+  // account: two concurrent signups with the same email could otherwise both
+  // pass the check and create duplicate accounts (one acct-by-id orphaned).
+  return withLock(`acct:${email}`, async () => {
+    if (await st.get(`acct:${email}`, { type: 'json' })) {
+      return j(409, { ok: false, error: 'email-taken' });
+    }
+    const now = Date.now();
+    const acct = {
+      id: newId('coach'), email, name,
+      pass: hashPassword(password),
+      plan: 'trial', workspaceId: null,
+      role: adminEmails().includes(email) ? 'admin' : 'coach',
+      sub: null, trialEndsAt: now + TRIAL_DAYS * 86400000,
+      createdAt: now
+    };
+    await st.setJSON(`acct:${email}`, acct);
+    await st.setJSON(`acct-by-id:${acct.id}`, { email });
+    const ws = await ensureWorkspace(st, acct);
+    const token = await issueSession(st, acct);
+    return j(200, {
+      ok: true, token,
+      coach: publicCoach(acct),
+      workspace: publicWs(ws),
+      access: accessOf(acct)
+    });
   });
 }
 
 export async function login(req, st) {
-  const body = await readJson(req);
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, AUTH_BODY_MAX);
+  if (big) return tooLarge(AUTH_BODY_MAX);
+  if (bad) return badJson();
   const email = normEmail(body?.email);
   const password = String(body?.password || '');
   if (!EMAIL_RE.test(email) || !password) return j(400, { ok: false, error: 'bad-credentials' });
@@ -176,17 +200,21 @@ export async function login(req, st) {
   }
   // Promote to admin on login if ADMIN_EMAILS changed since signup — the role
   // flag in the account record is the durable source of truth afterwards.
-  if (acct.role !== 'admin' && adminEmails().includes(email)) {
-    acct.role = 'admin';
-    await st.setJSON(`acct:${email}`, acct);
-  }
-  const ws = await ensureWorkspace(st, acct);
-  const token = await issueSession(st, acct);
-  return j(200, {
-    ok: true, token,
-    coach: publicCoach(acct),
-    workspace: publicWs(ws),
-    access: accessOf(acct)
+  // Same lock as signup: role write + workspace ensure + session issue are a
+  // read-modify-write sequence on the account record.
+  return withLock(`acct:${email}`, async () => {
+    if (acct.role !== 'admin' && adminEmails().includes(email)) {
+      acct.role = 'admin';
+      await st.setJSON(`acct:${email}`, acct);
+    }
+    const ws = await ensureWorkspace(st, acct);
+    const token = await issueSession(st, acct);
+    return j(200, {
+      ok: true, token,
+      coach: publicCoach(acct),
+      workspace: publicWs(ws),
+      access: accessOf(acct)
+    });
   });
 }
 
@@ -197,5 +225,9 @@ export async function importLegacy(st, legacy, ws) {
     rev: legacy.rev || 0, data: legacy.data,
     owner: ws.owner, code: ws.code, updatedAt: Date.now()
   });
+  // Persist the flag on the workspace row — without it the guard above could
+  // never fire and a re-claim would overwrite the imported meta again.
+  ws.__imported = true;
+  await st.setJSON(`ws:${ws.id}`, ws);
   return true;
 }

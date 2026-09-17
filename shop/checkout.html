@@ -151,7 +151,7 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
       <div class="lbl" id="t-code">Activation code</div>
       <div class="code" id="code">—</div>
       <div class="row">
-        <button id="copyBtn" type="button" id="t-copy">Copy</button>
+        <button id="copyBtn" type="button"><span id="t-copy">Copy</span></button>
         <a class="btn acc" style="margin-top:0;width:auto;padding:10px 18px" id="appLink" href="/index.html">Open the app</a>
         <a class="btn" style="margin-top:0;width:auto;padding:10px 18px;border:1px solid var(--acc-line);color:var(--acc)" href="/shop/account.html" id="t-acct">My account</a>
       </div>
@@ -193,7 +193,10 @@ const FA={
   'Paste the code and press Activate — your plan unlocks instantly':'کد را بچسبانید و فعال‌سازی را بزنید — پلن فوراً باز می‌شود',
   '🔒 Secure checkout':'🔒 پرداخت امن','Enter a valid email':'ایمیل معتبر وارد کنید','Processing…':'در حال پردازش…',
   'Full name':'نام و نام خانوادگی','Mobile number':'شماره موبایل','Enter your full name':'نام و نام خانوادگی را وارد کنید','Enter a valid mobile number':'شماره موبایل معتبر وارد کنید','My account':'حساب کاربری من',
-  'Copied ✓':'کپی شد ✓','month':'ماه'
+  'Copied ✓':'کپی شد ✓','month':'ماه',
+  'Could not reach server':'ارتباط با سرور برقرار نشد',
+  'Press Ctrl+C to copy':'برای کپی Ctrl+C را بزنید',
+  'Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در Coach OS ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.'
 };
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
@@ -223,8 +226,10 @@ function applyLang(){
   document.documentElement.lang=fa?'fa':'en';
   document.documentElement.dir=fa?'rtl':'ltr';
   $('langToggle').textContent=fa?'EN':'FA';
-  ['t-title','t-sub','t-plan','t-email','t-pay','t-note','t-sum','t-item','t-dur','t-1m','t-clients','t-total','t-sumnote','t-done','t-donesub','t-code','t-copy','t-s1','t-s2','t-s3','t-secure'].forEach(id=>{
-    const el=$(id);if(!el)return;
+  // Translate every [id^="t-"] hook. The old hard-coded id list silently
+  // omitted t-name / t-phone / t-acct (and t-copy after the markup fix), so
+  // those labels stayed English in Persian mode.
+  document.querySelectorAll('[id^="t-"]').forEach(el=>{
     const key=el.dataset.k||(el.dataset.k=el.textContent.trim());
     el.textContent=t(key);
   });
@@ -254,6 +259,11 @@ $('payBtn').addEventListener('click',async()=>{
     if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
     $('code').textContent=d.coupons[0];
     $('appLink').href='/index.html';
+    // The backend falls back to minting the code locally (and flags it `demo`)
+    // when COACH_OS_URL / ADMIN_API_KEY are not configured — the code then
+    // exists nowhere, so "Payment successful / your plan unlocks instantly"
+    // would be a lie. Surface it instead of hiding it.
+    if(d.demo)showErr(t('Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.'));
     $('form-view').style.display='none';
     $('done').classList.add('show');
     window.scrollTo({top:0});
@@ -266,7 +276,21 @@ $('payBtn').addEventListener('click',async()=>{
 });
 $('copyBtn').addEventListener('click',()=>{
   const v=$('code').textContent;
-  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(()=>{$('copyBtn').textContent=t('Copied ✓');setTimeout(()=>{$('copyBtn').textContent=t('Copy')},1600)});
+  const done=()=>{$('t-copy').textContent=t('Copied ✓');setTimeout(()=>{$('t-copy').textContent=t('Copy')},1600)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    // writeText() rejects on a non-secure origin / denied permission; without
+    // this catch the buyer got an unhandled rejection and no feedback at all —
+    // and the code is the only deliverable on this screen.
+    navigator.clipboard.writeText(v).then(done).catch(()=>{
+      try{const r=document.createRange();r.selectNodeContents($('code'));const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}
+      $('t-copy').textContent=t('Press Ctrl+C to copy');
+      setTimeout(()=>{$('t-copy').textContent=t('Copy')},2600);
+    });
+  }else{
+    try{const r=document.createRange();r.selectNodeContents($('code'));const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}
+    $('t-copy').textContent=t('Press Ctrl+C to copy');
+    setTimeout(()=>{$('t-copy').textContent=t('Copy')},2600);
+  }
 });
 applyLang();
 </script>

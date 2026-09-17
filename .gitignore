@@ -6,6 +6,12 @@ node_modules/
 .env.local
 .env.*.local
 
+# production credentials — MUST never be committed (rotate if they ever were)
+data/prod-secrets.txt
+data/prod-admin-pass.txt
+data/*-pass.txt
+data/*-secrets.txt
+
 # netlify local state
 .netlify/
 .netlify/state/
@@ -24,3 +30,6 @@ Thumbs.db
 
 # misc
 *.tmp
+
+# agent tooling worktrees — contain a FULL project copy incl. data/prod-secrets.txt
+.kilo/

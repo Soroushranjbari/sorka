@@ -11,7 +11,7 @@
 // Defaults: data/kv-prod.json -> db/schema.sql
 //   npm run db:dump                          # prod data into db/schema.sql
 //   node ./scripts/export-kv-to-sql.mjs data/kv.json -   # dev data to stdout
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, renameSync } from 'node:fs';
 
 const [, , inputArg = 'data/kv-prod.json', outputArg = 'db/schema.sql'] = process.argv;
 
@@ -69,6 +69,10 @@ if (outputArg === '-') {
     process.exit(1);
   }
   doc = doc.slice(0, b) + section + doc.slice(e + END.length);
-  writeFileSync(outputArg, doc);
+  // Atomic write (temp file + rename): a crash or Ctrl-C mid-write used to
+  // truncate db/schema.sql, destroying the DDL that only exists in that file.
+  const tmp = `${outputArg}.${process.pid}.tmp`;
+  writeFileSync(tmp, doc);
+  renameSync(tmp, outputArg);
   console.log(`kv->sql: ${keys.length} keys from ${inputArg} written into ${outputArg}`);
 }

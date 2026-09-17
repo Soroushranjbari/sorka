@@ -66,6 +66,14 @@ else info.push(`ADMIN_EMAILS: ${env('ADMIN_EMAILS').split(',').length} address(e
 const coachUrl = env('COACH_OS_URL');
 if (coachUrl) {
   if (!/^https:\/\//.test(coachUrl) && !coachUrl.includes('localhost')) problems.push('COACH_OS_URL must be https:// in production (http only for localhost tests)');
+  // A placeholder passes the https check but breaks every shop purchase at
+  // runtime (checkout.mjs then fetches https://YOUR-SITE.netlify.app/...).
+  if (/YOUR-SITE|your-site|example\.com|\.invalid|\.example|CHANGEME/i.test(coachUrl)) {
+    problems.push(`COACH_OS_URL is still a placeholder (${coachUrl}) — set the real public app URL`);
+  }
+  if (/\/\/(localhost|127\.0\.0\.1)/.test(coachUrl)) {
+    warnings.push('COACH_OS_URL points at localhost — the shop cannot reach the app from a browser');
+  }
   info.push(`COACH_OS_URL: ${coachUrl}`);
 } else {
   warnings.push('COACH_OS_URL empty — shop checkout cannot reach issue-coupon');

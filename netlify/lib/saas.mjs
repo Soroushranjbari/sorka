@@ -84,13 +84,9 @@ export function bearerOf(req) {
   return m ? m[1].trim() : '';
 }
 
-export async function readJson(req) {
-  try {
-    return await req.json();
-  } catch {
-    return null;
-  }
-}
+/* JSON body reading goes through guard.mjs readJsonCapped — every endpoint
+   must parse request bodies under a hard size cap (the old uncapped
+   readJson() here let a multi-megabyte body be buffered and parsed). */
 
 /** Trial/subscription state -> { status:'trial'|'active'|'expired', plan }.
  *  Phase 2: prefers authoritative sub_status/sub_ends_at (grantSub), falls

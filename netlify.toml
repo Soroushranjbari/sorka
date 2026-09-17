@@ -10,6 +10,110 @@
   included_files = ["netlify/lib/**"]
   node_bundler = "esbuild"
 
+# ─────────────────────────────────────────────────────────────────────────────
+# ⚠️ حیاتی: publish = "." یعنی *کل* ریشه‌ی پروژه به‌صورت استاتیک سرو می‌شود.
+# بدون قواعد زیر، این فایل‌ها برای همه از اینترنت قابل دانلود می‌شوند:
+#   /db/schema.sql          → هش رمز همه‌ی ادمین‌ها/مربی‌ها + توکن سشن‌ها
+#   /data/kv-prod.json      → کل دیتای پروداکشن
+#   /data/prod-secrets.txt  → ADMIN_API_KEY
+#   /data/prod-admin-pass.txt → رمز ادمین
+# این ریدایرکت‌ها (force = true) فایل‌های استاتیک موجود را سایه می‌اندازند.
+# ─────────────────────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/data/*"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/db/*"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+# فایل‌های تک‌مسیره (نمی‌توان با glob مسدود کرد چون الگوهای Netlify روی مسیر
+# تک‌سگمنتی با پسوند، بدون ستاره مطابقت می‌کنند)
+[[redirects]]
+  from = "/server.mjs"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/package.json"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/.env"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/.env.example"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/.gitignore"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/DEPLOY.md"
+  to = "/__denied__"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/SELFHOST.md"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+# پوشه‌ی ابزارهای ایجنت (kilo worktrees) — یک کپی کامل از پروژه از جمله
+# data/prod-secrets.txt و db/schema.sql در خود دارد و هرگز نباید سرو شود.
+[[redirects]]
+  from = "/.kilo/*"
+  to = "/__denied__"
+  status = 404
+  force = true
+
+# ── فروشگاه: هندلرهای /shop/api/* (checkout + account) ──────────────────────
+# این دو فایل به netlify/functions منتقل شده‌اند (Netlify فقط *یک* پوشه
+# functions را دیپلوی می‌کند، پس shop/api/*.mjs قبلاً هرگز بیلد نمی‌شد).
+[[redirects]]
+  from = "/shop/api/checkout"
+  to = "/.netlify/functions/shop-checkout"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/shop/api/account/*"
+  to = "/.netlify/functions/shop-account/:splat"
+  status = 200
+  force = false
+
 # مسیر تمیز برای API همگام‌سازی (با config.path داخل data.mjs هم‌خوان است؛
 # این ریدایرکت برای سازگاری با دیپلوی‌های قدیمی‌تر هم نگه داشته شده)
 [[redirects]]
@@ -37,8 +141,16 @@
   force = false
 
 # index.html و sw.js نباید کش بلندمدت شوند تا کاربران همیشه آخرین نسخه را بگیرند
+# نکته: "/" و "/index.html" دو مسیر متفاوت‌اند — هر دو باید پوشش داده شوند،
+# وگرنه کاربری که سایت را از ریشه باز می‌کند نه CSP می‌گیرد نه no-cache.
 [[headers]]
   for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+
+[[headers]]
+  for = "/"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
@@ -53,12 +165,21 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# صفحه‌های فروشگاه از CDN های شخص ثالث (فونت @fontsource و three.js) استفاده
+# می‌کنند؛ CSP اپ (فقط 'self') آن‌ها را بلاک می‌کرد و صحنه‌ی سه‌بعدی/فونت‌ها
+# بی‌صدا از کار می‌افتاد. برای همین یک CSP جداگانه دارند.
+[[headers]]
+  for = "/shop/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+
 # هدرهای امنیتی برای همه‌ی مسیرها (API هم از داخل هندلرها همین‌ها را ست می‌کند)
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Content-Type-Options = "nosniff"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"

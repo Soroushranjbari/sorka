@@ -671,6 +671,8 @@ footer{background:#050607;border-top:1px solid var(--line);padding:70px 0 34px;p
 .f-col b{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
 .f-col a{display:block;font-size:13.5px;color:var(--mut);padding:5px 0}
 .f-col a:hover{color:var(--txt)}
+/* Not-yet-existing pages: plain text instead of a dead href="#" link. */
+.f-soon{display:block;font-size:13.5px;color:var(--mut);padding:5px 0;opacity:.5;cursor:default}
 .f-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:56px;padding-top:24px;font-size:12px;color:var(--dim)}
 @media(max-width:860px){.f-grid{grid-template-columns:1fr 1fr}}
 html.fx-fallback #loader{display:none!important}
@@ -1616,26 +1618,28 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     <div class="pgrid">
       <div class="pcard" data-reveal>
         <h3>Free Trial</h3><p class="for">14 days · full access</p>
-        <div class="price"><span class="cur">€</span><span class="num">0</span><span class="per">/ 14 days</span></div>
+        <!-- No currency glyph here: the three paid cards are priced in IRT, so a
+             "€" on the trial card mixed two currencies in one table. -->
+        <div class="price"><span class="num" data-m="Free" data-y="Free">Free</span><span class="per">/ 14 days</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Every feature unlocked</li><li><svg class="ic"><use href="#i-check"/></svg>Up to 5 clients</li><li><svg class="ic"><use href="#i-check"/></svg>No credit card required</li></ul>
         <a class="btn acc" href="/index.html" data-app-link>Start Free</a>
       </div>
       <div class="pcard" data-reveal style="transition-delay:.08s">
         <h3>Basic</h3><p class="for">For independent coaches.</p>
-        <div class="price"><span class="cur">IRT</span><span class="num">290,000</span><span class="per">/ month</span></div>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="290,000" data-y="2,900,000">290,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 5 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Workout Builder</li><li><svg class="ic"><use href="#i-check"/></svg>Nutrition Planner</li><li><svg class="ic"><use href="#i-check"/></svg>Progress Tracking</li><li><svg class="ic"><use href="#i-check"/></svg>Calendar</li><li><svg class="ic"><use href="#i-check"/></svg>Templates</li><li><svg class="ic"><use href="#i-check"/></svg>Notes</li></ul>
         <a class="btn ghost" href="/shop/checkout.html?plan=basic" data-checkout="basic">Buy Now</a>
       </div>
       <div class="pcard rec" data-reveal style="transition-delay:.16s">
         <span class="rec-chip">Recommended</span>
         <h3>Professional</h3><p class="for">For professional coaches.</p>
-        <div class="price"><span class="cur">IRT</span><span class="num">790,000</span><span class="per">/ month</span></div>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="790,000" data-y="7,900,000">790,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 30 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Everything in Basic</li><li><svg class="ic"><use href="#i-check"/></svg>Advanced templates</li><li><svg class="ic"><use href="#i-check"/></svg>Payment tracking</li><li><svg class="ic"><use href="#i-check"/></svg>Priority support</li></ul>
         <a class="btn acc" href="/shop/checkout.html?plan=professional" data-checkout="professional">Buy Now</a>
       </div>
       <div class="pcard" data-reveal style="transition-delay:.24s">
         <h3>Club</h3><p class="for">For coaching teams and gyms.</p>
-        <div class="price"><span class="cur">IRT</span><span class="num">2,490,000</span><span class="per">/ month</span></div>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="2,490,000" data-y="24,900,000">2,490,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 200 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Everything in Professional</li><li><svg class="ic"><use href="#i-check"/></svg>Team management</li><li><svg class="ic"><use href="#i-check"/></svg>Gym management</li><li><svg class="ic"><use href="#i-check"/></svg>Priority support</li></ul>
         <a class="btn ghost" href="mailto:sales@coach-os.io">Talk to Sales</a>
       </div>
@@ -1667,8 +1671,11 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <p>The operating system for fitness coaches and gyms. One coach. One workspace.</p>
       </div>
       <div class="f-col"><b>Product</b><a href="#product">Dashboard</a><a href="#product">Workouts</a><a href="#product">Nutrition</a><a href="#product">Progress</a><a href="#pricing">Pricing</a></div>
-      <div class="f-col"><b>Company</b><a href="#s14">Manifesto</a><a href="#">Careers</a><a href="mailto:hello@coach-os.io">Contact</a></div>
-      <div class="f-col"><b>Legal</b><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Imprint</a></div>
+      <!-- These four used href="#", which just jumped the visitor back to the
+           top of the page — worse than not being links at all. They are plain
+           text until the real pages exist. -->
+      <div class="f-col"><b>Company</b><a href="#s14">Manifesto</a><span class="f-soon" title="Coming soon">Careers</span><a href="mailto:hello@coach-os.io">Contact</a></div>
+      <div class="f-col"><b>Legal</b><span class="f-soon" title="Coming soon">Privacy</span><span class="f-soon" title="Coming soon">Terms</span><span class="f-soon" title="Coming soon">Imprint</span></div>
     </div>
     <div class="f-bottom"><span>© 2026 Coach OS. All rights reserved.</span><span>Made for coaches who mean business.</span></div>
   </div>

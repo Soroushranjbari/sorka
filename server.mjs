@@ -12,24 +12,36 @@
 //   /api/billing/* -> netlify/functions/billing.mjs
 //   /api/data      -> netlify/functions/data.mjs
 //   /api/health    -> netlify/functions/health.mjs
+//   /shop/api/*    -> netlify/functions/shop-checkout.mjs | shop-account.mjs
 //   everything else -> static files from the project root (index.html, ...)
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CSP, SECURITY_HEADERS } from './netlify/lib/guard.mjs';
+import { CSP, CSP_SHOP, SECURITY_HEADERS } from './netlify/lib/guard.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url)).replace(/[\\/]+$/, '');
 const PORT = Number(process.env.PORT) || 8888;
 const HOST = process.env.HOST || '0.0.0.0';
+
+/* Default the standalone server to the file backend. Without this the KV layer
+   falls through to Netlify Blobs, which has no credentials outside Netlify —
+   so `npm start` booted fine but EVERY write (signup, login, data PUT, shop
+   checkout) threw while reads silently returned null. SELFHOST.md and the
+   comment above both assumed this default. An explicit KV_FILE or DATABASE_URL
+   (or its POSTGRES_URL / PGURL aliases) always wins — this must run BEFORE the
+   dynamic imports below, because netlify/lib/db.mjs reads env at module load. */
+if (!process.env.KV_FILE && !process.env.DATABASE_URL && !process.env.POSTGRES_URL && !process.env.PGURL) {
+  process.env.KV_FILE = './data/kv.json';
+}
 
 /* ---------- API handlers (shared with the Netlify deployment) ---------- */
 const authFn = await import('./netlify/functions/auth.mjs');
 const billingFn = await import('./netlify/functions/billing.mjs');
 const dataFn = await import('./netlify/functions/data.mjs');
 const healthFn = await import('./netlify/functions/health.mjs');
-const shopCheckoutFn = await import('./shop/api/checkout.mjs');
-const shopAccountFn = await import('./shop/api/account.mjs');
+const shopCheckoutFn = await import('./netlify/functions/shop-checkout.mjs');
+const shopAccountFn = await import('./netlify/functions/shop-account.mjs');
 
 // Netlify maps "/api/auth/signup" -> handler URL "/api/auth/signup" (config.path
 // with a wildcard), so the handler sees the full path. Reproduce that here.
@@ -93,11 +105,29 @@ const MIME = {
   '.webmanifest': 'application/manifest+json'
 };
 
+/* Files that must never be served over HTTP: they hold credentials, the SQL
+   schema with every password hash / session token, or build tooling. The
+   Netlify config blocks the same paths with force-404 redirects (netlify.toml).
+   NOTE: publish = "." / ROOT = project root means without this an attacker can
+   simply GET /data/prod-secrets.txt. */
+const DENY_DIRS = ['data/', 'db/', 'scripts/', 'netlify/', 'node_modules/', '.git/', '.kilo/'];
+const DENY_FILES = new Set([
+  'server.mjs', 'netlify.toml', 'package.json', 'package-lock.json',
+  '.env', '.env.example', '.gitignore', 'DEPLOY.md', 'SELFHOST.md'
+]);
+const isBlocked = (rel) =>
+  DENY_DIRS.some((d) => rel.startsWith(d)) || DENY_FILES.has(rel) || rel.endsWith('.md');
+
 async function serveStatic(req, res, url) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.statusCode = 405; res.end('method not allowed'); return;
   }
-  let p = decodeURIComponent(url.pathname);
+  // Malformed percent-encoding (e.g. GET /%) makes decodeURIComponent throw a
+  // URIError. Uncaught, that rejects the async handler promise and — being an
+  // unhandled rejection on Node >= 15 — kills the whole process. Answer 400.
+  let p;
+  try { p = decodeURIComponent(url.pathname); }
+  catch { res.statusCode = 400; res.end('bad request'); return; }
   if (p === '/') p = '/index.html';
   // The shop landing page lives under /shop with a long filename — make /shop
   // and /shop/ resolve to it so links stay short.
@@ -108,18 +138,27 @@ async function serveStatic(req, res, url) {
   if (!file.startsWith(ROOT + sep)) {
     res.statusCode = 403; res.end('forbidden'); return;
   }
+  // Works on both path separators: the deny-lists are written POSIX-style.
+  const rel = file.slice(ROOT.length + 1).split(sep).join('/');
+  if (isBlocked(rel)) { res.statusCode = 404; res.end('not found'); return; }
   try {
     const st = await stat(file);
     if (st.isDirectory()) { res.statusCode = 404; res.end('not found'); return; }
     const body = await readFile(file);
+    const ext = extname(file).toLowerCase();
     res.statusCode = 200;
-    res.setHeader('content-type', MIME[extname(file).toLowerCase()] || 'application/octet-stream');
+    res.setHeader('content-type', MIME[ext] || 'application/octet-stream');
     for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
-    // CSP on HTML documents (the app shell). Inline script/style is required
-    // by the single-file architecture; everything else is locked down.
-    if (extname(file).toLowerCase() === '.html') res.setHeader('content-security-policy', CSP);
+    // CSP on HTML documents. The shop landing page legitimately loads fonts and
+    // three.js from CDNs, so it gets its own (wider) policy — the app shell's
+    // strict 'self'-only policy silently blocked them.
+    if (ext === '.html') {
+      res.setHeader('content-security-policy', rel.startsWith('shop/') ? CSP_SHOP : CSP);
+    }
     // index.html / sw.js / manifest must always be fresh (same as netlify.toml).
-    if (['/index.html', '/sw.js', '/manifest.json'].includes(url.pathname)) {
+    // Keyed off the RESOLVED file, not url.pathname — otherwise a request to "/"
+    // (which maps to index.html) skipped the no-cache header entirely.
+    if (['index.html', 'sw.js', 'manifest.json'].includes(rel)) {
       res.setHeader('cache-control', 'public, max-age=0, must-revalidate');
     }
     res.end(req.method === 'HEAD' ? undefined : body);
@@ -130,8 +169,9 @@ async function serveStatic(req, res, url) {
         const body = await readFile(join(ROOT, 'index.html'));
         res.statusCode = 200;
         res.setHeader('content-type', 'text/html; charset=utf-8');
+        res.setHeader('content-security-policy', CSP);
         res.setHeader('cache-control', 'public, max-age=0, must-revalidate');
-        res.end(body);
+        res.end(req.method === 'HEAD' ? undefined : body);
         return;
       } catch {}
     }
@@ -141,9 +181,17 @@ async function serveStatic(req, res, url) {
 
 /* ---------- Server ---------- */
 const server = createServer(async (req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  if (await handleApi(req, res, url)) return;
-  await serveStatic(req, res, url);
+  // Last-resort guard: an exception here would otherwise become an unhandled
+  // rejection and take the whole server down (Node >= 15 default behaviour).
+  try {
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    if (await handleApi(req, res, url)) return;
+    await serveStatic(req, res, url);
+  } catch (e) {
+    console.error('[server]', req.method, req.url, e);
+    if (!res.headersSent) res.statusCode = 500;
+    res.end();
+  }
 });
 
 server.listen(PORT, HOST, () => {
