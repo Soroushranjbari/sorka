@@ -20,7 +20,8 @@ const RL = {
   signup: [5, 60_000],
   forgot: [3, 600_000],
   reset: [10, 600_000],
-  claim: [10, 60_000]
+  claim: [10, 60_000],
+  profile: [10, 60_000]
 };
 function limited(req, kind) {
   const [limit, win] = RL[kind];
@@ -41,6 +42,30 @@ async function logout(req, st) {
   const t = bearerOf(req);
   if (t) { try { await st.delete(`sess:${t}`); } catch {} }
   return j(200, { ok: true });
+}
+
+/** POST /api/auth/profile {name} — rename the signed-in coach. The app's
+ *  profile form used to be display-only while every screen hardcoded a demo
+ *  persona, so the signup name never showed anywhere. */
+async function profile(req, st) {
+  const s = await sessionOf(st, bearerOf(req));
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const acct = await accountById(st, s.coachId);
+  if (!acct) return j(401, { ok: false, error: 'unauthorized' });
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 10_000);
+  if (big) return tooLarge(10_000);
+  if (bad) return badJson();
+  const name = String(body?.name || '').trim().slice(0, 80);
+  if (name.length < 2) return j(400, { ok: false, error: 'bad-name' });
+  return withLock(`acct:${acct.email}`, async () => {
+    const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
+    cur.name = name;
+    await st.setJSON(`acct:${cur.email}`, cur);
+    return j(200, {
+      ok: true,
+      coach: { id: cur.id, email: cur.email, name: cur.name, plan: cur.plan || 'trial', role: cur.role || 'coach' }
+    });
+  });
 }
 
 async function claim(req, st) {
@@ -126,6 +151,7 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'login') { const lim = limited(req, 'login'); return secure(lim || await login(req, st)); }
     if (req.method === 'POST' && action === 'logout') return secure(await logout(req, st));
     if (req.method === 'GET' && action === 'me') return secure(await me(req, st));
+    if (req.method === 'POST' && action === 'profile') { const lim = limited(req, 'profile'); return secure(lim || await profile(req, st)); }
     if (req.method === 'POST' && action === 'claim') { const lim = limited(req, 'claim'); return secure(lim || await claim(req, st)); }
     if (req.method === 'POST' && action === 'forgot') return secure(await forgot(req, st));
     if (req.method === 'POST' && action === 'reset') return secure(await reset(req, st));
