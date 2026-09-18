@@ -17,18 +17,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F6F6F4; --surface:#FFFFFF; --sidebar:#12151B;
+  --bg:#F1F1EE; --surface:#FFFFFF; --sidebar:#12151B;
   --ink:#15181E; --ink2:#5C6270; --ink3:#9AA0AE;
-  --line:#E8E8E3; --line2:#F0F0EB;
+  --line:#DEDED6; --line2:#E8E8E1;
   --accent:#C8F04B; --accent-deep:#8FB51E; --accent-ink:#1A2205; --accent-soft:#F4FAE0;
   --acc-line:#CDE694; --acc-line2:#CFE49B; --acc-mid:#A6D437; --acc-mid2:#9CC53E; --acc-stat:#B4D95B; --acc-chip:#D8E9AF;
   --green:#16A34A; --green-soft:#E9F6EE; --red:#DC2626; --red-soft:#FDEDED;
   --amber:#C77414; --amber-soft:#FBF2E2; --blue:#2563EB; --blue-soft:#EAF1FE;
   --purple:#7C3AED; --purple-soft:#F2EDFD;
-  --glass:rgba(246,246,244,.85); --glass2:rgba(246,246,244,.92);
+  --glass:rgba(241,241,238,.85); --glass2:rgba(241,241,238,.92);
   --ink-bg:#15181E; --btn-dark-bg:#15181E; --btn-dark-fg:#fff;
-  --row-h:#FAFAF6; --seg-bg:#ECECE7; --seg-on:#FFFFFF; --kbd-bg:#F1F1EC; --cal-hd:#FBFBF8; --cal-alt:#FAFAF7;
-  --sh-1:0 1px 2px rgba(18,21,27,.05); --sh-2:0 12px 32px -8px rgba(18,21,27,.16);
+  --row-h:#F7F7F3; --seg-bg:#E9E9E3; --seg-on:#FFFFFF; --kbd-bg:#EFEFEA; --cal-hd:#F9F9F5; --cal-alt:#F7F7F3;
+  --sh-1:0 1px 2px rgba(18,21,27,.06),0 2px 10px -2px rgba(18,21,27,.06);
+  --sh-2:0 12px 32px -8px rgba(18,21,27,.18);
   --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 }
 html{color-scheme:light}
@@ -36,7 +37,7 @@ html[data-theme="dark"]{
   color-scheme:dark;
   --bg:#0F1114; --surface:#171A1F; --sidebar:#0B0D10;
   --ink:#E9EAEE; --ink2:#A9AFBA; --ink3:#707786;
-  --line:#272B32; --line2:#20242A;
+  --line:#2E333B; --line2:#262B33;
   --glass:rgba(15,17,20,.85); --glass2:rgba(15,17,20,.92);
   --ink-bg:#0B0D10; --btn-dark-bg:#E9EAEE; --btn-dark-fg:#12151B;
   --row-h:#1C2026; --seg-bg:#22262D; --seg-on:#2B3038; --kbd-bg:#1C2026; --cal-hd:#1B1F25; --cal-alt:#171A1F;
@@ -70,7 +71,7 @@ h1,h2,h3{letter-spacing:-.02em}
 .field{margin-bottom:14px}
 kbd{background:var(--kbd-bg);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;font-size:11px;font-family:inherit;color:var(--ink2)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh-1)}
-.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line2)}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line)}
 .card-t{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);display:flex;align-items:center;gap:8px}
 .row{display:flex;align-items:center;gap:10px}
 .sp{flex:1}
@@ -133,10 +134,10 @@ body.sb-c .sprof{justify-content:center}
 .ovl{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
 .modal{background:var(--surface);border-radius:18px;box-shadow:var(--sh-2);width:100%;max-width:760px;max-height:90vh;display:flex;flex-direction:column;animation:pop .16s ease}
 @keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}}
-.modal-h{display:flex;justify-content:space-between;align-items:center;padding:17px 22px;border-bottom:1px solid var(--line2)}
+.modal-h{display:flex;justify-content:space-between;align-items:center;padding:17px 22px;border-bottom:1px solid var(--line)}
 .modal-h h3{font-size:16px}
 .modal-b{padding:20px 22px;overflow-y:auto}
-.modal-f{display:flex;justify-content:flex-end;gap:10px;padding:15px 22px;border-top:1px solid var(--line2)}
+.modal-f{display:flex;justify-content:flex-end;gap:10px;padding:15px 22px;border-top:1px solid var(--line)}
 .fs{margin-bottom:20px}
 .fs-t{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);padding-bottom:8px;border-bottom:1px solid var(--line2);margin-bottom:14px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
@@ -174,6 +175,25 @@ body.sb-c .sprof{justify-content:center}
 .set-row:last-child{border-bottom:none}
 .set-row .t{font-weight:600;font-size:13.5px}
 .set-row .d{font-size:12.5px;color:var(--ink2);margin-top:2px}
+/* v17.6 — light-theme polish: sectioning, focus, scrollbars, empty states */
+.sec-t{display:flex;align-items:center;gap:10px;margin:24px 0 12px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.sec-t::after{content:'';flex:1;height:1px;background:var(--line)}
+.sec-t .bdg{letter-spacing:0}
+html[lang="fa"] .sec-t{letter-spacing:0}
+.stat{transition:transform .18s,box-shadow .18s}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
+.stat .icw{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);flex:none}
+button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible,.fchip:focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px;border-radius:8px}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid var(--bg)}
+*::-webkit-scrollbar-thumb:hover{background:var(--ink3)}
+*::-webkit-scrollbar-track{background:transparent}
+.empty{border:1.5px dashed var(--line);border-radius:14px;padding:26px 20px;text-align:center;color:var(--ink3);display:flex;flex-direction:column;align-items:center;gap:8px}
+.empty b{color:var(--ink2);font-size:13.5px}
+.empty .muted{font-size:12.5px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:14px}
+.cgrid .card{padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
+.cgrid .card:hover{border-color:var(--acc-line);box-shadow:var(--sh-2);transform:translateY(-1px)}
 .cal-grid{display:grid;grid-template-columns:56px repeat(7,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
 .cal-hd{padding:10px 6px;text-align:center;border-bottom:2px solid var(--line);border-inline-start:1px solid var(--line2);font-size:12px;font-weight:700;color:var(--ink2);background:var(--cal-hd)}
 .cal-hd.today{color:var(--accent-ink);background:var(--accent-soft)}
@@ -384,8 +404,10 @@ body.sb-c .sprof{justify-content:center}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;display:none}
 body.sb-open .scrim{display:block}
 /* v16.8 — AI chat assistant */
-.ai-fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:60;width:52px;height:52px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer;border:none;box-shadow:0 10px 30px -6px rgba(0,0,0,.35);transition:transform .25s}
+.ai-fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:60;height:52px;padding:0 18px;border-radius:999px;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;box-shadow:0 10px 30px -6px rgba(0,0,0,.35);transition:transform .25s;font-weight:800;font-size:13.5px;white-space:nowrap}
 .ai-fab:hover{transform:translateY(-3px)}
+/* Mobile: the pill must sit ABOVE the fixed bottom nav, not on top of it */
+@media(max-width:760px){.ai-fab{bottom:calc(86px + env(safe-area-inset-bottom,0px));height:46px;padding:0 15px;font-size:12.5px}}
 .ai-ovl{position:fixed;inset:0;z-index:98;background:rgba(8,10,6,.45);backdrop-filter:blur(3px)}
 .ai-panel{position:fixed;bottom:0;inset-inline-end:0;z-index:99;width:min(430px,100vw);height:min(660px,94vh);background:var(--bg);border:1px solid var(--line);border-bottom:none;border-radius:18px 18px 0 0;display:flex;flex-direction:column;box-shadow:0 -12px 44px -10px rgba(0,0,0,.4)}
 .ai-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line2);font-size:13.5px}
@@ -409,6 +431,7 @@ body.sb-open .scrim{display:block}
 /* ================= ICONS ================= */
 const P={
 grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
 users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
 dumbbell:'<path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>',
 calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
@@ -461,7 +484,10 @@ const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0
 
 /* ================= I18N ================= */
 let lang='en';
-try{lang=localStorage.getItem('co-lang')||'en'}catch(e){}
+/* Falls back to the shop's locale key (coach-os-locale, see shop/README.md) so
+   a buyer who browsed the shop in Persian gets the app in Persian on first
+   boot; after that co-lang (the app's own choice) wins. */
+try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){}
 const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
@@ -473,6 +499,14 @@ const FA={
 'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your Coach OS workspace.':'به فضای کاری Coach OS خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to Coach OS?':'تازه با Coach OS آشنا شدی؟','Request access':'درخواست دسترسی','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
+'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
+'Announce':'اعلامیه','New announcement':'اعلامیه جدید','Write the announcement…':'متن اعلامیه را بنویس…','Send to all clients':'ارسال به همه شاگردها','Announcement sent':'اعلامیه ارسال شد','Goes to every active client as a direct message':'برای همه شاگردهای فعال به‌صورت پیام مستقیم ارسال می‌شود','Schedule change next week':'تغییر برنامه هفته آینده','Message templates':'قالب پیام','New template':'قالب جدید','Template name':'نام قالب','Template text':'متن قالب','Template saved ✓':'قالب ذخیره شد ✓','A template with this name exists':'قالبی با این نام وجود دارد','Inserted into the composer':'در کادر نوشتن پیام قرار گرفت','Template name and text are required':'نام و متن قالب الزامی است','No templates yet':'هنوز قالبی نیست',
+'Session packages':'بسته‌های جلسه','Packages':'بسته‌ها','Sessions almost used':'جلسات در حال اتمام','Add pack':'افزودن بسته','Pack name':'نام بسته','Pack added ✓':'بسته اضافه شد ✓','Pack deleted':'بسته حذف شد','Used':'مصرف‌شده','left':'باقی‌مانده','Sessions remaining':'جلسات باقی‌مانده','No packages yet — sell sessions as a pack and Coach OS counts them down automatically':'هنوز بسته‌ای نیست — جلسات را به‌صورت بسته بفروش؛ Coach OS خودش می‌شمارد','remaining — offer a new pack':'باقی‌مانده — پیشنهاد بسته جدید بده',
+'Intake form':'فرم ورود اطلاعات','Fill intake form':'تکمیل فرم','Intake form missing':'فرم ورود اطلاعات تکمیل نشده','Review the health questionnaire before the first session':'قبل از اولین جلسه پرسشنامه سلامت را ببین','Submitted':'ثبت شده','Missing':'ناقص','The client has not submitted the intake form yet':'شاگرد هنوز فرم را تکمیل نکرده است','Intake form saved ✓':'فرم ذخیره شد ✓','Answer all questions':'به همه سوالات پاسخ بده','Your coach needs your health background before the first session':'مربی‌ات قبل از اولین جلسه به سوابق سلامتی‌ات نیاز دارد','Emergency contact (name & phone)':'تماس اضطراری (نام و شماره)','Injuries or medical conditions':'آسیب‌ها یا بیماری‌ها','Current medications':'داروهای فعلی','Chest pain or dizziness during exercise?':'درد قفسه سینه یا سرگیجه هنگام تمرین؟','Heart condition diagnosed by a doctor?':'بیماری قلبی که پزشک تشخیص داده؟','Bone or joint problem that could worsen?':'مشکل استخوان یا مفصلی که ممکن است بدتر شود؟','Currently doing other training?':'در حال حاضر تمرین دیگری هم انجام می‌دهی؟','Main goal & expectations':'هدف اصلی و انتظارات','Yes':'بله','No':'خیر','Submit':'ارسال',
+'Photo added ✓':'عکس اضافه شد ✓','Photo sent — waiting for coach approval':'عکس ارسال شد — در انتظار تأیید مربی','Photo limit reached — delete an older photo first':'سقف عکس‌ها پر شده — اول یک عکس قدیمی را حذف کن','Photo storage is full — delete some photos first':'فضای عکس‌ها پر شده — چند عکس را حذف کن','Photo deleted':'عکس حذف شد','Approved ✓':'تأیید شد ✓','Pending approval':'در انتظار تأیید','Approve':'تأیید','No photos yet — add the first one':'هنوز عکسی نیست — اولین عکس را اضافه کن','My Photos':'عکس‌های من','Add photo':'افزودن عکس','photos':'عکس','Your coach will see this photo. Upload?':'مربی‌ات این عکس را می‌بیند. بارگذاری شود؟',
+'Weight Target':'وزن هدف','Target Weight':'وزن هدف','Target Date':'تاریخ هدف','Goal progress':'پیشرفت هدف','My Goal':'هدف من',
+'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
+'Meat':'گوشت','Chicken':'مرغ','Fish':'ماهی','Eggs':'تخم‌مرغ','Dairy':'لبنیات','Rice & Grains':'برنج و غلات','Bread':'نان','Fruit':'میوه','Vegetables':'سبزیجات','Nuts':'آجیل','Oils':'روغن‌ها','Drinks':'نوشیدنی‌ها','Supplements':'مکمل‌ها','Other':'سایر',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
 'Could not load coaches':'بارگذاری مربی‌ها ناموفق بود','Admin error':'خطای ادمین','Retry':'تلاش دوباره','Search by name or email':'جستجو با نام یا ایمیل',
 'Sign in to Coach OS':'ورود به Coach OS','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
@@ -545,7 +579,7 @@ const FA={
 'Pending':'در انتظار','View summary':'مشاهده خلاصه','No workouts yet':'هنوز تمرینی نداری','sets':'ست','Set':'ست',
 'Finish Workout':'پایان تمرین','Rest':'استراحت','Skip':'رد کردن','Close':'بستن','Workout completed 💪':'تمرین تکمیل شد 💪',
 'My Progress':'پیشرفت من','Nutrition Plan':'برنامه تغذیه','Your coach has not published a nutrition plan yet':'مربی‌ات هنوز برنامه تغذیه‌ای منتشر نکرده',
-'Published to':'منتشر شد برای',
+'Published to':'منتشر شد برای','Workout Builder':'سازنده تمرین','Publishing to':'انتشار برای','Builder cleared':'سازنده پاک شد','File attached':'فایل پیوست شد',
 'need your reply':'نیاز به پاسخ تو دارند','Needs your reply':'در انتظار پاسخ شما','Waiting on your reply':'در انتظار پاسخ تو','All conversations':'همه گفتگوها','Type a message…':'پیام بنویس…','Send':'ارسال',
 'Save as note':'تبدیل به یادداشت','Saved as note':'به یادداشت تبدیل شد','From chat':'از چت','Form check':'فرم‌چک','Replies within ~4h':'میانگین پاسخ ~۴ ساعت',
 'Message sent':'پیام ارسال شد','Form check sent':'فرم‌چک ارسال شد','Record form check':'ضبط فرم‌چک','Attach file':'پیوست فایل','File picker (demo)':'انتخاب فایل (دمو)','Video player (demo)':'پخش ویدیو (دمو)',
@@ -573,7 +607,7 @@ const FA={
 'Hours This Week':'ساعت‌های این هفته','All clients on track ✓':'همه شاگردها سر جایشان هستند ✓','Workout awaiting client':'تمرین در انتظار شاگرد','No nutrition plan':'بدون برنامه تغذیه','Check-in with a note':'با یک یادداشت پیگیری کن','Re-engage with a message':'با یک پیام دوباره درگیرش کن',
 'Attendance':'حضور و غیبت','Attended':'حاضر','Missed':'غایب','Not marked':'ثبت نشده','Attendance Rate':'نرخ حضور','Marked attended ✓':'حضور ثبت شد ✓','Marked missed — client flagged':'غیبت ثبت شد — شاگرد علامت خورد','Attendance cleared':'ثبت حضور پاک شد','Delete client':'حذف شاگرد','Client deleted':'شاگرد حذف شد','At least one client required':'حداقل یک شاگرد لازم است','Attendance history':'تاریخچه حضور و غیبت',
 'Current Program':'برنامه فعلی','Measurement':'اندازه‌گیری','Sets × Reps × Weight':'ست × تکرار × وزن','New message':'پیام جدید','You':'شما','Create Plan':'ساخت برنامه','Add Phase':'افزودن فاز','Create Meal Template':'ساخت قالب وعده','Use':'استفاده','Apply to client':'اعمال روی شاگرد','then customize':'و سپس سفارشی کن','View':'مشاهده','Phase name':'نام فاز','Weeks':'هفته‌ها','120 min':'۱۲۰ دقیقه','sent you a message':'برایت پیام فرستاد','New Template':'قالب جدید','Please check my form on this set':'لطفاً فرم این ست را بررسی کن','12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.':'۱۲ سال تجربه در برنامه‌نویسی هایپرتروفی و قدرت برای ورزشکاران حرفه‌ای و علاقه‌مند.','No clients yet':'هنوز شاگردی نیست','Clients join with this code — data syncs live across devices':'شاگرد با همین کد وصل می‌شود — داده‌ها زنده بین دستگاه‌ها همگام می‌شوند','Live sync active — data is shared across devices':'همگام‌سازی زنده فعال است — داده‌ها بین دستگاه‌ها مشترک‌اند',
-'Sync blocked: ':'همگام‌سازی مسدود شد: ','Subscription expired — renew to keep editing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه ویرایش تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Subscription expired — renew to keep syncing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه همگام‌سازی تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Client limit reached — upgrade your plan or archive a client':'سقف شاگردان پر شده — پلن را ارتقا ده یا یک شاگرد را بایگانی کن','Enter a coupon or payment code':'کد تخفیف یا کد پیگیری پرداخت را وارد کن','Checking code…':'در حال بررسی کد…','Plan activated ✓ — welcome to ':'پلن فعال شد ✓ — خوش آمدی به ','Request registered — pay, then enter your tracking coupon':'درخواست ثبت شد — پرداخت کن و بعد کد پیگیری را وارد کن','Code not found — check and retry':'کدی یافت نشد — بررسی و دوباره تلاش کن','This code was already used':'این کد قبلاً استفاده شده','This code has expired':'این کد منقضی شده','Plans':'پلن‌ها','Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200':'آزمایشی: ۵ شاگرد · پایه: ۵ · حرفه‌ای: ۳۰ · باشگاه: ۲۰۰','seats used':'جایگاه مصرف‌شده','Basic':'پایه','Professional':'حرفه‌ای','Club':'باشگاه','IRT / month':'تومان / ماه','IRT':'تومان','Request':'درخواست','Pending request':'درخواست در انتظار','pay to the merchant, then enter your tracking coupon below':'به فروشنده پرداخت کن و سپس کد پیگیری را در پایین وارد کن','Coupon / payment code':'کد تخفیف / کد پرداخت','Redeem a coupon from support or your payment tracking code':'کد تخفیف از پشتیبانی یا کد پیگیری پرداخت‌ات را فعال کن','Activate':'فعال‌سازی','Expired — renew to keep syncing':'منقضی — برای ادامه همگام‌سازی تمدید کن','Trial · ':'آزمایشی · ','Active · ':'فعال · ','Platform admin':'مدیریت پلتفرم','All coaches on this platform — plans, remaining days & access control':'همه‌ی مربیان این پلتفرم — پلن‌ها، روزهای باقی‌مانده و کنترل دسترسی','Remaining':'باقی‌مانده','Seats':'شاگردان','Actions':'عملیات','days':'روز','Extend':'تمدید','Extend subscription':'تمدید اشتراک','Grant':'اعطا','Days':'روزها','Days stack on top of any remaining time — granting also restores suspended access':'روزها روی زمان باقی‌مانده اضافه می‌شوند — اعطا، دسترسی معلق را هم برمی‌گرداند','Subscription granted ✓':'اشتراک اعطا شد ✓','Suspend access':'قطع دسترسی','Restore access':'بازگرداندن دسترسی','Suspended':'معلق','Access suspended — coach is read-only':'دسترسی قطع شد — مربی فقط‌خواندنی است','Access restored ✓':'دسترسی برقرار شد ✓','Create coupon':'ساخت کوپن','Max uses':'حداکثر استفاده','Code (optional)':'کد (اختیاری)','Auto-generated':'تولید خودکار','Coupon created — share the code':'کوپن ساخته شد — کد را بفرست','Coach not found':'مربی پیدا نشد','Cannot suspend an admin':'نمی‌توان ادمین را معلق کرد','Code already exists':'این کد قبلاً ساخته شده','Coach':'مربی','Status':'وضعیت','Registered':'ثبت‌نام','Trial':'آزمایشی','Expired':'منقضی','Refresh':'به‌روزرسانی','Admin':'مدیر','Loading…':'در حال بارگذاری…'
+'Sync blocked: ':'همگام‌سازی مسدود شد: ','Subscription expired — renew to keep editing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه ویرایش تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Subscription expired — renew to keep syncing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه همگام‌سازی تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Client limit reached — upgrade your plan or archive a client':'سقف شاگردان پر شده — پلن را ارتقا ده یا یک شاگرد را بایگانی کن','Enter a coupon or payment code':'کد تخفیف یا کد پیگیری پرداخت را وارد کن','Checking code…':'در حال بررسی کد…','Plan activated ✓ — welcome to ':'پلن فعال شد ✓ — خوش آمدی به ','Request registered — pay, then enter your tracking coupon':'درخواست ثبت شد — پرداخت کن و بعد کد پیگیری را وارد کن','Code not found — check and retry':'کدی یافت نشد — بررسی و دوباره تلاش کن','This code was already used':'این کد قبلاً استفاده شده','This code has expired':'این کد منقضی شده','Plans':'پلن‌ها','Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200':'آزمایشی: ۵ شاگرد · پایه: ۵ · حرفه‌ای: ۳۰ · باشگاه: ۲۰۰','seats used':'جایگاه مصرف‌شده','Basic':'پایه','Professional':'حرفه‌ای','Club':'باشگاه','IRT / month':'تومان / ماه','IRT':'تومان','Request':'درخواست','Pending request':'درخواست در انتظار','pay to the merchant, then enter your tracking coupon below':'به فروشنده پرداخت کن و سپس کد پیگیری را در پایین وارد کن','Coupon / payment code':'کد تخفیف / کد پرداخت','Redeem a coupon from support or your payment tracking code':'کد تخفیف از پشتیبانی یا کد پیگیری پرداخت‌ات را فعال کن','Activate':'فعال‌سازی','Valid until':'اعتبار تا','Activation code':'کد فعال‌سازی','optional — from your purchase':'اختیاری — از خرید شما','optional — renewal code':'اختیاری — کد تمدید','Expired — renew to keep syncing':'منقضی — برای ادامه همگام‌سازی تمدید کن','Trial · ':'آزمایشی · ','Active · ':'فعال · ','Platform admin':'مدیریت پلتفرم','All coaches on this platform — plans, remaining days & access control':'همه‌ی مربیان این پلتفرم — پلن‌ها، روزهای باقی‌مانده و کنترل دسترسی','Remaining':'باقی‌مانده','Seats':'شاگردان','Actions':'عملیات','days':'روز','Extend':'تمدید','Extend subscription':'تمدید اشتراک','Grant':'اعطا','Days':'روزها','Days stack on top of any remaining time — granting also restores suspended access':'روزها روی زمان باقی‌مانده اضافه می‌شوند — اعطا، دسترسی معلق را هم برمی‌گرداند','Subscription granted ✓':'اشتراک اعطا شد ✓','Suspend access':'قطع دسترسی','Restore access':'بازگرداندن دسترسی','Suspended':'معلق','Access suspended — coach is read-only':'دسترسی قطع شد — مربی فقط‌خواندنی است','Access restored ✓':'دسترسی برقرار شد ✓','Create coupon':'ساخت کوپن','Max uses':'حداکثر استفاده','Code (optional)':'کد (اختیاری)','Auto-generated':'تولید خودکار','Coupon created — share the code':'کوپن ساخته شد — کد را بفرست','Coach not found':'مربی پیدا نشد','Cannot suspend an admin':'نمی‌توان ادمین را معلق کرد','Code already exists':'این کد قبلاً ساخته شده','Coach':'مربی','Status':'وضعیت','Registered':'ثبت‌نام','Trial':'آزمایشی','Expired':'منقضی','Refresh':'به‌روزرسانی','Admin':'مدیر','Loading…':'در حال بارگذاری…'
 };
 const t=s=>lang==='fa'?(FA[s]??s):s;
 /* muscle labels get their own lookup so the nav 'Back' and the muscle 'Back' never collide */
@@ -584,7 +618,7 @@ function applyLang(){
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==='fa'?'rtl':'ltr';
   document.title=lang==='fa'?'Coach OS — فضای کاری مربی و شاگرد':'Coach OS — Coach & Client Workspace';
-  try{localStorage.setItem('co-lang',lang)}catch(e){}
+  try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang)}catch(e){}
 }
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
@@ -896,6 +930,9 @@ function attentionList(){
   ACT.filter(c=>c.status==='On Hold').forEach(c=>items.push({name:c.name,why:'On Hold',d:t('Check-in with a note'),icon:'clock',bt:'bdg-amber',act:'client',cid:c.id}));
   ACT.filter(c=>c.status==='Inactive').forEach(c=>items.push({name:c.name,why:'Inactive',d:t('Re-engage with a message'),icon:'mail',bt:'bdg-gray',act:'msg'}));
   ACT.filter(c=>c.status==='Active'&&!nPlanOf(c.name)).forEach(c=>items.push({name:c.name,why:'No nutrition plan',d:t('Create Nutrition Plan'),icon:'utensils',bt:'bdg-blue',act:'client',cid:c.id,tab:'nutrition'}));
+  /* v17.5 — onboarding & package nudges (Trainerize/CoachAccountable parity) */
+  ACT.filter(c=>c.status==='Active'&&!c.intake).forEach(c=>items.push({name:c.name,why:'Intake form missing',d:t('Review the health questionnaire before the first session'),icon:'note',bt:'bdg-blue',act:'client',cid:c.id}));
+  PACKS.filter(p=>{const cc=ACT.find(x=>x.name===p.client);return cc&&cc.status==='Active'&&(p.total-p.used)<=1}).forEach(p=>{const cc=ACT.find(x=>x.name===p.client);items.push({name:p.client,why:'Sessions almost used',d:`${nf(Math.max(0,p.total-p.used))} ${t('of')} ${nf(p.total)} ${t('remaining — offer a new pack')}`,icon:'calendar',bt:'bdg-amber',act:'client',cid:cc.id})});
   return items;
 }
 const NOTIFS=[{t:'Measurement due — Maryam Sadeghi',d:'2 h ago',un:true},{t:'Reza Moradi missed his session',d:'5 h ago',un:true},{t:'Weekly report is ready',d:'Yesterday',un:false}];
@@ -909,6 +946,17 @@ let MSGS=[
 {id:5,client:'Reza Moradi',from:'client',type:'checkin',body:'Check-in · Energy: Low · Soreness: Some · Sleep: Poor',time:'Yesterday',read:true},
 {id:6,client:'Ali Rezaei',from:'client',type:'text',body:'Can I swap Thursday Pull A to Friday? I have a work trip.',time:'2 h ago',read:false},
 {id:7,client:'Sara Ahmadi',from:'client',type:'form',body:'Is my back neutral enough on the last reps?',ctx:'Hip Thrust · Set 2',time:'25 min ago',read:false,dur:'0:14'}];
+/* v17.5 — competitor parity (Trainerize/Everfit/Practice Better): session
+   packages (auto-deducted when a session is marked attended) and reusable
+   message templates. Progress photos live in DB[cid].photos and the intake
+   form on the client record (c.intake) — both ride the existing payload. */
+let PACKS=[
+{id:1,client:'Ali Rezaei',name:'12-Session Pack',total:12,used:5,createdAt:Date.now()-30*86400000},
+{id:2,client:'Sara Ahmadi',name:'8-Session Pack',total:8,used:7,createdAt:Date.now()-20*86400000}];
+let MSGTPL=[
+{n:'Welcome message',body:'Welcome aboard! Your first program is ready — open Workouts to see it. Reply here any time.'},
+{n:'Session reminder',body:'Quick reminder: we train tomorrow at the usual time. Come rested and hydrated.'},
+{n:'Measurement due',body:'Time for your weekly check-in — please log your weight and measurements when you can.'}];
 function threads(){
   const map={};
   MSGS.forEach(m=>{(map[m.client]=map[m.client]||[]).push(m)});
@@ -942,6 +990,18 @@ const FOODS=[
 {n:'Whey Protein',cat:'Supplements',kcal:375,p:80,c:8,f:5,alt:[]},
 {n:'Orange Juice',cat:'Drinks',kcal:45,p:0.7,c:10,f:0.2,alt:[]},
 {n:'Salmon',cat:'Fish',kcal:208,p:20,c:0,f:13,alt:['White Fish','Chicken Breast']}];
+/* v17.9 — Persian food names. Food records are stored with ENGLISH names
+   (they are data keys: alternatives reference them by name, and custom foods
+   created on any device must merge), so display goes through foodName()
+   instead of t(). Custom foods added by the coach have no entry here and
+   simply show as typed. */
+const FA_FOOD={
+'Chicken Breast':'سینه مرغ','Turkey Breast':'سینه بوقلمون','White Fish':'ماهی سفید','Lean Beef':'گوشت گاو کم‌چرب',
+'Egg Whites':'سفیده تخم‌مرغ','Whole Eggs':'تخم‌مرغ کامل','Greek Yogurt':'ماست یونانی','Cottage Cheese':'پنیر کوتاژ',
+'Whole Wheat Bread':'نان گندم کامل','Oats':'جو دوسر','White Rice (cooked)':'برنج سفید (پخته)','Banana':'موز',
+'Apple':'سیب','Broccoli':'بروکلی','Sweet Potato':'سیب‌زمینی شیرین','Almonds':'بادام',
+'Olive Oil':'روغن زیتون','Whey Protein':'پروتئین وی','Orange Juice':'آب پرتقال','Salmon':'ماهی سالمون'};
+const foodName=n=>lang==='fa'?(FA_FOOD[n]||n):n;
 const NCATS=['Meat','Chicken','Fish','Eggs','Dairy','Rice & Grains','Bread','Fruit','Vegetables','Nuts','Oils','Drinks','Supplements','Other'];
 const D01=[1,1,0,1,1,1,0];
 const TRAIN_T=[
@@ -1010,7 +1070,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[]};
 let __lastPack='';
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
@@ -1036,7 +1096,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,DB:packDB(),DEAD});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1065,6 +1125,7 @@ function loadData(){
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);
     Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
     Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
     /* NOTE: this used to run `if(!EVENTS.some(e=>e.att)) EVENTS.forEach(e=>e.day<TODAY&&(e.att='done'))`
@@ -1125,7 +1186,7 @@ function cloudReset(){
 function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
-  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;FOODS.length=0;
+  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;FOODS.length=0;PACKS.length=0;MSGTPL.length=0;
   Object.keys(DB).forEach(k=>delete DB[k]);
   Object.keys(DEAD).forEach(k=>DEAD[k].length=0);
   S.cid=1;S.pickCid=1;S.msgThread=null;S.nplan=0;
@@ -1141,35 +1202,52 @@ async function authSignup(){
   const name=($('su-name')?.value||'').trim();
   const email=($('su-email')?.value||'').trim();
   const pw=$('su-pass')?.value||'';
+  const coupon=($('su-coupon')?.value||'').trim();
   if(!name||!email||pw.length<8){toast(t('Enter name, valid email, password 8+ chars'));return}
   toast(t('Creating your account…'));
   try{
-    const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify({name,email,password:pw})});
+    const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify({name,email,password:pw,coupon:coupon||undefined})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
-    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
+    // The optional activation code (prefilled from the shop) is redeemed
+    // server-side in the SAME call — the plan is active on first landing.
+    if(d.redeemed&&d.access){
+      AUTH.access=d.access;BILL.info=d.billing||BILL.info;
+      try{localStorage.removeItem('coach-os-coupon')}catch(e){}
+    } else AUTH.access=d.access;
     // New account: drop the local demo seed and any previous tenant's cloud
     // state, so the coach starts with an empty, correctly-owned workspace.
     cloudReset();adoptAccount(d.coach);
     S.role='coach';S.view='dash';render();
-    toast(t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
+    toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
+      :d.redeemError?t(billErr({error:d.redeemError}))
+      :t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
   }catch(e){toast(t('Could not reach server'))}
 }
 async function authLogin(){
   const email=($('li-email')?.value||'').trim();
   const pw=$('li-pass')?.value||'';
+  const coupon=($('li-coupon')?.value||'').trim();
   if(!email||!pw){toast(t('Enter email and password'));return}
   toast(t('Signing in…'));
   try{
-    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
+    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw,coupon:coupon||undefined})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
-    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
+    // Renewal code (optional): redeemed in the same login call — days stack.
+    if(d.redeemed&&d.access){
+      AUTH.access=d.access;BILL.info=d.billing||BILL.info;
+      try{localStorage.removeItem('coach-os-coupon')}catch(e){}
+    } else AUTH.access=d.access;
     // Account switched in this tab: reset the sync target AND wipe local data
     // that belongs to the previous coach — otherwise the first sync pushes the
     // previous coach's clients into this coach's (empty) workspace.
     cloudReset();adoptAccount(d.coach);
     S.role='coach';S.view='dash';render();
-    toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
+    toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
+      :d.redeemError?t(billErr({error:d.redeemError}))
+      :t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();
   }catch(e){toast(t('Could not reach server'))}
 }
@@ -1245,9 +1323,15 @@ async function authProfile(){
 }
 const authPlanLabel=()=>{
   const a=AUTH.access||{};
-  if(a.status==='trial')return 'Trial · '+(a.plan||'trial');
-  if(a.status==='active')return 'Active · '+(a.plan||'trial');
-  return 'Expired — renew to keep syncing';
+  if(a.status==='trial')return t('Trial · ')+planLbl(a.plan||'trial');
+  if(a.status==='active')return t('Active · ')+planLbl(a.plan||'trial');
+  return t('Expired — renew to keep syncing');
+};
+/* Badge label for the same row — the raw status id ('ACTIVE') leaked English
+   into the Persian UI. Persian has no case, so toUpperCase() is a no-op there. */
+const authStatusLbl=()=>{
+  const s=(AUTH.access&&AUTH.access.status)||'trial';
+  return t(s==='trial'?'Trial':s==='active'?'Active':s==='suspended'?'Suspended':'Expired').toUpperCase();
 };
 const authErrMsg=(d,st)=>{
   const e=d&&d.error;
@@ -1266,6 +1350,22 @@ const authErrMsg=(d,st)=>{
    Leave '' to use the legacy manual flow (in-app request + tracking code). */
 const SHOP_URL='/shop/checkout.html';
 const BILL={info:null,quota:null,redeemCode:'',adminCoaches:null,adminLoaded:false,adminError:null};
+/* Shop hand-off (contract in shop/README.md): the checkout page stores the
+   buyer's email (coach-os-email) and the issued activation code
+   (coach-os-coupon) so the app can prefill signup and the coupon box — after
+   paying, the coach should never have to retype either value. */
+const shopEmail=()=>{try{return String(localStorage.getItem('coach-os-email')||'').trim()}catch(e){return ''}};
+const shopCoupon=()=>{try{return String(localStorage.getItem('coach-os-coupon')||'').trim()}catch(e){return ''}};
+/* Plan ids arrive raw from the API ('professional') — always show the label. */
+const PLAN_LABEL={trial:'Trial',basic:'Basic',professional:'Professional',club:'Club'};
+const planLbl=p=>t(PLAN_LABEL[p]||p||'Trial');
+const billExpiryLbl=()=>{
+  const b=BILL.info||{};
+  const end=b.subEndsAt||b.trialEndsAt;
+  if(!end)return '—';
+  const days=Math.max(0,Math.ceil((end-Date.now())/86400000));
+  return new Date(end).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')+' · '+nf(days)+' '+t('days');
+};
 async function billAdminLoad(){
   if(!AUTH.token||!AUTH.coach||AUTH.coach.role!=='admin')return;
   try{
@@ -1364,7 +1464,11 @@ async function billRedeem(){
     if(!ok||!d||!d.ok){toast(t(billErr(d)));billRefresh();return}
     AUTH.access=Object.assign({},AUTH.access,{status:d.billing.status,plan:d.billing.plan});
     BILL.info=d.billing;BILL.quota=d.quota||{used:billSeats(),max:planMaxClients()};
-    render();toast(t('Plan activated ✓ — welcome to ')+d.billing.plan);
+    // The prefilled shop code is now spent — drop it so a later visit never
+    // shows a stale (already-redeemed) code in the box.
+    try{localStorage.removeItem('coach-os-coupon')}catch(e){}
+    const inp=$('coupon-inp');if(inp)inp.value='';
+    render();toast(t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan));
   }catch(e){toast(t('Could not reach server'))}
 }
 async function billRequest(planId){
@@ -1409,7 +1513,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (Netlify Functions + Netlify Blobs) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1454,7 +1558,7 @@ function cloudMerge(d,adopt){
   if(typeof d.ownerName==='string'&&d.ownerName.trim()&&d.ownerName!==WS_OWNER){WS_OWNER=d.ownerName;ch=true}
   Object.keys(DEAD).forEach(k=>{const set=new Set(DEAD[k].map(String));((d.DEAD||{})[k]||[]).forEach(x=>{const s=String(x);if(!set.has(s)){set.add(s);DEAD[k].push(s);ch=true}})});
   const deadSets={};Object.keys(DEAD).forEach(k=>deadSets[k]=new Set(DEAD[k].map(String)));
-  ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
+  ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES','PACKS','MSGTPL'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
   // CLIENTS — union by id; on pull adopt server profile fields, progress = max
   {for(let i=CLIENTS.length-1;i>=0;i--){const c=CLIENTS[i];if(c&&c.id!=null&&deadSets.CLIENTS.has(String(c.id))){if(DB[c.id])delete DB[c.id];CLIENTS.splice(i,1);ch=true}}
    const idx={};CLIENTS.forEach((c,i)=>{if(c&&c.id!=null)idx[String(c.id)]=i});
@@ -1463,12 +1567,15 @@ function cloudMerge(d,adopt){
      const i=idx[String(rc.id)];
      if(i===undefined){CLIENTS.push(rc);idx[String(rc.id)]=CLIENTS.length-1;ch=true}
      else if(take){const loc=CLIENTS[i];
-       ['name','goal','prog','status','freq','next','nextW','last','email','weight','bf','h'].forEach(f=>{if(rc[f]!==undefined&&rc[f]!==loc[f]){loc[f]=rc[f];ch=true}});
+       ['name','goal','prog','status','freq','next','nextW','last','email','weight','bf','h','targetW','targetDate','startW'].forEach(f=>{if(rc[f]!==undefined&&rc[f]!==loc[f]){loc[f]=rc[f];ch=true}});
+       // Intake answers are an OBJECT — compared by content, never by identity,
+       // or every pull would see a fresh parse and loop the sync dirty flag.
+       if(rc.intake&&JSON.stringify(rc.intake)!==JSON.stringify(loc.intake||null)){loc.intake=rc.intake;ch=true}
        ['done','missed','streak','week'].forEach(f=>{if(typeof rc[f]==='number'&&rc[f]>(loc[f]||0)){loc[f]=rc[f];ch=true}});
      }})}
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
-  // EVENTS / MSGS / NOTES / NPLANS — union by id (NOTES & NPLANS stay newest-first)
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS]].forEach(([k,arr])=>{
+  // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -1480,7 +1587,7 @@ function cloudMerge(d,adopt){
     if(k==='NOTES'||k==='NPLANS')arr.sort((a,b)=>(b.id||0)-(a.id||0));
   });
   // name-keyed stores
-  [['TEMPLATES',TEMPLATES],['MTPL',MTPL],['PTPL',PTPL],['FOODS',FOODS],['FILES',FILES]].forEach(([k,arr])=>{
+  [['TEMPLATES',TEMPLATES],['MTPL',MTPL],['PTPL',PTPL],['FOODS',FOODS],['FILES',FILES],['MSGTPL',MSGTPL]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.n!=null&&deadSets[k].has(String(x.n))){arr.splice(i,1);ch=true}}
     const set=new Set(arr.map(x=>x&&x.n));
     (d[k]||[]).forEach(rc=>{
@@ -1697,6 +1804,183 @@ const nextId=()=>{
   return Math.max(seq,uniq);
 };
 const isNarrow=()=>window.innerWidth<760;
+
+/* ================= v17.5 — COMPETITOR-PARITY FEATURES =================
+   Gap-closers vs Trainerize / Everfit / TrueCoach / Practice Better:
+   session packages, intake (PAR-Q) form, real progress-photo upload,
+   announcements, message templates, print/PDF, goal targets. */
+const packRemain=name=>{const ps=PACKS.filter(p=>p.client===name);return ps.length?ps.reduce((a,p)=>a+Math.max(0,p.total-p.used),0):null};
+const goalPct=c=>{if(!c||!c.targetW||!c.weight)return 0;const s=c.startW||c.weight;const span=c.targetW-s;if(!span)return 100;return Math.max(0,Math.min(100,Math.round((c.weight-s)/span*100)))};
+const INTAKE_Q=['Emergency contact (name & phone)','Injuries or medical conditions','Current medications','Chest pain or dizziness during exercise?','Heart condition diagnosed by a doctor?','Bone or joint problem that could worsen?','Currently doing other training?','Main goal & expectations'];
+const INTAKE_YN=[3,4,5,6]; // indexes of the yes/no (PAR-Q) questions
+function photoTotalBytes(){let n=0;Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=(p.src||'').length}));return n}
+/* Downscale to ≤640px JPEG (~40-60 KB) — the workspace payload has a 5 MB cap,
+   so raw phone photos (3-8 MB) would break sync after the first upload. */
+function resizeImage(file,cb){
+  const rd=new FileReader();
+  rd.onload=()=>{const img=new Image();
+    img.onload=()=>{
+      const MAX=640;let w=img.width,h=img.height;
+      if(Math.max(w,h)>MAX){const r=MAX/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r)}
+      const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      cb(cv.toDataURL('image/jpeg',0.7));
+    };
+    img.src=rd.result};
+  rd.readAsDataURL(file);
+}
+function pickPhoto(by){
+  const c=client(S.cid);
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{
+    const f=inp.files&&inp.files[0];if(!f)return;
+    if(by==='client'&&PREFS.priv.consent&&!confirm(t('Your coach will see this photo. Upload?')))return;
+    const photos=DB[c.id].photos=DB[c.id].photos||[];
+    if(photos.length>=8){toast(t('Photo limit reached — delete an older photo first'));return}
+    if(photoTotalBytes()>3500000){toast(t('Photo storage is full — delete some photos first'));return}
+    resizeImage(f,src=>{
+      photos.push({id:uid(),d:Date.now(),tag:({Front:'front',Back:'back',Side:'side'})[S.pose]||'front',src,by,ok:by==='coach'});
+      saveData();render();
+      toast(by==='coach'?t('Photo added ✓'):t('Photo sent — waiting for coach approval'));
+    });
+  };
+  inp.click();
+}
+function intakeModal(){
+  const c=client(S.cid);
+  const a=(c.intake&&c.intake.a)||[];
+  openModal(`
+  <div class="modal-h"><h3>${t('Intake form')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:12px">${t('Your coach needs your health background before the first session')}</div>
+    ${INTAKE_Q.map((q,i)=>`<div class="field"><label class="lbl">${t(q)}</label>${
+      INTAKE_YN.includes(i)
+        ?`<select class="sel" id="iq-${i}">${['No','Yes'].map(v=>`<option value="${v}" ${a[i]===v?'selected':''}>${t(v)}</option>`).join('')}</select>`
+        :`<input class="inp" id="iq-${i}" value="${esc(a[i]||'')}">`
+    }</div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="intake-save">${ic('check',15)} ${t('Submit')}</button></div>`);
+}
+function intakeViewModal(name){
+  const c=CLIENTS.find(x=>x.name===name);if(!c)return;
+  const a=(c.intake&&c.intake.a)||[];
+  openModal(`
+  <div class="modal-h"><h3>${t('Intake form')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${c.intake?`<div class="muted" style="font-size:12px;margin-bottom:10px">${t('Submitted')}: ${new Date(c.intake.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</div>`
+      :`<div class="row" style="padding:10px 12px;border-radius:10px;background:var(--amber-soft,rgba(199,116,20,.12));color:var(--amber,#C77414);font-size:12.5px;font-weight:600">${ic('bell',14)} ${t('The client has not submitted the intake form yet')}</div>`}
+    ${INTAKE_Q.map((q,i)=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+      <div class="muted" style="font-size:11px;font-weight:700">${t(q)}</div>
+      <b style="font-size:13px">${esc(a[i]||'—')}</b></div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function packsModal(name){
+  const list=PACKS.filter(p=>p.client===name);
+  openModal(`
+  <div class="modal-h"><h3>${t('Session packages')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${list.length?list.map(p=>`<div class="tl-row">
+      <div style="flex:1;min-width:0"><b style="font-size:13px">${esc(t(p.name))}</b>
+        <div class="muted" style="font-size:11.5px">${t('Used')}: ${nf(p.used)} / ${nf(p.total)}</div></div>
+      <span class="bdg ${(p.total-p.used)<=1?'bdg-amber':'bdg-lime'}">${nf(Math.max(0,p.total-p.used))} ${t('left')}</span>
+      <button class="btn btn-ghost btn-icon" data-act="pack-del" data-id="${p.id}" data-c="${esc(name)}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12.5px;padding:8px 0">${t('No packages yet — sell sessions as a pack and Coach OS counts them down automatically')}</div>`}
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:8px">${t('Add pack')}</div>
+      <div class="fgrid">
+        <div class="field"><label class="lbl">${t('Pack name')}</label><input class="inp" id="pk-name" placeholder="${t('10-Session Pack')}"></div>
+        <div class="field"><label class="lbl">${t('Sessions')}</label><input class="inp" id="pk-total" type="number" min="1" max="200" value="10"></div>
+      </div>
+      <button class="btn btn-primary btn-sm" data-act="pack-add" data-c="${esc(name)}">${ic('plus',13)} ${t('Add pack')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function announceModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('New announcement')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Title')}</label><input class="inp" id="an-title" placeholder="${t('Schedule change next week')}"></div>
+    <div class="field"><label class="lbl">${t('Message')}</label><textarea class="ta" id="an-body" style="min-height:110px" placeholder="${t('Write the announcement…')}"></textarea></div>
+    <div class="muted" style="font-size:12px">${t('Goes to every active client as a direct message')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="announce-send">${ic('check',15)} ${t('Send to all clients')}</button></div>`);
+}
+function msgtplModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Message templates')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${MSGTPL.length?MSGTPL.map(tp=>`<div class="tl-row">
+      <div style="flex:1;min-width:0"><b style="font-size:13px">${esc(t(tp.n))}</b>
+        <div class="muted" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t(tp.body))}</div></div>
+      <button class="btn btn-outline btn-sm" data-act="msgtpl-use" data-n="${esc(tp.n)}">${t('Use')}</button>
+      <button class="btn btn-ghost btn-icon" data-act="msgtpl-del" data-n="${esc(tp.n)}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12.5px;padding:8px 0">${t('No templates yet')}</div>`}
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:8px">${t('New template')}</div>
+      <div class="field"><label class="lbl">${t('Template name')}</label><input class="inp" id="mt-name" placeholder="${t('Session reminder')}"></div>
+      <div class="field"><label class="lbl">${t('Template text')}</label><textarea class="ta" id="mt-body" style="min-height:80px"></textarea></div>
+      <button class="btn btn-primary btn-sm" data-act="msgtpl-add">${ic('check',13)} ${t('Save')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* Print/PDF export (TrueCoach parity): a clean light-themed print window —
+   no shell, no dark background, just the plan. */
+function printDoc(title,inner){
+  const w=window.open('','_blank','width=840,height=940');
+  if(!w){toast(t('Allow pop-ups to print'));return}
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+  body{font-family:'Segoe UI',Tahoma,sans-serif;color:#111;margin:32px;max-width:760px}
+  h1{font-size:20px;margin:0 0 4px}h2{font-size:13px;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:#555}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{border:1px solid #ddd;padding:7px 9px;text-align:start}th{background:#f4f4f0}
+  .meta{color:#666;font-size:12px;margin-bottom:6px}.brand{font-weight:800;letter-spacing:.05em}
+  .foot{margin-top:28px;color:#999;font-size:11px;border-top:1px solid #eee;padding-top:8px}
+  </style></head><body>${inner}<div class="foot"><span class="brand">COACH OS</span> — ${esc(wsOwnerName())} · ${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</div></body></html>`);
+  w.document.close();w.focus();setTimeout(()=>w.print(),250);
+}
+function printWorkout(){
+  if(!BUILDER.length){toast(t('Nothing to print — the builder is empty'));return}
+  const name=($('w-name')&&$('w-name').value)||S.wname||'Workout';
+  const day=($('w-day')&&$('w-day').value)||S.wday||'';
+  const dur=($('w-dur')&&$('w-dur').value)||S.wdur||'';
+  const note=($('w-note')&&$('w-note').value)||S.wnote||'';
+  const c=client(S.cid);
+  const rows=BUILDER.map((b,i)=>{const ex=EXERCISES[b.ex]||{};
+    return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td><td>${esc(t(b.note||''))}</td></tr>`}).join('');
+  printDoc(name,`<h1>${esc(t(name))}</h1>
+    <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
+    ${note?`<div class="meta">✎ ${esc(t(note))}</div>`:''}
+    <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`);
+}
+function printNutrition(){
+  const p=NPLANS[S.nplan];if(!p){toast(t('Create a nutrition plan first'));return}
+  const days=p.days.map((d,i)=>{
+    const tg=d.type==='train'?p.train:p.rest;
+    const mealRows=(d.meals||[]).map(m=>`<tr><td>${esc(t(m.time))}</td><td>${esc(t(m.name))}</td><td>${(m.foods||[]).map(x=>{const f=FOODS[x.fi];return f?esc(foodName(f.n))+' '+nf(x.g)+'g':''}).filter(Boolean).join(', ')||'—'}</td><td>${nf(Math.round(mealKcal(m)))} kcal</td></tr>`).join('');
+    return `<h2>${esc(t(DAYS[i]))} — ${esc(t(d.type==='train'?'Training Day':'Rest Day'))} (${nf(tg.kcal)} kcal)</h2>
+    <table><thead><tr><th>${esc(t('Meal time'))}</th><th>${esc(t('Meal'))}</th><th>${esc(t('Foods'))}</th><th>${esc(t('Calories'))}</th></tr></thead><tbody>${mealRows}</tbody></table>`;
+  }).join('');
+  printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`);
+}
+/* Session packs: attending a session consumes one from the client's oldest
+   pack with remaining sessions; un-marking refunds it (tracked via ev.packId
+   so a re-mark never double-charges). */
+function packCharge(ev,was){
+  if(ev.type!=='session')return;
+  if(ev.att==='done'&&!ev.packId){
+    const p=PACKS.filter(x=>x.client===ev.client&&x.total-x.used>0).sort((a,b)=>a.createdAt-b.createdAt)[0];
+    if(p){p.used++;ev.packId=p.id}
+  }else if(was==='done'&&ev.att!=='done'&&ev.packId){
+    const p=PACKS.find(x=>x.id===ev.packId);
+    if(p&&p.used>0)p.used--;
+    ev.packId=undefined;
+  }
+}
 const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
 const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
 const genCode=(n=6)=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<n;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
@@ -1801,12 +2085,14 @@ function coachLogin(){return `
     <label class="lbl">${t('Confirm')}</label><input class="inp" id="rs-pass2" type="password" autocomplete="new-password" style="margin-bottom:12px">
     <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="reset-do">${t('Update Password')} ${ic('arrowR',15)}</button>`
     :S.authMode==='signup'
-      ?`<label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" style="margin-bottom:14px">
+      ?`<label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
     <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
+    <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — from your purchase')}</span></label><input class="inp" id="su-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
     <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
         <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>`
-      :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" style="margin-bottom:14px">
+      :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
     <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
+    <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — renewal code')}</span></label><input class="inp" id="li-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
     <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${t('Sign In')} ${ic('arrowR',15)}</button>
         <div class="divider"><span>${t('or')}</span></div>
@@ -1875,7 +2161,7 @@ function vDash(){
   <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
   <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div></div>
   <div class="stats">${stats.map(([k,v,sub,vis,i])=>`
-    <div class="card stat"><div class="row"><span class="k">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,17)}</span></div>
+    <div class="card stat"><div class="row"><span class="icw">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
     <span class="muted" style="font-size:11.5px;font-weight:600">${sub}</span>${vis}</div></div>`).join('')}
   </div>
@@ -1891,7 +2177,7 @@ function vDash(){
         </div>`:''}
         ${attBadge(ev)||`<span class="bdg ${st.b}">${t(st.l)}</span>`}
       </div>`}).join('')
-      :`<div style="padding:26px;text-align:center"><div style="color:var(--ink3);margin-bottom:8px">${ic('calendar',24)}</div><div class="muted" style="font-size:12.5px;margin-bottom:10px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
+      :`<div class="empty" style="margin:14px 20px 18px"><div>${ic('calendar',24)}</div><b>${t('No events this day')}</b><span class="muted">${t('Tap an empty slot to add a session')}</span><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
     </div>
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
@@ -1906,13 +2192,13 @@ function vDash(){
       </div>
     </div>
   </div>
-  <div class="grid2">
-    <div class="card" style="grid-column:1/-1">
+  <div class="grid2" style="grid-template-columns:1.15fr .85fr">
+    <div class="card">
       <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
       ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
       :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
     </div>
-    <div class="card" style="grid-column:1/-1">
+    <div class="card">
       <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="toast" data-msg="Full activity log">${t('View all →')}</a></div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
         ${ACTIVITY.slice(0,7).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
@@ -1921,17 +2207,37 @@ function vDash(){
   </div>`;
 }
 function vClients(){
-  const grid=S.cv==='list';
+  const grid=S.cv==='grid';
   return `
   <div class="page-h"><div><h1>${t('Clients')}</h1><div class="sub">${t('42 Active Clients · 8 shown in this workspace')}</div></div>
   <div class="row">
     <div class="searchbox" style="flex:none;width:220px">${ic('search',15)} <span>${t('Search clients…')}</span></div>
     <button class="btn btn-outline" data-act="toast" data-msg="Filters: status, goal, program">${ic('filter',15)} ${t('Filter')}</button>
     <button class="btn btn-outline" data-act="toast" data-msg="Sorted by: Next session">${ic('chevD',15)} ${t('Sort')}</button>
-    <div class="seg"><button class="${grid?'on':''}" data-act="cv" data-cv="list">${ic('grid',14)}</button><button class="${!grid?'on':''}" data-act="cv" data-cv="grid">${ic('stack',14)}</button></div>
+    <div class="seg"><button class="${!grid?'on':''}" data-act="cv" data-cv="list" title="${t('List')}">${ic('list',14)}</button><button class="${grid?'on':''}" data-act="cv" data-cv="grid" title="${t('Grid')}">${ic('grid',14)}</button></div>
     <button class="btn btn-outline" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',15)} ${t('Connect')}</button>
     <button class="btn btn-primary" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div></div>
+  ${grid?`
+  <div class="cgrid">${CLIENTS.map(c=>`
+    <div class="card" data-act="open-client" data-cid="${c.id}">
+      <div class="row" style="align-items:flex-start">
+        ${avC(c.name,44)}
+        <div style="flex:1;min-width:0"><div style="font-weight:700">${t(c.name)}</div><div class="muted" style="font-size:12px">${esc(c.email||'')}</div></div>
+        ${stBdg(c.status)}
+      </div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <span class="chip">${t(c.goal)}</span>
+        ${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
+        ${c.streak?`<span class="chip">🔥 ${nf(c.streak)} ${t('wk')}</span>`:''}
+      </div>
+      <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
+        <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
+        <span class="lnk" style="font-size:12.5px;flex:none">${t('Open')} ${ic('arrowR',13)}</span>
+      </div>
+    </div>`).join('')}
+  </div>`
+  :`
   <div class="card" style="overflow-x:auto"><table class="tbl">
     <thead><tr><th>${t('Client')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
     <tbody>${CLIENTS.map(c=>`
@@ -1946,7 +2252,7 @@ function vClients(){
         <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
         <button class="btn btn-ghost btn-sm" data-act="open-client" data-cid="${c.id}">${t('Open Workspace')} ${ic('arrowR',13)}</button>
       </td>
-    </tr>`).join('')}</tbody></table></div>`;
+    </tr>`).join('')}</tbody></table></div>`}`;
 }
 function vWorkspace(){
   const c=client(S.cid);
@@ -1970,6 +2276,8 @@ function vWorkspace(){
       </div>
       <div class="row" style="flex-wrap:wrap">
         <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        <button class="btn btn-outline btn-sm" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',14)} ${t('Intake form')}</button>
+        <button class="btn btn-outline btn-sm" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',14)} ${t('Packages')}</button>
         <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
         <button class="btn btn-outline btn-sm" data-act="nav" data-view="messages">${ic('mail',14)} ${t('Messages')}</button>
         <button class="btn btn-dark btn-sm" data-act="tab" data-tab="notes">${ic('note',14)} ${t('Add Note')}</button>
@@ -1997,6 +2305,11 @@ function vCOverview(){
     <div class="card" style="padding:18px"><div class="card-t" style="margin-bottom:12px">${t('Client Summary')}</div>
       ${L(t('Current Weight'),uwS(c.weight||null))}${L(t('Goal'),t(c.goal))}${L(t('Training Frequency'),t(c.freq))}
       ${L(t('Current Program'),t(c.prog))}${L(t('Body Fat'),c.bf?`${nf(c.bf)} %`:'—')}${L(t('Height'),ucS(c.h||null))}
+      ${L(t('Weight Target'),c.targetW?`${uwS(c.weight||null)} → <b>${uwS(c.targetW)}</b>${c.targetDate?` · ${esc(c.targetDate)}`:''}`:'—')}
+      ${L(t('Intake form'),c.intake?`✓ ${t('Submitted')}`:`<span style="color:var(--amber,#C77414)">${t('Missing')}</span>`)}
+      ${L(t('Sessions remaining'),packRemain(c.name)!=null?nf(packRemain(c.name)):'—')}
+      ${c.targetW?`<div style="margin-top:12px"><div class="row" style="justify-content:space-between;font-size:12px;color:var(--ink2)"><span>${t('Goal progress')}</span><b>${pct(goalPct(c))}</b></div>
+      <div class="pbar" style="margin-top:6px"><i style="width:${goalPct(c)}%"></i></div></div>`:''}
       <div style="margin-top:12px"><div class="row" style="justify-content:space-between;font-size:12px;color:var(--ink2)"><span>${t('Program progress')} — ${t('Week')} ${nf(c.week)} ${t('of')} 12</span><b>${pct(Math.round(c.week/12*100))}</b></div>
       <div class="pbar" style="margin-top:6px"><i style="width:${c.week/12*100}%"></i></div></div>
     </div>
@@ -2068,7 +2381,14 @@ function loadClientProgram(cid){
 function vBuilder(){
   const c=client(S.cid);
   const wval=()=>`${S.wname.split(' — ')[0]} — ${t(c.name)}`;
+  /* Standalone page (nav → Workouts) gets a header with a client picker —
+     previously the ONLY way to target a client was to open their workspace
+     first. Inside a client workspace the header is redundant (the client is
+     fixed by the context) so it is skipped there. */
+  const standalone=S.view==='builder';
   return `
+  ${standalone?`<div class="page-h"><div><h1>${t('Workout Builder')}</h1><div class="sub">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</div></div>
+  <div class="row"><span class="muted" style="font-size:12.5px;font-weight:600">${t('Publishing to')}</span><select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div></div>`:''}
   ${S.tplEdit!=null&&TEMPLATES[S.tplEdit]?`<div class="card" style="padding:12px 16px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
     ${ic('edit',15)}<div style="flex:1;min-width:0"><b style="font-size:13px">${t('Editing template')}: ${esc(TEMPLATES[S.tplEdit].n)}</b><div class="muted" style="font-size:11.5px">${t('Update Template')} → ${nf(BUILDER.length)} ${t('exercises')}</div></div>
     <button class="btn btn-primary btn-sm" data-act="b-tpl">${ic('check',13)} ${t('Update Template')}</button>
@@ -2101,8 +2421,9 @@ function vBuilder(){
       </div>
       <div class="card" style="padding:14px 18px">
         <div class="row" style="flex-wrap:wrap"><span class="muted" style="font-size:12.5px">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</span><span class="sp"></span>
-        <button class="btn btn-ghost" data-act="toast" data-msg="Done">${t('Cancel')}</button>
+        <button class="btn btn-ghost" data-act="b-cancel">${t('Cancel')}</button>
         <button class="btn btn-outline" data-act="ai-draft" title="${t('AI Workout Assistant')}">${ic('zap',15)} ${t('AI Draft')}</button>
+        <button class="btn btn-outline" data-act="print-workout" title="${t('Print / PDF')}">${ic('download',15)} ${t('Print / PDF')}</button>
         <button class="btn btn-outline" data-act="b-tpl">${S.tplEdit!=null?t('Update Template'):t('Save as Template')}</button>
         <button class="btn btn-primary" data-act="b-save">${ic('check',15)} ${t('Save Workout')}</button></div>
       </div>
@@ -2212,6 +2533,7 @@ function vMeasure(){
   const c=client(S.cid);
   const m=lastM(c.id),p=prevM(c.id);
   const rows=[['Weight','w'],['Body Fat','bf'],['Chest','ch'],['Waist','wa'],['Hips','hi'],['Arm (R)','ar'],['Thigh','th'],['Calf','ca']];
+  const photos=DB[c.id].photos||[];
   const unitOf=k=>k==='w'?(PREFS.units==='Imperial'?' lb':' kg'):k==='bf'?' %':(PREFS.units==='Imperial'?' in':' cm');
   const convV=(k,v)=>v==null?null:(k==='w'?uw(v):(k==='bf'?v:uc(v)));
   const betterDown=k=>['w','bf','wa','hi'].includes(k);
@@ -2221,7 +2543,7 @@ function vMeasure(){
   <div class="row" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap">
     <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select>
     <div class="row">
-      <button class="btn btn-outline" data-act="toast" data-msg="Photo upload — private to coach & client">${ic('camera',15)} ${t('Add Progress Photos')}</button>
+      <button class="btn btn-outline" data-act="photo-add">${ic('camera',15)} ${t('Add Progress Photos')}</button>
       <button class="btn btn-primary" data-act="m-add">${ic('plus',15)} ${t('Add Measurement')}</button>
     </div>
   </div>
@@ -2240,16 +2562,29 @@ function vMeasure(){
     <div class="card">
       <div class="card-h"><span class="card-t">${ic('camera',14)} ${t('Progress Photos')}</span><span class="bdg bdg-gray">${ic('lock',12)} ${t('Private')}</span></div>
       <div style="padding:16px">
-        <div class="row" style="margin-bottom:12px">${['Front','Back','Side'].map(p2=>`<button class="fchip ${S.pose===p2?'on':''}" data-act="pose" data-p="${p2}">${t(p2)}</button>`).join('')}<span class="sp"></span><span class="muted" style="font-size:12px">${t('Week')} ${nf(1)} → ${t('Week')} ${nf(12)}</span></div>
-        <figure class="photo" style="--cut:${S.cut}%">
-          <span class="tag" style="left:10px">${t('Week')} ${nf(1)}</span><span class="tag" style="right:10px">${t('Week')} ${nf(12)}</span>
-          <div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>
-          <div class="photo after" style="--cut:${S.cut}%"><div style="position:absolute;inset:0;display:grid;place-items:center;color:#93A66C">${ic('users',54)}</div></div>
+        <div class="row" style="margin-bottom:12px">${['Front','Back','Side'].map(p2=>`<button class="fchip ${S.pose===p2?'on':''}" data-act="pose" data-p="${p2}">${t(p2)}</button>`).join('')}<span class="sp"></span><span class="muted" style="font-size:12px">${nf(photos.length)} ${t('photos')}</span></div>
+        ${(()=>{const tag=({Front:'front',Back:'back',Side:'side'})[S.pose]||'front';
+          const inPose=photos.filter(p=>p.tag===tag).sort((a,b)=>a.id-b.id);
+          const A=inPose[0],B=inPose[inPose.length-1];
+          const img=(p,cls)=>p?`<img src="${p.src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${cls}>`:`<div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>`;
+          return `<figure class="photo" style="--cut:${S.cut}%">
+          <span class="tag" style="left:10px">${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${A?'':nf(1)}</span><span class="tag" style="right:10px">${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${B?'':nf(12)}</span>
+          ${img(A)}
+          <div class="photo after" style="--cut:${S.cut}%">${img(B,1)}</div>
           <div class="handle" style="--cut:${S.cut}%"></div>
-          <figcaption>${t('Drag the slider to compare')}</figcaption>
-        </figure>
+          <figcaption>${inPose.length>=2?t('Drag the slider to compare'):t('No photos yet — add the first one')}</figcaption>
+        </figure>`})()}
         <input type="range" min="0" max="100" value="${S.cut}" data-range-cut style="width:100%;margin-top:12px;accent-color:var(--accent-deep)">
-        <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">${[1,4,8,12].map(w=>`<div class="card" style="padding:8px;flex:1;min-width:64px;text-align:center"><div style="height:44px;border-radius:8px;background:linear-gradient(150deg,#E9E9E4,#D8D8D2);display:grid;place-items:center;color:#B9B9B0">${ic('users',18)}</div><div style="font-size:10.5px;font-weight:600;margin-top:5px;color:var(--ink2)">${t('Week')} ${nf(w)}</div></div>`).join('')}</div>
+        <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">${photos.length?[...photos].sort((a,b)=>b.id-a.id).map(p=>`
+          <div class="card" style="padding:6px;flex:1;min-width:86px;max-width:120px;text-align:center;position:relative">
+            <div style="height:64px;border-radius:8px;overflow:hidden;background:linear-gradient(150deg,#E9E9E4,#D8D8D2)"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+            <div style="font-size:10px;font-weight:600;margin-top:4px;color:var(--ink2)">${esc(new Date(p.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'))} · ${t(({front:'Front',back:'Back',side:'Side'})[p.tag]||'Front')}</div>
+            <div class="row" style="justify-content:center;gap:2px;margin-top:2px">
+              ${p.by==='client'&&!p.ok?`<button class="btn btn-ghost btn-icon" style="padding:2px;color:var(--accent-deep)" title="${t('Approve')}" data-act="photo-ok" data-cid="${c.id}" data-id="${p.id}">${ic('check',13)}</button><span class="bdg bdg-amber" style="font-size:9px;padding:1px 5px">${t('Pending approval')}</span>`:''}
+              <button class="btn btn-ghost btn-icon" style="padding:2px;color:var(--red)" data-act="photo-del" data-cid="${c.id}" data-id="${p.id}">${ic('trash',13)}</button>
+            </div>
+          </div>`).join('')
+        :`<div class="muted" style="font-size:12px;width:100%;text-align:center;padding:4px 0">${t('No photos yet — add the first one')}</div>`}</div>
       </div>
     </div>
   </div>
@@ -2298,7 +2633,7 @@ function vCNotes(){
       <label class="chk" style="margin-top:10px"><input type="checkbox" id="nt-share" checked>${t('Visible to client')}</label>
       <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:10px" data-act="note-add" data-c="${esc(c.name)}">${ic('check',15)} ${t('Add Note')}</button>
     </div>
-    <div class="card">${list.length?list.map(n=>noteRow(n,false)).join(''):`<div style="padding:40px;text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}</div>
+    <div class="card">${list.length?list.map(n=>noteRow(n,false)).join(''):`<div class="empty" style="margin:14px"><div>${ic('note',24)}</div><b>${t('No notes yet')}</b><span class="muted">${t('Write your first note for this client')}</span></div>`}</div>
   </div>`;
 }
 function vNotes(){
@@ -2308,7 +2643,7 @@ function vNotes(){
   <div class="page-h"><div><h1>${t('Notes')}</h1><div class="sub">${t('Open a client workspace to add a note')}</div></div>
   <button class="btn btn-primary" data-act="toast" data-msg="Open a client workspace to add a note">${ic('plus',15)} ${t('Create Note')}</button></div>
   <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${types.map(x=>`<button class="fchip ${S.nfilter===x?'on':''}" data-act="nfilter" data-t="${x}">${t(x)}</button>`).join('')}</div>
-  <div class="card">${list.map(n=>noteRow(n,true)).join('')}</div>`;
+  <div class="card">${list.length?list.map(n=>noteRow(n,true)).join(''):`<div class="empty" style="margin:14px"><div>${ic('note',24)}</div><b>${t('No results found.')}</b><span class="muted">${t('Try a different filter')}</span></div>`}</div>`;
 }
 function vFiles(){
   const fIco=x=>({PDF:'note',Document:'note',Archive:'folder',Image:'image'})[x]||'folder';
@@ -2556,16 +2891,21 @@ function vSettings(){
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
     <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
   account:`<div class="card" style="padding:22px">
-    <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line2)"><div><b>${t('Plan')}</b><div class="sub">${AUTH.access?esc(authPlanLabel()):t('Coach OS Pro · Unlimited clients')}</div></div><span class="bdg bdg-lime">${AUTH.access?esc((AUTH.access.status||'trial').toUpperCase()):'PRO'}</span></div>
+    <div class="fs-t" style="margin-bottom:4px">${t('Subscription')}</div>
+    <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line2)"><div><b>${t('Plan')}</b><div class="sub">${AUTH.access?esc(authPlanLabel()):t('Coach OS Pro · Unlimited clients')}</div></div><span class="bdg bdg-lime">${AUTH.access?esc(authStatusLbl()):'PRO'}</span></div>
+    ${AUTH.token&&BILL.info&&(BILL.info.subEndsAt||BILL.info.trialEndsAt)?`<div class="set-row"><div><span class="t">${t('Valid until')}</span><div class="d">${billExpiryLbl()}</div></div></div>`:''}
+    ${AUTH.token&&BILL.info&&BILL.info.lastCode?`<div class="set-row"><div><span class="t">${t('Activation code')}</span><div class="d" style="letter-spacing:.1em;font-weight:700">${esc(BILL.info.lastCode)}</div></div></div>`:''}
     ${AUTH.token?`
-    <div class="set-row"><div><span class="t">${t('Clients')}</span><div class="d">${nf(billSeats())} / ${nf(planMaxClients())} ${t('seats used')}</div></div><div class="seg" style="min-width:150px"><div style="height:8px;border-radius:99px;background:var(--line2);overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(billSeats()/Math.max(1,planMaxClients())*100))}%;background:${billOverQuota()?'var(--red)':'var(--accent)'}"></div></div></div></div>
+    <div class="set-row"><div><span class="t">${t('Clients')}</span><div class="d">${nf(billSeats())} / ${nf(planMaxClients())} ${t('seats used')}</div></div><div class="seg" style="min-width:150px"><div style="height:8px;border-radius:99px;background:var(--line2);overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(billSeats()/Math.max(1,planMaxClients())*100))}%;background:${billOverQuota()?'var(--red)':'var(--accent)'}"></div></div></div></div>`:''}
+    ${AUTH.token?`<div class="fs-t" style="margin-top:18px">${t('Plans & billing')}</div>
     <div class="card" style="padding:16px;margin:6px 0 4px;background:var(--bg2)">
       <b style="font-size:13.5px">${t('Plans')}</b>
       <div class="sub" style="margin:2px 0 10px">${t('Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200')}</div>
       ${['basic','professional','club'].map(p=>`<div class="set-row" style="padding:8px 0"><div><span class="t">${p==='basic'?t('Basic'):p==='professional'?t('Professional'):t('Club')}</span><div class="d">${p==='basic'?'290,000':p==='professional'?'790,000':'2,490,000'} ${t('IRT / month')}</div></div><button class="btn ${SHOP_URL?'btn-primary':'btn-outline'} btn-sm" data-act="bill-request" data-p="${p}">${SHOP_URL?ic('cart',13)+' '+t('Buy'):t('Request')}</button></div>`).join('')}
       ${S.payPending?`<div class="sub" style="margin-top:6px">${t('Pending request')}: ${esc(S.payPending.planId)} · ${nf(S.payPending.amount)} ${t('IRT')} · ${t('pay to the merchant, then enter your tracking coupon below')}</div>`:''}
     </div>
-    <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="COACH-…" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
+    <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
+    <div class="fs-t" style="margin-top:18px">${t('Preferences')}</div>
     <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
     <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
       ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
@@ -2578,7 +2918,7 @@ function vSettings(){
   appearance:`<div class="card" style="padding:22px">
     <div class="card-t" style="margin-bottom:12px">${t('Theme')}</div>
     <div class="row" style="gap:12px;flex-wrap:wrap">
-      ${[['Light','linear-gradient(135deg,#F6F6F4 55%,#12151B 55%)'],['System','linear-gradient(135deg,#F6F6F4 30%,#12151B 30% 70%,#F6F6F4 70%)'],['Dark','linear-gradient(135deg,#12151B 60%,#2A2F38 60%)']].map(([x,g])=>`
+      ${[['Light','linear-gradient(135deg,#F1F1EE 55%,#12151B 55%)'],['System','linear-gradient(135deg,#F1F1EE 30%,#12151B 30% 70%,#F1F1EE 70%)'],['Dark','linear-gradient(135deg,#12151B 60%,#2A2F38 60%)']].map(([x,g])=>`
       <div class="card" style="width:130px;padding:10px;cursor:pointer;${PREFS.theme===x?'border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)':''}" data-act="theme" data-v="${x}">
         <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
         <b style="font-size:12.5px">${t(x)}${PREFS.theme===x?' ✓':''}</b></div>`).join('')}
@@ -2728,7 +3068,10 @@ function vMessages(){
     </div>`};
   return `
   <div class="page-h"><div><h1>${t('Messages')}</h1><div class="sub">${nf(need.length)} ${t('need your reply')} · ${t('Async — no pressure')}</div></div>
-  <button class="btn btn-outline" data-act="toast" data-msg="Message templates (demo)">${ic('edit',15)} ${t('Templates')}</button></div>
+  <div class="row">
+    <button class="btn btn-outline" data-act="announce-open">${ic('bell',15)} ${t('Announce')}</button>
+    <button class="btn btn-outline" data-act="msgtpl-open">${ic('edit',15)} ${t('Templates')}</button>
+  </div></div>
   ${need.length?`<div class="card" style="margin-bottom:14px"><div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Needs your reply')}</span><span class="bdg bdg-amber">${nf(need.length)}</span></div>${need.map(row).join('')}</div>`:''}
   ${rest.length?`<div class="card"><div class="card-h"><span class="card-t">${ic('mail',14)} ${t('All conversations')}</span></div>${rest.map(row).join('')}</div>`:''}`;
 }
@@ -2831,6 +3174,7 @@ function nPlanner(){
         <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">
           <span class="chip">${nf(tg.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(tg.p)}g</span><span class="chip">${t('Carbs')} ${nf(tg.c)}g</span><span class="chip">${t('Fat')} ${nf(tg.f)}g</span>
           <span class="sp"></span><button class="btn btn-outline btn-sm" data-act="tg-open">${ic('edit',13)} ${t('Target Macros')}</button>
+          <button class="btn btn-outline btn-sm" data-act="print-nutrition">${ic('download',13)} ${t('Print / PDF')}</button>
         </div>
         <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:12px">
           ${DAYS.map((d,i)=>`<button class="fchip ${S.nday===i?'on':''}" data-act="nday" data-i="${i}" style="display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${p.days[i].type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span>${t(d)}</button>`).join('')}
@@ -2864,7 +3208,7 @@ function nMealCard(p,day,m,mi){
     <div style="margin-top:8px">
       ${m.foods.map((x,xi)=>{const f=FOODS[x.fi];
       return `<div class="frow">
-        <div style="min-width:0"><div class="fk">${t(f.n)}</div><div class="muted" style="font-size:11px">${x.q?esc(t(x.q)):nf(x.g)+(lang==='fa'?' گرم':' g')}</div></div>
+        <div style="min-width:0"><div class="fk">${foodName(f.n)}</div><div class="muted" style="font-size:11px">${x.q?esc(t(x.q)):nf(x.g)+(lang==='fa'?' گرم':' g')}</div></div>
         <span>${nf(itK(x))} kcal</span><span>${nf(Math.round(itM(x,'p')))}g P</span>
         <button class="btn btn-ghost btn-icon" style="padding:4px" title="${t('Alternatives')}" data-act="falt" data-fi="${x.fi}">${ic('copy',13)}</button>
         <button class="btn btn-ghost btn-icon" style="padding:4px;color:var(--red)" data-act="fdel" data-mi="${mi}" data-xi="${xi}">${ic('trash',13)}</button>
@@ -2937,7 +3281,7 @@ function nMealTpl(){
   return `<div class="card exc">
     <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${t(x.n)}</b><span class="bdg bdg-gray" style="font-size:10px">${t(x.cat)}</span></div>
     <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(kcal)} kcal</span><span class="chip">${nf(pr)}g ${t('Protein')}</span></div>
-    <div class="muted" style="font-size:11.5px">${x.foods.map(y=>t(FOODS[y.fi].n)).join(' · ')}</div>
+    <div class="muted" style="font-size:11.5px">${x.foods.map(y=>foodName(FOODS[y.fi].n)).join(' · ')}</div>
     <div class="row" style="margin-top:auto;gap:6px">
       <button class="btn btn-primary btn-sm" data-act="mt-use" data-i="${idx}">${t('Use')}</button><span class="sp"></span>
       <button class="btn btn-ghost btn-icon" data-act="toast" data-msg="Edit">${ic('edit',14)}</button>
@@ -2997,7 +3341,7 @@ function wNutrition(){
   </div>
   <div class="grid2b" style="margin-bottom:14px">
     <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's Meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
-      ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>t(FOODS[x.fi].n)).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
+      ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>foodName(FOODS[x.fi].n)).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
     </div>
     <div class="stack">
       <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('chart',14)} ${t('Nutrition × Progress')}</div>
@@ -3034,10 +3378,10 @@ window.fpRender=()=>{
   if(!S.fp)return;
   const q=($('fp-q')?.value||'').toLowerCase();
   $('fp-cats').innerHTML=['All',...NCATS].map(c=>`<button class="fchip ${S.fp.cat===c?'on':''}" data-act="fpcat" data-c="${c}">${t(c)}</button>`).join('');
-  const list=FOODS.map((f,i)=>({...f,i})).filter(f=>(S.fp.cat==='All'||f.cat===S.fp.cat)&&f.n.toLowerCase().includes(q));
+  const list=FOODS.map((f,i)=>({...f,i})).filter(f=>(S.fp.cat==='All'||f.cat===S.fp.cat)&&(f.n.toLowerCase().includes(q)||foodName(f.n).includes(q)));
   $('fp-list').innerHTML=list.length?list.map(f=>`
   <div class="card" style="padding:10px 12px;cursor:pointer;${S.fp.fi===f.i?'border-color:var(--accent-deep);background:var(--accent-soft)':''}" data-act="fpsel" data-i="${f.i}">
-    <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t(f.n)}</b><span class="chip">${t(f.cat)}</span></div>
+    <div class="row" style="justify-content:space-between"><b style="font-size:13px">${foodName(f.n)}</b><span class="chip">${t(f.cat)}</span></div>
     <div class="muted" style="font-size:11.5px;margin-top:2px">${t('Per 100g')}: ${nf(f.kcal)} kcal · ${nf(f.p)}g P · ${nf(f.c)}g C · ${nf(f.f)}g F</div>
   </div>`).join(''):`<div style="padding:20px;text-align:center;color:var(--ink3);font-size:12.5px">${t('No results found.')}</div>`;
   $('fp-sel').innerHTML=fpSel();
@@ -3059,7 +3403,7 @@ function fpSel(){
   const f=FOODS[S.fp.fi];const g=S.fp.g;
   return `<div class="card" style="padding:14px;background:var(--accent-soft);border-color:var(--acc-line)">
     <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <b style="font-size:13.5px">${t(f.n)}</b>
+      <b style="font-size:13.5px">${foodName(f.n)}</b>
       <div class="row" style="gap:4px;flex-wrap:wrap">${[100,150,200,250,300].map(q=>`<button class="fchip ${S.fp.g===q?'on':''}" data-act="fpqty" data-g="${q}" style="padding:3px 9px;font-size:11px">${nf(q)}g</button>`).join('')}</div>
     </div>
     <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">
@@ -3074,7 +3418,7 @@ function fpSel(){
 function altModal(fi){
   const f=FOODS[fi];
   openModal(`
-  <div class="modal-h"><h3>${t('Alternatives')} — ${t(f.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3>${t('Alternatives')} — ${foodName(f.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px">
       <span class="chip">${nf(f.kcal)} kcal · ${nf(f.p)}g P · ${nf(f.c)}g C · ${nf(f.f)}g F / 100g</span>
@@ -3082,7 +3426,7 @@ function altModal(fi){
     </div>
     <div id="alt-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
     <div class="row">
-      <select class="sel" id="alt-sel" style="flex:1">${FOODS.filter(x=>x.n!==f.n&&!(f.alt||[]).includes(x.n)).map(x=>`<option value="${esc(x.n)}">${t(x.n)}</option>`).join('')}</select>
+      <select class="sel" id="alt-sel" style="flex:1">${FOODS.filter(x=>x.n!==f.n&&!(f.alt||[]).includes(x.n)).map(x=>`<option value="${esc(x.n)}">${foodName(x.n)}</option>`).join('')}</select>
       <button class="btn btn-primary" data-act="altadd" data-n="${esc(f.n)}">${ic('plus',14)} ${t('Add Alternative')}</button>
     </div>
   </div>`);
@@ -3092,7 +3436,7 @@ window.altRender=fi=>{
   const f=FOODS[fi];const el=$('alt-list');if(!el)return;
   el.innerHTML=(f.alt||[]).map(an=>{const a=FOODS.find(x=>x.n===an);if(!a)return '';
   return `<div class="card" style="padding:10px 12px"><div class="row" style="justify-content:space-between">
-    <div><b style="font-size:13px">${t(a.n)}</b><div class="muted" style="font-size:11px">${t('Per 100g')}: ${nf(a.kcal)} kcal · ${nf(a.p)}g P · ${nf(a.c)}g C · ${nf(a.f)}g F</div></div>
+    <div><b style="font-size:13px">${foodName(a.n)}</b><div class="muted" style="font-size:11px">${t('Per 100g')}: ${nf(a.kcal)} kcal · ${nf(a.p)}g P · ${nf(a.c)}g C · ${nf(a.f)}g F</div></div>
     <button class="btn btn-ghost btn-icon" style="color:var(--red)" data-act="altdel" data-fi="${fi}" data-n="${esc(an)}">${ic('x',14)}</button>
   </div></div>`}).join('')||`<div class="muted" style="font-size:12.5px">${t('No results found.')}</div>`;
 };
@@ -3237,7 +3581,7 @@ const AI_CHAT_KEY='co-ai-chat';
 let AI_CHAT=[];try{AI_CHAT=JSON.parse(localStorage.getItem(AI_CHAT_KEY)||'[]')}catch(e){AI_CHAT=[]}
 let AI_WAITING=false;
 const aiChatSave=()=>{try{localStorage.setItem(AI_CHAT_KEY,JSON.stringify(AI_CHAT.slice(-80)))}catch(e){}};
-const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',22)}</button>`;
+const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',20)}<span>${t('AI Assistant')}</span></button>`;
 function aiChatOpen(){S.aiOpen=true;renderAiChat()}
 function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
 function renderAiChat(){
@@ -3652,6 +3996,11 @@ function cToday(){
       <span>🔥 ${nf(c.streak)} ${t('day streak')}</span>
       <span style="color:rgba(26,34,5,.65);font-size:12px;font-weight:600">${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</span>
     </div>
+    ${!c.intake?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('note',14)} ${t('Intake form')}</div>
+      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Your coach needs your health background before the first session')}</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button></div>`:''}
+    ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
+      <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
     ${w?`<div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border-color:var(--acc-mid2)">
       <div class="card-t" style="color:var(--accent-ink)">${ic('dumbbell',14)} ${t("Today's Workout")}</div>
       <div style="font-weight:800;font-size:18px;margin:8px 0 6px;color:var(--accent-ink)">${esc(w.name)}</div>
@@ -3702,8 +4051,13 @@ function cWorkouts(){
 }
 function cProgress(){
   const lm=lastM(S.cid);
+  const c=client(S.cid);
+  const photos=(DB[c.id].photos||[]).filter(p=>p.ok!==false);
   return `<div class="cbody">
     <div class="card-t" style="margin:2px">${ic('chart',14)} ${t('My Progress')}</div>
+    ${c.targetW?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('target',14)} ${t('My Goal')}</div>
+      <div class="row" style="justify-content:space-between;font-size:12.5px;margin-top:6px"><span>${uwS(c.weight||null)} → <b>${uwS(c.targetW)}</b></span>${c.targetDate?`<span class="muted" style="font-size:11.5px">${esc(c.targetDate)}</span>`:''}</div>
+      <div class="pbar" style="margin-top:6px"><i style="width:${goalPct(c)}%"></i></div></div>`:''}
     ${lm?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('ruler',14)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
       <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
     <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,170)}</div>
@@ -3716,6 +4070,12 @@ function cProgress(){
       <div class="ccard" style="flex:1;min-width:100px;padding:10px"><div class="muted" style="font-size:10.5px;font-weight:700">${t(p.n)}</div>
       <div style="font-weight:800;font-size:15px;margin-top:2px">${nf(p.t)}</div>
       <span class="bdg bdg-lime" style="margin-top:6px;font-size:10px">${nf(p.g)}</span></div>`).join('')}</div>
+    ${PREFS.priv.photos?`<div class="ccard"><div class="card-t" style="margin-bottom:8px">${ic('camera',14)} ${t('My Photos')}</div>
+      ${photos.length?`<div class="row" style="gap:8px;flex-wrap:wrap">${[...photos].sort((a,b)=>b.id-a.id).slice(0,4).map(p=>`
+        <div style="width:72px;height:72px;border-radius:10px;overflow:hidden;border:1px solid var(--line2)"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`
+      :`<div class="muted" style="font-size:12px">${t('No photos yet — add the first one')}</div>`}
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
+    </div>`:''}
   </div>`;
 }
 function cNutrition(){
@@ -3743,7 +4103,7 @@ function cNutrition(){
     <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('utensils',14)} ${t("Today's Meals")}</div>
       ${day.meals.map(m=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
         <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t(m.time)} · ${t(m.name)}</b><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>
-        <div class="muted" style="font-size:11.5px;margin-top:2px">${m.foods.map(x=>`${t(FOODS[x.fi].n)} ${x.g}g`).join(' · ')||'—'}</div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${m.foods.map(x=>`${foodName(FOODS[x.fi].n)} ${x.g}g`).join(' · ')||'—'}</div>
       </div>`).join('')}
     </div>
     ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).length?`<div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</div>
@@ -3784,7 +4144,7 @@ function cChat(){
     </div>
     <div class="row" style="gap:6px;flex-wrap:wrap">
       <button class="fchip" data-act="cform">${ic('camera',13)} ${t('Record form check')}</button>
-      <button class="fchip" data-act="toast" data-msg="File picker (demo)">${ic('folder',13)} ${t('Attach file')}</button>
+      <button class="fchip" data-act="cattach">${ic('folder',13)} ${t('Attach file')}</button>
     </div>
     <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px">
       <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
@@ -3935,6 +4295,8 @@ function editClientModal(name){
       <div class="field"><label class="lbl">${t('Weight')} (${U?'lb':'kg'})</label><input class="inp" type="number" step="0.1" id="ec-weight" value="${c.weight?(U?uw(c.weight):c.weight):''}"></div>
       <div class="field"><label class="lbl">${t('Height')} (${U?'in':'cm'})</label><input class="inp" type="number" id="ec-h" value="${c.h?(U?uc(c.h):c.h):''}"></div>
       <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" type="number" step="0.1" id="ec-bf" value="${c.bf}"></div>
+      <div class="field"><label class="lbl">${t('Target Weight')} (${U?'lb':'kg'})</label><input class="inp" type="number" step="0.1" id="ec-targetw" value="${c.targetW?(U?uw(c.targetW):c.targetW):''}"></div>
+      <div class="field"><label class="lbl">${t('Target Date')}</label><input class="inp" type="date" id="ec-targetd" value="${esc(c.targetDate||'')}"></div>
     </div>
     <div style="margin-top:6px;padding-top:14px;border-top:1px solid var(--line2)">
       <div class="lbl" style="margin-bottom:6px">${t('Personal connection code')}</div>
@@ -4214,6 +4576,12 @@ document.addEventListener('click',e=>{
       const hv=$('ec-h').value;c.h=hv===''?c.h:lToCm(parseFloat(hv));
       c.bf=parseFloat($('ec-bf').value)||c.bf;
       c.email=$('ec-email').value.trim()||c.email;
+      // v17.5 — goal target: startW anchors the progress bar at the weight the
+      // target was set with (never re-anchored on later edits).
+      const twv=$('ec-targetw').value;c.targetW=twv===''?undefined:wToKg(parseFloat(twv));
+      c.targetDate=$('ec-targetd').value||undefined;
+      if(c.targetW&&!c.startW)c.startW=c.weight||c.targetW;
+      if(!c.targetW){c.startW=undefined}
       if(newName!==oldName){
         NPLANS.forEach(p=>{if(p.client===oldName)p.client=newName});
         NOTES.forEach(n=>{if(n.client===oldName)n.client=newName});
@@ -4250,14 +4618,17 @@ document.addEventListener('click',e=>{
       render();toast('Client deleted');break}
     case 'att-mark':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
       const v=el.dataset.v;
+      const was=ev.att;
       ev.att=ev.att===v?undefined:v;
+      packCharge(ev,was);
       syncClientSessions(ev.client);
       render();
       toast(v==='done'?(ev.att?'Marked attended ✓':'Attendance cleared'):v==='miss'?(ev.att?'Marked missed — client flagged':'Attendance cleared'):'Attendance cleared');
       break}
     case 'att-mark-modal':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
       const v=el.dataset.v||undefined;
-      ev.att=v;syncClientSessions(ev.client);
+      const was=ev.att;
+      ev.att=v;packCharge(ev,was);syncClientSessions(ev.client);saveData();
       [...el.parentElement.children].forEach(b=>b.classList.toggle('on',b===el));
       toast(v==='done'?'Marked attended ✓':v==='miss'?'Marked missed — client flagged':'Attendance cleared');break}
     case 'tpl-new':{S.tplEdit=null;if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
@@ -4337,7 +4708,7 @@ document.addEventListener('click',e=>{
       S.fp.fi=FOODS.length-1;S.fp.custom=false;fpRender();toast('Custom food added');break}
     case 'fpadd':{const p=NPLANS[S.nplan];const it={fi:S.fp.fi,g:S.fp.g};
       p.days[S.nday].meals[S.fp.mi].foods.push(it);
-      closeModal();render();toast(t(FOODS[S.fp.fi].n)+' '+t('added to meal'));break}
+      closeModal();render();toast(foodName(FOODS[S.fp.fi].n)+' '+t('added to meal'));break}
     case 'falt':altModal(+el.dataset.fi);break;
     case 'altadd':{const f=FOODS.find(x=>x.n===el.dataset.n);f.alt=f.alt||[];f.alt.push($('alt-sel').value);altRender(FOODS.indexOf(f));break}
     case 'altdel':{const f=FOODS[+el.dataset.fi];if(f)f.alt=(f.alt||[]).filter(x=>x!==el.dataset.n);altRender(+el.dataset.fi);break}
@@ -4416,6 +4787,14 @@ document.addEventListener('click',e=>{
       NOTIFS.unshift({t:`🎥 ${t(c.name)} — ${t('Form check')}`,d:'Just now',un:true});
       render();toast('Form check sent');break}
     case 'ck':S[el.dataset.k]=el.dataset.v;render();break;
+    case 'cattach':{
+      const inp=document.createElement('input');inp.type='file';
+      inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+        const c=client(S.cid);
+        MSGS.push({id:uid(),client:c.name,from:'client',type:'file',body:`📎 ${f.name}`,time:'Just now',read:false});
+        NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+        render();toast(t('File attached'))};
+      inp.click();break}
     case 'send-checkin':{
       if(!S.cEnergy||!S.cSore||!S.cSleep){toast('Answer all three first');break}
       const c=client(S.cid);
@@ -4424,6 +4803,48 @@ document.addEventListener('click',e=>{
       MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
       S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach');break}
+    /* ===== v17.5 — competitor-parity actions ===== */
+    case 'photo-add':pickPhoto('coach');break;
+    case 'photo-add-client':pickPhoto('client');break;
+    case 'photo-del':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
+      if(pdb&&pdb.photos){const i=pdb.photos.findIndex(p=>p.id===pid);if(i>=0){pdb.photos.splice(i,1);saveData();render();toast(t('Photo deleted'))}}break}
+    case 'photo-ok':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
+      if(pdb&&pdb.photos){const p=pdb.photos.find(x=>x.id===pid);if(p){p.ok=true;saveData();render();toast(t('Approved ✓'))}}break}
+    case 'intake-open':intakeModal();break;
+    case 'intake-save':{const ic2=client(S.cid);
+      const ans=INTAKE_Q.map((q,i)=>{const f=$('iq-'+i);return f?(f.value||'').trim():''});
+      if(ans.some(v=>!v)){toast(t('Answer all questions'));break}
+      ic2.intake={a:ans,at:Date.now()};saveData();closeModal();render();toast(t('Intake form saved ✓'));break}
+    case 'intake-view':intakeViewModal(el.dataset.c);break;
+    case 'pack-open':packsModal(el.dataset.c);break;
+    case 'pack-add':{const pname=el.dataset.c;
+      const pn=($('pk-name')&&$('pk-name').value.trim())||'Session Pack';
+      const pt=Math.max(1,Math.min(200,parseInt($('pk-total')&&$('pk-total').value,10)||10));
+      PACKS.push({id:uid(),client:pname,name:pn,total:pt,used:0,createdAt:Date.now()});
+      saveData();render();packsModal(pname);toast(t('Pack added ✓'));break}
+    case 'pack-del':{const pid=+el.dataset.id;const i=PACKS.findIndex(p=>p.id===pid);
+      if(i>=0){markDead('PACKS',pid);PACKS.splice(i,1);saveData();render();packsModal(el.dataset.c);toast(t('Pack deleted'))}break}
+    case 'announce-open':announceModal();break;
+    case 'announce-send':{const title=($('an-title')&&$('an-title').value.trim())||'';
+      const body=($('an-body')&&$('an-body').value.trim())||'';
+      if(!body){toast(t('Write the announcement…'));break}
+      const txt=title?`📣 ${title}\n${body}`:`📣 ${body}`;
+      let n=0;CLIENTS.filter(cc=>cc.status!=='Archived').forEach(cc=>{MSGS.push({id:uid(),client:cc.name,from:'coach',type:'text',body:txt,time:'Just now',read:false});n++});
+      NOTIFS.unshift({t:`${t('Announcement sent')} — ${nf(n)}`,d:'Just now',un:false});
+      saveData();closeModal();render();toast(t('Announcement sent')+' ('+nf(n)+')');break}
+    case 'msgtpl-open':msgtplModal();break;
+    case 'msgtpl-add':{const tn=($('mt-name')&&$('mt-name').value.trim())||'';const tb=($('mt-body')&&$('mt-body').value.trim())||'';
+      if(!tn||!tb){toast(t('Template name and text are required'));break}
+      if(MSGTPL.some(x=>x.n===tn)){toast(t('A template with this name exists'));break}
+      MSGTPL.push({n:tn,body:tb});saveData();render();msgtplModal();toast(t('Template saved ✓'));break}
+    case 'msgtpl-del':{const i=MSGTPL.findIndex(x=>x.n===el.dataset.n);
+      if(i>=0){markDead('MSGTPL',el.dataset.n);MSGTPL.splice(i,1);saveData();render();msgtplModal()}break}
+    case 'msgtpl-use':{const tp=MSGTPL.find(x=>x.n===el.dataset.n);if(!tp)break;
+      const inp=$('msg-inp');
+      if(inp){inp.value=tp.body;closeModal();inp.focus();toast(t('Inserted into the composer'))}
+      else{try{navigator.clipboard.writeText(tp.body)}catch(e){}closeModal();toast(t('Copied ✓'))}break}
+    case 'print-workout':printWorkout();break;
+    case 'print-nutrition':printNutrition();break;
     case 'open-player':{const w=(DB[S.cid].workouts||[]).find(x=>x.id===el.dataset.wid);if(!w)break;
       const keys=[];w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++)keys.push(ei+'-'+si)});
       S.player={wid:w.id,checked:new Set(w.status==='completed'?keys:[]),rpe:{},rest:0,restTotal:1};
@@ -4478,6 +4899,8 @@ document.addEventListener('click',e=>{
       render();toast(t('Published to')+' '+t(client(S.cid).name)+' ✓');break}
     case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wday='Monday';S.wdur='60 min';S.wnote='';
       if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
+    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wday='Monday';S.wdur='60 min';S.wnote='';S.tplEdit=null;
+      render();toast(t('Builder cleared'));break}
     case 'w-load':{const w=(DB[S.cid].workouts||[])[+el.dataset.wi];if(!w)break;
       BUILDER.length=0;(w.exercises||[]).forEach(x=>BUILDER.push({...x}));
       S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';
@@ -4560,7 +4983,7 @@ document.addEventListener('click',e=>{
       else if(it==='Create Note'){S.view='notes';render()}
       break}
     case 'markread':NOTIFS.forEach(n=>n.un=false);render();toast('All notifications marked as read');break;
-    case 'stab':S.stab=el.dataset.k;render();if(el.dataset.k==='admin')billAdminLoad();break;
+    case 'stab':S.stab=el.dataset.k;render();if(el.dataset.k==='admin')billAdminLoad();else if(el.dataset.k==='account')billRefresh().then(render).catch(()=>{});break;
     case 'admin-refresh':billAdminLoad();break;
     case 'adm-grant':admGrantModal(el.dataset.email,el.dataset.plan);break;
     case 'adm-grant-do':admGrantDo(el.dataset.email);break;

@@ -1641,7 +1641,10 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <h3>Club</h3><p class="for">For coaching teams and gyms.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="2,490,000" data-y="24,900,000">2,490,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 200 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Everything in Professional</li><li><svg class="ic"><use href="#i-check"/></svg>Team management</li><li><svg class="ic"><use href="#i-check"/></svg>Gym management</li><li><svg class="ic"><use href="#i-check"/></svg>Priority support</li></ul>
-        <a class="btn ghost" href="mailto:sales@coach-os.io">Talk to Sales</a>
+        <!-- Was a mailto:"Talk to Sales" — but checkout.html fully supports the
+             club plan and the app's in-app Buy button already sends club buyers
+             here, so the website funnel now matches (self-serve checkout). -->
+        <a class="btn ghost" href="/shop/checkout.html?plan=club" data-checkout="club">Buy Now</a>
       </div>
     </div>
     <p class="pfoot" data-reveal>Prices shown are launch placeholders — final pricing to be confirmed.</p>

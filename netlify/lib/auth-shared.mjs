@@ -7,7 +7,7 @@ import {
   EMAIL_RE, TRIAL_DAYS, SESSION_TTL_MS
 } from './saas.mjs';
 import { randomBytes } from 'node:crypto';
-import { adminEmails } from './billing.mjs';
+import { adminEmails, normCoupon, redeemForAccount } from './billing.mjs';
 import { readJsonCapped, tooLarge, badJson, withLock } from './guard.mjs';
 
 export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
@@ -158,12 +158,15 @@ export async function signup(req, st) {
   if (!EMAIL_RE.test(email)) return j(400, { ok: false, error: 'bad-email' });
   if (!name) return j(400, { ok: false, error: 'bad-name' });
   if (password.length < 8) return j(400, { ok: false, error: 'weak-password' });
+  // Optional activation code from the shop purchase (coach-os-coupon) — the
+  // coach can land in the app with the plan ALREADY active, no Settings detour.
+  const coupon = normCoupon(body?.coupon);
   // The existence check + account/workspace creation must be atomic per
   // account: two concurrent signups with the same email could otherwise both
   // pass the check and create duplicate accounts (one acct-by-id orphaned).
-  return withLock(`acct:${email}`, async () => {
+  const out = await withLock(`acct:${email}`, async () => {
     if (await st.get(`acct:${email}`, { type: 'json' })) {
-      return j(409, { ok: false, error: 'email-taken' });
+      return { err: j(409, { ok: false, error: 'email-taken' }) };
     }
     const now = Date.now();
     const acct = {
@@ -178,13 +181,26 @@ export async function signup(req, st) {
     await st.setJSON(`acct-by-id:${acct.id}`, { email });
     const ws = await ensureWorkspace(st, acct);
     const token = await issueSession(st, acct);
-    return j(200, {
-      ok: true, token,
-      coach: publicCoach(acct),
-      workspace: publicWs(ws),
-      access: accessOf(acct)
-    });
+    return { token, coach: publicCoach(acct), workspace: publicWs(ws), acct };
   });
+  if (out.err) return out.err;
+  const resp = {
+    ok: true, token: out.token,
+    coach: out.coach,
+    workspace: out.workspace,
+    access: accessOf(out.acct)
+  };
+  // Redeem AFTER the account lock released: redeemForAccount locks
+  // coupon → acct, and acquiring the coupon lock while still holding acct here
+  // would reverse that global order (deadlock with /api/billing/redeem).
+  // A bad/used code NEVER blocks the account — the coach still gets in (trial)
+  // and the client surfaces the error, keeping the code for a retry.
+  if (coupon) {
+    const r = await redeemForAccount(st, out.acct, coupon);
+    if (r.ok) { resp.access = r.access; resp.billing = r.billing; resp.redeemed = true; }
+    else resp.redeemError = r.error;
+  }
+  return j(200, resp);
 }
 
 export async function login(req, st) {
@@ -198,24 +214,35 @@ export async function login(req, st) {
   if (!acct || !verifyPassword(password, acct.pass)) {
     return j(401, { ok: false, error: 'bad-credentials' });
   }
+  // Optional renewal/activation code — same contract as signup.
+  const coupon = normCoupon(body?.coupon);
   // Promote to admin on login if ADMIN_EMAILS changed since signup — the role
   // flag in the account record is the durable source of truth afterwards.
   // Same lock as signup: role write + workspace ensure + session issue are a
   // read-modify-write sequence on the account record.
-  return withLock(`acct:${email}`, async () => {
+  const out = await withLock(`acct:${email}`, async () => {
     if (acct.role !== 'admin' && adminEmails().includes(email)) {
       acct.role = 'admin';
       await st.setJSON(`acct:${email}`, acct);
     }
     const ws = await ensureWorkspace(st, acct);
     const token = await issueSession(st, acct);
-    return j(200, {
-      ok: true, token,
-      coach: publicCoach(acct),
-      workspace: publicWs(ws),
-      access: accessOf(acct)
-    });
+    return { token, coach: publicCoach(acct), workspace: publicWs(ws), acct };
   });
+  // Coupon redemption runs AFTER the account lock released — see signup for
+  // the lock-order rationale. An invalid code never blocks the login.
+  const resp = {
+    ok: true, token: out.token,
+    coach: out.coach,
+    workspace: out.workspace,
+    access: accessOf(out.acct)
+  };
+  if (coupon) {
+    const r = await redeemForAccount(st, out.acct, coupon);
+    if (r.ok) { resp.access = r.access; resp.billing = r.billing; resp.redeemed = true; }
+    else resp.redeemError = r.error;
+  }
+  return j(200, resp);
 }
 
 /** Legacy import helper shared by claim flows: copy old anonymous bytes. */
