@@ -12,6 +12,12 @@ data/prod-admin-pass.txt
 data/*-pass.txt
 data/*-secrets.txt
 
+# KV data files — local/test data with a known admin password. Production
+# starts EMPTY (db/schema-fresh.sql); the admin is created on the server via
+# scripts/create-admin.mjs. Never push these (see DEPLOY.md §1).
+data/kv.json
+data/kv-prod.json
+
 # netlify local state
 .netlify/
 .netlify/state/
