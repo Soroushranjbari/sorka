@@ -5275,6 +5275,19 @@ loadData();
 })();
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
   window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+  /* When a NEW service worker takes control (a fresh deploy), reload ONCE so
+     the running shell matches the served code — otherwise the user keeps the
+     old UI until their next manual reload. The sessionStorage guard prevents
+     reload loops; it is cleared on every fresh boot, so future deploys still
+     trigger exactly one refresh. */
+  try{sessionStorage.removeItem('co-sw-reload')}catch(e){}
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    try{
+      if(sessionStorage.getItem('co-sw-reload'))return;
+      sessionStorage.setItem('co-sw-reload','1');
+      location.reload();
+    }catch(e){}
+  });
 }
 </script>
 </body>
