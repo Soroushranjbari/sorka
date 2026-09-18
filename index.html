@@ -194,6 +194,14 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:14px}
 .cgrid .card{padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
 .cgrid .card:hover{border-color:var(--acc-line);box-shadow:var(--sh-2);transform:translateY(-1px)}
+/* v17.11 — onboarding wizard */
+.onb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.onb-opt{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:13px 15px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:13.5px;text-align:start;transition:border-color .15s,background .15s;color:var(--ink)}
+.onb-opt:hover{border-color:var(--ink3)}
+.onb-opt.on{border-color:var(--accent-deep);background:var(--accent-soft);color:var(--accent-ink)}
+.onb-dot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .2s}
+.onb-dot.on{background:var(--accent-deep)}
+@media(max-width:520px){.onb-grid{grid-template-columns:1fr}}
 .cal-grid{display:grid;grid-template-columns:56px repeat(7,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
 .cal-hd{padding:10px 6px;text-align:center;border-bottom:2px solid var(--line);border-inline-start:1px solid var(--line2);font-size:12px;font-weight:700;color:var(--ink2);background:var(--cal-hd)}
 .cal-hd.today{color:var(--accent-ink);background:var(--accent-soft)}
@@ -507,6 +515,14 @@ const FA={
 'Weight Target':'وزن هدف','Target Weight':'وزن هدف','Target Date':'تاریخ هدف','Goal progress':'پیشرفت هدف','My Goal':'هدف من',
 'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
 'Meat':'گوشت','Chicken':'مرغ','Fish':'ماهی','Eggs':'تخم‌مرغ','Dairy':'لبنیات','Rice & Grains':'برنج و غلات','Bread':'نان','Fruit':'میوه','Vegetables':'سبزیجات','Nuts':'آجیل','Oils':'روغن‌ها','Drinks':'نوشیدنی‌ها','Supplements':'مکمل‌ها','Other':'سایر',
+'Bodybuilding & Fitness':'بدنسازی و فیتنس','Powerlifting':'پاورلیفتینگ','Running & Endurance':'دویدن و استقامت','Team Sports':'ورزش‌های تیمی','General Fitness':'تناسب اندام عمومی',
+'Online coaching':'مربیگری آنلاین','In-person / gym':'حضوری / باشگاه','Hybrid':'ترکیبی',
+'Just starting':'تازه شروع کرده‌ام','Less than 5 clients':'کمتر از ۵ شاگرد','Growing':'در حال رشد','5 – 30 clients':'۵ تا ۳۰ شاگرد','Established':'جایگزیده','More than 30 clients':'بیش از ۳۰ شاگرد',
+'Program design':'برنامه‌نویسی تمرین','Nutrition planning':'برنامه‌ریزی تغذیه','Progress tracking':'پیگیری پیشرفت','Client management':'مدیریت شاگردان',
+'Set up your workspace':'فضای کاری‌ات را تنظیم کن','Which sport do you coach?':'کدام رشته را مربیگری می‌کنی؟','How do you coach?':'چطور مربیگری می‌کنی؟','How many clients do you have?':'چند شاگرد داری؟','What do you do most?':'بیشتر وقتت صرف چه کاری می‌شود؟','Skip for now':'فعلاً رد کن','Finish':'پایان',
+'More sports are coming — pick the closest one for now':'رشته‌های بیشتری اضافه می‌شود — فعلاً نزدیک‌ترین را انتخاب کن','This becomes your home screen — change it anytime in Settings':'این صفحه‌ی خانه‌ات می‌شود — هر وقت خواستی از تنظیمات عوضش کن',
+'Workspace tailored ✓ — change it later in Settings':'فضای کاری شخصی‌سازی شد ✓ — بعداً از تنظیمات قابل تغییر است','Setup wizard':'ویزارد راه‌اندازی','Sport, coaching style and home screen':'رشته، سبک مربیگری و صفحه‌ی خانه','Redo':'انجام دوباره','Suggested':'پیشنهادی',
+'No templates for this sport yet':'هنوز قالبی برای این رشته نیست','Build one in the builder and save it as a template':'در سازنده بساز و به‌عنوان قالب ذخیره کن','Show all templates':'نمایش همه قالب‌ها',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
 'Could not load coaches':'بارگذاری مربی‌ها ناموفق بود','Admin error':'خطای ادمین','Retry':'تلاش دوباره','Search by name or email':'جستجو با نام یا ایمیل',
 'Sign in to Coach OS':'ورود به Coach OS','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
@@ -712,19 +728,19 @@ const EXERCISES=[
 const MUSCLES=['All','Chest','Back','Shoulders','Biceps','Triceps','Quadriceps','Hamstrings','Glutes','Calves','Core','Full Body'];
 const TX=(ex,sets,reps,kg,rest,note='')=>({ex,sets,reps,kg,rest,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note});
 function defaultTemplates(){return [
-{n:'Push A',days:'Push',dur:'60 min',mod:'2 days ago',note:'Prioritize chest before shoulders. Warm up: 8 min bike + band work.',exs:[TX(0,4,8,80,120,'Elbows ~45°, full ROM'),TX(1,3,10,26,90,'Pause at bottom'),TX(8,3,8,45,120,'Brace before each rep'),TX(9,3,12,10,60,'Lead with elbow'),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
-{n:'Push B',days:'Push',dur:'60 min',mod:'2 days ago',note:'Incline first today — vary the pressing angle.',exs:[TX(1,4,8,28,120),TX(0,3,10,70,120),TX(9,4,12,10,60),TX(8,3,10,40,90),TX(13,3,15,25,45),TX(3,3,15,0,60,'Bodyweight'),TX(2,3,15,15,45)]},
-{n:'Pull A',days:'Pull',dur:'55 min',mod:'4 days ago',note:'Keep the hinge neutral — quality over load.',exs:[TX(4,4,8,70,120,'Neutral spine'),TX(5,3,10,60,90),TX(6,3,8,0,90,'Bodyweight'),TX(7,3,10,55,90),TX(11,3,10,30,60),TX(12,3,12,12,60),TX(10,3,15,15,45)]},
-{n:'Pull B',days:'Pull',dur:'55 min',mod:'4 days ago',exs:[TX(5,4,10,55,120),TX(6,3,10,0,90),TX(7,4,10,60,90),TX(12,3,12,12,60),TX(11,3,10,25,60),TX(10,3,15,15,45)]},
-{n:'Leg A',days:'Legs',dur:'65 min',mod:'1 week ago',note:'Depth below parallel. Belt only on top sets.',exs:[TX(15,4,6,100,150,'Depth below parallel'),TX(16,3,10,120,120),TX(18,3,10,60,120,'Neutral spine'),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45),TX(22,3,40,0,60,'Seconds hold')]},
-{n:'Leg B',days:'Legs',dur:'60 min',mod:'1 week ago',exs:[TX(20,4,10,80,120,'Pause 1s at top'),TX(16,4,12,110,120),TX(18,3,10,55,90),TX(19,3,12,40,60),TX(17,3,15,40,45),TX(21,4,15,45,45)]},
-{n:'Full Body Beginner',days:'Full Body',dur:'45 min',mod:'2 weeks ago',note:'Technique focus. Leave 2 reps in reserve everywhere.',exs:[TX(3,3,10,0,60),TX(1,3,10,10,90),TX(5,3,10,35,90),TX(16,3,10,60,90),TX(9,2,12,6,45),TX(13,2,12,15,45),TX(23,3,10,0,45),TX(24,3,30,12,60,'30 m per set')]},
-{n:'Hypertrophy 4 Day',days:'4-day split',dur:'60 min',mod:'3 weeks ago',note:'Load each day separately. Rest 2–3 min on compounds.',parts:[
+{n:'Push A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Prioritize chest before shoulders. Warm up: 8 min bike + band work.',exs:[TX(0,4,8,80,120,'Elbows ~45°, full ROM'),TX(1,3,10,26,90,'Pause at bottom'),TX(8,3,8,45,120,'Brace before each rep'),TX(9,3,12,10,60,'Lead with elbow'),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
+{n:'Push B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Incline first today — vary the pressing angle.',exs:[TX(1,4,8,28,120),TX(0,3,10,70,120),TX(9,4,12,10,60),TX(8,3,10,40,90),TX(13,3,15,25,45),TX(3,3,15,0,60,'Bodyweight'),TX(2,3,15,15,45)]},
+{n:'Pull A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',note:'Keep the hinge neutral — quality over load.',exs:[TX(4,4,8,70,120,'Neutral spine'),TX(5,3,10,60,90),TX(6,3,8,0,90,'Bodyweight'),TX(7,3,10,55,90),TX(11,3,10,30,60),TX(12,3,12,12,60),TX(10,3,15,15,45)]},
+{n:'Pull B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',exs:[TX(5,4,10,55,120),TX(6,3,10,0,90),TX(7,4,10,60,90),TX(12,3,12,12,60),TX(11,3,10,25,60),TX(10,3,15,15,45)]},
+{n:'Leg A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'65 min',mod:'1 week ago',note:'Depth below parallel. Belt only on top sets.',exs:[TX(15,4,6,100,150,'Depth below parallel'),TX(16,3,10,120,120),TX(18,3,10,60,120,'Neutral spine'),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45),TX(22,3,40,0,60,'Seconds hold')]},
+{n:'Leg B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'60 min',mod:'1 week ago',exs:[TX(20,4,10,80,120,'Pause 1s at top'),TX(16,4,12,110,120),TX(18,3,10,55,90),TX(19,3,12,40,60),TX(17,3,15,40,45),TX(21,4,15,45,45)]},
+{n:'Full Body Beginner',sp:['General Fitness','Bodybuilding & Fitness','Running & Endurance','Team Sports'],days:'Full Body',dur:'45 min',mod:'2 weeks ago',note:'Technique focus. Leave 2 reps in reserve everywhere.',exs:[TX(3,3,10,0,60),TX(1,3,10,10,90),TX(5,3,10,35,90),TX(16,3,10,60,90),TX(9,2,12,6,45),TX(13,2,12,15,45),TX(23,3,10,0,45),TX(24,3,30,12,60,'30 m per set')]},
+{n:'Hypertrophy 4 Day',sp:['Bodybuilding & Fitness'],days:'4-day split',dur:'60 min',mod:'3 weeks ago',note:'Load each day separately. Rest 2–3 min on compounds.',parts:[
  {n:'Day 1 — Push',exs:[TX(0,4,8,80,120),TX(1,3,10,26,90),TX(8,3,8,45,120),TX(9,4,12,10,60),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
  {n:'Day 2 — Pull',exs:[TX(4,4,8,70,120),TX(5,3,10,60,90),TX(6,3,8,0,90),TX(7,3,10,55,90),TX(10,3,15,15,45),TX(11,3,10,30,60),TX(12,3,12,12,60)]},
  {n:'Day 3 — Legs',exs:[TX(15,4,6,100,150),TX(16,3,10,120,120),TX(18,3,10,60,120),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45)]},
  {n:'Day 4 — Upper',exs:[TX(0,3,10,70,90),TX(4,3,10,60,90),TX(8,3,10,40,90),TX(5,3,12,50,90),TX(11,3,12,25,45),TX(13,3,12,22,45),TX(9,3,15,8,45)]}]},
-{n:'Strength 5 Day',days:'5-day split',dur:'70 min',mod:'1 month ago',note:'5×5 main lifts — add 2.5 kg when all sets hit.',parts:[
+{n:'Strength 5 Day',sp:['Powerlifting','Bodybuilding & Fitness'],days:'5-day split',dur:'70 min',mod:'1 month ago',note:'5×5 main lifts — add 2.5 kg when all sets hit.',parts:[
  {n:'Day 1 — Squat',exs:[TX(15,5,5,105,180,'5×5 — add 2.5 kg weekly'),TX(16,3,8,120,120),TX(18,3,8,70,120),TX(21,3,12,60,60),TX(22,3,40,0,60,'Seconds hold')]},
  {n:'Day 2 — Bench',exs:[TX(0,5,5,82,180),TX(1,3,8,30,120),TX(8,3,8,47,120),TX(10,3,15,20,60),TX(13,3,10,27,60)]},
  {n:'Day 3 — Deadlift',exs:[TX(18,5,3,130,180,'Focus: bar path'),TX(4,4,8,75,120),TX(7,3,10,60,90),TX(19,3,10,45,60),TX(24,3,30,20,75)]},
@@ -1002,6 +1018,20 @@ const FA_FOOD={
 'Apple':'سیب','Broccoli':'بروکلی','Sweet Potato':'سیب‌زمینی شیرین','Almonds':'بادام',
 'Olive Oil':'روغن زیتون','Whey Protein':'پروتئین وی','Orange Juice':'آب پرتقال','Salmon':'ماهی سالمون'};
 const foodName=n=>lang==='fa'?(FA_FOOD[n]||n):n;
+/* v17.11 — coach onboarding wizard. Four questions whose answers SHAPE the
+   workspace: sport filters the template library, coaching style reorders the
+   dashboard quick actions, client scale highlights the suggested plan, and
+   the main focus becomes the home screen after login. ONB_SPORTS is a plain
+   list — new disciplines only need an entry here (plus optional template
+   tags) and the wizard/library pick them up automatically. ONBOARD rides the
+   workspace payload so the answers follow the coach across devices. */
+let ONBOARD={done:false};
+const ONB_SPORTS=['Bodybuilding & Fitness','Powerlifting','Running & Endurance','Team Sports','General Fitness'];
+const ONB_CONTEXT=['Online coaching','In-person / gym','Hybrid'];
+const ONB_SCALE=[['starting','Just starting','Less than 5 clients','basic'],['growing','Growing','5 – 30 clients','professional'],['established','Established','More than 30 clients','club']];
+const ONB_FOCUS=[['programs','Program design','builder'],['nutrition','Nutrition planning','nutrition'],['progress','Progress tracking','progress'],['clients','Client management','clients']];
+const landingView=()=>({programs:'builder',nutrition:'nutrition',progress:'progress',clients:'clients'}[ONBOARD.focus]||'dash');
+const suggestedPlan=()=>({starting:'basic',growing:'professional',established:'club'}[ONBOARD.scale]||null);
 const NCATS=['Meat','Chicken','Fish','Eggs','Dairy','Rice & Grains','Bread','Fruit','Vegetables','Nuts','Oils','Drinks','Supplements','Other'];
 const D01=[1,1,0,1,1,1,0];
 const TRAIN_T=[
@@ -1096,7 +1126,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,ONBOARD,DB:packDB(),DEAD});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1126,6 +1156,7 @@ function loadData(){
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
     repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);
+    if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
     Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
     Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
     /* NOTE: this used to run `if(!EVENTS.some(e=>e.att)) EVENTS.forEach(e=>e.day<TODAY&&(e.att='done'))`
@@ -1187,6 +1218,7 @@ function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;FOODS.length=0;PACKS.length=0;MSGTPL.length=0;
+  ONBOARD={done:false};
   Object.keys(DB).forEach(k=>delete DB[k]);
   Object.keys(DEAD).forEach(k=>DEAD[k].length=0);
   S.cid=1;S.pickCid=1;S.msgThread=null;S.nplan=0;
@@ -1218,11 +1250,11 @@ async function authSignup(){
     // New account: drop the local demo seed and any previous tenant's cloud
     // state, so the coach starts with an empty, correctly-owned workspace.
     cloudReset();adoptAccount(d.coach);
-    S.role='coach';S.view='dash';render();
+    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
     toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
       :d.redeemError?t(billErr({error:d.redeemError}))
       :t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
-    cloudEnsure();
+    cloudEnsure();maybeOnboard();
   }catch(e){toast(t('Could not reach server'))}
 }
 async function authLogin(){
@@ -1244,11 +1276,11 @@ async function authLogin(){
     // that belongs to the previous coach — otherwise the first sync pushes the
     // previous coach's clients into this coach's (empty) workspace.
     cloudReset();adoptAccount(d.coach);
-    S.role='coach';S.view='dash';render();
+    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
     toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
       :d.redeemError?t(billErr({error:d.redeemError}))
       :t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
-    cloudEnsure();
+    cloudEnsure();maybeOnboard();
   }catch(e){toast(t('Could not reach server'))}
 }
 async function authLogout(){
@@ -1513,7 +1545,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (Netlify Functions + Netlify Blobs) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,ONBOARD,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1600,6 +1632,9 @@ function cloudMerge(d,adopt){
     const set=new Set(arr.map(x=>JSON.stringify(x)));
     (d[k]||[]).forEach(x=>{const s=JSON.stringify(x);if(!set.has(s)){arr.push(x);set.add(s);ch=true}});
   });
+  // onboarding answers — the coach's own device wins only while local is
+  // unfinished; once done:true anywhere, it propagates everywhere.
+  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&(d.ONBOARD.done||!ONBOARD.done)&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){ONBOARD=d.ONBOARD;ch=true}
   // DB — per client
   Object.keys(d.DB||{}).forEach(cid=>{
     const L=DB[cid],R=d.DB[cid];if(!R)return;
@@ -1967,6 +2002,47 @@ function printNutrition(){
   }).join('');
   printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`);
 }
+/* ===== v17.11 — onboarding wizard (4 steps, answers shape the workspace) ===== */
+function onbWizard(){
+  S.onb=S.onb||{step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};
+  const st=S.onb.step;
+  const dots=[0,1,2,3].map(i=>`<span class="onb-dot ${i<=st?'on':''}"></span>`).join('');
+  let title='',body='';
+  if(st===0){title='Which sport do you coach?';
+    body=`<div class="onb-grid">${ONB_SPORTS.map(s=>`<button class="onb-opt ${S.onb.sport===s?'on':''}" data-act="onb-pick" data-k="sport" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:10px">${t('More sports are coming — pick the closest one for now')}</div>`;}
+  if(st===1){title='How do you coach?';
+    body=`<div class="onb-grid">${ONB_CONTEXT.map(s=>`<button class="onb-opt ${S.onb.context===s?'on':''}" data-act="onb-pick" data-k="context" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>`;}
+  if(st===2){title='How many clients do you have?';
+    body=`<div class="onb-grid">${ONB_SCALE.map(([id,l,d])=>`<button class="onb-opt ${S.onb.scale===id?'on':''}" data-act="onb-pick" data-k="scale" data-v="${id}"><b>${t(l)}</b><span class="muted" style="font-size:12px">${t(d)}</span></button>`).join('')}</div>`;}
+  if(st===3){title='What do you do most?';
+    body=`<div class="onb-grid">${ONB_FOCUS.map(([id,l])=>`<button class="onb-opt ${S.onb.focus===id?'on':''}" data-act="onb-pick" data-k="focus" data-v="${id}">${t(l)}</button>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:10px">${t('This becomes your home screen — change it anytime in Settings')}</div>`;}
+  const canNext=st===0?!!S.onb.sport:st===1?!!S.onb.context:st===2?!!S.onb.scale:!!S.onb.focus;
+  openModal(`
+  <div class="modal-h"><h3>${t('Set up your workspace')}</h3><button class="btn btn-ghost btn-icon" data-act="onb-skip" title="${t('Skip for now')}">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:6px;margin-bottom:16px">${dots}<span class="sp"></span><span class="muted" style="font-size:12px">${nf(st+1)} / ${nf(4)}</span></div>
+    <b style="font-size:16px;display:block;margin-bottom:14px">${t(title)}</b>
+    ${body}
+  </div>
+  <div class="modal-f">
+    ${st>0?`<button class="btn btn-outline" data-act="onb-back">${t('Back')}</button>`:''}
+    <span class="sp"></span>
+    <button class="btn btn-primary" data-act="onb-next" ${canNext?'':'disabled style="opacity:.5;cursor:not-allowed"'}>${st===3?t('Finish'):t('Continue')} ${ic('arrowR',15)}</button>
+  </div>`);
+}
+/* Auto-pop ONCE for signed-in coaches that never finished it. The check runs
+   again inside the timeout so a cloud merge that arrives first (done:true)
+   cancels the popup. Demo coaches (no token) are never interrupted. */
+function maybeOnboard(){
+  if(!AUTH.token||ONBOARD.done)return;
+  setTimeout(()=>{
+    if(ONBOARD.done||S.role!=='coach')return;
+    S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};
+    onbWizard();
+  },600);
+}
 /* Session packs: attending a session consumes one from the client's oldest
    pack with remaining sessions; un-marking refunds it (tracked via ev.packId
    so a re-mark never double-charges). */
@@ -2144,6 +2220,12 @@ function vDash(){
   const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
   const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
   const avStack=CLIENTS.slice(0,4).map((c,i)=>`<span style="margin-inline-start:${i?-8:0}px;display:inline-block;border-radius:50%;border:2px solid var(--surface);line-height:0">${avC(c.name,22)}</span>`).join('');
+  /* v17.11 — onboarding effects: greeting shows sport + coaching style, and
+     the quick-action order follows the coaching style (online → connect code
+     first, in-person → schedule first). */
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
     ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users'],
     ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check'],
@@ -2157,7 +2239,7 @@ function vDash(){
      :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
-  <div class="page-h"><div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${t('Wed, Jul 8 2026')}</div></div>
+  <div class="page-h"><div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${t('Wed, Jul 8 2026')}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
   <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
   <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div></div>
   <div class="stats">${stats.map(([k,v,sub,vis,i])=>`
@@ -2182,7 +2264,7 @@ function vDash(){
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
         <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px">
-        ${[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']].map(([l,i])=>`
+        ${qa.map(([l,i])=>`
           <button class="btn btn-ghost" style="justify-content:flex-start" data-act="qa-item" data-item="${l}">${ic('plus',15)} ${t(l)}</button>`).join('')}
         </div>
       </div>
@@ -2691,10 +2773,16 @@ function vLibrary(){
 }
 function vTemplates(){
   const snippet=tp=>tp.parts?tp.parts.map(p=>t(p.n)).join(' · '):(tp.exs||[]).slice(0,4).map(e=>t(EXERCISES[e.ex].n)).join(' · ')+((tp.exs||[]).length>4?` · +${nf(tp.exs.length-4)}`:'');
+  /* v17.11 — sport filter, defaulted to the coach's onboarding answer */
+  const sports=['All',...Array.from(new Set(TEMPLATES.flatMap(tp=>tp.sp||[])))];
+  if(ONBOARD.sport&&!sports.includes(ONBOARD.sport))sports.push(ONBOARD.sport);
+  if(!S.tsp||!sports.includes(S.tsp))S.tsp=ONBOARD.done&&ONBOARD.sport&&sports.includes(ONBOARD.sport)?ONBOARD.sport:'All';
+  const list=TEMPLATES.filter(tp=>S.tsp==='All'||(tp.sp||[]).includes(S.tsp));
   return `
   <div class="page-h"><div><h1>${t('Workout Templates')}</h1><div class="sub">${t('Reusable programs — build once, assign in seconds')}</div></div>
   <button class="btn btn-primary" data-act="tpl-new">${ic('plus',15)} ${t('Create Template')}</button></div>
-  <div class="excards">${TEMPLATES.map((tp,i)=>`
+  <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${sports.map(s=>`<button class="fchip ${S.tsp===s?'on':''}" data-act="tsp" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>
+  <div class="excards">${list.length?list.map((tp,i)=>`
     <div class="card tcard">
       <div class="row">${av(tp.n,38)}<div><b>${tp.n}</b><div class="muted" style="font-size:12px">${t(tp.days)}</div></div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(tplExN(tp))} ${t('exercises')}</span><span class="chip">${nf(tplSetN(tp))} ${t('sets')}</span><span class="chip">${t(tp.dur)}</span></div>
@@ -2706,7 +2794,7 @@ function vTemplates(){
         <button class="btn btn-ghost btn-icon" data-act="tpl-dup" data-i="${i}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" data-act="tpl-arch" data-i="${i}" style="color:var(--red)">${ic('archive',15)}</button>
       </div>
-    </div>`).join('')}</div>`;
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><div>${ic('stack',24)}</div><b>${t('No templates for this sport yet')}</b><span class="muted">${t('Build one in the builder and save it as a template')}</span><button class="btn btn-outline btn-sm" data-act="tsp" data-v="All">${t('Show all templates')}</button></div>`}</div>`;
 }
 function evBadge(tp){return `<span class="bdg ${tp==='session'?'bdg-lime':tp==='assess'?'bdg-blue':tp==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[tp])}</span>`}
 function icsExport(){
@@ -2884,11 +2972,13 @@ function vMeasureGlobal(){
 function vSettings(){
   const tabs=[['profile','Profile'],['account','Account'],['notifications','Notifications'],['appearance','Appearance'],['calendar','Calendar'],['workout','Workout Settings'],['units','Units'],['privacy','Privacy'],['security','Security'],...(AUTH.coach&&AUTH.coach.role==='admin'?[['admin','Admin']]:[])];
   const sw=(path,on)=>`<label class="sw"><input type="checkbox" ${on?'checked':''} data-act="pref-sw" data-k="${path}"><i></i></label>`;
+  const sug=suggestedPlan();
   const panels={
   profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px">${av(coachName(),56,3)}<div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div></div></div>
     <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
     <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
+    <div class="set-row" style="margin:6px 0 14px"><div><span class="t">${t('Setup wizard')}</span><div class="d">${t('Sport, coaching style and home screen')}</div></div><button class="btn btn-outline btn-sm" data-act="onb-open">${t('Redo')}</button></div>
     <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
   account:`<div class="card" style="padding:22px">
     <div class="fs-t" style="margin-bottom:4px">${t('Subscription')}</div>
@@ -2901,7 +2991,7 @@ function vSettings(){
     <div class="card" style="padding:16px;margin:6px 0 4px;background:var(--bg2)">
       <b style="font-size:13.5px">${t('Plans')}</b>
       <div class="sub" style="margin:2px 0 10px">${t('Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200')}</div>
-      ${['basic','professional','club'].map(p=>`<div class="set-row" style="padding:8px 0"><div><span class="t">${p==='basic'?t('Basic'):p==='professional'?t('Professional'):t('Club')}</span><div class="d">${p==='basic'?'290,000':p==='professional'?'790,000':'2,490,000'} ${t('IRT / month')}</div></div><button class="btn ${SHOP_URL?'btn-primary':'btn-outline'} btn-sm" data-act="bill-request" data-p="${p}">${SHOP_URL?ic('cart',13)+' '+t('Buy'):t('Request')}</button></div>`).join('')}
+      ${['basic','professional','club'].map(p=>`<div class="set-row" style="padding:8px 0"><div><span class="t">${p==='basic'?t('Basic'):p==='professional'?t('Professional'):t('Club')}</span>${sug===p?` <span class="bdg bdg-lime" style="font-size:10px">${t('Suggested')}</span>`:''}<div class="d">${p==='basic'?'290,000':p==='professional'?'790,000':'2,490,000'} ${t('IRT / month')}</div></div><button class="btn ${SHOP_URL?'btn-primary':'btn-outline'} btn-sm" data-act="bill-request" data-p="${p}">${SHOP_URL?ic('cart',13)+' '+t('Buy'):t('Request')}</button></div>`).join('')}
       ${S.payPending?`<div class="sub" style="margin-top:6px">${t('Pending request')}: ${esc(S.payPending.planId)} · ${nf(S.payPending.amount)} ${t('IRT')} · ${t('pay to the merchant, then enter your tracking coupon below')}</div>`:''}
     </div>
     <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
@@ -4765,6 +4855,18 @@ document.addEventListener('click',e=>{
       if(S.ptab==='chat'){const c=client(S.cid);MSGS.forEach(m=>{if(m.client===c.name&&m.from==='coach')m.read=true})}
       render();break;
     case 'cv':S.cv=el.dataset.cv;render();break;
+    /* ===== v17.11 — onboarding wizard + template sport filter ===== */
+    case 'onb-open':{S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};onbWizard();break}
+    case 'onb-pick':{S.onb[el.dataset.k]=el.dataset.v;onbWizard();break}
+    case 'onb-back':{S.onb.step=Math.max(0,S.onb.step-1);onbWizard();break}
+    case 'onb-next':{
+      if(S.onb.step<3){S.onb.step++;onbWizard();break}
+      ONBOARD={sport:S.onb.sport,context:S.onb.context,scale:S.onb.scale,focus:S.onb.focus,done:true,at:Date.now()};
+      saveData();closeModal();
+      S.view=landingView();render();
+      toast(t('Workspace tailored ✓ — change it later in Settings'));break}
+    case 'onb-skip':{ONBOARD=Object.assign({},ONBOARD,{done:true,at:Date.now()});saveData();closeModal();break}
+    case 'tsp':S.tsp=el.dataset.v;render();break;
     case 'range':S.range=el.dataset.r;render();break;
     case 'scrim':document.body.classList.remove('sb-open');break;
     case 'sb':document.body.classList.toggle('sb-c');break;
