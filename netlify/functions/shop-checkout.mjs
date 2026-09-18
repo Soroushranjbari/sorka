@@ -27,14 +27,17 @@ const MAX_BYTES = 16_000;
 const orders = kv('shop-orders');
 
 /** Demo payment — always succeeds. Swap for ZarinPal/… verification.
- *  ref is derived deterministically from email+plan so retries of the same
- *  order map to the same payment reference (and thus the same coupon). */
-function simulatePayment({ planId, email, name, phone }) {
+ *  ref is derived deterministically from email+plan+seq so retries of the same
+ *  order map to the same payment reference (and thus the same coupon), while a
+ *  REPEAT purchase (renewal) gets a fresh reference and a fresh code. */
+function simulatePayment({ planId, email, name, phone, seq }) {
   if (!PRICES[planId]) return { ok: false, error: 'bad-plan' };
   if (String(name || '').trim().length < 3) return { ok: false, error: 'bad-name' };
   if (!/^\+?\d{10,13}$/.test(String(phone || '').replace(/[\s-]/g, ''))) return { ok: false, error: 'bad-phone' };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email || ''))) return { ok: false, error: 'bad-email' };
-  const ref = 'DEMO-' + createHash('sha256').update(`${email}:${planId}`).digest('hex').slice(0, 12).toUpperCase();
+  const base = createHash('sha256').update(`${email}:${planId}`).digest('hex').slice(0, 12).toUpperCase();
+  // seq 0 keeps the historical ref format; renewals append -1, -2, …
+  const ref = seq > 0 ? `DEMO-${base}-${seq}` : `DEMO-${base}`;
   return { ok: true, ref };
 }
 
@@ -91,7 +94,24 @@ export default async (req) => {
   if (bad) return badJson();
   const planId = String(body?.planId || '');
   const email = String(body?.email || '').trim().toLowerCase();
-  const pay = simulatePayment({ planId, email, name: body?.name, phone: body?.phone });
+  // Purchase sequence per email+plan: a repeat purchase (renewal) must mint a
+  // FRESH reference (and thus a fresh single-use code) — the deterministic ref
+  // of the first purchase would otherwise hand back the same code, which is
+  // already redeemed and could never be activated again. Every ref for this
+  // email+plan shares the DEMO-<base> prefix (renewals get -N suffixes), so
+  // counting prefixed refs needs no per-order reads and still works if an
+  // order record was ever lost. Concurrent/duplicate submissions of the SAME
+  // purchase all scan before any of them records an order, so they share one
+  // ref and the 409 retry path stays intact.
+  let seq = 0;
+  try {
+    const base = createHash('sha256').update(`${email}:${planId}`).digest('hex').slice(0, 12).toUpperCase();
+    const idx = (await orders.get(`idx:${email}`, { type: 'json' })) || [];
+    for (const ref of idx.slice(0, 200)) {
+      if (ref === `DEMO-${base}` || ref.startsWith(`DEMO-${base}-`)) seq++;
+    }
+  } catch {}
+  const pay = simulatePayment({ planId, email, name: body?.name, phone: body?.phone, seq });
   if (!pay.ok) return j(400, { ok: false, error: pay.error });
   const out = await issueCoupon(planId, codeFor(pay.ref, planId));
   if (!out.ok) return j(502, { ok: false, error: out.error });

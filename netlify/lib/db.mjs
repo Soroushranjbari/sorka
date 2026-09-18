@@ -90,7 +90,17 @@ function fileFlush() {
   try { mkdirSync(dirname(KV_FILE), { recursive: true }); } catch {}
   const tmp = `${KV_FILE}.${process.pid}.tmp`;
   writeFileSync(tmp, JSON.stringify(_fileCache));
-  renameSync(tmp, KV_FILE);
+  // Windows (OneDrive sync / antivirus / search indexer) can hold the
+  // destination file for a few hundred ms — rename then fails with EPERM.
+  // A lost flush silently reverted just-written data (a shop order vanished,
+  // the renewal seq undercounted and re-issued an already-redeemed code), so
+  // retry a few times with a tiny synchronous backoff before giving up.
+  let err;
+  for (let i = 0; i < 6; i++) {
+    try { renameSync(tmp, KV_FILE); return; } catch (e) { err = e; }
+    try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50); } catch {}
+  }
+  throw err;
 }
 async function fileGet(fullKey) {
   const d = fileData();

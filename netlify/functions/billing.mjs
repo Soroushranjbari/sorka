@@ -8,7 +8,7 @@
 //   POST /api/billing/admin-suspend  (Bearer admin, {email|id, suspended})    -> freeze/restore access
 //   POST /api/billing/issue-coupon   (x-api-key: ADMIN_API_KEY, shop server-to-server) -> {coupons:[...]}
 import { store, j, bearerOf, sessionOf, accountById, accessOf, timingSafeEqual } from '../lib/saas.mjs';
-import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails } from '../lib/billing.mjs';
+import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, newPayId, grantSub, adminEmails, redeemForAccount } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure, withLock } from '../lib/guard.mjs';
 /* Billing bodies are tiny (codes/plan ids) — 64 KB is generous. */
 const BILL_MAX_BYTES = 64_000;
@@ -65,47 +65,14 @@ async function redeem(req, st) {
   if (err) return err;
   const code = normCoupon(body?.code);
   if (!code) return j(400, { ok: false, error: 'bad-code' });
-  // Redemption is a check-then-increment on coupon.usedCount plus a
-  // read-modify-write on the account — both must be serialized or two racing
-  // requests can redeem the same last use twice (and lose one subscription
-  // extension). Lock order: coupon → account (no path locks them reversed).
-  return withLock(`coupon:${code}`, () => withLock(`acct:${acct.email}`, async () => {
-    // Re-read the account inside the lock — it may have changed since.
-    const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
-    const c = await st.get(`coupon:${code}`, { type: 'json' });
-    if (!c || c.isActive === false) return j(404, { ok: false, error: 'unknown-code' });
-    if (c.expiresAt && Date.now() > c.expiresAt) return j(410, { ok: false, error: 'code-expired' });
-    if ((c.usedCount || 0) >= (c.maxUses || 1)) return j(409, { ok: false, error: 'code-used-up' });
-    if (!PLANS[c.planId]) return j(500, { ok: false, error: 'bad-plan' });
-    c.usedCount = (c.usedCount || 0) + 1;
-    await st.setJSON(`coupon:${code}`, c);
-    grantSub(cur, { planId: c.planId, days: c.durationDays || 30, provider: 'coupon', tracking: code });
-    await st.setJSON(`acct:${cur.email}`, cur);
-    // Keep the owned workspace row in sync with the new plan (same rule as
-    // requestPayment flow below — ws.plan/status mirror the subscription).
-    try {
-      if (cur.workspaceId) {
-        const w = await st.get(`ws:${cur.workspaceId}`, { type: 'json' });
-        if (w) { w.plan = cur.plan; w.status = 'active'; await st.setJSON(`ws:${cur.workspaceId}`, w); }
-      }
-    } catch {}
-    const payId = newPayId();
-    await st.setJSON(`pay:${payId}`, {
-      id: payId, coachId: cur.id, planId: c.planId, amount: 0, currency: 'IRT',
-      provider: 'coupon', tracking: code, status: 'paid',
-      startsAt: cur.sub_started_at, endsAt: cur.sub_ends_at, createdAt: Date.now()
-    });
-    await pushIdx(st, 'index:payments', payId);
-    let seats = 0;
-    try {
-      if (cur.workspaceId) {
-        const m = await st.get(`ws-meta:${cur.workspaceId}`, { type: 'json' });
-        if (m && m.data) seats = countSeats(m.data);
-      }
-    } catch {}
-    const plan = planOf(cur);
-    return j(200, { ok: true, billing: publicBilling(cur), quota: { plan: plan.id, max: plan.maxClients, used: seats } });
-  }));
+  // Redemption is serialized (coupon → account locks) inside redeemForAccount —
+  // the ONE shared implementation, also used by signup/login activation.
+  const r = await redeemForAccount(st, acct, code);
+  if (!r.ok) {
+    const status = { 'unknown-code': 404, 'code-expired': 410, 'code-used-up': 409, 'bad-plan': 500 }[r.error] || 400;
+    return j(status, { ok: false, error: r.error });
+  }
+  return j(200, { ok: true, billing: r.billing, quota: r.quota });
 }
 
 async function createCoupon(req, st) {

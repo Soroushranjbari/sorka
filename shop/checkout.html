@@ -139,7 +139,7 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
         <div class="srow"><span id="t-dur">Duration</span><b id="t-1m">1 month</b></div>
         <div class="srow"><span id="t-clients">Clients</span><b id="s-max">—</b></div>
         <div class="srow total"><span id="t-total">Total</span><b id="s-total">—</b></div>
-        <p class="note" id="t-sumnote">The activation code is single-use and valid for 1 year. Redeem it in the app: Settings → Account → Coupon.</p>
+        <p class="note" id="t-sumnote">The activation code is single-use and valid for 1 year. It is filled in automatically when you sign up in the app (or redeem it later: Settings → Account → Coupon).</p>
       </div>
     </div>
   </div>
@@ -158,8 +158,8 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
     </div>
     <div class="steps">
       <div><span class="n">1</span><span id="t-s1">Open the app and sign up / sign in with this email</span></div>
-      <div><span class="n">2</span><span id="t-s2">Go to Settings → Account → Coupon / payment code</span></div>
-      <div><span class="n">3</span><span id="t-s3">Paste the code and press Activate — your plan unlocks instantly</span></div>
+      <div><span class="n">2</span><span id="t-s2">The activation code is filled in automatically — just create your account</span></div>
+      <div><span class="n">3</span><span id="t-s3">Your plan unlocks instantly — manage it in Settings → Account</span></div>
     </div>
   </div>
 </main>
@@ -185,12 +185,12 @@ const FA={
   '1 — Choose your plan':'۱ — انتخاب پلن','Email (the code will be linked to it)':'ایمیل (کد به آن متصل می‌شود)','Pay & get code':'پرداخت و دریافت کد',
   'Demo gateway — no real charge. In production this step hands off to ZarinPal/… and the code is issued by the payment callback.':'درگاه نمایشی است — پرداخت واقعی نمی‌شود. در نسخه نهایی این مرحله به زرین‌پال/… واگذار می‌شود و کد در callback پرداخت صادر می‌شود.',
   'Order summary':'خلاصه سفارش','Plan':'پلن','Duration':'مدت','1 month':'۱ ماه','Clients':'شاگردان','Total':'مجموع',
-  'The activation code is single-use and valid for 1 year. Redeem it in the app: Settings → Account → Coupon.':'کد فعال‌سازی تک‌مصرف است و یک سال اعتبار دارد. در اپ ریدیم کنید: تنظیمات → حساب → کوپن.',
+  'The activation code is single-use and valid for 1 year. It is filled in automatically when you sign up in the app (or redeem it later: Settings → Account → Coupon).':'کد فعال‌سازی تک‌مصرف است و یک سال اعتبار دارد. هنگام ثبت‌نام در اپ به‌طور خودکار پر می‌شود (یا بعداً: تنظیمات → حساب → کوپن).',
   'Payment successful':'پرداخت موفق','This is your activation code — keep it safe. It activates your plan inside the app.':'این کد فعال‌سازی شماست — آن را نگه دارید. پلن شما را در اپ فعال می‌کند.',
   'Activation code':'کد فعال‌سازی','Copy':'کپی','Open the app':'باز کردن اپ',
   'Open the app and sign up / sign in with this email':'اپ را باز کنید و با همین ایمیل ثبت‌نام/ورود کنید',
-  'Go to Settings → Account → Coupon / payment code':'به تنظیمات → حساب → کوپن / کد پرداخت بروید',
-  'Paste the code and press Activate — your plan unlocks instantly':'کد را بچسبانید و فعال‌سازی را بزنید — پلن فوراً باز می‌شود',
+  'The activation code is filled in automatically — just create your account':'کد فعال‌سازی خودکار پر می‌شود — فقط حساب بسازید',
+  'Your plan unlocks instantly — manage it in Settings → Account':'پلن فوراً باز می‌شود — مدیریت آن در تنظیمات → حساب',
   '🔒 Secure checkout':'🔒 پرداخت امن','Enter a valid email':'ایمیل معتبر وارد کنید','Processing…':'در حال پردازش…',
   'Full name':'نام و نام خانوادگی','Mobile number':'شماره موبایل','Enter your full name':'نام و نام خانوادگی را وارد کنید','Enter a valid mobile number':'شماره موبایل معتبر وارد کنید','My account':'حساب کاربری من',
   'Copied ✓':'کپی شد ✓','month':'ماه',
@@ -259,6 +259,10 @@ $('payBtn').addEventListener('click',async()=>{
     if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
     $('code').textContent=d.coupons[0];
     $('appLink').href='/index.html';
+    // Hand the code to the app (same-origin localStorage contract, see
+    // shop/README.md): the app prefills Settings → Account → Coupon with it,
+    // so after signing up the buyer only presses Activate.
+    try{localStorage.setItem('coach-os-coupon',d.coupons[0])}catch(e){}
     // The backend falls back to minting the code locally (and flags it `demo`)
     // when COACH_OS_URL / ADMIN_API_KEY are not configured — the code then
     // exists nowhere, so "Payment successful / your plan unlocks instantly"
