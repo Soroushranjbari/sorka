@@ -139,6 +139,46 @@ npm run db:dump
 
 ---
 
+## ۹. استقرار روی Vercel
+
+پروژه به‌صورت بومی Netlify-shaped است، اما لایه‌ی سازگاری Vercel داخل ریپو هست و
+**هیچ کدی از `netlify/functions` کپی یا بازنویسی نمی‌شود**:
+
+| فایل | نقش |
+|---|---|
+| `api/[...path].mjs` | تابع catch-all — درخواست Node را به `Request` استاندارد تبدیل می‌کند، به همان هندلرهای `netlify/functions` می‌سپارد و `Response` را برمی‌گرداند |
+| `middleware.js` | قبل از سرو فایل استاتیک اجرا می‌شود و مسیرهای حساس (`/db/*`, `/scripts/*`, `/netlify/*`, `/data/*`, `server.mjs`, …) را 404 می‌کند — معادل ریدایرکت‌های force-404 در `netlify.toml` |
+| `vercel.json` | rewrite مسیرهای `/shop/api/*` به تابع + هدرهای CSP/کش/امنیتی (معادل `netlify.toml`) + `maxDuration: 60` برای هندلرهای AI |
+
+### ۹.۱ مراحل (داشبورد Vercel)
+
+1. ریپو را push کنید و در Vercel: **Add New → Project → Import** (فریم‌ورک «Other» — تشخیص خودکار).
+2. **قبل از اولین deploy** دیتابیس را وصل کنید: تب **Storage → Marketplace → Neon/Postgres → Connect**.
+   این کار `POSTGRES_URL` را خودکار ست می‌کند — `netlify/lib/db.mjs` همین متغیر را هم می‌شناسد.
+   ⚠️ روی Vercel **فقط PostgreSQL** کار می‌کند: دیسک serverless پایدار نیست (`KV_FILE` داده را بین درخواست‌ها گم می‌کند) و Netlify Blobs هم آنجا وجود ندارد. اگر دیتابیس وصل نباشد، API با 503 و پیام واضح جواب می‌دهد.
+3. یک بار `db/schema-fresh.sql` را در SQL Editor دیتابیس اجرا کنید (Neon → Console).
+4. Environment Variables (Settings → Environment Variables):
+   - `POSTGRES_URL` — خودکار با اتصال Neon (یا دستی `DATABASE_URL`)
+   - `ADMIN_API_KEY` — ۲۴+ کاراکتر hex (خرید فروشگاه به آن وابسته است)
+   - `ADMIN_EMAILS` — ایمیل ادمین
+   - `COACH_OS_URL` — `https://<project>.vercel.app` (بعد از اولین deploy ست کنید و redeploy بگیرید)
+   - `AI_API_KEY` — اختیاری (دستیار هوشمند)
+   - `NODE_ENV` لازم نیست — Vercel خودش `production` می‌گذارد
+5. Deploy → بعد از بالا آمدن سایت، `COACH_OS_URL` را ست و **Redeploy** کنید.
+6. ادمین: `npm run admin:create` با `DATABASE_URL` همان دیتابیس، یا signup از UI + ارتقا با `ADMIN_EMAILS`.
+
+### ۹.۲ نکته‌های Vercel
+
+- **Region:** در Settings → Functions → Function Region، همان نزدیکی دیتابیس را انتخاب کنید
+  (Neon us-east-2 → `iad1`) — تأخیر pg در هر درخواست sync دیده می‌شود.
+- **AI و timeout:** مدل‌های رایگان OpenRouter (reasoning) گاهی کندند؛ `maxDuration: 60` ست شده
+  که روی پلن Hobby هم مجاز است.
+- **Rate-limit/lock:** مثل Netlify، محدودیت نرخ و `withLock` per-instance است (serverless چند نمونه دارد) —
+  محدودیت واقعی و سخت‌گیرانه روی خود دیتابیس اعمال می‌شود، این‌ها فقط لایه‌ی کمکی‌اند.
+- **تست بعد از deploy:** `/api/health` باید `"backend":"postgres"` بدهد؛ بعد همان چک‌لیست بخش ۶.
+
+---
+
 ## خلاصه‌ی یک‌خطی
 
 **بدون `data/kv.json` آپلود کن، متغیرهای محیطی را روی سرور ست کن، ادمین را روی سرور بساز، HTTPS بگذار، ۵ دقیقه تست کن.**
