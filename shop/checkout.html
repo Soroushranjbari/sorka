@@ -193,6 +193,10 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
    forwards to /api/billing/issue-coupon. */
 const API_BASE=''; // '' = same origin
 const PLANS={
+  /* trial: the shop's "Start Free" card lands here (?plan=trial) — the
+     checkout form becomes a pure signup (no payment, no coupon) and the
+     14-day trial is started server-side by /api/auth/signup (TRIAL_DAYS). */
+  trial:{name:'Free Trial',nameFa:'آزمایشی رایگان',amount:0,max:5},
   basic:{name:'Basic',nameFa:'پایه',amount:290000,max:5},
   professional:{name:'Professional',nameFa:'حرفه‌ای',amount:790000,max:30},
   club:{name:'Club',nameFa:'باشگاه',amount:2490000,max:200}
@@ -221,7 +225,13 @@ const FA={
   'Copied ✓':'کپی شد ✓','month':'ماه',
   'Could not reach server':'ارتباط با سرور برقرار نشد',
   'Press Ctrl+C to copy':'برای کپی Ctrl+C را بزنید',
-  'Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در Coach OS ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.'
+  'Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در Coach OS ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.',
+  'Start free trial':'شروع آزمایش رایگان','14 days':'۱۴ روز','Free':'رایگان',
+  'Create your free account':'ساخت حساب رایگان','14 days of full access — no credit card required.':'۱۴ روز دسترسی کامل — بدون نیاز به کارت بانکی.',
+  'No payment needed — fill in your details and your 14-day free account is created instantly.':'پرداختی لازم نیست — مشخصاتتان را وارد کنید تا حسابتان با ۱۴ روز دسترسی رایگان فوراً ساخته شود.',
+  'Password':'رمز عبور','Account created':'حساب ساخته شد',
+  'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.':'آزمایش ۱۴ روزه رایگان شما فعال است — دسترسی کامل، تا ۵ شاگرد. برای شروع، اپ را باز کنید.',
+  'This email already has an account — sign in instead.':'این ایمیل قبلاً ثبت شده — وارد حساب خود شوید.'
 };
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
@@ -234,17 +244,34 @@ function renderPlans(){
     <div class="plan ${id===plan?'on':''}" data-plan="${id}" role="button" tabindex="0">
       <span class="dot"></span>
       <span class="nm"><b>${lang==='fa'?p.nameFa:p.name}</b><span>${nf(p.max)} ${lang==='fa'?'شاگرد':'clients'}</span></span>
-      <span class="pr"><b>${money(p.amount)}</b><span>${nf('IRT')} / ${t('month')}</span></span>
+      <span class="pr"><b>${p.amount?money(p.amount):t('Free')}</b><span>${p.amount?nf('IRT')+' / '+t('month'):t('14 days')}</span></span>
     </div>`).join('');
   document.querySelectorAll('.plan').forEach(el=>el.addEventListener('click',()=>{plan=el.dataset.plan;renderPlans();renderSummary()}));
   renderSummary();
 }
 const t=k=>lang==='fa'?(FA[k]??k):k;
+/* setT updates a t-* hook AND its cached data-k — the applyLang loop translates
+   dataset.k, so changing only textContent would be reverted on language toggle. */
+const setT=(el,key)=>{el.dataset.k=key;el.textContent=t(key)};
+/* Button label: the trial is a signup (never a payment); paid plans switch on
+   whether the password field turns the purchase into purchase+signup. */
+const payLabel=()=>plan==='trial'?t('Start free trial'):($('cpass').value?t('Pay & create account'):t('Pay & get code'));
 function renderSummary(){
-  const p=PLANS[plan];
+  const p=PLANS[plan],trial=plan==='trial';
   $('s-plan').textContent=lang==='fa'?p.nameFa:p.name;
   $('s-max').textContent=nf(p.max);
-  $('s-total').textContent=money(p.amount)+' IRT';
+  $('s-total').textContent=p.amount?money(p.amount)+' IRT':t('Free');
+  // The trial IS the signup: the password becomes required, the gateway note
+  // and the coupon wording no longer apply, and the button says "start" not "pay".
+  setT($('t-1m'),trial?'14 days':'1 month');
+  setT($('t-title'),trial?'Create your free account':'Complete your purchase');
+  setT($('t-sub'),trial?'14 days of full access — no credit card required.':'Pay securely, then receive your activation code instantly.');
+  setT($('t-pass'),trial?'Password':'Password (optional — creates your account)');
+  setT($('t-sumnote'),trial
+    ?'No payment needed — fill in your details and your 14-day free account is created instantly.'
+    :'The activation code is single-use and valid for 1 year. Enter a password to create your account with the plan already active — or leave it empty if you already have one and redeem the code later.');
+  $('t-note').style.display=trial?'none':'';
+  $('t-pay').textContent=payLabel();
 }
 function applyLang(){
   const fa=lang==='fa';
@@ -258,9 +285,9 @@ function applyLang(){
     const key=el.dataset.k||(el.dataset.k=el.textContent.trim());
     el.textContent=t(key);
   });
-  // The pay button label depends on whether the password field is filled
-  // (one-step purchase+signup vs code-only purchase).
-  $('t-pay').textContent=$('cpass').value?t('Pay & create account'):t('Pay & get code');
+  // The pay button label depends on the plan (trial = signup, not payment)
+  // and, for paid plans, on whether the password field is filled.
+  $('t-pay').textContent=payLabel();
   try{localStorage.setItem('coach-os-locale',lang)}catch(e){}
   renderPlans();
 }
@@ -268,7 +295,7 @@ $('langToggle').addEventListener('click',()=>{lang=lang==='fa'?'en':'fa';applyLa
 $('email').value='';try{$('email').value=localStorage.getItem('coach-os-email')||''}catch(e){}
 // Dynamic label: filling the password turns the purchase into purchase+signup.
 $('cpass').addEventListener('input',()=>{
-  $('t-pay').textContent=$('cpass').value?t('Pay & create account'):t('Pay & get code');
+  $('t-pay').textContent=payLabel();
 });
 function showErr(m){const e=$('err');e.textContent=m;e.classList.add('show')}
 $('payBtn').addEventListener('click',async()=>{
@@ -280,14 +307,47 @@ $('payBtn').addEventListener('click',async()=>{
   if(name.length<3){showErr(t('Enter your full name'));return}
   if(!/^\+?\d{10,13}$/.test(phone)){showErr(t('Enter a valid mobile number'));return}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){showErr(t('Enter a valid email'));return}
-  // Password is OPTIONAL: filled = create the account in this same click;
-  // empty = code-only purchase (renewal / already registered). Validate BEFORE
-  // charging so a typo never produces a paid order without an account.
-  if(pw&&pw.length<8){showErr(t('Password must be at least 8 characters'));return}
+  // Paid plans: password is OPTIONAL (filled = create the account in this same
+  // click; empty = code-only purchase). Trial: password is REQUIRED — the
+  // account IS what the trial creates, there is no code to redeem later.
+  // Validate BEFORE "charging" so a typo never produces a paid order without
+  // an account.
+  if(plan==='trial'?(!pw||pw.length<8):(pw&&pw.length<8)){showErr(t('Password must be at least 8 characters'));return}
   try{localStorage.setItem('coach-os-email',email)}catch(e){}
   const btn=$('payBtn');btn.classList.add('loading');btn.disabled=true;
   $('t-pay').textContent=t('Processing…');
   try{
+    /* FREE TRIAL (plan=trial): no payment, no coupon — the signup IS the
+       transaction. /shop/api/account/signup proxies the app's /api/auth/signup,
+       which starts the 14-day trial server-side (TRIAL_DAYS). Same one-click
+       shape as the paid flow: the visitor registers here and never lands in
+       the app unregistered. A failure (e.g. email already registered) keeps
+       the form up with a precise message — nothing was charged. */
+    if(plan==='trial'){
+      const sr=await fetch((API_BASE||'')+'/shop/api/account/signup',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,email,password:pw})});
+      const sd=await sr.json().catch(()=>null);
+      if(!sr.ok||!sd||!sd.ok){
+        const m={'bad-email':'Enter a valid email','bad-name':'Enter your full name','weak-password':'Password must be at least 8 characters'};
+        showErr(t(sd&&sd.error==='email-taken'?'This email already has an account — sign in instead.':(sd&&m[sd.error])||'Could not reach server'));
+        return;
+      }
+      // Same-origin localStorage contract: the app boots its session from
+      // 'co-auth', the shop account page from 'coach-os-shop-token'.
+      try{
+        localStorage.setItem('co-auth',sd.token);
+        localStorage.setItem('coach-os-shop-token',sd.token);
+      }catch(e){}
+      // Done view without a code: a trial needs no activation — the session
+      // token above already signs the new coach into the app.
+      $('t-code').style.display='none';$('code').style.display='none';$('copyBtn').style.display='none';
+      $('steps').style.display='none';$('acct-ok').classList.remove('show');
+      setT($('t-done'),'Account created');
+      setT($('t-donesub'),'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.');
+      $('form-view').style.display='none';
+      $('done').classList.add('show');
+      window.scrollTo({top:0});
+      return;
+    }
     /* PRODUCTION: redirect to the gateway here; the coupon is issued in the
        payment callback (server-side, see shop/api/checkout.mjs). Demo: call
        the checkout API directly to simulate a successful payment. */
@@ -333,11 +393,11 @@ $('payBtn').addEventListener('click',async()=>{
     if(acct==='created'){
       $('steps').style.display='none';
       okBox.classList.remove('acct-warn');okBox.classList.add('show');
-      $('t-acctok').textContent=t('Account created — your plan is active. “Open the app” signs you straight in.');
+      setT($('t-acctok'),'Account created — your plan is active. “Open the app” signs you straight in.');
     }else if(acct==='exists'){
       $('steps').style.display='none';
       okBox.classList.add('acct-warn','show');
-      $('t-acctok').textContent=t('This email already has an account — sign in and redeem the code in Settings → Account.');
+      setT($('t-acctok'),'This email already has an account — sign in and redeem the code in Settings → Account.');
     }else{
       // Code-only purchase (no password, or signup failed): keep the redeem
       // steps visible so the buyer knows what to do next.
@@ -351,7 +411,7 @@ $('payBtn').addEventListener('click',async()=>{
     showErr(t('Could not reach server'));
   }finally{
     btn.classList.remove('loading');btn.disabled=false;
-    $('t-pay').textContent=$('cpass').value?t('Pay & create account'):t('Pay & get code');
+    $('t-pay').textContent=payLabel();
   }
 });
 $('copyBtn').addEventListener('click',()=>{

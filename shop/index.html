@@ -1622,7 +1622,11 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
              "€" on the trial card mixed two currencies in one table. -->
         <div class="price"><span class="num" data-m="Free" data-y="Free">Free</span><span class="per">/ 14 days</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Every feature unlocked</li><li><svg class="ic"><use href="#i-check"/></svg>Up to 5 clients</li><li><svg class="ic"><use href="#i-check"/></svg>No credit card required</li></ul>
-        <a class="btn acc" href="/index.html" data-app-link>Start Free</a>
+        <!-- Was a naked link into the app: the visitor landed unregistered and
+             the trial only started if they happened to sign up there. Now the
+             trial goes through checkout like a purchase — the form registers
+             the coach and the 14-day trial account is created in one click. -->
+        <a class="btn acc" href="/shop/checkout.html?plan=trial" data-checkout="trial">Start Free</a>
       </div>
       <div class="pcard" data-reveal style="transition-delay:.08s">
         <h3>Basic</h3><p class="for">For independent coaches.</p>
