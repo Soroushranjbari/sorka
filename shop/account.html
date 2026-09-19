@@ -55,6 +55,18 @@ h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spaci
 .err{color:#f87171;font-size:12.5px;margin-top:10px;display:none}
 .err.show{display:block}
 .note{font-size:11.5px;color:var(--dim);margin-top:14px;line-height:1.7}
+/* sign-in / sign-up mode toggle */
+.modes{display:flex;gap:8px;margin-bottom:18px}
+.modes button{flex:1;border:1px solid var(--line2);border-radius:10px;padding:10px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);transition:.25s}
+.modes button.on{background:var(--acc-dim);border-color:var(--acc-line);color:var(--acc)}
+#su-name,#su-coupon,#su-hint{display:none}
+body.mode-signup #su-name,body.mode-signup #su-coupon,body.mode-signup #su-hint{display:block}
+body.mode-signup #t-title-signin{display:none}
+body:not(.mode-signup) #t-title-signup{display:none}
+body.mode-signup #t-sub-signin{display:none}
+body:not(.mode-signup) #t-sub-signup{display:none}
+body.mode-signup #loginBtn{display:none}
+body:not(.mode-signup) #signupBtn{display:none}
 /* dashboard */
 .dash{display:none}
 .dash.show{display:block}
@@ -109,16 +121,30 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
   </div>
 </header>
 <main>
-  <!-- LOGIN -->
+  <!-- LOGIN / SIGNUP -->
   <div id="login-view">
     <span class="eyebrow" id="t-eyebrow">My account</span>
-    <h1 id="t-title">Sign in to your account</h1>
-    <p class="sub" id="t-sub">Use the same email and password as the Coach OS app.</p>
+    <h1>
+      <span id="t-title-signin">Sign in to your account</span>
+      <span id="t-title-signup">Create your account</span>
+    </h1>
+    <p class="sub">
+      <span id="t-sub-signin">Use the same email and password as the Coach OS app.</span>
+      <span id="t-sub-signup">Have an activation code? It is applied automatically — your plan unlocks instantly.</span>
+    </p>
     <div class="card" style="max-width:460px;margin-top:26px">
+      <div class="modes">
+        <button type="button" id="mode-in" class="on"><span id="t-mode-in">Sign in</span></button>
+        <button type="button" id="mode-up"><span id="t-mode-up">Create account</span></button>
+      </div>
+      <div class="field" id="su-name"><label id="t-suname" for="sname">Full name</label><input id="sname" type="text" placeholder="Sara Ahmadi" autocomplete="name"></div>
       <div class="field"><label id="t-email" for="email">Email</label><input id="email" type="email" placeholder="coach@studio.com" autocomplete="email"></div>
       <div class="field"><label id="t-pass" for="pass">Password</label><input id="pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <div class="field" id="su-coupon"><label id="t-sucoupon" for="scoupon">Activation code (optional)</label><input id="scoupon" type="text" placeholder="PRO-XXXXXXXXXX" autocomplete="off" dir="ltr"></div>
+      <p class="note" id="su-hint" style="margin-top:0">Redeems with signup — a used or invalid code never blocks the account.</p>
       <div class="err" id="err"></div>
       <button class="btn acc" id="loginBtn"><span class="spin"></span><span id="t-login">Sign in</span></button>
+      <button class="btn acc" id="signupBtn"><span class="spin"></span><span id="t-signup">Create account</span></button>
       <p class="note" id="t-note">No account yet? <a href="/index.html" style="color:var(--acc)">Create one in the app</a>, or buy a plan — the code links to your email automatically.</p>
     </div>
   </div>
@@ -167,7 +193,12 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
 <footer><span>© 2026 Coach OS</span><span id="t-secure">🔒 Secure</span></footer>
 <script>
 const FA={
-  'My account':'حساب کاربری من','Sign in to your account':'ورود به حساب کاربری','Use the same email and password as the Coach OS app.':'از همان ایمیل و رمز عبور اپ Coach OS استفاده کنید.',
+  'My account':'حساب کاربری من','Sign in to your account':'ورود به حساب کاربری','Create your account':'ساخت حساب کاربری',
+  'Use the same email and password as the Coach OS app.':'از همان ایمیل و رمز عبور اپ Coach OS استفاده کنید.',
+  'Have an activation code? It is applied automatically — your plan unlocks instantly.':'کد فعال‌سازی دارید؟ خودکار اعمال می‌شود — پلن فوراً باز می‌شود.',
+  'Sign in':'ورود','Create account':'ساخت حساب','Full name':'نام و نام خانوادگی',
+  'Activation code (optional)':'کد فعال‌سازی (اختیاری)',
+  'Redeems with signup — a used or invalid code never blocks the account.':'همراه ثبت‌نام ریدیم می‌شود — کد مصرف‌شده یا نامعتبر مانع ساخت حساب نیست.',
   'Email':'ایمیل','Password':'رمز عبور','Sign in':'ورود',
   'No account yet? Create one in the app, or buy a plan — the code links to your email automatically.':'حساب ندارید؟ از اپ بسازید، یا یک پلن بخرید — کد به‌طور خودکار به ایمیل شما متصل می‌شود.',
   'Subscription':'اشتراک','days remaining':'روز باقی‌مانده','Valid until':'اعتبار تا','Clients':'شاگردان','Workspace code':'کد فضای کاری','Renew':'تمدید',
@@ -280,6 +311,57 @@ $('loginBtn').addEventListener('click',async()=>{
   finally{btn.classList.remove('loading');btn.disabled=false}
 });
 $('logoutBtn').addEventListener('click',()=>{TOKEN='';try{localStorage.removeItem('coach-os-shop-token')}catch(e){};location.reload()});
+
+/* ====== signup mode ======
+   The shop had NO signup at all: a code-holder had to open the app and
+   register there. This form creates the account through the same
+   server-to-server proxy (POST /shop/api/account/signup), optionally
+   redeeming an activation code in the same request. */
+const SIGNUP_ERR={
+  'email-taken':'This email already has an account — sign in instead',
+  'weak-password':'Password must be at least 8 characters',
+  'bad-email':'Enter a valid email',
+  'bad-name':'Enter your full name'
+};
+const setMode=up=>{
+  document.body.classList.toggle('mode-signup',up);
+  $('mode-in').classList.toggle('on',!up);
+  $('mode-up').classList.toggle('on',up);
+  $('pass').setAttribute('autocomplete',up?'new-password':'current-password');
+  $('err').classList.remove('show');
+};
+$('mode-in').addEventListener('click',()=>setMode(false));
+$('mode-up').addEventListener('click',()=>setMode(true));
+$('signupBtn').addEventListener('click',async()=>{
+  $('err').classList.remove('show');
+  const name=$('sname').value.trim(),email=$('email').value.trim(),password=$('pass').value;
+  if(name.length<2||!email||password.length<8){showErr('Enter your name, email and a password (min 8 chars)');return}
+  const btn=$('signupBtn');btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await fetch('/shop/api/account/signup',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({name,email,password,coupon:$('scoupon').value.trim()})
+    });
+    const d=await r.json().catch(()=>null);
+    if(!r.ok||!d||!d.ok){showErr(SIGNUP_ERR[d&&d.error]||'Could not reach server');return}
+    // Log the new coach into BOTH surfaces: the app boots from 'co-auth',
+    // this page from 'coach-os-shop-token' (same-origin localStorage).
+    try{
+      localStorage.setItem('co-auth',d.token);
+      localStorage.setItem('coach-os-shop-token',d.token);
+      localStorage.setItem('coach-os-email',email);
+    }catch(e){}
+    TOKEN=d.token;
+    renderDash(d);
+  }catch(e){showErr('Could not reach server')}
+  finally{btn.classList.remove('loading');btn.disabled=false}
+});
+// Prefill from a recent purchase + land in signup mode when a code is waiting.
+try{
+  $('email').value=localStorage.getItem('coach-os-email')||'';
+  const c=localStorage.getItem('coach-os-coupon')||'';
+  if(c){$('scoupon').value=c;setMode(true)}
+}catch(e){}
 // applyLang() itself calls loadDash() when a token is present — calling it here
 // as well would fire two identical session+orders round-trips on every load.
 applyLang();
