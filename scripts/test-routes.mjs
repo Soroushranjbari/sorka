@@ -32,7 +32,11 @@ const child = spawn(process.execPath, ['server.mjs'], {
     KV_FILE: join(dir, 'kv.json'), NODE_ENV: 'test',
     // The shop account proxy is server-to-server — point it back at this server
     // so the login/session round-trip is exercised for real.
-    COACH_OS_URL: BASE
+    COACH_OS_URL: BASE,
+    // A real (test) API key makes /shop/api/checkout issue the coupon INTO this
+    // server's KV instead of demo-minting an unregistered code — required for
+    // the purchase → signup → active-plan e2e below.
+    ADMIN_API_KEY: 'test-admin-key-0123456789abcdef'
   },
   stdio: ['ignore', 'pipe', 'pipe']
 });
@@ -112,6 +116,62 @@ try {
     body: JSON.stringify({ email: 'nobody@nowhere.dev', password: 'wrong-password' })
   });
   ok('shop account login (bad creds) -> 401', acctBad.status === 401, acctBad.status);
+
+  // Shop-side SIGNUP (the checkout success form + account page "Create
+  // account"): the proxy must forward to /api/auth/signup and hand back a
+  // working session. Regression guard: this route only exists since the shop
+  // had no signup at all and every buyer was forced into the app to register.
+  const shopSignup = await j('/shop/api/account/signup', {
+    method: 'POST',
+    // Distinct buyer IPs: signup is rate-limited 5/min PER IP, and this suite
+    // performs several signups from 127.0.0.1 — without this the last ones
+    // would 429 and make the suite order-dependent.
+    headers: { 'content-type': 'application/json', 'x-forwarded-for': '198.51.100.11' },
+    body: JSON.stringify({ email: `su${Date.now()}@shop.dev`, name: 'Shop Signup', password: 'Str0ngPass!' })
+  });
+  ok('POST /shop/api/account/signup -> 200 with token', shopSignup.status === 200 && !!shopSignup.d?.token && shopSignup.d?.coach?.email, shopSignup.d);
+  ok('shop signup starts as trial (no coupon sent)', shopSignup.d?.billing?.status === 'trial', shopSignup.d?.billing);
+  const shopDup = await j('/shop/api/account/signup', {
+    method: 'POST', headers: { 'content-type': 'application/json', 'x-forwarded-for': '198.51.100.12' },
+    body: JSON.stringify({ email: shopSignup.d?.coach?.email, name: 'Duplicate', password: 'Str0ngPass!' })
+  });
+  ok('shop signup duplicate email -> 409', shopDup.status === 409, shopDup.status);
+  const shopWeak = await j('/shop/api/account/signup', {
+    method: 'POST', headers: { 'content-type': 'application/json', 'x-forwarded-for': '198.51.100.13' },
+    body: JSON.stringify({ email: `weak${Date.now()}@shop.dev`, name: 'Weak', password: 'short' })
+  });
+  ok('shop signup weak password -> 400 weak-password', shopWeak.status === 400 && shopWeak.d?.error === 'weak-password', shopWeak.d);
+  // The token from the shop signup must be a REAL app session (the checkout
+  // page stores it as the app's co-auth, so "Open the app" must land signed in).
+  const shopMe = await j('/api/auth/me', { headers: { authorization: `Bearer ${shopSignup.d?.token}` } });
+  ok('shop signup token works on /api/auth/me', shopMe.status === 200 && shopMe.d?.ok === true, shopMe.status);
+
+  // FULL purchase → signup e2e: buy on the shop, create the account through the
+  // shop WITH the issued code — the plan must be ACTIVE on first login (the
+  // 14-day trial must never start). This is the exact flow the checkout
+  // success page performs.
+  console.log('== shop purchase → signup with code (e2e) ==');
+  const buyerEmail = `buy${Date.now()}@shop.dev`;
+  const buy = await j('/shop/api/checkout', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ planId: 'basic', email: buyerEmail, name: 'Buyer One', phone: '09123456789' })
+  });
+  ok('shop checkout issues a REAL coupon (not demo)', buy.status === 200 && buy.d?.ok === true && !!buy.d?.coupons?.[0] && buy.d?.demo === false, buy.d);
+  const buySignup = await j('/shop/api/account/signup', {
+    method: 'POST', headers: { 'content-type': 'application/json', 'x-forwarded-for': '198.51.100.14' },
+    body: JSON.stringify({ email: buyerEmail, name: 'Buyer One', password: 'Str0ngPass!', coupon: buy.d?.coupons?.[0] })
+  });
+  ok('shop signup + code -> redeemed:true', buySignup.status === 200 && buySignup.d?.redeemed === true, buySignup.d);
+  ok('plan is ACTIVE basic on first login (no trial)', buySignup.d?.billing?.status === 'active' && buySignup.d?.billing?.plan === 'basic', buySignup.d?.billing);
+  const buyMe = await j('/api/billing/me', { headers: { authorization: `Bearer ${buySignup.d?.token}` } });
+  ok('/api/billing/me confirms active basic', buyMe.status === 200 && buyMe.d?.billing?.status === 'active' && buyMe.d?.billing?.plan === 'basic', buyMe.d?.billing);
+  // A second signup with the SAME (now used-up) code must still create the
+  // account — the code failure must never block registration.
+  const usedCode = await j('/shop/api/account/signup', {
+    method: 'POST', headers: { 'content-type': 'application/json', 'x-forwarded-for': '198.51.100.15' },
+    body: JSON.stringify({ email: `second${Date.now()}@shop.dev`, name: 'Second User', password: 'Str0ngPass!', coupon: buy.d?.coupons?.[0] })
+  });
+  ok('signup with a used-up code still creates the account', usedCode.status === 200 && usedCode.d?.ok === true && usedCode.d?.redeemError === 'code-used-up', usedCode.d);
 
   const acctSessionNoToken = await j('/shop/api/account/session');
   ok('GET /shop/api/account/session (no token) -> 401', acctSessionNoToken.status === 401, acctSessionNoToken.status);

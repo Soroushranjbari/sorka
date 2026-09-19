@@ -52,10 +52,14 @@ export default async (req) => {
     if (big) return tooLarge(MAX_BYTES);
     if (bad) return badJson();
     if (!COACH_OS_URL) return j(503, { ok: false, error: 'account-service-not-configured' });
+    // Forward the buyer's IP: without this the app-side rate limiter sees every
+    // shop request as one client, so ALL shop signups/logins shared a single
+    // 5/min (signup) / 10/min (login) bucket — a busy shop locked everyone out.
+    const fwd = { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) };
     let upstream;
     try {
       upstream = await fetch(`${COACH_OS_URL}/api/auth/login`, {
-        method: 'POST', headers: { 'content-type': 'application/json' },
+        method: 'POST', headers: fwd,
         body: JSON.stringify({ email: body?.email, password: body?.password })
       });
     } catch { return j(502, { ok: false, error: 'coach-os-unreachable' }); }
@@ -65,6 +69,47 @@ export default async (req) => {
     return secure(j(200, {
       ok: true, token: d.token, coach: d.coach, workspace: d.workspace,
       access: d.access, billing: bill && bill.billing, quota: bill && bill.quota
+    }));
+  }
+
+  /* POST /shop/api/account/signup {name,email,password,coupon?}
+     Lets a buyer create their Coach OS account WITHOUT leaving the shop —
+     the checkout success page embeds this form, so the plan activates right
+     here instead of "go to the app, sign up, hope the code pre-fills".
+     The app's /api/auth/signup already accepts an optional `coupon` and
+     redeems it server-side in the same request (a bad code never blocks the
+     account — it comes back as redeemError), so the proxy only forwards. */
+  if (req.method === 'POST' && action === 'signup') {
+    const lim = rateLimit(`shopacct:${ipOf(req)}`, 10, 60_000);
+    if (!lim.ok) return tooMany(lim.retryAfter);
+    const { data: body, tooLarge: big, bad } = await readJsonCapped(req, MAX_BYTES);
+    if (big) return tooLarge(MAX_BYTES);
+    if (bad) return badJson();
+    if (!COACH_OS_URL) return j(503, { ok: false, error: 'account-service-not-configured' });
+    // Same IP forwarding as login — see the comment there.
+    let upstream;
+    try {
+      upstream = await fetch(`${COACH_OS_URL}/api/auth/signup`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) },
+        body: JSON.stringify({
+          name: body?.name, email: body?.email,
+          password: body?.password, coupon: body?.coupon
+        })
+      });
+    } catch { return j(502, { ok: false, error: 'coach-os-unreachable' }); }
+    const d = await upstream.json().catch(() => null);
+    if (!upstream.ok || !d || !d.ok) {
+      // Forward the app's own validation errors (bad-email, bad-name,
+      // weak-password, email-taken) so the shop UI can show a precise message
+      // instead of a generic failure.
+      return j(upstream.status === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
+    }
+    const bill = await billingOf(d.token);
+    return secure(j(200, {
+      ok: true, token: d.token, coach: d.coach, workspace: d.workspace,
+      access: d.access, billing: bill && bill.billing, quota: bill && bill.quota,
+      redeemed: !!d.redeemed, redeemError: d.redeemError || null
     }));
   }
 

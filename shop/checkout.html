@@ -87,6 +87,17 @@ h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spaci
 .steps{margin-top:22px;text-align:start;max-width:420px;margin-inline:auto;display:flex;flex-direction:column;gap:10px}
 .steps div{display:flex;gap:10px;font-size:12.5px;color:var(--mut);align-items:flex-start}
 .steps .n{width:20px;height:20px;border-radius:50%;background:var(--acc-dim);color:var(--acc);font-size:10.5px;font-weight:700;display:grid;place-items:center;flex:none;margin-top:1px}
+/* inline account creation (post-purchase signup) */
+.acct{max-width:420px;margin:26px auto 0;border:1px solid var(--line);border-radius:16px;padding:22px;background:rgba(255,255,255,.02);text-align:start}
+.acct h3{font-family:var(--disp);font-size:14px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.acct .asub{font-size:12.5px;color:var(--mut);margin-bottom:14px}
+.acct .field{margin-top:12px}
+.acct .btn{margin-top:16px}
+.acct .anote{font-size:11.5px;color:var(--dim);margin-top:12px}
+.acct .anote a{color:var(--acc)}
+.acct-ok{display:none;max-width:420px;margin:26px auto 0;border:1px solid rgba(22,163,74,.4);border-radius:16px;padding:18px 22px;background:rgba(22,163,74,.1);text-align:start;font-size:13px;color:#4ade80}
+.acct-ok.show{display:flex;gap:10px;align-items:flex-start}
+.acct-ok .ic{margin-top:2px;color:#4ade80}
 footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim)}
 #langToggle{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;color:var(--mut);font-size:11px;font-weight:700;letter-spacing:.08em;transition:color .3s,background .3s}
 #langToggle:hover{color:var(--txt);background:rgba(255,255,255,.06)}
@@ -157,9 +168,27 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
       </div>
     </div>
     <div class="steps">
-      <div><span class="n">1</span><span id="t-s1">Open the app and sign up / sign in with this email</span></div>
-      <div><span class="n">2</span><span id="t-s2">The activation code is filled in automatically — just create your account</span></div>
-      <div><span class="n">3</span><span id="t-s3">Your plan unlocks instantly — manage it in Settings → Account</span></div>
+      <div><span class="n">1</span><span id="t-s1">Create your account right below — or later in the app with this email</span></div>
+      <div><span class="n">2</span><span id="t-s2">The activation code is applied automatically — your plan unlocks instantly</span></div>
+      <div><span class="n">3</span><span id="t-s3">Manage everything in the app: Settings → Account</span></div>
+    </div>
+    <!-- Inline signup: the buyer creates their Coach OS account HERE (the shop
+         had no signup at all — the old flow forced every buyer into the app
+         just to register). The coupon is sent along, so the plan is ACTIVE
+         from the first login and the 14-day trial is never even started. -->
+    <div class="acct" id="acct-card">
+      <h3 id="t-accth">Create your account now</h3>
+      <p class="asub" id="t-acctsub">Your plan activates immediately — no trial, no extra step.</p>
+      <div class="field"><label id="t-aname" for="aname">Full name</label><input id="aname" type="text" placeholder="Sara Ahmadi" autocomplete="name"></div>
+      <div class="field"><label id="t-aemail" for="aemail">Email</label><input id="aemail" type="email" placeholder="coach@studio.com" autocomplete="email"></div>
+      <div class="field"><label id="t-apass" for="apass">Password (min 8 characters)</label><input id="apass" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+      <div class="err" id="serr"></div>
+      <button class="btn acc" id="signupBtn"><span class="spin"></span><span id="t-asignup">Create account &amp; activate</span></button>
+      <p class="anote" id="t-anote">Already have an account? <a href="/shop/account.html" id="t-ain">Sign in</a> — then redeem the code in Settings → Account.</p>
+    </div>
+    <div class="acct-ok" id="acct-ok">
+      <svg class="ic"><use href="#i-check"/></svg>
+      <span id="t-acctok">Account created — your plan is active. “Open the app” above now signs you straight in.</span>
     </div>
   </div>
 </main>
@@ -191,6 +220,20 @@ const FA={
   'Open the app and sign up / sign in with this email':'اپ را باز کنید و با همین ایمیل ثبت‌نام/ورود کنید',
   'The activation code is filled in automatically — just create your account':'کد فعال‌سازی خودکار پر می‌شود — فقط حساب بسازید',
   'Your plan unlocks instantly — manage it in Settings → Account':'پلن فوراً باز می‌شود — مدیریت آن در تنظیمات → حساب',
+  'Create your account right below — or later in the app with this email':'حسابتان را همین‌جا بسازید — یا بعداً در اپ با همین ایمیل',
+  'The activation code is applied automatically — your plan unlocks instantly':'کد فعال‌سازی خودکار اعمال می‌شود — پلن فوراً باز می‌شود',
+  'Manage everything in the app: Settings → Account':'مدیریت همه‌چیز در اپ: تنظیمات → حساب',
+  'Create your account now':'همین حالا حساب بسازید','Your plan activates immediately — no trial, no extra step.':'پلن بلافاصله فعال می‌شود — بدون دوره آزمایشی، بدون مرحله اضافه.',
+  'Full name':'نام و نام خانوادگی','Email':'ایمیل','Password (min 8 characters)':'رمز عبور (حداقل ۸ کاراکتر)',
+  'Create account & activate':'ساخت حساب و فعال‌سازی','Already have an account?':'قبلاً حساب دارید؟','Sign in':'ورود',
+  'Account created — your plan is active. “Open the app” above now signs you straight in.':'حساب ساخته شد — پلن شما فعال است. «باز کردن اپ» بالا مستقیم وارد حسابتان می‌شود.',
+  'Then press “Create account & activate”.':'سپس «ساخت حساب و فعال‌سازی» را بزنید.',
+  'Enter your name, email and a password (min 8 chars)':'نام، ایمیل و رمز عبور (حداقل ۸ کاراکتر) را وارد کنید',
+  'This email already has an account — sign in instead':'این ایمیل قبلاً ثبت شده — وارد شوید',
+  'Password must be at least 8 characters':'رمز عبور باید حداقل ۸ کاراکتر باشد',
+  'Enter a valid email':'ایمیل معتبر وارد کنید','Enter your full name':'نام و نام خانوادگی را وارد کنید',
+  'Account created, but the code could not be applied':'حساب ساخته شد، ولی کد اعمال نشد — از تنظیمات → حساب دوباره تلاش کنید',
+  'Could not reach server':'ارتباط با سرور برقرار نشد','Processing…':'در حال پردازش…',
   '🔒 Secure checkout':'🔒 پرداخت امن','Enter a valid email':'ایمیل معتبر وارد کنید','Processing…':'در حال پردازش…',
   'Full name':'نام و نام خانوادگی','Mobile number':'شماره موبایل','Enter your full name':'نام و نام خانوادگی را وارد کنید','Enter a valid mobile number':'شماره موبایل معتبر وارد کنید','My account':'حساب کاربری من',
   'Copied ✓':'کپی شد ✓','month':'ماه',
@@ -263,6 +306,13 @@ $('payBtn').addEventListener('click',async()=>{
     // shop/README.md): the app prefills Settings → Account → Coupon with it,
     // so after signing up the buyer only presses Activate.
     try{localStorage.setItem('coach-os-coupon',d.coupons[0])}catch(e){}
+    // Prefill the inline signup form from the purchase — the buyer should only
+    // have to type a password. (Runs HERE, after the payment: at script load
+    // the purchase fields were still empty.)
+    try{
+      $('aemail').value=email;
+      $('aname').value=name;
+    }catch(e){}
     // The backend falls back to minting the code locally (and flags it `demo`)
     // when COACH_OS_URL / ADMIN_API_KEY are not configured — the code then
     // exists nowhere, so "Payment successful / your plan unlocks instantly"
@@ -294,6 +344,60 @@ $('copyBtn').addEventListener('click',()=>{
     try{const r=document.createRange();r.selectNodeContents($('code'));const s=getSelection();s.removeAllRanges();s.addRange(r)}catch(e){}
     $('t-copy').textContent=t('Press Ctrl+C to copy');
     setTimeout(()=>{$('t-copy').textContent=t('Copy')},2600);
+  }
+});
+
+/* ====== inline signup (post-purchase) ======
+   The shop previously had NO signup: a buyer got a code and was sent into the
+   app to register there (starting the 14-day trial on the way). This form
+   creates the account right here — /shop/api/account/signup proxies to the
+   app's /api/auth/signup WITH the coupon, so the plan is active on first
+   login and the trial is never consumed. */
+const showSErr=m=>{const e=$('serr');e.textContent=t(m);e.classList.add('show')};
+const SIGNUP_ERR={
+  'email-taken':'This email already has an account — sign in instead',
+  'weak-password':'Password must be at least 8 characters',
+  'bad-email':'Enter a valid email',
+  'bad-name':'Enter your full name'
+};
+$('signupBtn').addEventListener('click',async()=>{
+  $('serr').classList.remove('show');
+  const name=$('aname').value.trim(),email=$('aemail').value.trim(),password=$('apass').value;
+  if(name.length<2||!email||password.length<8){showSErr(t('Enter your name, email and a password (min 8 chars)'));return}
+  const btn=$('signupBtn');btn.classList.add('loading');btn.disabled=true;
+  $('t-asignup').textContent=t('Processing…');
+  try{
+    const r=await fetch((API_BASE||'')+'/shop/api/account/signup',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({name,email,password,coupon:$('code').textContent.trim()})
+    });
+    const d=await r.json().catch(()=>null);
+    if(!r.ok||!d||!d.ok){
+      showSErr(t(SIGNUP_ERR[d&&d.error]||'Could not reach server'));
+      if(d&&d.error==='email-taken')$('t-anote').style.display='none';
+      return;
+    }
+    // Same-origin localStorage contract: the app boots its session from
+    // 'co-auth', the shop account page from 'coach-os-shop-token'. Writing
+    // both means “Open the app” lands the buyer INSIDE their new account.
+    try{
+      localStorage.setItem('co-auth',d.token);
+      localStorage.setItem('coach-os-shop-token',d.token);
+      localStorage.setItem('coach-os-email',email);
+    }catch(e){}
+    if(d.redeemError){ // account exists, code failed (used/expired) — not fatal
+      $('acct-card').style.display='none';
+      $('t-acctok').textContent=t('Account created, but the code could not be applied');
+      $('acct-ok').classList.add('show');
+    }else{
+      $('acct-card').style.display='none';
+      $('acct-ok').classList.add('show');
+    }
+  }catch(e){
+    showSErr(t('Could not reach server'));
+  }finally{
+    btn.classList.remove('loading');btn.disabled=false;
+    $('t-asignup').textContent=t('Create account & activate');
   }
 });
 applyLang();

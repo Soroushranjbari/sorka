@@ -5237,6 +5237,15 @@ loadData();
     // coach's workspace (the exact cross-tenant leak adoptAccount fixes at
     // login — this covers the reload path too).
     if(AUTH.coach)adoptAccount(AUTH.coach);
+    // Session resume: a valid stored token (a buyer who just signed up on the
+    // shop and tapped "Open the app", or a returning coach reloading) goes
+    // straight into the workspace instead of role-chooser → login form.
+    // authMe() above already validated the token — a dead/expired one leaves
+    // AUTH.coach null and the normal login screen shows. Skipped for reset
+    // links and client join links, which need their own screens.
+    if(AUTH.coach&&!S.joinCode&&!S.resetToken){
+      S.role='coach';S.view=ONBOARD.done?landingView():'dash';
+    }
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.
     let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
@@ -5272,6 +5281,12 @@ loadData();
   }catch(e){}
   render();
   cloudStart();
+  // A coach who arrived through a resumed session (e.g. straight from the shop
+  // signup) still gets the onboarding wizard if their workspace never finished
+  // it. Called AFTER the cloud merge so ONBOARD.done reflects the server state
+  // (a returning coach must not be re-nagged); the 600ms internal delay also
+  // re-checks it. Anonymous/demo boots return immediately (no token).
+  maybeOnboard();
 })();
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
   window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
