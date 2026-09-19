@@ -173,6 +173,27 @@ try {
   });
   ok('signup with a used-up code still creates the account', usedCode.status === 200 && usedCode.d?.ok === true && usedCode.d?.redeemError === 'code-used-up', usedCode.d);
 
+  // LOGIN = email + password ONLY. A coupon in the login body must be IGNORED
+  // (no redemption, no redeemed flag) and the code must stay redeemable —
+  // renewal codes go through Settings → Account (/api/billing/redeem).
+  console.log('== login contract: email + password only ==');
+  const renewBuy = await j('/shop/api/checkout', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ planId: 'basic', email: `renew${Date.now()}@shop.dev`, name: 'Renew Buyer', phone: '09123456789' })
+  });
+  const renewCode = renewBuy.d?.coupons?.[0];
+  ok('renewal coupon issued', renewBuy.status === 200 && !!renewCode, renewBuy.d);
+  const loginWithCoupon = await j('/api/auth/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: signup.d?.coach?.email, password: 'Str0ngPass!', coupon: renewCode })
+  });
+  ok('login with coupon in body -> 200, NO redemption', loginWithCoupon.status === 200 && loginWithCoupon.d?.ok === true && loginWithCoupon.d?.redeemed === undefined && loginWithCoupon.d?.redeemError === undefined, loginWithCoupon.d);
+  const redeemAfter = await j('/api/billing/redeem', {
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${loginWithCoupon.d?.token}` },
+    body: JSON.stringify({ code: renewCode })
+  });
+  ok('the code was NOT burned at login — redeemable afterwards', redeemAfter.status === 200 && redeemAfter.d?.ok === true && redeemAfter.d?.billing?.status === 'active', redeemAfter.d);
+
   const acctSessionNoToken = await j('/shop/api/account/session');
   ok('GET /shop/api/account/session (no token) -> 401', acctSessionNoToken.status === 401, acctSessionNoToken.status);
 

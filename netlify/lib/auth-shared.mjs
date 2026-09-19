@@ -214,8 +214,10 @@ export async function login(req, st) {
   if (!acct || !verifyPassword(password, acct.pass)) {
     return j(401, { ok: false, error: 'bad-credentials' });
   }
-  // Optional renewal/activation code — same contract as signup.
-  const coupon = normCoupon(body?.coupon);
+  // Login is email + password ONLY. Activation codes are redeemed at SIGNUP
+  // (the post-purchase flow) or manually via /api/billing/redeem (Settings →
+  // Account, for renewals) — never here, so a code in the body is ignored and
+  // stays redeemable.
   // Promote to admin on login if ADMIN_EMAILS changed since signup — the role
   // flag in the account record is the durable source of truth afterwards.
   // Same lock as signup: role write + workspace ensure + session issue are a
@@ -229,20 +231,12 @@ export async function login(req, st) {
     const token = await issueSession(st, acct);
     return { token, coach: publicCoach(acct), workspace: publicWs(ws), acct };
   });
-  // Coupon redemption runs AFTER the account lock released — see signup for
-  // the lock-order rationale. An invalid code never blocks the login.
-  const resp = {
+  return j(200, {
     ok: true, token: out.token,
     coach: out.coach,
     workspace: out.workspace,
     access: accessOf(out.acct)
-  };
-  if (coupon) {
-    const r = await redeemForAccount(st, out.acct, coupon);
-    if (r.ok) { resp.access = r.access; resp.billing = r.billing; resp.redeemed = true; }
-    else resp.redeemError = r.error;
-  }
-  return j(200, resp);
+  });
 }
 
 /** Legacy import helper shared by claim flows: copy old anonymous bytes. */
