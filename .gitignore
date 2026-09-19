@@ -17,6 +17,8 @@ data/*-secrets.txt
 # scripts/create-admin.mjs. Never push these (see DEPLOY.md §1).
 data/kv.json
 data/kv-prod.json
+data/kv-*.json
+data/*.json
 
 # netlify local state
 .netlify/
@@ -36,6 +38,10 @@ Thumbs.db
 
 # misc
 *.tmp
+
+# old marketing mockups / leftover drafts (kept on disk, not in the repo)
+shop/COACH-OS-The-Operating-System-for-Fitness-Coaches*
+supabase/
 
 # agent tooling worktrees — contain a FULL project copy incl. data/prod-secrets.txt
 .kilo/
