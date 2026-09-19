@@ -14,7 +14,7 @@ server.mjs          ← سرور مستقل
 netlify/            ← بک‌اند (lib + functions)
 shop/               ← سایت فروش (index.html, checkout.html, api/, assets/)
 scripts/            ← create-admin و تست‌ها
-db/                 ← schema.sql (اسکیمای PostgreSQL + داده‌های پروژه)
+db/                 ← schema-fresh.sql (اسکیمای خالی — برای production) + schema.sql (اسکیما + داده‌ی دمو — فقط لوکال)
 package.json        ← برای npm install
 netlify.toml        ← برای دیپلوی Netlify (اختیاری)
 sw.js, manifest.json, icons/
@@ -47,7 +47,7 @@ node --check server.mjs   # سلامت فایل‌ها
 | متغیر | الزامی؟ | توضیح |
 |---|---|---|
 | `KV_FILE` | یکی از دو گزینه | مسیر فایل KV (تک‌سرور). مثال: `/opt/coach-os/data/kv.json` — فایل خالی باشد خودش می‌سازد |
-| `DATABASE_URL` | یا این | رشته اتصال PostgreSQL خودتان (توصیه‌شده برای production و چند-سروری). اسکیمای `db/schema.sql` را یک‌بار اجرا کنید: `psql "$DATABASE_URL" -f db/schema.sql` |
+| `DATABASE_URL` | یا این | رشته اتصال PostgreSQL خودتان (توصیه‌شده برای production و چند-سروری). اسکیمای **خالی** `db/schema-fresh.sql` را یک‌بار اجرا کنید: `psql "$DATABASE_URL" -f db/schema-fresh.sql` — بعد ادمین را با `npm run admin:create` بسازید. ⚠️ `db/schema.sql` حاوی dump دیتای پروداکشن (هش رمز + توکن سشن فعال) است و هرگز نباید روی production اجرا شود |
 | `ADMIN_API_KEY` | ✅ الزامی | کلید سرور-به-سرور سایت فروش برای صدور کوپن. بدون آن endpoint فروش غیرفعال است |
 | `COACH_OS_URL` | ✅ الزامی | آدرس عمومی اپ (مثلاً `https://app.coachos.ir`) — checkout سایت با آن کوپن صادر می‌کند |
 | `ADMIN_EMAILS` | ✅ الزامی | ایمیل ادمین اصلی (با کاما جدا کنید اگر چند نفرند) |
@@ -69,7 +69,7 @@ KV_FILE=/opt/coach-os/data/kv.json \
 node ./scripts/create-admin.mjs admin@yourdomain.com 'رمز-قوی-جدید' 'Main Admin'
 ```
 
-- **چرا از نو؟** چون `data/kv.json` لوکال را اصلاً نمی‌برید؛ و رمز تستی لوکال (`Admin1234!`) هرگز نباید روی production باشد.
+- **چرا از نو؟** چون `data/kv.json` لوکال را اصلاً نمی‌برید؛ و رمز تستی لوکال (در `data/prod-admin-pass.txt`) هرگز نباید روی production باشد.
 - این اسکریپت عمداً از فرم ثبت‌نام عمومی رد می‌شود تا کسی نتواند ایمیل ادمین را قبل از شما بگیرد.
 - ادمین خودکار پلن `club` با اشتراک باز می‌گیرد و تب **Admin** در تنظیمات برایش ظاهر می‌شود.
 
@@ -106,6 +106,36 @@ curl https://yourdomain.com/api/health
 | چک `/api/health` | مانیتور uptime (مثلاً UptimeRobot مجانی) |
 | reconcile پلن مربی‌ها با سفارش‌های فروشگاه | هفتگی — از تب Admin |
 | rotate کردن `ADMIN_API_KEY` | هر ۶ ماه یا بعد از هر خروج اعضای تیم |
+
+---
+
+## ۸. اگر فایل KV یا schema.sql لو رفته باشد
+
+هر فایلی که داخلش `acct:` / `sess:` / `coupon:` باشد، یک نسخه‌ی کامل از اطلاعات ورود است:
+
+| چه چیزی داخلش است | چرا خطرناک است |
+|---|---|
+| `sess:<token>` | **خودِ توکن در نام کلید است** — تا ۳۰ روز بدون رمز وارد حساب می‌شود |
+| `acct:<email>.pass` | `{salt,hash}` — آفلاین قابل کرک است |
+| `coupon:<CODE>` | هر کسی می‌تواند ریدیم کند |
+
+**راه‌حل — بدون دست‌زدن به گیت، خودِ اطلاعات را بی‌ارزش کن:**
+
+```bash
+# ۱. اول ببین چه چیزی هدف قرار می‌گیرد (هیچ تغییری نمی‌دهد)
+npm run security:sanitize
+
+# ۲. اعمال کن: سشن‌ها پاک، رمزها با رمز تصادفی جدید عوض، کوپن‌ها غیرفعال
+npm run security:sanitize -- --apply
+
+# ۳. dump داخل SQL را هم از نو بساز تا آن هم پاک شود
+npm run db:dump
+```
+
+- رمزهای جدید در `data/rotated-pass.txt` نوشته می‌شوند (طبق `.gitignore` هرگز commit نمی‌شود) — بعد از تحویل دادن به صاحبانشان **حذفش کنید**.
+- `data/kv.json` داده‌ی تست لوکال است؛ اگر نمی‌خواهید رمز لوکال عوض شود: `--no-passwords`.
+- بعد از این کار، dump منتشرشده دیگر هیچ ارزشی ندارد.
+- اگر `ADMIN_API_KEY` هم منتشر شده بود، از پنل ادمین کلید جدید بسازید و در Netlify ست کنید.
 
 ---
 

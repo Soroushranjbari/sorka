@@ -36,9 +36,12 @@ DATABASE_URL=postgres://coach_os:secret@localhost:5432/coach_os \
 node server.mjs
 ```
 
-(One-time: create the database and load schema + data —
-`createdb coach_os && psql -d coach_os -f db/schema.sql`. The SQL file also
-contains the full dump of the project data, admin account included.)
+(One-time: create the database and load the schema —
+`createdb coach_os && psql -d coach_os -f db/schema-fresh.sql`. That file is
+DDL only; create the first admin afterwards with `npm run admin:create`.
+⚠️ `db/schema.sql` is the demo/self-host variant and embeds a snapshot dump of
+the project data (password hashes + live session tokens) — never use it in
+production.)
 
 ### Keep it running (systemd)
 
@@ -136,6 +139,8 @@ guide is additive — the Netlify path keeps working.
 - **File → PostgreSQL**: `npm run db:dump` splices every key of
   `data/kv-prod.json` (or any KV file you pass) into `db/schema.sql`, then
   `psql -d coach_os -f db/schema.sql` loads schema + data in one go.
+  This is a data migration into an EXISTING database — it is not how you
+  create a fresh production database (use `db/schema-fresh.sql` for that).
 - **PostgreSQL → File**: one command produces the exact KV file layout:
   `psql -d coach_os -At -c "select jsonb_object_agg(key, value)::text from kv_store" > data/kv.json`
 - **Blobs → PostgreSQL**: export the Blobs namespaces to a JSON file with the

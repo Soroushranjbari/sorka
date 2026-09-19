@@ -7,8 +7,9 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/lib/guard.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check netlify/functions/shop-checkout.mjs && node --check netlify/functions/shop-account.mjs && node --check netlify/functions/ai.mjs && node --check scripts/export-kv-to-sql.mjs && node --check scripts/create-admin.mjs && node --check scripts/deploy-check.mjs && node --check server.mjs && echo FUNCTIONS_SYNTAX_OK",
+    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/lib/guard.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check netlify/functions/shop-checkout.mjs && node --check netlify/functions/shop-account.mjs && node --check netlify/functions/ai.mjs && node --check scripts/export-kv-to-sql.mjs && node --check scripts/create-admin.mjs && node --check scripts/deploy-check.mjs && node --check scripts/sanitize-kv-dump.mjs && node --check server.mjs && echo FUNCTIONS_SYNTAX_OK",
     "db:dump": "node ./scripts/export-kv-to-sql.mjs",
+    "security:sanitize": "node ./scripts/sanitize-kv-dump.mjs",
     "admin:create": "node ./scripts/create-admin.mjs",
     "check:deploy": "node ./scripts/deploy-check.mjs",
     "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs && node ./scripts/test-guard.mjs && node ./scripts/test-routes.mjs"
