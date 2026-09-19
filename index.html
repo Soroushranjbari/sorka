@@ -1260,26 +1260,21 @@ async function authSignup(){
 async function authLogin(){
   const email=($('li-email')?.value||'').trim();
   const pw=$('li-pass')?.value||'';
-  const coupon=($('li-coupon')?.value||'').trim();
   if(!email||!pw){toast(t('Enter email and password'));return}
   toast(t('Signing in…'));
   try{
-    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw,coupon:coupon||undefined})});
+    // Login is email + password ONLY — activation codes are redeemed at
+    // signup (post-purchase) or manually in Settings → Account, never here.
+    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
-    // Renewal code (optional): redeemed in the same login call — days stack.
-    if(d.redeemed&&d.access){
-      AUTH.access=d.access;BILL.info=d.billing||BILL.info;
-      try{localStorage.removeItem('coach-os-coupon')}catch(e){}
-    } else AUTH.access=d.access;
+    AUTH.access=d.access;
     // Account switched in this tab: reset the sync target AND wipe local data
     // that belongs to the previous coach — otherwise the first sync pushes the
     // previous coach's clients into this coach's (empty) workspace.
     cloudReset();adoptAccount(d.coach);
     S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
-    toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
-      :d.redeemError?t(billErr({error:d.redeemError}))
-      :t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
+    toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();maybeOnboard();
   }catch(e){toast(t('Could not reach server'))}
 }
@@ -2168,7 +2163,6 @@ function coachLogin(){return `
         <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>`
       :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
     <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
-    <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — renewal code')}</span></label><input class="inp" id="li-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
     <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${t('Sign In')} ${ic('arrowR',15)}</button>
         <div class="divider"><span>${t('or')}</span></div>
