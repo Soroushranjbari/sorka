@@ -307,7 +307,7 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .clientwrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 20px;background:var(--bg)}
 .phone{width:410px;max-width:100%;height:min(870px,94vh);background:var(--bg);border:10px solid #0D0F13;border-radius:48px;box-shadow:0 30px 70px -25px rgba(13,15,19,.5);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none}
 .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:112px;height:26px;background:#0D0F13;border-radius:99px;z-index:6}
-.capp{flex:1;overflow-y:auto;scrollbar-width:thin}
+.capp{flex:1;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .chead{position:sticky;top:0;background:var(--glass2);backdrop-filter:blur(10px);padding:52px 16px 12px;padding-top:calc(52px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line);z-index:5}
 .cbody{padding:14px 14px 96px;display:flex;flex-direction:column;gap:12px}
 .ccard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh-1)}
@@ -408,7 +408,23 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
   .content{padding:0;max-width:none}
   .hamb{display:inline-flex}
 }
-@media(max-width:520px){.clientwrap{padding:0}.phone{width:100%;height:100vh;height:100dvh;border:none;border-radius:0}.notch{display:none}.chead{padding-top:calc(14px + env(safe-area-inset-top,0px))}.cphead{padding-top:calc(14px + env(safe-area-inset-top,0px))}}
+/* ≤520px — client portal goes full-screen. The page must NEVER scroll as a whole:
+   .clientwrap is pinned to the viewport (100vh on iOS is taller than the visible
+   screen, which made the entire app wobble up/down while scrolling), overscroll
+   is contained (no rubber-band / pull-to-refresh moving the whole page), the
+   floating lang/exit/feedback buttons are hidden (the lang one was an in-flow
+   flex sibling of .phone and caused horizontal overflow), and inputs get 16px
+   so iOS stops auto-zooming when the client types a message. */
+@media(max-width:520px){
+html,body{overscroll-behavior:none}
+.clientwrap{position:fixed;inset:0;padding:0;overflow:hidden}
+.phone{width:100%;height:100%;border:none;border-radius:0;box-shadow:none}
+.notch{display:none}
+.chead{padding-top:calc(14px + env(safe-area-inset-top,0px));backdrop-filter:none}
+.cphead{padding-top:calc(14px + env(safe-area-inset-top,0px))}
+.clientwrap>button[data-act="exitdemo"],.clientwrap>button[data-act="lang"],.clientwrap>a.btn{display:none}
+.phone .inp,.phone .ta,.phone .sel{font-size:16px}
+}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55;display:none}
 body.sb-open .scrim{display:block}
 /* v16.8 — AI chat assistant */
@@ -441,6 +457,7 @@ const P={
 grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
 list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
 users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
 dumbbell:'<path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>',
 calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
 chart:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
@@ -597,6 +614,7 @@ const FA={
 'Pending':'در انتظار','View summary':'مشاهده خلاصه','No workouts yet':'هنوز تمرینی نداری','sets':'ست','Set':'ست',
 'Finish Workout':'پایان تمرین','Rest':'استراحت','Skip':'رد کردن','Close':'بستن','Workout completed 💪':'تمرین تکمیل شد 💪',
 'My Progress':'پیشرفت من','Nutrition Plan':'برنامه تغذیه','Your coach has not published a nutrition plan yet':'مربی‌ات هنوز برنامه تغذیه‌ای منتشر نکرده',
+'My Profile':'پروفایل من','Body Metrics':'شاخص‌های بدنی','App language':'زبان اپلیکیشن',
 'Published to':'منتشر شد برای','Workout Builder':'سازنده تمرین','Publishing to':'انتشار برای','Builder cleared':'سازنده پاک شد','File attached':'فایل پیوست شد',
 'need your reply':'نیاز به پاسخ تو دارند','Needs your reply':'در انتظار پاسخ شما','Waiting on your reply':'در انتظار پاسخ تو','All conversations':'همه گفتگوها','Type a message…':'پیام بنویس…','Send':'ارسال',
 'Save as note':'تبدیل به یادداشت','Saved as note':'به یادداشت تبدیل شد','From chat':'از چت','Form check':'فرم‌چک','Replies within ~4h':'میانگین پاسخ ~۴ ساعت',
@@ -4201,8 +4219,8 @@ function mClientView(){
 function vClient(){
   const c=client(S.cid);
   const cunread=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&!m.read).length;
-  const tabs=[['today','Today','zap'],['workouts','Workouts','dumbbell'],['progress','Progress','chart'],['nutrition','Nutrition','utensils'],['sessions','Sessions','calendar'],['chat','Messages','mail']];
-  const body={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat}[S.ptab]();
+  const tabs=[['today','Today','zap'],['workouts','Workouts','dumbbell'],['progress','Progress','chart'],['nutrition','Nutrition','utensils'],['sessions','Sessions','calendar'],['chat','Messages','mail'],['profile','Profile','user']];
+  const body={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile}[S.ptab]();
   return `
   <div class="clientwrap">
     <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
@@ -4386,6 +4404,43 @@ function cChat(){
       <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
       <button class="btn btn-primary btn-icon" data-act="send-client">${ic('arrowR',16)}</button>
     </div>
+  </div>`;
+}
+function cProfile(){
+  const c=client(S.cid);
+  const lm=lastM(S.cid);
+  const remain=packRemain(c.name);
+  return `<div class="cbody">
+    <div class="card-t" style="margin:2px">${ic('user',14)} ${t('My Profile')}</div>
+    <div class="ccard" style="display:flex;align-items:center;gap:12px">
+      ${avC(c.name,56)}
+      <div style="flex:1;min-width:0"><b style="font-size:16px">${esc(t(c.name))}</b>
+        <div class="muted" style="font-size:12px">${t(c.goal)}</div>
+        ${c.code?`<div class="muted" style="font-size:11px;margin-top:3px">${t('Code')}: <b style="letter-spacing:.08em;color:var(--accent-deep)">${esc(joinCodeOf(c))}</b></div>`:''}
+      </div>
+      ${stBdg(c.status)}
+    </div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('users',14)} ${t('Personal Information')}</div>
+      ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
+      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px;text-align:end;min-width:0;word-break:break-word">${esc(String(v))}</b></div>`).join('')}
+    </div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('ruler',14)} ${t('Body Metrics')}</div>
+      ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
+      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
+      ${c.targetW?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Target Weight')}</span><b style="font-size:12.5px">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></div>
+      <div class="pbar" style="margin-top:8px"><i style="width:${goalPct(c)}%"></i></div>`:''}
+      ${lm?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div>
+      <div class="muted" style="font-size:10.5px;margin-top:6px">${t('Last measurement')}: ${fmtD(lm.d)}</div>`:''}
+    </div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:6px">${ic('gear',14)} ${t('Settings')}</div>
+      <div class="lbl" style="margin-bottom:6px">${ic('globe',13)} ${t('Language')}</div>
+      <div class="seg" style="width:100%;display:flex">
+        <button style="flex:1" class="${lang==='fa'?'on':''}" data-act="lang">فارسی</button>
+        <button style="flex:1" class="${lang==='en'?'on':''}" data-act="lang">English</button>
+      </div>
+      <div class="muted" style="font-size:11px;margin-top:6px">${t('App language')}</div>
+    </div>
+    <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;color:var(--red)" data-act="signout">${ic('x',14)} ${t('Sign out')}</button>
   </div>`;
 }
 let restIv=null;
