@@ -17,18 +17,23 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F1F1EE; --surface:#FFFFFF; --sidebar:#12151B;
+  /* v18.7 — light-theme separation fix (round 2): users only saw clear section
+     boundaries while a modal dimmed the page (rgba(0,0,0,.55) overlay makes
+     white surfaces glow against the darkened canvas). Round 1 (#EAEAE2) was
+     too subtle — the canvas is now clearly darker than the cards and the
+     hairlines/shadow carry real weight, so the layout has depth un-dimmed. */
+  --bg:#DDDDD0; --surface:#FFFFFF; --sidebar:#12151B;
   --ink:#15181E; --ink2:#5C6270; --ink3:#9AA0AE;
-  --line:#DEDED6; --line2:#E8E8E1;
+  --line:#C8C8B6; --line2:#D5D5C6;
   --accent:#C8F04B; --accent-deep:#8FB51E; --accent-ink:#1A2205; --accent-soft:#F4FAE0;
   --acc-line:#CDE694; --acc-line2:#CFE49B; --acc-mid:#A6D437; --acc-mid2:#9CC53E; --acc-stat:#B4D95B; --acc-chip:#D8E9AF;
   --green:#16A34A; --green-soft:#E9F6EE; --red:#DC2626; --red-soft:#FDEDED;
   --amber:#C77414; --amber-soft:#FBF2E2; --blue:#2563EB; --blue-soft:#EAF1FE;
   --purple:#7C3AED; --purple-soft:#F2EDFD;
-  --glass:rgba(241,241,238,.85); --glass2:rgba(241,241,238,.92);
+  --glass:rgba(221,221,208,.85); --glass2:rgba(221,221,208,.92);
   --ink-bg:#15181E; --btn-dark-bg:#15181E; --btn-dark-fg:#fff;
   --row-h:#F7F7F3; --seg-bg:#E9E9E3; --seg-on:#FFFFFF; --kbd-bg:#EFEFEA; --cal-hd:#F9F9F5; --cal-alt:#F7F7F3;
-  --sh-1:0 1px 2px rgba(18,21,27,.06),0 2px 10px -2px rgba(18,21,27,.06);
+  --sh-1:0 1px 2px rgba(18,21,27,.09),0 6px 18px -6px rgba(18,21,27,.16);
   --sh-2:0 12px 32px -8px rgba(18,21,27,.18);
   --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 }
@@ -3142,7 +3147,7 @@ function vSettings(){
   appearance:`<div class="card" style="padding:22px">
     <div class="card-t" style="margin-bottom:12px">${t('Theme')}</div>
     <div class="row" style="gap:12px;flex-wrap:wrap">
-      ${[['Light','linear-gradient(135deg,#F1F1EE 55%,#12151B 55%)'],['System','linear-gradient(135deg,#F1F1EE 30%,#12151B 30% 70%,#F1F1EE 70%)'],['Dark','linear-gradient(135deg,#12151B 60%,#2A2F38 60%)']].map(([x,g])=>`
+      ${[['Light','linear-gradient(135deg,#DDDDD0 55%,#12151B 55%)'],['System','linear-gradient(135deg,#DDDDD0 30%,#12151B 30% 70%,#DDDDD0 70%)'],['Dark','linear-gradient(135deg,#12151B 60%,#2A2F38 60%)']].map(([x,g])=>`
       <div class="card" style="width:130px;padding:10px;cursor:pointer;${PREFS.theme===x?'border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)':''}" data-act="theme" data-v="${x}">
         <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
         <b style="font-size:12.5px">${t(x)}${PREFS.theme===x?' ✓':''}</b></div>`).join('')}
