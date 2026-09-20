@@ -1,5 +1,5 @@
 // Coach OS — Phase 1 shared crypto + storage helpers (bundled, NOT a function).
-// Lives in netlify/lib so Netlify does not deploy it as a function endpoint.
+// Lives in backend/lib so it is never deployed as a function endpoint.
 // PBKDF2 password hashing (SHA-256, 120k iterations) + opaque session tokens.
 // Phase 2: accessOf() reads the authoritative sub_status/sub_ends_at fields
 // (written by grantSub) with full backward-compat for legacy `sub` + trial.

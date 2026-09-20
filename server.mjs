@@ -1,51 +1,47 @@
-// Coach OS — portable standalone server (zero dependencies, Node 18+).
-// Serves the static app AND the same API handlers Netlify deploys, using
+// Coach OS — portable standalone server (zero dependencies beyond better-sqlite3, Node 18+).
+// Serves the static app AND the same API handlers Vercel deploys, using
 // standard Web Request/Response — no framework, no platform lock-in.
 //
-//   node server.mjs                       # http://localhost:8888
+//   node server.mjs                       # http://localhost:8888 (SQLite ./data/sqlite.db)
 //   PORT=3000 node server.mjs             # custom port
-//   KV_FILE=./data/kv.json node server.mjs  # file-backed KV (default)
-//   DATABASE_URL=postgres://... node server.mjs  # PostgreSQL KV (db/schema.sql)
+//   SQLITE_PATH=/path/db.sqlite node server.mjs  # custom SQLite location
+//   DATABASE_URL=postgres://... node server.mjs  # PostgreSQL KV instead of SQLite
 //
-// Routes (identical to the Netlify redirects in netlify.toml):
-//   /api/auth/*    -> netlify/functions/auth.mjs
-//   /api/billing/* -> netlify/functions/billing.mjs
-//   /api/data      -> netlify/functions/data.mjs
-//   /api/health    -> netlify/functions/health.mjs
-//   /shop/api/*    -> netlify/functions/shop-checkout.mjs | shop-account.mjs
+// Routes (identical to the Vercel rewrites in vercel.json):
+//   /api/auth/*    -> backend/handlers/auth.mjs
+//   /api/billing/* -> backend/handlers/billing.mjs
+//   /api/data      -> backend/handlers/data.mjs
+//   /api/health    -> backend/handlers/health.mjs
+//   /shop/api/*    -> backend/handlers/shop-checkout.mjs | shop-account.mjs
 //   everything else -> static files from the project root (index.html, ...)
+import './backend/lib/env.mjs'; // loads .env FIRST — db.mjs reads env at module load
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CSP, CSP_SHOP, SECURITY_HEADERS } from './netlify/lib/guard.mjs';
+import { CSP, CSP_SHOP, SECURITY_HEADERS } from './backend/lib/guard.mjs';
+import { SQLITE_PATH } from './backend/lib/db.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url)).replace(/[\\/]+$/, '');
 const PORT = Number(process.env.PORT) || 8888;
 const HOST = process.env.HOST || '0.0.0.0';
 
-/* Default the standalone server to the file backend. Without this the KV layer
-   falls through to Netlify Blobs, which has no credentials outside Netlify —
-   so `npm start` booted fine but EVERY write (signup, login, data PUT, shop
-   checkout) threw while reads silently returned null. SELFHOST.md and the
-   comment above both assumed this default. An explicit KV_FILE or DATABASE_URL
-   (or its POSTGRES_URL / PGURL aliases) always wins — this must run BEFORE the
-   dynamic imports below, because netlify/lib/db.mjs reads env at module load. */
-if (!process.env.KV_FILE && !process.env.DATABASE_URL && !process.env.POSTGRES_URL && !process.env.PGURL) {
-  process.env.KV_FILE = './data/kv.json';
-}
+/* Storage: SQLite at ./data/sqlite.db is the DEFAULT — no env needed. An
+   explicit SQLITE_PATH moves the file; DATABASE_URL (or POSTGRES_URL/PGURL)
+   switches the KV layer to PostgreSQL instead. backend/lib/db.mjs reads the
+   environment at module load, and the .env import above has already run. */
 
-/* ---------- API handlers (shared with the Netlify deployment) ---------- */
-const authFn = await import('./netlify/functions/auth.mjs');
-const billingFn = await import('./netlify/functions/billing.mjs');
-const dataFn = await import('./netlify/functions/data.mjs');
-const healthFn = await import('./netlify/functions/health.mjs');
-const shopCheckoutFn = await import('./netlify/functions/shop-checkout.mjs');
-const shopAccountFn = await import('./netlify/functions/shop-account.mjs');
-const aiFn = await import('./netlify/functions/ai.mjs');
+/* ---------- API handlers (shared with the Vercel deployment) ---------- */
+const authFn = await import('./backend/handlers/auth.mjs');
+const billingFn = await import('./backend/handlers/billing.mjs');
+const dataFn = await import('./backend/handlers/data.mjs');
+const healthFn = await import('./backend/handlers/health.mjs');
+const shopCheckoutFn = await import('./backend/handlers/shop-checkout.mjs');
+const shopAccountFn = await import('./backend/handlers/shop-account.mjs');
+const aiFn = await import('./backend/handlers/ai.mjs');
 
-// Netlify maps "/api/auth/signup" -> handler URL "/api/auth/signup" (config.path
-// with a wildcard), so the handler sees the full path. Reproduce that here.
+// Vercel maps "/api/auth/signup" -> handler URL "/api/auth/signup" (rewrite),
+// so the handler sees the full path. Reproduce that here.
 const ROUTES = [
   { re: /^\/api\/auth\/(.*)$/, fn: authFn.default },
   { re: /^\/api\/billing\/(.*)$/, fn: billingFn.default },
@@ -107,14 +103,14 @@ const MIME = {
   '.webmanifest': 'application/manifest+json'
 };
 
-/* Files that must never be served over HTTP: they hold credentials, the SQL
-   schema with every password hash / session token, or build tooling. The
-   Netlify config blocks the same paths with force-404 redirects (netlify.toml).
-   NOTE: publish = "." / ROOT = project root means without this an attacker can
-   simply GET /data/prod-secrets.txt. */
-const DENY_DIRS = ['data/', 'db/', 'scripts/', 'netlify/', 'node_modules/', '.git/', '.kilo/'];
+/* Files that must never be served over HTTP: they hold credentials, the
+   SQLite database with every password hash / session token, or build tooling.
+   The Vercel middleware blocks the same paths before the filesystem
+   (middleware.js). NOTE: ROOT = project root means without this an attacker
+   can simply GET /data/prod-secrets.txt. */
+const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', '.git/', '.kilo/'];
 const DENY_FILES = new Set([
-  'server.mjs', 'netlify.toml', 'package.json', 'package-lock.json',
+  'server.mjs', 'vercel.json', 'middleware.js', 'package.json', 'package-lock.json',
   '.env', '.env.example', '.gitignore', 'DEPLOY.md', 'SELFHOST.md'
 ]);
 const isBlocked = (rel) =>
@@ -199,5 +195,5 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, HOST, () => {
   console.log(`Coach OS server → http://localhost:${PORT}`);
   const pgUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL;
-  console.log(`KV backend: ${pgUrl ? 'postgres' : process.env.KV_FILE ? `file (${process.env.KV_FILE})` : 'blobs (needs Netlify credentials)'}`);
+  console.log(`KV backend: ${pgUrl ? 'postgres' : `sqlite (${SQLITE_PATH})`}`);
 });

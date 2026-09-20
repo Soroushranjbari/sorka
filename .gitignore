@@ -12,13 +12,15 @@ data/prod-admin-pass.txt
 data/*-pass.txt
 data/*-secrets.txt
 
-# KV data files — local/test data with a known admin password. Production
-# starts EMPTY (db/schema-fresh.sql); the admin is created on the server via
-# scripts/create-admin.mjs. Never push these (see DEPLOY.md §1).
-data/kv.json
-data/kv-prod.json
-data/kv-*.json
-data/*.json
+# SQLite database — local data with password hashes / session tokens.
+# Never commit it (see DEPLOY.md).
+data/sqlite.db
+data/sqlite.db-shm
+data/sqlite.db-wal
+data/*.sqlite.db*
+
+# legacy KV JSON dumps (migration sources / backups — contain user data)
+data/kv*.json
 
 # netlify local state
 .netlify/
@@ -41,7 +43,6 @@ Thumbs.db
 
 # old marketing mockups / leftover drafts (kept on disk, not in the repo)
 shop/COACH-OS-The-Operating-System-for-Fitness-Coaches*
-supabase/
 
 # agent tooling worktrees — contain a FULL project copy incl. data/prod-secrets.txt
 .kilo/

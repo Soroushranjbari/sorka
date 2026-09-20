@@ -7,8 +7,8 @@
 //   2. publish = "." served db/schema.sql (every password hash), data/*.json
 //      and data/prod-secrets.txt to anyone who asked for them.
 //
-// It boots the real standalone server on a random port with the file KV
-// backend in a temp dir and asserts the API contracts + the static deny-list.
+// It boots the real standalone server on a random port with a temp SQLite
+// database and asserts the API contracts + the static deny-list.
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -29,7 +29,7 @@ const child = spawn(process.execPath, ['server.mjs'], {
   env: {
     ...process.env,
     PORT: String(PORT), HOST: '127.0.0.1',
-    KV_FILE: join(dir, 'kv.json'), NODE_ENV: 'test',
+    SQLITE_PATH: join(dir, 'kv-test.sqlite.db'), NODE_ENV: 'test',
     // The shop account proxy is server-to-server — point it back at this server
     // so the login/session round-trip is exercised for real.
     COACH_OS_URL: BASE,
@@ -67,7 +67,7 @@ try {
   console.log('== API routing ==');
   const health = await j('/api/health');
   ok('GET /api/health -> 200 ok', health.status === 200 && health.d?.ok === true, health.d);
-  ok('health reports the file backend', health.d?.backend === 'file', health.d?.backend);
+  ok('health reports the sqlite backend', health.d?.backend === 'sqlite', health.d?.backend);
   ok('health leaks no db host', !health.d?.postgresHost, health.d?.postgresHost);
 
   const badLogin = await j('/api/auth/login', {
@@ -209,8 +209,8 @@ try {
 
   console.log('== static exposure (regression: secrets were downloadable) ==');
   for (const p of ['/data/prod-secrets.txt', '/data/prod-admin-pass.txt', '/data/kv-prod.json',
-                   '/db/schema.sql', '/scripts/create-admin.mjs', '/netlify/lib/db.mjs',
-                   '/server.mjs', '/package.json', '/netlify.toml', '/.env', '/DEPLOY.md', '/SELFHOST.md',
+                   '/backend/lib/db.mjs', '/scripts/create-admin.mjs', '/data/sqlite.db',
+                   '/server.mjs', '/package.json', '/vercel.json', '/.env', '/DEPLOY.md', '/SELFHOST.md',
                    // Regression: the .kilo agent-worktree folder contains a FULL project copy
                    // (incl. prod-secrets.txt / schema.sql) and was not on the deny-list.
                    '/.kilo/worktrees/deep-lark/data/prod-secrets.txt',

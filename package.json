@@ -1,21 +1,20 @@
 {
   "name": "coach-os",
   "private": true,
-  "version": "16.1.0",
+  "version": "18.0.0",
   "type": "module",
-  "description": "Coach OS — SaaS backend (Netlify Functions + portable KV: PostgreSQL / JSON file / Netlify Blobs) with Phase-2 billing",
+  "description": "Coach OS — SaaS backend (portable KV: SQLite by default, optional PostgreSQL) with Phase-2 billing. Deploys to Vercel or runs standalone.",
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "check:fn": "node --check netlify/lib/db.mjs && node --check netlify/lib/saas.mjs && node --check netlify/lib/auth-shared.mjs && node --check netlify/lib/billing.mjs && node --check netlify/lib/guard.mjs && node --check netlify/functions/auth.mjs && node --check netlify/functions/billing.mjs && node --check netlify/functions/data.mjs && node --check netlify/functions/health.mjs && node --check netlify/functions/shop-checkout.mjs && node --check netlify/functions/shop-account.mjs && node --check netlify/functions/ai.mjs && node --check scripts/export-kv-to-sql.mjs && node --check scripts/create-admin.mjs && node --check scripts/deploy-check.mjs && node --check scripts/sanitize-kv-dump.mjs && node --check server.mjs && echo FUNCTIONS_SYNTAX_OK",
-    "db:dump": "node ./scripts/export-kv-to-sql.mjs",
-    "security:sanitize": "node ./scripts/sanitize-kv-dump.mjs",
+    "check:fn": "node --check backend/lib/db.mjs && node --check backend/lib/env.mjs && node --check backend/lib/saas.mjs && node --check backend/lib/auth-shared.mjs && node --check backend/lib/billing.mjs && node --check backend/lib/guard.mjs && node --check backend/handlers/auth.mjs && node --check backend/handlers/billing.mjs && node --check backend/handlers/data.mjs && node --check backend/handlers/health.mjs && node --check backend/handlers/shop-checkout.mjs && node --check backend/handlers/shop-account.mjs && node --check backend/handlers/ai.mjs && node --check scripts/migrate-kv-to-sqlite.mjs && node --check scripts/create-admin.mjs && node --check scripts/deploy-check.mjs && node --check server.mjs && echo FUNCTIONS_SYNTAX_OK",
+    "db:migrate": "node ./scripts/migrate-kv-to-sqlite.mjs",
     "admin:create": "node ./scripts/create-admin.mjs",
     "check:deploy": "node ./scripts/deploy-check.mjs",
     "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs && node ./scripts/test-guard.mjs && node ./scripts/test-routes.mjs"
   },
   "dependencies": {
-    "@netlify/blobs": "^8.0.0",
+    "better-sqlite3": "^12.11.1",
     "pg": "^8.23.0"
   },
   "engines": {

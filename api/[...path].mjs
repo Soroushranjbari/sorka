@@ -1,32 +1,32 @@
 // Coach OS — Vercel adapter (catch-all serverless function).
 //
-// The whole backend lives in netlify/functions/*.mjs as standard
-// Request -> Response handlers (the Netlify shape). Vercel's Node runtime
-// gives (req, res) instead, so this file is the ONLY Vercel-specific glue:
+// The whole backend lives in backend/handlers/*.mjs as standard
+// Request -> Response handlers. Vercel's Node runtime gives (req, res)
+// instead, so this file is the ONLY Vercel-specific glue:
 //
 //   Node req  ->  standard Request  ->  existing handler  ->  Response  ->  Node res
 //
-// Routing (mirrors netlify.toml's redirects):
-//   /api/auth/*            -> netlify/functions/auth.mjs
-//   /api/billing/*         -> netlify/functions/billing.mjs
-//   /api/ai/*              -> netlify/functions/ai.mjs
-//   /api/data              -> netlify/functions/data.mjs
-//   /api/health            -> netlify/functions/health.mjs
-//   /shop/api/checkout     -> netlify/functions/shop-checkout.mjs   (via vercel.json rewrite)
-//   /shop/api/account/*    -> netlify/functions/shop-account.mjs    (via vercel.json rewrite)
+// Routing (mirrors vercel.json's rewrites):
+//   /api/auth/*            -> backend/handlers/auth.mjs
+//   /api/billing/*         -> backend/handlers/billing.mjs
+//   /api/ai/*              -> backend/handlers/ai.mjs
+//   /api/data              -> backend/handlers/data.mjs
+//   /api/health            -> backend/handlers/health.mjs
+//   /shop/api/checkout     -> backend/handlers/shop-checkout.mjs   (via vercel.json rewrite)
+//   /shop/api/account/*    -> backend/handlers/shop-account.mjs    (via vercel.json rewrite)
 //
 // vercel.json rewrites /shop/api/* to /api/shop/api/*, so the catch-all sees
 // every route under one prefix: direct hits keep their /api/... path, shop
 // rewrites carry the original /shop/api/... path after the /api prefix.
 // Each handler parses new URL(req.url).pathname itself, so the synthetic
 // Request must carry the PUBLIC path the handler expects.
-import authHandler from '../netlify/functions/auth.mjs';
-import billingHandler from '../netlify/functions/billing.mjs';
-import dataHandler from '../netlify/functions/data.mjs';
-import aiHandler from '../netlify/functions/ai.mjs';
-import healthHandler from '../netlify/functions/health.mjs';
-import shopCheckout from '../netlify/functions/shop-checkout.mjs';
-import shopAccount from '../netlify/functions/shop-account.mjs';
+import authHandler from '../backend/handlers/auth.mjs';
+import billingHandler from '../backend/handlers/billing.mjs';
+import dataHandler from '../backend/handlers/data.mjs';
+import aiHandler from '../backend/handlers/ai.mjs';
+import healthHandler from '../backend/handlers/health.mjs';
+import shopCheckout from '../backend/handlers/shop-checkout.mjs';
+import shopAccount from '../backend/handlers/shop-account.mjs';
 
 /* Hop-by-hop / framing headers must NOT be copied onto the synthetic Request —
    undici sets its own and a stale content-length makes it throw. */
@@ -86,15 +86,11 @@ async function sendResponse(webRes, res) {
 
 export default async function handler(req, res) {
   try {
-    // Vercel serverless has NO persistent disk and no Netlify Blobs context:
-    // Postgres is the only usable backend here (db.mjs also accepts
-    // POSTGRES_URL, which Vercel's Neon integration sets automatically).
-    if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL && !process.env.PGURL && !process.env.KV_FILE) {
-      return json(res, 503, {
-        ok: false, error: 'no-database',
-        message: 'Set DATABASE_URL (Neon/Postgres) in Vercel → Settings → Environment Variables. Serverless has no persistent disk, so the file/Blobs backends cannot be used here.'
-      });
-    }
+    // Storage on Vercel: the default SQLite backend writes to /tmp there
+    // (the deploy dir is read-only), which works but is EPHEMERAL — every
+    // cold start starts from an empty database. For durable data on Vercel
+    // set DATABASE_URL (Neon/Postgres); db.mjs then uses the kv_store table
+    // and auto-creates it on first use.
     const inner = new URL(req.url || '/', 'http://localhost').pathname.replace(/^\/api\/?/, '');
     const webReq = await toWebRequest(req);
     let out;

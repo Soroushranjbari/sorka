@@ -26,7 +26,7 @@ basic  ·  professional  ·  club
 این‌ها باید بین سه جا یکی باشند:
 - `shop/index.html` (لینک‌های Buy Now)
 - `shop/checkout.html` (شیء `PLANS`)
-- بک‌اند اپ: `netlify/lib/billing.mjs` → `PLANS`
+- بک‌اند اپ: `backend/lib/billing.mjs` → `PLANS`
 
 اگر پلن جدید اضافه می‌کنید (مثلاً `studio`)، باید هر سه جا اضافه شود؛
 وگرنه checkout خطای `bad-plan` می‌دهد.

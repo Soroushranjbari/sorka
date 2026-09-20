@@ -2,16 +2,17 @@
 // Skips the public signup flow on purpose: the admin email must never be
 // claimable by a stranger racing the signup form.
 //
+// Usage (SQLite backend — the default):
+//   node ./scripts/create-admin.mjs admin@coachos.app 'S3cure!Pass' [Name]
+//   (writes into ./data/sqlite.db, or SQLITE_PATH if set)
+//
 // Usage (PostgreSQL backend):
 //   DATABASE_URL=postgres://... \
 //   node ./scripts/create-admin.mjs admin@coachos.app 'S3cure!Pass' [Name]
 //
-// Usage (Netlify Blobs backend): same, but run via `netlify dev` so the
-// NETLIFY_BLOBS_* credentials exist.
-//
 // Idempotent: refuses to overwrite an existing account unless --force is passed.
-import { kv } from '../netlify/lib/db.mjs';
-import { STORE_NAME, newId, hashPassword } from '../netlify/lib/saas.mjs';
+import { kv } from '../backend/lib/db.mjs';
+import { STORE_NAME, newId, hashPassword } from '../backend/lib/saas.mjs';
 
 // Flags must be stripped BEFORE positional parsing. Reading argv[3]/argv[4]
 // directly meant `create-admin.mjs a@b.c 'password' --force` silently created

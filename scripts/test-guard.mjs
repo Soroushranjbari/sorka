@@ -1,6 +1,6 @@
 // Coach OS — guard contract tests: rate limiter, body cap, security headers.
 // No network, no services — pure logic over mocked Request objects.
-import { rateLimit, readBody, readJsonCapped, secure, ipOf, withLock, SECURITY_HEADERS, CSP } from '../netlify/lib/guard.mjs';
+import { rateLimit, readBody, readJsonCapped, secure, ipOf, withLock, SECURITY_HEADERS, CSP } from '../backend/lib/guard.mjs';
 
 let pass = 0, fail = 0;
 const A = (name, cond) => { if (cond) { pass++; console.log('  PASS', name); } else { fail++; console.log('  FAIL', name); } };
