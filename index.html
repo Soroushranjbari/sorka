@@ -656,7 +656,7 @@ const FA={
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
-'Video link':'لینک ویدیو','Watch video':'تماشای ویدیو','Paste a YouTube or GIF link — the client sees it on their workout':'لینک یوتیوب یا گیف را بچسبان — شاگرد آن را در تمرینش می‌بیند','GIF links play right inside the workout — other links open in a new tab.':'لینک گیف همان‌جا داخل تمرین پخش می‌شود — بقیه لینک‌ها در تب جدید باز می‌شوند.','Link must start with http':'لینک باید با http شروع شود','Video saved ✓':'ویدیو ذخیره شد ✓','Video removed':'ویدیو حذف شد','Search on YouTube':'جستجو در یوتیوب','Set a link once — it attaches to this exercise in every workout':'یک‌بار لینک را ذخیره کن — به این حرکت در همه‌ی تمرین‌ها می‌چسبد','Saved to video bank ✓':'در بانک ویدیو ذخیره شد ✓','Video bank':'بانک ویدیو','links':'لینک','with video':'با ویدیو','Import':'درون‌ریزی','Export':'برون‌بری','Import video links':'درون‌ریزی لینک‌های ویدیو','Export video links':'برون‌بری لینک‌های ویدیو','Paste lines like:':'خط‌هایی مثل این بچسبان:','Name | URL':'نام | لینک','One link per line: exercise name, then the URL — tab or | separated.':'هر خط یک لینک: اول نام حرکت، بعد لینک — با تب یا | جدا می‌شود.','links imported':'لینک وارد شد','not matched':'پیدا نشد','No links imported':'هیچ لینکی وارد نشد','Select and copy manually':'دستی انتخاب و کپی کن',
+'Video link':'لینک ویدیو','Watch video':'تماشای ویدیو','Paste a YouTube or GIF link — the client sees it on their workout':'لینک یوتیوب یا گیف را بچسبان — شاگرد آن را در تمرینش می‌بیند','GIF links play right inside the workout — other links open in a new tab.':'لینک گیف همان‌جا داخل تمرین پخش می‌شود — بقیه لینک‌ها در تب جدید باز می‌شوند.','Link must start with http':'لینک باید با http شروع شود','Video saved ✓':'ویدیو ذخیره شد ✓','Video removed':'ویدیو حذف شد','Search on YouTube':'جستجو در یوتیوب','Set a link once — it attaches to this exercise in every workout':'یک‌بار لینک را ذخیره کن — به این حرکت در همه‌ی تمرین‌ها می‌چسبد','Saved to video bank ✓':'در بانک ویدیو ذخیره شد ✓','Video bank':'بانک ویدیو','links':'لینک','with video':'با ویدیو','Import':'درون‌ریزی','Export':'برون‌بری','Import video links':'درون‌ریزی لینک‌های ویدیو','Export video links':'برون‌بری لینک‌های ویدیو','Paste lines like:':'خط‌هایی مثل این بچسبان:','Name | URL':'نام | لینک','One link per line: exercise name, then the URL — tab or | separated.':'هر خط یک لینک: اول نام حرکت، بعد لینک — با تب یا | جدا می‌شود.','links imported':'لینک وارد شد','not matched':'پیدا نشد','No links imported':'هیچ لینکی وارد نشد','Select and copy manually':'دستی انتخاب و کپی کن','Change photo':'تغییر عکس','Remove photo':'حذف عکس','Photo saved ✓':'عکس ذخیره شد ✓','Photo removed':'عکس حذف شد','Picture is too large':'عکس بیش از حد بزرگ است','Could not read the picture':'عکس خوانده نشد','Tap the photo to change it':'برای تغییر، روی عکس بزن',
 };
 const t=s=>lang==='fa'?(FA[s]??s):s;
 /* muscle labels get their own lookup so the nav 'Back' and the muscle 'Back' never collide */
@@ -1178,7 +1178,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,ONBOARD,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,DB:packDB(),DEAD});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1209,6 +1209,7 @@ function loadData(){
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
     repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);
     if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
+    if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
     if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
     Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
     Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
@@ -1593,7 +1594,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,ONBOARD,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1845,7 +1846,37 @@ function scrubNames(){
   CLIENTS.forEach(fix);TEMPLATES.forEach(fix);FOODS.forEach(fix);
   [NOTES,MSGS,EVENTS,FILES,ACTIVITY,NOTIFS].forEach(arr=>arr.forEach(x=>{if(x&&typeof x.client==='string')x.client=scrubName(x.client)}));
 }
-const av=(name,s=36,hi)=>{const i=(hi??[...name].reduce((a,c)=>a+c.charCodeAt(0),0))%HUES.length;const init=name.split(' ').map(w=>w[0]).slice(0,2).join('');return `<div class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:${HUES[i%HUES.length]}">${init}</div>`};
+/* v18.5 — avatar photos: tiny square JPEG data-URLs (128px, q .72 ≈ 3–8 KB) so
+   they stay light in localStorage and in the sync payload. */
+let COACH_PIC='';
+const picOf=name=>{
+  if((name===coachName()||name===wsOwnerName())&&COACH_PIC)return COACH_PIC;
+  const c=CLIENTS.find(x=>x.name===name||t(x.name)===name);
+  return (c&&c.pic)||'';
+};
+const av=(name,s=36,hi)=>{const p=picOf(name);
+  if(p)return `<div class="av" style="width:${s}px;height:${s}px;overflow:hidden;padding:0"><img src="${p}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
+  const i=(hi??[...name].reduce((a,c)=>a+c.charCodeAt(0),0))%HUES.length;const init=name.split(' ').map(w=>w[0]).slice(0,2).join('');return `<div class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:${HUES[i%HUES.length]}">${init}</div>`};
+/* Square-crop + downscale any picked image to a 128px JPEG data-URL. */
+function pickPic(cb){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=()=>{const img=new Image();
+      img.onload=()=>{try{
+        const N=128,cv=document.createElement('canvas');cv.width=N;cv.height=N;
+        const ctx=cv.getContext('2d');if(!ctx){toast(t('Could not read the picture'));return}
+        const sc=Math.max(N/img.width,N/img.height),w=img.width*sc,h=img.height*sc;
+        ctx.drawImage(img,(N-w)/2,(N-h)/2,w,h);
+        const url=cv.toDataURL('image/jpeg',.72);
+        if(url.length>80000){toast(t('Picture is too large'));return}
+        cb(url);
+      }catch(err){toast(t('Could not read the picture'))}};
+      img.onerror=()=>toast(t('Could not read the picture'));
+      img.src=rd.result};
+    rd.readAsDataURL(f)};
+  inp.click();
+}
 const avC=(raw,s=36)=>{const f=CLIENTS.find(c=>c.name===raw||t(c.name)===raw);return av(t(f?f.name:raw),s,f?f.id-1:9)};
 const stBdg=s=>({Active:`<span class="bdg bdg-green">● ${t('Active')}</span>`,Inactive:`<span class="bdg bdg-gray">● ${t('Inactive')}</span>`,'On Hold':`<span class="bdg bdg-amber">● ${t('On Hold')}</span>`,Paused:`<span class="bdg bdg-amber">● ${t('Paused')}</span>`,Archived:`<span class="bdg bdg-gray">📦 ${t('Archived')}</span>`,Pending:`<span class="bdg bdg-lime">⏳ ${t('Pending')}</span>`})[s];
 const fmtT=s=>String(Math.floor(s)).padStart(2,'0')+':'+(s%1?'30':'00');
@@ -3073,7 +3104,7 @@ function vSettings(){
   const sw=(path,on)=>`<label class="sw"><input type="checkbox" ${on?'checked':''} data-act="pref-sw" data-k="${path}"><i></i></label>`;
   const sug=suggestedPlan();
   const panels={
-  profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px">${av(coachName(),56,3)}<div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div></div></div>
+  profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px"><button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="pf-pic" title="${t('Change photo')}">${av(coachName(),56,3)}</button><div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div>${COACH_PIC?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11.5px" data-act="pf-pic-del">${t('Remove photo')}</button>`:''}</div></div>
     <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
     <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
@@ -4488,13 +4519,14 @@ function cProfile(){
   return `<div class="cbody">
     <div class="card-t" style="margin:2px">${ic('user',14)} ${t('My Profile')}</div>
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
-      ${avC(c.name,56)}
+      <button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="cp-pic" title="${t('Change photo')}">${avC(c.name,56)}</button>
       <div style="flex:1;min-width:0"><b style="font-size:16px">${esc(t(c.name))}</b>
         <div class="muted" style="font-size:12px">${t(c.goal)}</div>
         ${c.code?`<div class="muted" style="font-size:11px;margin-top:3px">${t('Code')}: <b style="letter-spacing:.08em;color:var(--accent-deep)">${esc(joinCodeOf(c))}</b></div>`:''}
       </div>
       ${stBdg(c.status)}
     </div>
+    <div class="row" style="justify-content:space-between;margin:0 4px 8px"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
     <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('users',14)} ${t('Personal Information')}</div>
       ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px;text-align:end;min-width:0;word-break:break-word">${esc(String(v))}</b></div>`).join('')}
@@ -4651,7 +4683,7 @@ function editClientModal(name){
   openModal(`
   <div class="modal-h"><h3>${t('Edit Client')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
-    <div class="row" style="margin-bottom:14px">${avC(c.name,52)}<div><b style="font-size:15px">${t(c.name)}</b><div style="margin-top:4px">${stBdg(c.status)}</div></div></div>
+    <div class="row" style="margin-bottom:14px"><button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="ec-pic" data-c="${esc(c.name)}" title="${t('Change photo')}">${avC(c.name,52)}</button><div><b style="font-size:15px">${t(c.name)}</b><div style="margin-top:4px">${stBdg(c.status)}</div>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11.5px" data-act="ec-pic-del" data-c="${esc(c.name)}">${t('Remove photo')}</button>`:''}</div></div>
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="ec-fn" value="${esc(nm[0]||'')}"></div>
       <div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="ec-ln" value="${esc(nm.slice(1).join(' '))}"></div>
@@ -4902,6 +4934,12 @@ document.addEventListener('click',e=>{
     case 'signup':authSignup();break;
     case 'login':authLogin();break;
     case 'profile-save':authProfile();break;
+    case 'pf-pic':pickPic(u=>{COACH_PIC=u;saveData();render();toast(t('Photo saved ✓'))});break;
+    case 'pf-pic-del':COACH_PIC='';saveData();render();toast(t('Photo removed'));break;
+    case 'ec-pic':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(c)pickPic(u=>{c.pic=u;saveData();render();editClientModal(c.name);toast(t('Photo saved ✓'))});break}
+    case 'ec-pic-del':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(c){delete c.pic;saveData();render();editClientModal(c.name);toast(t('Photo removed'))}break}
+    case 'cp-pic':pickPic(u=>{const c=client(S.cid);if(c){c.pic=u;saveData();render();toast(t('Photo saved ✓'))}});break;
+    case 'cp-pic-del':{const c=client(S.cid);if(c){delete c.pic;saveData();render();toast(t('Photo removed'))}break}
     case 'ai-draft':aiModal();break;
     case 'ai-generate':aiGenerate();break;
     case 'ai-chat-fab':aiChatOpen();break;
