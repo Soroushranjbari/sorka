@@ -1,7 +1,7 @@
 {
   "name": "coach-os",
   "private": true,
-  "version": "18.0.0",
+  "version": "18.1.0",
   "type": "module",
   "description": "Coach OS — SaaS backend (portable KV: SQLite by default, optional PostgreSQL) with Phase-2 billing. Deploys to Vercel or runs standalone.",
   "scripts": {
