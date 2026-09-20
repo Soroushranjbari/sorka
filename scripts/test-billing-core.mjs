@@ -1,7 +1,7 @@
 // Coach OS — Phase-2 billing core logic tests (pure, no network, no env needed).
 //   node ./scripts/test-billing-core.mjs
-import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, grantSub, adminEmails } from '../netlify/lib/billing.mjs';
-import { accessOf } from '../netlify/lib/saas.mjs';
+import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, grantSub, adminEmails } from '../backend/lib/billing.mjs';
+import { accessOf } from '../backend/lib/saas.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond, name) => {
@@ -81,7 +81,7 @@ const pb = publicBilling({ plan: 'professional', sub_status: 'active', sub_ends_
 ok(pb.status === 'active' && pb.plan === 'professional' && pb.subEndsAt === now + days(5), 'publicBilling exposes status/plan/ends');
 
 console.log('== admin role flag ==');
-import('../netlify/lib/auth-shared.mjs').then(({ publicCoach }) => {
+import('../backend/lib/auth-shared.mjs').then(({ publicCoach }) => {
   const c = publicCoach({ id: 'x', email: 'a@b.c', name: 'A', plan: 'club', role: 'admin' });
   ok(c.role === 'admin', 'publicCoach exposes admin role');
   const c2 = publicCoach({ id: 'x', email: 'a@b.c', name: 'A', plan: 'trial' });

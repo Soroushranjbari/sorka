@@ -8,10 +8,9 @@
 //   3. THEN call issueCoupon()  -> store code with the order, email it
 // Never trust the browser for "payment succeeded".
 //
-// NOTE (v16.2): this file used to live in shop/api/. Netlify only bundles the
-// single directory configured in netlify.toml ([functions] directory), so
-// those handlers were never deployed and every purchase 404'd in production.
-// It now lives in netlify/functions and keeps the public path /shop/api/checkout
+// NOTE (v16.2): this file used to live in shop/api/ — outside the deployed
+// functions directory — so it was never deployed and every purchase 404'd.
+// It now lives in backend/handlers and keeps the public path /shop/api/checkout
 // via `export const config` below (server.mjs maps it for self-hosting).
 import { createHash } from 'node:crypto';
 import { kv } from '../lib/db.mjs';

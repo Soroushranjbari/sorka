@@ -16,7 +16,6 @@ const title = (s) => console.log(`\n== ${s} ==`);
 /* ---------- 1. KV backend ---------- */
 title('KV backend');
 const pgUrl = env('DATABASE_URL') || env('POSTGRES_URL') || env('PGURL');
-const file = has('KV_FILE');
 if (pgUrl) {
   let host = '?';
   try { host = new URL(pgUrl).host; } catch {}
@@ -25,22 +24,22 @@ if (pgUrl) {
   if (/@(localhost|127\.0\.0\.1)[:/]/.test(pgUrl) && env('NODE_ENV') === 'production') {
     warnings.push('DATABASE_URL points at localhost in production — confirm this is intended');
   }
-} else if (file) {
-  info.push(`KV: file (${env('KV_FILE')})`);
-  if (existsSync(env('KV_FILE'))) {
+} else {
+  // SQLite is the default backend — zero configuration needed.
+  const sqlitePath = env('SQLITE_PATH') || (process.env.VERCEL ? '/tmp/coach-os.sqlite.db' : './data/sqlite.db');
+  info.push(`KV: SQLite (${sqlitePath})`);
+  if (existsSync(sqlitePath)) {
     try {
-      const kb = Math.round(readFileSync(env('KV_FILE')).length / 1024);
-      info.push(`KV file exists (${kb} KB)`);
-      if (kb > 0 && env('NODE_ENV') === 'production' && !has('ALLOW_EXISTING_KV')) {
-        warnings.push('KV file already has data — confirm this is the right server (set ALLOW_EXISTING_KV=1 to silence)');
-      }
+      const kb = Math.round(readFileSync(sqlitePath).length / 1024);
+      info.push(`SQLite database exists (${kb} KB)`);
     } catch {}
   } else {
-    info.push('KV file does not exist yet — it will be created on first write');
+    info.push('SQLite database does not exist yet — it will be created on first write');
   }
-  if (env('KV_FILE').includes(' ')) warnings.push('KV_FILE path contains spaces — quoted paths required in service files');
-} else {
-  problems.push('No KV backend configured. Set KV_FILE=/path/kv.json (single server) or DATABASE_URL=postgres://... (multi-instance).');
+  if (process.env.VERCEL) {
+    warnings.push('SQLite on Vercel lives in /tmp and is EPHEMERAL — data resets on every cold start. Set DATABASE_URL for durable storage.');
+  }
+  if (has('KV_FILE')) warnings.push('KV_FILE is no longer used — the JSON-file backend was removed; data lives in SQLite now');
 }
 
 /* ---------- 2. Secrets ---------- */
@@ -81,7 +80,7 @@ if (coachUrl) {
 
 /* ---------- 4. Files ---------- */
 title('Required files');
-for (const f of ['index.html', 'server.mjs', 'netlify/lib/saas.mjs', 'netlify/functions/auth.mjs', 'shop/checkout.html']) {
+for (const f of ['index.html', 'server.mjs', 'backend/lib/saas.mjs', 'backend/handlers/auth.mjs', 'shop/checkout.html']) {
   if (existsSync(f)) info.push(`ok: ${f}`);
   else problems.push(`missing file: ${f}`);
 }

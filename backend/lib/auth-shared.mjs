@@ -1,5 +1,5 @@
 // Coach OS — Phase 1 Auth shared logic: signup/login + session issue.
-// Bundled via relative import (netlify/lib), NOT a deployed function.
+// Bundled via relative import (backend/lib), NOT a deployed function.
 import {
   store, j, normEmail, newId, newToken,
   hashPassword, verifyPassword,
