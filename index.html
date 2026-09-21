@@ -527,6 +527,8 @@ google:'<path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19
 target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
 mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
 globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
 flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
 play:'<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/>',
 // These three were referenced by the admin panel / file list but missing from
@@ -547,6 +549,7 @@ try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale'
 const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
+'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
 'Help center — docs & shortcuts':'مرکز راهنما — مستندات و میان‌برها','Sign out':'خروج','Signed out':'خارج شدی','Welcome back, Coach':'خوش برگشتی، مربی','Done':'انجام شد','Switch role':'تغییر نقش','Exit demo':'خروج از دمو','Reply':'پاسخ',
 'Add Client':'افزودن شاگرد','Create Workout':'ساخت تمرین','Schedule Session':'زمان‌بندی جلسه','Add Measurement':'ثبت اندازه‌گیری','Create Template':'ساخت قالب','Add Exercise':'افزودن حرکت','Create Note':'یادداشت جدید','Create Nutrition Plan':'ساخت برنامه تغذیه',
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
@@ -703,7 +706,7 @@ function applyLang(){
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
 const PREFS_KEY='co-prefs';
-const defPrefs=()=>({units:'Metric',accent:0,theme:'Light',resp:'~4 h',favs:[],
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
   wk:{rpe:true,adv:true,dup:true,rest:'120'},
   priv:{own:true,photos:true,others:false,consent:true},
@@ -759,7 +762,7 @@ function applyAccent(ix){
   r.setProperty('--acc-line',A.l);r.setProperty('--acc-line2',A.l2);r.setProperty('--acc-mid',A.m);r.setProperty('--acc-mid2',A.m2);r.setProperty('--acc-stat',A.st);r.setProperty('--acc-chip',A.c);
 }
 function applyTheme(){
-  const th=PREFS.theme||'Light';
+  const th=PREFS.theme||'Dark';
   const dark=th==='Dark'||(th==='System'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);
   document.documentElement.dataset.theme=dark?'dark':'light';
   const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute('content',dark?'#0F1114':'#12151B');
@@ -2278,6 +2281,11 @@ function packCharge(ev,was){
   }
 }
 const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
+/* v18.12 — one-tap theme switch: shows the theme you'll GET (sun in dark mode,
+   moon in light mode), like GitHub/Linear. System pref stays available in
+   Settings → Appearance; this button flips Light↔Dark directly. */
+const themeBtn=cls=>{const dark=(PREFS.theme||'Dark')!=='Light';
+  return `<button class="btn ${cls}" data-act="theme-toggle" title="${dark?t('Switch to light theme'):t('Switch to dark theme')}">${ic(dark?'sun':'moon',16)}</button>`};
 const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
 const genCode=(n=6)=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<n;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
 const inviteLink=code=>location.origin+location.pathname+'#join='+code;
@@ -4478,6 +4486,7 @@ function renderMobile(){
     <div class="mhead">
       <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
       <div class="row" style="gap:4px">
+        ${themeBtn('btn-ghost btn-icon')}
         <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
         <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
       </div>
@@ -4992,6 +5001,7 @@ function shell(inner){
       <button class="btn btn-ghost btn-icon hamb" data-act="hamb">${ic('grid',18)}</button>
       <div class="searchbox" data-act="palette">${ic('search',16)}<span style="flex:1">${t('Search clients, foods, plans, meals…')}</span><kbd>⌘K</kbd></div>
       <span class="sp"></span>
+      ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
       <span class="bdg bdg-gray">${ic('dumbbell',12)} ${t('Coach')}</span>
       <div class="mwrap" data-mw>
@@ -5883,6 +5893,7 @@ document.addEventListener('click',e=>{
     /* v15.7 — persisted preference handlers */
     case 'pref-sw':{setP(PREFS,el.dataset.k,el.checked);savePrefs();toast('Setting saved');break}
     case 'theme':{PREFS.theme=el.dataset.v;savePrefs();applyTheme();render();toast('Theme applied');break}
+    case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
     case 'accent':{PREFS.accent=+el.dataset.ix;savePrefs();applyAccent(PREFS.accent);render();toast('Accent color updated');break}
     case 'unit':{PREFS.units=el.dataset.u;savePrefs();render();toast(t('Units set to')+' '+t(PREFS.units==='Metric'?'Metric (kg · cm)':'Imperial (lb · in)'));break}
     case 'pose':S.pose=el.dataset.p;render();break;
