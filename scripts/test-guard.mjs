@@ -1,4 +1,4 @@
-// Coach OS — guard contract tests: rate limiter, body cap, security headers.
+// CoachMint — guard contract tests: rate limiter, body cap, security headers.
 // No network, no services — pure logic over mocked Request objects.
 import { rateLimit, readBody, readJsonCapped, secure, ipOf, withLock, SECURITY_HEADERS, CSP } from '../backend/lib/guard.mjs';
 

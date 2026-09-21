@@ -1,4 +1,4 @@
-// Coach OS — create the MAIN ADMIN account directly in the backend KV store.
+// CoachMint — create the MAIN ADMIN account directly in the backend KV store.
 // Skips the public signup flow on purpose: the admin email must never be
 // claimable by a stranger racing the signup form.
 //

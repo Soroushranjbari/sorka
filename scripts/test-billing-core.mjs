@@ -1,4 +1,4 @@
-// Coach OS — Phase-2 billing core logic tests (pure, no network, no env needed).
+// CoachMint — Phase-2 billing core logic tests (pure, no network, no env needed).
 //   node ./scripts/test-billing-core.mjs
 import { PLANS, planOf, countSeats, quotaCheck, publicBilling, normCoupon, grantSub, adminEmails } from '../backend/lib/billing.mjs';
 import { accessOf } from '../backend/lib/saas.mjs';

@@ -1,4 +1,4 @@
-// Coach OS — Phase-3 AI assistant (OpenRouter, server-side key, FREE models).
+// CoachMint — Phase-3 AI assistant (OpenRouter, server-side key, FREE models).
 //   POST /api/ai/draft   (Bearer) {catalog, ctx} -> {ok, draft, model, usage}
 //   POST /api/ai/chat    (Bearer) {question, history?, catalog?} -> {ok, answer, model}
 //   POST /api/ai/insight (Bearer) {kind:'weekly'|'reply', client?, lang?} -> {ok, text, model}
@@ -65,7 +65,7 @@ async function quotaOf(st, acct) {
 function buildPrompt(ctx, catalog) {
   const lang = ctx.lang === 'fa' ? 'fa' : 'en';
   const sys =
-    'You are the drafting assistant inside Coach OS, a workout-planning app for human coaches. ' +
+    'You are the drafting assistant inside CoachMint, a workout-planning app for human coaches. ' +
     'You DRAFT ONLY: the coach always reviews, edits and decides — never imply automatic publication, ' +
     'diagnosis or medical authority. If the stated limitations suggest injury, avoid contraindicated ' +
     'exercises and explain the substitution in the workout note. Output STRICT JSON only — no markdown ' +
@@ -111,8 +111,8 @@ async function callModel(messages, validate) {
         headers: {
           authorization: `Bearer ${AI_KEY}`,
           'content-type': 'application/json',
-          'HTTP-Referer': process.env.PUBLIC_URL || 'https://coach-os.app',
-          'X-Title': 'Coach OS'
+          'HTTP-Referer': process.env.PUBLIC_URL || 'https://coachmint.app',
+          'X-Title': 'CoachMint'
         },
         body: JSON.stringify({
           model,
@@ -403,7 +403,7 @@ async function chat(req, st) {
     if (used >= CHAT_DAILY) return j(402, { ok: false, error: 'ai-quota', used, max: CHAT_DAILY });
     const context = await buildContext(st, acct, catalog);
     const sys = [
-      'You are the built-in AI assistant of Coach OS, a workout & nutrition coaching app. The SIGNED-IN COACH is talking to you.',
+      'You are the built-in AI assistant of CoachMint, a workout & nutrition coaching app. The SIGNED-IN COACH is talking to you.',
       'You have FULL READ access to their workspace — the data block below is live server-side data. Answer questions about ANY detail:',
       'clients and their profiles, workouts (sets, reps, loads, rest, RPE, cues), nutrition plans (meals, grams, macros), measurements and trends,',
       'sessions and attendance, notes, message history, templates, the exercise/food library, billing and quotas, and how app features work.',
@@ -461,7 +461,7 @@ async function insight(req, st) {
     const context = await buildContext(st, acct, catalog, kind === 'reply' ? clientName : null);
     const sys = kind === 'weekly'
       ? [
-        'You are the built-in AI assistant of Coach OS. Produce a WEEKLY REPORT for the signed-in coach from the live workspace data below.',
+        'You are the built-in AI assistant of CoachMint. Produce a WEEKLY REPORT for the signed-in coach from the live workspace data below.',
         'Structure (plain text, short lines, "-" bullets, no markdown tables):',
         '1) Snapshot — one line: active clients, workouts pending review, unanswered client messages.',
         '2) Needs attention — every client with a REAL reason found in the data (missed sessions, no check-in, unanswered message, weight trend, archived) with the actual numbers.',
@@ -471,7 +471,7 @@ async function insight(req, st) {
         'You advise; the coach decides. Answer in ' + (lang === 'fa' ? 'Persian (Farsi)' : 'English') + '.'
       ].join('\n')
       : [
-        'You are the built-in AI assistant of Coach OS. Draft ONE reply message from the COACH to their client, based on the live data below.',
+        'You are the built-in AI assistant of CoachMint. Draft ONE reply message from the COACH to their client, based on the live data below.',
         'Rules:',
         '- 2-4 short sentences, warm and professional, coach-to-client tone.',
         '- Reference something SPECIFIC from the client\'s data (their latest message, workout status, streak, check-in) when it exists.',
@@ -576,7 +576,7 @@ async function analyze(req, st) {
     const hints = calorieHints(rec);
     const context = await buildContext(st, acct, catalog, clientName);
     const sys = [
-      'You are the built-in AI assistant of Coach OS. Perform a DIAGNOSTIC assessment of ONE client for the signed-in coach, from the live workspace data below.',
+      'You are the built-in AI assistant of CoachMint. Perform a DIAGNOSTIC assessment of ONE client for the signed-in coach, from the live workspace data below.',
       'Detect problems and prescribe — but you ADVISE; the coach DECIDES. Never claim you changed anything.',
       'Diagnose across these areas, citing the client\'s REAL numbers:',
       '- weight-trend: measurement history vs the stated goal (e.g. weight DROPPING while goal is Muscle Gain = high severity; rising while Fat Loss = high).',

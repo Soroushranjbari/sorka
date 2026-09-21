@@ -1,11 +1,11 @@
-// Coach OS — Shop account API (server-side proxy to the app's auth/billing).
-// Lets the buyer sign in on the SHOP with their Coach OS email+password and
+// CoachMint — Shop account API (server-side proxy to the app's auth/billing).
+// Lets the buyer sign in on the SHOP with their CoachMint email+password and
 // see their subscription state and purchase history — without exposing any
 // secrets to the browser and without a second account system.
 //   POST /shop/api/account/login   {email,password} -> {ok,token,coach,workspace,billing,quota}
 //   GET  /shop/api/account/session (Bearer)         -> {ok,coach,workspace,access,billing,quota}
 //   GET  /shop/api/account/orders  (Bearer)         -> {ok,orders:[...]}
-// All Coach OS calls happen here (server-to-server) so this page keeps working
+// All CoachMint calls happen here (server-to-server) so this page keeps working
 // even if the shop later moves to its own domain.
 //
 // NOTE (v16.2): moved here from shop/api/account.mjs — Netlify only bundles the
@@ -62,7 +62,7 @@ export default async (req) => {
         method: 'POST', headers: fwd,
         body: JSON.stringify({ email: body?.email, password: body?.password })
       });
-    } catch { return j(502, { ok: false, error: 'coach-os-unreachable' }); }
+    } catch { return j(502, { ok: false, error: 'coachmint-unreachable' }); }
     const d = await upstream.json().catch(() => null);
     if (!upstream.ok || !d || !d.ok) return j(401, { ok: false, error: 'bad-credentials' });
     const bill = await billingOf(d.token);
@@ -73,7 +73,7 @@ export default async (req) => {
   }
 
   /* POST /shop/api/account/signup {name,email,password,coupon?}
-     Lets a buyer create their Coach OS account WITHOUT leaving the shop —
+     Lets a buyer create their CoachMint account WITHOUT leaving the shop —
      the checkout success page embeds this form, so the plan activates right
      here instead of "go to the app, sign up, hope the code pre-fills".
      The app's /api/auth/signup already accepts an optional `coupon` and
@@ -97,7 +97,7 @@ export default async (req) => {
           password: body?.password, coupon: body?.coupon
         })
       });
-    } catch { return j(502, { ok: false, error: 'coach-os-unreachable' }); }
+    } catch { return j(502, { ok: false, error: 'coachmint-unreachable' }); }
     const d = await upstream.json().catch(() => null);
     if (!upstream.ok || !d || !d.ok) {
       // Forward the app's own validation errors (bad-email, bad-name,

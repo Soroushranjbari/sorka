@@ -1,4 +1,4 @@
-// Coach OS — Vercel Edge middleware.
+// CoachMint — Vercel Edge middleware.
 //
 // Vercel serves the repo root statically and filesystem matches win over
 // rewrites, so sensitive repo files (SQLite database, scripts, server code,

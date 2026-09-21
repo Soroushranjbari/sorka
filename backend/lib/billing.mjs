@@ -1,4 +1,4 @@
-// Coach OS — Phase 2 billing lib (bundled, NOT a function).
+// CoachMint — Phase 2 billing lib (bundled, NOT a function).
 // Server-authoritative plans + quotas + simulated payments (manual/coupon).
 // Real gateways (ZarinPal/Stripe) plug into requestPayment()/webhook later;
 // the shapes here (payments rows, grantSub()) stay the same.

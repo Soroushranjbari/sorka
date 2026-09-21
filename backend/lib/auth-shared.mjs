@@ -1,4 +1,4 @@
-// Coach OS — Phase 1 Auth shared logic: signup/login + session issue.
+// CoachMint — Phase 1 Auth shared logic: signup/login + session issue.
 // Bundled via relative import (backend/lib), NOT a deployed function.
 import {
   store, j, normEmail, newId, newToken,
@@ -43,6 +43,35 @@ export async function killSessions(st, coachId) {
   } catch {}
 }
 
+/** Revoke every session of a coach EXCEPT one (the caller's own device).
+ *  Backs POST /api/auth/logout-others and the password change, which must
+ *  keep the current tab signed in while killing stolen/old tokens. */
+export async function killSessionsExcept(st, coachId, keepToken) {
+  try {
+    const idx = (await st.get(`sess-idx:${coachId}`, { type: 'json' })) || [];
+    for (const t of idx) {
+      if (t === keepToken) continue;
+      try { await st.delete(`sess:${t}`); } catch {}
+    }
+    await st.setJSON(`sess-idx:${coachId}`, keepToken ? [keepToken] : []);
+  } catch {}
+}
+
+/** Change the password of a SIGNED-IN coach. Unlike the reset flow (which
+ *  authenticates via a one-time emailed token) this verifies the CURRENT
+ *  password, then revokes every other session so a token copied from a
+ *  shared device dies with the old password.
+ *  @returns {ok:boolean, error?:'wrong-password'|'weak-password'} */
+export async function changePassword(st, acct, currentPw, nextPw, keepToken) {
+  if (!verifyPassword(String(currentPw || ''), acct.pass)) return { ok: false, error: 'wrong-password' };
+  if (String(nextPw || '').length < 8) return { ok: false, error: 'weak-password' };
+  acct.pass = hashPassword(nextPw);
+  acct.pwChangedAt = Date.now();
+  await st.setJSON(`acct:${acct.email}`, acct);
+  await killSessionsExcept(st, acct.id, keepToken);
+  return { ok: true };
+}
+
 /* ---------- Password reset ---------- */
 
 /** Delivery: RESEND_API_KEY -> real email; RESET_DELIVERY=return -> link in
@@ -51,13 +80,13 @@ async function deliverResetLink(email, link) {
   const key = process.env.RESEND_API_KEY;
   if (key) {
     try {
-      const from = process.env.RESET_FROM || 'Coach OS <onboarding@resend.dev>';
+      const from = process.env.RESET_FROM || 'CoachMint <onboarding@resend.dev>';
       const r = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
         body: JSON.stringify({
           from, to: [email],
-          subject: 'Coach OS — password reset',
+          subject: 'CoachMint — password reset',
           html: `<p>Click the link below to choose a new password (valid for 1 hour):</p>
                  <p><a href="${link}">${link}</a></p>
                  <p>If you did not request this, ignore this email.</p>`
@@ -69,11 +98,11 @@ async function deliverResetLink(email, link) {
       // Delivery failure used to bubble up as a 500 AFTER the token was stored,
       // leaving the user with an error and no link anywhere. Fall back to the
       // console log so the link is at least retrieable on the server.
-      console.error('[coach-os] reset email delivery failed:', e.message, '— logging link instead');
+      console.error('[coachmint] reset email delivery failed:', e.message, '— logging link instead');
     }
   }
   if ((process.env.RESET_DELIVERY || '').toLowerCase() === 'return') return 'return';
-  console.log(`[coach-os] password reset link for ${email}: ${link}`);
+  console.log(`[coachmint] password reset link for ${email}: ${link}`);
   return 'log';
 }
 

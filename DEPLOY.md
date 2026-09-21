@@ -1,4 +1,4 @@
-# Coach OS — راهنمای استقرار (Vercel + SQLite)
+# CoachMint — راهنمای استقرار (Vercel + SQLite)
 
 معماری جدید: بک‌اند در `backend/` (lib + handlers) است و دیتا به‌صورت پیشفرض در
 **یک فایل SQLite** (`data/sqlite.db`) ذخیره میشود — بدون Neon، بدون Supabase،

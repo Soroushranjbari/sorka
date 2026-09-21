@@ -1,4 +1,4 @@
-// Coach OS — Phase 2 Billing API (simulated payments, server-authoritative).
+// CoachMint — Phase 2 Billing API (simulated payments, server-authoritative).
 //   GET  /api/billing/me      (Bearer) -> {ok, billing:{status,plan,...}, quota:{used,max,plan}, plans:[...]}
 //   POST /api/billing/redeem  (Bearer, {code}) -> {ok, billing, quota} | 400/404/409/410
 //   POST /api/billing/request (Bearer, {planId}) -> {ok, payment:{id,planId,amount,...}} (manual flow)

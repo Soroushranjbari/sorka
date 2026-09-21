@@ -1,4 +1,4 @@
-// Coach OS — portable KV backend (SQLite edition).
+// CoachMint — portable KV backend (SQLite edition).
 // Same get/setJSON/delete surface the Phase-1 code already uses, but the
 // bytes can live in EITHER a single SQLite database file (default — zero
 // cloud services, one `data/sqlite.db` file) or your own PostgreSQL

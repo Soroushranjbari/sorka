@@ -1,4 +1,4 @@
-// Coach OS — route + static-exposure smoke test (no network, no real backend).
+// CoachMint — route + static-exposure smoke test (no network, no real backend).
 //
 // This test exists because of two production bugs that unit tests could not
 // catch:
@@ -206,6 +206,109 @@ try {
   ok('PUT /api/data (coach) -> 200', put.status === 200 && put.d?.ok === true, put.d);
   const get = await j(`/api/data?code=${ws}&rev=${put.d?.rev}`);
   ok('GET /api/data?rev=<current> -> unchanged', get.d?.unchanged === true, get.d);
+
+  console.log('== payload validation + quota (v18.9 hardening) ==');
+  // Malformed payloads used to be stored verbatim; countSeats(CLIENTS:"x")
+  // silently counted 0 seats and BYPASSED the plan quota.
+  const badShape = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, CLIENTS: 'x' } })
+  });
+  ok('PUT with CLIENTS:"x" -> 400 bad-payload', badShape.status === 400 && badShape.d?.error === 'bad-payload', badShape.d);
+  const badClient = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, CLIENTS: [{ name: 'no-id' }] } })
+  });
+  ok('PUT with a client missing id -> 400 bad-payload', badClient.status === 400 && badClient.d?.error === 'bad-payload', badClient.d);
+  const badDB = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, DB: [] } })
+  });
+  ok('PUT with DB as array -> 400 bad-payload', badDB.status === 400 && badDB.d?.error === 'bad-payload', badDB.d);
+
+  // Trial plan caps at 5 seats. The quota check used to run ONLY for
+  // authenticated PUTs — an anonymous student device holding the code could
+  // push a 6-client payload straight past the cap. Now the OWNER's plan is
+  // enforced for every writer.
+  const six = { v: 13, CLIENTS: [1, 2, 3, 4, 5, 6].map((i) => ({ id: i, name: 'C' + i, status: 'Active' })) };
+  const coachOver = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: six })
+  });
+  ok('coach PUT 6 clients on trial -> 402 quota-exceeded', coachOver.status === 402 && coachOver.d?.error === 'quota-exceeded', coachOver.d);
+  const anonOver = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ rev: put.d?.rev, data: six })
+  });
+  ok('anonymous PUT 6 clients -> 402 too (owner plan enforced)', anonOver.status === 402 && anonOver.d?.error === 'quota-exceeded', anonOver.d);
+  // Shrinking is always allowed — even below the cap while over it.
+  const shrink = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, CLIENTS: [{ id: 1, name: 'A', status: 'Active' }] } })
+  });
+  ok('PUT shrinking back to 1 client -> 200', shrink.status === 200 && shrink.d?.ok === true, shrink.d);
+
+  console.log('== password change + session control (v18.9) ==');
+  const pwEmail = signup.d?.coach?.email;
+  // Second session (another "device") for the same coach.
+  const login2 = await j('/api/auth/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: pwEmail, password: 'Str0ngPass!' })
+  });
+  ok('second device login -> 200', login2.status === 200 && !!login2.d?.token, login2.status);
+  const wrongCur = await j('/api/auth/password', {
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ current: 'WrongPass!1', password: 'NewStr0ngPass!' })
+  });
+  ok('password change with wrong current -> 403', wrongCur.status === 403 && wrongCur.d?.error === 'wrong-password', wrongCur.d);
+  const weakPw = await j('/api/auth/password', {
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ current: 'Str0ngPass!', password: 'short' })
+  });
+  ok('password change with weak new -> 400', weakPw.status === 400 && weakPw.d?.error === 'weak-password', weakPw.d);
+  const pwChange = await j('/api/auth/password', {
+    method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ current: 'Str0ngPass!', password: 'NewStr0ngPass!' })
+  });
+  ok('password change -> 200', pwChange.status === 200 && pwChange.d?.ok === true, pwChange.d);
+  const meAfterPw = await j('/api/auth/me', { headers: { authorization: `Bearer ${signup.d?.token}` } });
+  ok('current session survives password change', meAfterPw.status === 200 && meAfterPw.d?.ok === true, meAfterPw.status);
+  const meOther = await j('/api/auth/me', { headers: { authorization: `Bearer ${login2.d?.token}` } });
+  ok('OTHER device session revoked by password change', meOther.status === 401, meOther.status);
+  const loginOld = await j('/api/auth/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: pwEmail, password: 'Str0ngPass!' })
+  });
+  ok('login with OLD password after change -> 401', loginOld.status === 401, loginOld.status);
+  const loginNew = await j('/api/auth/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: pwEmail, password: 'NewStr0ngPass!' })
+  });
+  ok('login with NEW password -> 200', loginNew.status === 200 && !!loginNew.d?.token, loginNew.status);
+  // logout-others: sign in a third device, then revoke everything but caller.
+  const login3 = await j('/api/auth/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email: pwEmail, password: 'NewStr0ngPass!' })
+  });
+  const logoutOthers = await j('/api/auth/logout-others', {
+    method: 'POST', headers: { authorization: `Bearer ${loginNew.d?.token}` }
+  });
+  ok('logout-others -> 200', logoutOthers.status === 200 && logoutOthers.d?.ok === true, logoutOthers.d);
+  const meThird = await j('/api/auth/me', { headers: { authorization: `Bearer ${login3.d?.token}` } });
+  ok('other device revoked by logout-others', meThird.status === 401, meThird.status);
+  const meSelf = await j('/api/auth/me', { headers: { authorization: `Bearer ${loginNew.d?.token}` } });
+  ok('caller session survives logout-others', meSelf.status === 200, meSelf.status);
+  const noTokPw = await j('/api/auth/password', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ current: 'x', password: 'y' })
+  });
+  ok('password change without token -> 401', noTokPw.status === 401, noTokPw.status);
 
   console.log('== static exposure (regression: secrets were downloadable) ==');
   for (const p of ['/data/prod-secrets.txt', '/data/prod-admin-pass.txt', '/data/kv-prod.json',

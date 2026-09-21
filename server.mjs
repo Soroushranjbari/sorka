@@ -1,4 +1,4 @@
-// Coach OS — portable standalone server (zero dependencies beyond better-sqlite3, Node 18+).
+// CoachMint — portable standalone server (zero dependencies beyond better-sqlite3, Node 18+).
 // Serves the static app AND the same API handlers Vercel deploys, using
 // standard Web Request/Response — no framework, no platform lock-in.
 //
@@ -193,7 +193,7 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`Coach OS server → http://localhost:${PORT}`);
+  console.log(`CoachMint server → http://localhost:${PORT}`);
   const pgUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL;
   console.log(`KV backend: ${pgUrl ? 'postgres' : `sqlite (${SQLITE_PATH})`}`);
 });

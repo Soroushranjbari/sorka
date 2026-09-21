@@ -1,6 +1,6 @@
-// Coach OS — Shop checkout API (server-side, keeps ADMIN_API_KEY secret).
+// CoachMint — Shop checkout API (server-side, keeps ADMIN_API_KEY secret).
 // The shop frontend (shop/checkout.html) calls /shop/api/checkout; this module
-// verifies the (demo) payment and forwards to the Coach OS issue-coupon API.
+// verifies the (demo) payment and forwards to the CoachMint issue-coupon API.
 //
 // PRODUCTION: replace simulatePayment() with your gateway flow:
 //   1. POST /shop/api/checkout  -> create order, return gateway redirect URL
@@ -53,7 +53,7 @@ function codeFor(ref, planId) {
 async function issueCoupon(planId, code) {
   if (!COACH_OS_URL || !ADMIN_API_KEY) {
     // Local/demo fallback: mint the code here so the flow still completes.
-    // The code will NOT exist in Coach OS until ADMIN_API_KEY is configured.
+    // The code will NOT exist in CoachMint until ADMIN_API_KEY is configured.
     return { ok: true, demo: true, coupons: [code] };
   }
   let r;
@@ -66,13 +66,13 @@ async function issueCoupon(planId, code) {
   } catch (e) {
     // Network/DNS failure — do NOT record a paid order for a coupon that was
     // never issued (previously the buyer got a code that could never be redeemed).
-    return { ok: false, error: 'coach-os-unreachable' };
+    return { ok: false, error: 'coachmint-unreachable' };
   }
   const d = await r.json().catch(() => null);
   if (r.status === 409 && d && d.error === 'code-exists') {
     return { ok: true, coupons: [code] }; // retry of the same order — fine
   }
-  if (!r.ok || !d || !d.ok) return { ok: false, error: (d && d.error) || `coach-os-${r.status}` };
+  if (!r.ok || !d || !d.ok) return { ok: false, error: (d && d.error) || `coachmint-${r.status}` };
   return d;
 }
 

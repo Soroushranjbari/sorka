@@ -3,7 +3,7 @@
   "private": true,
   "version": "18.1.0",
   "type": "module",
-  "description": "Coach OS — SaaS backend (portable KV: SQLite by default, optional PostgreSQL) with Phase-2 billing. Deploys to Vercel or runs standalone.",
+  "description": "CoachMint — SaaS backend (portable KV: SQLite by default, optional PostgreSQL) with Phase-2 billing. Deploys to Vercel or runs standalone.",
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
