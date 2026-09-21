@@ -370,6 +370,55 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .phone .seg button.on{background:var(--accent);color:var(--accent-ink);box-shadow:none}
 .phone .pbar{background:var(--accent-soft)}
 .phone .pbar i{background:linear-gradient(90deg,var(--accent-deep),var(--accent))}
+/* v18.14 — Fitness+-inspired client app: the phone is ALWAYS true-black with
+   dark-gray cards, regardless of the coach theme (Apple Fitness+ never goes
+   light inside the app). Scoped via CSS vars on .phone so every nested
+   component (chips, inputs, bars) adapts without touching markup. */
+.phone{--surface:#15171C;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
+  --row-h:#1C2026;--seg-bg:#22262D;--seg-on:#2B3038;--kbd-bg:#1C2026;--cal-hd:#1B1F25;--cal-alt:#171A1F;
+  --glass:rgba(5,6,8,.88);--glass2:rgba(5,6,8,.92);--btn-dark-bg:#F5F6F8;--btn-dark-fg:#12151B;
+  background:#000;color:var(--ink)}
+.phone .ccard{box-shadow:none}
+.phone .chip{background:#22262D;color:#E9EAEE;border:1px solid #2E333B}
+.phone .fchip{background:#1C2026;border-color:#2E333B;color:#B4B9C4}
+.phone .fchip.on,.phone .fchip:hover{background:rgba(200,240,75,.1);border-color:var(--accent);color:var(--accent)}
+.phone .inp,.phone .sel,.phone .ta{background:#1C2026;border-color:#2E333B;color:var(--ink)}
+.phone .tbl th{color:#7E8492}.phone .tbl td{border-color:#1F232A}
+.phone .tbl tbody tr[data-act]:hover td:first-child{box-shadow:none}
+/* Fitness+ check-in segments: dark pills, selected = lime outline + lime text */
+.phone .seg{background:transparent;gap:6px}
+.phone .seg button{flex:1;background:#1C2026;border:1.5px solid transparent;border-radius:10px;color:#B4B9C4}
+.phone .seg button.on{background:rgba(200,240,75,.08);border-color:var(--accent);color:var(--accent);box-shadow:none}
+/* Fitness+ bottom tab bar: blurred black, active = lime icon + label, no pill */
+.phone .cnav,.mshell .cnav{background:rgba(8,9,11,.92);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.06)}
+.phone .cnav-it,.mshell .cnav-it{color:#6B7280}
+.phone .cnav-it.on,.mshell .cnav-it.on{color:var(--accent);background:none}
+/* Fitness+ gradient hero card ("Stay Consistent") — layered radial mesh */
+.fhero{position:relative;overflow:hidden;border-radius:20px;padding:18px;color:#fff;border:none;
+  background:radial-gradient(120% 95% at 85% 8%,rgba(235,150,90,.92),transparent 55%),
+             radial-gradient(125% 105% at 12% 92%,rgba(88,68,158,.95),transparent 62%),
+             linear-gradient(135deg,#6D5BA6,#B85B8A 55%,#D98A62)}
+.fhero.pink{background:radial-gradient(120% 95% at 82% 12%,rgba(242,172,120,.88),transparent 55%),
+             radial-gradient(130% 110% at 10% 88%,rgba(186,56,138,.95),transparent 62%),
+             linear-gradient(135deg,#A84B8A,#C25B7C 50%,#E08D5B)}
+.fhero .card-t{color:rgba(255,255,255,.85)}
+.fhero .chip{background:rgba(0,0,0,.22);color:#fff;border:none}
+.fhero .glass{width:100%;justify-content:center;background:rgba(0,0,0,.28);backdrop-filter:blur(6px);color:#fff;border-radius:13px;font-weight:700}
+/* Fitness+ big lime CTA ("Review Plan" / "Let's Go") */
+.btn-lime{width:100%;justify-content:center;background:var(--accent);color:#141A05;font-weight:800;border-radius:14px;padding:13px 16px;font-size:14px}
+.btn-lime:hover{filter:brightness(1.05)}
+/* Fitness+ weekly letter circles (M T W T F S S) */
+.wkc{display:flex;gap:7px}
+.wkc i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12.5px;background:#1C2026;color:#8A90A0;flex:none}
+.wkc i.done{background:rgba(200,240,75,.16);color:var(--accent)}
+.wkc i.today{box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent)}
+/* Fitness+ pill filter row */
+.fpills{display:flex;gap:8px;flex-wrap:wrap}
+.fpill{padding:8px 16px;border-radius:999px;background:#1C2026;color:#B4B9C4;font-size:12.5px;font-weight:700;border:1.5px solid transparent;cursor:pointer}
+.fpill.on{background:rgba(200,240,75,.08);border-color:var(--accent);color:var(--accent)}
+/* Fitness+ big bold section headers inside the app */
+.csec{font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin:4px 2px -2px}
+html[lang="fa"] .csec{letter-spacing:0}
 .phone .cnav{background:#12151B;border-top:1px solid rgba(255,255,255,.07)}
 .phone .cnav-it{color:#8A90A0}
 .phone .cnav-it.on{color:var(--accent);background:rgba(200,240,75,.12)}
@@ -550,6 +599,7 @@ const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
 'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
+'Your Workouts':'تمرین‌های تو','Preview exercises':'پیش‌نمایش حرکات',
 'Help center — docs & shortcuts':'مرکز راهنما — مستندات و میان‌برها','Sign out':'خروج','Signed out':'خارج شدی','Welcome back, Coach':'خوش برگشتی، مربی','Done':'انجام شد','Switch role':'تغییر نقش','Exit demo':'خروج از دمو','Reply':'پاسخ',
 'Add Client':'افزودن شاگرد','Create Workout':'ساخت تمرین','Schedule Session':'زمان‌بندی جلسه','Add Measurement':'ثبت اندازه‌گیری','Create Template':'ساخت قالب','Add Exercise':'افزودن حرکت','Create Note':'یادداشت جدید','Create Nutrition Plan':'ساخت برنامه تغذیه',
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
@@ -4713,7 +4763,13 @@ function cToday(){
   const doneWk=db.workouts.filter(x=>x.status==='completed').length;
   const up=db.sessions.filter(s=>s.day>=TODAY).sort((a,b)=>a.day-b.day||a.start-b.start)[0];
   const notes=NOTES.filter(n=>n.client===c.name&&n.from==='coach'&&n.shared&&!n.arch).slice(0,2);
+  /* v18.14 — Fitness+ weekly letter circles: days with a completed workout glow
+     lime, today gets a lime ring. w.day is a weekday name → index map. */
+  const wkIdx=d=>({Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[d]??-1);
+  const doneDays=new Set(db.workouts.filter(x=>x.status==='completed').map(x=>wkIdx(x.day)).filter(i=>i>=0));
   return `<div class="cbody">
+    <div class="csec">${t('Today')}</div>
+    <div class="wkc">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>`<i class="${doneDays.has(i)?'done':''} ${i===TODAY?'today':''}">${t(d).slice(0,lang==='fa'?1:1)}</i>`).join('')}</div>
     <div class="ccard cstat" style="background:linear-gradient(120deg,var(--accent),var(--acc-mid));border-color:var(--acc-stat);color:var(--accent-ink)">
       <span>🔥 ${nf(c.streak)} ${t('day streak')}</span>
       <span style="color:rgba(26,34,5,.65);font-size:12px;font-weight:600">${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</span>
@@ -4723,15 +4779,16 @@ function cToday(){
       <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button></div>`:''}
     ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
       <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
-    ${w?`<div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border-color:var(--acc-mid2)">
-      <div class="card-t" style="color:var(--accent-ink)">${ic('dumbbell',14)} ${t("Today's Workout")}</div>
-      <div style="font-weight:800;font-size:18px;margin:8px 0 6px;color:var(--accent-ink)">${esc(w.name)}</div>
-      <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px">
-        <span class="chip" style="background:rgba(20,28,5,.12);color:var(--accent-ink)">${t(w.day)}</span>
-        <span class="chip" style="background:rgba(20,28,5,.12);color:var(--accent-ink)">${t(w.dur)}</span>
-        <span class="chip" style="background:rgba(20,28,5,.12);color:var(--accent-ink)">${nf(w.exercises.length)} ${t('exercises')} · ${nf(w.exercises.reduce((a,e)=>a+e.sets,0))} ${t('sets')}</span>
+    ${w?`<div class="fhero">
+      <div class="card-t">${ic('dumbbell',14)} ${t("Today's Workout")}</div>
+      <div style="font-weight:800;font-size:21px;margin:8px 0 6px;letter-spacing:-.02em">${esc(w.name)}</div>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="chip">${t(w.day)}</span>
+        <span class="chip">${t(w.dur)}</span>
+        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(w.exercises.reduce((a,e)=>a+e.sets,0))} ${t('sets')}</span>
       </div>
-      <button class="btn btn-dark" style="width:100%;justify-content:center" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',15)}</button>
+      <button class="btn glass" data-act="open-player" data-wid="${w.id}" style="margin-bottom:8px">${ic('list',15)} ${t('Preview exercises')}</button>
+      <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',15)}</button>
     </div>`
     :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
     ${up?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('clock',14)} ${t('Next session')}</div>
@@ -4756,17 +4813,23 @@ function cToday(){
 }
 function cWorkouts(){
   const c=client(S.cid),db=DB[c.id];
+  /* v18.14 — Fitness+ pill filters (All / Pending / Completed) with counts */
+  const f=S.cwfilter||'All';
+  const list=db.workouts.filter(w=>f==='All'||(f==='Pending'?w.status!=='completed':w.status==='completed'));
+  const cnt=v=>v==='All'?db.workouts.length:db.workouts.filter(w=>v==='Pending'?w.status!=='completed':w.status==='completed').length;
   return `<div class="cbody">
+    <div class="csec">${t('Your Workouts')}</div>
+    <div class="fpills">${['All','Pending','Completed'].map(v=>`<button class="fpill ${f===v?'on':''}" data-act="cwfilter" data-v="${v}">${t(v)}${cnt(v)?` · ${nf(cnt(v))}`:''}</button>`).join('')}</div>
     <div class="ccard"><div class="row" style="justify-content:space-between"><b>${t('Program progress')}</b><span class="chip">${t('Week')} ${nf(c.week)} ${t('of')} 12</span></div>
       <div class="pbar" style="margin-top:8px"><i style="width:${c.week/12*100}%"></i></div></div>
-    ${db.workouts.length?db.workouts.map(w=>{const total=w.exercises.reduce((a,e)=>a+e.sets,0);
+    ${list.length?list.map(w=>{const total=w.exercises.reduce((a,e)=>a+e.sets,0);
     return `<div class="ccard" ${w.status==='assigned'?'style="border-color:var(--acc-line2)"':''}>
       <div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px">
         <div style="min-width:0"><b>${esc(w.name)}</b>
         <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip">${t(w.day)}</span><span class="chip">${t(w.dur)}</span><span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(total)} ${t('sets')}</span></div></div>
         ${w.status==='completed'?`<span class="bdg bdg-green">${t('Completed')}</span>`:`<span class="bdg bdg-lime">${t('Pending')}</span>`}
       </div>
-      <button class="btn ${w.status==='completed'?'btn-outline':'btn-primary'} btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="open-player" data-wid="${w.id}">${w.status==='completed'?t('View summary'):t('Start Workout')}</button>
+      <button class="btn ${w.status==='completed'?'btn-outline':'btn-lime'}" style="${w.status==='completed'?'width:100%;justify-content:center;margin-top:12px;padding:10px 16px':''}margin-top:12px" data-act="open-player" data-wid="${w.id}">${w.status==='completed'?t('View summary'):t('Start Workout')} ${w.status!=='completed'?ic('arrowR',15):''}</button>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
   </div>`;
@@ -4776,7 +4839,7 @@ function cProgress(){
   const c=client(S.cid);
   const photos=(DB[c.id].photos||[]).filter(p=>p.ok!==false);
   return `<div class="cbody">
-    <div class="card-t" style="margin:2px">${ic('chart',14)} ${t('My Progress')}</div>
+    <div class="csec">${t('My Progress')}</div>
     ${c.targetW?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('target',14)} ${t('My Goal')}</div>
       <div class="row" style="justify-content:space-between;font-size:12.5px;margin-top:6px"><span>${uwS(c.weight||null)} → <b>${uwS(c.targetW)}</b></span>${c.targetDate?`<span class="muted" style="font-size:11.5px">${esc(c.targetDate)}</span>`:''}</div>
       <div class="pbar" style="margin-top:6px"><i style="width:${goalPct(c)}%"></i></div></div>`:''}
@@ -4808,7 +4871,7 @@ function cNutrition(){
   const tg=day.type==='train'?p.train:p.rest;
   const s=daySum(day.meals);
   return `<div class="cbody">
-    <div class="card-t" style="margin:2px">${ic('utensils',14)} ${t('Nutrition Plan')}</div>
+    <div class="csec">${t('Nutrition Plan')}</div>
     <div class="ccard" style="border-color:var(--acc-line)">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:6px">
         <b style="font-size:14px">${t(p.name)}</b>
@@ -5894,6 +5957,7 @@ document.addEventListener('click',e=>{
     case 'pref-sw':{setP(PREFS,el.dataset.k,el.checked);savePrefs();toast('Setting saved');break}
     case 'theme':{PREFS.theme=el.dataset.v;savePrefs();applyTheme();render();toast('Theme applied');break}
     case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
+    case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
     case 'accent':{PREFS.accent=+el.dataset.ix;savePrefs();applyAccent(PREFS.accent);render();toast('Accent color updated');break}
     case 'unit':{PREFS.units=el.dataset.u;savePrefs();render();toast(t('Units set to')+' '+t(PREFS.units==='Metric'?'Metric (kg · cm)':'Imperial (lb · in)'));break}
     case 'pose':S.pose=el.dataset.p;render();break;
