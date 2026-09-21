@@ -30,6 +30,11 @@ const child = spawn(process.execPath, ['server.mjs'], {
     ...process.env,
     PORT: String(PORT), HOST: '127.0.0.1',
     SQLITE_PATH: join(dir, 'kv-test.sqlite.db'), NODE_ENV: 'test',
+    // Hermetic: the suite tests the SQLITE backend. A developer .env with a
+    // live DATABASE_URL would otherwise flip server.mjs to Postgres (and, if
+    // that DB is unreachable, fail ~30 tests with server-error). Empty string
+    // beats the .env loader too — env.mjs skips keys already defined.
+    DATABASE_URL: '', POSTGRES_URL: '', PGURL: '',
     // The shop account proxy is server-to-server — point it back at this server
     // so the login/session round-trip is exercised for real.
     COACH_OS_URL: BASE,
