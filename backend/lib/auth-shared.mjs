@@ -9,6 +9,7 @@ import {
 import { randomBytes } from 'node:crypto';
 import { adminEmails, normCoupon, redeemForAccount } from './billing.mjs';
 import { readJsonCapped, tooLarge, badJson, withLock } from './guard.mjs';
+import { sendMail, welcomeMail } from './mail.mjs';
 
 export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
@@ -77,30 +78,18 @@ export async function changePassword(st, acct, currentPw, nextPw, keepToken) {
 /** Delivery: RESEND_API_KEY -> real email; RESET_DELIVERY=return -> link in
  *  the API response (self-host/dev only); otherwise -> server console log. */
 async function deliverResetLink(email, link) {
-  const key = process.env.RESEND_API_KEY;
-  if (key) {
-    try {
-      const from = process.env.RESET_FROM || 'CoachMint <onboarding@resend.dev>';
-      const r = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-        body: JSON.stringify({
-          from, to: [email],
-          subject: 'CoachMint — password reset',
-          html: `<p>Click the link below to choose a new password (valid for 1 hour):</p>
-                 <p><a href="${link}">${link}</a></p>
-                 <p>If you did not request this, ignore this email.</p>`
-        })
-      });
-      if (!r.ok) throw new Error(`resend ${r.status}`);
-      return 'email';
-    } catch (e) {
-      // Delivery failure used to bubble up as a 500 AFTER the token was stored,
-      // leaving the user with an error and no link anywhere. Fall back to the
-      // console log so the link is at least retrieable on the server.
-      console.error('[coachmint] reset email delivery failed:', e.message, '— logging link instead');
-    }
-  }
+  const mode = await sendMail({
+    to: email,
+    subject: 'CoachMint — password reset',
+    html: `<div style="font-family:Tahoma,Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+             <p>Click the link below to choose a new password (valid for 1 hour):</p>
+             <p><a href="${link}">${link}</a></p>
+             <p dir="rtl" style="text-align:right;color:#4B5563">برای انتخاب رمز تازه روی پیوند بالا بزنید (یک ساعت اعتبار دارد). اگر این درخواست را نکرده‌اید، این ایمیل را نادیده بگیرید.</p>
+             <p style="color:#9CA3AF;font-size:12px">If you did not request this, ignore this email.</p>
+           </div>`
+  });
+  if (mode === 'email') return 'email';
+  if (mode === 'failed') console.error('[coachmint] reset email delivery failed — logging link instead');
   if ((process.env.RESET_DELIVERY || '').toLowerCase() === 'return') return 'return';
   console.log(`[coachmint] password reset link for ${email}: ${link}`);
   return 'log';
@@ -213,6 +202,10 @@ export async function signup(req, st) {
     return { token, coach: publicCoach(acct), workspace: publicWs(ws), acct };
   });
   if (out.err) return out.err;
+  // Welcome email — fire-and-forget semantics via sendMail (never throws),
+  // skipped entirely when RESEND_API_KEY is not configured. A mail outage
+  // must never fail a signup that already succeeded server-side.
+  welcomeMail(out.acct.name, email, process.env.COACH_OS_URL || '').catch(() => {});
   const resp = {
     ok: true, token: out.token,
     coach: out.coach,

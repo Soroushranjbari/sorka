@@ -43,7 +43,8 @@ environment variables always win over the file.
 | `ADMIN_API_KEY` | shop → issue-coupon server-to-server key |
 | `COACH_OS_URL` | public app URL (shop checkout needs it) |
 | `AI_API_KEY` | optional OpenRouter key for the AI assistant |
-| `RESEND_API_KEY` | optional password-reset email delivery |
+| `RESEND_API_KEY` | optional email delivery: welcome mail (signup), purchase confirmation with the activation code (shop), password reset |
+| `MAIL_FROM` | sender identity, default `CoachMint <onboarding@resend.dev>` (test-only — verify your domain at resend.com/domains for production) |
 
 ## Production notes
 

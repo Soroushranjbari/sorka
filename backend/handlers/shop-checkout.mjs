@@ -15,6 +15,7 @@
 import { createHash } from 'node:crypto';
 import { kv } from '../lib/db.mjs';
 import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
+import { couponMail } from '../lib/mail.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || '';
@@ -114,6 +115,13 @@ export default async (req) => {
   if (!pay.ok) return j(400, { ok: false, error: pay.error });
   const out = await issueCoupon(planId, codeFor(pay.ref, planId));
   if (!out.ok) return j(502, { ok: false, error: out.error });
+  // Purchase confirmation with the activation code — the buyer keeps the code
+  // even if they close the tab. Real email only when RESEND_API_KEY is set
+  // (demo orders stay silent); sendMail never throws so checkout is unaffected.
+  if (!out.demo) {
+    const planLabel = { basic: 'Basic', professional: 'Professional', club: 'Club' }[planId] || planId;
+    couponMail(body?.name, email, out.coupons[0], planLabel, COACH_OS_URL).catch(() => {});
+  }
   // Record the order (buyer specs + coupon) for the account page & support.
   try {
     const order = {
