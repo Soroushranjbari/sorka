@@ -58,7 +58,9 @@ input,select,textarea{font:inherit;color:inherit}
 ::placeholder{color:var(--ink3)}
 h1,h2,h3{letter-spacing:-.02em}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;font-weight:600;font-size:13.5px;border:1px solid transparent;transition:.15s;white-space:nowrap}
-.btn-primary{background:var(--accent);color:var(--accent-ink)}.btn-primary:hover{filter:brightness(.95)}
+/* v18.11 design pass — brand lime front and center: gradient primary with a
+   soft glow + hover lift (both themes; accent vars adapt automatically). */
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:var(--accent-ink);box-shadow:0 4px 14px -6px rgba(143,181,30,.55)}.btn-primary:hover{filter:brightness(1.04);transform:translateY(-1px);box-shadow:0 7px 20px -6px rgba(143,181,30,.65)}
 .btn-dark{background:var(--btn-dark-bg);color:var(--btn-dark-fg)}.btn-dark:hover{filter:brightness(.94)}
 .btn-outline{background:var(--surface);border-color:var(--line);color:var(--ink)}.btn-outline:hover{border-color:var(--ink3);background:var(--row-h)}
 .btn-ghost{color:var(--ink2)}.btn-ghost:hover{background:var(--line2);color:var(--ink)}
@@ -93,8 +95,10 @@ body.sb-c .brand-tag{display:none}
 .nav-sec{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#565D6B;padding:14px 10px 6px;white-space:nowrap}
 .nav-it{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;font-size:13.5px;font-weight:500;color:#A9AFBD;margin-bottom:2px;cursor:pointer;position:relative;white-space:nowrap}
 .nav-it:hover{background:rgba(255,255,255,.06);color:#fff}
-.nav-it.on{background:rgba(200,240,75,.13);color:var(--accent)}
-.nav-it.on::before{content:'';position:absolute;inset-inline-start:-10px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--accent)}
+/* v18.11 — active nav = solid lime pill (was a faint 13% tint nobody saw) */
+.nav-it.on,.nav-it.on:hover{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.nav-it.on::before{content:none}
+.nav-it.on .nbadge{background:rgba(26,34,5,.22);color:var(--accent-ink)}
 .nbadge{margin-inline-start:auto;font-size:10px;font-weight:700;background:var(--accent);color:var(--accent-ink);padding:1px 7px;border-radius:99px}
 body.sb-c .nbadge{position:absolute;top:2px;inset-inline-end:6px;padding:1px 5px;margin:0}
 .side-foot{padding:10px;border-top:1px solid rgba(255,255,255,.07)}
@@ -116,19 +120,26 @@ body.sb-c .sprof{justify-content:center}
 .content{padding:24px;max-width:1400px;width:100%;margin:0 auto;flex:1;animation:fade .2s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}}
 .page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-.page-h h1{font-size:22px;font-weight:750}
-.page-h .sub{margin-top:3px}
+/* v18.11 — page title scale + lime kicker bar above every coach page header */
+.page-h h1{font-size:26px;font-weight:800}
+.page-h h1::before{content:'';display:block;width:34px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--acc-mid));margin-bottom:8px}
+.page-h .sub{margin-top:4px}
 .av{border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;flex:none}
 .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .tbl th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);font-weight:700;text-align:start;padding:10px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
 .tbl td{padding:12px 16px;border-bottom:1px solid var(--line2);vertical-align:middle}
 .tbl tbody tr:last-child td{border-bottom:none}
 .tbl tbody tr[data-act]{cursor:pointer}
+/* v18.11 — Stripe-style row hover: soft wash + lime inset bar on the start edge */
+.tbl tbody tr[data-act]{position:relative}
 .tbl tbody tr[data-act]:hover{background:var(--row-h)}
+.tbl tbody tr[data-act]:hover td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+html[dir="rtl"] .tbl tbody tr[data-act]:hover td:first-child{box-shadow:inset -3px 0 0 var(--accent)}
 .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:18px 0 20px;overflow-x:auto;scrollbar-width:none}
-.tab{padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--ink2);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab{padding:8px 14px;font-size:13.5px;font-weight:600;color:var(--ink2);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;border-radius:9px 9px 0 0}
 .tab:hover{color:var(--ink);background:var(--line2)}
-.tab.on{color:var(--ink);border-color:var(--accent-deep);background:none}
+/* v18.11 — active tab gets a soft lime wash above the underline (Linear-style) */
+.tab.on{color:var(--accent-deep);border-color:var(--accent-deep);background:linear-gradient(to top,var(--accent-soft),transparent 70%)}
 .mwrap{position:relative}
 .menu{position:absolute;inset-inline-end:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--sh-2);padding:6px;min-width:230px;z-index:80;display:none}
 .mwrap.open .menu{display:block;animation:fade .12s}
@@ -149,7 +160,7 @@ body.sb-c .sprof{justify-content:center}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
 .stat{padding:17px 19px;display:flex;flex-direction:column;gap:2px}
 .stat .k{font-size:12.5px;font-weight:600;color:var(--ink2)}
-.stat .v{font-size:26px;font-weight:800;letter-spacing:-.03em}
+.stat .v{font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .delta{font-size:12px;font-weight:600}
 .delta.up{color:var(--green)}.delta.down{color:var(--red)}
 .grid2{display:grid;grid-template-columns:2fr 1fr;gap:14px;align-items:start}
@@ -187,7 +198,7 @@ body.sb-c .sprof{justify-content:center}
 html[lang="fa"] .sec-t{letter-spacing:0}
 .stat{transition:transform .18s,box-shadow .18s}
 .stat:hover{transform:translateY(-2px);box-shadow:var(--sh-2)}
-.stat .icw{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);flex:none}
+.stat .icw{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-deep);flex:none}
 button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible,.fchip:focus-visible{outline:2px solid var(--accent-deep);outline-offset:2px;border-radius:8px}
 *::-webkit-scrollbar{width:10px;height:10px}
 *::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid var(--bg)}
@@ -985,7 +996,9 @@ function evState(ev){
   return{k:'future',b:'bdg-blue',l:'Scheduled'};
 }
 const sparkBars=(arr,c='var(--accent-deep)')=>{const mx=Math.max(...arr,1);
-return `<svg width="86" height="26" viewBox="0 0 86 26">${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2" fill="${c}" opacity="${i===arr.length-1?1:.3}"/>`}).join('')}</svg>`};
+/* v18.11 — Strava-style gradient bars: defs gradient + rounded caps */
+const gid='sg'+Math.random().toString(36).slice(2,7);
+return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"/>`}).join('')}</svg>`};
 const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
 const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
 const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
@@ -2305,7 +2318,9 @@ function barChart(d,o={}){
   const labs=(o.labels||[]).map((l,i)=>`<text x="${(p+(i+.5)*(w-2*p)/d.length).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10" fill="var(--ink3)">${l}</text>`).join('');
   return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">${g}${bars}${labs}</svg>`;
 }
-const ring=(p,s=76)=>{const r=(s-10)/2,c=2*Math.PI*r;return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--accent-deep)" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"/></svg>`};
+const ring=(p,s=76)=>{const r=(s-10)/2,c=2*Math.PI*r;const gid='rg'+Math.random().toString(36).slice(2,7);
+/* v18.11 — Apple-Fitness-style gradient ring */
+return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"/></svg>`};
 
 /* ================= LOGIN ================= */
 function vLogin(){
@@ -2422,10 +2437,10 @@ function vDash(){
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
-    ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users'],
-    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check'],
-    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(today.length-doneT)} ${t('Upcoming')}${missT?` · ✗ ${nf(missT)}`:''}`,sparkBars(perDayCnt),'calendar'],
-    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock']];
+    ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users','accent'],
+    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check','green'],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(today.length-doneT)} ${t('Upcoming')}${missT?` · ✗ ${nf(missT)}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
+    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple']];
   const attRow=it=>`<div class="tl-row">
     <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,13)}</span>
     <div style="flex:1;min-width:0"><div style="font-weight:600">${t(it.name)} <span class="muted" style="font-weight:500">· ${t(it.why)}</span></div><div class="muted" style="font-size:12.5px">${it.d}</div></div>
@@ -2437,8 +2452,8 @@ function vDash(){
   <div class="page-h"><div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${fmtFullDate(TDATE)}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
   <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
   <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div></div>
-  <div class="stats">${stats.map(([k,v,sub,vis,i])=>`
-    <div class="card stat"><div class="row"><span class="icw">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
+  <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
+    <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
     <span class="muted" style="font-size:11.5px;font-weight:600">${sub}</span>${vis}</div></div>`).join('')}
   </div>
