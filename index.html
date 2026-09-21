@@ -120,6 +120,17 @@ body.sb-c .sprof{justify-content:center}
 .content{padding:24px;max-width:1400px;width:100%;margin:0 auto;flex:1;animation:fade .2s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}}
 .page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+/* v18.11 tier-3 — dashboard hero banner (dark gradient + lime glow, both themes) */
+.hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#12151B 0%,#1C2530 55%,#27351B 100%);border-radius:18px;padding:24px 26px;margin-bottom:20px;box-shadow:var(--sh-2)}
+.hero::after{content:'';position:absolute;inset-inline-end:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(200,240,75,.28),transparent 70%);pointer-events:none}
+.hero-k{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+html[lang="fa"] .hero-k{letter-spacing:0}
+.hero h1{color:#fff;font-size:27px;font-weight:800;margin:4px 0 5px}
+.hero .sub{color:#A9AFBD;font-size:13.5px}
+.hero .btn-outline{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
+.hero .btn-outline:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.32)}
+.hero .row{position:relative;z-index:1}
+@media(max-width:760px){.hero{padding:18px}.hero h1{font-size:22px}}
 /* v18.11 — page title scale + lime kicker bar above every coach page header */
 .page-h h1{font-size:26px;font-weight:800}
 .page-h h1::before{content:'';display:block;width:34px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--acc-mid));margin-bottom:8px}
@@ -249,10 +260,13 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .mday.click:hover{background:var(--row-h)}
 .mdots{display:flex;gap:3px;margin-top:8px;flex-wrap:wrap}
 .mdot{width:7px;height:7px;border-radius:50%}
-.exb{display:flex;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:10px;box-shadow:var(--sh-1)}
+.exb{display:flex;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:10px;box-shadow:var(--sh-1);transition:border-color .15s,box-shadow .15s,transform .15s}
+/* v18.11 tier-3 — builder blocks feel like cards: lime edge + numbered lime badge + hover lift */
+.exb{border-inline-start:3px solid var(--acc-line)}
+.exb:hover{border-color:var(--acc-line);box-shadow:var(--sh-2);transform:translateY(-1px)}
 .exb.dragging{opacity:.35}.exb.over{border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)}
 .grip{cursor:grab;color:var(--ink3);padding:6px 0}
-.ex-num{width:26px;height:26px;border-radius:8px;background:var(--line2);display:grid;place-items:center;font-weight:700;font-size:12px;color:var(--ink2);flex:none;margin-top:4px}
+.ex-num{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--acc-mid));display:grid;place-items:center;font-weight:800;font-size:12px;color:var(--accent-ink);flex:none;margin-top:4px}
 .ex-main{flex:1;min-width:0}
 .mi{display:flex;flex-direction:column;gap:3px}
 .mi span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3)}
@@ -996,9 +1010,9 @@ function evState(ev){
   return{k:'future',b:'bdg-blue',l:'Scheduled'};
 }
 const sparkBars=(arr,c='var(--accent-deep)')=>{const mx=Math.max(...arr,1);
-/* v18.11 — Strava-style gradient bars: defs gradient + rounded caps */
+/* v18.11 — Strava-style gradient bars + native per-bar tooltips (day: value) */
 const gid='sg'+Math.random().toString(36).slice(2,7);
-return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"/>`}).join('')}</svg>`};
+return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"><title>${t(DAYS[i]||'')} · ${nf(v)}</title></rect>`}).join('')}</svg>`};
 const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
 const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
 const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
@@ -2320,7 +2334,7 @@ function barChart(d,o={}){
 }
 const ring=(p,s=76)=>{const r=(s-10)/2,c=2*Math.PI*r;const gid='rg'+Math.random().toString(36).slice(2,7);
 /* v18.11 — Apple-Fitness-style gradient ring */
-return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"/></svg>`};
+return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"><title>${p}%</title></circle></svg>`};
 
 /* ================= LOGIN ================= */
 function vLogin(){
@@ -2449,9 +2463,11 @@ function vDash(){
      :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
-  <div class="page-h"><div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")} · ${fmtFullDate(TDATE)}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
-  <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
-  <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div></div>
+  <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')} 👋</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
+    <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
+    <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
+  </div></div>
   <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
     <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
@@ -3584,9 +3600,11 @@ function nPlanner(){
 }
 function nMealCard(p,day,m,mi){
   const tot=daySum([m]);
-  return `<div class="card" style="padding:14px 16px">
+  /* v18.11 tier-3 — meal-type color coding (amber/green/blue/purple, lime fallback) */
+  const MC={Breakfast:['var(--amber-soft)','var(--amber)'],Lunch:['var(--green-soft)','var(--green)'],Dinner:['var(--blue-soft)','var(--blue)'],Snack:['var(--purple-soft)','var(--purple)']}[m.name]||['var(--accent-soft)','var(--accent-deep)'];
+  return `<div class="card" style="padding:14px 16px;border-top:3px solid ${MC[1]}">
     <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">
-      <div class="row"><span class="mtime">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(m.note))}</span>`:''}</div>
+      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(m.note))}</span>`:''}</div>
       <div class="row" style="gap:2px">
         <button class="btn btn-ghost btn-icon" data-act="mealup" data-mi="${mi}">${ic('chevL',14)}</button>
         <button class="btn btn-ghost btn-icon" data-act="mealdn" data-mi="${mi}">${ic('chevR',14)}</button>
