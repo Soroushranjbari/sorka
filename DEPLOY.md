@@ -46,6 +46,10 @@ npm run db:migrate
    - `ADMIN_API_KEY` — کلید سرور-به-سرور فروشگاه (۲۴+ کاراکتر hex)
    - `COACH_OS_URL` — `https://<project>.vercel.app` (بعد از اولین دیپلوی)
    - `NODE_ENV=production`
+   - اختیاری — `RESEND_API_KEY` + `MAIL_FROM`: ارسال ایمیل‌های برند CoachMint
+     (خوش‌آمدگویی بعد از ثبت‌نام، تأیید خرید + کد فعال‌سازی، بازیابی رمز).
+     بدون این کلید هیچ ایمیلی ارسال نمیشود؛ برای دامنه اختصاصی اول دامنه را در
+     resend.com/domains تأیید کنید.
 3. Deploy.
 
 ### نکته مهم درباره دیتا روی ورکسل
