@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checkout — Coach OS</title>
-<meta name="description" content="Complete your Coach OS purchase and get your activation code.">
+<title>Checkout — CoachMint</title>
+<meta name="description" content="Complete your CoachMint purchase and get your activation code.">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="%23050506"/><g transform="translate(10 0) skewX(-10)"><path fill="white" d="M99 16H47C24 16 10 31 10 52V68C10 89 24 104 47 104H99L85 88H52C43 88 38 82 38 73V47C38 38 43 32 52 32H85Z"/><path fill="white" d="M38 58L98 47L90 68H38Z"/></g></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,7 +105,7 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
 <header>
   <a class="logo" href="/shop/">
     <svg class="mark" viewBox="0 0 120 100" style="width:21px;height:21px"><path fill="currentColor" d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z"/></svg>
-    <span class="wm">COACH <b>OS</b></span>
+    <span class="wm">COACHMINT</span>
   </a>
   <div style="display:flex;align-items:center;gap:14px">
     <button id="langToggle" type="button">FA</button>
@@ -180,14 +180,14 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
     </div>
   </div>
 </main>
-<footer><span>© 2026 Coach OS</span><span id="t-secure">🔒 Secure checkout</span></footer>
+<footer><span>© 2026 CoachMint</span><span id="t-secure">🔒 Secure checkout</span></footer>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
 <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></symbol>
 </defs></svg>
 <script>
 /* ====== CONFIG ======
-   API base of the Coach OS deployment (same origin when served by server.mjs).
+   API base of the CoachMint deployment (same origin when served by server.mjs).
    The ADMIN_API_KEY must NEVER live here — coupon issuing happens server-side
    (see shop/checkout-api.mjs example). This page calls that backend, which
    forwards to /api/billing/issue-coupon. */
@@ -225,7 +225,7 @@ const FA={
   'Copied ✓':'کپی شد ✓','month':'ماه',
   'Could not reach server':'ارتباط با سرور برقرار نشد',
   'Press Ctrl+C to copy':'برای کپی Ctrl+C را بزنید',
-  'Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در Coach OS ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.',
+  'Demo mode: this code is NOT registered in CoachMint yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در CoachMint ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.',
   'Start free trial':'شروع آزمایش رایگان','14 days':'۱۴ روز','Free':'رایگان',
   'Create your free account':'ساخت حساب رایگان','14 days of full access — no credit card required.':'۱۴ روز دسترسی کامل — بدون نیاز به کارت بانکی.',
   'No payment needed — fill in your details and your 14-day free account is created instantly.':'پرداختی لازم نیست — مشخصاتتان را وارد کنید تا حسابتان با ۱۴ روز دسترسی رایگان فوراً ساخته شود.',
@@ -388,7 +388,7 @@ $('payBtn').addEventListener('click',async()=>{
     // when COACH_OS_URL / ADMIN_API_KEY are not configured — the code then
     // exists nowhere, so "Payment successful / your plan unlocks instantly"
     // would be a lie. Surface it instead of hiding it.
-    if(d.demo)showErr(t('Demo mode: this code is NOT registered in Coach OS yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.'));
+    if(d.demo)showErr(t('Demo mode: this code is NOT registered in CoachMint yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.'));
     const okBox=$('acct-ok');
     if(acct==='created'){
       $('steps').style.display='none';

@@ -1,4 +1,4 @@
-// Coach OS — Phase 1 Workspace Data API (tenant-isolated).
+// CoachMint — Phase 1 Workspace Data API (tenant-isolated).
 //   GET /api/data?code=XXXX            -> {ok, rev, data|null, exists, owned, mine, legacy?}
 //   PUT /api/data?code=XXXX {rev,data} -> {ok, rev, mine}
 // Auth OPTIONAL (Bearer coach-token): students sync by code alone, but only
@@ -15,6 +15,36 @@ import { readJsonCapped, tooLarge, badJson, secure, withLock } from '../lib/guar
 /* Workspace payload cap (default 5 MB — hundreds of clients with workouts,
    notes and measurements fit comfortably). Override with DATA_MAX_BYTES. */
 const DATA_MAX_BYTES = Number(process.env.DATA_MAX_BYTES) || 5_000_000;
+
+/* Minimal payload shape validation. The workspace blob is stored verbatim and
+   countSeats() reads data.CLIENTS — a malformed payload (CLIENTS:"x") used to
+   silently count 0 seats and BYPASS the plan quota. Array-typed fields must be
+   arrays, DB must be a plain object, and every client needs an id (the whole
+   merge/tenant model keys on it). */
+const ARRAY_FIELDS = ['CLIENTS', 'EVENTS', 'MSGS', 'NOTES', 'TEMPLATES', 'FILES', 'BUILDER',
+  'NPLANS', 'MTPL', 'PTPL', 'NHIST', 'ACTIVITY', 'NOTIFS', 'FOODS', 'PACKS', 'MSGTPL', 'CEXS'];
+function validatePayload(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return 'bad-payload';
+  for (const k of ARRAY_FIELDS) {
+    if (data[k] !== undefined && !Array.isArray(data[k])) return 'bad-payload';
+  }
+  if (data.DB !== undefined && (typeof data.DB !== 'object' || data.DB === null || Array.isArray(data.DB))) return 'bad-payload';
+  if (Array.isArray(data.CLIENTS) && data.CLIENTS.some((c) => !c || typeof c !== 'object' || c.id == null)) return 'bad-payload';
+  return null;
+}
+
+/* The workspace OWNER's account — quota/subscription are properties of the
+   workspace's owner, not of whoever happens to hold a Bearer token (students
+   sync anonymously by design). */
+async function ownerAccount(st, ws) {
+  if (!ws || !ws.owner) return null;
+  const id = String(ws.owner).replace(/^coach:/, '');
+  try {
+    const ptr = await st.get(`acct-by-id:${id}`, { type: 'json' });
+    if (ptr && ptr.email) return await st.get(`acct:${ptr.email}`, { type: 'json' });
+  } catch {}
+  return null;
+}
 
 const legacyStore = () => legacyBlobs();
 
@@ -86,6 +116,8 @@ async function handlePutLocked(st, req, code) {
   if (bad) return badJson();
   const data = body && body.data;
   if (!data || typeof data !== 'object') return j(400, { ok: false, error: 'missing data' });
+  const shapeErr = validatePayload(data);
+  if (shapeErr) return j(400, { ok: false, error: shapeErr });
   const want = Number(body.rev) || 0;
   const coach = await coachOf(st, req);
   const now = Date.now();
@@ -113,24 +145,24 @@ async function handlePutLocked(st, req, code) {
     if (ws.owner && coach && ws.owner !== ownerOf(coach)) {
       return j(403, { ok: false, error: 'foreign' });
     }
-    // Phase-2 server quota: count seats in the INCOMING payload (client could
-    // have added clients offline); anonymous student writes bypass the coach
-    // seat check but expired coaches are read-only (except deletions/shrinks).
-    if (coach) {
-      const acc = await accountById(st, coach.id);
-      if (acc) {
-        const access = accessOf(acc);
-        const incoming = countSeats(data);
-        const current = await metaOf(st, ws).then((m) => countSeats(m && m.data));
-        if (access.status === 'expired' || access.status === 'suspended') {
-          if (incoming >= current) {
-            return j(402, { ok: false, error: access.status === 'suspended' ? 'sub-suspended' : 'sub-expired' });
-          }
+    // Phase-2 server quota — enforced against the WORKSPACE OWNER's plan for
+    // EVERY writer. It used to run only for authenticated PUTs, so a student
+    // device holding just the code could push a payload past the plan cap
+    // (or keep growing a suspended coach's workspace). Shrinking is always
+    // allowed: an expired/suspended coach can still archive clients.
+    const ownerAcc = await ownerAccount(st, ws);
+    if (ownerAcc) {
+      const access = accessOf(ownerAcc);
+      const incoming = countSeats(data);
+      const current = await metaOf(st, ws).then((m) => countSeats(m && m.data));
+      if (access.status === 'expired' || access.status === 'suspended') {
+        if (incoming >= current) {
+          return j(402, { ok: false, error: access.status === 'suspended' ? 'sub-suspended' : 'sub-expired' });
         }
-        const plan = planOf(acc);
-        if (incoming > plan.maxClients && incoming >= current) {
-          return j(402, { ok: false, error: 'quota-exceeded', max: plan.maxClients, used: incoming });
-        }
+      }
+      const plan = planOf(ownerAcc);
+      if (incoming > plan.maxClients && incoming >= current) {
+        return j(402, { ok: false, error: 'quota-exceeded', max: plan.maxClients, used: incoming });
       }
     }
     const cur = await metaOf(st, ws);

@@ -1,6 +1,6 @@
 {
-  "name": "Coach OS — Coach & Client Workspace",
-  "short_name": "Coach OS",
+  "name": "CoachMint — Coach & Client Workspace",
+  "short_name": "CoachMint",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -1,4 +1,4 @@
-// Coach OS — Phase 1 Auth API: me/logout/claim + router.
+// CoachMint — Phase 1 Auth API: me/logout/claim + router.
 import {
   store, j, normCode, bearerOf,
   sessionOf, accountById, accessOf, ownerOf,
@@ -6,7 +6,8 @@ import {
 } from '../lib/saas.mjs';
 import {
   signup, login, publicWs, importLegacy,
-  requestPasswordReset, performPasswordReset
+  requestPasswordReset, performPasswordReset,
+  changePassword, killSessionsExcept
 } from '../lib/auth-shared.mjs';
 import { legacyBlobs } from '../lib/saas.mjs';
 import { rateLimit, ipOf, originOf, readJsonCapped, tooMany, tooLarge, badJson, secure, withLock } from '../lib/guard.mjs';
@@ -14,14 +15,16 @@ import { rateLimit, ipOf, originOf, readJsonCapped, tooMany, tooLarge, badJson, 
 const legacyStore = () => legacyBlobs();
 
 /* Rate limits (per IP, fixed window):
-   login 10/min · signup 5/min · forgot 3/10min · reset 10/10min · claim 10/min */
+   login 10/min · signup 5/min · forgot 3/10min · reset 10/10min · claim 10/min
+   · profile/password 10/min (logout-others reuses the profile bucket) */
 const RL = {
   login: [10, 60_000],
   signup: [5, 60_000],
   forgot: [3, 600_000],
   reset: [10, 600_000],
   claim: [10, 60_000],
-  profile: [10, 60_000]
+  profile: [10, 60_000],
+  password: [10, 60_000]
 };
 function limited(req, kind) {
   const [limit, win] = RL[kind];
@@ -42,6 +45,45 @@ async function logout(req, st) {
   const t = bearerOf(req);
   if (t) { try { await st.delete(`sess:${t}`); } catch {} }
   return j(200, { ok: true });
+}
+
+/** POST /api/auth/password {current, password} — change the signed-in
+ *  coach's password. The Settings → Security form used to be a dead toast:
+ *  the ONLY way to change a password was the forgot/reset email round-trip.
+ *  Verifies the current password, then signs out every OTHER device (the
+ *  current session token is kept so the tab stays logged in). */
+async function password(req, st) {
+  const lim = limited(req, 'password');
+  if (lim) return lim;
+  const token = bearerOf(req);
+  const s = await sessionOf(st, token);
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const acct = await accountById(st, s.coachId);
+  if (!acct) return j(401, { ok: false, error: 'unauthorized' });
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 10_000);
+  if (big) return tooLarge(10_000);
+  if (bad) return badJson();
+  return withLock(`acct:${acct.email}`, async () => {
+    const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
+    const out = await changePassword(st, cur, body?.current, body?.password, token);
+    if (!out.ok) {
+      return j(out.error === 'wrong-password' ? 403 : 400, { ok: false, error: out.error });
+    }
+    return j(200, { ok: true, message: 'Password updated — other devices were signed out' });
+  });
+}
+
+/** POST /api/auth/logout-others — revoke every session of this coach except
+ *  the caller's own. Pairs with the "Sign out others" button in Settings →
+ *  Security (which was also a dead toast). */
+async function logoutOthers(req, st) {
+  const lim = limited(req, 'profile');
+  if (lim) return lim;
+  const token = bearerOf(req);
+  const s = await sessionOf(st, token);
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  await killSessionsExcept(st, s.coachId, token);
+  return j(200, { ok: true, message: 'Signed out of all other devices' });
 }
 
 /** POST /api/auth/profile {name} — rename the signed-in coach. The app's
@@ -150,6 +192,8 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'signup') { const lim = limited(req, 'signup'); return secure(lim || await signup(req, st)); }
     if (req.method === 'POST' && action === 'login') { const lim = limited(req, 'login'); return secure(lim || await login(req, st)); }
     if (req.method === 'POST' && action === 'logout') return secure(await logout(req, st));
+    if (req.method === 'POST' && action === 'password') { const lim = limited(req, 'password'); return secure(lim || await password(req, st)); }
+    if (req.method === 'POST' && action === 'logout-others') return secure(await logoutOthers(req, st));
     if (req.method === 'GET' && action === 'me') return secure(await me(req, st));
     if (req.method === 'POST' && action === 'profile') { const lim = limited(req, 'profile'); return secure(lim || await profile(req, st)); }
     if (req.method === 'POST' && action === 'claim') { const lim = limited(req, 'claim'); return secure(lim || await claim(req, st)); }

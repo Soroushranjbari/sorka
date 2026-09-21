@@ -1,4 +1,4 @@
-// Coach OS — health endpoint (public, no secrets).
+// CoachMint — health endpoint (public, no secrets).
 // GET /api/health -> { ok, backend, postgresConfigured, postgresHost, time }
 import { j } from '../lib/saas.mjs';
 import { dbInfo } from '../lib/db.mjs';

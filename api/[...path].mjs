@@ -1,4 +1,4 @@
-// Coach OS — Vercel adapter (catch-all serverless function).
+// CoachMint — Vercel adapter (catch-all serverless function).
 //
 // The whole backend lives in backend/handlers/*.mjs as standard
 // Request -> Response handlers. Vercel's Node runtime gives (req, res)

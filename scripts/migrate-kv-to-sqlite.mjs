@@ -1,4 +1,4 @@
-// Coach OS — one-time migration: import a KV JSON dump (the old file backend)
+// CoachMint — one-time migration: import a KV JSON dump (the old file backend)
 // into the SQLite database. Run ONCE after switching to SQLite:
 //
 //   npm run db:migrate                     # ./data/kv.json -> ./data/sqlite.db

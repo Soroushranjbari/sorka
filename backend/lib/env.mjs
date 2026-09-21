@@ -1,4 +1,4 @@
-// Coach OS — minimal .env loader (zero dependencies).
+// CoachMint — minimal .env loader (zero dependencies).
 // Imported FIRST by server.mjs so the variables exist before backend/lib/db.mjs
 // reads the environment at module load. Values already present in the real
 // environment always win (12-factor style) — the file only fills gaps, so

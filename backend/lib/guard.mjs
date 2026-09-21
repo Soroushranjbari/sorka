@@ -1,4 +1,4 @@
-// Coach OS — request guard: rate limiting, body caps, security headers.
+// CoachMint — request guard: rate limiting, body caps, security headers.
 // Pure functions over standard Web Request/Response — works on Netlify,
 // Vercel, the standalone server, anywhere. Zero dependencies.
 //

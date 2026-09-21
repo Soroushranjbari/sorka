@@ -1,4 +1,4 @@
-// Coach OS — portable KV contract test (runs WITHOUT any network).
+// CoachMint — portable KV contract test (runs WITHOUT any network).
 // Points the KV layer at a temp SQLite database, then loads backend/lib/db.mjs
 // and asserts: backend detection, setJSON->get round-trip, missing key -> null,
 // namespacing, delete, and durability on disk. No Postgres, no cloud.

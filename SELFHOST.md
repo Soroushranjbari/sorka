@@ -1,4 +1,4 @@
-# SELF-HOSTING — Coach OS on your own server
+# SELF-HOSTING — CoachMint on your own server
 
 The backend is plain Node (18+). Business logic lives in `backend/lib/*.mjs`
 (pure Node, only `node:crypto` + `better-sqlite3`), the HTTP handlers in

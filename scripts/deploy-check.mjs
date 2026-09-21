@@ -1,4 +1,4 @@
-// Coach OS — deployment pre-flight check.
+// CoachMint — deployment pre-flight check.
 // Run before starting the server in a new environment:
 //   node ./scripts/deploy-check.mjs
 // Exits non-zero with a clear fix list when something is misconfigured.
