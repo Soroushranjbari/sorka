@@ -1060,7 +1060,11 @@ function threads(){
 }
 
 /* ============ NUTRITION DATA ============ */
-const FOODS=[
+/* v18.9.1 — the starter library lives in *_SEED so freshWorkspace() can seed
+   NEW accounts with it. freshWorkspace used to leave FOODS empty, so "Create
+   Nutrition Plan" built meals referencing FOODS[fi] entries that did not
+   exist — the planner crashed and the food picker was blank. */
+const FOOD_SEED=[
 {n:'Chicken Breast',cat:'Chicken',kcal:165,p:31,c:0,f:3.6,alt:['Turkey Breast','White Fish','Lean Beef','Egg Whites']},
 {n:'Turkey Breast',cat:'Meat',kcal:135,p:30,c:0,f:1,alt:['Chicken Breast']},
 {n:'White Fish',cat:'Fish',kcal:110,p:24,c:0,f:1.5,alt:['Chicken Breast','Salmon']},
@@ -1081,6 +1085,8 @@ const FOODS=[
 {n:'Whey Protein',cat:'Supplements',kcal:375,p:80,c:8,f:5,alt:[]},
 {n:'Orange Juice',cat:'Drinks',kcal:45,p:0.7,c:10,f:0.2,alt:[]},
 {n:'Salmon',cat:'Fish',kcal:208,p:20,c:0,f:13,alt:['White Fish','Chicken Breast']}];
+const FOODS=FOOD_SEED.map(f=>({...f,alt:[...(f.alt||[])]}));
+const defaultFoods=()=>FOOD_SEED.map(f=>({...f,alt:[...(f.alt||[])]}));
 /* v17.9 — Persian food names. Food records are stored with ENGLISH names
    (they are data keys: alternatives reference them by name, and custom foods
    created on any device must merge), so display goes through foodName()
@@ -1135,17 +1141,21 @@ let NPLANS=[
 {id:4,client:'Neda Hosseini',name:'Lean Bulk Start',goal:'Muscle Gain',phase:'Phase 1',week:'Week 1',updated:'Sep 5',status:'Active',train:{kcal:2400,p:150,c:280,f:70},rest:{kcal:2200,p:150,c:230,f:70},days:mkDays(scM(TRAIN_T,.87),scM(REST_T,.87)),phases:mkPh(.84,'Jul 1')},
 {id:5,client:'Hamed Naderi',name:'Mass Phase 2',goal:'Muscle Gain',phase:'Phase 2',week:'Week 4',updated:'Sep 4',status:'Active',train:{kcal:3200,p:190,c:360,f:88},rest:{kcal:2900,p:190,c:300,f:88},days:mkDays(scM(TRAIN_T,1.15),scM(REST_T,1.15)),phases:mkPh(1.12,'May 25')},
 {id:6,client:'Maryam Sadeghi',name:'Recovery Plan',goal:'Mobility',phase:'—',week:'Week 2',updated:'Sep 3',status:'Paused',train:{kcal:2100,p:130,c:240,f:65},rest:{kcal:1950,p:130,c:210,f:65},days:mkDays(scM(TRAIN_T,.76),scM(REST_T,.76)),phases:mkPh(.74,'Jun 10')}];
-let MTPL=[
+const MTPL_SEED=[
 {n:'High Protein Breakfast',cat:'Breakfast',foods:[{fi:5,g:100},{fi:8,g:120},{fi:6,g:200}]},
 {n:'Chicken & Rice Lunch',cat:'Lunch',foods:[{fi:0,g:180},{fi:10,g:300},{fi:13,g:150}]},
 {n:'Weight Gain Breakfast',cat:'Breakfast',foods:[{fi:9,g:100},{fi:11,g:150},{fi:17,g:40},{fi:15,g:25}]},
 {n:'Fat Loss Dinner',cat:'Dinner',foods:[{fi:2,g:200},{fi:13,g:200},{fi:16,g:8}]},
 {n:'Pre-Workout Fuel',cat:'Pre-Workout',foods:[{fi:11,g:120},{fi:17,g:25}]},
 {n:'Cottage Cheese Night Snack',cat:'Snack',foods:[{fi:7,g:200},{fi:15,g:15}]}];
-let PTPL=[
+let MTPL=MTPL_SEED.map(x=>({...x,foods:x.foods.map(y=>({...y}))}));
+const defaultMtpl=()=>MTPL_SEED.map(x=>({...x,foods:x.foods.map(y=>({...y}))}));
+const PTPL_SEED=[
 {n:'Hypertrophy — 3000 kcal',meals:4,kcal:3000,p:180,c:350,f:80},
 {n:'Fat Loss — 2200 kcal',meals:5,kcal:2200,p:170,c:220,f:65},
 {n:'Maintenance — 2500 kcal',meals:4,kcal:2500,p:160,c:280,f:75}];
+let PTPL=PTPL_SEED.map(x=>({...x}));
+const defaultPtpl=()=>PTPL_SEED.map(x=>({...x}));
 let NHIST=[
 {d:'Sep 8',i:'edit',t:'Nutrition Plan Updated',d2:'2850 → 3000 kcal'},
 {d:'Sep 5',i:'ruler',t:'Weight Updated',d2:'76.4 → 76.9 kg'},
@@ -1242,6 +1252,10 @@ function loadData(){
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
     repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);syncCustomEx();
+    // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
+    // (freshWorkspace used to leave it empty). There is no food-delete UI, so
+    // an empty library is always a broken state, never intentional: backfill.
+    if(!FOODS.length)defaultFoods().forEach(f=>FOODS.push(f));
     if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
     if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
     if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
@@ -1305,8 +1319,16 @@ function cloudReset(){
 function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
-  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;FOODS.length=0;PACKS.length=0;MSGTPL.length=0;
+  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
   CEXS.length=0;syncCustomEx();
+  // v18.9.1 — a new coach still needs a usable nutrition library: the 20
+  // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
+  // "Create Nutrition Plan" seeded meals referencing FOODS[fi] entries that
+  // did not exist — the planner crashed and the food picker was blank.
+  FOODS.length=0;
+  defaultFoods().forEach(f=>FOODS.push(f));
+  defaultMtpl().forEach(x=>MTPL.push(x));
+  defaultPtpl().forEach(x=>PTPL.push(x));
   ONBOARD={done:false};
   Object.keys(DB).forEach(k=>delete DB[k]);
   Object.keys(DEAD).forEach(k=>DEAD[k].length=0);
@@ -2248,10 +2270,12 @@ const clientCode=c=>{
 const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
 const joinCodeOf=c=>{const ws=wsCode();return ws?ws+'-'+clientCode(c):clientCode(c)};
 const parseJoinCode=v=>{const i=String(v||'').indexOf('-');return i>0?{ws:String(v).slice(0,i),pc:String(v).slice(i+1)}:null};
-const itK=it=>Math.round(FOODS[it.fi].kcal*it.g/100);
-const itM=(it,k)=>Math.round(FOODS[it.fi][k]*it.g/100);
-const mealKcal=m=>m.foods.length?m.foods.reduce((a,x)=>a+FOODS[x.fi].kcal*x.g/100,0):(m.mk?m.mk.kcal:0);
-const mealM=(m,k)=>m.foods.length?m.foods.reduce((a,x)=>a+FOODS[x.fi][k]*x.g/100,0):(m.mk&&k==='p'?m.mk.p:0);
+const itK=it=>{const f=FOODS[it.fi];return f?Math.round(f.kcal*it.g/100):0};
+const itM=(it,k)=>{const f=FOODS[it.fi];return f?Math.round((f[k]||0)*it.g/100):0};
+/* v18.9.1 — a missing food entry (old payload, pruned library) must never
+   crash the planner: unknown foods simply contribute 0 to the totals. */
+const mealKcal=m=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];return a+(f?f.kcal*x.g/100:0)},0):(m.mk?m.mk.kcal:0);
+const mealM=(m,k)=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];return a+(f?(f[k]||0)*x.g/100:0)},0):(m.mk&&k==='p'?m.mk.p:0);
 const daySum=ms=>({kcal:Math.round(ms.reduce((a,m)=>a+mealKcal(m),0)),p:Math.round(ms.reduce((a,m)=>a+mealM(m,'p'),0)),c:Math.round(ms.reduce((a,m)=>a+mealM(m,'c'),0)),f:Math.round(ms.reduce((a,m)=>a+mealM(m,'f'),0))});
 const nPlanOf=cl=>NPLANS.find(x=>x.client===cl&&x.status!=='Archived');
 const tplExN=tp=>tp.parts?tp.parts.reduce((a,p)=>a+(p.exs||[]).length,0):(tp.exs||[]).length;
@@ -3558,7 +3582,7 @@ function nMealCard(p,day,m,mi){
       </div>
     </div>
     <div style="margin-top:8px">
-      ${m.foods.map((x,xi)=>{const f=FOODS[x.fi];
+      ${m.foods.map((x,xi)=>{const f=FOODS[x.fi];if(!f)return '';
       return `<div class="frow">
         <div style="min-width:0"><div class="fk">${foodName(f.n)}</div><div class="muted" style="font-size:11px">${x.q?esc(t(x.q)):nf(x.g)+(lang==='fa'?' گرم':' g')}</div></div>
         <span>${nf(itK(x))} kcal</span><span>${nf(Math.round(itM(x,'p')))}g P</span>
@@ -3629,11 +3653,11 @@ function nMealTpl(){
     <div class="row" style="flex-wrap:wrap;gap:6px">${cats.map(c=>`<button class="fchip ${S.mtcat===c?'on':''}" data-act="mtcat" data-c="${c}">${t(c)}</button>`).join('')}</div>
     <button class="btn btn-primary btn-sm" data-act="mt-add">${ic('plus',14)} ${t('Create Meal Template')}</button>
   </div>
-  <div class="excards">${list.map((x)=>{const idx=MTPL.indexOf(x);const kcal=Math.round(x.foods.reduce((a,y)=>a+FOODS[y.fi].kcal*y.g/100,0));const pr=Math.round(x.foods.reduce((a,y)=>a+FOODS[y.fi].p*y.g/100,0));
+  <div class="excards">${list.map((x)=>{const idx=MTPL.indexOf(x);const kcal=Math.round(x.foods.reduce((a,y)=>a+((FOODS[y.fi]||{}).kcal||0)*y.g/100,0));const pr=Math.round(x.foods.reduce((a,y)=>a+((FOODS[y.fi]||{}).p||0)*y.g/100,0));
   return `<div class="card exc">
     <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${t(x.n)}</b><span class="bdg bdg-gray" style="font-size:10px">${t(x.cat)}</span></div>
     <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(kcal)} kcal</span><span class="chip">${nf(pr)}g ${t('Protein')}</span></div>
-    <div class="muted" style="font-size:11.5px">${x.foods.map(y=>foodName(FOODS[y.fi].n)).join(' · ')}</div>
+    <div class="muted" style="font-size:11.5px">${x.foods.map(y=>FOODS[y.fi]?foodName(FOODS[y.fi].n):'').filter(Boolean).join(' · ')}</div>
     <div class="row" style="margin-top:auto;gap:6px">
       <button class="btn btn-primary btn-sm" data-act="mt-use" data-i="${idx}">${t('Use')}</button><span class="sp"></span>
       <button class="btn btn-ghost btn-icon" data-act="mt-edit" data-i="${idx}">${ic('edit',14)}</button>
@@ -3715,7 +3739,7 @@ function wNutrition(){
   </div>
   <div class="grid2b" style="margin-bottom:14px">
     <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's Meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
-      ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>foodName(FOODS[x.fi].n)).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
+      ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>FOODS[x.fi]?foodName(FOODS[x.fi].n)+' '+nf(x.g)+'g':'').filter(Boolean).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
     </div>
     <div class="stack">
       <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('chart',14)} ${t('Nutrition × Progress')}</div>
