@@ -4747,8 +4747,7 @@ function vClient(){
     <div class="phone"><div class="notch"></div>
       <div class="capp" id="capp">
         <div class="chead">
-          <div class="row">${avC(c.name,40)}<div><div style="font-weight:800;font-size:16px">${t('Hi')} ${esc(t(c.name).split(' ')[0])} 👋</div><div class="muted" style="font-size:11.5px">${fmtFullDate(TDATE)}${c.code?` · ${t('Code')} <b style="letter-spacing:.1em">${esc(joinCodeOf(c))}</b>`:''}</div></div></div>
-          <span class="bdg gbadge">${CLOUD.on?'✓ '+t('Synced'):t('Offline mode')}</span>
+          <div><div style="font-weight:800;font-size:19px;letter-spacing:-.02em">${t('Hi')} ${esc(t(c.name).split(' ')[0])} 👋</div><div class="muted" style="font-size:12px;margin-top:2px">${t(DAYS[TODAY])} · ${fmtFullDate(TDATE)}</div></div>
         </div>
         ${body}
       </div>
@@ -4946,7 +4945,7 @@ function cProfile(){
   const lm=lastM(S.cid);
   const remain=packRemain(c.name);
   return `<div class="cbody">
-    <div class="card-t" style="margin:2px">${ic('user',14)} ${t('My Profile')}</div>
+    <div class="csec">${t('My Profile')}</div>
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       <button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="cp-pic" title="${t(c.pic?'Change photo':'Add photo')}">${avPlus(t(c.name),56,c.id-1,!!c.pic)}</button>
       <div style="flex:1;min-width:0"><b style="font-size:16px">${esc(t(c.name))}</b>
@@ -4957,6 +4956,7 @@ function cProfile(){
     </div>
     <div class="row" style="justify-content:space-between;margin:0 4px 8px"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
     <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('users',14)} ${t('Personal Information')}</div>
+      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Connection')}</span><span class="bdg gbadge" style="font-size:10.5px">${CLOUD.on?'✓ '+t('Synced'):t('Offline mode')}</span></div>
       ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px;text-align:end;min-width:0;word-break:break-word">${esc(String(v))}</b></div>`).join('')}
     </div>
