@@ -523,7 +523,31 @@ body.sb-open .scrim{display:block}
 .ai-typing span:nth-child(2){animation-delay:.2s}.ai-typing span:nth-child(3){animation-delay:.4s}
 @keyframes aib{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 .ai-in{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line2)}
-.ai-in .inp{flex:1}
+.ai-in .inp{flex:1;min-width:0}
+/* v18.16 — Apply mode: the assistant may WRITE changes to the workspace */
+.ai-apply{flex:none;display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 11px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink2);font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.ai-apply.on{background:var(--accent-soft);border-color:var(--acc-line);color:var(--accent-deep)}
+.ai-applied{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line2);display:flex;flex-direction:column;gap:4px}
+.ai-applied>div{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--accent-deep);text-align:start}
+.ai-applied.fail>div{color:var(--red)}
+/* v18.17 — camera form check (MediaPipe Pose, on-device) */
+.fc-stage{position:relative;background:#000;border-radius:14px;overflow:hidden;aspect-ratio:3/4;max-height:56vh;margin:0 auto}
+.fc-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fc-stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.fc-hud{position:absolute;top:10px;inset-inline-start:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.fc-hud .fc-big{background:rgba(0,0,0,.55);color:#fff;border-radius:12px;padding:6px 12px;font-weight:800;font-size:20px;backdrop-filter:blur(4px);line-height:1.2}
+.fc-hud .fc-big small{display:block;font-size:9.5px;font-weight:700;opacity:.75;letter-spacing:.04em;text-transform:uppercase}
+.fc-feed{position:absolute;bottom:10px;inset-inline:10px;z-index:2;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.fc-flag{background:rgba(220,38,38,.92);color:#fff;border-radius:999px;padding:4px 11px;font-size:11.5px;font-weight:800}
+.fc-ok{background:rgba(22,163,74,.92)}
+.fc-tools{position:absolute;top:10px;inset-inline-end:10px;z-index:2;display:flex;flex-direction:column;gap:6px}
+.fc-tools button{width:38px;height:38px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.fc-kfs{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.fc-kfs img{width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.fc-pat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fc-pat button{padding:13px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:start}
+.fc-pat button:hover{border-color:var(--acc-line);background:var(--accent-soft)}
+.fc-pat button small{font-weight:600;font-size:10.5px;color:var(--ink3)}
 </style>
 </head>
 <body>
@@ -605,7 +629,9 @@ const FA={
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
 'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
 '"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."':'«CoachMint چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
-'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی',
+'Apply':'اعمال','Let the AI apply changes':'دستیار خودش تغییرات را اعمال کند','Describe the change to apply…':'تغییری که باید اعمال شود را بنویس…','Done — changes applied':'انجام شد — تغییرات اعمال شد','Nothing was changed':'تغییری اعمال نشد','A client with this name exists':'شاگردی با این نام وجود دارد','Invalid values':'مقادیر نامعتبر','Change failed':'تغییر ناموفق بود',
+'Camera form check':'بررسی فرم با دوربین','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -1128,6 +1154,11 @@ let MSGTPL=[
 {n:'Welcome message',body:'Welcome aboard! Your first program is ready — open Workouts to see it. Reply here any time.'},
 {n:'Session reminder',body:'Quick reminder: we train tomorrow at the usual time. Come rested and hydrated.'},
 {n:'Measurement due',body:'Time for your weekly check-in — please log your weight and measurements when you can.'}];
+/* v18.17 — CAMERA FORM CHECK reports (MediaPipe Pose, on-device). One entry per
+   completed set: reps counted, form score, range of motion, rule flags and up
+   to 3 keyframe snapshots. Rides the workspace payload like PACKS. */
+let FORMS=[
+{id:1,client:'Ali Rezaei',pattern:'squat',ex:'Squat',reps:8,score:85,rom:96,flags:['Shallow depth'],kf:[],d:'2026-09-18'}];
 function threads(){
   const map={};
   MSGS.forEach(m=>{(map[m.client]=map[m.client]||[]).push(m)});
@@ -1276,7 +1307,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[]};
 let __lastPack='';
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
@@ -1302,7 +1333,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1331,7 +1362,7 @@ function loadData(){
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
-    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);syncCustomEx();
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);syncCustomEx();
     // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
     // (freshWorkspace used to leave it empty). There is no food-delete UI, so
     // an empty library is always a broken state, never intentional: backfill.
@@ -1400,6 +1431,7 @@ function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
+  FORMS.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
   // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
@@ -1754,7 +1786,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1799,7 +1831,7 @@ function cloudMerge(d,adopt){
   if(typeof d.ownerName==='string'&&d.ownerName.trim()&&d.ownerName!==WS_OWNER){WS_OWNER=d.ownerName;ch=true}
   Object.keys(DEAD).forEach(k=>{const set=new Set(DEAD[k].map(String));((d.DEAD||{})[k]||[]).forEach(x=>{const s=String(x);if(!set.has(s)){set.add(s);DEAD[k].push(s);ch=true}})});
   const deadSets={};Object.keys(DEAD).forEach(k=>deadSets[k]=new Set(DEAD[k].map(String)));
-  ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES','PACKS','MSGTPL'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
+  ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES','PACKS','MSGTPL','FORMS'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
   // CLIENTS — union by id; on pull adopt server profile fields, progress = max
   {for(let i=CLIENTS.length-1;i>=0;i--){const c=CLIENTS[i];if(c&&c.id!=null&&deadSets.CLIENTS.has(String(c.id))){if(DB[c.id])delete DB[c.id];CLIENTS.splice(i,1);ch=true}}
    const idx={};CLIENTS.forEach((c,i)=>{if(c&&c.id!=null)idx[String(c.id)]=i});
@@ -1816,7 +1848,7 @@ function cloudMerge(d,adopt){
      }})}
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS]].forEach(([k,arr])=>{
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -2655,6 +2687,7 @@ function vWorkspace(){
       </div>
       <div class="row" style="flex-wrap:wrap">
         <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
         <button class="btn btn-outline btn-sm" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',14)} ${t('Intake form')}</button>
         <button class="btn btn-outline btn-sm" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',14)} ${t('Packages')}</button>
         <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
@@ -2663,6 +2696,7 @@ function vWorkspace(){
         <div class="mwrap" data-mw><button class="btn btn-ghost btn-icon" data-act="mw">${ic('more',16)}</button>
           <div class="menu"><div class="menu-hd">${t('More actions')}</div>
             <div class="menu-it" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',15)} ${t('AI Analysis')}</div>
+            <div class="menu-it" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',15)} ${t('Form reports')}</div>
             <div class="menu-it" data-act="client-arch" data-c="${esc(c.name)}">${ic('archive',15)} ${t('Archive client')}</div>
             <div class="menu-it" data-act="ws-export">${ic('download',15)} ${t('Export data')}</div>
             <div class="menu-it" data-act="invite-open">${ic('mail',15)} ${t('Invite to portal')}</div>
@@ -4352,10 +4386,19 @@ const aiChatSave=()=>{try{localStorage.setItem(AI_CHAT_KEY,JSON.stringify(AI_CHA
 const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',20)}<span>${t('AI Assistant')}</span></button>`;
 function aiChatOpen(){S.aiOpen=true;renderAiChat()}
 function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
+/* v18.16 — Apply mode: when ON, messages go to /api/ai/action and the model's
+   changes are APPLIED to the workspace server-side (the panel lists exactly
+   what changed). Default stays advisory chat — the coach opts in per session. */
+const AI_FAIL={'client-not-found':'Client not found in synced data','quota-exceeded':'Client limit reached — upgrade your plan or archive a client','name-exists':'A client with this name exists','bad-fields':'Invalid values','no-workspace':'No synced workspace data','failed':'Change failed'};
 function renderAiChat(){
   const root=$('ai-chat-root');if(!root)return;
   if(!S.aiOpen){root.innerHTML='';return}
-  const msgs=AI_CHAT.map(m=>`<div class="ai-m ${m.role==='user'?'u':'a'}">${esc(m.content)}</div>`).join('')
+  const bubble=m=>{
+    const ok=(m.applied&&m.applied.length)?`<div class="ai-applied">${m.applied.map(a=>`<div>${ic('check',12)}<span>${esc(a.detail||a.action)}</span></div>`).join('')}</div>`:'';
+    const bad=(m.failed&&m.failed.length)?`<div class="ai-applied fail">${m.failed.map(a=>`<div>${ic('x',12)}<span>${esc(a.target?a.target+' — ':'')}${t(AI_FAIL[a.reason]||a.reason||'Change failed')}</span></div>`).join('')}</div>`:'';
+    return `<div class="ai-m ${m.role==='user'?'u':'a'}">${esc(m.content)}${ok}${bad}</div>`;
+  };
+  const msgs=AI_CHAT.map(bubble).join('')
     +(AI_WAITING?`<div class="ai-m a ai-typing"><span></span><span></span><span></span></div>`:'');
   root.innerHTML=`<div class="ai-ovl" data-act="ai-chat-close"></div>
   <div class="ai-panel">
@@ -4363,7 +4406,8 @@ function renderAiChat(){
       <div class="row" style="gap:2px"><button class="btn btn-ghost btn-icon" title="${t('Weekly report')}" data-act="ai-weekly">${ic('chart',15)}</button><button class="btn btn-ghost btn-icon" title="${t('Clear chat')}" data-act="ai-chat-clear">${ic('trash',15)}</button><button class="btn btn-ghost btn-icon" data-act="ai-chat-close">${ic('x',17)}</button></div></div>
     <div class="ai-msgs" id="ai-msgs">${msgs||`<div class="ai-m a" style="max-width:100%">${t('Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.')}</div>`}</div>
     <div class="ai-in">
-      <input class="inp" id="ai-chat-inp" placeholder="${t('Ask the AI assistant…')}" onkeydown="if(event.key==='Enter')window.aiSend()">
+      <button class="ai-apply ${S.aiApply?'on':''}" data-act="ai-apply-toggle" title="${t('Let the AI apply changes')}">${ic('edit',13)}<span>${t('Apply')}</span></button>
+      <input class="inp" id="ai-chat-inp" placeholder="${S.aiApply?t('Describe the change to apply…'):t('Ask the AI assistant…')}" onkeydown="if(event.key==='Enter')window.aiSend()">
       <button class="btn btn-primary btn-icon" data-act="ai-chat-send">${ic('arrowR',17)}</button>
     </div>
   </div>`;
@@ -4374,13 +4418,34 @@ window.aiSend=async function(){
   const inp=$('ai-chat-inp');const q=(inp&&inp.value||'').trim();if(!q||AI_WAITING)return;
   AI_CHAT.push({role:'user',content:q});aiChatSave();
   AI_WAITING=true;renderAiChat();
+  const cat=EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}));
+  const failMsg=d=>d&&d.error==='ai-quota'?t('AI daily quota reached'):d&&d.error==='ai-not-configured'?t('AI is not configured on the server'):d&&d.error==='no-workspace'?t('No synced workspace data'):t('AI service unavailable — try again');
   try{
-    const {ok,d}=await authApi('/api/ai/chat',{method:'POST',body:JSON.stringify({
-      question:q,
-      history:AI_CHAT.slice(-9,-1).map(m=>({role:m.role,content:m.content})),
-      catalog:EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}))
-    })});
-    AI_CHAT.push({role:'assistant',content:(ok&&d&&d.ok&&d.answer)?d.answer:(d&&d.error==='ai-quota'?t('AI daily quota reached'):t('AI service unavailable — try again'))});
+    if(S.aiApply){
+      /* Phase 5 — the server validates + applies the model's actions to the
+         workspace KV, then this device pulls the new revision so every view
+         (clients, messages, calendar…) reflects the change immediately. */
+      const {ok,d}=await authApi('/api/ai/action',{method:'POST',body:JSON.stringify({request:q,lang,catalog:cat})});
+      if(ok&&d&&d.ok){
+        const applied=d.applied||[],failed=d.failed||[];
+        AI_CHAT.push({role:'assistant',content:d.reply||(applied.length?t('Done — changes applied'):t('Nothing was changed')),applied,failed});
+        aiChatSave();
+        /* Coach rename lives on the ACCOUNT — update this device's session
+           identity too, then push so client devices get the new ownerName. */
+        if(d.coachName&&AUTH.coach){AUTH.coach.name=d.coachName;WS_OWNER=d.coachName;try{localStorage.setItem('co-auth',JSON.stringify(AUTH))}catch(e){}}
+        /* The SERVER mutated the workspace — pull the fresh state into this
+           device (push local edits first so they are not clobbered). */
+        try{if(CLOUD.dirty)await cloudPush();if(CLOUD.on)await cloudPull()}catch(e){}
+      }
+      else AI_CHAT.push({role:'assistant',content:failMsg(d)});
+    }else{
+      const {ok,d}=await authApi('/api/ai/chat',{method:'POST',body:JSON.stringify({
+        question:q,
+        history:AI_CHAT.slice(-9,-1).map(m=>({role:m.role,content:m.content})),
+        catalog:cat
+      })});
+      AI_CHAT.push({role:'assistant',content:(ok&&d&&d.ok&&d.answer)?d.answer:failMsg(d)});
+    }
   }catch(e){AI_CHAT.push({role:'assistant',content:t('Could not reach server')})}
   AI_WAITING=false;aiChatSave();renderAiChat();
 };
@@ -4456,6 +4521,235 @@ function renderAnalysisModal(c,a){
     ${(a.actions||[]).length?`<div class="field" style="margin-top:12px"><label class="lbl">${t('Suggested actions')}</label><ul style="margin:6px 0 0;padding-inline-start:18px;font-size:12.5px">${a.actions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="ai-an-save" data-c="${esc(c.name)}">${ic('note',14)} ${t('Save as client note')}</button></div>`);
+}
+/* v18.17 — CAMERA FORM CHECK (MediaPipe Pose Landmarker, fully on-device).
+   ADDITIVE feature: nothing existing changes — a new modal, a new FORMS array
+   in the payload and new entry buttons. The camera stream NEVER leaves the
+   device: MediaPipe runs in WASM on the phone, only the computed report
+   (reps, score, flags, ≤3 tiny keyframes) syncs to the workspace.
+   Files are self-hosted in /vendor/mediapipe/ (CSP has no CDN allowance). */
+const FC_VENDOR='/vendor/mediapipe/';
+/* Landmark indexes (MediaPipe Pose, 33 points). */
+const FCLM={shL:11,shR:12,elL:13,elR:14,wrL:15,wrR:16,hipL:23,hipR:24,knL:25,knR:26,anL:27,anR:28};
+const fcAngle=(a,b,c)=>{const v1=[a.x-b.x,a.y-b.y],v2=[c.x-b.x,c.y-b.y];const m=Math.hypot(v1[0],v1[1])*Math.hypot(v2[0],v2[1]);if(!m)return 180;const d=(v1[0]*v2[0]+v1[1]*v2[1])/m;return Math.acos(Math.min(1,Math.max(-1,d)))*180/Math.PI};
+/* Joint-angle sets: side 0 = left, 1 = right. */
+const FC_ANG={
+  knee:(l,s)=>fcAngle(l[23+s],l[25+s],l[27+s]),
+  elbow:(l,s)=>fcAngle(l[11+s],l[13+s],l[15+s]),
+  hip:(l,s)=>fcAngle(l[11+s],l[23+s],l[25+s]),
+  line:(l,s)=>fcAngle(l[11+s],l[23+s],l[27+s])
+};
+const fcAvg=(f,l)=>(f(l,0)+f(l,1))/2;
+/* Movement patterns — rules are DATA (evaluated by fcEval), so a new pattern
+   is one entry here. down/up are the tracked-angle thresholds for the rep
+   state machine; checks run per frame or at the rep bottom. */
+const FPATTERNS=[
+ {id:'squat',n:'Squat',sub:'Knees · depth · torso',ang:'knee',down:115,up:160,checks:[
+   {at:'bottom',type:'depth',thr:100,flag:'Shallow depth'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+   {at:'always',type:'lean',thr:55,flag:'Torso collapses'}]},
+ {id:'hinge',n:'Hinge / Deadlift',sub:'Hips · back line',ang:'hip',down:75,up:150,checks:[
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+   {at:'always',type:'lean',thr:70,flag:'Back rounds'}]},
+ {id:'pushup',n:'Push-up',sub:'Elbows · body line',ang:'elbow',down:100,up:155,checks:[
+   {at:'bottom',type:'depth',thr:105,flag:'Shallow depth'},
+   {at:'always',type:'line',thr:145,flag:'Hips sag'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'press',n:'Shoulder Press',sub:'Elbows · path',ang:'elbow',down:105,up:160,checks:[
+   {at:'bottom',type:'depth',thr:110,flag:'Partial range'},
+   {at:'always',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'curl',n:'Bicep Curl',sub:'Elbow · no swing',ang:'elbow',down:150,up:65,checks:[
+   {at:'bottom',type:'swing',thr:0.06,flag:'Body swing'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'plank',n:'Plank',sub:'Hold · body line',hold:true,ang:'line',checks:[
+   {at:'always',type:'line',thr:150,flag:'Hips sag'},
+   {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'}]}
+];
+/* Rule evaluator — returns true when the rule FIRES (a problem). Uses the
+   live FC session for the tracked angle and the swing baseline. */
+function fcEvalCheck(ch,lm,bottom){
+  if(ch.at==='bottom'&&!bottom)return false;
+  switch(ch.type){
+    case 'depth':return fcAvg(FC_ANG[FC.pat.ang],lm)>ch.thr;
+    case 'asym':return Math.abs(FC_ANG[FC.pat.ang](lm,0)-FC_ANG[FC.pat.ang](lm,1))>ch.thr;
+    case 'lean':{const s=lm[11].y<lm[12].y?lm[11]:lm[12],h=lm[23].y<lm[24].y?lm[23]:lm[24];return Math.atan2(Math.abs(s.x-h.x),Math.abs(s.y-h.y))*180/Math.PI>ch.thr}
+    case 'line':return fcAvg(FC_ANG.line,lm)<ch.thr;
+    case 'lineHi':return fcAvg(FC_ANG.line,lm)>ch.thr;
+    case 'swing':{const hx=(lm[23].x+lm[24].x)/2;if(FC.hipX==null)FC.hipX=hx;return Math.abs(hx-FC.hipX)>ch.thr}
+  }
+  return false;
+}
+/* Skeleton connections for the overlay. */
+const FC_BONES=[[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32]];
+let FC={on:false};
+let FC_POSE=null,FC_VISION=null;
+async function fcEngine(){
+  if(FC_POSE)return FC_POSE;
+  FC_VISION=await import(FC_VENDOR+'vision_bundle.mjs');
+  const files=await FC_VISION.FilesetResolver.forVisionTasks(FC_VENDOR+'wasm');
+  const opts=d=>({baseOptions:{modelAssetPath:FC_VENDOR+'pose_landmarker_lite.task',delegate:d},runningMode:'VIDEO',numPoses:1,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5});
+  try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('GPU'))}
+  catch(e){FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('CPU'))}
+  return FC_POSE;
+}
+function formCheckModal(name){
+  if(!name){name=S.role==='client'?client(S.cid).name:(client(S.cid)||CLIENTS[0]||{}).name}
+  if(!name){toast(t('Add a client first'));return}
+  S.fcName=name;S.fcPat=null;
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Camera form check')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Runs on your device — the video never leaves it. Stand so your whole body is visible.')}</div>
+    <div class="fc-pat">${FPATTERNS.map(p=>`<button data-act="fc-pattern" data-p="${p.id}"><b>${t(p.n)}</b><small>${t(p.sub)}</small></button>`).join('')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button></div>`);
+}
+async function fcStart(pid){
+  const p=FPATTERNS.find(x=>x.id===pid);if(!p)return;
+  S.fcPat=pid;
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t(p.n)} — ${esc(t(S.fcName))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fc-stage" id="fc-stage"><video id="fc-video" playsinline muted></video><canvas id="fc-canvas"></canvas>
+      <div class="fc-hud">
+        <div class="fc-big"><small>${t('Reps')}</small><span id="fc-reps">0</span></div>
+        ${p.hold?`<div class="fc-big"><small>${t('Hold')}</small><span id="fc-hold">0s</span></div>`:''}
+        <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
+      </div>
+      <div class="fc-tools"><button title="${t('Flip camera')}" data-act="fc-flip">${ic('edit',16)}</button></div>
+      <div class="fc-feed" id="fc-feed"></div>
+    </div>
+    <div class="muted" id="fc-msg" style="font-size:12px;text-align:center;margin-top:10px">${t('Loading the pose engine…')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
+  FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0};
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
+    FC.stream=stream;
+    const v=$('fc-video');v.srcObject=stream;v.style.transform='scaleX(-1)';FC.flip=true;
+    await v.play();
+    const msg=$('fc-msg');if(msg)msg.textContent=t('Loading the pose engine…');
+    await fcEngine();
+    if(msg)msg.textContent=t('Stand so your whole body is visible');
+    FC.holdT0=performance.now();
+    FC.raf=requestAnimationFrame(fcLoop);
+  }catch(e){
+    const msg=$('fc-msg');if(msg)msg.textContent=e&&e.name==='NotAllowedError'?t('Camera permission is required for form check'):t('Camera is not available on this device');
+  }
+}
+function fcStop(){
+  FC.on=false;
+  if(FC.raf)cancelAnimationFrame(FC.raf);
+  if(FC.stream){FC.stream.getTracks().forEach(tr=>tr.stop());FC.stream=null}
+}
+async function fcFlip(){
+  if(!FC.on)return;
+  FC.flip=!FC.flip;
+  if(FC.stream)FC.stream.getTracks().forEach(tr=>tr.stop());
+  try{
+    FC.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:FC.flip?'user':'environment',width:{ideal:720},height:{ideal:960}},audio:false});
+    const v=$('fc-video');if(v){v.srcObject=FC.stream;v.style.transform=FC.flip?'scaleX(-1)':'none';await v.play()}
+  }catch(e){}
+}
+function fcFeed(flag,ok){
+  const feed=$('fc-feed');if(!feed)return;
+  const el=document.createElement('div');el.className='fc-flag'+(ok?' fc-ok':'');el.textContent=t(flag);
+  feed.innerHTML='';feed.appendChild(el);
+  clearTimeout(FC.feedT);FC.feedT=setTimeout(()=>{if(feed)feed.innerHTML=''},1800);
+}
+function fcSnapshot(){
+  const v=$('fc-video'),c=document.createElement('canvas');
+  const w=240,h=Math.round(w*v.videoHeight/v.videoWidth)||320;
+  c.width=w;c.height=h;
+  const ctx=c.getContext('2d');if(!ctx)return '';
+  if(FC.flip){ctx.translate(w,0);ctx.scale(-1,1)}
+  ctx.drawImage(v,0,0,w,h);
+  return c.toDataURL('image/jpeg',.5);
+}
+function fcLoop(){
+  if(!FC.on)return;
+  FC.raf=requestAnimationFrame(fcLoop);
+  const v=$('fc-video'),cv=$('fc-canvas');if(!v||!cv||!FC_POSE||v.readyState<2)return;
+  if(v.currentTime===FC.lastT)return;FC.lastT=v.currentTime;
+  let res;try{res=FC_POSE.detectForVideo(v,performance.now())}catch(e){return}
+  const lm=res&&res.landmarks&&res.landmarks[0];
+  const ctx=cv.getContext('2d');
+  cv.width=v.videoWidth;cv.height=v.videoHeight;
+  ctx.clearRect(0,0,cv.width,cv.height);
+  if(!lm)return;
+  /* skeleton */
+  ctx.save();if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle='rgba(200,240,75,.95)';
+  FC_BONES.forEach(([a,b])=>{const p1=lm[a],p2=lm[b];if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke()}});
+  ctx.fillStyle='#fff';const r=Math.max(2.5,cv.width/220);
+  lm.forEach((pt,i)=>{if(i<11&&i!==0)return;if(pt.v!=null&&pt.v<.4)return;ctx.beginPath();ctx.arc(pt.x*cv.width,pt.y*cv.height,r,0,7);ctx.fill()});
+  ctx.restore();
+  /* rep state machine + rules */
+  const p=FC.pat,angF=FC_ANG[p.ang];
+  const a=fcAvg(angF,lm);
+  if(a<FC.minA)FC.minA=a;if(a>FC.maxA)FC.maxA=a;
+  const down=p.hold?false:(p.up>p.down?(a<p.down):(a>p.down));
+  const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
+  if(p.hold){FC.hold0=(performance.now()-FC.holdT0)/1000;const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s'}
+  else if(FC.state==='up'&&down){FC.state='down';FC.bottomA=a;FC.bottomLm=lm}
+  else if(FC.state==='down'&&up){FC.state='up';FC.reps++;const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot())}
+  const bottom=FC.state==='down';
+  p.checks.forEach(ch=>{if(fcEvalCheck(ch,lm,bottom)){FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;if(Date.now()-(FC.lastFlagT||0)>1500){FC.lastFlagT=Date.now();fcFeed(ch.flag,false)}}});
+  const sc=$('fc-score');if(sc)sc.textContent=nf(fcScore());
+}
+const fcScore=()=>Math.max(45,Math.min(100,100-12*Math.min(5,Object.values(FC.flags).reduce((a,b)=>a+Math.min(3,b),0))));
+function fcFinish(){
+  if(!FC.pat||!FC.stream){toast(t('Camera is not available on this device'));return}
+  const p=FC.pat,reps=p.hold?Math.floor(FC.hold0):FC.reps;
+  const flags=Object.keys(FC.flags).filter(k=>FC.flags[k]>=2);
+  const score=fcScore(),rom=(p.hold||!reps)?null:Math.round(FC.maxA-FC.minA);
+  const kfs=FC.kf.slice(0,3);
+  KF_STASH.length=0;kfs.forEach(k=>KF_STASH.push(k));
+  fcStop();
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form check')} — ${t(p.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:14px;margin-bottom:12px">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Reps')}</span><b style="font-size:22px">${nf(reps)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Form score')}</span><b style="font-size:22px;color:${score>=85?'var(--green)':score>=65?'var(--accent-deep)':'var(--red)'}">${nf(score)}</b></div>
+      ${rom!=null?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Range of motion')}</span><b style="font-size:22px">${nf(rom)}°</b></div>`:''}
+    </div>
+    ${flags.length?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px">${flags.map(f=>`<span class="bdg bdg-red">${t(f)}</span>`).join('')}</div>`:`<div class="row" style="margin-bottom:10px"><span class="bdg bdg-lime">${t('Good form')}</span></div>`}
+    ${kfs.length?`<div class="fc-kfs">${kfs.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Retake')}</button><button class="btn btn-primary" data-act="fc-save" data-reps="${reps}" data-score="${score}" data-rom="${rom==null?'':rom}" data-flags="${esc(flags.join('|'))}" data-kf="${kfs.length}">${ic('check',15)} ${t('Save report')}</button></div>`);
+}
+function fcSave(el){
+  const p=FC.pat||FPATTERNS.find(x=>x.id===S.fcPat);const name=S.fcName;
+  const reps=+el.dataset.reps||0,score=+el.dataset.score||0,rom=el.dataset.rom?+el.dataset.rom:null;
+  const flags=(el.dataset.flags||'').split('|').filter(Boolean);
+  const kfN=+el.dataset.kf||0;
+  const kf=KF_STASH.splice(0,kfN);
+  FORMS.unshift({id:uid(),client:name,pattern:p?p.id:'?',ex:p?t(p.n):'?',reps,score,rom,flags,kf,d:isoToday()});
+  const from=S.role==='client'?'client':'coach';
+  MSGS.push({id:uid(),client:name,from,type:'text',body:`${t('Form check')} · ${p?t(p.n):''} — ${t('Reps')} ${nf(reps)} · ${t('Form score')} ${nf(score)}${flags.length?' · '+flags.map(f=>t(f)).join(', '):''}`,time:'Just now',read:from==='coach'});
+  fcStop();FC={on:false};
+  closeModal();saveData();render();
+  toast(S.role==='client'?t('Report saved — your coach can see it'):t('Report saved'));
+}
+/* Keyframes survive the summary modal via this tiny stash (data-URLs are too
+   big for element attributes). */
+const KF_STASH=[];
+function formReportsModal(name){
+  const list=FORMS.filter(f=>f.client===name);
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form reports')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${list.length?list.map(f=>`
+    <div class="card" style="padding:12px;margin-bottom:8px">
+      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${esc(f.ex)}</b><span class="bdg ${f.score>=85?'bdg-lime':f.score>=65?'bdg-amber':'bdg-red'}">${t('Form score')} ${nf(f.score)}</span></div>
+      <div class="muted" style="font-size:11.5px;margin-top:4px">${t('Reps')} ${nf(f.reps)}${f.rom!=null?` · ${t('Range of motion')} ${nf(f.rom)}°`:''} · ${esc(f.d)}</div>
+      ${(f.flags||[]).length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:6px">${f.flags.map(fl=>`<span class="bdg bdg-red" style="font-size:10px">${t(fl)}</span>`).join('')}</div>`:''}
+      ${(f.kf||[]).length?`<div class="fc-kfs">${f.kf.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
+    </div>`).join('')
+    :`<div class="empty">${ic('ruler',22)}<b>${t('No report yet — run a form check')}</b></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="fc-new" data-c="${esc(name)}">${ic('ruler',15)} ${t('New check')}</button></div>`);
 }
 function tplPreview(i){
   const tp=TEMPLATES[i];if(!tp)return;
@@ -4808,6 +5102,11 @@ function cToday(){
       <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
       <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="send-checkin">${t('Send check-in')}</button>
     </div>
+    <div class="ccard">
+      <div class="card-t">${ic('ruler',14)} ${t('Form check')}</div>
+      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Point the camera at yourself — reps and form are checked on your device')}</div>
+      <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="fc-open">${ic('ruler',15)} ${t('Start form check')}</button>
+    </div>
   </div>`;
 }
 function cWorkouts(){
@@ -5105,7 +5404,11 @@ function render(){renderInner();saveData()}
 
 /* ================= MODALS ================= */
 function openModal(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="modal">${html}</div></div>`;document.body.style.overflow='hidden'}
-function closeModal(){$('modal-root').innerHTML='';document.body.style.overflow=''}
+function closeModal(){$('modal-root').innerHTML='';document.body.style.overflow='';
+  /* v18.17 — the form-check camera must never keep running after its modal
+     closes (X button, overlay tap, or any other modal opening over it). */
+  try{if(FC&&FC.on)fcStop()}catch(e){}
+}
 function editClientModal(name){
   const c=CLIENTS.find(x=>x.name===name)||client(S.cid);
   const nm=c.name.split(' ');
@@ -5375,6 +5678,16 @@ document.addEventListener('click',e=>{
     case 'ai-chat-fab':aiChatOpen();break;
     case 'ai-chat-close':aiChatClose();break;
     case 'ai-chat-send':window.aiSend();break;
+    case 'ai-apply-toggle':S.aiApply=!S.aiApply;renderAiChat();break;
+    /* v18.17 — camera form check */
+    case 'fc-open':formCheckModal(null);break;
+    case 'fc-reports':formReportsModal(el.dataset.c);break;
+    case 'fc-new':formCheckModal(el.dataset.c);break;
+    case 'fc-pattern':fcStart(el.dataset.p);break;
+    case 'fc-flip':fcFlip();break;
+    case 'fc-finish':fcFinish();break;
+    case 'fc-cancel':fcStop();closeModal();break;
+    case 'fc-save':fcSave(el);break;
     case 'ai-chat-clear':AI_CHAT=[];aiChatSave();renderAiChat();break;
     case 'ai-weekly':aiInsight('weekly');break;
     case 'ai-reply':aiReplyDraft(el.dataset.c,el);break;

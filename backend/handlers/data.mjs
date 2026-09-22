@@ -22,7 +22,7 @@ const DATA_MAX_BYTES = Number(process.env.DATA_MAX_BYTES) || 5_000_000;
    arrays, DB must be a plain object, and every client needs an id (the whole
    merge/tenant model keys on it). */
 const ARRAY_FIELDS = ['CLIENTS', 'EVENTS', 'MSGS', 'NOTES', 'TEMPLATES', 'FILES', 'BUILDER',
-  'NPLANS', 'MTPL', 'PTPL', 'NHIST', 'ACTIVITY', 'NOTIFS', 'FOODS', 'PACKS', 'MSGTPL', 'CEXS'];
+  'NPLANS', 'MTPL', 'PTPL', 'NHIST', 'ACTIVITY', 'NOTIFS', 'FOODS', 'PACKS', 'MSGTPL', 'CEXS', 'FORMS'];
 function validatePayload(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return 'bad-payload';
   for (const k of ARRAY_FIELDS) {

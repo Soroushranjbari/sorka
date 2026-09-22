@@ -138,8 +138,10 @@ export const badJson = () =>
 /* ---------- Security headers ---------- */
 // CSP: the app is a single-file UI with inline script/style, so 'unsafe-inline'
 // is required for script-src/style-src; everything else is locked down.
+// 'wasm-unsafe-eval' (v18.17) lets the SELF-HOSTED MediaPipe pose engine
+// compile its WASM module — it adds nothing beyond WASM compilation.
 export const CSP =
-  "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+  "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
   "font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self'; " +
   "media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
 
@@ -157,7 +159,7 @@ export const SECURITY_HEADERS = {
   'x-content-type-options': 'nosniff',
   'x-frame-options': 'DENY',
   'referrer-policy': 'strict-origin-when-cross-origin',
-  'permissions-policy': 'camera=(), microphone=(), geolocation=()',
+  'permissions-policy': 'camera=(self), microphone=(), geolocation=()',
   'strict-transport-security': 'max-age=31536000; includeSubDomains'
 };
 

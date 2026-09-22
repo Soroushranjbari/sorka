@@ -1,7 +1,9 @@
-// CoachMint — Phase-3 AI assistant (OpenRouter, server-side key, FREE models).
+// CoachMint — AI assistant (OpenRouter, server-side key, FREE models).
 //   POST /api/ai/draft   (Bearer) {catalog, ctx} -> {ok, draft, model, usage}
 //   POST /api/ai/chat    (Bearer) {question, history?, catalog?} -> {ok, answer, model}
 //   POST /api/ai/insight (Bearer) {kind:'weekly'|'reply', client?, lang?} -> {ok, text, model}
+//   POST /api/ai/analyze (Bearer) {client, lang, catalog?} -> {ok, analysis, model}
+//   POST /api/ai/action  (Bearer) {request, lang?, catalog?} -> {ok, reply, applied, failed}
 //   GET  /api/ai/quota   (Bearer) -> {ok, used, max, plan, chatToday, enabled}
 //
 // DESIGN CONTRACT — "the coach decides": the AI only DRAFTS and ADVISES. Its
@@ -28,7 +30,7 @@ const AI_BASE = (process.env.AI_BASE_URL || 'https://openrouter.ai/api/v1').repl
    available free model), followed by concrete free models. callModel() walks
    the list until one returns a parseable draft. Override with AI_MODELS=a,b,c. */
 const AI_MODELS = (process.env.AI_MODELS ||
-  'nvidia/nemotron-3-super-120b-a12b:free,openrouter/free,qwen/qwen3.8-27b:free,google/gemma-4-31b-it:free')
+  'openrouter/free,qwen/qwen3.8-27b:free,google/gemma-4-31b-it:free')
   .split(',').map((s) => s.trim()).filter(Boolean);
 /* Draft bodies carry the exercise catalog (~25 rows) + context — 64 KB is generous. */
 const MAX_BYTES = 64_000;
@@ -210,7 +212,12 @@ const line = (arr, s) => { arr.push(s); };
  *  sessions, notes, messages, templates, the food library and billing state. */
 async function buildContext(st, acct, catalog, onlyName) {
   const L = [];
-  line(L, `COACH: ${acct.name || ''} <${acct.email}>, plan=${acct.plan || 'trial'}, role=${acct.role || 'coach'}`);
+  /* v18.16 — FULL coach profile: identity, plan, role, workspace pointer and
+     the account's own billing window, so "what do you know about me" answers
+     with real facts instead of guessing. */
+  const access = accessOf(acct);
+  const until = acct.sub_ends_at || (acct.sub && acct.sub.endsAt) || acct.trialEndsAt || null;
+  line(L, `COACH PROFILE: name=${acct.name || ''} | email=${acct.email} | plan=${acct.plan || 'trial'} | role=${acct.role || 'coach'} | workspace=${acct.workspaceId || 'none'} | access=${access.status}${until ? ` (until ${new Date(until).toISOString().slice(0, 10)})` : ''}`);
   if (Array.isArray(catalog) && catalog.length) {
     line(L, `EXERCISE LIBRARY (${catalog.length}): ` + catalog.map((c) => `${c.i}=${c.n}`).join(' | '));
   }
@@ -227,7 +234,8 @@ async function buildContext(st, acct, catalog, onlyName) {
     ? all.filter((c) => String(c.name || '').trim().toLowerCase() === onlyName.toLowerCase())
     : all;
   if (onlyName && !cl.length) return `WORKSPACE: no client named "${onlyName}" found. Clients: ` + all.map((c) => c.name).join(', ');
-  line(L, `WORKSPACE: code=${m.code || '?'}, clients=${cl.length}, lastUpdated=${m.updatedAt ? new Date(m.updatedAt).toISOString() : '?'}`);
+  const actN = all.filter((c) => c && c.status !== 'Archived').length;
+  line(L, `WORKSPACE: code=${m.code || '?'}, clients=${all.length} (${actN} active, ${all.length - actN} archived), lastUpdated=${m.updatedAt ? new Date(m.updatedAt).toISOString() : '?'}`);
 
   cl.slice(0, 80).forEach((c, ci) => {
     if (L.length > CTX_MAX_CHARS) return;
@@ -606,6 +614,302 @@ async function analyze(req, st) {
   });
 }
 
+/* ---------- Phase 5: APPLY changes (write access) ---------- */
+/* The coach can flip the assistant into "Apply" mode: the model returns
+   structured actions, THIS FILE validates them against a strict whitelist and
+   mutates the workspace KV itself. The model never writes directly — every
+   field is clamped, every target re-resolved against live data, and the
+   response lists exactly what was applied (or why an action failed). */
+
+const STATUSES = ['Active', 'Paused', 'Archived'];
+const NOTE_TYPES = ['General Note', 'Training Note', 'Progress Note', 'Injury / Restriction Note', 'Nutrition Note'];
+const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+/* Measurement keys → sane metric ranges (kg / cm / %). */
+const MEAS_RANGES = { w: [20, 400], ht: [80, 260], bf: [1, 70], ch: [20, 200], wa: [20, 200], hi: [20, 200], ar: [10, 80], th: [10, 120], ca: [10, 80] };
+
+const clean = (v, n) => String(v == null ? '' : v).replace(/[<>]/g, '').trim().slice(0, n);
+const num = (v, lo, hi) => { const n = Number(v); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, Math.round(n * 10) / 10)) : null; };
+const isoDate = (v) => (/^\d{4}-\d{2}-\d{2}$/.test(String(v || '')) ? String(v) : null);
+const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+const normFreq = (v) => {
+  const m = String(v || '').match(/(\d)\s*x\s*\/?\s*week/i);
+  const n = m && Number(m[1]);
+  return n >= 2 && n <= 5 ? `${n}x / week` : (clean(v, 30) || null);
+};
+const genClientCode = () => {
+  let s = '';
+  for (let i = 0; i < 8; i++) s += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  return s;
+};
+
+/** Turn the model's raw JSON into a SAFE action list. Unknown shapes are
+ *  dropped here; anything that references missing clients is reported later,
+ *  at apply time, so the coach sees a precise reason. */
+function parseActions(raw) {
+  const d = parseJsonLoose(raw);
+  if (!d || typeof d !== 'object') return null;
+  const reply = clean(d.reply, 2000);
+  const list = Array.isArray(d.actions) ? d.actions.slice(0, 8) : [];
+  const actions = [];
+  for (const a of list) {
+    if (!a || typeof a !== 'object') continue;
+    const kind = String(a.action || '').trim();
+    const client = clean(a.client, 80);
+    if (kind === 'update_client') {
+      const f = a.fields && typeof a.fields === 'object' ? a.fields : {};
+      const fields = {};
+      if (f.name != null) { const v = clean(f.name, 80); if (v.length >= 2) fields.name = v; }
+      if (f.email != null) { const v = clean(f.email, 120); if (isEmail(v)) fields.email = v; }
+      if (f.phone != null) { const v = clean(f.phone, 30); if (v) fields.phone = v; }
+      if (f.goal != null) { const v = clean(f.goal, 40); if (v) fields.goal = v; }
+      if (f.status != null && STATUSES.includes(f.status)) fields.status = f.status;
+      if (f.freq != null) { const v = normFreq(f.freq); if (v) fields.freq = v; }
+      if (f.prog != null) { const v = clean(f.prog, 80); if (v) fields.prog = v; }
+      if (f.week != null) { const v = num(f.week, 1, 52); if (v != null) fields.week = Math.round(v); }
+      if (f.weight != null) { const v = num(f.weight, 20, 400); if (v != null) fields.weight = v; }
+      if (f.h != null) { const v = num(f.h, 80, 260); if (v != null) fields.h = v; }
+      if (f.bf != null) { const v = num(f.bf, 1, 70); if (v != null) fields.bf = v; }
+      if (f.targetW != null) { const v = num(f.targetW, 20, 400); if (v != null) fields.targetW = v; }
+      if (f.targetDate != null) { const v = isoDate(f.targetDate); if (v) fields.targetDate = v; }
+      if (f.nid != null) { const v = clean(f.nid, 20); if (v) fields.nid = v; }
+      if (client && Object.keys(fields).length) actions.push({ action: 'update_client', client, fields });
+    } else if (kind === 'add_client') {
+      const f = a.fields && typeof a.fields === 'object' ? a.fields : {};
+      const name = clean(f.name, 80);
+      if (name.length < 2) continue;
+      const fields = { name };
+      if (f.goal != null) { const v = clean(f.goal, 40); if (v) fields.goal = v; }
+      if (f.freq != null) { const v = normFreq(f.freq); if (v) fields.freq = v; }
+      if (f.email != null) { const v = clean(f.email, 120); if (isEmail(v)) fields.email = v; }
+      if (f.phone != null) { const v = clean(f.phone, 30); if (v) fields.phone = v; }
+      if (f.weight != null) { const v = num(f.weight, 20, 400); if (v != null) fields.weight = v; }
+      if (f.h != null) { const v = num(f.h, 80, 260); if (v != null) fields.h = v; }
+      actions.push({ action: 'add_client', fields });
+    } else if (kind === 'add_note') {
+      const body = clean(a.body, 2000), title = clean(a.title, 120);
+      if (!client || (!body && !title)) continue;
+      actions.push({ action: 'add_note', client, title: title || 'Note', body, shared: !!a.shared, type: NOTE_TYPES.includes(a.type) ? a.type : 'General Note' });
+    } else if (kind === 'send_message') {
+      const body = clean(a.body, 2000);
+      if (!client || !body) continue;
+      actions.push({ action: 'send_message', client, body });
+    } else if (kind === 'add_measurement') {
+      const fields = {};
+      for (const [k, [lo, hi]] of Object.entries(MEAS_RANGES)) {
+        if (a[k] != null) { const v = num(a[k], lo, hi); if (v != null) fields[k] = v; }
+      }
+      if (!client || !Object.keys(fields).length) continue;
+      actions.push({ action: 'add_measurement', client, fields, d: isoDate(a.d) });
+    } else if (kind === 'schedule_session') {
+      const day = Math.round(Number(a.day)), start = Math.round(Number(a.start));
+      const dur = num(a.dur, 0.5, 4) || 1, label = clean(a.label, 60) || 'Session';
+      if (!client || !Number.isInteger(day) || day < 0 || day > 6) continue;
+      if (!Number.isInteger(start) || start < 6 || start > 22) continue;
+      actions.push({ action: 'schedule_session', client, day, start, dur, label });
+    } else if (kind === 'update_coach') {
+      const name = clean(a.name, 80);
+      if (name.length >= 2) actions.push({ action: 'update_coach', name });
+    }
+  }
+  return { reply, actions };
+}
+
+/** Apply validated actions to the workspace payload IN PLACE. Returns
+ *  {applied, failed, coachName} — the caller persists the payload and handles
+ *  the coach rename (which lives on the ACCOUNT, not in the workspace). */
+function applyActions(data, actions, lang, acct) {
+  const applied = [], failed = [];
+  let coachName = null;
+  const fa = lang === 'fa';
+  const clients = Array.isArray(data.CLIENTS) ? data.CLIENTS : (data.CLIENTS = []);
+  if (!data.DB || typeof data.DB !== 'object' || Array.isArray(data.DB)) data.DB = {};
+  const db = data.DB;
+  const findClient = (name) => clients.find((c) => String(c.name || '').trim().toLowerCase() === String(name || '').trim().toLowerCase());
+  const seats = () => clients.filter((c) => c && c.status !== 'Archived').length;
+  const plan = planOf(acct);
+  const base = Date.now() * 1000;
+  const today = new Date().toISOString().slice(0, 10);
+  const fmtFields = (fields) => Object.entries(fields).map(([k, v]) => `${k}=${v}`).join(', ');
+
+  actions.forEach((a, ai) => {
+    const fail = (reason) => failed.push({ action: a.action, target: a.client || a.name || '', reason });
+    try {
+      if (a.action === 'update_client') {
+        const c = findClient(a.client);
+        if (!c) return fail('client-not-found');
+        const rename = a.fields.name && a.fields.name !== c.name ? a.fields.name : null;
+        if (rename && findClient(rename)) return fail('name-exists');
+        // Un-archiving grows the seat count — respect the owner's plan cap.
+        if (c.status === 'Archived' && a.fields.status && a.fields.status !== 'Archived' && seats() + 1 > plan.maxClients) return fail('quota-exceeded');
+        Object.assign(c, a.fields);
+        if (rename) {
+          // Notes/messages/plans/events key on the NAME — follow the rename
+          // exactly like the app's own edit modal does.
+          [data.NOTES, data.MSGS, data.NPLANS, data.EVENTS].forEach((arr) => {
+            if (Array.isArray(arr)) arr.forEach((x) => { if (x && x.client === a.client) x.client = rename; });
+          });
+        }
+        applied.push({ action: 'update_client', target: rename || a.client, detail: `${rename || a.client}: ${fmtFields(a.fields)}` });
+      } else if (a.action === 'add_client') {
+        if (seats() + 1 > plan.maxClients) return fail('quota-exceeded');
+        if (findClient(a.fields.name)) return fail('name-exists');
+        const c = {
+          id: base + ai, name: a.fields.name, code: genClientCode(),
+          goal: a.fields.goal || 'Muscle Gain', weight: a.fields.weight != null ? a.fields.weight : 0,
+          prog: 'Onboarding — Week 1', week: 1, next: '—', status: 'Active',
+          freq: a.fields.freq || '3x / week', streak: 0, done: 0, missed: 0, last: '—', nextW: 'Unscheduled',
+          h: a.fields.h != null ? a.fields.h : 0, bf: a.fields.bf != null ? a.fields.bf : 0
+        };
+        if (a.fields.email) c.email = a.fields.email;
+        if (a.fields.phone) c.phone = a.fields.phone;
+        clients.unshift(c);
+        db[c.id] = { workouts: [], sessions: [], stats: { done: 0, missed: 0 }, nutrition: null, measures: [] };
+        applied.push({ action: 'add_client', target: c.name, detail: `${c.name} (${c.code})` });
+      } else if (a.action === 'add_note') {
+        const c = findClient(a.client);
+        if (!c) return fail('client-not-found');
+        if (!Array.isArray(data.NOTES)) data.NOTES = [];
+        data.NOTES.unshift({ id: base + ai, client: c.name, from: 'coach', shared: !!a.shared, type: a.type, title: a.title, date: 'Just now', body: a.body, pin: false, arch: false });
+        applied.push({ action: 'add_note', target: c.name, detail: `${c.name}: "${a.title}"` });
+      } else if (a.action === 'send_message') {
+        const c = findClient(a.client);
+        if (!c) return fail('client-not-found');
+        if (!Array.isArray(data.MSGS)) data.MSGS = [];
+        data.MSGS.push({ id: base + ai, client: c.name, from: 'coach', type: 'text', body: a.body, time: 'Just now', read: true });
+        applied.push({ action: 'send_message', target: c.name, detail: `${c.name}: ${a.body.slice(0, 60)}${a.body.length > 60 ? '…' : ''}` });
+      } else if (a.action === 'add_measurement') {
+        const c = findClient(a.client);
+        if (!c) return fail('client-not-found');
+        const bucket = db[c.id] = db[c.id] || { workouts: [], sessions: [], stats: { done: 0, missed: 0 }, measures: [] };
+        if (!Array.isArray(bucket.measures)) bucket.measures = [];
+        const e = { d: a.d || today, ...a.fields };
+        bucket.measures.push(e);
+        bucket.measures.sort((x, y) => (x.d < y.d ? -1 : 1));
+        if (e.w != null) c.weight = e.w;
+        if (e.bf != null) c.bf = e.bf;
+        if (e.ht != null) c.h = e.ht;
+        applied.push({ action: 'add_measurement', target: c.name, detail: `${c.name}: ${fmtFields(a.fields)}${a.d ? ` @${a.d}` : ''}` });
+      } else if (a.action === 'schedule_session') {
+        const c = findClient(a.client);
+        if (!c) return fail('client-not-found');
+        if (!Array.isArray(data.EVENTS)) data.EVENTS = [];
+        data.EVENTS.push({ id: base + ai, day: a.day, start: a.start, dur: a.dur, client: c.name, label: a.label, type: 'Session' });
+        applied.push({ action: 'schedule_session', target: c.name, detail: `${c.name}: day${a.day} ${String(a.start).padStart(2, '0')}:00 "${a.label}"` });
+      } else if (a.action === 'update_coach') {
+        coachName = a.name;
+        // Client devices greet the coach by the payload's ownerName — keep it
+        // in sync with the account rename.
+        if (typeof data.ownerName === 'string' && data.ownerName) data.ownerName = a.name;
+        applied.push({ action: 'update_coach', target: a.name, detail: `${acct.name || ''} → ${a.name}` });
+      }
+    } catch (e) {
+      console.error('[ai] apply failed:', a.action, e.message);
+      fail('failed');
+    }
+  });
+
+  // One activity-feed entry for the whole batch (the feed renders HTML).
+  if (applied.length) {
+    if (!Array.isArray(data.ACTIVITY)) data.ACTIVITY = [];
+    const n = applied.length;
+    data.ACTIVITY.unshift({
+      w: 'Just now', i: 'zap',
+      h: fa ? `<b>${'دستیار هوشمند'}</b> ${n} تغییر اعمال کرد` : `<b>AI assistant</b> applied ${n} change${n > 1 ? 's' : ''}`
+    });
+  }
+  return { applied, failed, coachName };
+}
+
+/** POST /api/ai/action {request, lang?, catalog?} — Phase 5: the assistant
+ *  with WRITE access. The coach describes a change; the model returns
+ *  structured actions; the server validates + applies them to the live
+ *  workspace KV and reports exactly what changed. Shares the daily chat
+ *  quota. The coach's device pulls the new revision right after. */
+async function aiAction(req, st) {
+  const s = await sessionOf(st, bearerOf(req));
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const acct = await accountById(st, s.coachId);
+  if (!acct) return j(401, { ok: false, error: 'unauthorized' });
+  if (!AI_KEY) return j(503, { ok: false, error: 'ai-not-configured' });
+  const access = accessOf(acct);
+  if (access.status === 'suspended') return j(402, { ok: false, error: 'sub-suspended' });
+  if (access.status === 'expired') return j(402, { ok: false, error: 'sub-expired' });
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 200_000);
+  if (big) return tooLarge(200_000);
+  if (bad) return badJson();
+  const request = String(body?.request || '').trim().slice(0, 4000);
+  if (!request) return j(400, { ok: false, error: 'bad-question' });
+  const lang = body?.lang === 'fa' ? 'fa' : 'en';
+  const catalog = (Array.isArray(body?.catalog) ? body.catalog : [])
+    .map((c) => ({ i: Math.round(Number(c && c.i)), n: String((c && c.n) || '').slice(0, 60), m: String((c && c.m) || '').slice(0, 30), e: String((c && c.e) || '').slice(0, 30) }))
+    .filter((c) => Number.isInteger(c.i) && c.i >= 0 && c.n)
+    .slice(0, 300);
+  const meta = acct.workspaceId ? await st.get(`ws-meta:${acct.workspaceId}`, { type: 'json' }).catch(() => null) : null;
+  if (!meta || !meta.data) return j(404, { ok: false, error: 'no-workspace' });
+  const dayKey = new Date().toISOString().slice(0, 10);
+  const ckey = `ai-chat:${acct.id}:${dayKey}`;
+  return withLock(`ai:${acct.id}`, async () => {
+    const used = Number((await st.get(ckey, { type: 'json' })) || 0);
+    if (used >= CHAT_DAILY) return j(402, { ok: false, error: 'ai-quota', used, max: CHAT_DAILY });
+    const context = await buildContext(st, acct, catalog);
+    const sys = [
+      'You are the built-in AI assistant of CoachMint with WRITE access to the signed-in coach\'s workspace.',
+      'The coach asks you to MAKE CHANGES (update a client profile, log a measurement, add a note, message a client, schedule a session, add a client, rename the coach).',
+      'You have FULL READ access via the live data block below. Apply ONLY what was explicitly asked — never invent extra changes, never delete data.',
+      'Respond with STRICT JSON only — no markdown fences, no commentary:',
+      '{"reply":"one short sentence confirming what you changed (or a clarifying question if the request is ambiguous)","actions":[…]}',
+      'Available actions (use ONLY these exact shapes; omit optional fields you do not need):',
+      '- {"action":"update_client","client":"<exact name>","fields":{"name":"…","email":"…","phone":"…","goal":"…","status":"Active|Paused|Archived","freq":"3x / week","prog":"…","week":6,"weight":82.4,"h":176,"bf":14.2,"targetW":78,"targetDate":"2026-12-01","nid":"…"}}',
+      '- {"action":"add_client","fields":{"name":"…","goal":"…","freq":"3x / week","email":"…","phone":"…","weight":75,"h":178}}',
+      '- {"action":"add_note","client":"…","title":"…","body":"…","shared":false}',
+      '- {"action":"send_message","client":"…","body":"…"}',
+      '- {"action":"add_measurement","client":"…","w":75.2,"ht":176,"bf":14,"wa":84,"d":"YYYY-MM-DD"}  (w=weight kg, ht=height cm, bf=bodyfat %, wa=waist, hi=hips, ch=chest, ar=arm, th=thigh, ca=calf; d defaults to today)',
+      '- {"action":"schedule_session","client":"…","day":0,"start":9,"dur":1,"label":"…"}  (day: 0=Monday…6=Sunday; start: hour 6-22; dur: hours)',
+      '- {"action":"update_coach","name":"…"}  (rename the coach themself)',
+      'Rules:',
+      '- Use the EXACT client name as it appears in the data.',
+      '- Numbers are METRIC (kg, cm, %). Never invent values the coach did not give.',
+      '- If the request is ambiguous or the client does not exist, return an EMPTY actions list and ask in "reply".',
+      '- "reply" in the SAME LANGUAGE the coach writes in (Persian or English).'
+    ].join('\n');
+    const user = [
+      `Today is ${dayKey} (YYYY-MM-DD).`,
+      `The coach says: "${request}"`,
+      '=== LIVE WORKSPACE DATA ===',
+      context
+    ].join('\n');
+    const out = await callModel([{ role: 'system', content: sys }, { role: 'user', content: user }], parseActions);
+    if (!out) return j(502, { ok: false, error: 'ai-upstream' });
+    const { reply, actions } = out.parsed;
+    let applied = [], failed = [], renamedCoach = null;
+    if (actions.length) {
+      // Serialize against the coach's own data writes (same lock key as the
+      // data handler) and RE-READ the payload inside the lock so a concurrent
+      // PUT that landed while the model was thinking is not clobbered.
+      const res = await withLock(`data:${meta.code}`, async () => {
+        const cur = await st.get(`ws-meta:${acct.workspaceId}`, { type: 'json' }).catch(() => null);
+        if (!cur || !cur.data) return null;
+        const r = applyActions(cur.data, actions, lang, acct);
+        const rev = Date.now();
+        await st.setJSON(`ws-meta:${acct.workspaceId}`, { rev, data: cur.data, owner: cur.owner || null, code: cur.code || meta.code, updatedAt: rev });
+        return r;
+      });
+      if (res) { applied = res.applied; failed = res.failed; renamedCoach = res.coachName || null; }
+      else failed.push({ action: 'all', target: '', reason: 'no-workspace' });
+      // Coach rename lives on the ACCOUNT — same lock the profile endpoint uses.
+      if (res && res.coachName) {
+        await withLock(`acct:${acct.email}`, async () => {
+          const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
+          cur.name = res.coachName;
+          await st.setJSON(`acct:${cur.email}`, cur);
+        });
+      }
+    }
+    await st.setJSON(ckey, used + 1);
+    return j(200, { ok: true, reply, applied, failed, coachName: renamedCoach, model: out.model, usage: { chatToday: used + 1, chatMax: CHAT_DAILY } });
+  });
+}
+
 export default async (req) => {
   if (req.method === 'POST') {
     const r = rateLimit(`ai:${ipOf(req)}`, 20, 60_000);
@@ -620,6 +924,7 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'chat') return secure(await chat(req, st));
     if (req.method === 'POST' && action === 'insight') return secure(await insight(req, st));
     if (req.method === 'POST' && action === 'analyze') return secure(await analyze(req, st));
+    if (req.method === 'POST' && action === 'action') return secure(await aiAction(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     console.error('[ai] handler error:', e.message);
