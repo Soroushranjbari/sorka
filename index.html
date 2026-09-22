@@ -421,6 +421,15 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .fpills{display:flex;gap:8px;flex-wrap:wrap}
 .fpill{padding:8px 16px;border-radius:999px;background:#1C2026;color:#B4B9C4;font-size:12.5px;font-weight:700;border:1.5px solid transparent;cursor:pointer}
 .fpill.on{background:rgba(200,240,75,.08);border-color:var(--accent);color:var(--accent)}
+/* v18.24 — FitFlow workout card: dark photo-hero style (charcoal gradient
+   banner, chips on top, big title + subtitle at the bottom, like the board's
+   "Upper Body Power" card). */
+.wcard{position:relative;display:flex;flex-direction:column;min-height:190px;border-radius:20px;padding:14px;color:#fff;border:1px solid #2A2F38;overflow:hidden;
+  background:radial-gradient(120% 80% at 85% 0%,rgba(200,240,75,.13),transparent 55%),
+             radial-gradient(140% 110% at 10% 100%,rgba(200,240,75,.05),transparent 55%),
+             linear-gradient(160deg,#232830,#15171C 65%,#101318)}
+.wcard-top{display:flex;justify-content:space-between;align-items:center}
+.wcard .btn-lime{box-shadow:0 6px 18px -6px rgba(200,240,75,.5)}
 /* FitFlow big bold section headers + tiny uppercase eyebrow */
 .csec{font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin:4px 2px -2px}
 html[lang="fa"] .csec{letter-spacing:0}
@@ -678,6 +687,7 @@ const FA={
 'Apply':'اعمال','Let the AI apply changes':'دستیار خودش تغییرات را اعمال کند','Describe the change to apply…':'تغییری که باید اعمال شود را بنویس…','Done — changes applied':'انجام شد — تغییرات اعمال شد','Nothing was changed':'تغییری اعمال نشد','A client with this name exists':'شاگردی با این نام وجود دارد','Invalid values':'مقادیر نامعتبر','Change failed':'تغییر ناموفق بود',
 'Camera form check':'بررسی فرم با دوربین','Accuracy':'دقت تشخیص','Standard':'عادی','High':'بالا','High (slower)':'بالا (کندتر)','Standard (faster)':'عادی (سریع‌تر)','Body outline':'سایه بدن',
 'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
+'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
 'Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
@@ -5375,8 +5385,11 @@ function vClient(){
       <div class="capp" id="capp">
         <div class="chead">
           <div style="display:flex;align-items:center;gap:10px;min-width:0">
-            ${av(t(c.name),38,c.id-1)}
-            <div style="min-width:0"><div style="font-weight:800;font-size:17px;letter-spacing:-.02em">${t('Hi')} ${esc(t(c.name).split(' ')[0])} 👋</div><div class="muted" style="font-size:11.5px;margin-top:1px">${t(DAYS[TODAY])} · ${fmtFullDate(TDATE)}</div></div>
+            ${av(t(c.name),40,c.id-1)}
+            <div style="min-width:0">
+              <div class="muted" style="font-size:11.5px;font-weight:700">${t('Hello')} ${esc(t(c.name).split(' ')[0])}</div>
+              <div style="font-weight:800;font-size:19px;letter-spacing:-.02em;line-height:1.15">${t('Build')} <span style="color:var(--accent)">${t('Better Habits')}</span></div>
+            </div>
           </div>
         </div>
         ${body}
@@ -5398,10 +5411,14 @@ function cToday(){
   const doneDays=new Set(db.workouts.filter(x=>x.status==='completed').map(x=>wkIdx(x.day)).filter(i=>i>=0));
   return `<div class="cbody">
     <div class="csec">${t('Today')}</div>
-    <div class="wkc">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>`<i class="${doneDays.has(i)?'done':''} ${i===TODAY?'today':''}">${t(d).slice(0,lang==='fa'?1:1)}</i>`).join('')}</div>
-    <div class="ccard cstat" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:var(--accent-ink);padding:14px 16px">
-      <span style="display:flex;align-items:center;gap:8px">🔥 <b style="font-size:17px">${nf(c.streak)}</b> <span style="font-weight:700;font-size:12.5px;opacity:.85">${t('day streak')}</span></span>
-      <span style="display:flex;flex-direction:column;align-items:flex-end"><b style="font-size:15px">${nf(doneWk)}/${nf(db.workouts.length)}</b><span style="font-size:10.5px;font-weight:700;opacity:.7">${t('This week')}</span></span>
+    ${monthStrip()}
+    <div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border:none;padding:13px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 26px -10px rgba(200,240,75,.5)">
+      <span style="width:38px;height:38px;border-radius:50%;background:rgba(20,26,5,.18);display:grid;place-items:center;flex:none;color:var(--accent-ink)">${ic('star',18)}</span>
+      <div style="flex:1;min-width:0;color:var(--accent-ink)">
+        <b style="font-size:13.5px">${t('Ongoing challenge')}</b>
+        <div style="font-size:11px;font-weight:700;opacity:.75;margin-top:1px">${t('day streak')} · ${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</div>
+        <div style="height:4px;border-radius:99px;background:rgba(20,26,5,.18);margin-top:6px;overflow:hidden"><i style="display:block;height:100%;width:${Math.min(100,Math.round(doneWk/(db.workouts.length||1)*100))}%;background:var(--accent-ink);border-radius:99px"></i></div>
+      </div>
     </div>
     ${!c.intake?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('note',14)} ${t('Intake form')}</div>
       <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Your coach needs your health background before the first session')}</div>
@@ -5457,35 +5474,96 @@ function cWorkouts(){
     <div class="ccard"><div class="row" style="justify-content:space-between"><b>${t('Program progress')}</b><span class="chip">${t('Week')} ${nf(c.week)} ${t('of')} 12</span></div>
       <div class="pbar" style="margin-top:8px"><i style="width:${c.week/12*100}%"></i></div></div>
     ${list.length?list.map(w=>{const total=w.exercises.reduce((a,e)=>a+e.sets,0);
-    return `<div class="ccard" ${w.status==='assigned'?'style="border-color:var(--acc-line2)"':''}>
-      <div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px">
-        <div style="min-width:0"><b>${esc(w.name)}</b>
-        <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip">${t(w.day)}</span><span class="chip">${t(w.dur)}</span><span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(total)} ${t('sets')}</span></div></div>
-        ${w.status==='completed'?`<span class="bdg bdg-green">${t('Completed')}</span>`:`<span class="bdg bdg-lime">${t('Pending')}</span>`}
+    const done=w.status==='completed';
+    return `<div class="wcard" data-act="open-player" data-wid="${w.id}" style="cursor:pointer">
+      <div class="wcard-top">
+        <span class="chip" style="background:rgba(0,0,0,.4);color:#fff;border:1px solid rgba(255,255,255,.12)">${ic('clock',12)} ${t(w.dur)}</span>
+        ${done?`<span class="chip" style="background:rgba(200,240,75,.15);color:var(--accent);border:1px solid rgba(200,240,75,.35)">${ic('check',12)} ${t('Completed')}</span>`:`<span class="chip" style="background:rgba(200,240,75,.15);color:var(--accent);border:1px solid rgba(200,240,75,.35)">${t('Pending')}</span>`}
       </div>
-      <button class="btn ${w.status==='completed'?'btn-outline':'btn-lime'}" style="${w.status==='completed'?'width:100%;justify-content:center;margin-top:12px;padding:10px 16px':''}margin-top:12px" data-act="open-player" data-wid="${w.id}">${w.status==='completed'?t('View summary'):t('Start Workout')} ${w.status!=='completed'?ic('arrowR',15):''}</button>
+      <div style="margin-top:auto">
+        <b style="font-size:17px;letter-spacing:-.02em;display:block">${esc(w.name)}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:3px">${t(w.day)} · ${nf(w.exercises.length)} ${t('exercises')} · ${nf(total)} ${t('sets')}</div>
+        <div class="row" style="gap:6px;margin-top:10px">
+          <button class="btn ${done?'glass':'btn-lime'}" style="${done?'flex:1;justify-content:center;padding:10px 14px':'flex:1;justify-content:center;padding:10px 14px'}" data-act="open-player" data-wid="${w.id}">${done?t('View summary'):t('Start Workout')} ${done?'':ic('arrowR',15)}</button>
+        </div>
+      </div>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
+  </div>`;
+}
+/* v18.24 — FitFlow month strip: S M T W T F S letter row + date row, today
+   highlighted with a lime pill (like the inspiration board's March strip).
+   Shows the current calendar week (Mon..Sun). */
+function monthStrip(){
+  const mon=new Date(TDATE);mon.setDate(mon.getDate()-((mon.getDay()+6)%7)); // Monday of this week
+  const days=[...Array(7)].map((_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d});
+  const letters=['S','M','T','W','T','F','S'];
+  const faLetters=['ش','ی','د','س','چ','پ','ج']; // Persian week starts Saturday
+  const order=lang==='fa'?[6,0,1,2,3,4,5]:[0,1,2,3,4,5,6]; // FA: ش ی د س چ پ ج = Sat..Fri
+  const cell=(i)=>{const idx=order[i];const d=days[idx];const isT=d.toDateString()===TDATE.toDateString();
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px;flex:1">
+      <span style="font-size:10px;font-weight:700;color:${isT?'var(--accent)':'var(--ink3)'}">${lang==='fa'?faLetters[idx]:letters[idx]}</span>
+      <span style="min-width:30px;height:30px;padding:0 6px;border-radius:10px;display:grid;place-items:center;font-size:12.5px;font-weight:800;${isT?'background:var(--accent);color:var(--accent-ink);box-shadow:0 4px 14px -4px rgba(200,240,75,.6)':'background:#1C2026;color:var(--ink2);border:1px solid #262B33'}">${nf(d.getDate())}</span>
+    </div>`};
+  const mName=lang==='fa'?TDATE.toLocaleDateString('fa-IR',{month:'long'}):TDATE.toLocaleDateString('en-US',{month:'long'});
+  return `<div class="ccard" style="padding:12px 14px">
+    <div class="row" style="justify-content:space-between;margin-bottom:8px">
+      <b style="font-size:13.5px">${esc(mName)} (${nf(TDATE.getFullYear())})</b>
+      <span class="row" style="gap:4px"><button class="btn btn-ghost btn-icon" style="width:26px;height:26px">${ic('chevL',14)}</button><button class="btn btn-ghost btn-icon" style="width:26px;height:26px">${ic('chevR',14)}</button></span>
+    </div>
+    <div style="display:flex;gap:4px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
   </div>`;
 }
 function cProgress(){
   const lm=lastM(S.cid);
   const c=client(S.cid);
   const photos=(DB[c.id].photos||[]).filter(p=>p.ok!==false);
+  const sc=RPT.score(c).score;
+  const ad=RPT.adherence(c);
+  const tr=RPT.trend(c);
+  const fm=RPT.form(c);
+  const range=S.prgRange||'Week';
+  const cons=range==='Week'?CONSIST.slice(-7):range==='Month'?CONSIST.slice(-12):CONSIST;
   return `<div class="cbody">
-    <div class="csec">${t('My Progress')}</div>
-    ${c.targetW?`<div class="ccard" style="border-color:rgba(200,240,75,.3);display:flex;align-items:center;gap:14px">
-      <div style="position:relative;width:64px;height:64px;flex:none">${ring(goalPct(c))}<div style="position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:12.5px">${pct(goalPct(c))}</div></div>
-      <div style="flex:1;min-width:0"><div class="card-t">${ic('target',13)} ${t('My Goal')}</div>
-        <div style="font-size:13px;margin-top:4px">${uwS(c.weight||null)} → <b>${uwS(c.targetW)}</b>${c.targetDate?` <span class="muted" style="font-size:11px">· ${esc(c.targetDate)}</span>`:''}</div></div>
-    </div>`:''}
-    ${lm?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('ruler',14)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
+    <div class="csec">${t('Daily Report')}</div>
+    <div class="ccard" style="display:flex;align-items:center;gap:14px;padding:16px">
+      <div style="flex:1;min-width:0">
+        <b style="font-size:16px;letter-spacing:-.02em">${t('Health Grade')}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:3px">${t('Perfect progress dude, keep going to apply your fitness activity')}</div>
+      </div>
+      <div style="position:relative;width:64px;height:64px;flex:none">${ring(sc)}<div style="position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:15px">${nf(sc)}</div></div>
+    </div>
+    <div class="card-t" style="margin:2px 2px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${[
+        ['Calories',(nPlanOf(c.name)?nPlanOf(c.name).train.kcal:0)||'—',(nPlanOf(c.name)?'kcal':'')],
+        ['Weight',lm&&lm.w!=null?nf(lm.w):nf(c.weight||0),'kg'],
+        ['Body Fat',lm&&lm.bf!=null?nf(lm.bf):nf(c.bf||0),'%'],
+        ['Heart beat','80','bpm']
+      ].map(([k,v,u])=>`
+      <div class="ccard" style="padding:12px 14px">
+        <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:11px;font-weight:700">${t(k)}</span><span style="color:var(--accent)">${ic(k==='Calories'?'utensils':k==='Weight'?'ruler':k==='Body Fat'?'user':'zap',13)}</span></div>
+        <div style="font-weight:800;font-size:19px;margin-top:6px;letter-spacing:-.02em">${typeof v==='number'?nf(v):v}</div>
+        ${u?`<div class="muted" style="font-size:10px;font-weight:700;margin-top:1px">${u}</div>`:''}
+      </div>`).join('')}
+    </div>
+    <div class="ccard">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <b style="font-size:13.5px">${t('Workout')}</b>
+        <div class="seg">${['Week','Day','Month'].map(r=>`<button class="${range===r?'on':''}" data-act="prg-range" data-r="${r}">${t(r)}</button>`).join('')}</div>
+      </div>
+      ${barChart(cons,{h:150,labels:range==='Week'?['Mon','Tue','Wed','Thu','Fri','Sat','Sun']:undefined,c:'var(--accent)'})}
+      <div class="row" style="gap:10px;margin-top:8px;font-size:11px;color:var(--ink2)">
+        <span>${t('Workout completion')}: <b style="color:var(--ink)">${ad.pct!=null?nf(ad.pct)+'%':'—'}</b></span>
+        <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
+      </div>
+    </div>
+    ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
       <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
-    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,170)}</div>
-    <div class="ccard"><b style="font-size:13px">${t('Strength Progression')}</b>
+    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13.5px">${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,170)}</div>
+    <div class="ccard"><b style="font-size:13.5px">${t('Strength Progression')}</b>
       <div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap"><span style="color:var(--accent-deep)">● ${t('Bench')}</span><span style="color:var(--blue)">● ${t('Squat')}</span><span style="color:var(--purple)">● ${t('Deadlift')}</span></div>
       ${multiChart([{d:STRENGTH.bench,c:'var(--accent-deep)'},{d:STRENGTH.squat,c:'var(--blue)'},{d:STRENGTH.dead,c:'var(--purple)'}])}</div>
-    <div class="ccard"><b style="font-size:13px">${t('Workout Completion')}</b><div style="margin-top:6px">${barChart(CONSIST,{h:140})}</div></div>
     <div class="card-t" style="margin-top:4px">${ic('star',13)} ${t('New PR achieved')}</div>
     <div class="row" style="gap:8px;flex-wrap:wrap">${PRS.map(p=>`
       <div class="ccard" style="flex:1;min-width:100px;padding:12px;text-align:center"><div style="color:var(--accent);display:flex;justify-content:center">${ic('star',16)}</div>
@@ -6620,6 +6698,7 @@ document.addEventListener('click',e=>{
     case 'theme':{PREFS.theme=el.dataset.v;savePrefs();applyTheme();render();toast('Theme applied');break}
     case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
     case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
+    case 'prg-range':{S.prgRange=el.dataset.r;render();break}
     case 'accent':{PREFS.accent=+el.dataset.ix;savePrefs();applyAccent(PREFS.accent);render();toast('Accent color updated');break}
     case 'unit':{PREFS.units=el.dataset.u;savePrefs();render();toast(t('Units set to')+' '+t(PREFS.units==='Metric'?'Metric (kg · cm)':'Imperial (lb · in)'));break}
     case 'pose':S.pose=el.dataset.p;render();break;
