@@ -453,6 +453,25 @@ html[lang="fa"] .phone .card-t{letter-spacing:0}
 /* FitFlow ring — lime gradient stroke (chart fns already use it) */
 .phone .set-row{border-color:#23272F;background:#171A20}
 .phone .set-row.on{background:rgba(200,240,75,.07);border-color:rgba(200,240,75,.35)}
+/* ================= v18.26 — CALM MOTION (slow, no 3D) =================
+   Gentle life for the client app: cards fade+rise slowly as they enter the
+   viewport (IntersectionObserver, once per element), the tab content cross-
+   fades softly, and interactive elements ease a touch slower. Everything is
+   opacity/transform only, GPU-composited, and fully disabled for
+   prefers-reduced-motion. */
+.phone .cbody>.ccard,.phone .cbody>.wcard,.phone .cbody>.fhero{
+  opacity:0;transform:translateY(26px);
+  transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform}
+.phone .cbody>.ccard.fx-in,.phone .cbody>.wcard.fx-in,.phone .cbody>.fhero.fx-in{opacity:1;transform:translateY(0)}
+/* stagger via transition-delay (set by the observer per index) */
+@media(prefers-reduced-motion:reduce){
+  .phone .cbody>.ccard,.phone .cbody>.wcard,.phone .cbody>.fhero{opacity:1!important;transform:none!important;transition:none!important}
+}
+/* soft cross-fade when switching tabs */
+.phone .cbody{animation:cfade .5s ease}
+@keyframes cfade{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){.phone .cbody{animation:none}}
 /* coach mobile — black chrome, green accents */
 .mshell{height:100vh;height:100dvh;display:flex;flex-direction:column;background:var(--bg)}
 .mhead{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#12151B,#171B22);backdrop-filter:blur(10px);border-bottom:1px solid rgba(200,240,75,.16);padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff}
@@ -5804,6 +5823,7 @@ function shell(inner){
 function renderInner(){
   if(S.role==='client'){
     $('app').innerHTML=vClient();
+    fxReveal(); // v18.26 — slow scroll-reveal for the client app cards
     if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
     return;
   }
@@ -5818,6 +5838,40 @@ function renderInner(){
   document.body.classList.remove('sb-c');
 }
 function render(){renderInner();saveData()}
+
+/* ================= v18.26 — SCROLL REVEAL (calm motion) =================
+   Observes the client app's cards and adds .fx-in (fade+rise, .9s) as each
+   enters the viewport, with a small stagger. One shared observer; elements
+   are unobserved after revealing (once per mount). Disabled entirely for
+   prefers-reduced-motion (CSS also flattens). */
+let FXO=null;
+function fxReveal(){
+  try{
+    if(!FXO){
+      FXO=new IntersectionObserver(es=>{
+        es.forEach(en=>{
+          if(!en.isIntersecting)return;
+          const el=en.target;
+          const sibs=[...el.parentElement.children].filter(x=>x.classList.contains('ccard')||x.classList.contains('wcard')||x.classList.contains('fhero'));
+          el.style.transitionDelay=Math.min(360,sibs.indexOf(el)*90)+'ms';
+          el.classList.add('fx-in');
+          FXO.unobserve(el);
+        });
+      },{root:null,rootMargin:'0px 0px -8% 0px',threshold:.08});
+    }
+    const els=document.querySelectorAll('.phone .cbody>.ccard,.phone .cbody>.wcard,.phone .cbody>.fhero');
+    els.forEach(el=>{el.classList.remove('fx-in');FXO.observe(el)});
+    /* Hidden tabs defer IO callbacks indefinitely — reveal anything already
+       in the viewport after a beat so the first screen is never blank. */
+    setTimeout(()=>{
+      els.forEach(el=>{
+        if(el.classList.contains('fx-in'))return;
+        const r=el.getBoundingClientRect();
+        if(r.top<innerHeight&&r.bottom>0){el.classList.add('fx-in');FXO.unobserve(el)}
+      });
+    },350);
+  }catch(e){}
+}
 
 /* ================= MODALS ================= */
 function openModal(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="modal">${html}</div></div>`;document.body.style.overflow='hidden'}
