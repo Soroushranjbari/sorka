@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v18-19';
+const CACHE = 'co-os-v18-20';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
