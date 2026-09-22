@@ -559,6 +559,7 @@ body.sb-open .scrim{display:block}
 .fc-ok{background:rgba(22,163,74,.92)}
 .fc-tools{position:absolute;top:10px;inset-inline-end:10px;z-index:2;display:flex;flex-direction:column;gap:6px}
 .fc-tools button{width:38px;height:38px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.fc-tools button.on{background:var(--accent);color:var(--accent-ink)}
 .fc-kfs{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .fc-kfs img{width:74px;height:74px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .fc-pat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -650,7 +651,7 @@ const FA={
 '"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."':'«CoachMint چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
 'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی',
 'Apply':'اعمال','Let the AI apply changes':'دستیار خودش تغییرات را اعمال کند','Describe the change to apply…':'تغییری که باید اعمال شود را بنویس…','Done — changes applied':'انجام شد — تغییرات اعمال شد','Nothing was changed':'تغییری اعمال نشد','A client with this name exists':'شاگردی با این نام وجود دارد','Invalid values':'مقادیر نامعتبر','Change failed':'تغییر ناموفق بود',
-'Camera form check':'بررسی فرم با دوربین','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Camera form check':'بررسی فرم با دوربین','Accuracy':'دقت تشخیص','Standard':'عادی','High':'بالا','High (slower)':'بالا (کندتر)','Standard (faster)':'عادی (سریع‌تر)','Body outline':'سایه بدن','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -4551,6 +4552,10 @@ const FC_VENDOR='/vendor/mediapipe/';
 /* Landmark indexes (MediaPipe Pose, 33 points). */
 const FCLM={shL:11,shR:12,elL:13,elR:14,wrL:15,wrR:16,hipL:23,hipR:24,knL:25,knR:26,anL:27,anR:28};
 const fcAngle=(a,b,c)=>{const v1=[a.x-b.x,a.y-b.y],v2=[c.x-b.x,c.y-b.y];const m=Math.hypot(v1[0],v1[1])*Math.hypot(v2[0],v2[1]);if(!m)return 180;const d=(v1[0]*v2[0]+v1[1]*v2[1])/m;return Math.acos(Math.min(1,Math.max(-1,d)))*180/Math.PI};
+/* v18.20 — TRUE 3D angles from WORLD landmarks (meters, hip-center origin):
+   rotation-independent, so depth/asymmetry no longer depend on the camera
+   being perfectly side-on. Falls back to 2D image angles when absent. */
+const fcAngle3=(a,b,c)=>{const v1=[a.x-b.x,a.y-b.y,a.z-b.z],v2=[c.x-b.x,c.y-b.y,c.z-b.z];const m=Math.hypot(v1[0],v1[1],v1[2])*Math.hypot(v2[0],v2[1],v2[2]);if(!m)return 180;const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/m;return Math.acos(Math.min(1,Math.max(-1,d)))*180/Math.PI};
 /* Joint-angle sets: side 0 = left, 1 = right. */
 const FC_ANG={
   knee:(l,s)=>fcAngle(l[23+s],l[25+s],l[27+s]),
@@ -4558,7 +4563,15 @@ const FC_ANG={
   hip:(l,s)=>fcAngle(l[11+s],l[23+s],l[25+s]),
   line:(l,s)=>fcAngle(l[11+s],l[23+s],l[27+s])
 };
-const fcAvg=(f,l)=>(f(l,0)+f(l,1))/2;
+const FC_ANG3={
+  knee:(l,s)=>fcAngle3(l[23+s],l[25+s],l[27+s]),
+  elbow:(l,s)=>fcAngle3(l[11+s],l[13+s],l[15+s]),
+  hip:(l,s)=>fcAngle3(l[11+s],l[23+s],l[25+s]),
+  line:(l,s)=>fcAngle3(l[11+s],l[23+s],l[27+s])
+};
+/* Angle by name using WORLD landmarks when available (3D), else image 2D. */
+const fcA=(name,lm,wl,s)=>wl?FC_ANG3[name](wl,s):FC_ANG[name](lm,s);
+const fcAvgA=(name,lm,wl)=>(fcA(name,lm,wl,0)+fcA(name,lm,wl,1))/2;
 /* Movement patterns — rules are DATA (evaluated by fcEval), so a new pattern
    is one entry here. down/up are the tracked-angle thresholds for the rep
    state machine; checks run per frame or at the rep bottom. */
@@ -4585,15 +4598,18 @@ const FPATTERNS=[
    {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'}]}
 ];
 /* Rule evaluator — returns true when the rule FIRES (a problem). Uses the
-   live FC session for the tracked angle and the swing baseline. */
-function fcEvalCheck(ch,lm,bottom){
+   live FC session for the tracked angle and the swing baseline. Angles come
+   from WORLD landmarks (3D) when the model provides them. */
+function fcEvalCheck(ch,lm,wl,bottom){
   if(ch.at==='bottom'&&!bottom)return false;
   switch(ch.type){
-    case 'depth':return fcAvg(FC_ANG[FC.pat.ang],lm)>ch.thr;
-    case 'asym':return Math.abs(FC_ANG[FC.pat.ang](lm,0)-FC_ANG[FC.pat.ang](lm,1))>ch.thr;
-    case 'lean':{const s=lm[11].y<lm[12].y?lm[11]:lm[12],h=lm[23].y<lm[24].y?lm[23]:lm[24];return Math.atan2(Math.abs(s.x-h.x),Math.abs(s.y-h.y))*180/Math.PI>ch.thr}
-    case 'line':return fcAvg(FC_ANG.line,lm)<ch.thr;
-    case 'lineHi':return fcAvg(FC_ANG.line,lm)>ch.thr;
+    case 'depth':return fcAvgA(FC.pat.ang,lm,wl)>ch.thr;
+    case 'asym':return Math.abs(fcA(FC.pat.ang,lm,wl,0)-fcA(FC.pat.ang,lm,wl,1))>ch.thr;
+    case 'lean':{
+      if(wl){const S3=wl[11].y<wl[12].y?wl[11]:wl[12],H3=wl[23].y<wl[24].y?wl[23]:wl[24];const dx=S3.x-H3.x,dz=S3.z-H3.z,dy=Math.abs(S3.y-H3.y);return Math.atan2(Math.hypot(dx,dz),dy)*180/Math.PI>ch.thr}
+      const s=lm[11].y<lm[12].y?lm[11]:lm[12],h=lm[23].y<lm[24].y?lm[23]:lm[24];return Math.atan2(Math.abs(s.x-h.x),Math.abs(s.y-h.y))*180/Math.PI>ch.thr}
+    case 'line':return fcAvgA('line',lm,wl)<ch.thr;
+    case 'lineHi':return fcAvgA('line',lm,wl)>ch.thr;
     case 'swing':{const hx=(lm[23].x+lm[24].x)/2;if(FC.hipX==null)FC.hipX=hx;return Math.abs(hx-FC.hipX)>ch.thr}
   }
   return false;
@@ -4601,14 +4617,25 @@ function fcEvalCheck(ch,lm,bottom){
 /* Skeleton connections for the overlay. */
 const FC_BONES=[[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32]];
 let FC={on:false};
-let FC_POSE=null,FC_VISION=null;
+let FC_POSE=null,FC_VISION=null,FC_ACC=null;
+/* v18.20 — LIVE_STREAM mode: frames are dropped (never queued) when the model
+   is busy, results arrive via the listener, and BOTH world landmarks (3D) and
+   segmentation masks are requested. numPoses=2 covers coach+client in frame;
+   rules always run on the PRIMARY pose (largest bounding box = closest). */
 async function fcEngine(){
-  if(FC_POSE)return FC_POSE;
-  FC_VISION=await import(FC_VENDOR+'vision_bundle.mjs');
+  const acc=S.fcAcc=S.fcAcc||(function(){try{return localStorage.getItem('co-fc-acc')||'lite'}catch(e){return 'lite'}})();
+  if(FC_POSE&&FC_ACC===acc)return FC_POSE;
+  if(FC_POSE){try{await FC_POSE.close()}catch(e){}FC_POSE=null}
+  FC_VISION=FC_VISION||await import(FC_VENDOR+'vision_bundle.mjs');
   const files=await FC_VISION.FilesetResolver.forVisionTasks(FC_VENDOR+'wasm');
-  const opts=d=>({baseOptions:{modelAssetPath:FC_VENDOR+'pose_landmarker_lite.task',delegate:d},runningMode:'VIDEO',numPoses:1,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5});
+  const model=acc==='full'?'pose_landmarker_full.task':'pose_landmarker_lite.task';
+  const opts=d=>({baseOptions:{modelAssetPath:FC_VENDOR+model,delegate:d},runningMode:'LIVE_STREAM',numPoses:2,
+    outputWorldLandmarks:true,outputSegmentationMasks:!!FC.maskOn,
+    minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,
+    resultListener:(res)=>fcOnResult(res)});
   try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('GPU'))}
   catch(e){FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('CPU'))}
+  FC_ACC=acc;
   return FC_POSE;
 }
 function formCheckModal(name){
@@ -4620,6 +4647,10 @@ function formCheckModal(name){
   <div class="modal-b">
     <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Runs on your device — the video never leaves it. Stand so your whole body is visible.')}</div>
     <div class="fc-pat">${FPATTERNS.map(p=>`<button data-act="fc-pattern" data-p="${p.id}"><b>${t(p.n)}</b><small>${t(p.sub)}</small></button>`).join('')}</div>
+    <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
+      <span class="muted" style="font-size:12px">${t('Accuracy')} — ${t(S.fcAcc==='full'?'High (slower)':'Standard (faster)')}</span>
+      <div class="seg">${[['lite','Standard'],['full','High']].map(([a,l])=>`<button class="${(S.fcAcc||'lite')===a?'on':''}" data-act="fc-acc" data-a="${a}">${t(l)}</button>`).join('')}</div>
+    </div>
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button></div>`);
 }
@@ -4635,7 +4666,7 @@ async function fcStart(pid){
         ${p.hold?`<div class="fc-big"><small>${t('Hold')}</small><span id="fc-hold">0s</span></div>`:''}
         <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
       </div>
-      <div class="fc-tools"><button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button></div>
+      <div class="fc-tools"><button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button><button title="${t('Body outline')}" data-act="fc-mask" class="${FC.maskOn?'on':''}">${ic('user',16)}</button></div>
       <div class="fc-feed" id="fc-feed"></div>
     </div>
     <div class="muted" id="fc-msg" style="font-size:12px;text-align:center;margin-top:10px">${t('Loading the pose engine…')}</div>
@@ -4647,7 +4678,7 @@ async function fcStart(pid){
   try{
     const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
     FC.stream=stream;
-    const v=$('fc-video');v.srcObject=stream;v.style.transform='scaleX(-1)';FC.flip=true;
+    const v=$('fc-video');v.srcObject=stream;v.style.transform='scaleX(-1)';FC.flip=true;FC.video=v;
     await v.play();
     const msg=$('fc-msg');if(msg)msg.textContent=t('Loading the pose engine…');
     await fcEngine();
@@ -4672,6 +4703,13 @@ async function fcFlip(){
     const v=$('fc-video');if(v){v.srcObject=FC.stream;v.style.transform=FC.flip?'scaleX(-1)':'none';await v.play()}
   }catch(e){}
 }
+/* v18.20 — body-outline (segmentation mask) toggle. Masks are an output
+   option: flip it on the live landmarker without recreating the engine. */
+async function fcToggleMask(btn){
+  FC.maskOn=!FC.maskOn;
+  if(btn)btn.classList.toggle('on',FC.maskOn);
+  if(FC_POSE){try{await FC_POSE.setOptions({outputSegmentationMasks:FC.maskOn})}catch(e){}}
+}
 function fcFeed(flag,ok){
   const feed=$('fc-feed');if(!feed)return;
   const el=document.createElement('div');el.className='fc-flag'+(ok?' fc-ok':'');el.textContent=t(flag);
@@ -4690,33 +4728,69 @@ function fcSnapshot(){
 function fcLoop(){
   if(!FC.on)return;
   FC.raf=requestAnimationFrame(fcLoop);
-  const v=$('fc-video'),cv=$('fc-canvas');if(!v||!cv||!FC_POSE||v.readyState<2)return;
-  if(v.currentTime===FC.lastT)return;FC.lastT=v.currentTime;
-  let res;try{res=FC_POSE.detectForVideo(v,performance.now())}catch(e){return}
-  const lm=res&&res.landmarks&&res.landmarks[0];
-  const ctx=cv.getContext('2d');
-  cv.width=v.videoWidth;cv.height=v.videoHeight;
-  ctx.clearRect(0,0,cv.width,cv.height);
-  if(!lm)return;
-  /* skeleton */
+  const v=FC.video||$('fc-video');if(!v||!FC_POSE||v.readyState<2)return;
+  /* LIVE_STREAM: non-blocking — the task drops frames while busy and the
+     result arrives in fcOnResult. Timestamps must be monotonic. */
+  try{FC_POSE.detectForVideo(v,performance.now())}catch(e){}
+}
+function fcDrawSkeleton(ctx,cv,lm,primary){
   ctx.save();if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
-  ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle='rgba(200,240,75,.95)';
+  ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle=primary?'rgba(200,240,75,.95)':'rgba(200,240,75,.35)';
   FC_BONES.forEach(([a,b])=>{const p1=lm[a],p2=lm[b];if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke()}});
-  ctx.fillStyle='#fff';const r=Math.max(2.5,cv.width/220);
+  ctx.fillStyle=primary?'#fff':'rgba(255,255,255,.4)';const r=Math.max(2.5,cv.width/220);
   lm.forEach((pt,i)=>{if(i<11&&i!==0)return;if(pt.v!=null&&pt.v<.4)return;ctx.beginPath();ctx.arc(pt.x*cv.width,pt.y*cv.height,r,0,7);ctx.fill()});
   ctx.restore();
-  /* rep state machine + rules */
-  const p=FC.pat,angF=FC_ANG[p.ang];
-  const a=fcAvg(angF,lm);
-  if(a<FC.minA)FC.minA=a;if(a>FC.maxA)FC.maxA=a;
-  const down=p.hold?false:(p.up>p.down?(a<p.down):(a>p.down));
-  const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
-  if(p.hold){FC.hold0=(performance.now()-FC.holdT0)/1000;const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s'}
-  else if(FC.state==='up'&&down){FC.state='down';FC.bottomA=a;FC.bottomLm=lm}
-  else if(FC.state==='down'&&up){FC.state='up';FC.reps++;const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot())}
-  const bottom=FC.state==='down';
-  p.checks.forEach(ch=>{if(fcEvalCheck(ch,lm,bottom)){FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;if(Date.now()-(FC.lastFlagT||0)>1500){FC.lastFlagT=Date.now();fcFeed(ch.flag,false)}}});
-  const sc=$('fc-score');if(sc)sc.textContent=nf(fcScore());
+}
+/* v18.20 — segmentation mask: lime silhouette over the body. Read back at
+   HALF resolution (the per-pixel loop is the only CPU part) and scaled up. */
+function fcDrawMask(mask,cv,ctx){
+  try{
+    const w=mask.width,h=mask.height;if(!w||!h)return;
+    let src=null;try{src=mask.getAsUint8Array()}catch(e){}
+    if(!src){try{const f=mask.getAsFloat32Array();src={length:f.length};for(let i=0;i<f.length;i++)src[i]=f[i]>.5?255:0}catch(e){return}}
+    const sw=Math.ceil(w/2),sh=Math.ceil(h/2);
+    const off=FC.maskCv=FC.maskCv||document.createElement('canvas');
+    if(off.width!==sw||off.height!==sh){off.width=sw;off.height=sh}
+    const octx=FC.maskCtx=FC.maskCtx||off.getContext('2d');
+    const img=octx.createImageData(sw,sh);
+    for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){const si=(y*2)*w+(x*2),di=(y*sw+x)*4;const on=src[si]>128;
+      img.data[di]=200;img.data[di+1]=240;img.data[di+2]=75;img.data[di+3]=on?72:0}
+    octx.putImageData(img,0,0);
+    ctx.save();ctx.drawImage(off,0,0,cv.width,cv.height);ctx.restore();
+  }catch(e){}
+  finally{try{mask.close()}catch(e){}}
+}
+function fcOnResult(res){
+  if(!FC.on)return;
+  const masks=(res&&res.segmentationMasks)||[];
+  try{
+    const v=FC.video,cv=$('fc-canvas');if(!v||!cv)return;
+    cv.width=v.videoWidth||720;cv.height=v.videoHeight||960;
+    const ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,cv.width,cv.height);
+    const list=(res&&res.landmarks)||[];
+    if(!list.length)return;
+    /* primary pose = largest bounding box (closest to the camera) */
+    let pi=0,best=-1;
+    list.forEach((L,i)=>{let x0=9,x1=-9,y0=9,y1=-9;L.forEach(p=>{if(p.x<x0)x0=p.x;if(p.x>x1)x1=p.x;if(p.y<y0)y0=p.y;if(p.y>y1)y1=p.y});const a=(x1-x0)*(y1-y0);if(a>best){best=a;pi=i}});
+    const lm=list[pi];
+    const wl=(res.worldLandmarks&&res.worldLandmarks[pi])||null;
+    if(FC.maskOn&&masks[0])fcDrawMask(masks[0],cv,ctx);
+    list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,L,i===pi));
+    /* rep state machine + rules (3D angles when world landmarks exist) */
+    const p=FC.pat;
+    const a=fcAvgA(p.ang,lm,wl);
+    if(a<FC.minA)FC.minA=a;if(a>FC.maxA)FC.maxA=a;
+    const down=p.hold?false:(p.up>p.down?(a<p.down):(a>p.down));
+    const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
+    if(p.hold){FC.hold0=(performance.now()-FC.holdT0)/1000;const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s'}
+    else if(FC.state==='up'&&down){FC.state='down';FC.bottomA=a;FC.bottomLm=lm}
+    else if(FC.state==='down'&&up){FC.state='up';FC.reps++;const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot())}
+    const bottom=FC.state==='down';
+    p.checks.forEach(ch=>{if(fcEvalCheck(ch,lm,wl,bottom)){FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;if(Date.now()-(FC.lastFlagT||0)>1500){FC.lastFlagT=Date.now();fcFeed(ch.flag,false)}}});
+    const sc=$('fc-score');if(sc)sc.textContent=nf(fcScore());
+  }
+  finally{masks.forEach(m=>{if(m)try{m.close()}catch(e){}})}
 }
 const fcScore=()=>Math.max(45,Math.min(100,100-12*Math.min(5,Object.values(FC.flags).reduce((a,b)=>a+Math.min(3,b),0))));
 function fcFinish(){
@@ -5708,6 +5782,8 @@ document.addEventListener('click',e=>{
     case 'fc-new':formCheckModal(el.dataset.c);break;
     case 'fc-pattern':fcStart(el.dataset.p);break;
     case 'fc-flip':fcFlip();break;
+    case 'fc-mask':fcToggleMask(el);break;
+    case 'fc-acc':{S.fcAcc=el.dataset.a;try{localStorage.setItem('co-fc-acc',S.fcAcc)}catch(e){}if(FC_POSE){FC_POSE.close().catch(()=>{});FC_POSE=null;FC_ACC=null}formCheckModal(S.fcName);break}
     case 'fc-finish':fcFinish();break;
     case 'fc-cancel':fcStop();closeModal();break;
     case 'fc-save':fcSave(el);break;
