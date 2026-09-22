@@ -5018,6 +5018,8 @@ function mClientView(){
     </div>
     <div class="row" style="gap:8px;flex-wrap:wrap">
       <button class="btn btn-dark btn-sm" data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',14)} ${t('Messages')}</button>
+      <button class="btn btn-primary btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+      <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form reports')}</button>
       <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
       <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
       <button class="btn btn-outline btn-sm" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>
