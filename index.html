@@ -430,51 +430,6 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
              linear-gradient(160deg,#232830,#15171C 65%,#101318)}
 .wcard-top{display:flex;justify-content:space-between;align-items:center}
 .wcard .btn-lime{box-shadow:0 6px 18px -6px rgba(200,240,75,.5)}
-/* ================= v18.25 — 3D DEPTH + PARALLAX =================
-   The client app becomes a layered 3D scene: the phone is a perspective
-   stage; the hero floats NEAREST (translateZ + pointer tilt), cards sit in
-   the mid layer with a subtle scroll-driven drift, and the tab bar is
-   glassy-nearest. Everything is transform/opacity only (GPU-composited),
-   throttled through one rAF loop, and fully disabled when the user asks for
-   reduced motion. Content and behavior are untouched. */
-.phone{perspective:1200px;perspective-origin:50% 20%}
-.phone .capp{transform-style:preserve-3d}
-/* depth layers */
-.phone .fhero,.phone .wcard{transform:translateZ(34px);box-shadow:0 24px 44px -18px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04) inset;will-change:transform}
-.phone .ccard{transform:translateZ(14px);transition:transform .25s ease,box-shadow .25s ease;will-change:transform}
-.phone .cstat,.phone .ccard[style*="linear-gradient(135deg,var(--accent)"]{transform:translateZ(30px)}
-.phone .cnav{transform:translateZ(46px);box-shadow:0 -18px 40px -18px rgba(0,0,0,.8)}
-.phone .chead{transform:translateZ(24px)}
-/* pointer tilt: the whole scene leans toward the finger/cursor (set via JS
-   custom props; defaults keep everything flat) */
-.phone{--tx:0deg;--ty:0deg;--px:0;--py:0}
-.phone .capp{transform:rotateX(var(--tx)) rotateY(var(--ty))}
-/* parallax drift: hero moves slightly MORE than the scroll (nearest), cards
-   less (mid layer) — classic depth cue. JS writes --sy (scroll px). */
-.phone .fhero{transform:translateZ(34px) translateY(calc(var(--sy,0px) * -0.045))}
-.phone .wcard{transform:translateZ(34px) translateY(calc(var(--sy,0px) * -0.035))}
-.phone .ccard{transform:translateZ(14px) translateY(calc(var(--sy,0px) * -0.018))}
-/* hover lift on cards (desktop) */
-@media(hover:hover){
-  .phone .ccard:hover{transform:translateZ(22px) translateY(calc(var(--sy,0px) * -0.018))}
-}
-/* entry animation: fade+rise via OPACITY only — transforms belong to the
-   parallax system (an animated transform here would fight it and freeze
-   elements at their keyframe in hidden tabs). */
-@keyframes fcrise{from{opacity:0}to{opacity:1}}
-.phone .cbody>.ccard,.phone .cbody>.wcard,.phone .cbody>.fhero{animation:fcrise .45s ease-out backwards}
-.phone .cbody>.ccard:nth-child(2){animation-delay:.05s}
-.phone .cbody>.ccard:nth-child(3){animation-delay:.1s}
-.phone .cbody>.ccard:nth-child(4){animation-delay:.15s}
-.phone .cbody>.ccard:nth-child(5){animation-delay:.2s}
-.phone .cbody>.wcard:nth-child(3){animation-delay:.06s}
-.phone .cbody>.wcard:nth-child(4){animation-delay:.12s}
-/* respect reduced motion: flatten everything */
-@media(prefers-reduced-motion:reduce){
-  .phone .capp{transform:none}
-  .phone .fhero,.phone .wcard,.phone .ccard,.phone .cnav,.phone .chead{transform:none!important}
-  .phone .cbody>*{animation:none!important}
-}
 /* FitFlow big bold section headers + tiny uppercase eyebrow */
 .csec{font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin:4px 2px -2px}
 html[lang="fa"] .csec{letter-spacing:0}
@@ -5849,7 +5804,6 @@ function shell(inner){
 function renderInner(){
   if(S.role==='client'){
     $('app').innerHTML=vClient();
-    p3dStart(); // v18.25 — idempotent: mounts the delegation-based 3D engine once
     if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
     return;
   }
@@ -5864,62 +5818,6 @@ function renderInner(){
   document.body.classList.remove('sb-c');
 }
 function render(){renderInner();saveData()}
-
-/* ================= v18.25 — 3D PARALLAX ENGINE =================
-   Delegation-based (survives re-renders — render() replaces the scene on
-   every interaction, so per-node listeners kept dying):
-   • scroll parallax — a capture-phase document scroll listener finds the
-     live .capp and feeds its scrollTop into --sy (CSS moves the depth layers
-     at different rates);
-   • pointer tilt — document-level pointermove over .phone feeds --tx/--ty
-     (max 4°); pointerleave resets;
-   • device tilt — deviceorientation does the same on phones.
-   One rAF-throttled apply; everything transform-only; fully disabled for
-   prefers-reduced-motion. */
-const P3D={raf:0,sy:0,tx:0,ty:0,dirty:false,started:false,lastSy:-1};
-const P3D_MAX=4; // degrees
-const p3dPhone=()=>document.querySelector('.phone');
-const p3dApp=()=>document.getElementById('capp');
-function p3dApply(){
-  P3D.dirty=false;
-  const phone=p3dPhone();if(!phone)return;
-  phone.style.setProperty('--sy',P3D.sy.toFixed(1)+'px');
-  phone.style.setProperty('--tx',P3D.tx.toFixed(2)+'deg');
-  phone.style.setProperty('--ty',P3D.ty.toFixed(2)+'deg');
-}
-const p3dKick=()=>{if(!P3D.dirty){P3D.dirty=true;setTimeout(p3dApply,16)}};
-function p3dStart(){
-  if(P3D.started)return;
-  try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){return}
-  P3D.started=true;
-  /* Scroll: programmatic scrollTop assignment does not always dispatch a
-     scroll event in every embedding, so poll the live scroller. The loop is
-     rAF-driven when the tab is visible and falls back to a 120ms interval
-     when hidden (rAF never fires in background tabs). */
-  const poll=()=>{
-    if(!P3D.started)return;
-    const app=p3dApp();
-    if(app){const st=app.scrollTop||0;if(st!==P3D.lastSy){P3D.lastSy=st;P3D.sy=st;p3dKick()}}
-    if(document.hidden)setTimeout(poll,120);else requestAnimationFrame(poll);
-  };
-  setTimeout(poll,120); // never via rAF first — rAF never fires in hidden tabs
-  document.addEventListener('pointermove',e=>{
-    const phone=p3dPhone();if(!phone)return;
-    const r=phone.getBoundingClientRect();
-    if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;
-    const nx=((e.clientX-r.left)/r.width-.5)*2,ny=((e.clientY-r.top)/r.height-.5)*2;
-    P3D.ty=Math.max(-P3D_MAX,Math.min(P3D_MAX,nx*P3D_MAX));
-    P3D.tx=Math.max(-P3D_MAX,Math.min(P3D_MAX,-ny*P3D_MAX));
-    p3dKick();
-  });
-  document.addEventListener('pointerleave',()=>{P3D.tx=0;P3D.ty=0;p3dKick()},true);
-  window.addEventListener('deviceorientation',e=>{
-    if(e.gamma==null)return;
-    P3D.ty=Math.max(-P3D_MAX,Math.min(P3D_MAX,(e.gamma/45)*P3D_MAX));
-    P3D.tx=Math.max(-P3D_MAX,Math.min(P3D_MAX,((e.beta-45)/45)*P3D_MAX));
-    p3dKick();
-  });
-}
 
 /* ================= MODALS ================= */
 function openModal(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="modal">${html}</div></div>`;document.body.style.overflow='hidden'}
