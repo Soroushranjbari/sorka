@@ -534,6 +534,21 @@ body.sb-open .scrim{display:block}
 /* v18.18 — bigger stage: full modal width, taller viewport-relative height */
 .fc-stage{position:relative;background:#000;border-radius:14px;overflow:hidden;width:100%;aspect-ratio:auto;height:min(72vh,640px);margin:0 auto}
 @media(max-width:760px){.fc-stage{height:min(66vh,560px)}}
+/* v18.19 — on PHONES the camera goes FULLSCREEN (native camera feel): the
+   modal becomes edge-to-edge, header/footer float over the video as glass
+   bars, the stage fills the whole screen (dvh = dynamic viewport height so
+   the browser address bar does not clip it). Desktop keeps the big stage. */
+@media(max-width:760px){
+  .modal.fc-full{position:fixed;inset:0;max-width:none;max-height:none;width:100%;height:100vh;height:100dvh;border-radius:0;animation:none}
+  .modal.fc-full .modal-h{position:absolute;top:0;left:0;right:0;z-index:5;border-bottom:none;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,0));color:#fff;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .modal.fc-full .modal-h .btn-ghost{color:#fff}
+  .modal.fc-full .modal-b{flex:1;padding:0;overflow:hidden}
+  .modal.fc-full .fc-stage{height:100%;border-radius:0}
+  .modal.fc-full .fc-hud,.modal.fc-full .fc-tools{top:calc(58px + env(safe-area-inset-top,0px))}
+  .modal.fc-full #fc-msg{position:absolute;bottom:calc(78px + env(safe-area-inset-bottom,0px));left:12px;right:12px;z-index:4;color:#fff;background:rgba(0,0,0,.45);border-radius:10px;padding:8px 10px;backdrop-filter:blur(4px)}
+  .modal.fc-full .modal-f{position:absolute;bottom:0;left:0;right:0;z-index:5;border-top:none;justify-content:space-between;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.6));padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px))}
+  .modal.fc-full .modal-f .btn-ghost{background:rgba(0,0,0,.4);color:#fff;border:1px solid rgba(255,255,255,.25)}
+}
 .fc-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fc-stage canvas{position:absolute;inset:0;width:100%;height:100%}
 .fc-hud{position:absolute;top:10px;inset-inline-start:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
@@ -4626,6 +4641,8 @@ async function fcStart(pid){
     <div class="muted" id="fc-msg" style="font-size:12px;text-align:center;margin-top:10px">${t('Loading the pose engine…')}</div>
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
+  /* v18.19 — fullscreen camera on phones (CSS scopes it to ≤760px). */
+  document.querySelector('#modal-root .modal')?.classList.add('fc-full');
   FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0};
   try{
     const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
