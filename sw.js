@@ -1,4 +1,26 @@
-const CACHE = 'co-os-v18-21';
+const CACHE = 'co-os-v18-22';
+
+/* v18.22 — Web Push: show the OS notification and focus/open the app. */
+self.addEventListener('push', e => {
+  let data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (_) {}
+  e.waitUntil(self.registration.showNotification(data.title || 'CoachMint', {
+    body: data.body || '',
+    tag: data.tag || 'coachmint',
+    renotify: !!data.tag,
+    icon: './icons/icon-192.png',
+    badge: './icons/icon-192.png',
+    data: { url: data.url || './' }
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || './';
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) { c.navigate(url); return c.focus(); } }
+    return self.clients.openWindow(url);
+  }));
+});
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
