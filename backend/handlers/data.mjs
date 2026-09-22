@@ -11,6 +11,27 @@ import {
 } from '../lib/saas.mjs';
 import { planOf, countSeats } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, secure, withLock } from '../lib/guard.mjs';
+import { pushToAccount, pushEnabled } from './push.mjs';
+
+/* v18.22 — push the OWNER when a student device adds client→coach messages
+   (plain messages, check-ins, form checks). Cheap diff: compare the incoming
+   MSGS ids against the stored payload's; every unseen id from a 'client'
+   author is one notification (batched into a single push per PUT). */
+function clientMsgDiff(oldData, newData) {
+  try {
+    const oldIds = new Set(((oldData && Array.isArray(oldData.MSGS)) ? oldData.MSGS : []).map((m) => String(m && m.id)));
+    const msgs = (newData && Array.isArray(newData.MSGS)) ? newData.MSGS : [];
+    const fresh = msgs.filter((m) => m && m.from === 'client' && !oldIds.has(String(m.id)));
+    if (!fresh.length) return null;
+    const last = fresh[fresh.length - 1];
+    const checkin = fresh.some((m) => m.type === 'checkin');
+    return {
+      title: checkin ? '📋 New check-in' : '💬 New message',
+      body: `${last.client}: ${String(last.body || '').slice(0, 80)}`,
+      tag: 'msg', url: '/?view=messages'
+    };
+  } catch { return null; }
+}
 
 /* Workspace payload cap (default 5 MB — hundreds of clients with workouts,
    notes and measurements fit comfortably). Override with DATA_MAX_BYTES. */
@@ -179,6 +200,15 @@ async function handlePutLocked(st, req, code) {
     }
     const rev = Date.now();
     await st.setJSON(`ws-meta:${ws.id}`, { rev, data, owner: ws.owner || null, code, updatedAt: rev });
+    /* v18.22 — a student device just wrote client→coach messages: notify the
+       owner's devices (fire-and-forget; never blocks or fails the PUT). */
+    if (!coach && ws.owner && pushEnabled()) {
+      const note = clientMsgDiff(cur && cur.data, data);
+      if (note) {
+        const ownerId = String(ws.owner).replace(/^coach:/, '');
+        pushToAccount(st, ownerId, note).catch(() => {});
+      }
+    }
     return j(200, { ok: true, rev, mine: !!(coach && ws.owner && ws.owner === ownerOf(coach)) });
   }
 

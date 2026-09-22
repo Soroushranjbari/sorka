@@ -566,6 +566,15 @@ body.sb-open .scrim{display:block}
 .fc-pat button{padding:13px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;gap:3px;align-items:flex-start;text-align:start}
 .fc-pat button:hover{border-color:var(--acc-line);background:var(--accent-soft)}
 .fc-pat button small{font-weight:600;font-size:10.5px;color:var(--ink3)}
+/* v18.22 — push nudge chip + install banner */
+.pwa-chip{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom,0px));inset-inline-start:22px;z-index:70;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--acc-line);background:var(--surface);color:var(--ink);font-weight:700;font-size:12.5px;cursor:pointer;box-shadow:var(--sh-2)}
+.pwa-chip i{display:inline-flex;color:var(--ink3);margin-inline-start:4px}
+.pwa-banner{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));inset-inline:16px;z-index:70;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--acc-line);background:var(--surface);box-shadow:var(--sh-2);animation:pop .2s ease}
+.pwa-banner .pwa-ic{font-size:26px}
+.pwa-banner div{flex:1;min-width:0}
+.pwa-banner b{display:block;font-size:13.5px}
+.pwa-banner span{display:block;font-size:11.5px;color:var(--ink2)}
+@media(max-width:760px){.pwa-chip{bottom:calc(86px + env(safe-area-inset-bottom,0px));inset-inline-start:14px}}
 </style>
 </head>
 <body>
@@ -652,7 +661,8 @@ const FA={
 'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی',
 'Apply':'اعمال','Let the AI apply changes':'دستیار خودش تغییرات را اعمال کند','Describe the change to apply…':'تغییری که باید اعمال شود را بنویس…','Done — changes applied':'انجام شد — تغییرات اعمال شد','Nothing was changed':'تغییری اعمال نشد','A client with this name exists':'شاگردی با این نام وجود دارد','Invalid values':'مقادیر نامعتبر','Change failed':'تغییر ناموفق بود',
 'Camera form check':'بررسی فرم با دوربین','Accuracy':'دقت تشخیص','Standard':'عادی','High':'بالا','High (slower)':'بالا (کندتر)','Standard (faster)':'عادی (سریع‌تر)','Body outline':'سایه بدن',
-'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
+'Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -4989,6 +4999,73 @@ function formReportsModal(name){
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="fc-new" data-c="${esc(name)}">${ic('ruler',15)} ${t('New check')}</button></div>`);
 }
+/* ================= v18.22 — WEB PUSH + INSTALL BANNER =================
+   Push: one permission prompt → subscription stored per-account server-side
+   → the backend fires real OS notifications (new message, smart report…).
+   Install: Chrome/Android fire beforeinstallprompt → a one-tap banner; iOS
+   gets the Share→Add-to-Home-Screen guide instead. Both are additive and
+   degrade silently when unsupported. */
+let PWA={deferred:null,enabled:false};
+async function pwaInit(){
+  try{
+    // Install banner (Chromium)
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA.deferred=e;showInstallBanner()});
+    // Push availability
+    if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window))return;
+    const {ok,d}=await fetch('/api/push/vapid').then(r=>r.json()).catch(()=>({ok:false}));
+    if(!ok||!d||!d.enabled||!d.publicKey)return;
+    PWA.enabled=true;PWA.key=d.publicKey;
+    const reg=await navigator.serviceWorker.ready;
+    const cur=await reg.pushManager.getSubscription();
+    if(cur&&Notification.permission==='granted')await pushSubscribe(cur); // re-sync (keys may have rotated)
+    else if(Notification.permission==='default')setTimeout(showPushNudge,15000); // gentle, once
+  }catch(e){}
+}
+function urlB64ToUint8(b64){const pad='='.repeat((4-b64.length%4)%4);const raw=atob((b64+pad).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)))}
+async function pushSubscribe(sub){
+  try{
+    const {ok}=await authApi('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),ua:navigator.userAgent.slice(0,120)})});
+    if(ok){PWA.subscribed=true;try{localStorage.setItem('co-push','1')}catch(e){}}
+  }catch(e){}
+}
+async function pushEnable(){
+  if(!PWA.enabled){toast(t('Push is not configured on the server'));return}
+  try{
+    const perm=await Notification.requestPermission();
+    if(perm!=='granted'){toast(t('Notifications blocked — enable them in browser settings'));return}
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64ToUint8(PWA.key)});
+    await pushSubscribe(sub);
+    toast(t('Notifications on 🔔'));
+    const b=$('push-nudge');if(b)b.remove();
+  }catch(e){toast(t('Could not enable notifications'))}
+}
+/* Soft nudge — a small dismissible chip, never a hard prompt. */
+function showPushNudge(){
+  if(!AUTH.token||PWA.subscribed||$('push-nudge'))return;
+  try{if(localStorage.getItem('co-push-dismiss'))return}catch(e){}
+  const el=document.createElement('button');el.id='push-nudge';el.className='pwa-chip';el.dataset.act='push-enable';
+  el.innerHTML=`${ic('bell',14)}<span>${t('Turn on notifications')}</span><i data-act="push-dismiss">${ic('x',12)}</i>`;
+  document.body.appendChild(el);
+}
+function showInstallBanner(){
+  if($('pwa-banner')||window.matchMedia('(display-mode: standalone)').matches)return;
+  try{if(localStorage.getItem('co-pwa-hide'))return}catch(e){}
+  const el=document.createElement('div');el.id='pwa-banner';el.className='pwa-banner';
+  el.innerHTML=`<span class="pwa-ic">📱</span><div><b>${t('Install CoachMint')}</b><span>${t('Full screen, offline-ready, like an app')}</span></div><button class="btn btn-primary btn-sm" data-act="pwa-install">${t('Install')}</button><button class="btn btn-ghost btn-icon" data-act="pwa-hide">${ic('x',14)}</button>`;
+  document.body.appendChild(el);
+}
+function showIosInstall(){
+  openModal(`
+  <div class="modal-h"><h3>${ic('download',16)} ${t('Install CoachMint')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:10px">${t('Add it to your home screen — full screen and offline-ready, like an app:')}</div>
+    ${[['1. Tap the Share button','⬆️'],['2. Choose "Add to Home Screen"','➕'],['3. Open CoachMint from your home screen','📱']].map(([s,e])=>`
+    <div class="row" style="gap:10px;padding:8px 0;border-bottom:1px solid var(--line2)"><span style="font-size:20px">${e}</span><b style="font-size:13px">${t(s)}</b></div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Got it')}</button></div>`);
+}
 function tplPreview(i){
   const tp=TEMPLATES[i];if(!tp)return;
   const exRow=e=>{const ex=EXERCISES[e.ex];
@@ -5963,6 +6040,11 @@ document.addEventListener('click',e=>{
     case 'rpt-all':smartReportsModal();break;
     case 'rpt-open':clientReportModal(el.dataset.c);break;
     case 'rpt-ai':{closeModal();if(!S.aiOpen)aiChatOpen();const inp=$('ai-chat-inp');if(inp){inp.value=`${t('Analyze')} ${el.dataset.c}: ${t('what should I change this week?')}`;inp.focus()}break}
+    /* v18.22 — push + install */
+    case 'push-enable':pushEnable();break;
+    case 'push-dismiss':{try{localStorage.setItem('co-push-dismiss','1')}catch(e){}const pn=$('push-nudge');if(pn)pn.remove();break}
+    case 'pwa-install':{const b=$('pwa-banner');if(b)b.remove();if(PWA.deferred){PWA.deferred.prompt();PWA.deferred=null}else showIosInstall();break}
+    case 'pwa-hide':{try{localStorage.setItem('co-pwa-hide','1')}catch(e){}const pb=$('pwa-banner');if(pb)pb.remove();break}
     case 'help-open':helpModal();break;
     case 'notif-open':{const txt=el.dataset.t||'';const cc=CLIENTS.find(x=>txt.includes(x.name));
       NOTIFS.forEach(n2=>{if(n2.t===txt)n2.un=false});
@@ -6709,6 +6791,9 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
   // (a returning coach must not be re-nagged); the 600ms internal delay also
   // re-checks it. Anonymous/demo boots return immediately (no token).
   maybeOnboard();
+  /* v18.22 — push subscription + install banner (self-guarding: silently no-ops
+     when unsupported, unconfigured, or already handled). */
+  pwaInit();
 })();
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
   window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});

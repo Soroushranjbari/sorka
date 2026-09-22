@@ -39,6 +39,7 @@ const healthFn = await import('./backend/handlers/health.mjs');
 const shopCheckoutFn = await import('./backend/handlers/shop-checkout.mjs');
 const shopAccountFn = await import('./backend/handlers/shop-account.mjs');
 const aiFn = await import('./backend/handlers/ai.mjs');
+const pushFn = await import('./backend/handlers/push.mjs');
 
 // Vercel maps "/api/auth/signup" -> handler URL "/api/auth/signup" (rewrite),
 // so the handler sees the full path. Reproduce that here.
@@ -46,6 +47,7 @@ const ROUTES = [
   { re: /^\/api\/auth\/(.*)$/, fn: authFn.default },
   { re: /^\/api\/billing\/(.*)$/, fn: billingFn.default },
   { re: /^\/api\/ai\/(.*)$/, fn: aiFn.default },
+  { re: /^\/api\/push\/(.*)$/, fn: pushFn.default },
   { re: /^\/api\/data\/?$/, fn: dataFn.default },
   { re: /^\/api\/health\/?$/, fn: healthFn.default },
   { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default },

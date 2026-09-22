@@ -24,6 +24,7 @@ import authHandler from '../backend/handlers/auth.mjs';
 import billingHandler from '../backend/handlers/billing.mjs';
 import dataHandler from '../backend/handlers/data.mjs';
 import aiHandler from '../backend/handlers/ai.mjs';
+import pushHandler from '../backend/handlers/push.mjs';
 import healthHandler from '../backend/handlers/health.mjs';
 import shopCheckout from '../backend/handlers/shop-checkout.mjs';
 import shopAccount from '../backend/handlers/shop-account.mjs';
@@ -97,6 +98,7 @@ export default async function handler(req, res) {
     if (inner.startsWith('auth/')) out = await authHandler(webReq);
     else if (inner.startsWith('billing/')) out = await billingHandler(webReq);
     else if (inner.startsWith('ai/')) out = await aiHandler(webReq);
+    else if (inner.startsWith('push/')) out = await pushHandler(webReq);
     else if (inner === 'data') out = await dataHandler(webReq);
     else if (inner === 'health') out = await healthHandler(webReq);
     else if (inner === 'shop/api/checkout') out = await shopCheckout(webReq);
