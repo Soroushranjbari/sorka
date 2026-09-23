@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121416;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary": "#2a313a", "on-surface-variant": "#b9cbbc", "tertiary-container": "#b6ebca", "on-primary": "#00391f", "on-tertiary": "#003822", "surface-bright": "#38393c", "primary": "#f4fff3", "on-error-container": "#ffdad6", "on-primary-fixed": "#002110", "secondary-fixed-dim": "#c0c7d3", "on-secondary-fixed": "#151c25", "outline": "#849587", "surface-container-low": "#1a1c1e", "primary-fixed": "#56ffa8", "tertiary-fixed-dim": "#9ed2b3", "error-container": "#93000a", "secondary-fixed": "dce3ef", "outline-variant": "#3b4a3f", "primary-fixed-dim": "#00e38b", "surface-dim": "#121416", "inverse-primary": "#006d40", "surface-container": "#1e2022", "on-tertiary-container": "#3b6c52", "surface-container-highest": "#333537", "surface-tint": "#00e38b", "primary-container": "#00ff9d", "inverse-on-surface": "#2f3133", "surface-container-lowest": "#0c0e10", "on-secondary-container": "#afb6c1", "surface": "#121416", "surface-container-high": "#282a2c", "on-primary-container": "#007143", "secondary": "#c0c7d3", "tertiary": "#f2fff4", "on-error": "#690005", "secondary-container": "#404751", "on-primary-fixed-variant": "#00522f", "on-secondary-fixed-variant": "#404751", "on-surface": "#e2e2e5", "inverse-surface": "#e2e2e5", "surface-variant": "#333537", "background": "#121416", "on-tertiary-fixed": "#002112", "on-background": "#e2e2e5", "error": "#ffb4ab", "tertiary-fixed": "#b9efce", "on-tertiary-fixed-variant": "#1e5038" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2.5rem", "margin": "2rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem", "gutter-mobile": "0.75rem" }, fontFamily: { "metric-xl": ["JetBrains Mono"], "caption": ["JetBrains Mono"], "headline-lg-mobile": ["Space Grotesk"], "body-md": ["JetBrains Mono"], "display-hero": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-lg": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "metric-md": ["JetBrains Mono"], "display-hero-mobile": ["Space Grotesk"], "label-code": ["JetBrains Mono"] }, fontSize: { "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }], "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "metric-md": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-code": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm shrink-0"><button aria-label="Go Back" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-on-surface hover:text-primary-container transition-colors" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button><img alt="COACHMINT Monogram Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UZFu9n1V3VTRuMcDgMOhbKR5rnCCDihDcfeU3WJ9RxkVkLd6_chBzHt1t52D4XLLgI53hHPr6uwDTGwOGGeWHkxwrN1OotDyOsqtSETQKoBB65Unav4ITk-qh9NrVIYLhil7SPxaAEfPYszzT7kaapCtGwrLtzsJZJj1JJlmxN45K1XU-yT18vJK4dx5QS9ybPXMTAQx_eLciSSm6tMbBijdW6RJAzUh__BsJ7c4Ebp1qIhmU3n5QqXRE"/></div><div class="flex-1 text-center truncate px-space-xs"><h1 class="font-headline-md text-headline-md font-semibold tracking-tight text-on-surface truncate">Athlete Protocol Detail</h1></div><div class="flex items-center justify-end shrink-0"><div class="min-w-[44px] min-h-[44px] flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnsYtba2TyO8etT-egOYJdkyFC2PvqPZeGz5t1BmUWC7MXz1Jm0dghP0oMBymZ7l5Sh6A94qsfkcCOzM_dgoahXtGdf5VzHfc8ziggU2JPjwwkL9DlEu5LCLf_AGnaHhjZ80scz0avv0ilwdsDcvD2GgUXEgZGnUhjZT-8symn3YcxN6SgdIzsS9kNS4tcmoyWJmlyU3frwzIB3SLKwDtwcn9nNWuc815tuMiY2ZMHKL3KClCVt5iH"/></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<!-- Top Telemetry Strip -->
+<div class="px-margin-mobile pt-space-sm pb-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-0.5 rounded">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-label-code text-label-code uppercase tracking-wider text-primary-container">BLE Sync // Vitruve V3 Connected</span>
+</div>
+<div class="flex items-center gap-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">battery_charging_full</span>
+<span>98%</span>
+</div>
+</div>
+<!-- Editorial Top Briefing Card -->
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container-high rounded-xl p-space-md shadow-md relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-code text-label-code uppercase tracking-widest text-primary-container font-semibold">// PROTOCOL RUNNER</span>
+<span class="font-caption text-caption text-on-surface-variant">WEEK 6 • BLOCK 4</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-surface tracking-tight mb-space-xs">
+        Thursday • Velocity Potentiation
+      </h2>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-code text-label-code uppercase tracking-wider text-on-surface-variant font-medium">Head Coach Directive</span>
+<p class="font-body-md text-body-md text-on-surface mt-0.5 leading-snug">
+            Focus on explosive concentric intent. Cut set immediately if mean velocity dips below <span class="font-bold text-primary-container">1.20 m/s</span>.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Biometric Readiness Instrument -->
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-code text-label-code uppercase tracking-wider text-on-surface-variant">// NEURAL READINESS</span>
+<div class="flex items-center gap-1 bg-surface-container-highest px-space-xs py-0.5 rounded">
+<span class="material-symbols-outlined text-primary-container text-[12px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-code text-label-code text-primary-container font-bold">PRIME ENGINE</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-md">
+<!-- SVG Gauge Dial -->
+<div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="none" r="42" stroke="currentColor" stroke-width="7"></circle>
+<circle class="text-primary-container" cx="50" cy="50" fill="none" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="15" stroke-linecap="round" stroke-width="7"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-metric-md text-metric-md text-on-surface font-extrabold leading-none tracking-tighter">94</span>
+<span class="font-label-code text-label-code text-on-surface-variant font-semibold mt-0.5">READINESS</span>
+</div>
+</div>
+<!-- Biometric Metric Matrix -->
+<div class="grid grid-cols-2 gap-space-xs flex-1">
+<div class="bg-surface-container-low rounded-lg p-space-xs flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">Resting HR</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">48</span>
+<span class="font-label-code text-label-code text-on-surface-variant">bpm</span>
+</div>
+<span class="font-caption text-caption text-primary-fixed-dim mt-0.5 font-medium">-3 bpm vs 30d</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-xs flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">rMSSD HRV</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-md text-headline-md font-bold text-primary-container">92</span>
+<span class="font-label-code text-label-code text-on-surface-variant">ms</span>
+</div>
+<span class="font-caption text-caption text-primary-fixed-dim mt-0.5 font-medium">Optimum (+12%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Active Block Telemetry & Exercise View -->
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container rounded-xl p-space-md shadow-md">
+<!-- Title & Progress Bar -->
+<div class="flex items-start justify-between mb-space-xs">
+<div>
+<span class="font-label-code text-label-code uppercase tracking-wider text-primary-container font-semibold">// ACTIVE BLOCK 01</span>
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface leading-tight mt-0.5">
+            Barbell Deficit Snatch Pull
+          </h3>
+</div>
+<div class="bg-surface-container-highest px-space-xs py-1 rounded text-right shrink-0">
+<span class="font-label-code text-label-code text-on-surface-variant block">SERIES</span>
+<span class="font-headline-md text-headline-md font-bold text-primary-container">SET 2<span class="text-on-surface-variant text-caption">/4</span></span>
+</div>
+</div>
+<!-- Linear Execution Progress Track -->
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden flex gap-1 p-0.5 mb-space-md">
+<div class="h-full bg-primary-container flex-1 rounded-full"></div>
+<div class="h-full bg-primary-container animate-pulse flex-1 rounded-full"></div>
+<div class="h-full bg-surface-container-highest flex-1 rounded-full"></div>
+<div class="h-full bg-surface-container-highest flex-1 rounded-full"></div>
+</div>
+<!-- Completed Set 1 Log Pill -->
+<div class="bg-surface-container-low rounded-lg p-space-xs mb-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-caption text-caption text-on-surface-variant font-medium">SET 1:</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">115 kg × 3 reps</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-0.5 bg-surface-container-high px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-primary-container text-[12px]">speed</span>
+<span class="font-label-code text-label-code font-bold text-on-surface">1.28 m/s</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">RPE 7.0</span>
+</div>
+</div>
+<!-- Rest Countdown Ring & Current Status -->
+<div class="bg-surface-container-high rounded-xl p-space-md flex items-center justify-between mb-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-code text-label-code uppercase tracking-widest text-primary-container font-semibold">INTER-SET REST</span>
+<span class="w-2 h-2 rounded-full bg-primary-container inline-block animate-ping"></span>
+</div>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-xl text-metric-xl font-bold text-on-surface tracking-tighter" id="timer-display">01:24</span>
+<span class="font-label-code text-label-code text-on-surface-variant">REM</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">vibration</span>
+            Haptic pulse armed at 00:15
+          </span>
+</div>
+<div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 80 80">
+<circle class="text-surface-container-lowest" cx="40" cy="40" fill="none" r="32" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-primary-container" cx="40" cy="40" fill="none" id="timer-circle" r="32" stroke="currentColor" stroke-dasharray="201" stroke-dashoffset="65" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<button aria-label="Pause or Skip Timer" class="absolute w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface active:scale-95 transition-transform" id="timer-toggle-btn">
+<span class="material-symbols-outlined text-[20px]" id="timer-icon">pause</span>
+</button>
+</div>
+</div>
+<!-- Rapid Telemetry Logger (One-Hand Ergonomic Layout) -->
+<div class="bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-code text-label-code uppercase tracking-wider text-on-surface-variant font-semibold">// LIVE TELEMETRY LOGGER</span>
+<span class="font-caption text-caption text-primary-container flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">sensors</span>
+            VITRUVE OPTICAL SYNC
+          </span>
+</div>
+<!-- Value Matrix Steppers -->
+<div class="grid grid-cols-2 gap-space-sm mb-space-sm">
+<!-- Weight Stepper -->
+<div class="bg-surface-container-high rounded-lg p-space-sm">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-code text-label-code">LOAD</span>
+<span class="font-label-code text-label-code text-primary-container">KG</span>
+</div>
+<div class="flex items-center justify-between">
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface font-bold text-metric-md active:bg-surface-container-highest" onclick="adjustVal('weight', -2.5)">−</button>
+<span class="font-headline-md text-headline-md font-bold text-on-surface" id="weight-display">115.0</span>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface font-bold text-metric-md active:bg-surface-container-highest" onclick="adjustVal('weight', 2.5)">+</button>
+</div>
+</div>
+<!-- Reps Stepper -->
+<div class="bg-surface-container-high rounded-lg p-space-sm">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-code text-label-code">TARGET REPS</span>
+<span class="font-label-code text-label-code text-primary-container">COUNT</span>
+</div>
+<div class="flex items-center justify-between">
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface font-bold text-metric-md active:bg-surface-container-highest" onclick="adjustVal('reps', -1)">−</button>
+<span class="font-headline-md text-headline-md font-bold text-on-surface" id="reps-display">3</span>
+<button class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface font-bold text-metric-md active:bg-surface-container-highest" onclick="adjustVal('reps', 1)">+</button>
+</div>
+</div>
+</div>
+<!-- Live Sensor Bar Velocity Reading -->
+<div class="bg-surface-container-high rounded-lg p-space-sm mb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">electric_bolt</span>
+</div>
+<div>
+<span class="font-label-code text-label-code text-on-surface-variant block">AUTO MEAN VELOCITY</span>
+<span class="font-caption text-caption text-primary-fixed-dim font-medium">Cutoff Threshold: 1.20 m/s</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-metric-md text-metric-md font-bold text-primary-container tracking-tight">1.27</span>
+<span class="font-label-code text-label-code text-on-surface-variant"> m/s</span>
+</div>
+</div>
+<!-- RPE Slider -->
+<div class="bg-surface-container-high rounded-lg p-space-sm mb-space-md">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-code text-label-code text-on-surface-variant">PERCEIVED EXERTION (RPE)</span>
+<span class="font-body-md text-body-md font-bold text-primary-container" id="rpe-val-display">7.5 • Target Pace</span>
+</div>
+<input class="w-full accent-primary-container h-2 bg-surface-container-lowest rounded-lg cursor-pointer" id="rpe-slider" max="10" min="6" oninput="updateRPE(this.value)" step="0.5" type="range" value="7.5"/>
+<div class="flex justify-between text-caption font-caption text-on-surface-variant mt-1">
+<span>6.0 (Warm)</span>
+<span>7.5 (Fast)</span>
+<span>9.0 (Grind)</span>
+<span>10 (Max)</span>
+</div>
+</div>
+<!-- Primary Thumb Tap Log Action -->
+<button class="w-full py-3.5 bg-primary-container text-on-primary-container font-headline-md text-headline-md font-bold rounded-lg shadow flex items-center justify-center gap-space-xs active:scale-[0.99] transition-transform" id="commit-set-btn" onclick="commitSet()">
+<span class="material-symbols-outlined text-[22px]">check_box</span>
+<span>CONFIRM SET 2 // 115 KG</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Real-Time Athletic Imagery Inset -->
+<div class="px-margin-mobile mb-space-sm">
+<div class="relative w-full h-36 rounded-xl overflow-hidden shadow-md">
+<div class="w-full h-full bg-cover bg-center" data-alt="Dynamic low-angle shot of an Olympic athlete performing an explosive barbell snatch pull in an ultra-modern dark performance lab. Cinematic neon mint illumination cuts through deep graphite shadows, highlighting muscle tension, grip chalk powder in the air, and pristine biomechanical form." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjrWvrYzgJ9F5cNgbGNS8WptjBctp0f9zPNHjfN_Xo67XsbH1FxM-nbE49SpJVxMwt08pvZx5d99b1qGrGbXV0Kvk-RsO8k7GxlkrPnfV8Fy01a5sL6Ezfu-LOxvzmpSObAMkvfT8HvsPSj_fx4RB_vrVUgX7QrvVciAem-e_DjnRrZTGjeCT3QG_RxdF-uAzgLcqSxZdWCW5_JmMXChojneTGcMQwB_Ycny4PexsK9X8ZOxAtwHqB')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent flex flex-col justify-end p-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code uppercase tracking-wider text-primary-container bg-surface-container/80 px-2 py-0.5 rounded backdrop-blur-sm">BAR PATH TRACER // 98.4% EFFICIENCY</span>
+<button class="font-caption text-caption text-on-surface flex items-center gap-0.5 bg-surface-container-high/80 px-2 py-1 rounded backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">videocam</span>
+            Review Clip
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Nutrition & Fueling Window Accordion Tile -->
+<div class="px-margin-mobile mb-space-lg">
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">local_fire_department</span>
+<div>
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface leading-none">Intra-Workout Fueling</h4>
+<span class="font-caption text-caption text-on-surface-variant">Optimal substrate availability</span>
+</div>
+</div>
+<span class="font-label-code text-label-code bg-surface-container-high text-primary-container px-2 py-0.5 rounded font-bold">ACTIVE PHASE</span>
+</div>
+<div class="space-y-space-xs">
+<!-- Pre-workout Item -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-primary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<div class="min-w-0">
+<span class="font-body-md text-body-md font-medium text-on-surface block truncate">Pre-Fuel: 45g Cyclic Dextrin + 10g EAAs</span>
+<span class="font-caption text-caption text-on-surface-variant">Consumed T-20min • Gastric transit clear</span>
+</div>
+</div>
+<span class="font-label-code text-label-code text-primary-fixed-dim shrink-0">LOGGED</span>
+</div>
+<!-- Post-workout Item -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">check_box_outline_blank</span>
+<div class="min-w-0">
+<span class="font-body-md text-body-md font-medium text-on-surface block truncate">Post-Protocol: 40g Whey Hydrolysate + 5g Creatine</span>
+<span class="font-caption text-caption text-on-surface-variant">Scheduled for T+00:10 post training session</span>
+</div>
+</div>
+<span class="font-label-code text-label-code text-on-surface-variant shrink-0">UPCOMING</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Quick-Jump Telemetry Dock -->
+<div class="sticky bottom-0 w-full bg-surface-container-lowest/90 backdrop-blur-md px-margin-mobile py-space-sm flex items-center justify-between gap-space-sm">
+<button class="flex-1 py-2.5 bg-surface-container-high rounded-lg text-on-surface font-caption text-caption flex items-center justify-center gap-1.5 active:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]">stacked_bar_chart</span>
+<span>Velocity Profile</span>
+</button>
+<button class="flex-1 py-2.5 bg-surface-container-high rounded-lg text-on-surface font-caption text-caption flex items-center justify-center gap-1.5 active:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+<span>Ping Coach</span>
+</button>
+<button class="py-2.5 px-space-md bg-surface-container-highest rounded-lg text-primary-container font-caption text-caption flex items-center justify-center gap-1 active:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]">fast_forward</span>
+<span>Skip Rest</span>
+</button>
+</div>
+</div>
+<script>
+  let weight = 115.0;
+  let reps = 3;
+  let timerSeconds = 84;
+  let isTimerRunning = true;
+  let timerInterval = null;
+
+  function adjustVal(type, delta) {
+    if (type === 'weight') {
+      weight = Math.max(0, weight + delta);
+      document.getElementById('weight-display').innerText = weight.toFixed(1);
+      document.getElementById('commit-set-btn').children[1].innerText = `CONFIRM SET 2 // ${weight.toFixed(1)} KG`;
+    } else if (type === 'reps') {
+      reps = Math.max(1, reps + delta);
+      document.getElementById('reps-display').innerText = reps;
+    }
+  }
+
+  function updateRPE(val) {
+    let label = "Sub-maximal";
+    if (val >= 9) label = "Near Failure";
+    else if (val >= 8) label = "High Effort";
+    else if (val >= 7) label = "Target Explosive";
+    document.getElementById('rpe-val-display').innerText = `${parseFloat(val).toFixed(1)} • ${label}`;
+  }
+
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  function tickTimer() {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      document.getElementById('timer-display').innerText = formatTime(timerSeconds);
+      const circle = document.getElementById('timer-circle');
+      if (circle) {
+        const offset = (1 - (timerSeconds / 120)) * 201;
+        circle.style.strokeDashoffset = offset;
+      }
+    } else {
+      clearInterval(timerInterval);
+    }
+  }
+
+  timerInterval = setInterval(tickTimer, 1000);
+
+  const toggleBtn = document.getElementById('timer-toggle-btn');
+  const timerIcon = document.getElementById('timer-icon');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        timerIcon.innerText = 'play_arrow';
+      } else {
+        timerInterval = setInterval(tickTimer, 1000);
+        isTimerRunning = true;
+        timerIcon.innerText = 'pause';
+      }
+    });
+  }
+
+  function commitSet() {
+    const btn = document.getElementById('commit-set-btn');
+    btn.innerHTML = `<span class="material-symbols-outlined text-[22px] animate-spin">refresh</span><span>TELEMETRY COMMITTED...</span>`;
+    btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+    btn.classList.add('bg-surface-container-highest', 'text-primary-container');
+    
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[22px]">check_circle</span><span>SET 2 LOGGED • REST ARMED</span>`;
+      timerSeconds = 120;
+    }, 600);
+  }
+</script></main></body></html>

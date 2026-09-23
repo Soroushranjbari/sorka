@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='22' fill='%2312151B'/%3E%3Cpath d='M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z' fill='%23C8F04B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -48,6 +48,233 @@ html[data-theme="dark"]{
   --row-h:#1C2026; --seg-bg:#22262D; --seg-on:#2B3038; --kbd-bg:#1C2026; --cal-hd:#1B1F25; --cal-alt:#171A1F;
   --sh-1:0 1px 2px rgba(0,0,0,.5); --sh-2:0 14px 34px -10px rgba(0,0,0,.7);
 }
+/* ================= v18.28 — DESIGN TEMPLATE: COACHMINT =================
+   Sourced from the user's Stitch project (COACHMINT Fitness Operating System).
+   Material-3 token set: graphite surfaces, mint primary, JetBrains Mono metrics,
+   Space Grotesk display. Scoped under html[data-tpl="coachmint"] — the default
+   design stays untouched. Light + dark variants keep the Theme toggle working. */
+html[data-tpl="coachmint"]{
+  --bg:#E9EDE9; --surface:#FFFFFF; --sidebar:#0E120E;
+  --ink:#161A16; --ink2:#4E5A50; --ink3:#849587;
+  --line:#D3DAD3; --line2:#E1E6E0;
+  --accent:#00C97B; --accent-deep:#008A4D; --accent-ink:#032B18; --accent-soft:#E0F6EB;
+  --acc-line:#9ED2B3; --acc-line2:#BCEBDA; --acc-mid:#00B86B; --acc-mid2:#00A862; --acc-stat:#5ED9A4; --acc-chip:#CDEFDF;
+  --green:#008A4D; --green-soft:#E0F6EB; --red:#C62828; --red-soft:#FDEBEA;
+  --amber:#B26A00; --amber-soft:#FBF1E0; --blue:#1565C0; --blue-soft:#EAF1FB;
+  --purple:#6A3AB2; --purple-soft:#F1EBFB;
+  --glass:rgba(233,237,233,.85); --glass2:rgba(233,237,233,.92);
+  --row-h:#F2F5F1; --seg-bg:#E3E8E2; --seg-on:#FFFFFF; --kbd-bg:#EEF1ED; --cal-hd:#F4F7F3; --cal-alt:#EFF2EE;
+  --sh-1:0 1px 2px rgba(12,20,14,.08),0 6px 18px -6px rgba(12,20,14,.14);
+  --sh-2:0 12px 32px -8px rgba(12,20,14,.18);
+}
+html[data-tpl="coachmint"][data-theme="dark"]{
+  --bg:#0C0E10; --surface:#1A1C1E; --sidebar:#0C0E10;
+  --ink:#E2E2E5; --ink2:#B9CBBC; --ink3:#849587;
+  --line:#2C302D; --line2:#242725;
+  --accent:#00FF9D; --accent-deep:#00E38B; --accent-ink:#00391F; --accent-soft:rgba(0,255,157,.12);
+  --acc-line:rgba(0,255,157,.42); --acc-line2:rgba(0,255,157,.28); --acc-mid:#00E38B; --acc-mid2:#00C97B; --acc-stat:#56FFA8; --acc-chip:rgba(0,255,157,.16);
+  --green:#00E38B; --green-soft:rgba(0,255,157,.12); --red:#FFB4AB; --red-soft:rgba(255,180,171,.12);
+  --amber:#FFB871; --amber-soft:rgba(255,184,113,.12); --blue:#8AB4F8; --blue-soft:rgba(138,180,248,.12);
+  --purple:#C9A7F5; --purple-soft:rgba(201,167,245,.12);
+  --glass:rgba(12,14,16,.85); --glass2:rgba(12,14,16,.92);
+  --ink-bg:#0C0E10; --btn-dark-bg:#E2E2E5; --btn-dark-fg:#121416;
+  --row-h:#1E2022; --seg-bg:#282A2C; --seg-on:#333537; --kbd-bg:#1E2022; --cal-hd:#1A1C1E; --cal-alt:#16181A;
+  --sh-1:0 1px 2px rgba(0,0,0,.5); --sh-2:0 14px 34px -10px rgba(0,0,0,.7);
+}
+/* CoachMint typography & shape language (both themes) */
+html[data-tpl="coachmint"] h1,html[data-tpl="coachmint"] h2,html[data-tpl="coachmint"] h3,
+html[data-tpl="coachmint"] .brand-name{font-family:'Space Grotesk','Vazirmatn','Inter',sans-serif}
+html[data-tpl="coachmint"] .card-t,html[data-tpl="coachmint"] .stat .v,html[data-tpl="coachmint"] .tbl th,
+html[data-tpl="coachmint"] .nav-sec,html[data-tpl="coachmint"] kbd,html[data-tpl="coachmint"] .bdg,
+html[data-tpl="coachmint"] .brand-tag{font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .card-t{letter-spacing:.09em}
+html[data-tpl="coachmint"] .card-t::before{content:'//';color:var(--accent);font-weight:700;margin-inline-end:7px}
+html[data-tpl="coachmint"] .card{border-radius:12px}
+html[data-tpl="coachmint"] .btn{border-radius:8px}
+html[data-tpl="coachmint"] .inp,html[data-tpl="coachmint"] .sel,html[data-tpl="coachmint"] .ta{border-radius:8px}
+html[data-tpl="coachmint"] .btn-primary{background:var(--accent);box-shadow:0 4px 14px -6px rgba(0,255,157,.45)}
+html[data-tpl="coachmint"] .hero{background:linear-gradient(115deg,#0C0E10 0%,#151A16 55%,#0A2B1A 100%)}
+html[data-tpl="coachmint"] .hero::after{background:radial-gradient(circle,rgba(0,255,157,.22),transparent 70%)}
+/* v18.29 — CoachMint DEEP: full component transformation (cockpit chrome).
+   Sidebar becomes the Stitch "COCKPIT" rail, cards go flat-technical, stats
+   become mono telemetry readouts, badges become status chips, buttons go
+   uppercase-mono. All scoped — the Default template is untouched. */
+html[data-tpl="coachmint"] .sidebar{background:#0A0C0A;border-inline-end:1px solid #1B201B}
+html[data-tpl="coachmint"] .nav-sec{color:#5E6B60}
+html[data-tpl="coachmint"] .nav-sec::before{content:'//';color:#00E38B;margin-inline-end:5px}
+html[data-tpl="coachmint"] .nav-it{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;border-radius:7px}
+html[data-tpl="coachmint"] .nav-it:hover{background:rgba(0,255,157,.06);color:#DDE5DD}
+html[data-tpl="coachmint"] .nav-it.on,html[data-tpl="coachmint"] .nav-it.on:hover{background:rgba(0,255,157,.1);color:#00FF9D;box-shadow:inset 2px 0 0 #00FF9D}
+html[data-tpl="coachmint"] .nav-it.on .nbadge{background:rgba(0,255,157,.16);color:#5CFFC0}
+html[data-tpl="coachmint"] .nbadge{font-family:'JetBrains Mono',monospace}
+html[data-tpl="coachmint"] .side-foot{border-top-color:#1B201B}
+html[data-tpl="coachmint"] .side-foot::before{content:'SYS.SYNC // OPTIMAL';display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:#3E4A40;padding:0 10px 8px}
+html[data-tpl="coachmint"] .sprof .p{color:#00E38B}
+html[data-tpl="coachmint"] .topbar{border-bottom-color:#1B201B}
+html[data-tpl="coachmint"] .searchbox{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:12px;border-radius:8px}
+html[data-tpl="coachmint"] .card{border-radius:10px;box-shadow:none}
+html[data-tpl="coachmint"] .card-h{padding:13px 18px}
+html[data-tpl="coachmint"] .card-t{font-size:10.5px;letter-spacing:.12em}
+html[data-tpl="coachmint"] .stat{border-radius:10px}
+html[data-tpl="coachmint"] .stat .k{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+html[data-tpl="coachmint"] .stat .k::before{content:'//';color:var(--accent-deep);margin-inline-end:5px}
+html[data-tpl="coachmint"] .stat .v{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:-.01em}
+html[data-tpl="coachmint"] .stat .icw{border-radius:8px}
+html[data-tpl="coachmint"] .tbl th{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10px;letter-spacing:.14em}
+html[data-tpl="coachmint"] .tbl tbody tr[data-act]:hover{background:rgba(0,255,157,.05)}
+html[data-tpl="coachmint"] .tbl tbody tr[data-act]:hover td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+html[data-tpl="coachmint"] .bdg{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line)}
+html[data-tpl="coachmint"] .btn{border-radius:7px;font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+html[data-tpl="coachmint"] .btn-sm{font-size:10.5px}
+html[data-tpl="coachmint"] .inp,html[data-tpl="coachmint"] .sel,html[data-tpl="coachmint"] .ta{border-radius:8px}
+html[data-tpl="coachmint"] .seg{border-radius:8px}
+html[data-tpl="coachmint"] .seg button{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+html[data-tpl="coachmint"] .modal{border-radius:12px;border:1px solid var(--line)}
+html[data-tpl="coachmint"] .modal-h h3{font-family:'Space Grotesk','Vazirmatn',sans-serif;letter-spacing:.01em}
+html[data-tpl="coachmint"] .hero{border-radius:12px}
+html[data-tpl="coachmint"] .eyebrow{font-family:'JetBrains Mono','Vazirmatn',monospace;letter-spacing:.18em}
+html[data-tpl="coachmint"] ::-webkit-scrollbar{width:8px;height:8px}
+html[data-tpl="coachmint"] ::-webkit-scrollbar-thumb{background:#2A2F2A;border-radius:99px}
+html[data-tpl="coachmint"] ::-webkit-scrollbar-track{background:transparent}
+html[lang="fa"][data-tpl="coachmint"] .btn,html[lang="fa"][data-tpl="coachmint"] .nav-it,html[lang="fa"][data-tpl="coachmint"] .seg button,html[lang="fa"][data-tpl="coachmint"] .bdg,html[lang="fa"][data-tpl="coachmint"] .stat .k,html[lang="fa"][data-tpl="coachmint"] .tbl th{letter-spacing:0;text-transform:none}
+/* v18.33 — full font coverage: every remaining text element gets the Stitch
+   type system (Space Grotesk display / JetBrains Mono technical). */
+html[data-tpl="coachmint"] .page-h h1,html[data-tpl="coachmint"] .hero h1,html[data-tpl="coachmint"] .modal-h h3,
+html[data-tpl="coachmint"] .ws-head h1,html[data-tpl="coachmint"] .capp h1{font-family:'Space Grotesk','Vazirmatn','Inter',sans-serif}
+html[data-tpl="coachmint"] .hero-k,html[data-tpl="coachmint"] .eyebrow,html[data-tpl="coachmint"] .fs-t,
+html[data-tpl="coachmint"] .mi span,html[data-tpl="coachmint"] .nav-sec{font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .hero-k{letter-spacing:.18em}
+html[data-tpl="coachmint"] .tab,html[data-tpl="coachmint"] .fchip,html[data-tpl="coachmint"] .menu-it,
+html[data-tpl="coachmint"] .lbl,html[data-tpl="coachmint"] .lnk,html[data-tpl="coachmint"] .tl-time,
+html[data-tpl="coachmint"] .cm-time,html[data-tpl="coachmint"] .cm-meta,html[data-tpl="coachmint"] .cm-fchip,
+html[data-tpl="coachmint"] .cm-kpi .k,html[data-tpl="coachmint"] .cm-kpi b,html[data-tpl="coachmint"] .cm-kpi .s{font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .tab{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}
+html[data-tpl="coachmint"] .fchip{font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-radius:7px}
+html[data-tpl="coachmint"] .menu-it{font-size:12.5px}
+html[data-tpl="coachmint"] .lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+html[data-tpl="coachmint"] .tl-time{font-size:11.5px}
+html[data-tpl="coachmint"] .calk .v,html[data-tpl="coachmint"] .stat .v,html[data-tpl="coachmint"] .cm-kpi b{font-family:'JetBrains Mono',monospace}
+html[data-tpl="coachmint"] .calk .v{font-size:17px}
+html[data-tpl="coachmint"] .cal-hd,html[data-tpl="coachmint"] .mcal .mh,html[data-tpl="coachmint"] .mday,
+html[data-tpl="coachmint"] .cal-time{font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .cal-hd{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+html[data-tpl="coachmint"] .mcal .mh{font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+html[data-tpl="coachmint"] .exc .nm{font-family:'Space Grotesk','Vazirmatn',sans-serif}
+html[data-tpl="coachmint"] .exc .meta,html[data-tpl="coachmint"] .exc .chip{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11px}
+html[data-tpl="coachmint"] .ev b,html[data-tpl="coachmint"] .ev small{font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .ev b{font-size:10.5px;letter-spacing:.02em}
+html[data-tpl="coachmint"] .set-row .t,html[data-tpl="coachmint"] .set-row .d,html[data-tpl="coachmint"] .sub,
+html[data-tpl="coachmint"] .muted,html[data-tpl="coachmint"] .tl-row b,html[data-tpl="coachmint"] .tl-row > div > div:first-child{font-family:'Inter','Vazirmatn',sans-serif}
+html[data-tpl="coachmint"] .set-row .t{font-size:13px}
+html[data-tpl="coachmint"] .page-h h1::before{width:26px;height:3px;background:var(--accent)}
+html[data-tpl="coachmint"] .act-dot{background:var(--accent);box-shadow:0 0 8px rgba(0,255,157,.5)}
+html[lang="fa"][data-tpl="coachmint"] .tab,html[lang="fa"][data-tpl="coachmint"] .fchip,html[lang="fa"][data-tpl="coachmint"] .lbl,
+html[lang="fa"][data-tpl="coachmint"] .cal-hd,html[lang="fa"][data-tpl="coachmint"] .mcal .mh,html[lang="fa"][data-tpl="coachmint"] .hero-k,
+html[lang="fa"][data-tpl="coachmint"] .fs-t,html[lang="fa"][data-tpl="coachmint"] .mi span,html[lang="fa"][data-tpl="coachmint"] .nav-sec{letter-spacing:0;text-transform:none}
+/* v18.34 — Persian readability fixes (FA audit):
+   1) JetBrains Mono ships its own Arabic-block glyphs at poor quality — in FA
+      every mono element puts Vazirmatn FIRST so Persian text renders clean;
+      Latin/digits in pure-technical strings keep JBM via dedicated rules.
+   2) .eyebrow mint (#00FF9D) was unreadable on the light canvas — light theme
+      uses --accent-deep; hero keeps bright mint (dark gradient in both themes).
+   3) FA mono sizes bumped (9.5px labels were too small for Persian script). */
+html[lang="fa"][data-tpl="coachmint"] .card-t,html[lang="fa"][data-tpl="coachmint"] .stat .k,
+html[lang="fa"][data-tpl="coachmint"] .tbl th,html[lang="fa"][data-tpl="coachmint"] .nav-it,
+html[lang="fa"][data-tpl="coachmint"] .btn,html[lang="fa"][data-tpl="coachmint"] .seg button,
+html[lang="fa"][data-tpl="coachmint"] .bdg,html[lang="fa"][data-tpl="coachmint"] .tab,
+html[lang="fa"][data-tpl="coachmint"] .fchip,html[lang="fa"][data-tpl="coachmint"] .menu-it,
+html[lang="fa"][data-tpl="coachmint"] .lbl,html[lang="fa"][data-tpl="coachmint"] .lnk,
+html[lang="fa"][data-tpl="coachmint"] .tl-time,html[lang="fa"][data-tpl="coachmint"] .cm-time,
+html[lang="fa"][data-tpl="coachmint"] .cm-meta,html[lang="fa"][data-tpl="coachmint"] .cm-fchip,
+html[lang="fa"][data-tpl="coachmint"] .cm-kpi .k,html[lang="fa"][data-tpl="coachmint"] .cm-kpi b,
+html[lang="fa"][data-tpl="coachmint"] .cm-kpi .s,html[lang="fa"][data-tpl="coachmint"] .eyebrow,
+html[lang="fa"][data-tpl="coachmint"] .hero-k,html[lang="fa"][data-tpl="coachmint"] .fs-t,
+html[lang="fa"][data-tpl="coachmint"] .mi span,html[lang="fa"][data-tpl="coachmint"] .nav-sec,
+html[lang="fa"][data-tpl="coachmint"] .cal-hd,html[lang="fa"][data-tpl="coachmint"] .mcal .mh,
+html[lang="fa"][data-tpl="coachmint"] .mday,html[lang="fa"][data-tpl="coachmint"] .cal-time,
+html[lang="fa"][data-tpl="coachmint"] .calk .v,html[lang="fa"][data-tpl="coachmint"] .stat .v,
+html[lang="fa"][data-tpl="coachmint"] .exc .meta,html[lang="fa"][data-tpl="coachmint"] .exc .chip,
+html[lang="fa"][data-tpl="coachmint"] .ev b,html[lang="fa"][data-tpl="coachmint"] .ev small,
+html[lang="fa"][data-tpl="coachmint"] .chip,html[lang="fa"][data-tpl="coachmint"] .toast,
+html[lang="fa"][data-tpl="coachmint"] .empty,html[lang="fa"][data-tpl="coachmint"] .av,
+html[lang="fa"][data-tpl="coachmint"] .nbadge,html[lang="fa"][data-tpl="coachmint"] .searchbox{font-family:'Vazirmatn','JetBrains Mono',sans-serif}
+html[data-tpl="coachmint"] .brand-tag,html[data-tpl="coachmint"] .side-foot::before{font-family:'JetBrains Mono',monospace!important}
+html[data-tpl="coachmint"] .hero .eyebrow{color:var(--accent)}
+html[data-tpl="coachmint"][data-theme="light"] .page-h .eyebrow,
+html[data-tpl="coachmint"][data-theme="light"] .eyebrow{color:var(--accent-deep)}
+html[lang="fa"][data-tpl="coachmint"] .cm-kpi .k{font-size:11px}
+html[lang="fa"][data-tpl="coachmint"] .cm-kpi b{font-size:22px}
+html[lang="fa"][data-tpl="coachmint"] .bdg{font-size:11px}
+html[lang="fa"][data-tpl="coachmint"] .btn{font-size:12.5px}
+html[lang="fa"][data-tpl="coachmint"] .tab{font-size:12.5px}
+html[lang="fa"][data-tpl="coachmint"] .fchip{font-size:12px}
+html[lang="fa"][data-tpl="coachmint"] .lbl{font-size:12px}
+html[lang="fa"][data-tpl="coachmint"] .eyebrow{font-size:12px}
+html[lang="fa"][data-tpl="coachmint"] .nav-it{font-size:12.5px}
+html[lang="fa"][data-tpl="coachmint"] .cm-meta{font-size:11.5px}
+html[lang="fa"][data-tpl="coachmint"] .cm-fchip{font-size:12px}
+html[lang="fa"][data-tpl="coachmint"] .tl-time{font-size:12.5px}
+html[lang="fa"][data-tpl="coachmint"] .cal-hd{font-size:12px}
+html[lang="fa"][data-tpl="coachmint"] .mcal .mh{font-size:11.5px}
+/* v18.35 — CoachMint COACH MOBILE: the phone app gets the same cockpit chrome
+   when the template is active (mhead/mnav/mono type/mint accents). */
+html[data-tpl="coachmint"] .mhead{background:linear-gradient(180deg,#0A0C0A,#101410);border-bottom-color:#1E241E}
+html[data-tpl="coachmint"] .mhead .mbrand{font-family:'Space Grotesk','Vazirmatn',sans-serif;letter-spacing:.04em}
+html[data-tpl="coachmint"] .mshell{background:var(--bg)}
+html[data-tpl="coachmint"] .mshell .cnav{background:rgba(8,10,8,.94);border-top-color:#1E241E;backdrop-filter:blur(16px)}
+html[data-tpl="coachmint"] .mshell .cnav-it{color:#6B756B;font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+html[data-tpl="coachmint"] .mshell .cnav-it.on{color:#00FF9D;background:rgba(0,255,157,.08)}
+html[data-tpl="coachmint"] .mshell .ccard{border-radius:12px;box-shadow:none;background:linear-gradient(180deg,var(--surface),var(--surface))}
+html[data-tpl="coachmint"] .mshell .card-t::before{content:'//';color:var(--accent);font-weight:700;margin-inline-end:6px}
+html[data-tpl="coachmint"] .mshell .mrow{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:12px;letter-spacing:.03em;border-radius:8px}
+html[data-tpl="coachmint"] .mshell .mrow:hover{background:rgba(0,255,157,.05)}
+html[data-tpl="coachmint"] .mshell .btn{border-radius:8px;font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+html[data-tpl="coachmint"] .mshell .chip{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10.5px;border-radius:6px}
+html[data-tpl="coachmint"] .mshell .bdg{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line)}
+html[data-tpl="coachmint"] .mshell .searchbox{border-radius:8px;font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:12px}
+html[data-tpl="coachmint"] .mshell .set-row .t,html[data-tpl="coachmint"] .mshell .set-row b{font-family:'Inter','Vazirmatn',sans-serif}
+html[data-tpl="coachmint"] .mshell .mstack>.ccard.cstat b{font-family:'Space Grotesk','Vazirmatn',sans-serif}
+html[data-tpl="coachmint"] .mshell .mtime{font-family:'JetBrains Mono',monospace}
+html[lang="fa"][data-tpl="coachmint"] .mshell .cnav-it,html[lang="fa"][data-tpl="coachmint"] .mshell .mrow,
+html[lang="fa"][data-tpl="coachmint"] .mshell .btn,html[lang="fa"][data-tpl="coachmint"] .mshell .chip,
+html[lang="fa"][data-tpl="coachmint"] .mshell .bdg,html[lang="fa"][data-tpl="coachmint"] .mshell .searchbox{font-family:'Vazirmatn','JetBrains Mono',sans-serif;letter-spacing:0;text-transform:none}
+/* v18.30 — CoachMint deep pass #2: icons, avatars, chips, toasts, progress.
+   Same markup, same structure — only the chrome changes (Android-theme style). */
+html[data-tpl="coachmint"] .ic{stroke-width:2.1}
+html[data-tpl="coachmint"] .brand-mark{background:rgba(0,255,157,.1);border:1px solid rgba(0,255,157,.45);color:#00FF9D;border-radius:7px}
+html[data-tpl="coachmint"] .av{border-radius:10px;font-family:'JetBrains Mono','Vazirmatn',monospace;font-weight:700}
+html[data-tpl="coachmint"] .chip{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11px;border-radius:6px}
+html[data-tpl="coachmint"] .toast{border-radius:9px;border:1px solid var(--acc-line);font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:12px}
+html[data-tpl="coachmint"] .empty{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:12px}
+html[data-tpl="coachmint"] .pbar{border-radius:99px;background:var(--seg-bg)}
+html[data-tpl="coachmint"] .pbar i{background:var(--accent);box-shadow:none}
+html[data-tpl="coachmint"] .page-h h1{text-transform:uppercase;letter-spacing:.01em}
+html[data-tpl="coachmint"] .modal-h{background:transparent}
+html[data-tpl="coachmint"] .set-row .t{font-weight:600}
+html[data-tpl="coachmint"] .hero .chip{background:rgba(0,255,157,.12);border-color:rgba(0,255,157,.3);color:#5CFFC0}
+html[data-tpl="coachmint"] .btn-lime{border-radius:9px}
+/* v18.31 — CoachMint page layouts: cockpit components used by the alternative
+   vDashCm/vClientsCm renderers (KPI strip, manifest rows, priority queue,
+   roster cards with readiness rings). Only rendered when tpl==='coachmint'. */
+html[data-tpl="coachmint"] .cm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:18px}
+html[data-tpl="coachmint"] .cm-kpi{background:var(--surface);padding:12px 16px;display:flex;flex-direction:column;gap:2px}
+html[data-tpl="coachmint"] .cm-kpi .k{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+html[data-tpl="coachmint"] .cm-kpi .k::before{content:'//';color:var(--accent-deep);margin-inline-end:5px}
+html[data-tpl="coachmint"] .cm-kpi b{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;letter-spacing:-.01em}
+html[data-tpl="coachmint"] .cm-kpi .s{font-size:11px;color:var(--ink2);font-family:'JetBrains Mono','Vazirmatn',monospace}
+html[data-tpl="coachmint"] .cm-row{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--line2)}
+html[data-tpl="coachmint"] .cm-row:last-child{border-bottom:none}
+html[data-tpl="coachmint"] .cm-alert{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--line2)}
+html[data-tpl="coachmint"] .cm-alert:last-child{border-bottom:none}
+html[data-tpl="coachmint"] .cm-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--accent-deep);background:var(--accent-soft);padding:3px 8px;border-radius:6px;flex:none;min-width:64px;text-align:center}
+html[data-tpl="coachmint"] .cm-fchip{font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:7px 13px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink2);display:inline-flex;gap:7px;align-items:center}
+html[data-tpl="coachmint"] .cm-fchip b{font-weight:700;color:var(--ink)}
+html[data-tpl="coachmint"] .cm-fchip.on{border-color:var(--accent);color:var(--accent-deep);background:var(--accent-soft)}
+html[data-tpl="coachmint"] .cm-roster{display:flex;flex-direction:column;gap:10px}
+html[data-tpl="coachmint"] .cm-ath{display:flex;align-items:center;gap:14px;padding:13px 16px;cursor:pointer;transition:.15s;flex-wrap:wrap}
+html[data-tpl="coachmint"] .cm-ath:hover{border-color:var(--acc-line);transform:translateY(-1px)}
+html[data-tpl="coachmint"] .cm-meta{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono','Vazirmatn',monospace;font-size:10.5px;color:var(--ink2)}
+@media(max-width:900px){html[data-tpl="coachmint"] .cm-kpis{grid-template-columns:repeat(2,1fr)}}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 html[lang="fa"] body{font-family:'Vazirmatn','Inter',-apple-system,sans-serif;font-size:13.5px}
 html[lang="fa"] h1,html[lang="fa"] h2,html[lang="fa"] h3,html[lang="fa"] .stat .v{letter-spacing:0}
@@ -377,6 +604,10 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 /* v18.23 — FitFlow redesign (UI inspiration board): charcoal panels on
    near-black, acid-lime accents, glowing progress, fine hairlines. Same
    markup, new skin — content untouched. */
+/* v18.27 — PHONE SKINS: the client app ships 4 selectable themes. The base
+   rules below are the shared dark skeleton; each skin overrides the palette
+   via .phone[data-skin=…]. Default = fitflow. Chosen in Profile → App Theme,
+   persisted in PREFS.phoneSkin (per device, like theme/accent). */
 .phone{--surface:#15171C;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
   --row-h:#1C2026;--seg-bg:#22262D;--seg-on:#2B3038;--kbd-bg:#1C2026;--cal-hd:#1B1F25;--cal-alt:#171A1F;
   --glass:rgba(5,6,8,.88);--glass2:rgba(5,6,8,.92);--btn-dark-bg:#F5F6F8;--btn-dark-fg:#12151B;
@@ -430,6 +661,56 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
              linear-gradient(160deg,#232830,#15171C 65%,#101318)}
 .wcard-top{display:flex;justify-content:space-between;align-items:center}
 .wcard .btn-lime{box-shadow:0 6px 18px -6px rgba(200,240,75,.5)}
+/* ================= v18.27 — SKIN VARIANTS =================
+   Each skin re-themes the SAME components: canvas, card gradient, hairline
+   color, chip/segment fills, nav, hero/workout-card glows. The lime accent
+   of the coach theme is replaced by the skin's own accent so the client app
+   feels like a distinct product theme. */
+/* CARBON — pure black, white accents, minimal (Apple Fitness style) */
+.phone[data-skin="carbon"]{background:#000}
+.phone[data-skin="carbon"] .ccard{background:linear-gradient(180deg,#111214,#0C0D0F);border-color:#1E2126}
+.phone[data-skin="carbon"] .ccard::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.phone[data-skin="carbon"] .chip{background:#17181B;border-color:#26282D}
+.phone[data-skin="carbon"] .fchip,.phone[data-skin="carbon"] .inp,.phone[data-skin="carbon"] .sel,.phone[data-skin="carbon"] .ta,.phone[data-skin="carbon"] .seg button,.phone[data-skin="carbon"] .fpill,.phone[data-skin="carbon"] .wkc i,.phone[data-skin="carbon"] .pbar,.phone[data-skin="carbon"] .set-row{background:#141518;border-color:#24262B}
+.phone[data-skin="carbon"] .fchip.on,.phone[data-skin="carbon"] .seg button.on,.phone[data-skin="carbon"] .fpill.on{background:rgba(255,255,255,.08);border-color:#fff;color:#fff}
+.phone[data-skin="carbon"] .cnav,.phone[data-skin="carbon"] .cnav-it.on::after{background:#050506}
+.phone[data-skin="carbon"] .cnav-it.on{color:#fff}
+.phone[data-skin="carbon"] .cnav-it.on::after{background:#fff;box-shadow:0 0 10px rgba(255,255,255,.6)}
+.phone[data-skin="carbon"] .fhero,.phone[data-skin="carbon"] .wcard{background:radial-gradient(110% 90% at 88% 0%,rgba(255,255,255,.1),transparent 55%),linear-gradient(150deg,#17181C,#0E0F11 60%,#0A0B0D);border-color:#22242A}
+.phone[data-skin="carbon"] .btn-lime{background:linear-gradient(135deg,#FFFFFF,#D6D8DD);color:#0A0B0D;box-shadow:0 6px 22px -6px rgba(255,255,255,.35)}
+.phone[data-skin="carbon"] .wkc i.done{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4);box-shadow:0 0 12px -2px rgba(255,255,255,.3)}
+.phone[data-skin="carbon"] .pbar i{background:linear-gradient(90deg,#B9BCC4,#FFFFFF);box-shadow:0 0 10px -2px rgba(255,255,255,.5)}
+.phone[data-skin="carbon"] .card-t svg,.phone[data-skin="carbon"] .cempty svg{color:#E9EAEE}
+/* OCEAN — deep navy, cyan accents (calm water) */
+.phone[data-skin="ocean"]{background:#060B14}
+.phone[data-skin="ocean"] .ccard{background:linear-gradient(180deg,#0D1524,#0A101C);border-color:#16233A}
+.phone[data-skin="ocean"] .ccard::before{background:linear-gradient(90deg,transparent,rgba(56,189,248,.35),transparent)}
+.phone[data-skin="ocean"] .chip{background:#101B2E;border-color:#1C2C47}
+.phone[data-skin="ocean"] .fchip,.phone[data-skin="ocean"] .inp,.phone[data-skin="ocean"] .sel,.phone[data-skin="ocean"] .ta,.phone[data-skin="ocean"] .seg button,.phone[data-skin="ocean"] .fpill,.phone[data-skin="ocean"] .wkc i,.phone[data-skin="ocean"] .pbar,.phone[data-skin="ocean"] .set-row{background:#0F1A2C;border-color:#1C2C47}
+.phone[data-skin="ocean"] .fchip.on,.phone[data-skin="ocean"] .seg button.on,.phone[data-skin="ocean"] .fpill.on{background:rgba(56,189,248,.1);border-color:#38BDF8;color:#7DD3FC}
+.phone[data-skin="ocean"] .cnav{background:rgba(4,9,17,.92)}
+.phone[data-skin="ocean"] .cnav-it.on{color:#38BDF8}
+.phone[data-skin="ocean"] .cnav-it.on::after{background:#38BDF8;box-shadow:0 0 10px rgba(56,189,248,.7)}
+.phone[data-skin="ocean"] .fhero,.phone[data-skin="ocean"] .wcard{background:radial-gradient(110% 90% at 88% 0%,rgba(56,189,248,.16),transparent 55%),radial-gradient(130% 110% at 8% 100%,rgba(14,116,144,.14),transparent 55%),linear-gradient(150deg,#0E1B30,#0A1220 60%,#070D18);border-color:#1C2C47}
+.phone[data-skin="ocean"] .btn-lime{background:linear-gradient(135deg,#38BDF8,#0EA5E9);color:#04121D;box-shadow:0 6px 22px -6px rgba(56,189,248,.5)}
+.phone[data-skin="ocean"] .wkc i.done{background:rgba(56,189,248,.14);color:#7DD3FC;border-color:rgba(56,189,248,.4);box-shadow:0 0 12px -2px rgba(56,189,248,.4)}
+.phone[data-skin="ocean"] .pbar i{background:linear-gradient(90deg,#0EA5E9,#38BDF8);box-shadow:0 0 10px -2px rgba(56,189,248,.6)}
+.phone[data-skin="ocean"] .card-t svg,.phone[data-skin="ocean"] .cempty svg{color:#38BDF8}
+/* SUNSET — warm plum, amber accents (energetic evening) */
+.phone[data-skin="sunset"]{background:#120A10}
+.phone[data-skin="sunset"] .ccard{background:linear-gradient(180deg,#1D1220,#150D17);border-color:#2E1F30}
+.phone[data-skin="sunset"] .ccard::before{background:linear-gradient(90deg,transparent,rgba(251,146,60,.35),transparent)}
+.phone[data-skin="sunset"] .chip{background:#241627;border-color:#38243B}
+.phone[data-skin="sunset"] .fchip,.phone[data-skin="sunset"] .inp,.phone[data-skin="sunset"] .sel,.phone[data-skin="sunset"] .ta,.phone[data-skin="sunset"] .seg button,.phone[data-skin="sunset"] .fpill,.phone[data-skin="sunset"] .wkc i,.phone[data-skin="sunset"] .pbar,.phone[data-skin="sunset"] .set-row{background:#201323;border-color:#38243B}
+.phone[data-skin="sunset"] .fchip.on,.phone[data-skin="sunset"] .seg button.on,.phone[data-skin="sunset"] .fpill.on{background:rgba(251,146,60,.1);border-color:#FB923C;color:#FDBA74}
+.phone[data-skin="sunset"] .cnav{background:rgba(15,8,14,.92)}
+.phone[data-skin="sunset"] .cnav-it.on{color:#FB923C}
+.phone[data-skin="sunset"] .cnav-it.on::after{background:#FB923C;box-shadow:0 0 10px rgba(251,146,60,.7)}
+.phone[data-skin="sunset"] .fhero,.phone[data-skin="sunset"] .wcard{background:radial-gradient(110% 90% at 88% 0%,rgba(251,146,60,.18),transparent 55%),radial-gradient(130% 110% at 8% 100%,rgba(219,39,119,.12),transparent 55%),linear-gradient(150deg,#241527,#180F1A 60%,#100A12);border-color:#38243B}
+.phone[data-skin="sunset"] .btn-lime{background:linear-gradient(135deg,#FDBA74,#FB923C);color:#2A1204;box-shadow:0 6px 22px -6px rgba(251,146,60,.5)}
+.phone[data-skin="sunset"] .wkc i.done{background:rgba(251,146,60,.14);color:#FDBA74;border-color:rgba(251,146,60,.4);box-shadow:0 0 12px -2px rgba(251,146,60,.4)}
+.phone[data-skin="sunset"] .pbar i{background:linear-gradient(90deg,#F97316,#FDBA74);box-shadow:0 0 10px -2px rgba(251,146,60,.6)}
+.phone[data-skin="sunset"] .card-t svg,.phone[data-skin="sunset"] .cempty svg{color:#FB923C}
 /* FitFlow big bold section headers + tiny uppercase eyebrow */
 .csec{font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin:4px 2px -2px}
 html[lang="fa"] .csec{letter-spacing:0}
@@ -553,6 +834,22 @@ body.sb-open .scrim{display:block}
 /* v16.8 — AI chat assistant */
 .ai-fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:60;height:52px;padding:0 18px;border-radius:999px;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;box-shadow:0 10px 30px -6px rgba(0,0,0,.35);transition:transform .25s;font-weight:800;font-size:13.5px;white-space:nowrap}
 .ai-fab:hover{transform:translateY(-3px)}
+/* v18.36 — mobile FABs: round robot AI button + coach toolbox (opposite corner) */
+.ai-fab-round{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer;border:none;box-shadow:0 10px 30px -6px rgba(0,0,0,.4),0 0 0 4px var(--accent-soft);transition:transform .25s}
+.ai-fab-round:hover{transform:translateY(-3px)}
+.ai-fab-round .ic{stroke-width:2}
+.tbx-fab{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));inset-inline-start:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);box-shadow:0 10px 30px -6px rgba(0,0,0,.3);transition:transform .25s}
+.tbx-fab:hover{transform:translateY(-3px);border-color:var(--acc-line)}
+.tbx-fab .ic{stroke-width:2}
+.sheet{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;animation:sheetUp .22s var(--e,cubic-bezier(.22,.61,.2,1))}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:0}}
+.sh-h{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 10px;border-bottom:1px solid var(--line2)}
+.sh-h b{font-size:15px}
+.sh-b{padding:12px 16px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.tbx-it{display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;font:inherit;color:inherit;transition:.15s;text-align:start}
+.tbx-it:hover{border-color:var(--acc-line);background:var(--row-h)}
+.tbx-it .ic{color:var(--accent-deep);flex:none}
+@media(min-width:761px){.ai-fab-round,.tbx-fab{display:none}}
 /* Mobile: the pill must sit ABOVE the fixed bottom nav, not on top of it */
 @media(max-width:760px){.ai-fab{bottom:calc(86px + env(safe-area-inset-bottom,0px));height:46px;padding:0 15px;font-size:12.5px}}
 .ai-ovl{position:fixed;inset:0;z-index:98;background:rgba(8,10,6,.45);backdrop-filter:blur(3px)}
@@ -682,7 +979,11 @@ play:'<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/>',
 refresh:'<path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/>',
 pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
 image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m21 15-5-5L5 21"/>',
-qr:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M14 21h3"/><path d="M21 14v3"/><path d="M18 18h3v3h-3z"/>'};
+qr:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M14 21h3"/><path d="M21 14v3"/><path d="M18 18h3v3h-3z"/>',
+/* v18.36 — toolbox FAB icons: robot (AI), toolbox (coach tools), stopwatch */
+robot:'<rect x="4" y="8" width="16" height="12" rx="3"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9 17.5h.01M15 17.5h.01"/><path d="M2 12v4M22 12v4"/>',
+toolbox:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/><path d="M10 13v2h4v-2"/>',
+stopwatch:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/><path d="m19 5 1.5 1.5"/>'};
 const ic=(n,s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${P[n]||''}</svg>`;
 const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg>`;
 
@@ -707,6 +1008,7 @@ const FA={
 'Camera form check':'بررسی فرم با دوربین','Accuracy':'دقت تشخیص','Standard':'عادی','High':'بالا','High (slower)':'بالا (کندتر)','Standard (faster)':'عادی (سریع‌تر)','Body outline':'سایه بدن',
 'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
 'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
+'App Theme':'تم اپلیکیشن','FitFlow':'فیت‌فلو','Carbon':'کربن','Ocean':'اقیانوس','Sunset':'غروب','CoachMint':'کوچ‌مینت','Charcoal · lime':'زغالی · لیمویی','Black · white':'مشکی · سفید','Navy · cyan':'سرمه‌ای · فیروزه‌ای','Plum · amber':'بادمجانی · کهربایی','Applies to this device only':'فقط روی همین دستگاه اعمال می‌شود',
 'Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
@@ -785,7 +1087,7 @@ const FA={
 'Soroush Karimi':'سروش کریمی','Certified Strength & Conditioning Coach':'مربی رسمی قدرت و آمادگی جسمانی','Bio':'بیوگرافی','Save Changes':'ذخیره تغییرات','Profile saved':'پروفایل ذخیره شد',
 'Plan':'طرح','CoachMint Pro · Unlimited clients':'CoachMint Pro · شاگرد نامحدود','Language':'زبان','Timezone':'منطقه زمانی','Response time':'زمان پاسخ','Shown to clients in chat':'در چت به شاگردها نمایش داده می‌شود',
 'Session reminders':'یادآوری جلسات','Push + email 24 h before each session':'پوش و ایمیل ۲۴ ساعت قبل از هر جلسه','Client completes workout':'تکمیل تمرین توسط شاگرد','Notify when a workout is logged':'وقتی تمرینی ثبت شد اطلاع بده','Missed sessions':'جلسات غایب','Alert when a client misses a session':'وقتی شاگردی غیبت کرد هشدار بده','New client message':'پیام جدید شاگرد','Push when a client sends a message':'وقتی شاگرد پیامی فرستاد پوش بگیر','Measurement reminders':'یادآوری اندازه‌گیری','Weekly digest of due measurements':'خلاصه هفتگی اندازه‌گیری‌های سررسید','New PR achieved':'رکورد جدید','Celebrate personal records instantly':'رکوردها را فوراً جشن بگیر','Weekly report':'گزارش هفتگی','Summary every Sunday evening':'خلاصه هر یکشنبه عصر','Setting saved':'تنظیمات ذخیره شد',
-'Theme':'پوسته','Light':'روشن','System':'سیستم','Dark':'تیره','Accent Color':'رنگ اکسنت','Accent color updated':'رنگ اکسنت به‌روز شد','Theme applied':'پوسته اعمال شد',
+'Theme':'پوسته','Light':'روشن','System':'سیستم','Dark':'تیره','Accent Color':'رنگ اکسنت','Accent color updated':'رنگ اکسنت به‌روز شد','Theme applied':'پوسته اعمال شد','Design Template':'تمپلت طراحی','Default':'پیش‌فرض','CoachMint':'کوچ‌مینت','Live Telemetry':'تله‌متری زنده','Squad Readiness':'آمادگی تیم','Priority Queue':'صف اولویت','Quick Prescribe':'تجویز سریع','Optimal':'بهینه','Attention':'نیاز به توجه','Roster':'فهرست شاگردها','Performance Analytics':'تحلیل عملکرد','Adherence':'پایبندی','Workouts Done':'تمرین‌های انجام‌شده','Scheduling':'زمان‌بندی','Movement Bank':'بانک حرکات','Dispatch':'ارتباطات','Encrypted':'رمزگذاری‌شده','Completed':'انجام‌شده','Coach Toolbox':'جعبه‌ابزار مربی','Stopwatch':'کرنومتر','Interval timer for sets and rest':'تایمر بازه‌ای برای ست‌ها و استراحت','Start':'شروع','Pause':'توقف',
 'Default rest timer':'تایمر استراحت پیش‌فرض','120 seconds between sets':'۱۲۰ ثانیه بین ست‌ها','Show RPE & RIR fields':'نمایش فیلدهای RPE و RIR','On all exercise blocks':'در همه بلوک‌های حرکت','Auto-advance program weeks':'پیشروی خودکار هفته‌های برنامه','When all sessions are completed':'وقتی همه جلسات تکمیل شد','Set display':'نمایش ست‌ها','Duplicate on save':'تکثیر هنگام ذخیره','Keep source workout intact':'تمرین اصلی دست‌نخورده بماند','60 sec':'۶۰ ثانیه','120 sec':'۱۲۰ ثانیه','180 sec':'۱۸۰ ثانیه',
 'Measurement Units':'واحد اندازه‌گیری','Metric (kg · cm)':'متریک (کیلوگرم · سانتی‌متر)','Imperial (lb · in)':'امپریال (پوند · اینچ)','Applies to weights, measurements and body metrics across the workspace.':'روی وزنه‌ها، اندازه‌گیری‌ها و شاخص‌های بدنی در کل فضای کاری اعمال می‌شود.','Units set to':'واحدها تنظیم شد روی',
 'Clients see their own data':'شاگردها داده‌های خودشان را ببینند','Clients see progress photos':'شاگردها عکس‌های پیشرفت را ببینند','Only photos the coach approves':'فقط عکس‌هایی که مربی تأیید کند','Clients see other clients':'شاگردها بقیه شاگردها را ببینند','Disabled by default':'به‌صورت پیش‌فرض غیرفعال','Require consent for photos':'اجازه برای عکس‌ها الزام باشد','Client must accept before upload':'شاگرد قبل از بارگذاری باید تأیید کند',
@@ -858,7 +1160,7 @@ function applyLang(){
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
 const PREFS_KEY='co-prefs';
-const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
   wk:{rpe:true,adv:true,dup:true,rest:'120'},
   priv:{own:true,photos:true,others:false,consent:true},
@@ -909,7 +1211,9 @@ const ACCENTS=[
 {a:'#34D399',d:'#059669',s:'#E7F8F1',i:'#064E3B',l:'#B3E8D2',l2:'#BCEBDA',m:'#5CE0AE',m2:'#3DD6A0',st:'#8CEAC8',c:'#CDF2E4'},
 {a:'#FB923C',d:'#EA580C',s:'#FEF1E7',i:'#7C2D12',l:'#F8CBA4',l2:'#F9D2B0',m:'#FDA060',m2:'#FD9853',st:'#FEB57E',c:'#FDE0C9'}];
 function applyAccent(ix){
-  const A=ACCENTS[ix]||ACCENTS[0];const r=document.documentElement.style;
+  /* v18.28 — CoachMint template: the default accent slot renders the Stitch mint palette */
+  const A=(PREFS.uiTpl==='coachmint'&&ix===0)?{a:'#00FF9D',d:'#00E38B',s:'rgba(0,255,157,.12)',i:'#00391F',l:'rgba(0,255,157,.42)',l2:'rgba(0,255,157,.28)',m:'#00E38B',m2:'#00C97B',st:'#56FFA8',c:'rgba(0,255,157,.16)'}:(ACCENTS[ix]||ACCENTS[0]);
+  const r=document.documentElement.style;
   r.setProperty('--accent',A.a);r.setProperty('--accent-deep',A.d);r.setProperty('--accent-soft',A.s);r.setProperty('--accent-ink',A.i);
   r.setProperty('--acc-line',A.l);r.setProperty('--acc-line2',A.l2);r.setProperty('--acc-mid',A.m);r.setProperty('--acc-mid2',A.m2);r.setProperty('--acc-stat',A.st);r.setProperty('--acc-chip',A.c);
 }
@@ -917,7 +1221,13 @@ function applyTheme(){
   const th=PREFS.theme||'Dark';
   const dark=th==='Dark'||(th==='System'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);
   document.documentElement.dataset.theme=dark?'dark':'light';
-  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute('content',dark?'#0F1114':'#12151B');
+  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute('content',dark?(PREFS.uiTpl==='coachmint'?'#0C0E10':'#0F1114'):'#12151B');
+}
+/* v18.28 — design template switch (default | coachmint). Only flips the
+   data-tpl attribute; all template styling lives in scoped CSS blocks. */
+function applyTpl(){
+  if(PREFS.uiTpl==='coachmint')document.documentElement.dataset.tpl='coachmint';
+  else delete document.documentElement.dataset.tpl;
 }
 
 /* ================= DATA ================= */
@@ -1409,7 +1719,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1446,6 +1756,9 @@ function loadData(){
     if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
     if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
     if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
+    /* v18.35 — design template rides the workspace payload: switching it on any
+       device applies it everywhere after the next sync. */
+    if(d.UI&&typeof d.UI==='object'&&typeof d.UI.tpl==='string')PREFS.uiTpl=d.UI.tpl==='coachmint'?'coachmint':'default';
     Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
     Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
     /* NOTE: this used to run `if(!EVENTS.some(e=>e.att)) EVENTS.forEach(e=>e.day<TODAY&&(e.att='done'))`
@@ -1862,7 +2175,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1969,6 +2282,13 @@ function cloudMerge(d,adopt){
   // onboarding answers — the coach's own device wins only while local is
   // unfinished; once done:true anywhere, it propagates everywhere.
   if(d.ONBOARD&&typeof d.ONBOARD==='object'&&(d.ONBOARD.done||!ONBOARD.done)&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){ONBOARD=d.ONBOARD;ch=true}
+  /* v18.35 — design template: last-writer-wins. The remote value always wins
+     on pull (the device that just switched it pushed it); local changes push
+     immediately via saveData→cloudSchedule. */
+  if(d.UI&&typeof d.UI==='object'&&typeof d.UI.tpl==='string'){
+    const rt=d.UI.tpl==='coachmint'?'coachmint':'default';
+    if(rt!==(PREFS.uiTpl||'default')){PREFS.uiTpl=rt;savePrefs();applyTpl();applyAccent(PREFS.accent);applyTheme();ch=true}
+  }
   // DB — per client
   Object.keys(d.DB||{}).forEach(cid=>{
     const L=DB[cid],R=d.DB[cid];if(!R)return;
@@ -2597,7 +2917,134 @@ function clientPicker(){
 </div>`}
 
 /* ================= COACH VIEWS ================= */
+/* v18.31 — CoachMint template page layouts (Stitch cockpit arrangement).
+   Same data + same data-act hooks as the default views; only the arrangement
+   changes. Rendered instead of vDash/vClients when PREFS.uiTpl==='coachmint'. */
+/* v18.32 — cmRing: progress ring with the number PERFECTLY centered (the SVG
+   size always matches the wrapper, so place-items:center lands dead-center). */
+const cmRing=(p,s,fs)=>`<div style="position:relative;width:${s}px;height:${s}px;flex:none">${ring(p,s)}<div style="position:absolute;inset:0;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:${fs}px;line-height:1">${p}%</div></div>`;
+function cmStatusChip(st){
+  const map={'Active':['OPTIMAL','bdg-green'],'On Hold':['HOLD','bdg-amber'],'Inactive':['OFFLINE','bdg-gray'],'Archived':['ARCHIVED','bdg-gray']};
+  const [l,c]=map[st]||['UNKNOWN','bdg-gray'];return `<span class="bdg ${c}">${l}</span>`;
+}
+function vDashCm(){
+  const active=CLIENTS.filter(c=>c.status==='Active').length;
+  const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+  const missT=today.filter(e=>e.att==='miss').length;
+  const hrsW=EVENTS.reduce((a,e)=>a+e.dur,0);
+  const needN=threads().filter(x=>x.needs).length;
+  const att=attentionList();
+  const totDone=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.done||0),0);
+  const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
+  const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  const kpi=(k,v,s)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b><span class="s">${s}</span></div>`;
+  const attRow=it=>`<div class="cm-alert">
+    <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,12)}</span>
+    <div style="flex:1;min-width:0"><b style="font-size:13px">${t(it.name)}</b><span class="muted" style="font-size:12px"> · ${t(it.why)}</span><div class="muted" style="font-size:11.5px;margin-top:2px">${it.d}</div></div>
+    ${it.act==='msg'?`<button class="btn btn-outline btn-sm" data-act="open-thread" data-c="${esc(it.name)}">${t('Reply')}</button>`
+     :it.act==='copy'?`<button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(it.code)}">${t('Copy')}</button>`
+     :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')}</button>`}
+  </div>`;
+  return `
+  <div class="hero">
+    <div class="row" style="justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div>
+        <div class="eyebrow">${t('Live Telemetry')} // ${fmtFullDate(TDATE)}</div>
+        <h1 style="margin-top:8px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1>
+        <div class="sub">${t("Here's what's happening with your clients today.")}</div>
+      </div>
+      <div class="row" style="gap:16px">
+        ${cmRing(pctW,86,16)}
+        <div><div class="eyebrow" style="font-size:9.5px">${t('Squad Readiness')}</div>
+        <div class="row" style="gap:6px;margin-top:8px"><span class="bdg ${pctW>=75?'bdg-green':pctW>=50?'bdg-amber':'bdg-red'}">${pctW>=75?t('Optimal'):t('Attention')}</span></div>
+        <div class="muted" style="font-size:11.5px;margin-top:8px">${nf(totDone)} / ${nf(totDone+totMiss)} ${t('Workouts Completed')}</div></div>
+      </div>
+    </div>
+    <div class="cm-kpis">
+      ${kpi('Total Clients',nf(CLIENTS.length),`${t('Active')}: ${nf(active)}`)}
+      ${kpi('Sessions Today',nf(today.length),`${nf(doneT)} ✓ · ${nf(today.length-doneT)} ${t('Upcoming')}`)}
+      ${kpi('Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Missed')}: ${nf(missT)}`)}
+      ${kpi('Needs Attention',nf(att.length),`${t('Messages')}: ${nf(needN)}`)}
+    </div>
+  </div>
+  <div class="grid2" style="grid-template-columns:1.15fr .85fr;margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('calendar',14)} ${t("Today's Schedule")}</span><a class="lnk" style="font-size:12px" data-act="nav" data-view="calendar">${t('Open calendar →')}</a></div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="cm-row click" data-act="ev-open" data-eid="${ev.id}">
+        <span class="cm-time">${nf(fmtT(ev.start))}</span>
+        ${cc?avC(cc.name,34):av(t('Coach'),34,3)}
+        <div style="flex:1;min-width:0"><b style="font-size:13px">${t(ev.label)}</b><div class="muted" style="font-size:11.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${st.k!=='future'?`<button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="done" title="${t('Attended')}" style="color:${ev.att==='done'?'var(--green)':'var(--ink3)'}">${ic('check',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="miss" title="${t('Missed')}" style="color:${ev.att==='miss'?'var(--red)':'var(--ink3)'}">${ic('x',15)}</button>`:''}
+        ${attBadge(ev)||`<span class="bdg ${st.b}">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div class="empty" style="margin:14px 20px 18px"><div>${ic('calendar',24)}</div><b>${t('No events this day')}</b><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="card"><div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Priority Queue')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
+      ${att.length?att.slice(0,5).map(attRow).join('')+(att.length>5?`<div class="cm-row"><span class="muted" style="font-size:12px">+${nf(att.length-5)} ${t('More')} …</span></div>`:'')
+      :`<div class="cm-row"><span class="bdg bdg-green" style="flex:none">${ic('check',12)}</span><b>${t('All clients on track ✓')}</b></div>`}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Prescribe')}</span>
+    <div class="row"><button class="btn btn-outline btn-sm" data-act="nav" data-view="messages">${ic('mail',13)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
+    <button class="btn btn-primary btn-sm" data-act="nav" data-view="builder">${ic('plus',13)} ${t('Create Workout')}</button></div></div>
+    <div style="padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap">
+      ${qa.map(([l,i])=>`<button class="btn btn-outline btn-sm" data-act="qa-item" data-item="${l}">${ic(i,13)} ${t(l)}</button>`).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:12px" data-act="act-all">${t('View all →')}</a></div>
+    <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px">
+      ${ACTIVITY.slice(0,6).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0;font-size:13px">${t(a.h)}<div style="font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace">${t(a.w)}</div></div></div>`).join('')}
+    </div>
+  </div>`;
+}
+function vClientsCm(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
+  const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  const cnt=v=>CLIENTS.filter(c=>v==='All'?c.status!=='Archived':c.status===v).length;
+  const chip=(v,l)=>`<button class="cm-fchip ${(S.cfilter||'All')===v?'on':''}" data-act="cm-filter" data-v="${v}">${t(l)} <b>${nf(cnt(v))}</b></button>`;
+  return `
+  <div class="page-h"><div>
+    <div class="eyebrow">${t('Live Telemetry')} // ${t('Roster')}</div>
+    <h1>${t('Clients')}</h1><div class="sub">${nf(act)} ${t(act===1?'active client':'active clients')} · ${t('Sort')}: ${t(({name:'Name',status:'Status',streak:'Streak',next:'Next Session'})[S.csort]||'Name')}</div></div>
+  <div class="row">
+    <button class="btn btn-outline" data-act="cl-sort">${ic('chevD',14)} ${t('Sort')}</button>
+    <button class="btn btn-outline" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',14)} ${t('Connect')}</button>
+    <button class="btn btn-primary" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button>
+  </div></div>
+  <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    ${chip('All','All')}${chip('Active','Active')}${chip('On Hold','On Hold')}${chip('Inactive','Inactive')}
+  </div>
+  ${!CLIENTS.length?`
+  <div class="card"><div class="empty" style="margin:14px"><div>${ic('users',24)}</div><b>${t('No clients yet')}</b><span class="muted">${t('Add your first client to start building programs, plans and progress tracking')}</span><button class="btn btn-primary btn-sm" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button></div></div>`
+  :`<div class="cm-roster">${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
+    return `<div class="card cm-ath" data-act="open-client" data-cid="${c.id}">
+      ${avC(c.name,46)}
+      <div style="flex:1;min-width:180px">
+        <div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(c.name)}</b>${cmStatusChip(c.status)}${pend?`<span class="bdg bdg-lime">${t('Pending')}</span>`:''}</div>
+        <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
+        <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
+          <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
+          ${c.streak?`<span class="cm-meta">🔥 ${nf(c.streak)} ${t('wk')}</span>`:''}
+          <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
+        </div>
+      </div>
+      ${cmRing(p,52,11)}
+      <div class="row" style="flex:none;gap:2px">
+        <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
+      </div>
+    </div>`}).join('')}</div>`}`;
+}
 function vDash(){
+  if(PREFS.uiTpl==='coachmint')return vDashCm();
   const roster=CLIENTS;
   const active=CLIENTS.filter(c=>c.status==='Active').length;
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
@@ -2690,6 +3137,7 @@ function vDash(){
   </div>`;
 }
 function vClients(){
+  if(PREFS.uiTpl==='coachmint')return vClientsCm();
   const grid=S.cv==='grid';
   /* Real counts — the subtitle used to be a HARDCODED demo string ("42 Active
      Clients · 8 shown in this workspace") that every fresh signup saw over an
@@ -3167,8 +3615,9 @@ function vFiles(){
     </td></tr>`).join('')||`<tr><td colspan="5" style="text-align:center;padding:26px;color:var(--ink3)">${t('No files yet — upload the first document')}</td></tr>`}</tbody></table></div>`;
 }
 function vLibrary(){
+  const cm=PREFS.uiTpl==='coachmint';
   return `
-  <div class="page-h"><div><h1>${t('Exercise Library')}</h1><div class="sub">${nf(EXERCISES.length)} ${t('exercises')} · ${t('video & instructions on each card')} · <b>${nf(bankN())}</b> ${t('with video')}</div></div>
+  <div class="page-h"><div>${cm?`<div class="eyebrow">${t('Movement Bank')} // ${nf(EXERCISES.length)}</div>`:''}<h1>${t('Exercise Library')}</h1><div class="sub">${nf(EXERCISES.length)} ${t('exercises')} · ${t('video & instructions on each card')} · <b>${nf(bankN())}</b> ${t('with video')}</div></div>
   <div class="row" style="gap:8px;flex-wrap:wrap">
   <button class="btn btn-outline" data-act="ex-vid-imp" title="${t('Import video links')}">${ic('upload',15)} ${t('Import')}</button>
   <button class="btn btn-outline" data-act="ex-vid-exp" title="${t('Export video links')}">${ic('download',15)} ${t('Export')}</button>
@@ -3307,7 +3756,8 @@ function vCalendar(){
   FE.forEach(e=>{if(e.start<calS)calS=Math.floor(e.start);if(e.start+e.dur>calE)calE=Math.ceil(e.start+e.dur)});
   calE=Math.max(calS+1,Math.min(24,calE));
   const hours=Array.from({length:Math.round(calE-calS)},(_,i)=>calS+i);
-  const head=`<div class="page-h"><div><h1>${t('Calendar')}</h1><div class="sub">${weekRange()}</div></div>
+  const cm=PREFS.uiTpl==='coachmint';
+  const head=`<div class="page-h"><div>${cm?`<div class="eyebrow">${t('Scheduling')} // ${weekRange()}</div>`:''}<h1>${t('Calendar')}</h1><div class="sub">${weekRange()}</div></div>
   <div class="row" style="flex-wrap:wrap">
     <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="-1">${ic('chevL',15)}</button>
     <button class="btn btn-outline btn-sm" data-act="cal-today">${t('Today')}</button>
@@ -3322,8 +3772,9 @@ function vCalendar(){
     <select class="sel" style="width:auto" data-change="calclient"><option value="All">${t('All Clients')}</option>${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${S.calfClient===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
     <span class="sp"></span><span class="muted" style="font-size:12px">${t('💡 Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
   </div>
-  <div class="calk">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
-    <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>`;
+  <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
+    <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>
+  ${cm?`<div class="cm-kpis" style="margin:-6px 0 14px">${[['Sessions This Week',nf(FE.length)],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`],['Active Clients',nf(new Set(FE.map(e=>e.client)).size)],['Busiest Day',busiest]].map(([k,v])=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`).join('')}</div>`:''}`;
   if(S.calV==='Week'){
     return head+`
     <div class="cal-grid">
@@ -3436,7 +3887,29 @@ function eventModal(id){
   </div>`);
   evConflict(id);
 }
+/* v18.32 — cockpit Progress: KPI strip (real client stats) + the existing
+   charts below, untouched. */
+function vProgressCm(){
+  const c=client(S.cid);
+  const ws=DB[c.id]||{};
+  const done=ws.stats?.done||0,miss=ws.stats?.missed||0;
+  const adh=Math.round(done/((done+miss)||1)*100);
+  const kpi=(k,v,s)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b><span class="s">${s}</span></div>`;
+  return `
+  <div class="page-h"><div>
+    <div class="eyebrow">${t('Performance Analytics')} // ${esc(t(c.name))}</div>
+    <h1>${t('Progress')}</h1><div class="sub">${t('Data across your clients')}</div></div>
+  <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
+  <div class="cm-kpis" style="margin-bottom:14px">
+    ${kpi('Workouts Done',nf(done),`${t('Missed')}: ${nf(miss)}`)}
+    ${kpi('Adherence',adh+'%',adh>=75?t('Optimal'):t('Attention'))}
+    ${kpi('Streak',`${nf(c.streak||0)} ${t('wk')}`,t(c.goal))}
+    ${kpi('Weight',uwS(c.weight||null),t(c.prog))}
+  </div>
+  ${vCProgress()}`;
+}
 function vProgress(){
+  if(PREFS.uiTpl==='coachmint')return vProgressCm();
   return `
   <div class="page-h"><div><h1>${t('Progress')}</h1><div class="sub">${t('Data across your clients')}</div></div>
   <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
@@ -3493,6 +3966,14 @@ function vSettings(){
         <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
         <b style="font-size:12.5px">${t(x)}${PREFS.theme===x?' ✓':''}</b></div>`).join('')}
     </div>
+    <div class="card-t" style="margin:20px 0 12px">${t('Design Template')}</div>
+    <div class="row" style="gap:12px;flex-wrap:wrap">
+      ${[['default','Default','linear-gradient(135deg,#12151B 55%,#C8F04B 55%)'],['coachmint','CoachMint','linear-gradient(135deg,#0C0E10 55%,#00FF9D 55%)']].map(([k,n,g])=>`
+      <div class="card" style="width:130px;padding:10px;cursor:pointer;${(PREFS.uiTpl||'default')===k?'border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)':''}" data-act="tpl" data-v="${k}">
+        <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
+        <b style="font-size:12.5px">${t(n)}${(PREFS.uiTpl||'default')===k?' ✓':''}</b></div>`).join('')}
+    </div>
+    <div class="sub" style="margin-top:10px">${t('Applies to this device only')}</div>
     <div class="card-t" style="margin:20px 0 12px">${t('Accent Color')}</div>
     <div class="row" style="gap:10px">
       ${ACCENTS.map((A,ix)=>`<button data-act="accent" data-ix="${ix}" style="width:38px;height:38px;border-radius:50%;background:${A.a};border:2px solid ${PREFS.accent===ix?'var(--ink)':'var(--line)'};box-shadow:inset 0 -8px 12px rgba(0,0,0,.12)"></button>`).join('')}
@@ -3639,7 +4120,7 @@ function vMessages(){
       <div style="text-align:end;font-size:11px;color:var(--ink3);flex:none">${t(x.last.time)}</div>
     </div>`};
   return `
-  <div class="page-h"><div><h1>${t('Messages')}</h1><div class="sub">${nf(need.length)} ${t('need your reply')} · ${t('Async — no pressure')}</div></div>
+  <div class="page-h"><div>${PREFS.uiTpl==='coachmint'?`<div class="eyebrow">${t('Dispatch')} // ${t('Encrypted')}</div>`:''}<h1>${t('Messages')}</h1><div class="sub">${nf(need.length)} ${t('need your reply')} · ${t('Async — no pressure')}</div></div>
   <div class="row">
     <button class="btn btn-outline" data-act="announce-open">${ic('bell',15)} ${t('Announce')}</button>
     <button class="btn btn-outline" data-act="msgtpl-open">${ic('edit',15)} ${t('Templates')}</button>
@@ -4602,6 +5083,49 @@ let AI_CHAT=[];try{AI_CHAT=JSON.parse(localStorage.getItem(AI_CHAT_KEY)||'[]')}c
 let AI_WAITING=false;
 const aiChatSave=()=>{try{localStorage.setItem(AI_CHAT_KEY,JSON.stringify(AI_CHAT.slice(-80)))}catch(e){}};
 const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',20)}<span>${t('AI Assistant')}</span></button>`;
+/* v18.36 — mobile FABs: the AI assistant becomes a circular robot button and a
+   new coach TOOLBOX FAB sits in the opposite corner (form check + stopwatch). */
+const aiFabRound=()=>`<button class="ai-fab-round" data-act="ai-chat-fab" title="${t('AI Assistant')}" aria-label="${t('AI Assistant')}">${ic('robot',24)}</button>`;
+const toolboxFab=()=>`<button class="tbx-fab" data-act="tbx-open" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}</button>`;
+function toolboxSheet(){
+  const c=(client(S.cid)||CLIENTS[0]||{}).name;
+  const rest=S.player&&S.player.rest>0?nf(fmtMS(S.player.rest)):null;
+  openSheet(`
+  <div class="sh-h"><b>${t('Coach Toolbox')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x">${ic('x',18)}</button></div>
+  <div class="sh-b">
+    <button class="tbx-it" data-act="fc-open">${ic('camera',20)}<div style="flex:1;text-align:start"><b>${t('Form check')}</b><div class="muted" style="font-size:11.5px">${t('Camera form check')} — ${esc(t(c||'—'))}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+    <button class="tbx-it" data-act="tbx-stopwatch">${ic('stopwatch',20)}<div style="flex:1;text-align:start"><b>${t('Stopwatch')}</b><div class="muted" style="font-size:11.5px">${rest?`${t('Rest')}: ${rest}`:t('Interval timer for sets and rest')}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+  </div>`);
+}
+let swIv=null,swT0=0,swRuns=false,swElapsed=0;
+function stopwatchSheet(){
+  openSheet(`
+  <div class="sh-h"><b>${t('Stopwatch')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x" onclick="swStop()">${ic('x',18)}</button></div>
+  <div class="sh-b" style="align-items:center;text-align:center">
+    <div id="swDisp" style="font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:700;letter-spacing:.02em;padding:18px 0">00:00.0</div>
+    <div class="row" style="gap:10px;justify-content:center">
+      <button class="btn btn-primary" id="swGo" data-act="sw-toggle">${swRuns?t('Pause'):t('Start')}</button>
+      <button class="btn btn-outline" data-act="sw-reset">${t('Reset')}</button>
+    </div>
+    <div class="muted" style="font-size:11.5px;margin-top:10px">${t('Interval timer for sets and rest')}</div>
+  </div>`);
+  swPaint();
+}
+function swPaint(){
+  const el=$('swDisp');if(!el)return;
+  const ms=swElapsed+(swRuns?Date.now()-swT0:0);
+  const s=Math.floor(ms/1000),d=Math.floor((ms%1000)/100);
+  el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+d;
+}
+function swTick(){if(swRuns){swPaint();swIv=requestAnimationFrame(swTick)}}
+function swToggle(){
+  if(swRuns){swElapsed+=Date.now()-swT0;swRuns=false;cancelAnimationFrame(swIv)}
+  else{swT0=Date.now();swRuns=true;swTick()}
+  const b=$('swGo');if(b)b.textContent=swRuns?t('Pause'):t('Start');
+}
+function swReset(){swRuns=false;cancelAnimationFrame(swIv);swElapsed=0;swPaint();const b=$('swGo');if(b)b.textContent=t('Start')}
+function swStop(){swRuns=false;cancelAnimationFrame(swIv)}
+window.swStop=swStop;
 function aiChatOpen(){S.aiOpen=true;renderAiChat()}
 function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
 /* v18.16 — Apply mode: when ON, messages go to /api/ai/action and the model's
@@ -5186,7 +5710,8 @@ function renderMobile(){
   else if(S.mview==='calendar')body=mCalView();
   else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
   return `<div class="mshell">
-    ${fbBtn('bottom:92px;inset-inline-start:14px;')}
+    ${aiFabRound()}
+    ${toolboxFab()}
     <div class="mhead">
       <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
       <div class="row" style="gap:4px">
@@ -5230,6 +5755,42 @@ function mCalView(){
 function mToday(){
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
   const att=attentionList();
+  /* v18.35 — CoachMint template: cockpit Today (telemetry header + KPI strip
+     + manifest rows). Same data + same data-act hooks as the default view. */
+  if(PREFS.uiTpl==='coachmint'){
+    const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+    const kpi=(k,v)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`;
+    return `<div class="mstack">
+    <div class="ccard" style="padding:16px 14px">
+      <div class="eyebrow" style="font-size:10px">${t('Live Telemetry')} // ${fmtFullDate(dayDate(TODAY))}</div>
+      <b style="font-size:17px;display:block;margin-top:6px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b>
+      <div class="cm-kpis" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+        ${kpi('Sessions Today',nf(today.length))}${kpi('Completed',nf(doneT))}${kpi('Attention',nf(att.length))}
+      </div>
+    </div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="cm-row click" style="padding:11px 2px" data-act="ev-open" data-eid="${ev.id}">
+        <span class="cm-time" style="min-width:52px">${nf(fmtT(ev.start))}</span>${cc?avC(cc.name,32):av(t('Coach'),32,3)}
+        <div style="flex:1;min-width:0"><b style="font-size:12.5px">${t(ev.label)}</b><div class="muted" style="font-size:11px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${attBadge(ev)||`<span class="bdg ${st.b}" style="font-size:9.5px">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Priority Queue')} · ${nf(att.length)}</div>
+      ${att.length?att.slice(0,3).map(it=>`<div class="cm-alert click" style="padding:11px 2px" data-act="${it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client'}"
+        ${it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code)}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`}>
+        <span class="bdg ${it.bt}" style="flex:none;font-size:9.5px">${ic(it.icon,11)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:12.5px">${t(it.name)}</b><div class="muted" style="font-size:11px">${t(it.why)}</div></div>
+        ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')
+      :`<div class="cm-row" style="padding:11px 2px"><span class="bdg bdg-green" style="flex:none;font-size:9.5px">${ic('check',11)}</span><b style="font-size:12.5px">${t('All clients on track ✓')}</b></div>`}
+    </div>
+    <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
+  </div>`;
+  }
   return `<div class="mstack">
     <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
     <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
@@ -5259,6 +5820,22 @@ function mToday(){
 function mClients(){
   const q=(S.mcq||'').toLowerCase();
   const list=CLIENTS.filter(c=>!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q));
+  /* v18.35 — CoachMint template: roster rows with readiness rings. */
+  if(PREFS.uiTpl==='coachmint'){
+    return `<div class="mstack">
+    <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
+    return `<div class="ccard cm-ath" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
+      ${avC(c.name,42)}
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:6px;flex-wrap:wrap"><b style="font-size:13.5px">${t(c.name)}</b>${cmStatusChip(c.status)}${pend?`<span class="bdg bdg-lime" style="font-size:9.5px">${t('Pending')}</span>`:''}</div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${t(c.goal)} · ${t(c.prog)}</div>
+        <div class="cm-meta" style="margin-top:5px">${ic('calendar',11)} ${t(c.next)}</div>
+      </div>
+      ${cmRing(p,44,10)}
+    </div>`}).join('')||`<div class="ccard" style="text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}
+  </div>`;
+  }
   return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
     ${list.map(c=>{const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
@@ -5400,7 +5977,7 @@ function vClient(){
     <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
     ${langBtn('btn-outline btn-sm')}
     ${fbBtn('top:18px;inset-inline-end:18px;')}
-    <div class="phone"><div class="notch"></div>
+    <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
       <div class="capp" id="capp">
         <div class="chead">
           <div style="display:flex;align-items:center;gap:10px;min-width:0">
@@ -5675,6 +6252,13 @@ function cChat(){
     </div>
   </div>`;
 }
+/* v18.27 — phone skins (client app themes). prev = mini preview gradient,
+   dot = the skin's accent used in the preview chips. */
+const PHONESKINS=[
+{id:'fitflow',n:'FitFlow',d:'Charcoal · lime',prev:'linear-gradient(150deg,#1B1F26,#101318)',dot:'#C8F04B'},
+{id:'carbon',n:'Carbon',d:'Black · white',prev:'linear-gradient(150deg,#17181C,#0A0B0D)',dot:'#FFFFFF'},
+{id:'ocean',n:'Ocean',d:'Navy · cyan',prev:'linear-gradient(150deg,#0E1B30,#070D18)',dot:'#38BDF8'},
+{id:'sunset',n:'Sunset',d:'Plum · amber',prev:'linear-gradient(150deg,#241527,#100A12)',dot:'#FB923C'}];
 function cProfile(){
   const c=client(S.cid);
   const lm=lastM(S.cid);
@@ -5703,13 +6287,27 @@ function cProfile(){
       ${lm?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div>
       <div class="muted" style="font-size:10.5px;margin-top:6px">${t('Last measurement')}: ${fmtD(lm.d)}</div>`:''}
     </div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:6px">${ic('gear',14)} ${t('Settings')}</div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:8px">${ic('gear',14)} ${t('Settings')}</div>
       <div class="lbl" style="margin-bottom:6px">${ic('globe',13)} ${t('Language')}</div>
       <div class="seg" style="width:100%;display:flex">
         <button style="flex:1" class="${lang==='fa'?'on':''}" data-act="lang">فارسی</button>
         <button style="flex:1" class="${lang==='en'?'on':''}" data-act="lang">English</button>
       </div>
       <div class="muted" style="font-size:11px;margin-top:6px">${t('App language')}</div>
+    </div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:10px">${ic('star',14)} ${t('App Theme')}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${PHONESKINS.map(s=>`
+      <button class="ccard" style="padding:10px;cursor:pointer;text-align:start;${(PREFS.phoneSkin||'fitflow')===s.id?'border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,240,75,.12)':''}" data-act="skin" data-s="${s.id}">
+        <div style="height:56px;border-radius:12px;background:${s.prev};border:1px solid #2E333B;margin-bottom:8px;position:relative;overflow:hidden">
+          <span style="position:absolute;top:8px;inset-inline-start:8px;width:26px;height:5px;border-radius:99px;background:${s.dot}"></span>
+          <span style="position:absolute;bottom:8px;inset-inline-start:8px;width:40%;height:14px;border-radius:6px;background:${s.dot};opacity:.85"></span>
+        </div>
+        <b style="font-size:12.5px">${t(s.n)}${(PREFS.phoneSkin||'fitflow')===s.id?' ✓':''}</b>
+        <div class="muted" style="font-size:10.5px;margin-top:2px">${t(s.d)}</div>
+      </button>`).join('')}
+      </div>
+      <div class="muted" style="font-size:11px;margin-top:8px">${t('Applies to this device only')}</div>
     </div>
     <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;color:var(--red)" data-act="signout">${ic('x',14)} ${t('Sign out')}</button>
   </div>`;
@@ -5875,6 +6473,9 @@ function fxReveal(){
 
 /* ================= MODALS ================= */
 function openModal(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="modal">${html}</div></div>`;document.body.style.overflow='hidden'}
+/* v18.36 — bottom sheet (mobile-first toolbox/stopwatch). Reuses the modal
+   root so overlay-tap close and body-lock behave identically. */
+function openSheet(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="sheet">${html}</div></div>`;document.body.style.overflow='hidden'}
 function closeModal(){$('modal-root').innerHTML='';document.body.style.overflow='';
   /* v18.17 — the form-check camera must never keep running after its modal
      closes (X button, overlay tap, or any other modal opening over it). */
@@ -6575,6 +7176,11 @@ document.addEventListener('click',e=>{
     case 'qr-open':qrModal(el.dataset.name||'',el.dataset.code||'');break;
     case 'modal-x':closeModal();if(el.dataset.msg)toast(el.dataset.msg);break;
     case 'ovl-x':if(e.target===el)closeModal();break;
+    /* v18.36 — coach toolbox FAB (mobile) */
+    case 'tbx-open':toolboxSheet();break;
+    case 'tbx-stopwatch':stopwatchSheet();break;
+    case 'sw-toggle':swToggle();break;
+    case 'sw-reset':swReset();break;
     case 'pk':pickerModal();break;
     case 'pk-add':{const ex=EXERCISES[+el.dataset.i];
       BUILDER.push({ex:+el.dataset.i,sets:3,reps:10,kg:20,rest:90,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''});fillVids();
@@ -6750,9 +7356,12 @@ document.addEventListener('click',e=>{
     /* v15.7 — persisted preference handlers */
     case 'pref-sw':{setP(PREFS,el.dataset.k,el.checked);savePrefs();toast('Setting saved');break}
     case 'theme':{PREFS.theme=el.dataset.v;savePrefs();applyTheme();render();toast('Theme applied');break}
+    case 'tpl':{PREFS.uiTpl=el.dataset.v==='coachmint'?'coachmint':'default';savePrefs();applyTpl();applyAccent(PREFS.accent);applyTheme();saveData();render();toast(t('Theme applied'));break}
     case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
     case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
+    case 'cm-filter':{S.cfilter=el.dataset.v;render();break}
     case 'prg-range':{S.prgRange=el.dataset.r;render();break}
+    case 'skin':{PREFS.phoneSkin=el.dataset.s;savePrefs();render();toast(t('Theme applied'));break}
     case 'accent':{PREFS.accent=+el.dataset.ix;savePrefs();applyAccent(PREFS.accent);render();toast('Accent color updated');break}
     case 'unit':{PREFS.units=el.dataset.u;savePrefs();render();toast(t('Units set to')+' '+t(PREFS.units==='Metric'?'Metric (kg · cm)':'Imperial (lb · in)'));break}
     case 'pose':S.pose=el.dataset.p;render();break;
@@ -6883,6 +7492,7 @@ const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S
 loadPrefs();
 applyLang();
 applyAccent(PREFS.accent);
+applyTpl();
 applyTheme();
 if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(PREFS.theme==='System')applyTheme()})}catch(e){}}
 loadData();

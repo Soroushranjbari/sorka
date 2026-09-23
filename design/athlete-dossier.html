@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#b9cbbc","tertiary-fixed-dim":"#9ed2b3","inverse-primary":"#006d40","secondary-fixed-dim":"#c0c7d3","surface-container-highest":"#333537","on-primary":"#00391f","surface-dim":"#121416","secondary-fixed":"#dce3ef","surface-variant":"#333537","on-tertiary-container":"#3b6c52","tertiary-fixed":"#b9efce","on-secondary":"#2a313a","on-tertiary-fixed-variant":"#1e5038","surface-container-low":"#1a1c1e","secondary-container":"#404751","on-tertiary":"#003822","on-primary-container":"#007143","primary":"#f4fff3","on-surface":"#e2e2e5","inverse-surface":"#e2e2e5","primary-fixed":"#56ffa8","on-secondary-container":"#afb6c1","background":"#121416","on-background":"#e2e2e5","surface":"#121416","surface-tint":"#00e38b","surface-container-lowest":"#0c0e10","error-container":"#93000a","inverse-on-surface":"#2f3133","outline":"#849587","on-error":"#690005","surface-container":"#1e2022","on-primary-fixed":"#002110","on-primary-fixed-variant":"#00522f","outline-variant":"#3b4a3f","primary-container":"#00ff9d","tertiary":"#f2fff4","on-tertiary-fixed":"#002112","error":"#ffb4ab","on-secondary-fixed":"#151c25","on-secondary-fixed-variant":"#404751","secondary":"#c0c7d3","surface-container-high":"#282a2c","primary-fixed-dim":"#00e38b","surface-bright":"#38393c","tertiary-container":"#b6ebca","on-error-container":"#ffdad6"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2.5rem","gutter":"1rem","gutter-mobile":"0.75rem","space-sm":"0.5rem","margin-mobile":"1rem","space-lg":"1.5rem","margin":"2rem","space-xs":"0.25rem","space-md":"1rem"},"fontFamily":{"headline-lg":["Space Grotesk"],"display-hero-mobile":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"metric-xl":["JetBrains Mono"],"headline-md":["Space Grotesk"],"display-hero":["Space Grotesk"],"caption":["JetBrains Mono"],"body-lg":["JetBrains Mono"],"label-code":["JetBrains Mono"],"metric-md":["JetBrains Mono"],"body-md":["JetBrains Mono"]},"fontSize":{"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.03em","fontWeight":"600"}],"display-hero-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"metric-xl":["44px",{"lineHeight":"48px","letterSpacing":"-0.05em","fontWeight":"700"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.02em","fontWeight":"500"}],"display-hero":["56px",{"lineHeight":"64px","letterSpacing":"-0.04em","fontWeight":"700"}],"caption":["11px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"400"}],"body-lg":["15px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-code":["10px",{"lineHeight":"12px","letterSpacing":"0.08em","fontWeight":"500"}],"metric-md":["24px",{"lineHeight":"28px","letterSpacing":"-0.03em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-container-lowest text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between select-none"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center justify-between shrink-0"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #00ff9d - Font: spaceGrotesk - Mode: dark - Roundness: rounded-lg" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U2mFWXKlsI1ijXDumJNaCaxnp2_ESzjTy5hJmoUEj8-c0cEXcjoqObMXIYAuvRL-cWo_azNEXtW9cskW0ivVwrWyCHNf8pac8XjpLl3o5eFaW3VZKno6m0TBUX_82HkZ8J8WcofhnYqvr6l5hWP2vphcA2L0Y6CuNUv-XlJdGW5irVKeQA3_7GJ21c9olwGrAQ8UIsFWHG2aYO90Sba15tsr9boR1kFfRlPGRpEVCQ3PDAcqjf8QaEqVY"/><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight text-primary leading-none font-bold">COACHMINT</span><span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-widest mt-1">OS // COCKPIT v4.2</span></div></div><div class="h-2 w-2 rounded-full bg-primary-container animate-pulse"></div></div><div class="px-space-md pt-space-md pb-space-sm shrink-0"><div class="bg-surface-container-low border border-outline-variant/40 p-space-xs flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">terminal</span><span class="font-caption text-caption text-on-surface font-semibold tracking-wide uppercase">Coach Workspace</span></div><span class="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer hover:text-on-surface">unfold_more</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md"><div class="space-y-1"><div class="px-space-xs py-1 flex items-center justify-between"><span class="font-label-code text-label-code text-outline uppercase tracking-wider">// 01_CORE</span><span class="font-label-code text-label-code text-on-surface-variant/40">PRM</span></div><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed"><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="cockpit" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span class="font-body-md text-body-md">Cockpit</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-all bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed" data-path="athletes" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span class="font-body-md text-body-md">Athletes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="studio" href="#"><span class="material-symbols-outlined text-[18px]">fitness_center</span><span class="font-body-md text-body-md">Studio</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="fuel" href="#"><span class="material-symbols-outlined text-[18px]">nutrition</span><span class="font-body-md text-body-md">Fuel</span></a></nav></div><div class="space-y-1"><div class="px-space-xs py-1 flex items-center justify-between"><span class="font-label-code text-label-code text-outline uppercase tracking-wider">// 02_OPERATIONS</span><span class="font-label-code text-label-code text-on-surface-variant/40">SYS</span></div><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed"><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="telemetry" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Telemetry</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span class="font-body-md text-body-md">Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="dispatch" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Dispatch</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="vault" href="#"><span class="material-symbols-outlined text-[18px]">folder_special</span><span class="font-body-md text-body-md">Vault</span></a></nav></div></div></div><div class="border-t border-outline-variant/30 bg-surface-container-low/60 p-space-md shrink-0 space-y-space-sm"><div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1.5 border border-outline-variant/30"><div class="flex items-center gap-space-xs"><span class="h-1.5 w-1.5 bg-primary-container"></span><span class="font-label-code text-label-code text-primary-fixed-dim uppercase">SYS.SYNC // OPTIMAL</span></div><span class="font-label-code text-label-code text-outline">12ms</span></div><div class="flex items-center justify-between pt-1"><div class="flex items-center gap-space-sm min-w-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/60 shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/><div class="flex flex-col min-w-0"><span class="font-body-md text-body-md text-on-surface font-semibold truncate leading-tight">Viktor Kline</span><span class="font-caption text-caption text-on-surface-variant truncate">High Performance Director</span></div></div><button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">settings</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-code text-label-code text-outline"><span class="text-on-surface-variant">COCKPIT</span><span>/</span><span class="text-primary-fixed-dim uppercase tracking-wider">LIVE TELEMETRY HUB</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 border border-outline-variant/40"><span class="h-1.5 w-1.5 bg-primary-container"></span><span class="font-label-code text-label-code text-on-surface uppercase">92% OPTIMAL READY</span></div></div><div class="flex-1 max-w-xl mx-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 pl-10 pr-16 py-1.5 font-label-code text-label-code text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Cmd+K // Search athletes, protocols, bio-markers..." type="text"/><span class="absolute right-2.5 font-label-code text-[9px] bg-surface-container-high border border-outline-variant/40 px-1 py-0.5 text-outline">⌘K</span></div></div><div class="flex items-center gap-space-md"><button class="flex items-center gap-space-xs bg-primary-container text-on-primary-fixed px-space-md py-1.5 font-label-code text-label-code font-bold uppercase tracking-wider hover:bg-surface-tint transition-colors"><span class="material-symbols-outlined text-[16px]">add</span><span>Quick Prescribe</span></button><div class="flex items-center gap-space-sm border-l border-outline-variant/30 pl-space-md"><button class="relative p-1.5 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 h-1.5 w-1.5 bg-primary-container"></span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/50" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/></div></div></header><main class="w-full pt-16 bg-surface-container-lowest min-h-screen"><div class="flex flex-col w-full">
+<!-- Sub-Header Status Horizon Strip -->
+<div class="flex items-center justify-between px-space-lg py-2.5 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 bg-primary-container"></span>
+<span class="font-label-code text-label-code uppercase tracking-widest text-primary-fixed-dim">ATHLETE INTELLIGENCE // ROSTER MATRIX</span>
+</div>
+<span class="font-caption text-caption text-outline">|</span>
+<div class="flex items-center gap-1.5">
+<span class="font-label-code text-label-code text-on-surface-variant">ACTIVE SQUADRON:</span>
+<span class="font-label-code text-label-code text-on-surface font-semibold">ELITE COHORT ALPHA (24 ATHLETES)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-4 font-label-code text-label-code text-on-surface-variant">
+<span>SYNC RATE: <strong class="text-primary font-mono">1.2ms</strong></span>
+<span>AGGREGATE READINESS: <strong class="text-primary-container font-mono">91.4%</strong></span>
+<span class="text-error">FLAGGED ANOMALIES: 03</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-1">
+<span class="font-label-code text-label-code text-outline">SYS.MODE</span>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase font-bold tracking-wider">LIVE_FEED</span>
+</div>
+</div>
+</div>
+<!-- Master-Detail 2-Column Split Workspace -->
+<div class="flex flex-col lg:flex-row w-full bg-surface-container-lowest">
+<!-- LEFT PANEL: Roster Navigation & Bio-Filters (320px Desktop Lock) -->
+<aside class="w-full lg:w-80 shrink-0 bg-surface-container-low flex flex-col shadow-xl">
+<!-- Search Box with Monospace Accelerator -->
+<div class="p-space-md bg-surface-container-low space-y-space-sm">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-label-code text-label-code pl-9 pr-8 py-2.5 placeholder:text-outline focus:outline-none focus:bg-surface-container transition-all" placeholder="Search dossier, tag, bio-id..." type="text"/>
+<kbd class="absolute right-2.5 font-label-code text-[9px] bg-surface-container px-1.5 py-0.5 text-outline uppercase font-mono">/</kbd>
+</div>
+<!-- Filter Segmented Tabs -->
+<div class="grid grid-cols-2 gap-1 bg-surface-container-lowest p-1">
+<button class="bg-primary-container text-on-primary-fixed font-label-code text-[11px] py-1.5 font-semibold text-center uppercase tracking-tight shadow-sm transition-all">
+            All (24)
+          </button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-code text-[11px] py-1.5 text-center uppercase tracking-tight transition-all flex items-center justify-center gap-1">
+<span class="w-1.5 h-1.5 bg-error inline-block"></span>
+            Alerts (3)
+          </button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-code text-[11px] py-1.5 text-center uppercase tracking-tight transition-all">
+            Peaking (8)
+          </button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-label-code text-[11px] py-1.5 text-center uppercase tracking-tight transition-all">
+            Off-Season (4)
+          </button>
+</div>
+</div>
+<!-- Athlete Roster Compact Cards List -->
+<div class="flex-1 overflow-y-auto divide-y-0 space-y-1 p-2">
+<!-- CARD 1: Elena Rostova (Active Selected) -->
+<div class="relative bg-surface-container-high p-3.5 cursor-pointer shadow-md transition-all group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary-container"></div>
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="relative w-9 h-9 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Intense close-up portrait of female Olympic track and field sprinter Elena Rostova in dark athletic gear with focused expression, moody directional gym rim lighting in graphite and mint tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA51bcJagnmGymkqXBtzgO7h_NtWkSTCAeXQLl_Ioc-DRimuLQ6IBm3oa99Jt03ANpmE9x7q2o6kmG8jsMxs-7Xc6VYKkatvQ9DVE_ruM40RTDtusH3t5JRY17rb-BHe5ORhZKbHBbP9qV5bdtC0ybOa8BuhOn8lAvd8HYFRkxUkLZM_tryllj1Ol7stLtCH1gjUoneA6F_3NSo-C-kf26jNSLLWGvhdw_pNwCD_IUZ_RWE5wQiM8VZ"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-primary-container"></span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<h4 class="font-headline-md text-headline-md text-primary leading-tight truncate">Elena Rostova</h4>
+</div>
+<span class="font-label-code text-caption text-on-surface-variant block truncate">TRACK // 400M SPRINT</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-metric-md text-metric-md text-primary-container leading-none font-bold">98%</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim uppercase">READINESS</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-2 font-label-code text-[10px]">
+<div>
+<span class="text-outline block text-[9px]">CNS STATE</span>
+<span class="text-primary-fixed font-semibold">OPTIMAL</span>
+</div>
+<div>
+<span class="text-outline block text-[9px]">MACROCYCLE</span>
+<span class="text-on-surface">WK 03/06</span>
+</div>
+<div class="text-right">
+<span class="text-outline block text-[9px]">HRV 7D</span>
+<span class="text-primary-container font-mono">92ms</span>
+</div>
+</div>
+</div>
+<!-- CARD 2: Marcus Vance (Fatigue Alert) -->
+<div class="relative bg-surface-container hover:bg-surface-container-high p-3.5 cursor-pointer transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="relative w-9 h-9 shrink-0">
+<img class="w-full h-full object-cover grayscale" data-alt="Monochrome studio portrait of male decathlete Marcus Vance resting his head against hand with subtle fatigue under harsh stadium floodlights, technical graphite darkroom contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiLjD_HyikFwxhQ9rEIqPs3WMkBn-gVRuVtUq6WzdxclZ8XwAA9w9enYAxTQQWK8dBn4-McHC0nBbod4CDGujC5CmhOkOpsYyaPNTcaJnLnmN15jkT2bbI7P9tPm4rmPGU69QCxa8T4nFMqm8hXiEqYDzP3qqQN6LbD8aRMomW6MMb6sKamU_bx0P9y5fJs5_3PFsXweLgLvaHxYDr2TJ94fv7hdsHJjWwZaAwM3XSK2G6TJRFVkOq"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-error"></span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight truncate">Marcus Vance</h4>
+<span class="font-label-code text-caption text-on-surface-variant block truncate">DECATHLON // MULTI</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-metric-md text-metric-md text-error leading-none font-bold">64%</div>
+<span class="font-label-code text-[9px] text-error uppercase">FATIGUE FLAG</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-2 font-label-code text-[10px]">
+<div>
+<span class="text-outline block text-[9px]">CNS STATE</span>
+<span class="text-error font-semibold">STRAIN 2.8</span>
+</div>
+<div>
+<span class="text-outline block text-[9px]">SLEEP DEF</span>
+<span class="text-error font-mono">-2.4h</span>
+</div>
+<div class="text-right">
+<span class="text-outline block text-[9px]">RECOVERY</span>
+<span class="text-error font-mono">CRITICAL</span>
+</div>
+</div>
+</div>
+<!-- CARD 3: Liam Chen -->
+<div class="relative bg-surface-container hover:bg-surface-container-high p-3.5 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="relative w-9 h-9 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of male Asian ultra-endurance athlete Liam Chen wearing reflective hydration visor in front of dark technical backdrop, sharp rim illumination" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-K9djz9uecV-okxUWYL4PHnP4ccOztjouDHhMAwURk23qQed8Cw9Lj6nQXmXz4Pgm7XN_nGaDikaskgPKrb3bW4luQYQfQ-693V4M_1WUlAcUcLvA3LyC0M4Gyh8zzPqGhl28eygoGhb_YRjQQKw0nHoWzH3wmKeyanQUopdPp4lFIv69Zw7XWTekhbeh6gx9_DMvi9oDDbCSahFcSeIN1c0epk3aWdvpw5mMAIeYmuVKjWf9dBZg"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-primary-fixed-dim"></span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight truncate">Liam Chen</h4>
+<span class="font-label-code text-caption text-on-surface-variant block truncate">ULTRA-ENDURANCE // 100K</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-metric-md text-metric-md text-primary leading-none font-bold">88%</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim uppercase">READY</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-2 font-label-code text-[10px]">
+<div>
+<span class="text-outline block text-[9px]">GLYCOGEN</span>
+<span class="text-primary font-mono">REPLATE 92%</span>
+</div>
+<div>
+<span class="text-outline block text-[9px]">ACWR</span>
+<span class="text-on-surface font-mono">1.14</span>
+</div>
+<div class="text-right">
+<span class="text-outline block text-[9px]">VO2 MAX</span>
+<span class="text-primary-fixed font-mono">74.2</span>
+</div>
+</div>
+</div>
+<!-- CARD 4: Sofia Al-Mansoor -->
+<div class="relative bg-surface-container hover:bg-surface-container-high p-3.5 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="relative w-9 h-9 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Intense athletic profile of female Middle Eastern powerlifter Sofia Al-Mansoor with chalk on hands and determined eyes, cinematic low-key sports photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJBUbL-p2qZSwTtCoouxyb97V2ScVpIGx7ExWVD_w3_2eAn4sgFArCX5GY_-2w4rAhLbqOic5fqzYwT_IacZj5qLiU4PfSVaY6xZ6wVKvQALjRkhHnlS9mtFMJEOe_N_9EIuI4CKsKl2cCP0YEe2OHg6TI8EYc32xgIy2s8yoLppM8m5isgiBsRKsmGb1uFJyFkpXbHlE4Z1h4QLC-N90cxqAGK8eWoe83Pb3cd0f5TwFhXaAqVzrw"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-primary-container"></span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight truncate">Sofia Al-Mansoor</h4>
+<span class="font-label-code text-caption text-on-surface-variant block truncate">POWERLIFTING // -63KG</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-metric-md text-metric-md text-primary-container leading-none font-bold">85%</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim uppercase">PEAKING</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-2 font-label-code text-[10px]">
+<div>
+<span class="text-outline block text-[9px]">CNS STATE</span>
+<span class="text-primary-fixed">PRIME</span>
+</div>
+<div>
+<span class="text-outline block text-[9px]">BAR SPEED</span>
+<span class="text-on-surface font-mono">1.02 m/s</span>
+</div>
+<div class="text-right">
+<span class="text-outline block text-[9px]">MEET T-MINUS</span>
+<span class="text-primary-fixed font-mono">9 DAYS</span>
+</div>
+</div>
+</div>
+<!-- CARD 5: Mateo Silva -->
+<div class="relative bg-surface-container hover:bg-surface-container-high p-3.5 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="relative w-9 h-9 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Athletic portrait of Brazilian male combat jiu jitsu competitor Mateo Silva with tape on ears, dark technical lighting, sharp mint edge highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwFx3qI4cnsHlHVtgU2u36bWfF7TcM8I0A1cDBi4FPoE4s0hGCiyZCmnbyhrnJJrYh_KftorrvY5cJnTM7cnTVAFWd56yxza8_LiAWyEtkIH1yHaiwf_-N4k_qlvxIL_wZq8FAHvfke6LRBJ_tZ8L3Mo6SHQZ4WtGWa39MKAnBy_chDaVBPPAjmox80g8CrRcn_546K0LcpZDuBT3h7_Ub4zrN845qHbPyJnw5ejfPxRNzYvjh2HE_"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 bg-primary-fixed-dim"></span>
+</div>
+<div class="min-w-0">
+<h4 class="font-headline-md text-headline-md text-on-surface leading-tight truncate">Mateo Silva</h4>
+<span class="font-label-code text-caption text-on-surface-variant block truncate">COMBAT // BJJ -82KG</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-metric-md text-metric-md text-primary leading-none font-bold">91%</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim uppercase">READY</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-2 font-label-code text-[10px]">
+<div>
+<span class="text-outline block text-[9px]">WEIGHT TARGET</span>
+<span class="text-primary-fixed font-mono">-0.8kg</span>
+</div>
+<div>
+<span class="text-outline block text-[9px]">HYDRATION</span>
+<span class="text-primary-container font-mono">OPTIMAL</span>
+</div>
+<div class="text-right">
+<span class="text-outline block text-[9px]">SESSION 02</span>
+<span class="text-on-surface font-mono">16:30</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Roster Footer Stats -->
+<div class="p-space-md bg-surface-container-lowest text-on-surface-variant flex items-center justify-between font-label-code text-[10px]">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary-fixed-dim">tune</span>
+<span>FILTERS ACTIVE: 0</span>
+</div>
+<span class="text-outline">PAGE 1 OF 3</span>
+</div>
+</aside>
+<!-- RIGHT PANEL: Elena Rostova Deep 360 Dossier -->
+<main class="flex-1 min-w-0 bg-surface-container-lowest flex flex-col p-space-md lg:p-space-lg space-y-space-md">
+<!-- Athlete Master Dossier Header Card -->
+<section class="relative bg-surface-container-low p-space-md lg:p-space-lg shadow-xl overflow-hidden">
+<div class="absolute -right-16 -top-16 w-80 h-80 bg-gradient-to-br from-primary-container/10 via-transparent to-transparent pointer-events-none rounded-full blur-3xl"></div>
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md relative z-10">
+<div class="flex items-start md:items-center gap-space-md">
+<div class="relative w-20 h-20 md:w-24 md:h-24 shrink-0 bg-surface-container-highest shadow-md">
+<img class="w-full h-full object-cover" data-alt="High-resolution elite sports photography of sprinter Elena Rostova facing camera with focused composure, dressed in aerodynamic black competition kit, high key contrast with mint green ambient reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW94FsUOa4wz2et7JVBxPGeHJZ48MaBGTUB1tH12Cob25p4kY2sBpbViAGlMJE9jQKPIEpL-yc2oPepR4Fwang-tb_FkuRgNkoTEeHpW7EDmJNw7pXIxfh5Y1lcMMxbjSQPD_FATVFjH89oRLNhx21VZxyRyUQNY5_nEZrN9xttz9QMiVXL0UTFKuaoWRt_t9Z2mnR8Y5k7J0cTIQIXyxJLqdERMbF3TEf-PMuVcGszPFK7okmumwg"/>
+<div class="absolute top-0 right-0 bg-primary-container text-on-primary-fixed font-label-code text-[9px] font-bold px-1.5 py-0.5">
+                OLY-71KG
+              </div>
+</div>
+<div class="space-y-1 min-w-0">
+<div class="flex flex-wrap items-center gap-2">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">
+                  Elena Rostova
+                </h1>
+<span class="bg-primary-container/20 text-primary-container font-label-code text-caption px-2 py-0.5 font-bold uppercase">
+                  ACTIVE ROSTER // TIER 1
+                </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span>Olympic Track &amp; Field</span>
+<span class="text-outline">•</span>
+<span class="text-primary-fixed">400m Sprint &amp; 4x400m Anchor</span>
+<span class="text-outline">•</span>
+<span class="text-outline">DOB: 14.04.1998 (Age 26)</span>
+</p>
+<div class="flex items-center gap-2 pt-1 font-label-code text-caption text-on-surface">
+<span class="text-primary-container uppercase font-semibold">PHASE 4:</span>
+<span class="text-on-surface-variant">HYPERTROPHY &amp; NEUROMUSCULAR POTENTIATION</span>
+<span class="text-outline">[WK 3 OF 6]</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Operations Console -->
+<div class="flex flex-wrap items-center gap-2 shrink-0">
+<button class="bg-primary-container hover:bg-surface-tint text-on-primary-fixed font-label-code text-label-code font-bold uppercase px-3.5 py-2.5 flex items-center gap-1.5 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Adjust Active Load</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-code text-label-code uppercase px-3 py-2.5 flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">assignment_add</span>
+<span>Prescribe Protocol</span>
+</button>
+<button class="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-code text-label-code uppercase px-3 py-2.5 flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">forum</span>
+<span>Comms (2)</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-code text-label-code uppercase px-2.5 py-2.5 transition-all" title="Export Dossier PDF">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</div>
+<!-- Key Vitals High-Density Strip -->
+<div class="mt-space-md grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 bg-surface-container-lowest p-space-md">
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">DAILY READINESS</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-xl text-metric-xl text-primary-container leading-none font-bold">98</span>
+<span class="font-label-code text-caption text-outline">/100</span>
+</div>
+<span class="font-label-code text-[10px] text-primary-fixed-dim flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary-container"></span> PEAK SUPRA-COMP
+            </span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">RESTING HR</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-xl text-metric-xl text-on-surface leading-none font-bold">48</span>
+<span class="font-label-code text-caption text-outline">BPM</span>
+</div>
+<span class="font-label-code text-[10px] text-primary-fixed flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_down</span> -3 BPM VS BASE
+            </span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">7-DAY HRV (rMSSD)</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-xl text-metric-xl text-primary leading-none font-bold">92</span>
+<span class="font-label-code text-caption text-outline">MS</span>
+</div>
+<span class="font-label-code text-[10px] text-primary-container font-mono">
+              +12.4% ADAPTATION
+            </span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">SLEEP ARCHITECTURE</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-xl text-metric-xl text-on-surface leading-none font-bold">8h 14m</span>
+</div>
+<span class="font-label-code text-[10px] text-on-surface-variant">
+              96.4% SLEEP EFFICIENCY
+            </span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">SKELETAL MUSCLE MASS</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-xl text-metric-xl text-on-surface leading-none font-bold">64.2</span>
+<span class="font-label-code text-caption text-outline">KG</span>
+</div>
+<span class="font-label-code text-[10px] text-primary-fixed">
+              11.8% DEXA BODY FAT
+            </span>
+</div>
+</div>
+</section>
+<!-- Clean Horizontal Navigation Matrix -->
+<nav class="flex items-center gap-1 bg-surface-container overflow-x-auto p-1 text-on-surface-variant font-label-code text-caption uppercase tracking-wider shrink-0 shadow-sm">
+<button class="bg-surface-container-highest text-primary font-bold px-4 py-2 flex items-center gap-1.5 shadow-sm">
+<span class="w-1.5 h-1.5 bg-primary-container"></span>
+<span>Overview &amp; Telemetry</span>
+</button>
+<button class="hover:text-on-surface hover:bg-surface-container-high px-4 py-2 transition-all">
+          Training Protocols (Active Wk 3)
+        </button>
+<button class="hover:text-on-surface hover:bg-surface-container-high px-4 py-2 transition-all">
+          Nutrition &amp; Bio-Fuel
+        </button>
+<button class="hover:text-on-surface hover:bg-surface-container-high px-4 py-2 transition-all">
+          Kinematics &amp; High-Speed Video
+        </button>
+<button class="hover:text-on-surface hover:bg-surface-container-high px-4 py-2 transition-all">
+          Lab Biomarkers &amp; Blood
+        </button>
+<button class="hover:text-on-surface hover:bg-surface-container-high px-4 py-2 transition-all flex items-center gap-1">
+<span>Private Coach Notes</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</button>
+</nav>
+<!-- Active Tab Content: 360 Panoramic Dashboard -->
+<div class="space-y-space-md">
+<!-- SECTION A + B: Top Row Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- SECTION A: Current Program & Velocity Feedback (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-low p-space-md flex flex-col justify-between shadow-md">
+<div>
+<div class="flex items-center justify-between pb-3 bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="font-label-code text-label-code text-outline">// 01_REALTIME_LOAD</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">
+                    Week 3, Day 4 — Velocity Potentiation Block
+                  </span>
+</div>
+<span class="bg-primary-container/20 text-primary-container font-label-code text-[10px] px-2 py-0.5 font-bold uppercase">
+                  LIVE SENSOR FEED
+                </span>
+</div>
+<!-- Exercise Item 1 -->
+<div class="mt-space-sm bg-surface-container-lowest p-space-md space-y-2">
+<div class="flex items-center justify-between">
+<div class="space-y-0.5">
+<span class="font-body-lg text-body-lg text-on-surface font-semibold">
+                      Barbell Deficit Snatch Pull
+                    </span>
+<span class="font-label-code text-caption text-outline block">
+                      SET 4 OF 5 • 85KG • REPS: 3 • REST: 180s
+                    </span>
+</div>
+<div class="text-right">
+<div class="font-metric-md text-metric-md text-primary-container font-mono font-bold">1.28 m/s</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim uppercase">+2.4% VS TARGET (1.25 m/s)</span>
+</div>
+</div>
+<!-- Linear Specialized Performance Metrics Bar -->
+<div class="w-full bg-surface-container h-1.5 relative overflow-hidden">
+<div class="bg-primary-container h-full transition-all duration-500" style="width: 82%;"></div>
+<div class="absolute left-[75%] top-0 bottom-0 w-0.5 bg-on-surface" title="Target Baseline Threshold"></div>
+</div>
+<div class="flex justify-between font-label-code text-[10px] text-outline pt-0.5">
+<span>THRESHOLD: 1.25 m/s</span>
+<span class="text-primary-fixed">PEAK POWER: 3,420 WATTS</span>
+<span>VELOCITY LOSS: 3.1% (LOW)</span>
+</div>
+</div>
+<!-- Exercise Item 2 -->
+<div class="mt-2 bg-surface-container-lowest p-space-md space-y-2">
+<div class="flex items-center justify-between">
+<div class="space-y-0.5">
+<span class="font-body-lg text-body-lg text-on-surface font-semibold">
+                      Contrast Banded Box Squats
+                    </span>
+<span class="font-label-code text-caption text-outline block">
+                      SET 3 OF 4 • 120KG BAR + 45KG ELASTIC TENSION
+                    </span>
+</div>
+<div class="text-right">
+<div class="font-metric-md text-metric-md text-primary font-mono font-bold">0.94 m/s</div>
+<span class="font-label-code text-[9px] text-on-surface-variant uppercase">TARGET: 0.90 m/s</span>
+</div>
+</div>
+<div class="w-full bg-surface-container h-1.5 relative overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500" style="width: 78%;"></div>
+<div class="absolute left-[70%] top-0 bottom-0 w-0.5 bg-on-surface"></div>
+</div>
+<div class="flex justify-between font-label-code text-[10px] text-outline pt-0.5">
+<span>RFD (0-100ms): 4,820 N/s</span>
+<span class="text-primary-fixed">RPE REPORTED: 7.5</span>
+<span>LATENCY: NOMINAL</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-2 flex items-center justify-between font-label-code text-caption text-on-surface-variant">
+<span>ACCELEROMETER: GYMAWARE OPTICAL #04</span>
+<button class="text-primary-container hover:underline uppercase flex items-center gap-1 font-semibold">
+<span>View Full Kinematic Curve</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- SECTION B: 14-Day HRV vs. Strain Supercompensation Trend Chart (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-low p-space-md flex flex-col justify-between shadow-md">
+<div>
+<div class="flex items-center justify-between pb-2 bg-surface-container-low">
+<div>
+<span class="font-label-code text-label-code text-outline">// 02_SUPERCOMPENSATION</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">
+                    HRV (rMSSD) vs Daily Strain
+                  </h3>
+</div>
+<div class="flex items-center gap-3 font-label-code text-[10px]">
+<span class="flex items-center gap-1 text-primary-container">
+<span class="w-2.5 h-0.5 bg-primary-container"></span> HRV (ms)
+                  </span>
+<span class="flex items-center gap-1 text-secondary-fixed-dim">
+<span class="w-2.5 h-0.5 bg-secondary-fixed-dim"></span> Strain (AU)
+                  </span>
+</div>
+</div>
+<!-- Vector Chart Visualization -->
+<div class="mt-2 bg-surface-container-lowest p-3 relative">
+<div class="flex justify-between text-[9px] font-mono text-outline mb-1">
+<span>110 ms</span>
+<span class="text-primary-fixed-dim font-bold">CURRENT: 92 ms (OPTIMAL)</span>
+<span>STRAIN: 14.8</span>
+</div>
+<!-- Inline Vector Trend Graph -->
+<svg class="w-full h-36 overflow-visible" fill="none" viewbox="0 0 400 130">
+<!-- Grid Background Lines -->
+<line class="text-surface-container-high" stroke="currentColor" stroke-dasharray="3 3" x1="0" x2="400" y1="20" y2="20"></line>
+<line class="text-surface-container-high" stroke="currentColor" stroke-dasharray="3 3" x1="0" x2="400" y1="65" y2="65"></line>
+<line class="text-surface-container-high" stroke="currentColor" stroke-dasharray="3 3" x1="0" x2="400" y1="110" y2="110"></line>
+<!-- Optimal HRV Corridor Polygon -->
+<polygon class="text-primary-container/10" fill="currentColor" points="0,35 400,25 400,65 0,75"></polygon>
+<!-- Strain Bar Chart (Subdued Backplate) -->
+<rect class="fill-surface-container-high" height="35" width="8" x="15" y="80"></rect>
+<rect class="fill-surface-container-high" height="55" width="8" x="45" y="60"></rect>
+<rect class="fill-surface-container-high" height="70" width="8" x="75" y="45"></rect>
+<rect class="fill-surface-container-high" height="60" width="8" x="105" y="55"></rect>
+<rect class="fill-surface-container-high" height="30" width="8" x="135" y="85"></rect>
+<rect class="fill-surface-container-high" height="75" width="8" x="165" y="40"></rect>
+<rect class="fill-surface-container-high" height="80" width="8" x="195" y="35"></rect>
+<rect class="fill-surface-container-high" height="65" width="8" x="225" y="50"></rect>
+<rect class="fill-surface-container-high" height="45" width="8" x="255" y="70"></rect>
+<rect class="fill-surface-container-high" height="25" width="8" x="285" y="90"></rect>
+<rect class="fill-surface-container-high" height="70" width="8" x="315" y="45"></rect>
+<rect class="fill-surface-container-high" height="77" width="8" x="345" y="38"></rect>
+<rect class="fill-surface-container-high" height="63" width="8" x="375" y="52"></rect>
+<!-- HRV Polyline Curve (Electric Mint) -->
+<polyline class="text-primary-container" fill="none" points="19,70 49,68 79,52 109,58 139,40 169,45 199,35 229,55 259,48 289,32 319,30 349,38 379,28" stroke="currentColor" stroke-linecap="square" stroke-width="2.5"></polyline>
+<!-- Key Markers on the Curve -->
+<circle class="fill-surface-container-lowest stroke-primary-container" cx="289" cy="32" r="3" stroke-width="2"></circle>
+<circle class="fill-surface-container-lowest stroke-primary-container" cx="319" cy="30" r="3" stroke-width="2"></circle>
+<circle class="fill-primary-container animate-pulse" cx="379" cy="28" r="4.5"></circle>
+</svg>
+<div class="flex justify-between text-[9px] font-mono text-outline pt-2 border-t-0">
+<span>D-14 (HEAVY)</span>
+<span>D-10 (ACCUMULATION)</span>
+<span>D-5 (DELOAD)</span>
+<span class="text-primary-container font-semibold">TODAY (PRIME)</span>
+</div>
+</div>
+</div>
+<!-- Telemetry Diagnosis Footnote -->
+<div class="mt-space-sm bg-surface-container-lowest p-2.5 flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary-container shrink-0 mt-0.5">verified</span>
+<p class="font-body-md text-caption text-on-surface-variant leading-relaxed">
+                Supercompensation wave confirmed. Parasympathetic recovery rebounded +18% following 48h rest interval. Neuromuscular output primed for max-velocity recruitment.
+              </p>
+</div>
+</div>
+</div>
+<!-- SECTION C + D: Bottom Row Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- SECTION C: Nutrition Adherence & Body Composition (6 Cols) -->
+<div class="lg:col-span-6 bg-surface-container-low p-space-md shadow-md space-y-space-sm">
+<div class="flex items-center justify-between pb-2 bg-surface-container-low">
+<div>
+<span class="font-label-code text-label-code text-outline">// 03_BIO_FUEL_ADHERENCE</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">
+                  Metabolic Fuel &amp; Macro Balance
+                </h3>
+</div>
+<span class="font-metric-md text-metric-md text-primary font-mono font-bold">94% ADHERENCE</span>
+</div>
+<div class="grid grid-cols-3 gap-2 bg-surface-container-lowest p-space-md">
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">CALORIC TARGET</span>
+<div class="font-metric-md text-metric-md text-on-surface font-mono font-bold">3,450</div>
+<div class="w-full bg-surface-container-high h-1">
+<div class="bg-primary-container h-full" style="width: 95%;"></div>
+</div>
+<span class="font-label-code text-[9px] text-primary-fixed-dim">3,280 KCAL CONSUMED</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">PROTEIN QUOTA</span>
+<div class="font-metric-md text-metric-md text-primary font-mono font-bold">188g</div>
+<div class="w-full bg-surface-container-high h-1">
+<div class="bg-primary h-full" style="width: 100%;"></div>
+</div>
+<span class="font-label-code text-[9px] text-primary-fixed">2.9g / KG FFM</span>
+</div>
+<div class="space-y-1">
+<span class="font-label-code text-[10px] text-outline uppercase block">CARB LOADING</span>
+<div class="font-metric-md text-metric-md text-on-surface font-mono font-bold">465g</div>
+<div class="w-full bg-surface-container-high h-1">
+<div class="bg-primary-container h-full" style="width: 90%;"></div>
+</div>
+<span class="font-label-code text-[9px] text-on-surface-variant">HIGH GLYCOGEN INDEX</span>
+</div>
+</div>
+<!-- Hydration & Electrolytes Real-time Monitor -->
+<div class="bg-surface-container-lowest p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container-high flex items-center justify-center text-primary-fixed-dim">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+<div>
+<span class="font-body-md text-body-md text-on-surface font-medium block">Hydration Osmolality Status</span>
+<span class="font-label-code text-caption text-outline">Gatorade Gx Sweat Patch Sensor: 420mg Na+/L</span>
+</div>
+</div>
+<span class="bg-primary-container/20 text-primary-container font-label-code text-caption px-2 py-1 font-bold">
+                OPTIMAL (0.8% HYDRATION DRIFT)
+              </span>
+</div>
+</div>
+<!-- SECTION D: Coach's Running Directives & Pinned Protocols (6 Cols) -->
+<div class="lg:col-span-6 bg-surface-container-low p-space-md shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-2 bg-surface-container-low">
+<div>
+<span class="font-label-code text-label-code text-outline">// 04_COACH_DIRECTIVES</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">
+                    Running Directives &amp; Clinical Flags
+                  </h3>
+</div>
+<button class="text-primary-container hover:text-surface-tint font-label-code text-caption uppercase flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[14px]">add_circle</span>
+<span>New Note</span>
+</button>
+</div>
+<!-- Pinned Directives List -->
+<div class="space-y-2 mt-2">
+<!-- Note 1 (Pinned) -->
+<div class="bg-surface-container-lowest p-3 relative group">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="bg-primary-container text-on-primary-fixed font-label-code text-[9px] font-bold px-1.5 py-0.2 uppercase">
+                        PINNED DIRECTIVE
+                      </span>
+<span class="font-label-code text-[10px] text-outline">TODAY, 08:45 AM // VIKTOR KLINE</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-primary-fixed-dim">push_pin</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+                    "Maintain 100% velocity focus on pull acceleration today. If snatch pull bar speed drops beneath 1.22 m/s on Set 4, cut the 5th set immediately. We want pure neural recruitment, zero metabolic slop."
+                  </p>
+<div class="mt-2 flex items-center gap-2 font-label-code text-[10px] text-on-surface-variant">
+<span class="text-outline">TAGS:</span>
+<span class="bg-surface-container px-1 text-primary-fixed">#VELOCITY_GATE</span>
+<span class="bg-surface-container px-1 text-on-surface">#400M_NEURAL</span>
+</div>
+</div>
+<!-- Note 2 -->
+<div class="bg-surface-container-lowest p-3 relative">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="font-label-code text-[10px] text-outline">YESTERDAY, 18:20 PM // DR. ARIS THORNE (PHYSIO)</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-outline">healing</span>
+</div>
+<p class="font-body-md text-caption text-on-surface-variant leading-snug">
+                    Right Achilles tendon sheath thickness scan: 4.8mm (symmetric with left at 4.7mm). Post-isometric holds successfully eliminated morning stiffness. Cleared for unrestricted bounding.
+                  </p>
+</div>
+</div>
+</div>
+<!-- Quick Inline Directive Input Bar -->
+<div class="mt-space-sm pt-2 flex items-center gap-2">
+<input class="flex-1 bg-surface-container-lowest text-on-surface font-label-code text-caption px-3 py-2 placeholder:text-outline focus:outline-none focus:bg-surface-container transition-all" placeholder="Log instant directive or sync alert to Elena's wrist terminal..." type="text"/>
+<button class="bg-primary hover:bg-white text-on-primary font-label-code text-caption font-bold px-3 py-2 uppercase transition-all shadow-sm">
+                Transmit
+              </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface-variant":"#b9cbbc","tertiary-fixed-dim":"#9ed2b3","inverse-primary":"#006d40","secondary-fixed-dim":"#c0c7d3","surface-container-highest":"#333537","on-primary":"#00391f","surface-dim":"#121416","secondary-fixed":"#dce3ef","surface-variant":"#333537","on-tertiary-container":"#3b6c52","tertiary-fixed":"#b9efce","on-secondary":"#2a313a","on-tertiary-fixed-variant":"#1e5038","surface-container-low":"#1a1c1e","secondary-container":"#404751","on-tertiary":"#003822","on-primary-container":"#007143","primary":"#f4fff3","on-surface":"#e2e2e5","inverse-surface":"#e2e2e5","primary-fixed":"#56ffa8","on-secondary-container":"#afb6c1","background":"#121416","on-background":"#e2e2e5","surface":"#121416","surface-tint":"#00e38b","surface-container-lowest":"#0c0e10","error-container":"#93000a","inverse-on-surface":"#2f3133","outline":"#849587","on-error":"#690005","surface-container":"#1e2022","on-primary-fixed":"#002110","on-primary-fixed-variant":"#00522f","outline-variant":"#3b4a3f","primary-container":"#00ff9d","tertiary":"#f2fff4","on-tertiary-fixed":"#002112","error":"#ffb4ab","on-secondary-fixed":"#151c25","on-secondary-fixed-variant":"#404751","secondary":"#c0c7d3","surface-container-high":"#282a2c","primary-fixed-dim":"#00e38b","surface-bright":"#38393c","tertiary-container":"#b6ebca","on-error-container":"#ffdad6"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2.5rem","gutter":"1rem","gutter-mobile":"0.75rem","space-sm":"0.5rem","margin-mobile":"1rem","space-lg":"1.5rem","margin":"2rem","space-xs":"0.25rem","space-md":"1rem"},"fontFamily":{"headline-lg":["Space Grotesk"],"display-hero-mobile":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"],"metric-xl":["JetBrains Mono"],"headline-md":["Space Grotesk"],"display-hero":["Space Grotesk"],"caption":["JetBrains Mono"],"body-lg":["JetBrains Mono"],"label-code":["JetBrains Mono"],"metric-md":["JetBrains Mono"],"body-md":["JetBrains Mono"]},"fontSize":{"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.03em","fontWeight":"600"}],"display-hero-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"metric-xl":["44px",{"lineHeight":"48px","letterSpacing":"-0.05em","fontWeight":"700"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.02em","fontWeight":"500"}],"display-hero":["56px",{"lineHeight":"64px","letterSpacing":"-0.04em","fontWeight":"700"}],"caption":["11px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"400"}],"body-lg":["15px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}],"label-code":["10px",{"lineHeight":"12px","letterSpacing":"0.08em","fontWeight":"500"}],"metric-md":["24px",{"lineHeight":"28px","letterSpacing":"-0.03em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-container-lowest text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col justify-between select-none"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-md border-b border-outline-variant/30 flex items-center justify-between shrink-0"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #00ff9d - Font: spaceGrotesk - Mode: dark - Roundness: rounded-lg" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U2mFWXKlsI1ijXDumJNaCaxnp2_ESzjTy5hJmoUEj8-c0cEXcjoqObMXIYAuvRL-cWo_azNEXtW9cskW0ivVwrWyCHNf8pac8XjpLl3o5eFaW3VZKno6m0TBUX_82HkZ8J8WcofhnYqvr6l5hWP2vphcA2L0Y6CuNUv-XlJdGW5irVKeQA3_7GJ21c9olwGrAQ8UIsFWHG2aYO90Sba15tsr9boR1kFfRlPGRpEVCQ3PDAcqjf8QaEqVY"/><div class="flex flex-col"><span class="font-headline-md text-headline-md tracking-tight text-primary leading-none font-bold">COACHMINT</span><span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-widest mt-1">OS // COCKPIT v4.2</span></div></div><div class="h-2 w-2 rounded-full bg-primary-container animate-pulse"></div></div><div class="px-space-md pt-space-md pb-space-sm shrink-0"><div class="bg-surface-container-low border border-outline-variant/40 p-space-xs flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">terminal</span><span class="font-caption text-caption text-on-surface font-semibold tracking-wide uppercase">Coach Workspace</span></div><span class="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer hover:text-on-surface">unfold_more</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md"><div class="space-y-1"><div class="px-space-xs py-1 flex items-center justify-between"><span class="font-label-code text-label-code text-outline uppercase tracking-wider">// 01_CORE</span><span class="font-label-code text-label-code text-on-surface-variant/40">PRM</span></div><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed"><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="cockpit" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span class="font-body-md text-body-md">Cockpit</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="athletes" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span class="font-body-md text-body-md">Athletes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="studio" href="#"><span class="material-symbols-outlined text-[18px]">fitness_center</span><span class="font-body-md text-body-md">Studio</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-all bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed" data-path="fuel" href="#"><span class="material-symbols-outlined text-[18px]">nutrition</span><span class="font-body-md text-body-md">Fuel</span></a></nav></div><div class="space-y-1"><div class="px-space-xs py-1 flex items-center justify-between"><span class="font-label-code text-label-code text-outline uppercase tracking-wider">// 02_OPERATIONS</span><span class="font-label-code text-label-code text-on-surface-variant/40">SYS</span></div><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary-fixed font-semibold border-l-2 border-primary-fixed"><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="telemetry" href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span><span class="font-body-md text-body-md">Telemetry</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span class="font-body-md text-body-md">Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="dispatch" href="#"><span class="material-symbols-outlined text-[18px]">send</span><span class="font-body-md text-body-md">Dispatch</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all border-l-2 border-transparent" data-path="vault" href="#"><span class="material-symbols-outlined text-[18px]">folder_special</span><span class="font-body-md text-body-md">Vault</span></a></nav></div></div></div><div class="border-t border-outline-variant/30 bg-surface-container-low/60 p-space-md shrink-0 space-y-space-sm"><div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1.5 border border-outline-variant/30"><div class="flex items-center gap-space-xs"><span class="h-1.5 w-1.5 bg-primary-container"></span><span class="font-label-code text-label-code text-primary-fixed-dim uppercase">SYS.SYNC // OPTIMAL</span></div><span class="font-label-code text-label-code text-outline">12ms</span></div><div class="flex items-center justify-between pt-1"><div class="flex items-center gap-space-sm min-w-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/60 shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/><div class="flex flex-col min-w-0"><span class="font-body-md text-body-md text-on-surface font-semibold truncate leading-tight">Viktor Kline</span><span class="font-caption text-caption text-on-surface-variant truncate">High Performance Director</span></div></div><button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">settings</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-code text-label-code text-outline"><span class="text-on-surface-variant">COCKPIT</span><span>/</span><span class="text-primary-fixed-dim uppercase tracking-wider">LIVE TELEMETRY HUB</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 border border-outline-variant/40"><span class="h-1.5 w-1.5 bg-primary-container"></span><span class="font-label-code text-label-code text-on-surface uppercase">92% OPTIMAL READY</span></div></div><div class="flex-1 max-w-xl mx-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-full bg-surface-container-low border border-outline-variant/40 pl-10 pr-16 py-1.5 font-label-code text-label-code text-on-surface placeholder:text-outline focus:border-primary-container focus:outline-none transition-colors" placeholder="Cmd+K // Search athletes, protocols, bio-markers..." type="text"/><span class="absolute right-2.5 font-label-code text-[9px] bg-surface-container-high border border-outline-variant/40 px-1 py-0.5 text-outline">⌘K</span></div></div><div class="flex items-center gap-space-md"><button class="flex items-center gap-space-xs bg-primary-container text-on-primary-fixed px-space-md py-1.5 font-label-code text-label-code font-bold uppercase tracking-wider hover:bg-surface-tint transition-colors"><span class="material-symbols-outlined text-[16px]">add</span><span>Quick Prescribe</span></button><div class="flex items-center gap-space-sm border-l border-outline-variant/30 pl-space-md"><button class="relative p-1.5 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 h-1.5 w-1.5 bg-primary-container"></span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/50" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/></div></div></header><main class="w-full pt-16 bg-surface-container-lowest min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Athlete & Diagnostic Metadata Banner -->
+<section class="bg-surface-container-low px-space-lg py-space-md shadow-sm">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs font-label-code text-label-code text-on-surface-variant uppercase tracking-wider mb-1">
+<span class="text-primary-fixed-dim font-bold">// PROTOCOL_OS</span>
+<span>::</span>
+<span>NUTRITION ARCHITECTURE &amp; BIOMARKER SYNCHRONIZATION</span>
+<span>::</span>
+<span class="bg-surface-container px-space-xs text-primary-container">ACTIVE CYCLE // W3-D4</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Elena Rostova</h1>
+<span class="font-label-code text-label-code bg-surface-container-highest px-space-xs py-0.5 text-on-surface uppercase">OLY-71KG SPRINT</span>
+<span class="font-caption text-caption text-outline">LBM: 58.4kg</span>
+</div>
+</div>
+<!-- Quick Telemetry Chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 lg:pb-0">
+<div class="bg-surface-container px-space-sm py-1.5 flex flex-col min-w-[110px]">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">RPE SPRINT LOAD</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-primary">8.8</span>
+<span class="font-caption text-caption text-primary-fixed-dim">▲ HIGH</span>
+</div>
+</div>
+<div class="bg-surface-container px-space-sm py-1.5 flex flex-col min-w-[120px]">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">CORTISOL/DHEA</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-primary">0.014</span>
+<span class="font-caption text-caption text-on-surface-variant">OPT</span>
+</div>
+</div>
+<div class="bg-surface-container px-space-sm py-1.5 flex flex-col min-w-[110px]">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">GLYCOGEN STORE</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-primary">84%</span>
+<span class="font-caption text-caption text-primary-fixed-dim">POTENTIATED</span>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-fixed hover:bg-surface-tint px-space-md py-3 font-label-code text-label-code font-bold uppercase tracking-wider flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>CALIBRATE</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Macro Targets Dashboard & Linear Gauge Cluster -->
+<section class="bg-surface-container-lowest px-space-lg py-space-md">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-sm">
+<!-- Energy Target -->
+<div class="bg-surface-container p-space-md flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between font-label-code text-label-code text-on-surface-variant uppercase mb-1">
+<span>// 01_DAILY_ENERGY</span>
+<span class="text-primary-fixed-dim">94% OF TDEE</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-primary font-bold">3,450</span>
+<span class="font-body-md text-body-md text-outline">kcal</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">High potentiation protocol + 300 kcal sprint surplus</p>
+</div>
+<div class="mt-space-md">
+<div class="h-1 w-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 82%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1 font-label-code text-label-code text-outline">
+<span>CONSUMED: 2,830</span>
+<span>REM: 620</span>
+</div>
+</div>
+</div>
+<!-- Carbohydrates -->
+<div class="bg-surface-container p-space-md flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between font-label-code text-label-code text-on-surface-variant uppercase mb-1">
+<span>// 02_GLYCOGEN_CARBS</span>
+<span class="text-primary-fixed-dim">SUPERCOMP</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-primary font-bold">480</span>
+<span class="font-body-md text-body-md text-outline">g</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">High glycogen replenishment for sprint potentiation</p>
+</div>
+<div class="mt-space-md">
+<div class="h-1 w-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 78%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1 font-label-code text-label-code text-outline">
+<span>375g LOGGED</span>
+<span>+35g PENDING</span>
+</div>
+</div>
+</div>
+<!-- Protein -->
+<div class="bg-surface-container p-space-md flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between font-label-code text-label-code text-on-surface-variant uppercase mb-1">
+<span>// 03_PROTEIN_SYNTH</span>
+<span class="text-outline">3.0g / KG LBM</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-primary font-bold">210</span>
+<span class="font-body-md text-body-md text-outline">g</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Sustained amino acid pool for myofibrillar repair</p>
+</div>
+<div class="mt-space-md">
+<div class="h-1 w-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 90%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1 font-label-code text-label-code text-outline">
+<span>190g LOGGED</span>
+<span>20g LEFT</span>
+</div>
+</div>
+</div>
+<!-- Fats -->
+<div class="bg-surface-container p-space-md flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between font-label-code text-label-code text-on-surface-variant uppercase mb-1">
+<span>// 04_LIPOLYTIC_FATS</span>
+<span class="text-outline">MOD-LOW</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-primary font-bold">72</span>
+<span class="font-body-md text-body-md text-outline">g</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Hormonal homeostasis without delaying gastric transit</p>
+</div>
+<div class="mt-space-md">
+<div class="h-1 w-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 71%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1 font-label-code text-label-code text-outline">
+<span>51g LOGGED</span>
+<span>21g LEFT</span>
+</div>
+</div>
+</div>
+<!-- Hydration & Sodium -->
+<div class="bg-surface-container p-space-md flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between font-label-code text-label-code text-on-surface-variant uppercase mb-1">
+<span>// 05_HYDRATION_MATRIX</span>
+<span class="text-primary-fixed-dim">OSMOTIC OPT</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-primary font-bold">4.2</span>
+<span class="font-body-md text-body-md text-outline">L</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">1,200mg Sodium electrolyte replenishment formula</p>
+</div>
+<div class="mt-space-md">
+<div class="h-1 w-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between items-center mt-1 font-label-code text-label-code text-outline">
+<span>3.55 L LOGGED</span>
+<span>900mg Na+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Execution Layout: Daily Timeline (Left) + Contextual Telemetry Sidecar (Right) -->
+<section class="grid grid-cols-1 xl:grid-cols-12 gap-space-md px-space-lg pb-space-xl">
+<!-- Left 8-Columns: Detailed Timeline & Food Protocol Matrix -->
+<div class="xl:col-span-8 flex flex-col space-y-space-md">
+<!-- Section Controls Bar -->
+<div class="bg-surface-container-low p-space-sm flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-code text-label-code text-primary-fixed-dim font-bold uppercase tracking-wider">// SCHEDULE: MEAL ARCHITECTURE</span>
+<span class="font-caption text-caption text-outline">5 Windows Programmed</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="bg-surface-container hover:bg-surface-container-high px-space-sm py-1 font-label-code text-label-code text-on-surface transition-colors">COMPACT VIEW</button>
+<button class="bg-surface-container-highest px-space-sm py-1 font-label-code text-label-code text-primary-fixed-dim font-bold transition-colors">DIAGNOSTIC DETAILED</button>
+</div>
+</div>
+<!-- Protocol Timeline Item 01 -->
+<article class="bg-surface-container p-space-md flex flex-col md:flex-row gap-space-md shadow-sm">
+<div class="md:w-48 shrink-0 flex flex-col justify-between">
+<div>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-wider">WINDOW 01</span>
+<div class="font-headline-md text-headline-md text-primary mt-0.5">07:00 AM</div>
+<span class="font-caption text-caption text-outline uppercase block mt-1">MORNING AWAKENING</span>
+</div>
+<div class="bg-surface-container-low px-space-xs py-1 mt-2 inline-block">
+<span class="font-label-code text-label-code text-primary">FASTED HYDRATION</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between space-y-space-sm">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Electrolyte Priming Solution</h3>
+<span class="font-label-code text-label-code text-outline">0 kcal | 0g C | 0g P | 0g F</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              750ml sterile water + 500mg Himalayan pink salt + 200mg pure L-Theanine. Cortisol awakening curve attenuation.
+            </p>
+</div>
+<div class="bg-surface-container-lowest p-space-xs flex items-center justify-between">
+<span class="font-caption text-caption text-primary-fixed-dim font-medium">STATUS: Biometric check completed at 07:12 AM (HRV: 78ms)</span>
+<span class="font-label-code text-label-code text-outline uppercase">VERIFIED</span>
+</div>
+</div>
+</article>
+<!-- Protocol Timeline Item 02 -->
+<article class="bg-surface-container p-space-md flex flex-col md:flex-row gap-space-md shadow-sm">
+<div class="md:w-48 shrink-0 flex flex-col justify-between">
+<div>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-wider">WINDOW 02</span>
+<div class="font-headline-md text-headline-md text-primary mt-0.5">09:30 AM</div>
+<span class="font-caption text-caption text-outline uppercase block mt-1">PRE-TRAINING (T-90m)</span>
+</div>
+<div class="bg-surface-container-low px-space-xs py-1 mt-2 inline-block">
+<span class="font-label-code text-label-code text-primary">GLYCEMIC PRIMER</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between space-y-space-sm">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Complex Carbohydrate &amp; Myofibrillar Starter</h3>
+<div class="bg-surface-container-highest px-space-xs py-0.5 font-label-code text-label-code text-primary">
+                720 kcal // 110g C // 42g P // 12g F
+              </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              80g Organic Rolled Oats, 1 sliced medium banana, 35g Whey Isolate (Native Cold-Filtered), 5g Creatine Monohydrate.
+            </p>
+</div>
+<!-- Contingency / Substitution Rule Block -->
+<div class="bg-surface-container-lowest p-space-sm flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim shrink-0 mt-0.5">alt_route</span>
+<div class="flex-1">
+<span class="font-label-code text-label-code text-tertiary-fixed-dim uppercase font-bold">SUBSTITUTION PROTOCOL CONFIGURED:</span>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">
+                Substitute 75g Cream of Rice (hydrolyzed) if subjective gastrointestinal tension &gt; Level 2 is logged at morning check-in.
+              </p>
+</div>
+<span class="font-label-code text-label-code text-outline bg-surface-container px-space-xs py-0.5 uppercase">AUTO-TRIGGER</span>
+</div>
+</div>
+</article>
+<!-- Protocol Timeline Item 03 -->
+<article class="bg-surface-container p-space-md flex flex-col md:flex-row gap-space-md shadow-sm">
+<div class="md:w-48 shrink-0 flex flex-col justify-between">
+<div>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-wider">WINDOW 03</span>
+<div class="font-headline-md text-headline-md text-primary mt-0.5">12:00 PM</div>
+<span class="font-caption text-caption text-outline uppercase block mt-1">INTRA-WORKOUT MATRIX</span>
+</div>
+<div class="bg-surface-container-low px-space-xs py-1 mt-2 inline-block">
+<span class="font-label-code text-label-code text-primary-fixed-dim">POTENTIATION SIP</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between space-y-space-sm">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Osmolar Cyclic Dextrin Flow</h3>
+<div class="bg-surface-container-highest px-space-xs py-0.5 font-label-code text-label-code text-primary">
+                220 kcal // 45g C // 10g P // 0g F
+              </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              45g Highly Branched Cyclic Dextrin (Cluster Dextrin®) + 10g Essential Amino Acids (4:1:1 BCAA profile) dissolved in 1,000ml chilled water with 300mg sodium citrate.
+            </p>
+</div>
+<div class="bg-surface-container-lowest p-space-xs flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">Gastric clearance rate benchmark: 18-22 min. Zero osmotic distress reported.</span>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase">INGESTED // OPTIMAL</span>
+</div>
+</div>
+</article>
+<!-- Protocol Timeline Item 04 -->
+<article class="bg-surface-container p-space-md flex flex-col md:flex-row gap-space-md shadow-sm">
+<div class="md:w-48 shrink-0 flex flex-col justify-between">
+<div>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-wider">WINDOW 04</span>
+<div class="font-headline-md text-headline-md text-primary mt-0.5">02:00 PM</div>
+<span class="font-caption text-caption text-outline uppercase block mt-1">POST-LOAD WINDOW</span>
+</div>
+<div class="bg-surface-container-low px-space-xs py-1 mt-2 inline-block">
+<span class="font-label-code text-label-code text-primary">ANABOLIC ACCRETION</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between space-y-space-sm">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Whole Food Glycogen Reload</h3>
+<div class="bg-surface-container-highest px-space-xs py-0.5 font-label-code text-label-code text-primary">
+                820 kcal // 88g C // 52g P // 22g F
+              </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              220g Steamed Jasmine Rice, 180g Wild Alaskan Sockeye Salmon fillet, 120g grilled asparagus spears seasoned with Celtic sea salt and 5ml cold-pressed olive oil.
+            </p>
+</div>
+<div class="bg-surface-container-lowest p-space-xs flex items-center justify-between">
+<span class="font-caption text-caption text-outline">Bio-marker correlation: Postprandial insulin peak aligns with GLUT4 sensitivity window.</span>
+<span class="font-label-code text-label-code text-outline uppercase">COMPLETED</span>
+</div>
+</div>
+</article>
+<!-- Protocol Timeline Item 05 (Evening / Recovery) -->
+<article class="bg-surface-container p-space-md flex flex-col md:flex-row gap-space-md shadow-sm">
+<div class="md:w-48 shrink-0 flex flex-col justify-between">
+<div>
+<span class="font-label-code text-label-code text-primary-fixed-dim uppercase tracking-wider">WINDOW 05</span>
+<div class="font-headline-md text-headline-md text-primary mt-0.5">07:30 PM</div>
+<span class="font-caption text-caption text-outline uppercase block mt-1">EVENING RECOVERY</span>
+</div>
+<div class="bg-surface-container-low px-space-xs py-1 mt-2 inline-block">
+<span class="font-label-code text-label-code text-primary">SOMATOTROPIC PRIMING</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between space-y-space-sm">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Micellar Casein Matrix &amp; Sleep Neurochemistry</h3>
+<div class="bg-surface-container-highest px-space-xs py-0.5 font-label-code text-label-code text-primary">
+                390 kcal // 38g C // 35g P // 4g F
+              </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              250g 0% Icelandic Skyr / Greek Yogurt, 15g raw clover honey, 30ml Montmorency Tart Cherry Extract, 400mg Magnesium Bisglycinate chelate.
+            </p>
+</div>
+<div class="bg-surface-container-low p-space-xs flex items-center justify-between">
+<span class="font-caption text-caption text-primary-fixed-dim">Adjustment Alert: +35g carbohydrate allocation pending injection from Coach Kline.</span>
+<span class="font-label-code text-label-code text-primary uppercase">ACTION QUEUED</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Right 4-Columns (380px nominal): Contextual Comms & Telemetry Sidecar -->
+<div class="xl:col-span-4 flex flex-col space-y-space-md">
+<!-- Panel Header -->
+<div class="bg-surface-container-low p-space-sm flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary-container">forum</span>
+<span class="font-label-code text-label-code text-primary uppercase font-bold tracking-wider">DISPATCH // CONTEXTUAL COMMS</span>
+</div>
+<span class="font-label-code text-label-code text-primary-fixed-dim bg-surface-container px-space-xs">SYNCED W3</span>
+</div>
+<!-- Realtime Biometric Telemetry Strip -->
+<div class="bg-surface-container p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-code text-label-code text-outline uppercase tracking-wider">// REALTIME LAB STATUS</span>
+<span class="font-label-code text-label-code text-primary-fixed-dim">LIVE 12s AGO</span>
+</div>
+<div class="space-y-space-xs">
+<div class="bg-surface-container-lowest p-space-sm flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Serum Cortisol / DHEA</span>
+<span class="font-label-code text-label-code text-outline">Catabolic index</span>
+</div>
+<div class="text-right">
+<span class="font-metric-md text-metric-md text-primary font-bold">0.014</span>
+<span class="font-caption text-caption text-primary-fixed-dim block">Optimal Baseline</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-sm flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Bar Velocity (Set 4 Pulls)</span>
+<span class="font-label-code text-label-code text-outline">Olympic platform telemetry</span>
+</div>
+<div class="text-right">
+<span class="font-metric-md text-metric-md text-primary font-bold">1.28 m/s</span>
+<span class="font-caption text-caption text-primary-fixed-dim block">+0.04 m/s baseline</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-sm flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">Blood Glucose (CGM Continuous)</span>
+<span class="font-label-code text-label-code text-outline">Sub-cutaneous probe</span>
+</div>
+<div class="text-right">
+<span class="font-metric-md text-metric-md text-primary font-bold">96 mg/dL</span>
+<span class="font-caption text-caption text-outline block">Stable Post-Meal 4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Contextual Message Thread -->
+<div class="bg-surface-container p-space-md flex-1 flex flex-col justify-between shadow-sm space-y-space-md">
+<div class="space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">// ATHLETE THREAD: ELENA ROSTOVA</span>
+<span class="font-label-code text-label-code text-outline">SESSION: SPEED-W3</span>
+</div>
+<!-- Elena's Incoming Message -->
+<div class="bg-surface-container-lowest p-space-sm space-y-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md text-primary font-bold">Elena Rostova</span>
+<span class="font-label-code text-label-code text-outline uppercase">OLY-71</span>
+</div>
+<span class="font-label-code text-label-code text-outline">08:14 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+              “Felt light on my feet for the 90kg pulls. The cyclic dextrin intra-workout kept my fatigue flat across set 4.”
+            </p>
+</div>
+<!-- Coach Kline's Response -->
+<div class="bg-surface-container-low p-space-sm space-y-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md text-primary-fixed-dim font-bold">Viktor Kline</span>
+<span class="font-label-code text-label-code text-primary uppercase font-semibold">COACH [YOU]</span>
+</div>
+<span class="font-label-code text-label-code text-outline">08:22 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+              “Velocity data confirms it (1.28 m/s average). Increasing your evening carbohydrate allocation +35g to supercompensate for tomorrow's sprint mechanics.”
+            </p>
+<!-- Interactive Direct Macro Injection Module -->
+<div class="mt-space-sm bg-surface-container-lowest p-space-sm space-y-space-xs" id="macroActionBox">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-primary-fixed-dim font-bold uppercase">ATTACHED PROTOCOL ACTION</span>
+<span class="font-label-code text-label-code bg-surface-container px-space-xs py-0.5 text-primary">+35g CHO</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">
+                Append 35g organic basmati rice / honey to Window 05 (Evening Recovery).
+              </p>
+<div class="pt-1 flex items-center gap-space-xs">
+<button class="w-full bg-primary-container hover:bg-surface-tint text-on-primary-fixed font-label-code text-label-code font-bold py-2 uppercase tracking-wider transition-colors flex items-center justify-center gap-1" id="btnExecuteMacro" onclick="executeMacroPrescription()">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span id="btnExecuteText">EXECUTE MACRO INJECTION</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Voice Memo Player -->
+<div class="bg-surface-container-lowest p-space-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase font-medium">AUDIO MEMO // 0:24</span>
+<span class="font-label-code text-label-code text-outline">COACH MEMO</span>
+</div>
+<div class="flex items-center gap-space-sm mt-1">
+<button class="bg-surface-container-highest hover:bg-surface-container-high text-primary p-2 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+<!-- Soundwave visualizer bar SVG -->
+<div class="flex-1 flex items-center gap-1 h-6 px-1 bg-surface-container-low">
+<span class="w-1 bg-primary-container h-2"></span>
+<span class="w-1 bg-primary-container h-4"></span>
+<span class="w-1 bg-primary-container h-6"></span>
+<span class="w-1 bg-primary-container h-3"></span>
+<span class="w-1 bg-primary-container h-5"></span>
+<span class="w-1 bg-outline h-2"></span>
+<span class="w-1 bg-outline h-4"></span>
+<span class="w-1 bg-outline h-5"></span>
+<span class="w-1 bg-outline h-2"></span>
+<span class="w-1 bg-outline h-3"></span>
+<span class="w-1 bg-outline h-4"></span>
+<span class="w-1 bg-outline h-2"></span>
+<span class="w-1 bg-outline h-1"></span>
+</div>
+<span class="font-label-code text-label-code text-outline shrink-0">0:24</span>
+</div>
+</div>
+</div>
+<!-- Coach Quick Input Box -->
+<div class="bg-surface-container-low p-space-xs mt-space-md">
+<div class="flex items-center justify-between px-space-xs pb-1">
+<span class="font-label-code text-label-code text-outline uppercase">PROMPT / DISPATCH</span>
+<span class="font-label-code text-label-code text-primary-fixed-dim">CH: ENCRYPTED</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<input class="flex-1 bg-surface-container-lowest px-space-sm py-2 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" placeholder="Type prompt or prescription command (e.g. /macro +20g CHO)..." type="text"/>
+<button class="bg-surface-container-highest hover:bg-surface-container-high text-on-surface p-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+<button class="bg-primary-container text-on-primary-fixed hover:bg-surface-tint p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Inline Micro-interaction Script -->
+<script>
+    function executeMacroPrescription() {
+      const btn = document.getElementById('btnExecuteMacro');
+      const txt = document.getElementById('btnExecuteText');
+      const box = document.getElementById('macroActionBox');
+      
+      btn.disabled = true;
+      txt.innerText = 'EXECUTING SYNC...';
+      
+      setTimeout(() => {
+        txt.innerText = 'APPLIED TO WINDOW 05 (+35g CHO)';
+        btn.classList.remove('bg-primary-container', 'text-on-primary-fixed');
+        btn.classList.add('bg-surface-container-highest', 'text-primary-fixed-dim');
+        box.classList.add('bg-surface-container');
+      }, 400);
+    }
+  </script>
+</div></main></div></body></html>

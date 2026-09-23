@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121416;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#121416", "on-error-container": "#ffdad6", "surface-container-high": "#282a2c", "primary-fixed-dim": "#00e38b", "primary": "#f4fff3", "secondary": "#c0c7d3", "on-tertiary": "#003822", "on-error": "#690005", "surface-tint": "#00e38b", "outline-variant": "#3b4a3f", "on-primary-fixed": "#002110", "on-tertiary-fixed-variant": "#1e5038", "on-secondary-fixed": "#151c25", "error-container": "#93000a", "surface-dim": "#121416", "tertiary": "#f2fff4", "on-secondary-container": "#afb6c1", "on-tertiary-fixed": "#002112", "surface-bright": "#38393c", "on-tertiary-container": "#3b6c52", "on-primary-container": "#007143", "surface-container-highest": "#333537", "on-secondary-fixed-variant": "#404751", "secondary-fixed-dim": "#c0c7d3", "on-surface": "#e2e2e5", "tertiary-container": "#b6ebca", "primary-container": "#00ff9d", "inverse-primary": "#006d40", "surface-container": "#1e2022", "error": "#ffb4ab", "tertiary-fixed": "#b9efce", "outline": "#849587", "primary-fixed": "#56ffa8", "secondary-fixed": "#dce3ef", "surface-container-lowest": "#0c0e10", "on-surface-variant": "#b9cbbc", "surface-variant": "#333537", "surface-container-low": "#1a1c1e", "on-secondary": "#2a313a", "on-primary-fixed-variant": "#00522f", "inverse-surface": "#e2e2e5", "tertiary-fixed-dim": "#9ed2b3", "on-primary": "#00391f", "on-background": "#e2e2e5", "inverse-on-surface": "#2f3133", "background": "#121416", "secondary-container": "#404751" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "margin": "2rem", "space-md": "1rem", "gutter-mobile": "0.75rem", "space-xl": "2.5rem", "gutter": "1rem", "space-sm": "0.5rem" }, fontFamily: { "headline-md": ["Space Grotesk"], "metric-md": ["JetBrains Mono"], "metric-xl": ["JetBrains Mono"], "label-code": ["JetBrains Mono"], "display-hero-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-md": ["JetBrains Mono"], "headline-lg-mobile": ["Space Grotesk"], "caption": ["JetBrains Mono"], "display-hero": ["Space Grotesk"], "body-lg": ["JetBrains Mono"] }, fontSize: { "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "metric-md": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }], "label-code": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "500" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #00ff9d
+- Font: spaceGrotesk
+- Mode: dark
+- Roundness: rounded-lg
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U2mFWXKlsI1ijXDumJNaCaxnp2_ESzjTy5hJmoUEj8-c0cEXcjoqObMXIYAuvRL-cWo_azNEXtW9cskW0ivVwrWyCHNf8pac8XjpLl3o5eFaW3VZKno6m0TBUX_82HkZ8J8WcofhnYqvr6l5hWP2vphcA2L0Y6CuNUv-XlJdGW5irVKeQA3_7GJ21c9olwGrAQ8UIsFWHG2aYO90Sba15tsr9boR1kFfRlPGRpEVCQ3PDAcqjf8QaEqVY"/><div class="flex flex-col"><span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface leading-none uppercase">COACHMINT</span><div class="flex items-center gap-space-xs mt-0.5"><span class="w-1 h-1 bg-primary-container inline-block"></span><span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">READY // OPTIMAL 98%</span></div></div></div><div class="flex items-center gap-space-sm"><span class="hidden font-headline-md text-headline-md text-on-surface">Today</span><div class="relative flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/><span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-primary-container rounded-full ring-2 ring-surface"></span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full px-margin-mobile pb-space-xl">
+<!-- TOP TELEMETRY & GREETING -->
+<div class="flex flex-col pt-space-md pb-space-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-[0.2em]">THURSDAY, OCT 14 // CYCLE 04</span>
+<div class="flex items-center gap-space-xs">
+<span class="inline-block w-1.5 h-1.5 bg-primary-container animate-pulse"></span>
+<span class="font-label-code text-label-code text-primary-container font-semibold tracking-widest">LIVE SYNCED</span>
+</div>
+</div>
+<div class="mt-space-sm">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight font-bold">
+        Good morning, Elena.
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+        Your readiness is <span class="text-primary-container font-medium">peak (98%)</span>. Nervous system fully primed for bar acceleration.
+      </p>
+</div>
+</div>
+<!-- QUESTION 1: WHAT SHOULD I DO TODAY? -->
+<!-- HERO PROTOCOL CARD -->
+<div class="relative bg-surface-container-low rounded-lg p-space-lg overflow-hidden shadow-xl mb-space-md">
+<!-- Ambient Instrument Grid Graphic Accent -->
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary-container/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-code text-label-code text-primary-container uppercase tracking-wider font-semibold">
+        // 01_PRIMARY PROTOCOL
+      </span>
+<div class="flex items-center gap-1.5 bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px] text-primary-container">sensors</span>
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">VBT TETHER READY</span>
+</div>
+</div>
+<div class="space-y-1 mb-space-md">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">
+        Velocity Potentiation &amp; Speed-Strength
+      </h2>
+<p class="font-body-md text-body-md text-secondary">
+        55 MIN • 3 BLOCKS • CNS RECOVERY HIGH
+      </p>
+</div>
+<!-- Targeted Focus Blocks Row -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-lowest p-space-sm rounded mb-space-lg">
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-outline uppercase">BLOCK A</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5 truncate">Clean Pulls</span>
+<span class="font-caption text-caption text-primary-fixed-dim">0.95-1.05 m/s</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-outline uppercase">BLOCK B</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5 truncate">Speed Squat</span>
+<span class="font-caption text-caption text-secondary">5x3 @ 68%</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-outline uppercase">BLOCK C</span>
+<span class="font-body-md text-body-md text-on-surface font-medium mt-0.5 truncate">Oscillatory</span>
+<span class="font-caption text-caption text-secondary">Hamstring Iso</span>
+</div>
+</div>
+<!-- Immediate Call To Action Button -->
+<button class="w-full bg-primary-container active:bg-primary text-on-primary-fixed font-metric-md text-metric-md py-3.5 px-space-md flex items-center justify-between rounded group transition-all duration-150" id="start-session-trigger">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 bg-on-primary-fixed rounded-none animate-ping opacity-75"></span>
+<span class="tracking-tighter uppercase font-bold text-[18px]">START WORKOUT</span>
+</div>
+<div class="flex items-center gap-1 font-label-code text-label-code bg-on-primary-fixed/10 px-2 py-1 rounded">
+<span>TETH:01 CONNECTED</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</div>
+</button>
+</div>
+<!-- ATHLETE IN ACTION VISUAL ACCENT (Photo Context) -->
+<div class="relative w-full h-36 rounded-lg overflow-hidden bg-surface-container-low mb-space-md shadow-md">
+<img class="w-full h-full object-cover opacity-60" data-alt="Dark dramatic athletic gym environment, elite female weightlifter in mid-movement under a barbell with dynamic chalk dust suspended in the air, high contrast black and graphite interior with sharp directional lighting from high windows, cinematic high-performance coaching atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHcyDLeEofsWD0HeyiNIni9x89pKO9lycHQ5OWyYPtyELkhLkiWntlmIoq8b997O7i8Q2J_H-8N8n7zKQspuVutjp50oLtojzumJfbpEZ63nLSJi9GP3ZSk-EkxtVZ-l_4kootFA6bqa3bPBdZ5IqIMqNuc_OFubHaA7oFXEjv4zbhB3bBnhfZMpIOigfo1nzenyxVomNhqqVS6IPYY-HA1BvD2D2qO8XXOpPfujk79EPjhIvyJE92"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary-container">speed</span>
+<span class="font-label-code text-label-code text-on-surface uppercase tracking-wider font-semibold">TARGET VELOCITY CUTOFF: 10% DROP</span>
+</div>
+<span class="font-label-code text-label-code text-outline uppercase">ISO 04/12</span>
+</div>
+</div>
+<!-- QUESTION 2: IS THERE ANYTHING IMPORTANT FROM MY COACH? -->
+<!-- COACH BRIEFING & DISPATCH BOX -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md mb-space-md">
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img alt="Coach Viktor Kline" class="w-10 h-10 rounded object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/>
+<span class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-primary-container"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-[15px] font-bold text-on-surface leading-tight">Viktor Kline</span>
+<span class="font-label-code text-label-code text-primary-container px-1 py-0.2 bg-primary-container/10 rounded">HEAD COACH</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">07:42 AM // DIRECT DISPATCH</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[20px]">verified</span>
+</div>
+<!-- Message Body -->
+<div class="bg-surface-container p-space-sm rounded mb-space-sm">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+        “Your nervous system recovered ahead of schedule from Tuesday's volume. Green light for full bar velocity today. <strong class="text-primary-container font-semibold">Don't grind Set 4.</strong> If velocity dips past 0.88 m/s, rack it.”
+      </p>
+</div>
+<!-- Audio Memo Waveform Player -->
+<div class="bg-surface-container-lowest p-space-xs rounded flex items-center justify-between gap-space-sm mb-space-sm">
+<button class="w-8 h-8 rounded bg-surface-container-highest active:bg-primary-container active:text-on-primary-fixed text-primary-container flex items-center justify-center transition-colors" id="audio-play-btn">
+<span class="material-symbols-outlined text-[20px]" id="play-icon">play_arrow</span>
+</button>
+<!-- Interactive Waveform Visualizer -->
+<div class="flex-1 flex items-center gap-0.5 h-6 overflow-hidden px-1" id="waveform-container">
+<span class="w-1 h-2 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-4 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-3 bg-primary-container rounded-full"></span>
+<span class="w-1 h-5 bg-primary-container rounded-full"></span>
+<span class="w-1 h-6 bg-primary-container rounded-full"></span>
+<span class="w-1 h-4 bg-primary-container rounded-full"></span>
+<span class="w-1 h-5 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-3 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-4 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-6 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-2 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-3 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-5 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-3 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-2 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-4 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-5 bg-on-surface-variant/40 rounded-full"></span>
+<span class="w-1 h-3 bg-on-surface-variant/40 rounded-full"></span>
+</div>
+<div class="font-label-code text-label-code text-secondary pr-2">
+<span id="audio-time">0:00</span> / 0:24
+      </div>
+</div>
+<!-- Quick Feedback Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+<button class="coach-pill flex items-center gap-1.5 px-3 py-1.5 bg-surface-container active:bg-surface-container-high rounded text-on-surface hover:text-primary-container transition-colors">
+<span class="w-1.5 h-1.5 bg-primary-container inline-block"></span>
+<span class="font-label-code text-label-code uppercase tracking-wider font-semibold">Locked In</span>
+</button>
+<button class="coach-pill flex items-center gap-1.5 px-3 py-1.5 bg-surface-container active:bg-surface-container-high rounded text-on-surface hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[14px]">mic</span>
+<span class="font-label-code text-label-code uppercase tracking-wider font-semibold">Voice Note</span>
+</button>
+<button class="coach-pill flex items-center gap-1.5 px-3 py-1.5 bg-surface-container active:bg-surface-container-high rounded text-on-surface hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span class="font-label-code text-label-code uppercase tracking-wider font-semibold">Mod Request</span>
+</button>
+</div>
+</div>
+<!-- QUESTION 3: HOW AM I PROGRESSING & RECOVERING? -->
+<!-- BIOMETRIC SUPERCOMPENSATION GLANCE -->
+<div class="mb-space-md">
+<div class="flex items-center justify-between mb-space-xs px-1">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider font-medium">
+        // 02_PHYSIOLOGICAL READINESS
+      </span>
+<span class="font-label-code text-label-code text-primary-container">AUTONOMIC STATE: RECEPTIVE</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs">
+<!-- Metric 1: HRV -->
+<div class="bg-surface-container-low p-space-sm rounded shadow-sm flex flex-col justify-between">
+<span class="font-caption text-caption text-outline uppercase tracking-wider">HRV (RMSSD)</span>
+<div class="my-space-xs">
+<span class="font-metric-md text-metric-md text-on-surface font-bold leading-none">92</span>
+<span class="font-caption text-caption text-on-surface-variant ml-0.5">ms</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">trending_up</span>
+<span class="font-label-code text-label-code text-primary-container font-semibold">+12% vs 7D</span>
+</div>
+</div>
+<!-- Metric 2: RHR -->
+<div class="bg-surface-container-low p-space-sm rounded shadow-sm flex flex-col justify-between">
+<span class="font-caption text-caption text-outline uppercase tracking-wider">RESTING HR</span>
+<div class="my-space-xs">
+<span class="font-metric-md text-metric-md text-on-surface font-bold leading-none">48</span>
+<span class="font-caption text-caption text-on-surface-variant ml-0.5">bpm</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">check_circle</span>
+<span class="font-label-code text-label-code text-on-surface-variant">-2 BPM BASE</span>
+</div>
+</div>
+<!-- Metric 3: SLEEP -->
+<div class="bg-surface-container-low p-space-sm rounded shadow-sm flex flex-col justify-between">
+<span class="font-caption text-caption text-outline uppercase tracking-wider">SLEEP SCORE</span>
+<div class="my-space-xs">
+<span class="font-metric-md text-metric-md text-on-surface font-bold leading-none">8h 14m</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary-container"></span>
+<span class="font-label-code text-label-code text-primary-fixed-dim font-semibold">96% EFF</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TODAY'S FUEL & NUTRITION PULSE -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md mb-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider font-medium">// 03_METABOLIC PACE</span>
+</div>
+<div class="flex items-center gap-1 font-label-code text-label-code text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">
+<span>3,450 KCAL TARGET</span>
+</div>
+</div>
+<!-- Macro Telemetry Linear Meter -->
+<div class="mb-space-sm">
+<div class="flex justify-between items-baseline mb-1">
+<div class="flex items-baseline gap-1.5">
+<span class="font-metric-md text-[20px] text-on-surface font-bold">1,280</span>
+<span class="font-caption text-caption text-outline">KCAL CONSUMED</span>
+</div>
+<div class="font-caption text-caption text-secondary">
+<span class="text-on-surface font-semibold">2,170</span> REMAINING
+        </div>
+</div>
+<!-- Segmented Bar Indicator -->
+<div class="w-full h-2 bg-surface-container-lowest rounded-none flex overflow-hidden gap-[1px]">
+<div class="h-full bg-primary-container" style="width: 37%;"></div>
+<div class="h-full bg-primary-fixed-dim/40" style="width: 25%;"></div>
+<div class="h-full bg-surface-container-high flex-1"></div>
+</div>
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant mt-1.5">
+<span>PRO: 110g / 195g</span>
+<span>CHO: 165g / 480g</span>
+<span>FAT: 32g / 85g</span>
+</div>
+</div>
+<!-- Upcoming Window Alert Box -->
+<div class="bg-surface-container p-space-sm rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-highest flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-primary-fixed-dim font-bold uppercase tracking-wider">WINDOW 02 (T-90 MIN)</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Complex Carb &amp; Myofibrillar Starter</span>
+</div>
+</div>
+<button class="px-2.5 py-1 bg-surface-container-highest active:bg-primary-container active:text-on-primary-fixed text-on-surface font-label-code text-label-code rounded uppercase tracking-wider transition-colors">
+        LOG
+      </button>
+</div>
+</div>
+<!-- ATHLETIC FOCUS STATEMENT / DAILY DELIGHT NOTE -->
+<div class="p-space-md bg-surface-container-lowest rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">bolt</span>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+        “Fast off the pins. Precision before load.”
+      </p>
+</div>
+<span class="font-label-code text-label-code text-outline tracking-widest uppercase">MINT//SYS</span>
+</div>
+</div>
+<script>
+  (function() {
+    // Audio Player Simulation
+    const audioBtn = document.getElementById('audio-play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const timeDisplay = document.getElementById('audio-time');
+    const waveformBars = document.querySelectorAll('#waveform-container span');
+    
+    let isPlaying = false;
+    let timer = null;
+    let seconds = 0;
+
+    if (audioBtn) {
+      audioBtn.addEventListener('click', function() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+          playIcon.textContent = 'pause';
+          timer = setInterval(function() {
+            seconds++;
+            const formatted = '0:' + (seconds < 10 ? '0' : '') + seconds;
+            timeDisplay.textContent = formatted;
+            
+            // Jitter waveform
+            waveformBars.forEach(function(bar, idx) {
+              if (Math.random() > 0.4) {
+                bar.classList.toggle('bg-primary-container');
+                bar.classList.toggle('bg-on-surface-variant/40');
+              }
+            });
+
+            if (seconds >= 24) {
+              clearInterval(timer);
+              isPlaying = false;
+              playIcon.textContent = 'play_arrow';
+              seconds = 0;
+              timeDisplay.textContent = '0:24';
+            }
+          }, 1000);
+        } else {
+          playIcon.textContent = 'play_arrow';
+          clearInterval(timer);
+        }
+      });
+    }
+
+    // Coach Pill Feedback Micro-interaction
+    const pills = document.querySelectorAll('.coach-pill');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        const originalText = this.querySelector('span:last-child').textContent;
+        this.classList.add('bg-primary-container', 'text-on-primary-fixed');
+        this.classList.remove('bg-surface-container', 'text-on-surface');
+        this.querySelector('span:last-child').textContent = 'CONFIRMED';
+        
+        setTimeout(() => {
+          this.classList.remove('bg-primary-container', 'text-on-primary-fixed');
+          this.classList.add('bg-surface-container', 'text-on-surface');
+          this.querySelector('span:last-child').textContent = originalText;
+        }, 1800);
+      });
+    });
+
+    // Start Session Pulse Feedback
+    const startBtn = document.getElementById('start-session-trigger');
+    if (startBtn) {
+      startBtn.addEventListener('click', function() {
+        this.classList.add('scale-[0.98]');
+        setTimeout(() => this.classList.remove('scale-[0.98]'), 150);
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary-container font-semibold"><div class="flex items-center justify-around h-16 px-gutter-mobile"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs transition-colors text-primary-container font-semibold" data-path="today" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-code text-label-code tracking-wider uppercase">Today</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="train" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span class="font-label-code text-label-code tracking-wider uppercase">Train</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="fuel" href="#"><span class="material-symbols-outlined text-[20px]">nutrition</span><span class="font-label-code text-label-code tracking-wider uppercase">Fuel</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="progress" href="#"><span class="material-symbols-outlined text-[20px]">query_stats</span><span class="font-label-code text-label-code tracking-wider uppercase">Progress</span></a></div></nav></body></html>

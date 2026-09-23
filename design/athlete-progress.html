@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121416;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#121416", "on-error-container": "#ffdad6", "surface-container-high": "#282a2c", "primary-fixed-dim": "#00e38b", "primary": "#f4fff3", "secondary": "#c0c7d3", "on-tertiary": "#003822", "on-error": "#690005", "surface-tint": "#00e38b", "outline-variant": "#3b4a3f", "on-primary-fixed": "#002110", "on-tertiary-fixed-variant": "#1e5038", "on-secondary-fixed": "#151c25", "error-container": "#93000a", "surface-dim": "#121416", "tertiary": "#f2fff4", "on-secondary-container": "#afb6c1", "on-tertiary-fixed": "#002112", "surface-bright": "#38393c", "on-tertiary-container": "#3b6c52", "on-primary-container": "#007143", "surface-container-highest": "#333537", "on-secondary-fixed-variant": "#404751", "secondary-fixed-dim": "#c0c7d3", "on-surface": "#e2e2e5", "tertiary-container": "#b6ebca", "primary-container": "#00ff9d", "inverse-primary": "#006d40", "surface-container": "#1e2022", "error": "#ffb4ab", "tertiary-fixed": "#b9efce", "outline": "#849587", "primary-fixed": "#56ffa8", "secondary-fixed": "#dce3ef", "surface-container-lowest": "#0c0e10", "on-surface-variant": "#b9cbbc", "surface-variant": "#333537", "surface-container-low": "#1a1c1e", "on-secondary": "#2a313a", "on-primary-fixed-variant": "#00522f", "inverse-surface": "#e2e2e5", "tertiary-fixed-dim": "#9ed2b3", "on-primary": "#00391f", "on-background": "#e2e2e5", "inverse-on-surface": "#2f3133", "background": "#121416", "secondary-container": "#404751" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "margin": "2rem", "space-md": "1rem", "gutter-mobile": "0.75rem", "space-xl": "2.5rem", "gutter": "1rem", "space-sm": "0.5rem" }, fontFamily: { "headline-md": ["Space Grotesk"], "metric-md": ["JetBrains Mono"], "metric-xl": ["JetBrains Mono"], "label-code": ["JetBrains Mono"], "display-hero-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-md": ["JetBrains Mono"], "headline-lg-mobile": ["Space Grotesk"], "caption": ["JetBrains Mono"], "display-hero": ["Space Grotesk"], "body-lg": ["JetBrains Mono"] }, fontSize: { "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "metric-md": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }], "label-code": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "500" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #00ff9d
+- Font: spaceGrotesk
+- Mode: dark
+- Roundness: rounded-lg
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U2mFWXKlsI1ijXDumJNaCaxnp2_ESzjTy5hJmoUEj8-c0cEXcjoqObMXIYAuvRL-cWo_azNEXtW9cskW0ivVwrWyCHNf8pac8XjpLl3o5eFaW3VZKno6m0TBUX_82HkZ8J8WcofhnYqvr6l5hWP2vphcA2L0Y6CuNUv-XlJdGW5irVKeQA3_7GJ21c9olwGrAQ8UIsFWHG2aYO90Sba15tsr9boR1kFfRlPGRpEVCQ3PDAcqjf8QaEqVY"/><div class="flex flex-col"><span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface leading-none uppercase">COACHMINT</span><div class="flex items-center gap-space-xs mt-0.5"><span class="w-1 h-1 bg-primary-container inline-block"></span><span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">READY // OPTIMAL 98%</span></div></div></div><div class="flex items-center gap-space-sm"><span class="hidden font-headline-md text-headline-md text-on-surface">Progress</span><div class="relative flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VS8C30zrO0Rka03_ngb1s1LnlQCCrxLg3DLmEZjkJQkn5KVD_uoPT8FatwqN-iBBWJWL9nWEd0dd1Uh6WUQcFV4tSAxi2uvgO1CLBk4_y_mywYHD8Z8Uvu4RL_pm0jfVwls89CYpzsxY4mJNruzPAowwIXzXJwlm29oTEJPW1hJJhEeeox7t3A7hHsjRwQeuV7DYxT8LehgN5je-UV-1LUYIlcJNHHXqvBJke9L_UEF0OlxSYm9GVXfyI"/><span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-primary-container rounded-full ring-2 ring-surface"></span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full">
+<!-- Top Cockpit Segment Control -->
+<div class="px-margin-mobile pt-space-md pb-space-sm bg-surface">
+<div class="w-full bg-surface-container p-1 rounded flex items-center justify-between gap-1">
+<button class="flex-1 py-space-xs text-center font-label-code text-label-code uppercase tracking-wider bg-primary-container text-on-primary font-semibold transition-all" id="tab-trends">
+        [ 01_TRENDS &amp; TELEMETRY ]
+      </button>
+<button class="flex-1 py-space-xs text-center font-label-code text-label-code uppercase tracking-wider text-on-surface-variant hover:text-on-surface bg-transparent transition-all" id="tab-checkin">
+        [ 02_WEEKLY DOSSIER CHECK-IN ]
+      </button>
+</div>
+</div>
+<!-- Coach Connection Banner: Personal, high-calibre authority -->
+<div class="px-margin-mobile pt-space-xs pb-space-sm">
+<div class="bg-surface-container-low p-space-md rounded flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded overflow-hidden bg-surface-container-highest shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up confident studio portrait of an elite strength and conditioning head coach in dark technical sportswear, warm side-lighting, disciplined calm demeanor, neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXW3e80IH7qvMnfnfZA8cNEQElfkm5mHM1noqfzc-R2QVNP0rgtiaXOoKqspBgPcMCCmgtyB5b16jUq2PrIqsiREfbu3EBAZzXVeMNSbXWaWgURv2UAH4a8Qb6792UG-cejQz3sT7FMYmtDVxFO8mFDi_drB7Mk9p1KI6tVkaYyvvO_YusRUGCLvwGo3gDk4S8ZaYCj45J9ZVadsoD8Pu4cnuTcSLc3sFD_QiCD3yw8bdsXpvyBrrH"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-primary-container"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// SUPERVISING COACH</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight leading-none mt-0.5">Viktor S. Vance</span>
+<span class="font-caption text-caption text-primary-container mt-1">Review window open · Cycle 04 / Week 06</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase block">STATUS</span>
+<span class="font-caption text-caption text-on-surface bg-surface-container px-space-xs py-0.5 rounded font-mono">ON TRACK</span>
+</div>
+</div>
+</div>
+<!-- TAB VIEW 1: PERFORMANCE TRAJECTORY & TELEMETRY -->
+<div class="flex flex-col gap-space-md px-margin-mobile pb-space-lg" id="view-trends">
+<!-- Key Metric Ribbon -->
+<div class="grid grid-cols-2 gap-gutter-mobile">
+<div class="bg-surface-container p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider">// MCV PEAK</span>
+<span class="w-1.5 h-1.5 bg-primary-container"></span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl font-bold text-on-surface">1.30</span>
+<span class="font-caption text-caption text-on-surface-variant">m/s</span>
+</div>
+<span class="font-caption text-caption text-primary-container block">+16.1% vs baseline</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest overflow-hidden">
+<div class="bg-primary-container h-full w-[82%]"></div>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider">// ADHERENCE</span>
+<span class="w-1.5 h-1.5 bg-primary-container"></span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl font-bold text-on-surface">96.4</span>
+<span class="font-caption text-caption text-on-surface-variant">%</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant block">42 of 44 completed</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest overflow-hidden">
+<div class="bg-primary-container h-full w-[96.4%]"></div>
+</div>
+</div>
+</div>
+<!-- Chart: Mean Concentric Velocity 6-Week Progression -->
+<div class="bg-surface-container p-space-md rounded flex flex-col">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// VELOCITY_TRAJECTORY (6-WK POTENTIATION)</span>
+<span class="font-caption text-caption text-on-surface bg-surface-container-high px-space-xs py-0.5 rounded">82.5 KG BAR LOAD</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-md">
+        Mean concentric speed reflects clear neural adaptation. Peak velocity output achieved in session 38.
+      </p>
+<!-- Precision SVG Chart -->
+<div class="w-full h-44 bg-surface-container-lowest rounded p-space-sm relative flex flex-col justify-between">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code border-b border-surface-container-high pb-1">
+<span>1.35 m/s</span>
+<span>NEURAL TARGET // 1.25+</span>
+</div>
+<svg class="w-full h-28 overflow-visible" preserveaspectratio="none" viewbox="0 0 320 100">
+<!-- Background Grid Lines -->
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="320" y1="20" y2="20"></line>
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="320" y1="50" y2="50"></line>
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="320" y1="80" y2="80"></line>
+<!-- Baseline Reference Line -->
+<line stroke="#333537" stroke-width="1.5" x1="0" x2="320" y1="78" y2="78"></line>
+<!-- Velocity Line Path -->
+<path d="M 10,80 L 70,72 L 130,58 L 190,48 L 250,30 L 310,14" fill="none" stroke="#00ff9d" stroke-width="2.5"></path>
+<!-- Area Glow Gradient -->
+<polygon fill="#00ff9d" fill-opacity="0.08" points="10,80 70,72 130,58 190,48 250,30 310,14 310,95 10,95"></polygon>
+<!-- Data Points -->
+<rect fill="#121416" height="6" stroke="#00ff9d" stroke-width="1.5" width="6" x="7" y="77"></rect>
+<rect fill="#121416" height="6" stroke="#00ff9d" stroke-width="1.5" width="6" x="67" y="69"></rect>
+<rect fill="#121416" height="6" stroke="#00ff9d" stroke-width="1.5" width="6" x="127" y="55"></rect>
+<rect fill="#121416" height="6" stroke="#00ff9d" stroke-width="1.5" width="6" x="187" y="45"></rect>
+<rect fill="#121416" height="6" stroke="#00ff9d" stroke-width="1.5" width="6" x="247" y="27"></rect>
+<!-- Peak Callout Point -->
+<rect fill="#00ff9d" height="6" width="6" x="307" y="11"></rect>
+</svg>
+<div class="flex justify-between items-center text-on-surface-variant font-label-code text-label-code pt-1 border-t border-surface-container-high">
+<span>W01 (1.12)</span>
+<span>W02</span>
+<span>W03</span>
+<span>W04</span>
+<span>W05</span>
+<span class="text-primary-container font-semibold">W06 (1.30)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-space-sm bg-surface-container-high p-space-sm rounded">
+<span class="material-symbols-outlined text-primary-container text-[18px]">verified</span>
+<span class="font-caption text-caption text-on-surface">Viktor's Note: Bar speed validates shifting deadlifts to wave-loading next Monday.</span>
+</div>
+</div>
+<!-- Biometric Telemetry Trio -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// PHYSIOLOGICAL INTEGRITY</span>
+<span class="font-label-code text-label-code text-primary-container">AUTONOMOUS SYNC</span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm pt-space-xs">
+<div class="bg-surface-container-low p-space-sm rounded">
+<span class="font-caption text-caption text-on-surface-variant block">Body Mass</span>
+<span class="font-metric-md text-metric-md font-bold text-on-surface block mt-1">58.4</span>
+<span class="font-caption text-caption text-on-surface-variant">kg · stable</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded">
+<span class="font-caption text-caption text-on-surface-variant block">Lean Mass</span>
+<span class="font-metric-md text-metric-md font-bold text-on-surface block mt-1">11.8%</span>
+<span class="font-caption text-caption text-primary-container">DEXA anchor</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded">
+<span class="font-caption text-caption text-on-surface-variant block">Resting HR</span>
+<span class="font-metric-md text-metric-md font-bold text-primary-container block mt-1">48</span>
+<span class="font-caption text-caption text-on-surface-variant">bpm (-3 bpm)</span>
+</div>
+</div>
+</div>
+<!-- Next Focus Card -->
+<div class="bg-surface-container-high p-space-md rounded flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// IMMEDIATE FOCUS</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">Week 07 Neural Overload</span>
+<span class="font-caption text-caption text-on-surface-variant">Complete dossier check-in to confirm load schedule</span>
+</div>
+<button class="bg-primary-container text-on-primary p-space-sm rounded font-label-code text-label-code uppercase tracking-wider font-semibold" id="jump-to-checkin">
+        GO TO FORM
+      </button>
+</div>
+</div>
+<!-- TAB VIEW 2: CONVERSATIONAL WEEKLY CHECK-IN (ACTIVE) -->
+<div class="flex flex-col gap-space-md px-margin-mobile pb-space-lg hidden" id="view-checkin">
+<!-- Dossier Context Card -->
+<div class="bg-surface-container p-space-md rounded flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-primary-container animate-pulse"></span>
+<span class="font-label-code text-label-code text-primary-container uppercase tracking-widest">SUBMISSION WINDOW ACTIVE</span>
+</div>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-semibold text-on-surface mt-1">Week 06 Dossier</span>
+<span class="font-caption text-caption text-on-surface-variant">4 short diagnostic queries for Viktor &amp; physiotherapist</span>
+</div>
+<div class="w-10 h-10 bg-surface-container-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container">assignment_turned_in</span>
+</div>
+</div>
+<!-- Step 1: Energy & CNS Status Slider -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// 01_CNS_STATE &amp; VIGOR</span>
+<span class="font-label-code text-label-code text-primary-container uppercase" id="cns-label">LEVEL 9 // EXPLOSIVE</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+        How does your neuromuscular system feel entering the second wave?
+      </p>
+<!-- Interactive Slider -->
+<div class="pt-space-xs pb-space-xs">
+<input class="w-full accent-primary-container cursor-pointer bg-surface-container-highest h-2 rounded appearance-none" id="cns-slider" max="10" min="1" type="range" value="9"/>
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant pt-2">
+<span>1: Exhausted</span>
+<span>5: Nominal</span>
+<span class="text-primary-container">10: Fully Primed</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded font-caption text-caption text-on-surface" id="cns-descriptor">
+        "Explosive, ready for overload. Zero systemic hangover from Friday volume."
+      </div>
+</div>
+<!-- Step 2: Sleep & Latency Telemetry Verification -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// 02_RESTORATION TELEMETRY</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]">bedtime</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+        Autonomous watch telemetry captured. Confirm your perceived restorative depth:
+      </p>
+<div class="grid grid-cols-2 gap-gutter-mobile">
+<div class="bg-surface-container-low p-space-sm rounded flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">Sleep Duration Avg</span>
+<span class="font-metric-md text-metric-md font-bold text-on-surface mt-0.5">8h 14m</span>
+<span class="font-caption text-caption text-primary-container mt-1">+38m vs baseline</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">Deep Sleep Cycle</span>
+<span class="font-metric-md text-metric-md font-bold text-on-surface mt-0.5">2h 08m</span>
+<span class="font-caption text-caption text-primary-container mt-1">Elevated (Optimal)</span>
+</div>
+</div>
+<!-- Segmented confirmation toggle -->
+<div class="grid grid-cols-3 gap-1 bg-surface-container-lowest p-1 rounded mt-space-xs">
+<button class="py-1 text-center font-label-code text-label-code text-on-surface-variant hover:text-on-surface transition-colors" type="button">DEGRADED</button>
+<button class="py-1 text-center font-label-code text-label-code bg-surface-container-high text-on-surface font-semibold rounded transition-colors" type="button">RESTED</button>
+<button class="py-1 text-center font-label-code text-label-code bg-primary-container text-on-primary font-bold rounded" type="button">SUPER-CHARGED</button>
+</div>
+</div>
+<!-- Step 3: Tissue Readiness & Soreness Silhouette -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// 03_TISSUE READINESS MAP</span>
+<span class="font-caption text-caption text-error font-mono">1 ALERT FLAGGED</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+        Tap anatomical nodes displaying tenderness or restricted range of motion:
+      </p>
+<!-- Anatomical Interactive Canvas -->
+<div class="bg-surface-container-lowest p-space-md rounded flex items-center justify-between gap-space-md">
+<!-- SVG Silhouette with Interactive Nodes -->
+<div class="relative w-36 h-48 flex items-center justify-center shrink-0">
+<svg class="w-full h-full stroke-on-surface-variant fill-none opacity-40" viewbox="0 0 100 160">
+<!-- Stylized Human Body Silhouette -->
+<circle cx="50" cy="18" r="10" stroke-width="1.5"></circle>
+<path d="M 38,32 L 62,32 L 68,75 L 56,76 L 56,140 L 44,140 L 44,76 L 32,75 Z" stroke-width="1.5"></path>
+<path d="M 32,36 L 18,72 L 24,74 L 35,46" stroke-width="1.5"></path>
+<path d="M 68,36 L 82,72 L 76,74 L 65,46" stroke-width="1.5"></path>
+</svg>
+<!-- Interactive Points -->
+<!-- Shoulder Node (OK) -->
+<button class="absolute top-[28%] left-[24%] w-3.5 h-3.5 bg-surface-container border border-on-surface-variant rounded-full flex items-center justify-center" title="Left Shoulder: Clear" type="button">
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+</button>
+<!-- Hamstring Node (Flagged) -->
+<button class="absolute top-[62%] right-[34%] w-4 h-4 bg-error-container rounded-full flex items-center justify-center animate-pulse" id="flagged-node" title="Right Bicep Femoris" type="button">
+<span class="w-2 h-2 bg-error rounded-full"></span>
+</button>
+<!-- Lumbar Node (OK) -->
+<button class="absolute top-[48%] left-[45%] w-3.5 h-3.5 bg-surface-container border border-on-surface-variant rounded-full flex items-center justify-center" title="Lower Back: Clear" type="button">
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+</button>
+</div>
+<div class="flex-1 flex flex-col justify-between h-full">
+<div class="bg-surface-container-high p-space-sm rounded">
+<span class="font-label-code text-label-code text-error block uppercase tracking-wider font-semibold">// R. HAMSTRING TENSION</span>
+<span class="font-caption text-caption text-on-surface mt-1 block">
+              Flagged: Mild tightness at terminal eccentric hip hinge.
+            </span>
+</div>
+<div class="flex items-center gap-space-xs mt-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[16px]">medical_services</span>
+<span class="font-label-code text-label-code text-on-surface-variant">AUTO-COPIED TO PHYSIO</span>
+</div>
+<button class="mt-space-xs py-1 px-space-xs text-left bg-surface-container hover:bg-surface-container-high text-on-surface font-label-code text-label-code rounded" type="button">
+            + TAP TO ADD MORE NODES
+          </button>
+</div>
+</div>
+</div>
+<!-- Step 4: Kinetic Bar Path / Lift Video Slot -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// 04_KINEMATIC BAR PATH RECORD</span>
+<span class="font-label-code text-label-code text-primary-container">MP4 / 4K 60FPS</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+        Attach Set 2 Snatch Pull or heavy triple for Viktor's trajectory review:
+      </p>
+<div class="relative w-full h-36 bg-surface-container-lowest rounded overflow-hidden flex items-center justify-center group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:scale-105 transition-transform" data-alt="First-person athlete perspective of an Olympic lifting barbell loaded with calibrated bumper plates on a dark industrial rubber gym platform with minimalist neon alignment markers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0jL3uo9bHFgx9kDLynYrxDHTy8CD5wK26gJyCxxNUo15BhAOFPn4_ii9Rz7_H4ku1Qokvj8w-HlOPngXsA-iN4jOw17_JtJ83DgI8lIUxhqiPQDrdwIxoQ92Ov3wbbe1i8KIRclaXr3Pu_VaKaa98j6SRYeIp2hLN3Yo96I6QQahg2jDeXQJCIxostI3ZsCHbHeC7wXz3BSnNYywVSAOJRE9Po6QYqGjpE3MAeZ_Jo6m04N4ZaH_v"/>
+<div class="relative z-10 flex flex-col items-center gap-1 bg-surface-container-high/80 backdrop-blur-md px-space-md py-space-sm rounded">
+<span class="material-symbols-outlined text-primary-container text-[24px]">cloud_upload</span>
+<span class="font-label-code text-label-code text-on-surface font-semibold uppercase">UPLOAD_SET2_SNATCH_PULL.MOV</span>
+<span class="font-caption text-caption text-on-surface-variant">Auto-detects velocity via CoachMint CV</span>
+</div>
+</div>
+</div>
+<!-- Step 5: Direct Voice Memo or Micro-Note to Viktor -->
+<div class="bg-surface-container p-space-md rounded flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">// 05_ATHLETE DIALOGUE</span>
+<span class="font-caption text-caption text-on-surface-variant">DIRECT TO VIKTOR</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+        Any specific feel on this week's velocity gate?
+      </p>
+<!-- Voice Memo Pill Interaction -->
+<div class="flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded">
+<button class="w-10 h-10 bg-primary-container text-on-primary rounded flex items-center justify-center shrink-0 active:scale-95 transition-transform" id="voice-record-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<div class="flex-1 flex flex-col">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-on-surface font-semibold uppercase" id="voice-status">HOLD TO RECORD AUDIO NOTE</span>
+<span class="font-label-code text-label-code text-on-surface-variant" id="voice-time">00:00</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full mt-1.5 overflow-hidden flex gap-0.5">
+<div class="w-2 h-full bg-primary-container"></div>
+<div class="w-3 h-full bg-primary-container"></div>
+<div class="w-1 h-full bg-primary-container"></div>
+<div class="w-4 h-full bg-primary-container"></div>
+<div class="w-1.5 h-full bg-surface-container-highest flex-1"></div>
+</div>
+</div>
+</div>
+<!-- Quick Context Text Area -->
+<div class="w-full bg-surface-container-low rounded p-space-sm">
+<textarea class="w-full bg-transparent font-caption text-caption text-on-surface placeholder:text-on-surface-variant outline-none resize-none" placeholder="Optional text note: 'Felt slight hesitation off the floor during rep 3, otherwise smooth...'" rows="2"></textarea>
+</div>
+</div>
+<!-- Final Submission Action Card -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<button class="w-full py-space-md bg-primary-container text-on-primary hover:bg-primary font-headline-md text-headline-md font-bold uppercase tracking-wider rounded text-center transition-colors" id="submit-checkin" type="button">
+        TRANSMIT TO COACH VIKTOR
+      </button>
+<div class="flex items-center justify-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary-container">lock</span>
+<span class="font-label-code text-label-code uppercase tracking-widest">ENCRYPTED COCKPIT TELEMETRY // CONFIDENTIAL</span>
+</div>
+</div>
+</div>
+<!-- Verification Toast Modal (Appears upon submit) -->
+<div class="fixed inset-0 z-50 bg-surface/90 backdrop-blur-md flex items-center justify-center px-margin-mobile hidden" id="receipt-modal">
+<div class="bg-surface-container p-space-lg rounded max-w-sm w-full flex flex-col items-center text-center">
+<div class="w-14 h-14 bg-primary-container text-on-primary rounded flex items-center justify-center mb-space-sm">
+<span class="material-symbols-outlined text-[32px]">task_alt</span>
+</div>
+<span class="font-label-code text-label-code text-primary-container uppercase tracking-widest">// DOSSIER INGESTION SUCCESS</span>
+<h3 class="font-headline-md text-headline-md font-semibold text-on-surface mt-1">Week 06 Delivered</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">
+        Viktor has received your velocity curve, hamstring notification, and voice memo. Monday load adjustments will sync by 20:00.
+      </p>
+<div class="w-full bg-surface-container-low p-space-sm rounded my-space-md text-left font-label-code text-label-code">
+<div class="flex justify-between py-0.5">
+<span class="text-on-surface-variant">TRANSMISSION HASH:</span>
+<span class="text-on-surface">#06-VTC-982</span>
+</div>
+<div class="flex justify-between py-0.5">
+<span class="text-on-surface-variant">ESTIMATED FEEDBACK:</span>
+<span class="text-primary-container">TODAY, 18:30</span>
+</div>
+</div>
+<button class="w-full py-space-sm bg-surface-container-high text-on-surface font-label-code text-label-code uppercase tracking-wider font-semibold rounded hover:bg-surface-container-highest transition-colors" id="close-modal" type="button">
+        RETURN TO TELEMETRY
+      </button>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const tabTrends = document.getElementById('tab-trends');
+    const tabCheckin = document.getElementById('tab-checkin');
+    const viewTrends = document.getElementById('view-trends');
+    const viewCheckin = document.getElementById('view-checkin');
+    const jumpBtn = document.getElementById('jump-to-checkin');
+    const slider = document.getElementById('cns-slider');
+    const cnsLabel = document.getElementById('cns-label');
+    const cnsDesc = document.getElementById('cns-descriptor');
+    const voiceBtn = document.getElementById('voice-record-btn');
+    const voiceStatus = document.getElementById('voice-status');
+    const voiceTime = document.getElementById('voice-time');
+    const submitBtn = document.getElementById('submit-checkin');
+    const receiptModal = document.getElementById('receipt-modal');
+    const closeModal = document.getElementById('close-modal');
+
+    function switchTab(target) {
+      if (target === 'trends') {
+        tabTrends.classList.add('bg-primary-container', 'text-on-primary', 'font-semibold');
+        tabTrends.classList.remove('text-on-surface-variant', 'bg-transparent');
+        tabCheckin.classList.remove('bg-primary-container', 'text-on-primary', 'font-semibold');
+        tabCheckin.classList.add('text-on-surface-variant', 'bg-transparent');
+        viewTrends.classList.remove('hidden');
+        viewCheckin.classList.add('hidden');
+      } else {
+        tabCheckin.classList.add('bg-primary-container', 'text-on-primary', 'font-semibold');
+        tabCheckin.classList.remove('text-on-surface-variant', 'bg-transparent');
+        tabTrends.classList.remove('bg-primary-container', 'text-on-primary', 'font-semibold');
+        tabTrends.classList.add('text-on-surface-variant', 'bg-transparent');
+        viewCheckin.classList.remove('hidden');
+        viewTrends.classList.add('hidden');
+      }
+    }
+
+    if (tabTrends && tabCheckin) {
+      tabTrends.addEventListener('click', () => switchTab('trends'));
+      tabCheckin.addEventListener('click', () => switchTab('checkin'));
+    }
+
+    if (jumpBtn) {
+      jumpBtn.addEventListener('click', () => switchTab('checkin'));
+    }
+
+    // Dynamic CNS descriptions
+    const cnsMap = {
+      1: { label: "LEVEL 1 // CRITICAL FATIGUE", desc: "Systemic drain detected. Needs deload." },
+      2: { label: "LEVEL 2 // HEAVY DEPLETION", desc: "Sluggish bar speed anticipated." },
+      3: { label: "LEVEL 3 // MILD NEURAL DAMP", desc: "Accumulated fatigue noticeable." },
+      4: { label: "LEVEL 4 // BELOW BASELINE", desc: "Manageable with thorough warmup." },
+      5: { label: "LEVEL 5 // EQUILIBRIUM", desc: "Neutral state. Ready for standard protocol." },
+      6: { label: "LEVEL 6 // SOLID TONE", desc: "Responsive reflexes, stable focus." },
+      7: { label: "LEVEL 7 // HIGH REBOUND", desc: "Crisp movement patterns, rapid recovery." },
+      8: { label: "LEVEL 8 // POTENTIATED", desc: "Bar feels light in warmup sets." },
+      9: { label: "LEVEL 9 // EXPLOSIVE", desc: "Explosive, ready for overload. Zero systemic hangover from Friday volume." },
+      10: { label: "LEVEL 10 // PEAK NEURAL STATE", desc: "Optimal PR territory. Maximum recruitment capacity." }
+    };
+
+    if (slider) {
+      slider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        const entry = cnsMap[val] || cnsMap[9];
+        cnsLabel.textContent = entry.label;
+        cnsDesc.textContent = `"${entry.desc}"`;
+      });
+    }
+
+    // Voice memo simulation
+    let recording = false;
+    let recInterval;
+    let seconds = 0;
+
+    if (voiceBtn) {
+      voiceBtn.addEventListener('click', () => {
+        recording = !recording;
+        if (recording) {
+          voiceBtn.classList.remove('bg-primary-container');
+          voiceBtn.classList.add('bg-error', 'text-on-error');
+          voiceStatus.textContent = "RECORDING MEMO TO VIKTOR...";
+          voiceStatus.classList.add('text-error');
+          seconds = 0;
+          recInterval = setInterval(() => {
+            seconds++;
+            const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const secs = String(seconds % 60).padStart(2, '0');
+            voiceTime.textContent = `${mins}:${secs}`;
+          }, 1000);
+        } else {
+          clearInterval(recInterval);
+          voiceBtn.classList.add('bg-primary-container');
+          voiceBtn.classList.remove('bg-error', 'text-on-error');
+          voiceStatus.textContent = "MEMO ENCODED (READY TO SEND)";
+          voiceStatus.classList.remove('text-error');
+        }
+      });
+    }
+
+    // Submission flow
+    if (submitBtn && receiptModal && closeModal) {
+      submitBtn.addEventListener('click', () => {
+        receiptModal.classList.remove('hidden');
+      });
+
+      closeModal.addEventListener('click', () => {
+        receiptModal.classList.add('hidden');
+        switchTab('trends');
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary-container font-semibold"><div class="flex items-center justify-around h-16 px-gutter-mobile"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="today" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-code text-label-code tracking-wider uppercase">Today</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="train" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span class="font-label-code text-label-code tracking-wider uppercase">Train</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="fuel" href="#"><span class="material-symbols-outlined text-[20px]">nutrition</span><span class="font-label-code text-label-code tracking-wider uppercase">Fuel</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] gap-space-xs transition-colors text-primary-container font-semibold" data-path="progress" href="#"><span class="material-symbols-outlined text-[20px]">query_stats</span><span class="font-label-code text-label-code tracking-wider uppercase">Progress</span></a></div></nav></body></html>

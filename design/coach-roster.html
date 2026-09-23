@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121416;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary": "#2a313a", "on-surface-variant": "#b9cbbc", "tertiary-container": "#b6ebca", "on-primary": "#00391f", "on-tertiary": "#003822", "surface-bright": "#38393c", "primary": "#f4fff3", "on-error-container": "#ffdad6", "on-primary-fixed": "#002110", "secondary-fixed-dim": "#c0c7d3", "on-secondary-fixed": "#151c25", "outline": "#849587", "surface-container-low": "#1a1c1e", "primary-fixed": "#56ffa8", "tertiary-fixed-dim": "#9ed2b3", "error-container": "#93000a", "secondary-fixed": "#dce3ef", "outline-variant": "#3b4a3f", "primary-fixed-dim": "#00e38b", "surface-dim": "#121416", "inverse-primary": "#006d40", "surface-container": "#1e2022", "on-tertiary-container": "#3b6c52", "surface-container-highest": "#333537", "surface-tint": "#00e38b", "primary-container": "#00ff9d", "inverse-on-surface": "#2f3133", "surface-container-lowest": "#0c0e10", "on-secondary-container": "#afb6c1", "surface": "#121416", "surface-container-high": "#282a2c", "on-primary-container": "#007143", "secondary": "#c0c7d3", "tertiary": "#f2fff4", "on-error": "#690005", "secondary-container": "#404751", "on-primary-fixed-variant": "#00522f", "on-secondary-fixed-variant": "#404751", "on-surface": "#e2e2e5", "inverse-surface": "#e2e2e5", "surface-variant": "#333537", "background": "#121416", "on-tertiary-fixed": "#002112", "on-background": "#e2e2e5", "error": "#ffb4ab", "tertiary-fixed": "#b9efce", "on-tertiary-fixed-variant": "#1e5038" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2.5rem", "margin": "2rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem", "gutter-mobile": "0.75rem" }, fontFamily: { "metric-xl": ["JetBrains Mono"], "caption": ["JetBrains Mono"], "headline-lg-mobile": ["Space Grotesk"], "body-md": ["JetBrains Mono"], "display-hero": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-lg": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "metric-md": ["JetBrains Mono"], "display-hero-mobile": ["Space Grotesk"], "label-code": ["JetBrains Mono"] }, fontSize: { "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }], "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "metric-md": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-code": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs shrink-0"><img alt="COACHMINT Monogram Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UZFu9n1V3VTRuMcDgMOhbKR5rnCCDihDcfeU3WJ9RxkVkLd6_chBzHt1t52D4XLLgI53hHPr6uwDTGwOGGeWHkxwrN1OotDyOsqtSETQKoBB65Unav4ITk-qh9NrVIYLhil7SPxaAEfPYszzT7kaapCtGwrLtzsJZJj1JJlmxN45K1XU-yT18vJK4dx5QS9ybPXMTAQx_eLciSSm6tMbBijdW6RJAzUh__BsJ7c4Ebp1qIhmU3n5QqXRE"/><span class="hidden font-headline-md text-headline-md font-semibold tracking-tight text-on-surface">COACHMINT</span><span class="font-caption text-caption text-on-surface-variant font-medium uppercase tracking-wider px-space-xs hidden">Athletes Roster</span></div><div class="flex items-center p-0.5 bg-surface-container-highest rounded-full"><button class="min-h-[32px] px-space-sm rounded-full bg-primary-container text-on-primary-container font-caption text-caption font-semibold transition-all" type="button">Workspace</button><button class="min-h-[32px] px-space-sm rounded-full text-on-surface-variant hover:text-on-surface font-caption text-caption font-medium transition-all" type="button">Athlete</button></div><div class="flex items-center justify-end shrink-0"><button aria-label="Profile" class="min-w-[44px] min-h-[44px] flex items-center justify-center p-0.5 focus:outline-none" type="button"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnsYtba2TyO8etT-egOYJdkyFC2PvqPZeGz5t1BmUWC7MXz1Jm0dghP0oMBymZ7l5Sh6A94qsfkcCOzM_dgoahXtGdf5VzHfc8ziggU2JPjwwkL9DlEu5LCLf_AGnaHhjZ80scz0avv0ilwdsDcvD2GgUXEgZGnUhjZT-8symn3YcxN6SgdIzsS9kNS4tcmoyWJmlyU3frwzIB3SLKwDtwcn9nNWuc815tuMiY2ZMHKL3KClCVt5iH"/></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full px-gutter-mobile gap-space-md">
+<!-- Squad Telemetry Aggregate Strip -->
+<section class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider">LIVE TELEMETRY // SQUAD ROSTER</span>
+</div>
+<span class="font-caption text-caption text-primary-container font-medium">SYNCED 12s AGO</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs">
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">OPTIMAL</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-primary-container">92%</span>
+<span class="font-caption text-caption text-on-surface-variant">SQUAD</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-1.5 overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 92%;"></div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">ALERTS</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-error">03</span>
+<span class="font-caption text-caption text-on-surface-variant">PENDING</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-1.5 overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 38%;"></div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">ACTIVE</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-metric-md text-metric-md text-on-surface">18</span>
+<span class="font-caption text-caption text-on-surface-variant">BLOCKS</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-1.5 overflow-hidden">
+<div class="h-full bg-surface-bright rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Search & Filter Controls -->
+<section class="flex flex-col gap-space-sm">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-container-low rounded-lg pl-10 pr-space-md py-2.5 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-surface-container" id="rosterSearch" placeholder="Filter athlete, metric, or protocol ID..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">tune</span>
+</div>
+<!-- Filter Pills Carousel -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-0.5">
+<button class="filter-btn active shrink-0 px-3 py-1.5 rounded-full bg-primary-container text-on-primary font-caption text-caption font-semibold flex items-center gap-1.5 transition-colors" type="button">
+<span>All</span>
+<span class="bg-on-primary/20 px-1 rounded font-label-code text-[10px]">24</span>
+</button>
+<button class="filter-btn shrink-0 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-caption text-caption font-medium flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span>High Strain</span>
+<span class="bg-surface-container-highest px-1 rounded font-label-code text-[10px]">3</span>
+</button>
+<button class="filter-btn shrink-0 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-caption text-caption font-medium flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+<span>Recovery Deficit</span>
+<span class="bg-surface-container-highest px-1 rounded font-label-code text-[10px]">2</span>
+</button>
+<button class="filter-btn shrink-0 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-caption text-caption font-medium flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span>Peaking</span>
+<span class="bg-surface-container-highest px-1 rounded font-label-code text-[10px]">6</span>
+</button>
+</div>
+</section>
+<!-- Athletes List -->
+<section class="flex flex-col gap-space-sm" id="rosterList">
+<!-- Athlete 01: Elena Rostova -->
+<article class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-lg object-cover" data-alt="High contrast professional sports portrait of a female Olympic 400m sprinter with focused intense gaze, athletic build, dramatic side rim lighting in dark gym studio with subtle mint ambient tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxbdfKGjPh_zHXp8Elw2074fjrdM12dKI-2dsasIJcAMRKvT73KxbbHit2M675wQRbNSNuStGG2-IuzuSSv6Z9f95-_h3z-q0YOmryNICsobMngHM-N-W6KFs4O7uNx0_iM6Dci0-lMPJrN45THeoB1JGJWLv0wy5YNmtB6hAjBO7CHgFDmp3PouHtFG8GNPFEZrtz3bEeJuCkHrXuQAN4MKo6vdFIdG-w_QSdi-jl3NAcVYE1bdFn"/>
+<span class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary-container rounded-full flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-on-primary rounded-full"></span>
+</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Elena Rostova</h2>
+<span class="font-label-code text-label-code text-primary-container px-1 py-0.5 bg-on-primary rounded">PEAK</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant truncate">Olympic Track &amp; Field // 400m Dash</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-metric-md text-metric-md text-primary-container">98%</span>
+<span class="font-label-code text-label-code text-on-surface-variant">READINESS</span>
+</div>
+</div>
+<!-- Telemetry Sparkline & Metric Row -->
+<div class="bg-surface-container rounded-lg p-space-sm flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant">STRAIN INDEX</span>
+<div class="flex items-baseline gap-1">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">14.8</span>
+<span class="font-caption text-caption text-on-surface-variant">/ 20</span>
+</div>
+</div>
+<!-- Inline Sparkline SVG -->
+<div class="flex flex-col items-center">
+<span class="font-label-code text-label-code text-on-surface-variant mb-1">7D HRV TREND</span>
+<svg class="w-24 h-6 overflow-visible" fill="none" viewbox="0 0 100 24">
+<path d="M0 16 L15 14 L30 18 L45 9 L60 12 L75 6 L100 3" stroke="#00ff9d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<circle cx="100" cy="3" fill="#00ff9d" r="3"></circle>
+</svg>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-code text-label-code text-on-surface-variant">CNS STATUS</span>
+<span class="font-caption text-caption text-primary-container font-semibold">OPTIMAL (94ms)</span>
+</div>
+</div>
+<!-- Protocol Schedule Alert -->
+<div class="flex items-center justify-between bg-surface-container-high rounded-lg px-space-sm py-2">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-primary-container text-[18px]">bolt</span>
+<span class="font-caption text-caption text-on-surface truncate">Velocity Micro-Dosing // Blocks 1-4</span>
+</div>
+<span class="font-label-code text-label-code text-on-surface-variant shrink-0">TODAY 16:30</span>
+</div>
+<!-- Quick Action Controls -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>Adjust Load</span>
+</button>
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Direct Comms</span>
+</button>
+</div>
+</article>
+<!-- Athlete 02: Marcus Vance -->
+<article class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-lg object-cover" data-alt="High-contrast athletic portrait of a focused male hybrid decathlete, intense gaze with water droplets on forehead, dark minimalist training backdrop with graphite tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-iE44UYxJEVJJmwjjEXepyk0xQpSW7XNPu4cHqyOHlBIflMtVnUXQLD2ERHx9pNfivPjdIpv6c0rRk77dtBLz4efm7CF6o0lgvtyXXYgJSB2UPzi5lvhzn_eBsDLVfYfNcaLE-yCeVF4Nv_MCN-c2EXQKeDWnP1VCTDY9tnCyq0_vn9jg2047E9kDhal8GvqWm-FmivPk38lEQqTWvP4VNhxdfSVwjRu-jO55FajERvXA2bKwaK5T"/>
+<span class="absolute -bottom-1 -right-1 w-3 h-3 bg-error rounded-full flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-on-error rounded-full"></span>
+</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Marcus Vance</h2>
+<span class="font-label-code text-label-code text-error px-1 py-0.5 bg-error-container rounded">ALERT</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant truncate">Hybrid Decathlon // S&amp;C Focus</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-metric-md text-metric-md text-error">64%</span>
+<span class="font-label-code text-label-code text-on-surface-variant">READINESS</span>
+</div>
+</div>
+<!-- Fatigue Warning Pill -->
+<div class="bg-error-container/40 rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col min-w-0">
+<span class="font-caption text-caption text-error font-semibold">Neurological Fatigue Detected</span>
+<span class="font-body-md text-body-md text-on-error-container mt-0.5">HRV drop -22ms below baseline. Resting HR elevated +8 bpm across 48h window.</span>
+</div>
+</div>
+<!-- System Diagnostic Proposal -->
+<div class="bg-surface-container rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex flex-col min-w-0 pr-space-xs">
+<span class="font-label-code text-label-code text-on-surface-variant">PRESCRIPTION</span>
+<span class="font-caption text-caption text-on-surface font-medium truncate">Automatic Deload Recommended: -15% Volume</span>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-caption text-caption font-bold shrink-0 hover:bg-white transition-colors" type="button">
+          Apply Now
+        </button>
+</div>
+<!-- Quick Action Controls -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">query_stats</span>
+<span>Full Telemetry</span>
+</button>
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Notify Athlete</span>
+</button>
+</div>
+</article>
+<!-- Athlete 03: Liam Chen -->
+<article class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-lg object-cover" data-alt="Chiseled ultra-endurance male runner portrait, intense disciplined expression, sweat-streaked brow, dark cinematic background with subtle cyan rim light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_pWoSZAxCPzCU-0wan-s0Dyr4QYmqPKD5Xi_XtcFq9kKX56VN-iw-Ae7kJFqCckE7-YSDJ5z9zL7LrAMRQWLpE4IsU51V3gr62y1NnLUJQZDkU7X_HHMK5TFjUa8csdE5dgcyvrZA7XtUI7G78Bi4GDT96BLW9OndfbzGrIADx-c8X8eZ3GTz5kHcnVKBEPnUXn7xz9XqawMiietOvJ6koGmZ2mP8PratMSiMoI1YxcvXkWagvy2R"/>
+<span class="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary-fixed rounded-full flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-on-secondary rounded-full"></span>
+</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Liam Chen</h2>
+<span class="font-label-code text-label-code text-on-surface-variant px-1 py-0.5 bg-surface-container rounded">PHASE III</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant truncate">Ultra-Endurance // 100k Alpine</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-metric-md text-metric-md text-secondary-fixed">88%</span>
+<span class="font-label-code text-label-code text-on-surface-variant">READINESS</span>
+</div>
+</div>
+<!-- Telemetry Data Grid -->
+<div class="grid grid-cols-3 gap-space-xs">
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant">BLOCK</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface mt-0.5">Day 4/28</span>
+<span class="font-caption text-caption text-on-surface-variant">Aerobic Base</span>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant">NUTRITION</span>
+<span class="font-body-md text-body-md font-semibold text-primary-container mt-0.5">96%</span>
+<span class="font-caption text-caption text-on-surface-variant">Target Met</span>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant">GLYCOGEN</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface mt-0.5">Replete</span>
+<span class="font-caption text-caption text-on-surface-variant">On Track</span>
+</div>
+</div>
+<!-- Quick Action Controls -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span>Fuel Log</span>
+</button>
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>Base Plan</span>
+</button>
+</div>
+</article>
+<!-- Athlete 04: Sofia Al-Mansoor -->
+<article class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-lg object-cover" data-alt="Powerful female competitive powerlifter portrait, strong posture, chalk-dusted singlet, dark industrial training setting with sharp mechanical lighting and mint highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkBvAv9As2GU7rNHGxQH5o6TrRw928m0iUAF4DwoLn6QChiVMRVsWCQ4vUs9v7oSHon0F1vbj1djp2vZnWltksDhiar8uSQ08zJUwKwyE-gRjXfnwiWc7X0Dp7Qi2m5sRXw1DegZQqOEI3KYk9ZuZEMDMlGkuWtnHkVVCc-H5uNvRfxeC4TpQIAzsjCv2ruCEmEL1MdF8QHg7Z30YD0UGvy6TpMZdWs9rx1LKQ_5M2OZXbGl9HaYW6"/>
+<span class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary-container rounded-full flex items-center justify-center">
+<span class="w-1.5 h-1.5 bg-on-primary rounded-full"></span>
+</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface truncate">Sofia Al-Mansoor</h2>
+<span class="font-label-code text-label-code text-primary-container px-1 py-0.5 bg-on-primary rounded">PEAKING</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant truncate">Powerlifting 63kg Class // Target: 185kg Squat</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-metric-md text-metric-md text-primary-container">95%</span>
+<span class="font-label-code text-label-code text-on-surface-variant">READINESS</span>
+</div>
+</div>
+<!-- Dynamic Bar Path Velocity Visualization Strip -->
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary-container text-[16px]">speed</span>
+<span class="font-label-code text-label-code text-on-surface uppercase">Mean Concentric Velocity (VBT)</span>
+</div>
+<span class="font-caption text-caption text-primary-container font-semibold">0.68 m/s @ 170kg</span>
+</div>
+<!-- Custom SVG Bar Path Visualizer -->
+<div class="w-full h-12 bg-surface-container-highest rounded flex items-center justify-center relative overflow-hidden">
+<svg class="w-full h-full p-1" fill="none" viewbox="0 0 200 40">
+<!-- Reference horizontal guides -->
+<line stroke="#3b4a3f" stroke-dasharray="2 4" x1="0" x2="200" y1="20" y2="20"></line>
+<!-- Bar path tracking trajectory -->
+<path d="M20 35 C 30 28, 40 24, 60 22 C 80 20, 100 18, 120 16 C 140 14, 160 10, 180 6" stroke="#00ff9d" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Velocity milestones -->
+<circle cx="60" cy="22" fill="#00ff9d" r="3"></circle>
+<circle cx="120" cy="16" fill="#00ff9d" r="3"></circle>
+<circle cx="180" cy="6" fill="#f4fff3" r="4"></circle>
+</svg>
+<span class="absolute bottom-1 right-2 font-label-code text-[9px] text-on-surface-variant">DEVIATION: 1.2cm (TIGHT)</span>
+</div>
+</div>
+<!-- Quick Action Controls -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">show_chart</span>
+<span>View 3D Bar Path</span>
+</button>
+<button class="py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-caption text-caption font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">fitness_center</span>
+<span>Warmup Calculator</span>
+</button>
+</div>
+</article>
+</section>
+<!-- Sticky Cockpit Batch Action Floating Button -->
+<div class="sticky bottom-20 self-end z-40">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary-container text-on-primary font-caption text-caption font-bold shadow-lg hover:bg-white active:scale-95 transition-all" id="batchAdjustBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Batch Adjust Load (4)</span>
+</button>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+    // Tab filtering micro-interactions
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-primary-container', 'text-on-primary');
+          b.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+        });
+        btn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+        btn.classList.add('bg-primary-container', 'text-on-primary');
+      });
+    });
+
+    // Floating batch adjust trigger micro-feedback
+    const batchBtn = document.getElementById('batchAdjustBtn');
+    if (batchBtn) {
+      batchBtn.addEventListener('click', () => {
+        const originalText = batchBtn.innerHTML;
+        batchBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">sync</span><span>Recalculating Load...</span>';
+        setTimeout(() => {
+          batchBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Load Synchronized!</span>';
+          setTimeout(() => {
+            batchBtn.innerHTML = originalText;
+          }, 1800);
+        }, 900);
+      });
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl" data-active-classes="text-primary-container font-semibold"><div class="flex items-center justify-around h-16 px-gutter-mobile"><a aria-current="page" aria-label="Athletes Roster" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 transition-colors text-primary-container font-semibold" data-path="athletes-roster" href="#"><span class="material-symbols-outlined text-[22px]">groups</span><span class="font-label-code text-label-code uppercase tracking-wider">Roster</span></a><a aria-label="Program Studio" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="program-studio" href="#"><span class="material-symbols-outlined text-[22px]">terminal</span><span class="font-label-code text-label-code uppercase tracking-wider">Studio</span></a><a aria-label="Diagnostics" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="diagnostics-analytics" href="#"><span class="material-symbols-outlined text-[22px]">monitoring</span><span class="font-label-code text-label-code uppercase tracking-wider">Metrics</span></a><a aria-label="Operations" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="operations" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-code text-label-code uppercase tracking-wider">Ops</span></a></div></nav></body></html>
