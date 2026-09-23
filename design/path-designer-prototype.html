@@ -1,0 +1,211 @@
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoachMint — Challenge Path Designer (prototype)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F1114;--surface:#171A1F;--surface2:#1C2026;--line:#2E333B;--ink:#E9EAEE;--ink2:#A9AFBA;--acc:#C8F04B;--acc-deep:#8FB51E;--red:#DC2626;--amber:#C77414;--blue:#2563EB;--purple:#7C3AED;--green:#16A34A}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn','Inter',system-ui,sans-serif}
+body{background:var(--bg);color:var(--ink);overflow:hidden;height:100vh}
+#topbar{height:52px;display:flex;align-items:center;gap:9px;padding:0 14px;background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:5}
+#topbar .logo{font-weight:800;letter-spacing:-.03em;font-size:15px}
+#topbar .logo b{color:var(--acc)}
+.btn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--acc)}
+.btn.primary{background:var(--acc);color:#1A2205;border-color:var(--acc-deep)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger:hover{border-color:var(--red);color:#FCA5A5}
+#topbar .sp{flex:1}
+#topbar .hint{font-size:11px;color:var(--ink2)}
+#stage{position:relative;width:100vw;height:calc(100vh - 52px);overflow:hidden;background-image:radial-gradient(circle,#2A2F37 1.1px,transparent 1.1px);background-size:26px 26px;cursor:grab}
+#stage.panning{cursor:grabbing}
+#stage.linking{cursor:crosshair}
+#world{position:absolute;top:0;left:0;transform-origin:0 0}
+#edges{position:absolute;top:0;left:0;overflow:visible;pointer-events:none}
+#edges path{pointer-events:stroke;cursor:pointer}
+#panel{position:absolute;top:12px;right:12px;width:300px;background:rgba(23,26,31,.95);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:14px;z-index:4;box-shadow:0 18px 44px -14px rgba(0,0,0,.7)}
+#panel h3{font-size:13px;margin-bottom:2px}
+#panel .sub{font-size:11px;color:var(--ink2);margin-bottom:12px}
+.f{margin-bottom:10px}
+.f label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin-bottom:4px;font-weight:800}
+.f input,.f select,.f textarea{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:8px 10px;font-size:12.5px;font-family:inherit;outline:none}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--acc)}
+.f textarea{resize:vertical;min-height:52px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.kinds button{background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--ink2);font-size:10.5px;padding:7px 2px;cursor:pointer;font-weight:700}
+.kinds button.on{border-color:var(--acc);color:var(--acc);background:rgba(200,240,75,.08)}
+.node{position:absolute;width:212px;background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:11px 12px 10px;cursor:grab;user-select:none;box-shadow:0 8px 22px -10px rgba(0,0,0,.7);transition:box-shadow .15s,border-color .15s}
+.node.sel{border-color:var(--acc);box-shadow:0 0 0 3px rgba(200,240,75,.16),0 10px 26px -10px rgba(0,0,0,.8)}
+.node.dragging{cursor:grabbing;box-shadow:0 22px 44px -12px rgba(0,0,0,.85);z-index:9}
+.node .nh{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.node .ic{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:13px;flex:none}
+.node .nm{font-weight:700;font-size:12.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.node .kd{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);font-weight:800}
+.node .bd{font-size:11px;color:var(--ink2);line-height:1.45;margin-top:3px}
+.node .mt{margin-top:7px;display:flex;align-items:center;gap:6px}
+.pill{font-size:10px;padding:2.5px 8px;border-radius:99px;font-weight:700;background:var(--surface2);border:1px solid var(--line);color:var(--ink2)}
+.pill.acc{background:rgba(200,240,75,.12);border-color:#CDE694;color:var(--acc)}
+.port{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--ink2);transform:translate(-50%,-50%);cursor:crosshair;z-index:3}
+.port.out{right:-7px}
+.port.in{left:-7px}
+.port:hover{border-color:var(--acc);box-shadow:0 0 0 4px rgba(200,240,75,.2)}
+.lock{position:absolute;top:-8px;right:-8px;width:19px;height:19px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:10px;cursor:pointer;color:var(--ink2)}
+.lock.on{color:var(--amber);border-color:var(--amber)}
+.minimap{position:absolute;right:12px;bottom:12px;width:176px;height:112px;background:rgba(23,26,31,.92);border:1px solid var(--line);border-radius:11px;z-index:4;overflow:hidden}
+.minimap canvas{width:100%;height:100%;display:block;cursor:pointer}
+#toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{background:var(--surface);border:1px solid var(--acc);color:var(--ink);padding:9px 18px;border-radius:99px;font-size:12.5px;font-weight:600;box-shadow:0 12px 32px -10px rgba(0,0,0,.8);animation:up .25s ease}
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+.empty{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);text-align:center;color:var(--ink2);pointer-events:none}
+.empty .big{font-size:44px;margin-bottom:10px}
+.empty .t{font-size:14px;font-weight:700;color:var(--ink)}
+.empty .d{font-size:12px;margin-top:5px}
+</style></head><body>
+<div id="topbar">
+ <div class="logo">Coach<b>Mint</b> <span style="color:var(--ink2);font-weight:600;font-size:11px">· Challenge Path Designer</span></div>
+ <button class="btn" id="add">＋ نود</button>
+ <button class="btn danger" id="del">🗑 حذف</button>
+ <button class="btn" id="clear">پاک کردن</button>
+ <div class="sp"></div>
+ <span class="hint">درگ نود: جابه‌جایی · درگ از ○: رسم مسیر · کلیک روی خط: حذف</span>
+ <input id="zoom" type="range" min="50" max="160" value="100" style="width:90px;accent-color:var(--acc)">
+ <span id="zv" style="font-size:11px;color:var(--ink2);width:36px">100%</span>
+ <button class="btn" id="load">📂 بارگذاری</button>
+ <button class="btn primary" id="save">💾 ذخیره JSON</button>
+ <input id="file" type="file" accept=".json" style="display:none">
+</div>
+<div id="stage">
+ <div id="world"></div>
+ <svg id="edges"></svg>
+ <div class="empty" id="empty" style="display:none"><div class="big">🗺️</div><div class="t">بوم خالیه</div><div class="d">با «＋ نود» شروع کن</div></div>
+ <div id="panel"></div>
+ <div class="minimap"><canvas id="mini" width="176" height="112"></canvas></div>
+</div>
+<div id="toasts"></div>
+<script>
+const $=s=>document.querySelector(s);
+const KIND={start:{ic:'🏁',label:'شروع',c:'#2563EB',soft:'rgba(37,99,235,.14)'},
+  workout:{ic:'💪',label:'تمرین',c:'#C8F04B',soft:'rgba(200,240,75,.14)'},
+  rest:{ic:'🛌',label:'استراحت',c:'#C77414',soft:'rgba(199,116,20,.16)'},
+  habit:{ic:'🌱',label:'عادت',c:'#16A34A',soft:'rgba(22,163,74,.15)'},
+  milestone:{ic:'🏆',label:'نشان',c:'#7C3AED',soft:'rgba(124,58,237,.16)'},
+  branch:{ic:'⑂',label:'شرط',c:'#DC2626',soft:'rgba(220,38,38,.14)'},
+  end:{ic:'🎯',label:'هدف',c:'#8FB51E',soft:'rgba(143,181,30,.2)'}};
+const S={challengeName:'چالش ۳۰ روزه',nodes:[],edges:[],sel:null,pan:{x:60,y:50},zoom:1,linkFrom:null,drag:null,panDrag:null};
+const nid=()=>'n'+Math.random().toString(36).slice(2,8);
+const N=id=>S.nodes.find(n=>n.id===id);
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function seed(){S.nodes=[
+ {id:'A',kind:'start',x:60,y:220,title:'شروع چالش ۳۰ روزه',desc:'وزن ۸۵ کیلو · هدف ۷۸',dur:'روز ۰'},
+ {id:'B',kind:'workout',x:330,y:100,title:'هفته ۱ — فول‌بادی',desc:'۳ روز در هفته · ۴۵ دقیقه',dur:'روز ۱-۷'},
+ {id:'C',kind:'habit',x:330,y:350,title:'آب + خواب',desc:'۸ لیوان آب · ۷ ساعت خواب',dur:'هر روز'},
+ {id:'D',kind:'branch',x:610,y:220,title:'تست انرژی',desc:'اگر ۸+ جلسه انجام داد → مسیر سریع',dur:'روز ۷'},
+ {id:'E',kind:'workout',x:890,y:80,title:'هفته ۲-۳ — هایپرتروفی',desc:'۴ روز · تمرکز روی عضله',dur:'روز ۸-۲۱'},
+ {id:'F',kind:'workout',x:890,y:350,title:'مسیر حجم',desc:'حجم بالا · کالری +',dur:'روز ۸-۲۱'},
+ {id:'G',kind:'milestone',x:1170,y:220,title:'نشان ۲۰ تمرین',desc:'🔓 باز شد: روز شارژ',dur:'روز ۲۱'},
+ {id:'H',kind:'end',x:1440,y:220,title:'هدف ۷۸ کیلو',desc:'🎉 چالش کامل شد',dur:'روز ۳۰'}];
+ S.edges=[['A','B'],['A','C'],['B','D'],['C','D'],['D','E'],['D','F'],['E','G'],['F','G'],['G','H']];}
+function render(){
+ const w=$('#world');w.innerHTML='';
+ w.style.transform='translate('+S.pan.x+'px,'+S.pan.y+'px) scale('+S.zoom+')';
+ const svg=$('#edges');svg.setAttribute('width',4000);svg.setAttribute('height',3000);
+ let defs='<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5C6270"/></marker></defs>';
+ S.nodes.forEach(n=>{
+  const d=document.createElement('div');d.className='node'+(S.sel===n.id?' sel':'');d.dataset.id=n.id;
+  const k=KIND[n.kind]||KIND.workout;
+  d.style.left=n.x+'px';d.style.top=n.y+'px';
+  d.innerHTML='<div class="lock '+(n.locked?'on':'')+'" title="قفل کردن موقعیت">'+(n.locked?'🔒':'🔓')+'</div>'
+   +(n.kind!=='start'?'<div class="port in" data-in="'+n.id+'"></div>':'')
+   +(n.kind!=='end'?'<div class="port out" data-out="'+n.id+'"></div>':'')
+   +'<div class="nh"><div class="ic" style="background:'+k.soft+';color:'+k.c+'">'+k.ic+'</div>'
+   +'<div class="nm">'+esc(n.title)+'</div></div>'
+   +'<div class="kd">'+k.label+'</div>'
+   +(n.desc?'<div class="bd">'+esc(n.desc)+'</div>':'')
+   +'<div class="mt"><span class="pill acc">⏱ '+esc(n.dur||'')+'</span>'
+   +'<button class="btn" style="padding:3px 8px;font-size:10px" data-edit="'+n.id+'">ویرایش</button></div>';
+  w.appendChild(d);
+ });
+ let eh='';
+ S.edges.forEach(([a,b])=>{const A=N(a),B=N(b);if(!A||!B)return;
+  const x1=A.x+212,y1=A.y+58,x2=B.x,y2=B.y+58,dx=Math.max(40,Math.abs(x2-x1)/2);
+  eh+='<path data-e="'+a+'>'+b+'" d="M'+x1+','+y1+' C'+(x1+dx)+','+y1+' '+(x2-dx)+','+y2+' '+x2+','+y2+'" fill="none" stroke="#5C6270" stroke-width="2.2" marker-end="url(#ah)"/>';});
+ if(S.linkFrom){const A=N(S.linkFrom);if(A){const mx=S.mouseX||A.x+260,my=S.mouseY||A.y+58;
+   eh+='<path d="M'+(A.x+212)+','+(A.y+58)+' C'+(A.x+280)+','+(A.y+58)+' '+(mx-70)+','+my+' '+mx+','+my+'" stroke="#C8F04B" stroke-width="2.4" fill="none" stroke-dasharray="6 5"/>';}}
+ svg.innerHTML=defs+eh;
+ $('#stage').classList.toggle('linking',!!S.linkFrom);
+ $('#empty').style.display=S.nodes.length?'none':'block';
+ drawMini();
+}
+function drawMini(){const c=$('#mini');const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);
+ if(!S.nodes.length)return;
+ let mx=1e9,my=1e9, MX=-1e9,MY=-1e9;
+ S.nodes.forEach(n=>{mx=Math.min(mx,n.x);my=Math.min(my,n.y);MX=Math.max(MX,n.x);MY=Math.max(MY,n.y)});
+ const sc=Math.min((c.width-16)/(MX-mx+220),(c.height-12)/(MY-my+100));
+ x.strokeStyle='#2E333B';x.lineWidth=1.4;
+ S.edges.forEach(([a,b])=>{const A=N(a),B=N(b);if(!A||!B)return;x.beginPath();x.moveTo((A.x-mx+106)*sc+8,(A.y-my+45)*sc+6);x.lineTo((B.x-mx+106)*sc+8,(B.y-my+45)*sc+6);x.stroke();});
+ S.nodes.forEach(n=>{const k=KIND[n.kind];x.fillStyle=k.c;x.beginPath();x.arc((n.x-mx+106)*sc+8,(n.y-my+45)*sc+6,3.4,0,7);x.fill();});
+}
+/* interactions */
+$('#stage').addEventListener('pointerdown',e=>{
+ if(e.target.closest('.node')||e.target.closest('#panel')||e.target.closest('.minimap'))return;
+ S.sel=null;S.panDrag={x:e.clientX,y:e.clientY,px:S.pan.x,py:S.pan.y};$('#stage').classList.add('panning');render();loadPanel();});
+window.addEventListener('pointermove',e=>{
+ const r=$('#stage').getBoundingClientRect();S.mouseX=(e.clientX-r.left-S.pan.x)/S.zoom;S.mouseY=(e.clientY-r.top-S.pan.y)/S.zoom;
+ if(S.panDrag){S.pan.x=S.panDrag.px+(e.clientX-S.panDrag.x);S.pan.y=S.panDrag.py+(e.clientY-S.panDrag.y);render();}
+ if(S.drag){const n=N(S.drag.id);if(n&&!n.locked){n.x=S.drag.ox+(e.clientX-S.drag.x)/S.zoom;n.y=S.drag.oy+(e.clientY-S.drag.y)/S.zoom;render();}}
+ if(S.linkFrom)render();});
+window.addEventListener('pointerup',()=>{S.panDrag=null;S.drag=null;$('#stage').classList.remove('panning');document.querySelectorAll('.dragging').forEach(d=>d.classList.remove('dragging'));});
+document.addEventListener('click',e=>{
+ const out=e.target.closest('[data-out]');if(out){S.linkFrom=out.dataset.out;render();return;}
+ const inn=e.target.closest('[data-in]');if(inn&&S.linkFrom){
+  if(S.linkFrom===inn.dataset.in)toast('نمی‌شه به خودش وصل کنی');
+  else if(S.edges.some(([a,b])=>a===S.linkFrom&&b===inn.dataset.in))toast('این مسیر از قبل وجود داره');
+  else{S.edges.push([S.linkFrom,inn.dataset.in]);toast('✓ مسیر متصل شد');}
+  S.linkFrom=null;render();return;}
+ const ed=e.target.closest('path[data-e]');if(ed){const[a,b]=ed.dataset.e.split('>');
+  if(confirm('این مسیر حذف شود?')){S.edges=S.edges.filter(([x,y])=>!(x===a&&y===b));render();}return;}
+ const nd=e.target.closest('.node');if(nd&&!e.target.closest('.lock')&&!e.target.closest('[data-edit]')){S.sel=nd.dataset.id;render();loadPanel();}
+});
+document.addEventListener('pointerdown',e=>{
+ const nd=e.target.closest('.node');if(!nd||e.target.closest('.port')||e.target.closest('.lock')||e.target.closest('[data-edit]'))return;
+ const n=N(nd.dataset.id);if(!n)return;nd.classList.add('dragging');S.drag={id:n.id,x:e.clientX,y:e.clientY,ox:n.x,oy:n.y};});
+document.addEventListener('click',e=>{
+ const lk=e.target.closest('.lock');if(!lk)return;e.stopPropagation();
+ const n=N(lk.parentElement.dataset.id);if(n){n.locked=!n.locked;render();toast(n.locked?'🔒 موقعیت قفل شد':'🔓 قفل باز شد');return;}
+ const ed=e.target.closest('[data-edit]');if(!ed)return;e.stopPropagation();S.sel=ed.dataset.edit;render();loadPanel();$('#panel input')&&$('#panel input').focus();});
+$('#add').onclick=()=>{const id=nid();const p=S.sel?N(S.sel):null;
+ S.nodes.push({id,kind:curKind,x:p?p.x+260:120+(S.nodes.length%5)*30,y:p?p.y+50:140+(S.nodes.length%5)*40,title:'نود جدید',desc:'',dur:'روز ?'});
+ S.sel=id;render();loadPanel();toast('✓ نود اضافه شد');};
+let curKind='workout';
+$('#del').onclick=()=>{if(!S.sel)return toast('نودی انتخاب نشده');if(N(S.sel).kind==='start')return toast('نود شروع قابل حذف نیست');
+ S.nodes=S.nodes.filter(n=>n.id!==S.sel);S.edges=S.edges.filter(([a,b])=>a!==S.sel&&b!==S.sel);S.sel=null;render();loadPanel();toast('حذف شد');};
+$('#clear').onclick=()=>{if(confirm('همه پاک شود?')){S.nodes=[];S.edges=[];S.sel=null;render();loadPanel();}};
+$('#save').onclick=()=>{const blob=new Blob([JSON.stringify({v:1,name:$('#cname')?$('#cname').value:'challenge',nodes:S.nodes,edges:S.edges},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='challenge-path.json';a.click();toast('💾 ذخیره شد');};
+$('#load').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);S.nodes=d.nodes||[];S.edges=d.edges||[];S.sel=null;render();loadPanel();toast('بارگذاری شد ✓');}catch(err){toast('فایل نامعتبر');}};r.readAsText(f);};
+$('#zoom').oninput=e=>{S.zoom=Number(e.target.value)/100;$('#zv').textContent=Math.round(S.zoom*100)+'%';render();};
+function loadPanel(){const n=S.sel?N(S.sel):null;const p=$('#panel');
+ if(!n){p.innerHTML='<h3>چالش را بساز</h3><div class="sub">یک نود را انتخاب کن یا یکی اضافه کن — برای رسم مسیر، از نقطه ○ یک نود بکش به نقطه بعدی</div><div class="f"><label>نام چالش</label><input id="cname" value="چالش ۳۰ روزه"></div><div class="f"><label>نوع نود بعدی</label><div class="kinds" id="kinds">'+Object.entries(KIND).map(([k,v])=>'<button data-k="'+k+'" class="'+(k===curKind?'on':'')+'">'+v.ic+'<br>'+v.label+'</button>').join('')+'</div></div>';
+  const cn=$('#cname');if(cn)cn.oninput=e=>{S.challengeName=e.target.value;};
+  p.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{curKind=b.dataset.k;loadPanel();});return;}
+ const k=KIND[n.kind];
+ p.innerHTML='<div class="f"><label>نام چالش</label><input id="cname" value="'+esc(S.challengeName||'چالش ۳۰ روزه')+'"></div><h3>ویرایش نود</h3><div class="sub">'+k.ic+' '+k.label+'</div>'
+ +'<div class="f"><label>عنوان</label><input id="p_t" value="'+esc(n.title)+'"></div>'
+ +'<div class="f"><label>توضیح</label><textarea id="p_d">'+esc(n.desc||'')+'</textarea></div>'
+ +'<div class="f"><label>زمان‌بندی</label><input id="p_dur" value="'+esc(n.dur||'')+'"></div>'
+ +'<div class="f"><label>نوع نود</label><div class="kinds">'+Object.entries(KIND).map(([kk,v])=>'<button data-k="'+kk+'" class="'+(kk===n.kind?'on':'')+'">'+v.ic+'<br>'+v.label+'</button>').join('')+'</div></div>'
+ +'<div class="row2"><button class="btn danger" id="p_del" style="width:100%;justify-content:center">حذف نود</button><button class="btn" id="p_dup" style="width:100%;justify-content:center">کپی نود</button></div>';
+ $('#cname').oninput=e=>{S.challengeName=e.target.value;};
+ $('#p_t').oninput=e=>{n.title=e.target.value;render();};
+ $('#p_d').oninput=e=>{n.desc=e.target.value;render();};
+ $('#p_dur').oninput=e=>{n.dur=e.target.value;render();};
+ $('#p_del').onclick=()=>$('#del').click();
+ $('#p_dup').onclick=()=>{const id=nid();S.nodes.push({...n,id,x:n.x+40,y:n.y+40,title:n.title+' (کپی)'});S.sel=id;render();loadPanel();toast('کپی شد');};
+ p.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{n.kind=b.dataset.k;render();loadPanel();});
+}
+$('#mini').addEventListener('click',e=>{if(!S.nodes.length)return;const r=e.target.getBoundingClientRect();
+ let mx=1e9,my=1e9;S.nodes.forEach(n=>{mx=Math.min(mx,n.x);my=Math.min(my,n.y)});
+ S.pan.x=-(e.clientX-r.left-8)*4+200;S.pan.y=-(e.clientY-r.top-6)*4+150;render();toast('نمای کلی');});
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;$('#toasts').appendChild(d);setTimeout(()=>d.remove(),2200);}
+seed();render();loadPanel();
+</script></body></html>

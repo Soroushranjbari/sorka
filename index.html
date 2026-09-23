@@ -503,6 +503,9 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .wk-it{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer}
 .wk-it.done{color:var(--ink3)}.wk-it.done .ic{color:var(--green)}
 .wk-it.cur{background:var(--accent-soft);color:var(--accent-ink)}
+/* v18.39 — challenge journey path: the current node pulses */
+.ch-pulse{animation:chp 1.8s ease-in-out infinite}
+@keyframes chp{0%,100%{opacity:.55}50%{opacity:.1}}
 .excards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .exc{padding:16px;display:flex;flex-direction:column;gap:10px}
 .exc .nm{font-weight:700;font-size:14px}
@@ -534,6 +537,57 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .rolecard{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:start;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--surface);cursor:pointer;transition:.15s}
 .rolecard:hover{border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft);transform:translateY(-2px)}
 .rolecard b{font-size:15.5px}
+/* ================= v18.41 — CINEMATIC 3D WELCOME / UNLOCK (students) =================
+   Full-screen stage that replaces the demo picker for the join flow: glowing
+   padlock, orbiting rings, drifting particles, a perspective grid — and the
+   portal opens by DRAGGING THE HANDLE TO THE RIGHT. --ux (0..1, set by JS)
+   physically opens the shackle, spins the rings, intensifies the glow and
+   tilts the scene; past the threshold the lock bursts open (shockwave + zoom)
+   and the device binds to the profile. Always dark — a stage, not a form. */
+.unlock{position:fixed;inset:0;z-index:6;overflow:hidden;user-select:none;-webkit-user-select:none;background:radial-gradient(120% 90% at 50% 0%,#151A24 0%,#0A0B0E 55%,#050608 100%);perspective:1100px}
+.un-stage{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(calc(var(--ux,0)*9deg + var(--py,0deg)));transition:transform .18s ease-out}
+.un-glow{position:absolute;left:50%;top:32%;width:620px;height:620px;transform:translate(-50%,-50%) translateZ(-120px);background:radial-gradient(circle,rgba(200,240,75,.22),rgba(200,240,75,.05) 42%,transparent 68%);opacity:calc(.5 + var(--ux,0)*.5);pointer-events:none}
+.un-grid{position:absolute;inset-inline:-20%;bottom:-14%;height:48%;transform:translateZ(-170px) rotateX(62deg);background:linear-gradient(rgba(200,240,75,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(200,240,75,.14) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:linear-gradient(to top,#000 26%,transparent 90%);mask-image:linear-gradient(to top,#000 26%,transparent 90%);opacity:.55;pointer-events:none}
+.un-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--accent);animation:unfloat 7s ease-in-out infinite;pointer-events:none}
+@keyframes unfloat{0%,100%{transform:translate3d(0,0,var(--z,0px))}50%{transform:translate3d(16px,-30px,var(--z,0px))}}
+.un-rings{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(40px) rotate(calc(var(--ux,0)*140deg));pointer-events:none}
+.un-ring{position:absolute;left:50%;top:50%;border-radius:50%;border:1.5px solid rgba(200,240,75,.4);transform:translate(-50%,-50%)}
+.un-ring.r1{width:196px;height:196px;border-style:dashed;animation:unspin 14s linear infinite}
+.un-ring.r2{width:262px;height:262px;opacity:.55;animation:unspin 24s linear infinite reverse}
+.un-ring.r3{width:336px;height:336px;opacity:.28;animation:unspin 38s linear infinite}
+@keyframes unspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
+@keyframes unbob{0%,100%{margin-top:0}50%{margin-top:-9px}}
+.un-lock svg{filter:drop-shadow(0 0 22px rgba(200,240,75,.4)) drop-shadow(0 18px 40px rgba(0,0,0,.6))}
+.un-shackle{transform-origin:48px 80px;transform:rotate(calc(var(--ux,0)*-40deg)) translateY(calc(var(--ux,0)*-7px))}
+.un-shock{position:absolute;left:50%;top:31%;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;border:2.5px solid var(--accent);opacity:0;transform:translateZ(60px);pointer-events:none}
+.un-card{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%) translateZ(34px);width:min(440px,90vw);text-align:center}
+.un-sub{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.un-name{display:block;font-size:31px;font-weight:800;letter-spacing:-.02em;color:#F5F6F8;margin-top:8px}
+.un-meta{font-size:12.5px;color:#8A90A0;margin-top:7px;letter-spacing:.05em}
+.un-codebox{display:flex;gap:8px;margin:16px auto 0;max-width:360px}
+.un-codebox .inp{flex:1;background:rgba(255,255,255,.06);border-color:rgba(200,240,75,.3);color:#F5F6F8}
+.un-pick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.un-chip{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:99px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);color:#E8EAF0;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+.un-chip.on{border-color:var(--accent);background:rgba(200,240,75,.12);box-shadow:0 0 0 3px rgba(200,240,75,.12)}
+.un-track{position:absolute;left:50%;bottom:calc(11vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateZ(50px);width:min(400px,86vw);height:64px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(200,240,75,.25);overflow:hidden;touch-action:none;box-shadow:0 18px 50px -18px rgba(0,0,0,.8)}
+.un-fill{position:absolute;inset:0;width:calc(var(--ux,0)*100%);background:linear-gradient(90deg,rgba(200,240,75,.04),rgba(200,240,75,.3));border-radius:99px}
+.un-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.05em;color:#B9C0CE;opacity:calc(1 - var(--ux,0)*1.5);padding-inline-start:56px;pointer-events:none}
+.un-handle{position:absolute;top:5px;left:5px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:var(--accent-ink);display:grid;place-items:center;cursor:grab;touch-action:none;box-shadow:0 6px 24px -6px rgba(200,240,75,.65);transition:opacity .2s}
+.un-foot{position:absolute;left:50%;bottom:calc(3.5vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:16px;align-items:center;font-size:11.5px;color:#7A8291;white-space:nowrap}
+.un-foot .lnk{color:#A9B2C3}
+/* unlock burst: rings blow out, shackle springs open, shockwave expands, the
+   whole stage zooms toward the viewer, then the portal renders */
+.unlocked .un-ring{animation:unburst .85s ease-out forwards}
+@keyframes unburst{to{transform:translate(-50%,-50%) scale(2.7);opacity:0}}
+.unlocked .un-shackle{animation:unopen .6s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes unopen{45%{transform:rotate(-62deg) translateY(-13px)}100%{transform:rotate(-48deg) translateY(-10px)}}
+.unlocked .un-shock{animation:unshock .95s ease-out forwards}
+@keyframes unshock{0%{opacity:.95;transform:translateZ(60px) scale(1)}100%{opacity:0;transform:translateZ(60px) scale(7.5)}}
+.unlocked .un-stage{animation:unzoom .95s cubic-bezier(.5,0,.8,.4) forwards}
+@keyframes unzoom{55%{opacity:1}100%{transform:translateZ(380px);opacity:0}}
+.unlocked .un-track,.unlocked .un-card,.unlocked .un-lock{animation:none;opacity:0;transition:opacity .4s}
+@media (prefers-reduced-motion:reduce){.un-dot,.un-ring,.un-lock{animation:none}.un-stage{transition:none}}
 .ric{width:44px;height:44px;border-radius:13px;display:grid;place-items:center}
 .pickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 18px}
 .pickc{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer;font-size:11.5px;font-weight:600;color:var(--ink2);transition:.12s}
@@ -939,6 +993,10 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 <div id="app"></div><div id="modal-root"></div><div id="pal-root"></div><div id="ai-chat-root"></div>
 <div class="scrim" data-act="scrim"></div><div id="toasts"></div>
 
+<!-- v18.40 — Lucide icon bank (1500+ icons, ISC, v1.47.0). Self-hosted in
+     /vendor because the CSP allows 'self' scripts only — no CDN. ic() falls
+     back to the legacy P map if this file ever fails to load. -->
+<script src="vendor/lucide/lucide.min.js"></script>
 <script>
 /* ================= ICONS ================= */
 const P={
@@ -1000,8 +1058,27 @@ qr:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height=
 /* v18.36 — toolbox FAB icons: robot (AI), toolbox (coach tools), stopwatch */
 robot:'<rect x="4" y="8" width="16" height="12" rx="3"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9 17.5h.01M15 17.5h.01"/><path d="M2 12v4M22 12v4"/>',
 toolbox:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/><path d="M10 13v2h4v-2"/>',
-stopwatch:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/><path d="m19 5 1.5 1.5"/>'};
-const ic=(n,s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${P[n]||''}</svg>`;
+stopwatch:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/><path d="m19 5 1.5 1.5"/>',
+/* v18.39 — challenges */
+trophy:'<circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/>',
+flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>'};
+/* v18.40 — LUCIDE ICON BANK bridge. Resolution order in ic(): the legacy P
+   map above first (zero visual regression for existing screens), then
+   LUCIDE_ALIAS, then ANY Lucide kebab name — new UI can simply write
+   ic('heart-pulse') / ic('medal') / ic('crown') / ic('dumbbell-…'). */
+const LUCIDE_ALIAS={grid:'layout-grid',stack:'layers',note:'file-text',gear:'settings',help:'circle-help',edit:'pencil',trash:'trash-2',more:'ellipsis',camflip:'refresh-ccw',grip:'grip-vertical',cart:'shopping-cart',refresh:'rotate-cw',qr:'qr-code',robot:'bot',stopwatch:'timer',chart:'chart-line',chevL:'chevron-left',chevR:'chevron-right',chevD:'chevron-down',arrowR:'arrow-right'};
+const lucideSvg=name=>{
+  const L=window.lucide||window.Lucide;if(!L||!name)return '';
+  const pk=String(name).split('-').filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join('');
+  const node=(L.icons&&L.icons[pk])||L[pk];
+  if(!Array.isArray(node))return '';
+  return node.map(nd=>{const t=nd[0],a=nd[1]||{};
+    const at=Object.keys(a).map(k=>`${k}="${a[k]}"`).join(' ');
+    return `<${t}${at?' '+at:''}/>`}).join('');
+};
+const ic=(n,s=16)=>{
+  const inner=P[n]||lucideSvg(LUCIDE_ALIAS[n])||lucideSvg(n);
+  return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`};
 const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg>`;
 
 /* ================= I18N ================= */
@@ -1159,7 +1236,28 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
+'Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
+/* v18.38 — gamification */
+'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
+'First Workout':'اولین تمرین','10 Workouts':'۱۰ تمرین','25 Workouts':'۲۵ تمرین','50 Workouts':'۵۰ تمرین','100 Workouts':'۱۰۰ تمرین',
+'3-Day Streak':'۳ روز پیاپی','7-Day Streak':'۷ روز پیاپی','14-Day Streak':'۱۴ روز پیاپی','30-Day Streak':'۳۰ روز پیاپی','100-Day Streak':'۱۰۰ روز پیاپی',
+'10 Check-ins':'۱۰ چک‌این','Form Master':'استاد فرم','5 Measurements':'۵ اندازه‌گیری','Fuel Plan':'برنامه تغذیه',
+'Earn points: workout +10 · check-in +3 · form check +5 · each badge +20':'امتیاز بگیر: تمرین +۱۰ · چک‌این +۳ · بررسی فرم +۵ · هر نشان +۲۰',
+/* v18.38 — smart reminders */
+'Auto workout reminders':'یادآور خودکار تمرین','Message clients who skip 3+ days':'پیام خودکار به شاگردانی که ۳+ روز تمرین نکرده‌اند','Reminder sent':'یادآور ارسال شد','days':'روز','Coach reminder':'یادآور مربی','Auto reminder':'یادآور خودکار','Reminder from your coach':'یادآور از مربی‌ات',
+/* v18.38 — PDF export */
+'Export PDF':'خروجی PDF','Week PDF':'PDF هفته','Nutrition PDF':'PDF تغذیه','Export the full week as a printable PDF':'برنامه کامل هفته به‌صورت PDF قابل چاپ','Allow pop-ups to export':'برای خروجی گرفتن، پاپ‌آپ‌ها را مجاز کن',
+'Scan to connect':'برای اتصال اسکن کن','Open the CoachMint app — your plan syncs live':'اپ CoachMint را باز کن — برنامه‌ات زنده همگام می‌شود','Week Plan':'برنامه هفته',
+'Muscle Gain':'افزایش عضله','Fat Loss':'چربی‌سوزی','Strength':'قدرت','Endurance':'استقامت','Mobility':'تحرک','General Fitness':'تناسب اندام عمومی',
+'Printed from CoachMint on':'چاپ‌شده از CoachMint در',
+/* v18.39 — challenges */
+'Challenges':'چالش‌ها','New Challenge':'چالش جدید','Edit Challenge':'ویرایش چالش','Challenge name':'نام چالش','Challenge type':'نوع چالش','Challenge saved ✓':'چالش ذخیره شد ✓','Challenge ended':'چالش پایان یافت','Challenge deleted':'چالش حذف شد','End':'پایان','Ended':'پایان‌یافته','No active challenges':'چالش فعالی نیست','Design journeys, set targets, celebrate every win':'مسیر طراحی کن، هدف بگذار، هر موفقیت را جشن بگیر','Create a challenge and design the path your clients follow':'یک چالش بساز و مسیری که شاگردها طی می‌کنند را طراحی کن',
+'Target':'هدف','Streak goal':'هدف استریک','Habit':'عادت روزانه','Metric':'سنجه','Target value':'مقدار هدف','Unit':'واحد','workouts':'تمرین','check-ins':'چک‌این','Check-ins':'چک‌این‌ها','Manual log':'ثبت دستی','Form checks':'بررسی‌های فرم',
+'Start Date':'تاریخ شروع','Duration (days)':'مدت (روز)','Days left':'روز باقی‌مانده','Participants':'شرکت‌کننده‌ها','All active clients':'همه شاگردان فعال','No participants yet':'هنوز شرکت‌کننده‌ای نیست',
+'Reward':'جایزه','Badge emoji':'ایموجی نشان','Badge name':'نام نشان','Challenge Champion':'قهرمان چالش','Champion':'قهرمان','September Streak':'استریک سپتامبر','Keep your streak alive all month':'استریک‌ات را تمام ماه زنده نگه دار',
+'Path stages':'مراحل مسیر','the journey the client walks':'مسیری که شاگرد طی می‌کند','Add stage':'افزودن مرحله','Stage name':'نام مرحله','Journey preview':'پیش‌نمایش مسیر','Next stage':'مرحله بعدی','You are here':'اینجا هستی','Log progress':'ثبت پیشرفت',
+'Leaderboard':'جدول امتیازات','Average progress':'میانگین پیشرفت','On track':'در مسیر','Behind':'عقب‌تر از برنامه','Nudge':'یادآوری','Nudge sent ✓':'یادآوری ارسال شد ✓','You rank':'رتبه تو','completed the challenge':'چالش را به پایان رساند',
 'Video link':'لینک ویدیو','Watch video':'تماشای ویدیو','Paste a YouTube or GIF link — the client sees it on their workout':'لینک یوتیوب یا گیف را بچسبان — شاگرد آن را در تمرینش می‌بیند','GIF links play right inside the workout — other links open in a new tab.':'لینک گیف همان‌جا داخل تمرین پخش می‌شود — بقیه لینک‌ها در تب جدید باز می‌شوند.','Link must start with http':'لینک باید با http شروع شود','Video saved ✓':'ویدیو ذخیره شد ✓','Video removed':'ویدیو حذف شد','Search on YouTube':'جستجو در یوتیوب','Set a link once — it attaches to this exercise in every workout':'یک‌بار لینک را ذخیره کن — به این حرکت در همه‌ی تمرین‌ها می‌چسبد','Saved to video bank ✓':'در بانک ویدیو ذخیره شد ✓','Video bank':'بانک ویدیو','links':'لینک','with video':'با ویدیو','Import':'درون‌ریزی','Export':'برون‌بری','Import video links':'درون‌ریزی لینک‌های ویدیو','Export video links':'برون‌بری لینک‌های ویدیو','Paste lines like:':'خط‌هایی مثل این بچسبان:','Name | URL':'نام | لینک','One link per line: exercise name, then the URL — tab or | separated.':'هر خط یک لینک: اول نام حرکت، بعد لینک — با تب یا | جدا می‌شود.','links imported':'لینک وارد شد','not matched':'پیدا نشد','No links imported':'هیچ لینکی وارد نشد','Select and copy manually':'دستی انتخاب و کپی کن','Change photo':'تغییر عکس','Add photo':'افزودن عکس','Remove photo':'حذف عکس','Photo saved ✓':'عکس ذخیره شد ✓','Photo removed':'عکس حذف شد','Picture is too large':'عکس بیش از حد بزرگ است','Could not read the picture':'عکس خوانده نشد','Tap the photo to change it':'برای تغییر، روی عکس بزن',
 'Offline mode':'حالت آفلاین','Your coach':'مربی تو','Replies within':'پاسخ در حدود','Swaps':'جایگزین‌ها','Custom':'سفارشی','Favorite':'علاقه‌مندی','Exercise name':'نام حرکت','Custom exercise saved ✓':'حرکت سفارشی ذخیره شد ✓','Exercise deleted':'حرکت حذف شد','Custom exercises sync with your workspace and appear in the builder, templates and the client app':'حرکات سفارشی با فضای کاری‌ات همگام می‌شوند و در سازنده، قالب‌ها و اپ شاگرد ظاهر می‌شوند','Edit Meal Template':'ویرایش قالب وعده','Edit Plan Template':'ویرایش قالب برنامه','Template name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','No foods — macro-only template':'بدون غذا — قالب فقط ماکرو','Edit Note':'ویرایش یادداشت','Note updated ✓':'یادداشت به‌روزرسانی شد ✓','No snapshot stored for this entry (older record)':'برای این رکورد اسنپ‌شاتی ذخیره نشده (رکورد قدیمی)','File too large — max 300 KB per file':'فایل بزرگ است — حداکثر ۳۰۰ کیلوبایت','File storage is full — delete some files first':'حافظه فایل‌ها پر است — اول چند فایل حذف کن','File uploaded ✓':'فایل بارگذاری شد ✓','This file has no stored content (legacy entry)':'این فایل محتوای ذخیره‌شده ندارد (رکورد قدیمی)','Downloading':'در حال دانلود','No downloadable files yet':'فایل قابل دانلودی نیست','files':'فایل','Preview':'پیش‌نمایش','No inline preview for this type — download it instead':'پیش‌نمایش این نوع نیست — دانلودش کن','No files yet — upload the first document':'هنوز فایلی نیست — اولین سند را بارگذاری کن','Stored in your workspace and synced to every device — max 300 KB per file':'در فضای کاری‌ات ذخیره و بین همه دستگاه‌ها همگام می‌شود — حداکثر ۳۰۰ کیلوبایت','Photo attached':'عکس پیوست شد','Workspace exported ✓':'فضای کاری خروجی گرفته شد ✓','Current password is incorrect':'رمز فعلی اشتباه است','Password updated — other devices signed out':'رمز به‌روزرسانی شد — دستگاه‌های دیگر خارج شدند','Signed out of all other devices':'از همه دستگاه‌های دیگر خارج شدی','Enter your current password':'رمز فعلی را وارد کن','Changing your password signs out every other device':'با تغییر رمز، از همه دستگاه‌های دیگر خارج می‌شوی','this device':'این دستگاه','Name':'نام','Status':'وضعیت','Streak':'زنجیره','Done':'تمام','Connect a client':'اتصال شاگرد','Every client gets a personal code (Clients → copy icon). They enter it on the login screen and their device binds to your workspace instantly.':'هر شاگرد یک کد اختصاصی می‌گیرد (شاگردها → آیکن کپی). کد را در صفحه ورود وارد می‌کند و دستگاهش فوراً به فضای کاری تو وصل می‌شود.','Publish a workout':'انتشار تمرین','Build it in the Workout Builder, save it to the client — it appears on their phone the moment you save.':'در سازنده تمرین بساز و برای شاگرد ذخیره کن — همان لحظه روی گوشی‌اش ظاهر می‌شود.',"Nutrition plans":'برنامه‌های تغذیه',"The client sees today's meals, targets and your food swaps in their Nutrition tab.":'شاگرد وعده‌های امروز، اهداف و جایگزین‌های غذا را در تب تغذیه می‌بیند.','Log measurements and approve progress photos — charts update for both of you.':'اندازه‌گیری‌ها را ثبت کن و عکس‌های پیشرفت را تأیید کن — نمودارها برای هر دو به‌روز می‌شوند.','Drafts workouts, analyzes clients and writes your weekly report — you always decide before anything is sent.':'تمرین پیش‌نویس می‌کند، شاگردها را تحلیل می‌کند و گزارش هفتگی می‌نویسد — همیشه قبل از ارسال، تصمیم با توست.','Data syncs live across every signed-in device — offline edits merge automatically':'داده‌ها بین همه دستگاه‌های واردشده زنده همگام می‌شوند — ویرایش‌های آفلاین خودکار ادغام می‌شوند',
 };
@@ -1177,7 +1275,7 @@ function applyLang(){
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
 const PREFS_KEY='co-prefs';
-const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',remind:true,
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
   wk:{rpe:true,adv:true,dup:true,rest:'120'},
   priv:{own:true,photos:true,others:false,consent:true},
@@ -1248,15 +1346,19 @@ function applyTpl(){
 }
 
 /* ================= DATA ================= */
+/* v18.38 — __iso(n) = LOCAL date (YYYY-MM-DD) n days from now; the demo
+   clients' lastDone uses it so the day-streak engine stays consistent in any
+   timezone (toISOString would be UTC and reset streaks ahead of UTC). */
+const __iso=(off)=>new Date(Date.now()+off*864e5).toLocaleDateString('en-CA');
 const CLIENTS=[
-{id:1,name:'Ali Rezaei',goal:'Muscle Gain',weight:76.4,prog:'Hypertrophy — Week 6',week:6,next:'Today · 09:00',status:'Active',freq:'4x / week',streak:9,done:41,missed:3,last:'Yesterday',nextW:'Push A · Tomorrow 09:00',h:176,bf:14.2,email:'ali.rezaei@mail.com'},
-{id:2,name:'Sara Ahmadi',goal:'Fat Loss',weight:64.1,prog:'Cutting — Week 3',week:3,next:'Today · 11:00',status:'Active',freq:'3x / week',streak:4,done:11,missed:1,last:'2 days ago',nextW:'Full Body B · Today 11:00',h:165,bf:24.6,email:'sara.a@mail.com'},
-{id:3,name:'Mohammad Karimi',goal:'Strength',weight:91.2,prog:'Strength 5×5 — Week 8',week:8,next:'Today · 14:30',status:'Active',freq:'5x / week',streak:15,done:63,missed:2,last:'Yesterday',nextW:'Leg A · Today 14:30',h:184,bf:17.9,email:'m.karimi@mail.com'},
-{id:4,name:'Neda Hosseini',goal:'Muscle Gain',weight:58.9,prog:'Hypertrophy — Week 2',week:2,next:'Tomorrow · 17:00',status:'Active',freq:'4x / week',streak:3,done:7,missed:0,last:'3 days ago',nextW:'Pull A · Tomorrow 17:00',h:168,bf:21.3,email:'neda.h@mail.com'},
-{id:5,name:'Reza Moradi',goal:'Fat Loss',weight:98.3,prog:'Cutting — Week 10',week:10,next:'—',status:'On Hold',freq:'3x / week',streak:0,done:28,missed:6,last:'9 days ago',nextW:'Unscheduled',h:181,bf:29.8,email:'reza.m@mail.com'},
-{id:6,name:'Amir Jafari',goal:'Endurance',weight:70.2,prog:'Conditioning — Week 5',week:5,next:'—',status:'Inactive',freq:'2x / week',streak:0,done:14,missed:4,last:'3 weeks ago',nextW:'Unscheduled',h:174,bf:16.4,email:'amir.j@mail.com'},
-{id:7,name:'Maryam Sadeghi',goal:'Mobility',weight:62.5,prog:'Recovery — Week 4',week:4,next:'Thu · 09:30',status:'Active',freq:'3x / week',streak:5,done:19,missed:1,last:'2 days ago',nextW:'Mobility B · Thu 09:30',h:162,bf:23.1,email:'maryam.s@mail.com'},
-{id:8,name:'Hamed Naderi',goal:'Muscle Gain',weight:84.6,prog:'Hypertrophy — Week 11',week:11,next:'Fri · 18:00',status:'Active',freq:'4x / week',streak:7,done:52,missed:1,last:'Yesterday',nextW:'Push B · Fri 18:00',h:179,bf:15.7,email:'hamed.n@mail.com'}];
+{id:1,name:'Ali Rezaei',goal:'Muscle Gain',weight:76.4,prog:'Hypertrophy — Week 6',week:6,next:'Today · 09:00',status:'Active',freq:'4x / week',streak:9,done:41,missed:3,last:'Yesterday',nextW:'Push A · Tomorrow 09:00',h:176,bf:14.2,email:'ali.rezaei@mail.com',dayStreak:12,lastDone:__iso(-1),pts:480,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'s3'},{id:'s7'},{id:'nut'}]},
+{id:2,name:'Sara Ahmadi',goal:'Fat Loss',weight:64.1,prog:'Cutting — Week 3',week:3,next:'Today · 11:00',status:'Active',freq:'3x / week',streak:4,done:11,missed:1,last:'2 days ago',nextW:'Full Body B · Today 11:00',h:165,bf:24.6,email:'sara.a@mail.com',dayStreak:4,lastDone:__iso(-1),pts:185,badges:[{id:'first'},{id:'w10'},{id:'s3'}]},
+{id:3,name:'Mohammad Karimi',goal:'Strength',weight:91.2,prog:'Strength 5×5 — Week 8',week:8,next:'Today · 14:30',status:'Active',freq:'5x / week',streak:15,done:63,missed:2,last:'Yesterday',nextW:'Leg A · Today 14:30',h:184,bf:17.9,email:'m.karimi@mail.com',dayStreak:23,lastDone:__iso(-1),pts:760,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'},{id:'s14'}]},
+{id:4,name:'Neda Hosseini',goal:'Muscle Gain',weight:58.9,prog:'Hypertrophy — Week 2',week:2,next:'Tomorrow · 17:00',status:'Active',freq:'4x / week',streak:3,done:7,missed:0,last:'3 days ago',nextW:'Pull A · Tomorrow 17:00',h:168,bf:21.3,email:'neda.h@mail.com',dayStreak:3,lastDone:__iso(-3),pts:95,badges:[{id:'first'},{id:'s3'}]},
+{id:5,name:'Reza Moradi',goal:'Fat Loss',weight:98.3,prog:'Cutting — Week 10',week:10,next:'—',status:'On Hold',freq:'3x / week',streak:0,done:28,missed:6,last:'9 days ago',nextW:'Unscheduled',h:181,bf:29.8,email:'reza.m@mail.com',dayStreak:0,pts:310,badges:[{id:'first'},{id:'w10'},{id:'w25'}]},
+{id:6,name:'Amir Jafari',goal:'Endurance',weight:70.2,prog:'Conditioning — Week 5',week:5,next:'—',status:'Inactive',freq:'2x / week',streak:0,done:14,missed:4,last:'3 weeks ago',nextW:'Unscheduled',h:174,bf:16.4,email:'amir.j@mail.com',dayStreak:0,pts:150,badges:[{id:'first'},{id:'w10'}]},
+{id:7,name:'Maryam Sadeghi',goal:'Mobility',weight:62.5,prog:'Recovery — Week 4',week:4,next:'Thu · 09:30',status:'Active',freq:'3x / week',streak:5,done:19,missed:1,last:'2 days ago',nextW:'Mobility B · Thu 09:30',h:162,bf:23.1,email:'maryam.s@mail.com',dayStreak:6,lastDone:__iso(-2),pts:250,badges:[{id:'first'},{id:'w10'},{id:'s3'},{id:'meas5'}]},
+{id:8,name:'Hamed Naderi',goal:'Muscle Gain',weight:84.6,prog:'Hypertrophy — Week 11',week:11,next:'Fri · 18:00',status:'Active',freq:'4x / week',streak:7,done:52,missed:1,last:'Yesterday',nextW:'Push B · Fri 18:00',h:179,bf:15.7,email:'hamed.n@mail.com',dayStreak:9,lastDone:__iso(-1),pts:600,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'}]}];
 let ACTIVITY=[
 {w:'1 h ago',i:'check',h:'<b>Sara Ahmadi</b> completed <b>Full Body A — all sets logged</b>'},
 {w:'3 h ago',i:'zap',h:'<b>Mohammad Karimi</b> hit a new PR — <b>Deadlift · 145 kg</b>'},
@@ -1562,6 +1664,13 @@ let MSGTPL=[
    to 3 keyframe snapshots. Rides the workspace payload like PACKS. */
 let FORMS=[
 {id:1,client:'Ali Rezaei',pattern:'squat',ex:'Squat',reps:8,score:85,rom:96,flags:['Shallow depth'],kf:[],d:'2026-09-18'}];
+/* v18.39 — CHALLENGES: the coach designs a challenge (target / streak / habit)
+   with a GRAPHICAL journey path (serpentine stages). Progress is computed from
+   real workspace data or logged manually; completion auto-awards the reward
+   badge + points. Rides the workspace payload like PACKS/FORMS. */
+let CHALLENGES=[
+{id:'ch1',name:'September Streak',emoji:'🔥',desc:'Keep your day streak alive all month — every day counts.',type:'streak',metric:'streak',target:14,unit:'days',start:__iso(-6),days:30,parts:['*'],reward:{pts:150,be:'🏅',bn:'Streak Master'},stages:[{e:'🌱',n:'Start'},{e:'🔥',n:'3 days'},{e:'💪',n:'7 days'},{e:'⚡',n:'10 days'},{e:'🏆',n:'14 days'}],prog:{},done:[],status:'active',createdAt:Date.now()},
+{id:'ch2',name:'Autumn Shred',emoji:'🏃',desc:'12 workouts in 4 weeks — consistency beats intensity.',type:'target',metric:'workouts',target:12,unit:'workouts',start:__iso(-10),days:28,parts:['Ali Rezaei','Sara Ahmadi','Mohammad Karimi'],reward:{pts:200,be:'🏆',bn:'Shred Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'4 done'},{e:'🔥',n:'8 done'},{e:'🏆',n:'12 done'}],prog:{},done:[],status:'active',createdAt:Date.now()}];
 function threads(){
   const map={};
   MSGS.forEach(m=>{(map[m.client]=map[m.client]||[]).push(m)});
@@ -1710,7 +1819,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[]};
 let __lastPack='';
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
@@ -1736,7 +1845,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1765,7 +1874,7 @@ function loadData(){
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
-    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);syncCustomEx();
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
     // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
     // (freshWorkspace used to leave it empty). There is no food-delete UI, so
     // an empty library is always a broken state, never intentional: backfill.
@@ -1821,6 +1930,7 @@ function cloudReset(){
   // so every sign-out/sign-in left another live interval behind — N accounts
   // meant N × /api/data GETs every 7 seconds, forever, in a long-lived PWA.
   clearInterval(CLOUD.pollT);CLOUD.pollT=null;
+  clearInterval(CLOUD.remT);CLOUD.remT=null;
   // Preserve the pre-account workspace code before dropping it: the one-time
   // /api/auth/claim import in the bootstrap reads it, and this reset used to
   // delete it, making that import permanently unreachable.
@@ -1837,7 +1947,7 @@ function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
-  FORMS.length=0;
+  FORMS.length=0;CHALLENGES.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
   // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
@@ -2192,7 +2302,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -2246,11 +2356,13 @@ function cloudMerge(d,adopt){
      const i=idx[String(rc.id)];
      if(i===undefined){CLIENTS.push(rc);idx[String(rc.id)]=CLIENTS.length-1;ch=true}
      else if(take){const loc=CLIENTS[i];
-       ['name','goal','prog','status','freq','next','nextW','last','email','weight','bf','h','targetW','targetDate','startW'].forEach(f=>{if(rc[f]!==undefined&&rc[f]!==loc[f]){loc[f]=rc[f];ch=true}});
+       ['name','goal','prog','status','freq','next','nextW','last','email','weight','bf','h','targetW','targetDate','startW','lastDone','lastRemind','since','noRemind'].forEach(f=>{if(rc[f]!==undefined&&rc[f]!==loc[f]){loc[f]=rc[f];ch=true}});
        // Intake answers are an OBJECT — compared by content, never by identity,
        // or every pull would see a fresh parse and loop the sync dirty flag.
        if(rc.intake&&JSON.stringify(rc.intake)!==JSON.stringify(loc.intake||null)){loc.intake=rc.intake;ch=true}
-       ['done','missed','streak','week'].forEach(f=>{if(typeof rc[f]==='number'&&rc[f]>(loc[f]||0)){loc[f]=rc[f];ch=true}});
+       // v18.38 — earned badges ride the client record the same way.
+       if(rc.badges&&JSON.stringify(rc.badges)!==JSON.stringify(loc.badges||[])){loc.badges=rc.badges;ch=true}
+       ['done','missed','streak','week','pts','dayStreak'].forEach(f=>{if(typeof rc[f]==='number'&&rc[f]>(loc[f]||0)){loc[f]=rc[f];ch=true}});
      }})}
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
@@ -2260,11 +2372,36 @@ function cloudMerge(d,adopt){
     (d[k]||[]).forEach(rc=>{
       if(rc.id==null||deadSets[k].has(String(rc.id)))return;
       const i=idx[String(rc.id)];
-      if(i===undefined){arr.push(rc);idx[String(rc.id)]=arr.length-1;ch=true}
+      if(i===undefined){arr.push(rc);idx[String(rc.id)]=arr.length-1;ch=true;
+        /* v18.38 — a fresh coach→client reminder just arrived: nudge the
+           student (toast in the foreground, OS notification when the tab is
+           in the background — the page can call showNotification itself). */
+        if(k==='MSGS'&&rc.type==='reminder'&&rc.from==='coach'&&S.role==='client'&&Date.now()-(rc.at||0)<120000){
+          toast('⏰ '+t('Reminder from your coach'));
+          try{if(document.hidden&&window.Notification&&Notification.permission==='granted'&&navigator.serviceWorker)
+            navigator.serviceWorker.ready.then(r=>r.showNotification('CoachMint ⏰',{body:String(rc.body||'').slice(0,120),icon:'./icons/icon-192.png',tag:'reminder'})).catch(()=>{})}catch(e){}
+        }
+      }
       else if(take&&k==='EVENTS'){const loc=arr[i];if(rc.att&&!loc.att){loc.att=rc.att;ch=true}}
     });
     if(k==='NOTES'||k==='NPLANS')arr.sort((a,b)=>(b.id||0)-(a.id||0));
   });
+  /* v18.39 — challenges: id-union PLUS live progress merge (prog = max per
+     client, done = union, ended wins) so a client device logging progress is
+     seen by the coach's device on the next pull. */
+  if(Array.isArray(d.CHALLENGES)){
+    const cidx={};CHALLENGES.forEach((x,i)=>{if(x&&x.id!=null)cidx[String(x.id)]=i});
+    d.CHALLENGES.forEach(rc=>{
+      if(!rc||rc.id==null||deadSets.CHALLENGES.has(String(rc.id)))return;
+      const i=cidx[String(rc.id)];
+      if(i===undefined){CHALLENGES.push(rc);cidx[String(rc.id)]=CHALLENGES.length-1;ch=true}
+      else{const loc=CHALLENGES[i];
+        if(rc.prog)Object.keys(rc.prog).forEach(k=>{if((rc.prog[k]||0)>((loc.prog||{})[k]||0)){(loc.prog=loc.prog||{})[k]=rc.prog[k];ch=true}});
+        (rc.done||[]).forEach(cid=>{if(!(loc.done||[]).includes(cid)){(loc.done=loc.done||[]).push(cid);ch=true}});
+        if(rc.status==='ended'&&loc.status!=='ended'){loc.status='ended';ch=true}
+      }
+    });
+  }
   // name-keyed stores
   [['TEMPLATES',TEMPLATES],['MTPL',MTPL],['PTPL',PTPL],['FOODS',FOODS],['FILES',FILES],['MSGTPL',MSGTPL]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.n!=null&&deadSets[k].has(String(x.n))){arr.splice(i,1);ch=true}}
@@ -2376,6 +2513,9 @@ function cloudStart(){
   /* v18.21 — daily smart-report sweep: shortly after boot, then every 6h. */
   setTimeout(rptAutoRun,4000);
   CLOUD.rptT=setInterval(()=>{if(!document.hidden)rptAutoRun()},6*3600*1000);
+  /* v18.38 — smart workout reminder sweep (coach devices only, see remSweep). */
+  setTimeout(remSweep,6000);
+  CLOUD.remT=setInterval(()=>{if(!document.hidden)remSweep()},6*3600*1000);
 }
 async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legacy code
   if(CLOUD.on){cloudStart();return}
@@ -2410,30 +2550,43 @@ async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legac
     toast('Cloud sync on — workspace '+code);
   }catch(e){}
 }
-async function cloudJoinCode(){ // client: connect with a connection code
-  const v=($('join-code')?.value||'').toUpperCase().trim();
+/* Fetch + merge a PERSONAL join code ("<workspace>-<client>") WITHOUT entering
+   the portal — shared by cloudJoinCode (enter on connect) and the unlock
+   screen (bind on unlock). Returns the matched client or null. */
+async function joinPersonal(v){
+  const parts=parseJoinCode(v);if(!parts)return null;
+  const out=await cloudFetch(parts.ws);
+  if(!out||!out.ok||out.exists===false)return null;
+  /* Joining must start from a CLEAN slate (see the legacy path below). */
+  cloudReset();
+  freshWorkspace();
+  CLOUD.code=parts.ws;
+  CLOUD.rev=out.rev||0;
+  if(out.data)cloudMerge(out.data,true);
+  const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+  if(!me)return null;
+  CLOUD.on=true;cloudStart();
+  S.wsConnected=true;
+  try{localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:me.id,pcode:v}))}catch(e){}
+  try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
+  cloudResync();
+  return me;
+}
+async function cloudJoinCode(forced){ // client: connect with a connection code
+  const v=(forced||($('join-code')?.value||'')).toUpperCase().trim();
   if(!v){toast('Invalid code');return}
   /* v16.3 — personal code "<workspace>-<client>": resolves the tenant AND the
      exact profile, then binds this device straight to it. A bare 6-char code
      keeps the legacy workspace-wide behaviour for old invites. */
   const parts=parseJoinCode(v);
   if(parts){
-    const out=await cloudFetch(parts.ws);
-    if(!out||!out.ok||out.exists===false){toast(t('Invalid code'));return}
-    /* Joining must start from a CLEAN slate (see the legacy path below). */
-    cloudReset();
-    freshWorkspace();
-    CLOUD.code=parts.ws;
-    CLOUD.rev=out.rev||0;
-    if(out.data)cloudMerge(out.data,true);
-    const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+    const me=await joinPersonal(v);
     if(!me){toast(t('Invalid code'));return}
-    CLOUD.on=true;cloudStart();
-    S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;S.joinCode=v;
-    try{localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:me.id,pcode:v}))}catch(e){}
-    try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
-    cloudResync();render();
-    toast(t('Connected as')+' '+t(me.name)+' ✓');
+    S.pickCid=me.id;S.joinCode=v;
+    /* On the unlock stage the slider completes the entry (the whole point of
+       the welcome lock); from the legacy demo picker we enter directly. */
+    if(S.role==='client'){S.cid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' ✓')}
+    else render();
     return;
   }
   if(CLOUD.on&&CLOUD.code===v){
@@ -2457,6 +2610,7 @@ async function cloudJoinCode(){ // client: connect with a connection code
      local/demo data into someone else's workspace — just wait for the coach's
      first push (cloudPull picks it up). */
   CLOUD.on=true;cloudStart();
+  S.wsConnected=true;
   try{localStorage.setItem('co-ws',v)}catch(e){}
   cloudResync();render();
   toast('Workspace connected ✓ — pick your profile below');
@@ -2685,18 +2839,34 @@ function msgtplModal(){
   <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
 }
 /* Print/PDF export (TrueCoach parity): a clean light-themed print window —
-   no shell, no dark background, just the plan. */
-function printDoc(title,inner){
+   no shell, no dark background, just the plan. v18.38: CoachMint-branded
+   header + a connection-QR footer so every printed page carries the brand
+   and a scannable join code (clientName picks whose code is printed). */
+function printDoc(title,inner,clientName){
+  const c=clientName?CLIENTS.find(x=>x.name===clientName):(S.cid!=null?client(S.cid):null);
+  const code=c?joinCodeOf(c):'';
+  const link=code?inviteLink(code):'';
+  const qr=link?`<div class="qrbox"><div>${qrSvg(link,96)}</div><div><b>${t('Scan to connect')}</b><div class="meta">${t('Open the CoachMint app — your plan syncs live')}</div><div class="qrcode">${esc(code)}</div></div></div>`:'';
   const w=window.open('','_blank','width=840,height=940');
   if(!w){toast(t('Allow pop-ups to print'));return}
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>
-  body{font-family:'Segoe UI',Tahoma,sans-serif;color:#111;margin:32px;max-width:760px}
-  h1{font-size:20px;margin:0 0 4px}h2{font-size:13px;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:#555}
+  w.document.write(`<!DOCTYPE html><html ${lang==='fa'?'dir="rtl" lang="fa"':''}><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+  body{font-family:Vazirmatn,'Segoe UI',Tahoma,sans-serif;color:#12151B;margin:32px;max-width:760px;font-size:13px}
+  .brand{display:flex;align-items:center;gap:10px;border-bottom:3px solid #C8F04B;padding-bottom:12px;margin-bottom:6px}
+  .brand svg{width:34px;color:#8FB51E;flex:none}
+  .wm{font-weight:800;font-size:18px;letter-spacing:.04em}.wm b{color:#8FB51E}
+  .brand .dt{margin-inline-start:auto;color:#6B7280;font-size:11.5px}
+  h1{font-size:20px;margin:14px 0 4px}h2{font-size:13px;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:#8FB51E}
   table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
-  th,td{border:1px solid #ddd;padding:7px 9px;text-align:start}th{background:#f4f4f0}
-  .meta{color:#666;font-size:12px;margin-bottom:6px}.brand{font-weight:800;letter-spacing:.05em}
-  .foot{margin-top:28px;color:#999;font-size:11px;border-top:1px solid #eee;padding-top:8px}
-  </style></head><body>${inner}<div class="foot"><span class="brand">CoachMint</span> — ${esc(wsOwnerName())} · ${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</div></body></html>`);
+  th,td{border-bottom:1px solid #E7E9DD;padding:7px 9px;text-align:start}th{background:#F7FAEC;color:#4A6210;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .meta{color:#666;font-size:12px;margin-bottom:6px}.brand2{font-weight:800;letter-spacing:.05em}
+  .qrbox{display:flex;gap:16px;align-items:center;margin-top:26px;padding:14px 16px;border:1.5px dashed #C9D6A0;border-radius:12px;background:#FBFDF3;page-break-inside:avoid}
+  .qrcode{font-weight:800;letter-spacing:.12em;font-size:14px;margin-top:5px;color:#4A6210}
+  .foot{margin-top:24px;color:#999;font-size:11px;border-top:1px solid #eee;padding-top:8px;display:flex;justify-content:space-between}
+  @media print{h2{page-break-after:avoid}table,.qrbox{page-break-inside:avoid}}
+  </style></head><body>
+  <div class="brand"><svg viewBox="0 0 120 100" fill="none"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg><span class="wm">COACH<b>MINT</b></span><span class="dt">${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{year:'numeric',month:'long',day:'numeric'})}</span></div>
+  ${inner}${qr}
+  <div class="foot"><span class="brand2">CoachMint</span> — ${esc(t('Coach'))}: ${esc(wsOwnerName())}</div></body></html>`);
   w.document.close();w.focus();setTimeout(()=>w.print(),250);
 }
 function printWorkout(){
@@ -2711,7 +2881,7 @@ function printWorkout(){
   printDoc(name,`<h1>${esc(t(name))}</h1>
     <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
     ${note?`<div class="meta">✎ ${esc(t(note))}</div>`:''}
-    <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`);
+    <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`,c.name);
 }
 function printNutrition(){
   const p=NPLANS[S.nplan];if(!p){toast(t('Create a nutrition plan first'));return}
@@ -2721,7 +2891,40 @@ function printNutrition(){
     return `<h2>${esc(t(DAYS[i]))} — ${esc(t(d.type==='train'?'Training Day':'Rest Day'))} (${nf(tg.kcal)} kcal)</h2>
     <table><thead><tr><th>${esc(t('Meal time'))}</th><th>${esc(t('Meal'))}</th><th>${esc(t('Foods'))}</th><th>${esc(t('Calories'))}</th></tr></thead><tbody>${mealRows}</tbody></table>`;
   }).join('');
-  printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`);
+  printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`,p.client);
+}
+/* v18.38 — full week-plan print: every workout grouped by day + a nutrition
+   summary. This is the OFFLINE/demo fallback for /api/export/pdf — same
+   layout, rendered from local data with the full in-app FA dictionary. */
+const DOW=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const dayIx=d=>{const i=DOW.indexOf(d);return i<0?99:i};
+function printWeek(){
+  const c=client(S.cid),db=DB[c.id]||{};
+  const list=[...(db.workouts||[])].sort((a,b)=>dayIx(a.day)-dayIx(b.day)).slice(0,14);
+  const wk=list.map(w=>{
+    const rows=(w.exercises||[]).map((b,i)=>{const ex=EXERCISES[b.ex]||{};
+      return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}${b.note?`<div class="meta">${esc(t(b.note))}</div>`:''}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td></tr>`}).join('');
+    const sets=(w.exercises||[]).reduce((a,b)=>a+(b.sets||0),0);
+    return `<div style="display:flex;gap:10px;align-items:baseline;margin:16px 0 2px;flex-wrap:wrap"><span style="background:#12151B;color:#fff;font-weight:800;font-size:10.5px;padding:4px 10px;border-radius:6px">${esc(t(w.day||''))}</span><b style="font-size:14.5px">${esc(w.name)}</b><span class="meta">${esc(t(w.dur||''))} · ${nf(sets)} ${t('sets')}</span></div>
+    <table><thead><tr><th style="width:26px">#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }).join('')||`<div class="meta">${t('No workouts yet')}</div>`;
+  const p=nPlanOf(c.name);
+  const nut=p?`<h2>${esc(t('Nutrition Plan'))} — ${esc(t(p.name))}</h2><div class="meta">${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal · ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>`:'';
+  printDoc(t('Week Plan')+' — '+t(c.name),`<h1>${esc(t('Week Plan'))} — ${esc(t(c.name))}</h1><div class="meta">${esc(t(c.goal))} · ${esc(t(c.prog))}${c.freq?' · '+esc(t(c.freq)):''}</div>${wk}${nut}`,c.name);
+}
+/* v18.38 — /api/export/pdf client bridge: opens the server-rendered printable
+   page (works from any device that knows the workspace code, QR included).
+   Offline or demo → the local branded print (printWeek / printNutrition). */
+function exportPdf(kind,clientName){
+  const c=clientName?CLIENTS.find(x=>x.name===clientName):client(S.cid);
+  if(!c){toast(t('Create a nutrition plan first'));return}
+  if(CLOUD.on&&navigator.onLine&&wsCode()){
+    const u='/api/export/pdf?code='+encodeURIComponent(wsCode())+'&client='+encodeURIComponent(c.id)+'&kind='+(kind||'week')+'&lang='+lang;
+    let w=null;try{w=window.open(u,'_blank')}catch(e){}
+    if(w)return;
+    toast(t('Allow pop-ups to export'));return;
+  }
+  if(kind==='nutrition')printNutrition();else printWeek();
 }
 /* ===== v17.11 — onboarding wizard (4 steps, answers shape the workspace) ===== */
 function onbWizard(){
@@ -2802,6 +3005,9 @@ const clientCode=c=>{
 };
 const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
 const joinCodeOf=c=>{const ws=wsCode();return ws?ws+'-'+clientCode(c):clientCode(c)};
+/* v18.38 — day-streak display: the real dayStreak once the gamification engine
+   has run for a client, the legacy weekly streak as fallback for old data. */
+const streakLbl=c=>c.dayStreak!=null?`${nf(c.dayStreak)} ${t('day streak')}`:c.streak?`${nf(c.streak)} ${t('wk')}`:'—';
 const parseJoinCode=v=>{const i=String(v||'').indexOf('-');return i>0?{ws:String(v).slice(0,i),pc:String(v).slice(i+1)}:null};
 const itK=it=>{const f=FOODS[it.fi];return f?Math.round(f.kcal*it.g/100):0};
 const itM=(it,k)=>{const f=FOODS[it.fi];return f?Math.round((f[k]||0)*it.g/100):0};
@@ -2844,8 +3050,13 @@ return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform
 
 /* ================= LOGIN ================= */
 function vLogin(){
+  /* v18.41 — students NEVER see the demo picker as the main path: a join code
+     (scanned QR / invite link / returning bound device) opens the cinematic
+     3D unlock stage. The old picker stays reachable via the small demo link. */
+  if(S.demoPick)return clientPicker();
+  if(S.joinCode)return vUnlock();
   if(!S.loginRole)return roleSelect();
-  return S.loginRole==='coach'?coachLogin():clientPicker();
+  return S.loginRole==='coach'?coachLogin():vUnlock();
 }
 function roleSelect(){return `
 <div class="login-right" style="min-height:100vh">
@@ -2932,6 +3143,121 @@ function clientPicker(){
     <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="continue-client">${t('Continue')} ${ic('arrowR',15)}</button>
   </div>
 </div>`}
+
+/* ================= v18.41 — CINEMATIC 3D WELCOME / UNLOCK =================
+   After scanning the connection QR or opening an invite link, the student
+   lands on a full-screen 3D stage: a glowing padlock inside orbiting rings,
+   drifting particles and a perspective grid. The portal opens by DRAGGING
+   THE HANDLE TO THE RIGHT — the drag physically opens the shackle, spins the
+   rings, intensifies the glow and tilts the scene; past the threshold the
+   lock bursts open (shockwave + zoom) and the device binds to the profile. */
+function unlockStage(){
+  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+  if(parts){ // PERSONAL code: only the bound profile counts — never the demo seed
+    const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+    return me?'ready':'loading';
+  }
+  /* Bare/legacy code: profile pick only after the workspace was actually
+     connected (S.wsConnected) — a fresh device still holds the demo seed. */
+  if(!S.joinCode||!S.wsConnected)return 'code';
+  return CLIENTS.length===1?'ready1':'pick';
+}
+function vUnlock(){
+  const st=unlockStage();
+  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+  const me=st==='ready'?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+  const known=me||(st==='ready1'?CLIENTS[0]:null);
+  const coach=wsOwnerName();
+  const dots=[...Array(16)].map((_,i)=>`<span class="un-dot" style="left:${(i*61)%96+2}%;top:${(i*37)%88+4}%;--z:${((i%5)*34-50).toFixed(0)}px;animation-delay:${(i*.7).toFixed(1)}s;opacity:${(.22+(i%4)*.13).toFixed(2)}"></span>`).join('');
+  let center='';
+  if(known){
+    center=`<div class="un-sub">${t('Welcome back')}</div>
+      <div style="margin:14px 0 4px">${avC(known.name,74)}</div>
+      <b class="un-name">${esc(t(known.name))}</b>
+      <div class="un-meta">${coach?esc(coach)+' · ':''}${esc(S.joinCode||'')}</div>`;
+  }else if(st==='pick'){
+    center=`<div class="un-sub">${t('Who are you?')}</div>
+      <div class="un-pick">${CLIENTS.map(c=>`<button class="un-chip ${S.pickCid===c.id?'on':''}" data-act="un-pick" data-cid="${c.id}">${avC(c.name,38)}<span>${esc(t(c.name))}</span></button>`).join('')}</div>`;
+  }else if(st==='loading'){
+    center=`<div class="un-sub">${t('Checking code…')}</div>
+      <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>`;
+  }else{
+    center=`<div class="un-sub">${t('Your coach invited you')}</div>
+      <div class="un-codebox"><input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${esc(S.joinCode||'')}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700"><button class="btn btn-primary" data-act="join-code">${t('Connect')}</button></div>
+      <div class="un-meta">${t('Enter the code your coach gave you')}</div>`;
+  }
+  const armed=!!known||(st==='pick'&&S.pickCid&&CLIENTS.some(c=>c.id===S.pickCid));
+  return `<div class="unlock" id="un-scene">
+    <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">COACHMINT</div><div class="brand-tag" style="color:#7A8291">ONE COACH. ONE WORKSPACE.</div></div></div>
+    <div style="position:absolute;top:18px;inset-inline-end:18px;z-index:2">${langBtn('btn-outline btn-sm')}</div>
+    <div class="un-stage">
+      <div class="un-glow"></div><div class="un-grid"></div>${dots}
+      <div class="un-rings"><span class="un-ring r1"></span><span class="un-ring r2"></span><span class="un-ring r3"></span></div>
+      <div class="un-lock"><svg width="148" height="170" viewBox="0 0 156 176">
+        <g class="un-shackle"><path d="M48 80V52a30 30 0 0 1 60 0v28" fill="none" stroke="rgba(200,240,75,.9)" stroke-width="14" stroke-linecap="round"/></g>
+        <rect x="28" y="76" width="100" height="86" rx="20" fill="#151922" stroke="rgba(200,240,75,.55)" stroke-width="2.5"/>
+        <circle cx="78" cy="112" r="12" fill="var(--accent)"/><rect x="73" y="118" width="10" height="24" rx="5" fill="var(--accent)"/>
+      </svg></div>
+      <div class="un-shock"></div>
+      <div class="un-card">${center}</div>
+    </div>
+    <div class="un-track" id="un-track">
+      <div class="un-fill"></div>
+      <div class="un-hint">${ic('chevR',16)} ${t('Slide to unlock')}</div>
+      <div class="un-handle" id="un-handle" style="${armed?'':'opacity:.4;pointer-events:none'}">${ic('arrowR',22)}</div>
+    </div>
+    <div class="un-foot"><span id="un-status">${armed?t('Unlocking opens your portal'):t('Connect with your code first')}</span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
+  </div>`;
+}
+/* Pointer wiring for the unlock stage: drag → --ux (0..1) drives the shackle,
+   rings, glow and tilt; release past 62% completes (burst + bind), otherwise
+   springs back. Pointer tilt adds a subtle 3D parallax on hover/move. */
+function unlockWire(){
+  const sc=$('un-scene'),tr=$('un-track'),hd=$('un-handle');
+  if(!sc||!tr||!hd||hd.dataset.wired)return;
+  hd.dataset.wired='1';
+  S.unlock={ux:0,drag:false,fetching:false};
+  const max=()=>Math.max(1,tr.clientWidth-hd.clientWidth-10);
+  const set=v=>{S.unlock.ux=v;sc.style.setProperty('--ux',v.toFixed(3));hd.style.transform=`translateX(${(v*max()).toFixed(1)}px)`};
+  sc.addEventListener('pointermove',e=>{if(S.unlock.drag)return;const r=sc.getBoundingClientRect();
+    sc.style.setProperty('--py',(((e.clientX-r.left)/r.width-.5)*8).toFixed(2)+'deg');
+    sc.style.setProperty('--rx',((-.5+(e.clientY-r.top)/r.height)*6).toFixed(2)+'deg')});
+  hd.addEventListener('pointerdown',e=>{S.unlock.drag=true;hd.setPointerCapture(e.pointerId);hd.style.cursor='grabbing';e.preventDefault()});
+  hd.addEventListener('pointermove',e=>{if(!S.unlock.drag)return;const r=tr.getBoundingClientRect();
+    set(Math.max(0,Math.min(1,(e.clientX-r.left-hd.clientWidth/2)/max())))});
+  const reset=()=>{sc.classList.remove('unlocked');set(0);const st=$('un-status');if(st)st.textContent=t('Unlocking opens your portal')};
+  const complete=async()=>{
+    sc.classList.add('unlocked'); // rings burst + shackle springs + shockwave + zoom
+    const st=unlockStage();
+    const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+    const known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+    const stat=$('un-status');if(stat)stat.textContent=t('Unlocking…');
+    await new Promise(r=>setTimeout(r,820)); // let the burst play
+    if(known){ // data already on this device (returning student / bare code)
+      S.role='client';S.cid=known.id;S.pickCid=known.id;S.ptab='today';S.player=null;S.joinCode=null;
+      render();toast(t('Welcome')+', '+t(known.name).split(' ')[0]+' 🔓');return;
+    }
+    if(parts){const me=await joinPersonal(S.joinCode);
+      if(me){S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' 🔓');return}}
+    reset();toast(t('Invalid code'));
+  };
+  const end=()=>{if(!S.unlock.drag)return;S.unlock.drag=false;hd.style.cursor='grab';
+    if(S.unlock.ux>=.62)complete();else set(0)};
+  hd.addEventListener('pointerup',end);
+  hd.addEventListener('pointercancel',end);
+  /* QR / invite-link arrival: the personal code is in S.joinCode but the
+     workspace is not fetched yet — bind silently so the personalized stage
+     replaces the demo seed. Invalid code → back to the code input. */
+  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+  const bound=parts&&CLIENTS.some(c=>String(c.code||'').toUpperCase()===parts.pc);
+  if(parts&&!bound&&!S.unlock.fetching){
+    S.unlock.fetching=true;
+    joinPersonal(S.joinCode).then(me=>{S.unlock.fetching=false;
+      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.joinCode=null;S.wsConnected=false;toast(t('Invalid code'))}
+      render();
+    }).catch(()=>{S.unlock.fetching=false});
+  }
+}
 
 /* ================= COACH VIEWS ================= */
 /* v18.31 — CoachMint template page layouts (Stitch cockpit arrangement).
@@ -3048,7 +3374,7 @@ function vClientsCm(){
         <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
         <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
           <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
-          ${c.streak?`<span class="cm-meta">🔥 ${nf(c.streak)} ${t('wk')}</span>`:''}
+          ${c.streak?`<span class="cm-meta">🔥 ${esc(streakLbl(c))}</span>`:''}
           <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
         </div>
       </div>
@@ -3189,7 +3515,7 @@ function vClients(){
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(c.goal)}</span>
         ${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
-        ${c.streak?`<span class="chip">🔥 ${nf(c.streak)} ${t('wk')}</span>`:''}
+        ${c.streak?`<span class="chip">🔥 ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
         <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
@@ -3204,7 +3530,7 @@ function vClients(){
     <tr data-act="open-client" data-cid="${c.id}">
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
       <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
-      <td class="hide-md">${c.streak?`${nf(c.streak)} ${t('wk')} 🔥`:'—'}</td>
+      <td class="hide-md">${c.streak||c.dayStreak?`🔥 ${esc(streakLbl(c))}`:'—'}</td>
       <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
@@ -3230,7 +3556,7 @@ function vWorkspace(){
       <div style="flex:1;min-width:240px">
         <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
         <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
-          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',`${nf(c.streak)} ${t('wk')}`]].map(([k,v])=>`
+          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))],['Points',`⭐ ${nf(c.pts||0)}`]].map(([k,v])=>`
           <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
           ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
         </div>
@@ -3248,6 +3574,7 @@ function vWorkspace(){
             <div class="menu-it" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',15)} ${t('AI Analysis')}</div>
             <div class="menu-it" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',15)} ${t('Form reports')}</div>
             <div class="menu-it" data-act="client-arch" data-c="${esc(c.name)}">${ic('archive',15)} ${t('Archive client')}</div>
+            <div class="menu-it" data-act="export-pdf" data-kind="week">${ic('download',15)} ${t('Export PDF')}</div>
             <div class="menu-it" data-act="ws-export">${ic('download',15)} ${t('Export data')}</div>
             <div class="menu-it" data-act="invite-open">${ic('mail',15)} ${t('Invite to portal')}</div>
             <div class="menu-it" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)} ${t('Delete client')}</div>
@@ -3387,6 +3714,7 @@ function vBuilder(){
         <button class="btn btn-ghost" data-act="b-cancel">${t('Cancel')}</button>
         <button class="btn btn-outline" data-act="ai-draft" title="${t('AI Workout Assistant')}">${ic('zap',15)} ${t('AI Draft')}</button>
         <button class="btn btn-outline" data-act="print-workout" title="${t('Print / PDF')}">${ic('download',15)} ${t('Print / PDF')}</button>
+        <button class="btn btn-outline" data-act="export-pdf" data-kind="week" title="${t('Export the full week as a printable PDF')}">${ic('download',15)} ${t('Week PDF')}</button>
         <button class="btn btn-outline" data-act="b-tpl">${S.tplEdit!=null?t('Update Template'):t('Save as Template')}</button>
         <button class="btn btn-primary" data-act="b-save">${ic('check',15)} ${t('Save Workout')}</button></div>
       </div>
@@ -3971,6 +4299,7 @@ function vSettings(){
       ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
     <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
     <div class="set-row"><div><span class="t">${t('Response time')}</span><div class="d">${t('Shown to clients in chat')}</div></div><select class="sel" style="width:160px" data-change="pref" data-k="resp">${['~1 h','~4 h','~24 h'].map(r=>`<option value="${r}" ${PREFS.resp===r?'selected':''}>${r}</option>`).join('')}</select></div>
+    <div class="set-row"><div><span class="t">${t('Auto workout reminders')}</span><div class="d">${t('Message clients who skip 3+ days')}</div></div>${sw('remind',PREFS.remind!==false)}</div>
     <div class="set-row"><div><span class="t">${t('Data storage')}</span><div class="d">${t('On this device (auto-save)')}</div></div><button class="btn btn-outline btn-sm" data-act="reset-demo">${ic('trash',14)} ${t('Reset demo data')}</button></div></div>`,
   notifications:`<div class="card" style="padding:8px 22px">
     ${[['sr','Session reminders','Push + email 24 h before each session'],['cw','Client completes workout','Notify when a workout is logged'],['ms','Missed sessions','Alert when a client misses a session'],['ncm','New client message','Push when a client sends a message'],['mr','Measurement reminders','Weekly digest of due measurements'],['pr','New PR achieved','Celebrate personal records instantly'],['wr','Weekly report','Summary every Sunday evening']].map(([k,a,b])=>`
@@ -4257,6 +4586,7 @@ function nPlanner(){
           <span class="chip">${nf(tg.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(tg.p)}g</span><span class="chip">${t('Carbs')} ${nf(tg.c)}g</span><span class="chip">${t('Fat')} ${nf(tg.f)}g</span>
           <span class="sp"></span><button class="btn btn-outline btn-sm" data-act="tg-open">${ic('edit',13)} ${t('Target Macros')}</button>
           <button class="btn btn-outline btn-sm" data-act="print-nutrition">${ic('download',13)} ${t('Print / PDF')}</button>
+          <button class="btn btn-outline btn-sm" data-act="export-pdf" data-kind="nutrition" data-c="${esc(p.client)}">${ic('download',13)} ${t('Nutrition PDF')}</button>
         </div>
         <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:12px">
           ${DAYS.map((d,i)=>`<button class="fchip ${S.nday===i?'on':''}" data-act="nday" data-i="${i}" style="display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${p.days[i].type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span>${t(d)}</button>`).join('')}
@@ -4880,7 +5210,7 @@ function clientReportModal(name){
       <div class="card-t" style="margin-bottom:6px">${ic('chart',13)} ${t('Progress')}</div>
       ${L(t('Weight trend'),tr.dir==='none'?t('Not enough data'):`${tr.delta>0?'+':''}${nf(tr.delta)} kg — ${tr.dir==='up'?t('Gaining'):tr.dir==='down'?t('Losing'):t('Stable')}`)}
       ${L(t('Workout completion'),ad.pct==null?t('No workouts yet'):`${nf(ad.done)} ✓ / ${nf(ad.missed)} ✗ (${nf(ad.pct)}%)`)}
-      ${L(t('Streak'),`${nf(c.streak||0)} ${t('wk')}`)}
+      ${L(t('Streak'),esc(streakLbl(c)))}
       ${L(t('Last contact'),en.dref?t(en.dref):t('No client messages yet'))}
       ${fm?L(t('Form checks'),`${nf(fm.n)} · ${t('avg')} ${nf(fm.avg)}${fm.flag?` · ${t(fm.flag)}`:''}`):''}
       ${L(t('Nutrition plan'),RPT.nutrition(c)?t('Active'):t('Missing'))}
@@ -4909,6 +5239,402 @@ function rptAutoRun(){
       ACTIVITY.unshift({w:'Just now',i:'chart',h:lang==='fa'?`<b>گزارش هوشمند</b> برای ${nf(rows.length)} شاگرد ساخته شد — ${nf(weak.length)} نیاز به توجه دارند`:`<b>Smart report</b> generated for ${nf(rows.length)} clients — ${nf(weak.length)} need attention`});
       saveData();
     }
+  }catch(e){}
+}
+/* ================= v18.38 — GAMIFICATION (day streak · points · badges) =================
+   c.streak (weeks) was demo-only and never updated by real activity. The real
+   engine lives on the client record: dayStreak (consecutive DAYS with a
+   completed workout), lastDone (local YYYY-MM-DD of the last completion),
+   pts (points) and badges [{id,at}]. All four ride the workspace payload —
+   cloudMerge merges them like the other client fields. */
+const GAM={
+  PTS:{workout:10,checkin:3,form:5,badge:20},
+  BADGES:[
+    {id:'first',e:'🎯',n:'First Workout',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
+    {id:'w10',e:'💪',n:'10 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
+    {id:'w25',e:'🏋️',n:'25 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
+    {id:'w50',e:'🏆',n:'50 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
+    {id:'w100',e:'👑',n:'100 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
+    {id:'s3',e:'🔥',n:'3-Day Streak',t:c=>(c.dayStreak||0)>=3},
+    {id:'s7',e:'🔥',n:'7-Day Streak',t:c=>(c.dayStreak||0)>=7},
+    {id:'s14',e:'⚡',n:'14-Day Streak',t:c=>(c.dayStreak||0)>=14},
+    {id:'s30',e:'🌟',n:'30-Day Streak',t:c=>(c.dayStreak||0)>=30},
+    {id:'s100',e:'💎',n:'100-Day Streak',t:c=>(c.dayStreak||0)>=100},
+    {id:'chk10',e:'📋',n:'10 Check-ins',t:c=>MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length>=10},
+    {id:'form85',e:'🎯',n:'Form Master',t:c=>{const f=FORMS.filter(x=>x.client===c.name);return f.length>0&&f.reduce((a,x)=>a+(x.score||0),0)/f.length>=85}},
+    {id:'meas5',e:'📏',n:'5 Measurements',t:c=>((DB[c.id]||{}).measures||[]).length>=5},
+    {id:'nut',e:'🥗',n:'Fuel Plan',t:c=>!!nPlanOf(c.name)}
+  ],
+  earned:c=>GAM.BADGES.filter(b=>(c.badges||[]).some(x=>x&&x.id===b.id)),
+  /* First un-earned badge + progress toward it (drives the Today card bar). */
+  next(c){
+    const done=((DB[c.id]||{}).stats||{}).done||0;
+    const chk=MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length;
+    const meas=((DB[c.id]||{}).measures||[]).length;
+    const fs=FORMS.filter(x=>x.client===c.name);
+    const fmAvg=fs.length?Math.round(fs.reduce((a,x)=>a+(x.score||0),0)/fs.length):0;
+    const prog={first:[done,1],w10:[done,10],w25:[done,25],w50:[done,50],w100:[done,100],
+      s3:[c.dayStreak||0,3],s7:[c.dayStreak||0,7],s14:[c.dayStreak||0,14],s30:[c.dayStreak||0,30],s100:[c.dayStreak||0,100],
+      chk10:[chk,10],meas5:[meas,5],form85:[fmAvg,85],nut:[nPlanOf(c.name)?1:0,1]};
+    const b=GAM.BADGES.find(x=>!(c.badges||[]).some(y=>y&&y.id===x.id));
+    if(!b)return null;
+    const [v,mx]=prog[b.id]||[0,1];
+    return {b,pct:Math.min(100,Math.round(v/mx*100))};
+  }
+};
+/* Local YYYY-MM-DD — streaks are day-granular in the device's timezone. */
+const ymdOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+/* Award points for an action, evaluate every badge test AND every active
+   challenge. Returns {nb, doneCh}; the celebration modal + coach notification
+   are centralized here so callers stay one-liners. */
+function gamAward(c,kind){
+  if(!c)return {nb:[],doneCh:[]};
+  c.pts=(c.pts||0)+(GAM.PTS[kind]||0);
+  const nb=[];
+  GAM.BADGES.forEach(b=>{
+    if((c.badges||[]).some(x=>x&&x.id===b.id))return;
+    let ok=false;try{ok=b.t(c)}catch(e){}
+    if(ok)nb.push(b);
+  });
+  if(nb.length){
+    c.badges=(c.badges||[]).concat(nb.map(b=>({id:b.id,at:Date.now()})));
+    c.pts+=nb.length*GAM.PTS.badge;
+  }
+  const doneCh=chalEvalClient(c);
+  const celeb=[...nb,...doneCh.map(ch=>({e:(ch.reward&&ch.reward.be)||ch.emoji||'🏆',n:(ch.reward&&ch.reward.bn)||ch.name}))];
+  if(celeb.length){
+    NOTIFS.unshift({t:`🏅 ${t(c.name)} — ${celeb.map(b=>b.e+' '+t(b.n)).join(' · ')}`,d:'Just now',un:true});
+    if(S.role==='client')badgeModal(celeb,GAM.PTS.badge*nb.length+doneCh.reduce((a,ch)=>a+((ch.reward&&ch.reward.pts)||50),0));
+  }
+  return {nb,doneCh};
+}
+/* Badge celebration — shown on the client device right after a workout. */
+function badgeModal(list,pts){
+  openModal(`
+  <div class="modal-b" style="text-align:center;padding:30px 22px 22px">
+    <div style="font-size:52px;line-height:1">${list.map(b=>b.e).join(' ')}</div>
+    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Badge unlocked!')}</b>
+    <div class="muted" style="font-size:13px;margin-top:6px">${list.map(b=>esc(t(b.n))).join(' · ')}</div>
+    <div style="margin-top:12px"><span class="bdg bdg-lime" style="font-size:12px;padding:5px 14px">⭐ +${nf(pts)} ${t('Points')}</span></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Awesome!')} 🔥</button></div>`);
+}
+/* Full achievements grid — earned badges colored + dated, locked ones dimmed. */
+function gamModal(){
+  const c=client(S.cid);
+  const has=id=>(c.badges||[]).some(x=>x&&x.id===id);
+  const at=id=>{const x=(c.badges||[]).find(y=>y&&y.id===id);return x&&x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—'};
+  openModal(`
+  <div class="modal-h"><h3>${ic('crown',16)} ${t('Achievements')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:16px;margin-bottom:14px">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Points')}</span><b style="font-size:22px">⭐ ${nf(c.pts||0)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('day streak')}</span><b style="font-size:22px">🔥 ${nf(c.dayStreak||0)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Badges')}</span><b style="font-size:22px">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</b></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px">
+      ${GAM.BADGES.map(b=>{const on=has(b.id);return `
+      <div class="ccard" style="padding:12px 8px;text-align:center;${on?'':'opacity:.45;filter:grayscale(1)'}">
+        <div style="font-size:26px">${b.e}</div>
+        <b style="font-size:10.5px;display:block;margin-top:5px">${t(b.n)}</b>
+        <div class="muted" style="font-size:9.5px;margin-top:2px">${on?esc(at(b.id)):'🔒'}</div>
+      </div>`}).join('')}
+      ${(c.badges||[]).filter(x=>x&&String(x.id).startsWith('chal-')).map(x=>{const ch=CHALLENGES.find(y=>String(y.id)===String(String(x.id).slice(5)));
+        if(!ch)return '';
+        return `<div class="ccard" style="padding:12px 8px;text-align:center;border-color:var(--acc-line)">
+        <div style="font-size:26px">${(ch.reward||{}).be||ch.emoji||'🏆'}</div>
+        <b style="font-size:10.5px;display:block;margin-top:5px">${esc(t((ch.reward||{}).bn||ch.name))}</b>
+        <div class="muted" style="font-size:9.5px;margin-top:2px">${esc(x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—')}</div>
+      </div>`}).join('')}
+    </div>
+    <div class="muted" style="font-size:11.5px;margin-top:12px">${t('Earn points: workout +10 · check-in +3 · form check +5 · each badge +20')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ================= v18.39 — CHALLENGE BUILDER + JOURNEY PATHS =================
+   The coach designs challenges (Target / Streak / Habit) with a GRAPHICAL
+   journey path: a serpentine trail of stages the client walks node by node.
+   Progress is computed from REAL workspace data (workouts completed since the
+   start date, check-ins, form checks, points, day streak) or logged manually;
+   hitting 100% auto-awards the reward badge + points through the gamification
+   engine. Everything rides the workspace payload. */
+const CHAL={
+  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',points:'Points',custom:'Manual log'},
+  EMOJIS:['🏆','🔥','💪','⚡','🌟','🥇','🎯','🚀','🏃','🥗','💎','👑'],
+  parts(ch){const ps=ch.parts||['*'];return CLIENTS.filter(c=>c.status!=='Archived'&&(ps.includes('*')||ps.includes(c.name)))},
+  val(ch,c){
+    const st=ch.start?Date.parse(ch.start+'T00:00:00'):0;
+    const m=ch.type==='streak'?'streak':ch.type==='habit'?'checkins':(ch.metric||'workouts');
+    if(m==='streak')return c.dayStreak||0;
+    if(m==='points')return c.pts||0;
+    if(m==='forms')return FORMS.filter(f=>f.client===c.name&&(!st||Date.parse(f.d)>=st)).length;
+    if(m==='checkins')return MSGS.filter(x=>x.client===c.name&&x.type==='checkin'&&(!x.at||x.at>=st)).length;
+    if(m==='workouts'){const db=DB[c.id]||{};return (db.workouts||[]).filter(w=>w.status==='completed'&&(!w.doneAt||Date.parse(w.doneAt)>=st)).length}
+    return ((ch.prog||{})[c.id])||0;
+  },
+  end(ch){return Date.parse(ch.start||isoToday())+(ch.days||30)*864e5},
+  left(ch){return Math.max(0,Math.ceil((CHAL.end(ch)-Date.now())/864e5))},
+  pace(ch){const el=(Date.now()-Date.parse(ch.start||isoToday()))/864e5;return Math.max(0,Math.min(100,Math.round(el/Math.max(1,ch.days||30)*100)))},
+  pct(ch,c){return Math.min(100,Math.round(CHAL.val(ch,c)/Math.max(1,ch.target||1)*100))},
+  rows(ch){return CHAL.parts(ch).map(c=>({c,val:CHAL.val(ch,c),pct:CHAL.pct(ch,c)})).sort((a,b)=>b.pct-a.pct||b.val-a.val)},
+  node(ch,pct){const n=(ch.stages||[]).length;return n?Math.min(n,Math.floor(pct/100*n)):0}
+};
+/* Evaluate ONE client against every active challenge — called from gamAward
+   (workout / check-in / form check) and after manual logs. Returns the
+   challenges completed in THIS call (reward already granted). */
+function chalEvalClient(c){
+  const out=[];
+  CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id)).forEach(ch=>{
+    if(CHAL.pct(ch,c)<100||(ch.done||[]).includes(c.id))return;
+    (ch.done=ch.done||[]).push(c.id);
+    c.pts=(c.pts||0)+((ch.reward&&ch.reward.pts)||50);
+    c.badges=(c.badges||[]).concat([{id:'chal-'+ch.id,at:Date.now()}]);
+    ACTIVITY.unshift({w:'Just now',i:'trophy',h:lang==='fa'?`<b>${t(c.name)}</b> چالش <b>${esc(ch.name)}</b> را به پایان رساند ${ch.emoji||'🏆'}`:`<b>${t(c.name)}</b> completed the challenge <b>${esc(ch.name)}</b> ${ch.emoji||'🏆'}`});
+    out.push(ch);
+  });
+  return out;
+}
+/* The GRAPHICAL journey path — a serpentine trail (board-game style) with one
+   node per stage. doneN = how many stages are complete; the current node
+   pulses. Used by the coach designer (live preview), the detail modal and the
+   client's Today card. */
+function chalPath(stages,doneN,opt){
+  opt=opt||{};const list=stages||[];const n=list.length;if(!n)return '';
+  const perRow=n<=2?n:4;
+  const rows=Math.ceil(n/perRow);
+  const w=opt.w||340,padX=30,padY=26,rowH=opt.rowH||62;
+  const colW=perRow>1?(w-2*padX)/(perRow-1):0;
+  const h=padY*2+(rows-1)*rowH+(opt.labels===false?0:16);
+  const pts=list.map((s,i)=>{const r=Math.floor(i/perRow);let c=i%perRow;if(r%2===1)c=perRow-1-c;
+    return {x:padX+c*colW,y:padY+r*rowH}});
+  let d=`M ${pts[0].x} ${pts[0].y}`;
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i];const my=(a.y+b.y)/2;
+    d+=` C ${a.x} ${my}, ${b.x} ${my}, ${b.x} ${b.y}`}
+  const done=doneN==null?0:doneN;
+  const nodes=pts.map((p,i)=>{const st=i<done?'done':i===done?'cur':'lock';
+    const fill=st==='done'?'var(--accent)':st==='cur'?'var(--surface)':'var(--line2)';
+    const op=st==='lock'?.55:1;
+    return `${st==='cur'?`<circle cx="${p.x}" cy="${p.y}" r="21" fill="none" stroke="var(--accent)" stroke-width="1.5" class="ch-pulse"/>`:''}
+    <circle cx="${p.x}" cy="${p.y}" r="15" fill="${fill}" stroke="${st==='cur'?'var(--accent)':'none'}" stroke-width="${st==='cur'?2.5:0}" opacity="${op}"/>
+    <text x="${p.x}" y="${p.y}" dy=".34em" text-anchor="middle" font-size="13" opacity="${st==='lock'?.5:1}">${esc(list[i].e||'⭐')}</text>
+    ${opt.labels===false?'':`<text x="${p.x}" y="${p.y+27}" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--ink2)" opacity="${st==='lock'?.6:1}">${esc(String(list[i].n||'').slice(0,12))}</text>`}`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px;display:block;margin:0 auto" role="img" aria-label="challenge path">
+    <path d="${d}" fill="none" stroke="var(--acc-line2)" stroke-width="2.5" stroke-dasharray="1 7" stroke-linecap="round"/>
+    ${nodes}</svg>`;
+}
+/* ---------- coach: Challenges view ---------- */
+function chalCard(ch){
+  const rows=CHAL.rows(ch);
+  const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
+  const medals=['🥇','🥈','🥉'];
+  return `<div class="card" style="padding:18px;margin-bottom:12px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div class="row" style="gap:12px">
+        <span style="width:44px;height:44px;border-radius:13px;background:var(--accent-soft);display:grid;place-items:center;font-size:22px;flex:none">${ch.emoji||'🏆'}</span>
+        <div><b style="font-size:15.5px">${esc(ch.name)}</b>
+          <div class="row" style="gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span class="bdg bdg-lime" style="font-size:10px">${t(ch.type==='streak'?'Streak goal':ch.type==='habit'?'Habit':'Target')}</span>
+            <span class="chip">${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+            ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">⏳ ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+            <span class="chip">👥 ${nf(rows.length)}</span>
+          </div></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="chal-open" data-id="${esc(ch.id)}">${ic('chart',13)} ${t('Open')}</button>
+        <button class="btn btn-outline btn-sm" data-act="chal-edit" data-id="${esc(ch.id)}">${ic('edit',13)} ${t('Edit')}</button>
+        ${ch.status!=='ended'?`<button class="btn btn-ghost btn-sm" data-act="chal-end" data-id="${esc(ch.id)}">${t('End')}</button>`:''}
+        <button class="btn btn-ghost btn-icon" data-act="chal-del" data-id="${esc(ch.id)}" style="color:var(--red)">${ic('trash',14)}</button>
+      </div></div>
+    <div class="row" style="gap:14px;margin-top:14px;flex-wrap:wrap;align-items:center">
+      <div class="row" style="gap:4px">${rows.slice(0,5).map(r=>avC(r.c.name,28)).join('')}${rows.length>5?`<span class="muted" style="font-size:11px">+${nf(rows.length-5)}</span>`:''}</div>
+      <div style="flex:1;min-width:180px">
+        <div class="row" style="justify-content:space-between;font-size:11px;font-weight:700"><span>${t('Average progress')}</span><span>${nf(avg)}%</span></div>
+        <div class="pbar" style="margin-top:4px"><i style="width:${avg}%"></i></div></div>
+      <div class="row" style="gap:10px;font-size:12px;flex-wrap:wrap">${rows.slice(0,3).map((r,i)=>`<span>${medals[i]} ${esc(t(r.c.name).split(' ')[0])} ${nf(r.pct)}%</span>`).join('')}</div>
+    </div></div>`;
+}
+function vChallenges(){
+  const act=CHALLENGES.filter(ch=>ch.status!=='ended');
+  const ended=CHALLENGES.filter(ch=>ch.status==='ended');
+  return `<div class="page-h"><div><h1>${t('Challenges')}</h1><div class="sub">${t('Design journeys, set targets, celebrate every win')}</div></div>
+  <button class="btn btn-primary" data-act="chal-new">${ic('plus',15)} ${t('New Challenge')}</button></div>
+  ${act.length?act.map(chalCard).join(''):`<div class="empty">${ic('trophy',24)}<b>${t('No active challenges')}</b><span class="muted" style="font-size:12.5px">${t('Create a challenge and design the path your clients follow')}</span><button class="btn btn-primary btn-sm" data-act="chal-new" style="margin-top:4px">${ic('plus',14)} ${t('New Challenge')}</button></div>`}
+  ${ended.length?`<div class="sec-t" style="margin:20px 0 10px">${t('Ended')}</div>${ended.map(chalCard).join('')}`:''}`;
+}
+/* ---------- coach: challenge detail (leaderboard + big path) ---------- */
+function chalDetail(id){
+  const ch=CHALLENGES.find(x=>String(x.id)===String(id));if(!ch)return;
+  const rows=CHAL.rows(ch);
+  const medals=['🥇','🥈','🥉'];
+  const pace=CHAL.pace(ch);
+  openModal(`
+  <div class="modal-h"><h3>${ch.emoji||'🏆'} ${esc(ch.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="chip">${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">${t('Start Date')}: ${fmtD(ch.start)}</span>
+      ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">⏳ ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+      <span class="chip">${ic('gift',12)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)} ${t('Points')}</span>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-bottom:14px">
+      ${chalPath(ch.stages,rows.length?CHAL.node(ch,rows[0].pct):0,{w:520})}
+    </div>
+    <div class="lbl" style="margin-bottom:6px">${t('Leaderboard')}</div>
+    ${rows.length?rows.map((r,i)=>`
+    <div class="card" style="padding:11px 13px;margin-bottom:7px">
+      <div class="row" style="gap:10px">
+        <b style="width:24px;text-align:center">${medals[i]||nf(i+1)}</b>
+        ${avC(r.c.name,32)}
+        <div style="flex:1;min-width:120px">
+          <div class="row" style="justify-content:space-between;font-size:12.5px"><b>${t(r.c.name)}</b><span>${nf(r.val)}/${nf(ch.target)} · ${nf(r.pct)}%</span></div>
+          <div class="pbar" style="margin-top:4px"><i style="width:${r.pct}%"></i></div></div>
+        ${ch.status==='active'?`<span class="bdg ${r.pct>=pace?'bdg-green':'bdg-amber'}" style="font-size:10px">${r.pct>=pace?t('On track'):t('Behind')}</span>`:''}
+      </div>
+      ${ch.status==='active'?`<div class="row" style="gap:6px;margin-top:8px;justify-content:flex-end">
+        ${ch.metric==='custom'?`<button class="btn btn-outline btn-sm" data-act="chal-bump" data-id="${esc(ch.id)}" data-c="${r.c.id}" data-v="-1">−1</button><button class="btn btn-outline btn-sm" data-act="chal-bump" data-id="${esc(ch.id)}" data-c="${r.c.id}" data-v="1">+1</button>`:''}
+        ${r.pct<pace?`<button class="btn btn-outline btn-sm" data-act="chal-nudge" data-id="${esc(ch.id)}" data-c="${esc(r.c.name)}">${ic('bell',12)} ${t('Nudge')}</button>`:''}
+      </div>`:''}
+    </div>`).join(''):`<div class="muted" style="font-size:12.5px">${t('No participants yet')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="chal-edit" data-id="${esc(ch.id)}">${ic('edit',14)} ${t('Edit Challenge')}</button></div>`);
+}
+/* ---------- coach: challenge editor with the live path designer ---------- */
+function chalEditor(id){
+  const ch=id!=null?CHALLENGES.find(x=>String(x.id)===String(id)):null;
+  S.chalDraft=ch?JSON.parse(JSON.stringify(ch)):{id:'ch'+Date.now(),name:'',emoji:'🏆',desc:'',type:'target',metric:'workouts',target:12,unit:'workouts',start:isoToday(),days:30,parts:['*'],reward:{pts:100,be:'🏅',bn:'Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'Halfway'},{e:'🔥',n:'Almost'},{e:'🏆',n:'Finish'}],prog:{},done:[],status:'active',createdAt:Date.now()};
+  renderChalEditor();
+}
+function chalReadStages(){
+  const d=S.chalDraft;if(!d)return;
+  (d.stages||[]).forEach((s,i)=>{const e=$('ce-st-e-'+i),n2=$('ce-st-n-'+i);if(e)s.e=e.value.trim()||'⭐';if(n2)s.n=n2.value.trim()||''});
+}
+function renderChalEditor(){
+  const d=S.chalDraft;if(!d)return;
+  const emojiRow=CHAL.EMOJIS.map(e=>`<button class="fchip ${d.emoji===e?'on':''}" data-act="chal-draft" data-k="emoji" data-v="${e}" style="font-size:15px;padding:4px 9px">${e}</button>`).join('');
+  const stageRows=(d.stages||[]).map((s,i)=>`
+    <div class="row" style="gap:6px;margin-bottom:6px">
+      <input class="inp" style="width:52px;text-align:center" id="ce-st-e-${i}" value="${esc(s.e||'⭐')}" maxlength="2">
+      <input class="inp" style="flex:1" id="ce-st-n-${i}" value="${esc(s.n||'')}" placeholder="${t('Stage name')}">
+      <button class="btn btn-ghost btn-icon" data-act="chal-stage-del" data-i="${i}" style="color:var(--red)">${ic('trash',13)}</button>
+    </div>`).join('');
+  const partChip=(n,label)=>`<button class="fchip ${(d.parts||[]).includes(n)?'on':''}" data-act="chal-part" data-n="${esc(n)}">${esc(label)}</button>`;
+  openModal(`
+  <div class="modal-h"><h3>${ic('trophy',16)} ${CHALLENGES.some(x=>String(x.id)===String(d.id))?t('Edit Challenge'):t('New Challenge')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Challenge name')}</label><input class="inp" id="ce-name" value="${esc(d.name)}" placeholder="${t('September Streak')}"></div>
+    <div class="field"><label class="lbl">${t('Emoji')}</label><div class="row" style="gap:5px;flex-wrap:wrap">${emojiRow}</div></div>
+    <div class="field"><label class="lbl">${t('Description')}</label><input class="inp" id="ce-desc" value="${esc(d.desc||'')}" placeholder="${t('Keep your streak alive all month')}"></div>
+    <div class="field"><label class="lbl">${t('Challenge type')}</label>
+      <div class="seg" style="width:100%;display:flex">
+        ${[['target','Target'],['streak','Streak goal'],['habit','Habit']].map(([k,l])=>`<button style="flex:1" class="${d.type===k?'on':''}" data-act="chal-draft" data-k="type" data-v="${k}">${t(l)}</button>`).join('')}</div></div>
+    ${d.type==='target'?`<div class="fgrid">
+      <div class="field"><label class="lbl">${t('Metric')}</label><select class="sel" data-change="chal-draft" data-k="metric">${Object.entries(CHAL.METRICS).map(([k,l])=>`<option value="${k}" ${d.metric===k?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Target value')}</label><input class="inp" type="number" id="ce-target" value="${d.target||1}" min="1"></div>
+      <div class="field"><label class="lbl">${t('Unit')}</label><input class="inp" id="ce-unit" value="${esc(d.unit||'')}" placeholder="${t('workouts')}"></div>
+    </div>`:''}
+    ${d.type==='streak'?`<div class="field"><label class="lbl">${t('Target value')} (${t('days')})</label><input class="inp" type="number" id="ce-target" value="${d.target||7}" min="1"></div>`:''}
+    ${d.type==='habit'?`<div class="field"><label class="lbl">${t('Target value')} (${t('Check-ins')})</label><input class="inp" type="number" id="ce-target" value="${d.target||d.days||30}" min="1"></div>`:''}
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" type="date" id="ce-start" value="${esc(d.start||isoToday())}"></div>
+      <div class="field"><label class="lbl">${t('Duration (days)')}</label><input class="inp" type="number" id="ce-days" value="${d.days||30}" min="1"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Participants')}</label>
+      <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*','👥 '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Reward')} (${t('Points')})</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
+      <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
+      <div class="field"><label class="lbl">${t('Badge name')}</label><input class="inp" id="ce-bn" value="${esc((d.reward||{}).bn||'')}" placeholder="${t('Challenge Champion')}"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Path stages')} — ${t('the journey the client walks')}</label>
+      ${stageRows}
+      <button class="btn btn-outline btn-sm" data-act="chal-stage-add">${ic('plus',13)} ${t('Add stage')}</button></div>
+    <div class="field"><label class="lbl">${t('Journey preview')}</label>
+      <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px">${chalPath(d.stages,0,{w:520})}</div></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="chal-save">${ic('check',15)} ${t('Save')}</button></div>`);
+}
+/* ---------- client: challenge card modal + mobile list ---------- */
+function chalClientModal(id){
+  const ch=CHALLENGES.find(x=>String(x.id)===String(id));if(!ch)return;
+  const c=client(S.cid);
+  const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
+  const rows=CHAL.rows(ch);const rank=rows.findIndex(r=>r.c.id===c.id)+1;
+  openModal(`
+  <div class="modal-h"><h3>${ch.emoji||'🏆'} ${esc(ch.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
+    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 8px">${chalPath(ch.stages,node,{w:320})}</div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin:12px 0">
+      <span class="chip">${nf(val)}/${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">⏳ ${nf(CHAL.left(ch))} ${t('days')}</span>
+      ${rank>0?`<span class="chip">🏅 ${t('You rank')}: #${nf(rank)}</span>`:''}
+      <span class="chip">⭐ ${t('Reward')}: ${nf((ch.reward||{}).pts||50)}</span></div>
+    ${(ch.stages||[]).length?`<div class="lbl" style="margin-bottom:6px">${t('Path stages')}</div>
+    ${ch.stages.map((s,i)=>`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${s.e||'⭐'} ${esc(t(s.n||''))}</span>${i<node?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Done')}</span>`:i===node?`<span class="bdg bdg-lime" style="font-size:10px">${t('You are here')}</span>`:`<span class="bdg bdg-gray" style="font-size:10px">${ic('lock',11)}</span>`}</div>`).join('')}`:''}
+    ${ch.metric==='custom'?`<button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:12px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',14)} ${t('Log progress')}</button>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function chalListModal(){
+  const act=CHALLENGES.filter(ch=>ch.status!=='ended');
+  openModal(`
+  <div class="modal-h"><h3>${ic('trophy',16)} ${t('Challenges')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${act.length?act.map(ch=>{const rows=CHAL.rows(ch);const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
+      return `<div class="card" style="padding:13px;margin-bottom:8px;cursor:pointer" data-act="chal-open" data-id="${esc(ch.id)}">
+      <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${ch.emoji||'🏆'} ${esc(ch.name)}</b><span class="chip">${nf(avg)}%</span></div>
+      <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip">👥 ${nf(rows.length)}</span><span class="chip">⏳ ${nf(CHAL.left(ch))} ${t('days')}</span></div></div>`}).join('')
+    :`<div class="empty">${ic('trophy',22)}<b>${t('No active challenges')}</b></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="chal-new">${ic('plus',14)} ${t('New Challenge')}</button></div>`);
+}
+/* ================= v18.38 — SMART WORKOUT REMINDERS =================
+   If a client hasn't completed a workout for REM.DAYS days, the COACH's device
+   (this sweep ONLY runs there — a student device must never author coach
+   messages) drops an encouraging coach→client message into MSGS. It reaches
+   the student's phone within one 7s poll and shows as a banner on their Today
+   tab. Coach consent: the global toggle in Settings → Preferences
+   (PREFS.remind) plus a per-client opt-out (c.noRemind in Edit Client).
+   Re-reminds every REM.EVERY days until they train again. The deterministic
+   message id (rem-<cid>-<date>) makes the id-union cloud merge dedupe when
+   two coach devices are open at once. */
+const REM={DAYS:3,EVERY:2};
+const REM_TXT=[
+  c=>lang==='fa'?`سلام ${t(c.name)} 👋 چند روز تمرین انجام ندادی — برنامه امروز منتظرته!`:`Hi ${t(c.name)} 👋 it's been a few days since your last workout — today's plan is waiting for you!`,
+  c=>lang==='fa'?`🔥 زنجیره‌ات را نشکن! یه تمرین کوتاه هم بهتر از هیچی است — امروز را جا ننداز.`:`Don't break the streak 🔥 — even a short session beats skipping. See you in the app!`,
+  c=>lang==='fa'?`💪 برنامه امروزت آماده‌ست. شروع کن و نتیجه را برایم بفرست!`:`Your workout for today is ready 💪 start it and send me the result!`
+];
+const lastDoneDate=c=>{
+  let t=0;((DB[c.id]||{}).workouts||[]).forEach(w=>{if(w&&w.status==='completed'&&w.doneAt){const x=Date.parse(w.doneAt);if(x>t)t=x}});
+  return t?new Date(t):null;
+};
+function remSweep(){
+  if(S.role!=='coach'||!CLOUD.on)return;
+  if(PREFS.remind===false)return;
+  try{
+    const now=Date.now();
+    const last=+(localStorage.getItem('co-rem-at')||0);
+    if(now-last<12*3600*1000)return; // at most every 12 h per device
+    localStorage.setItem('co-rem-at',String(now));
+    let sent=0;
+    CLIENTS.filter(c=>c.status==='Active'&&!c.noRemind).forEach(c=>{
+      const ld=lastDoneDate(c);
+      const base=ld?ld.getTime():(c.since?Date.parse(c.since):0);
+      if(!base)return; // never trained AND no join date → nothing to measure yet
+      const days=Math.floor((now-base)/864e5);
+      if(days<REM.DAYS)return;
+      const lr=c.lastRemind?Date.parse(c.lastRemind):0;
+      if(lr&&(now-lr)/864e5<REM.EVERY)return;
+      const id='rem-'+c.id+'-'+ymdOf(new Date());
+      if(MSGS.some(m=>String(m.id)===id))return; // another device already sent today
+      MSGS.push({id,type:'reminder',from:'coach',client:c.name,body:REM_TXT[sent%REM_TXT.length](c),time:'Just now',read:false,at:now});
+      c.lastRemind=ymdOf(new Date());
+      NOTIFS.unshift({t:`⏰ ${t('Reminder sent')} — ${t(c.name)} (${nf(days)} ${t('days')})`,d:'Just now',un:true});
+      ACTIVITY.unshift({w:'Just now',i:'clock',h:lang==='fa'?`<b>یادآور خودکار</b> برای <b>${t(c.name)}</b> ارسال شد — ${nf(days)} روز بدون تمرین`:`<b>Auto reminder</b> sent to <b>${t(c.name)}</b> — ${nf(days)} days without a workout`});
+      sent++;
+    });
+    if(sent)saveData();
   }catch(e){}
 }
 /* v18.9 — sidebar Help was a dead toast; a real quick-start modal now. */
@@ -5571,6 +6297,7 @@ function fcSave(el){
   FORMS.unshift({id:uid(),client:name,pattern:p?p.id:'?',ex:p?t(p.n):'?',reps,score,rom,flags,kf,d:isoToday()});
   const from=S.role==='client'?'client':'coach';
   MSGS.push({id:uid(),client:name,from,type:'text',body:`${t('Form check')} · ${p?t(p.n):''} — ${t('Reps')} ${nf(reps)} · ${t('Form score')} ${nf(score)}${flags.length?' · '+flags.map(f=>t(f)).join(', '):''}`,time:'Just now',read:from==='coach'});
+  if(from==='client'){const cc=CLIENTS.find(x=>x.name===name);if(cc)gamAward(cc,'form')} // v18.38 — +5 pts
   fcStop();FC={on:false};
   closeModal();saveData();render();
   toast(S.role==='client'?t('Report saved — your coach can see it'):t('Report saved'));
@@ -5923,7 +6650,8 @@ function mMore(){
     ['Calendar','calendar','mcal'],
     ['Create Workout','dumbbell','mworkout'],
     ['Templates','stack','mtemplates'],
-    ['Nutrition','utensils','mnut']];
+    ['Nutrition','utensils','mnut'],
+    ['Challenges','trophy','mchal']];
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
@@ -5959,7 +6687,7 @@ function mClientView(){
     <div class="row" style="gap:6px;flex-wrap:wrap">
       <span class="chip">${t('Weight')}: ${uwS(c.weight||null)}</span>
       <span class="chip">${t('Program')}: ${t(c.prog)}</span>
-      <span class="chip">🔥 ${nf(c.streak)} ${t('wk')}</span>
+      <span class="chip">🔥 ${esc(streakLbl(c))}</span>
       <span class="chip">${t('Attendance')}: ${nf(ac.d)} ✓ / ${nf(ac.m)} ✗</span>
     </div>
     ${w?`<div class="ccard" style="border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
@@ -6030,17 +6758,53 @@ function cToday(){
      lime, today gets a lime ring. w.day is a weekday name → index map. */
   const wkIdx=d=>({Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[d]??-1);
   const doneDays=new Set(db.workouts.filter(x=>x.status==='completed').map(x=>wkIdx(x.day)).filter(i=>i>=0));
+  /* v18.38 — gamification: day streak + points + next badge, and an unread
+     coach reminder (auto-sent by the coach's device after 3+ skipped days). */
+  const nb=GAM.next(c),earnedN=GAM.earned(c).length;
+  const remMsg=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&m.type==='reminder'&&!m.read).slice(-1)[0];
   return `<div class="cbody">
     <div class="csec">${t('Today')}</div>
     ${monthStrip()}
-    <div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border:none;padding:13px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 26px -10px rgba(200,240,75,.5)">
-      <span style="width:38px;height:38px;border-radius:50%;background:rgba(20,26,5,.18);display:grid;place-items:center;flex:none;color:var(--accent-ink)">${ic('star',18)}</span>
-      <div style="flex:1;min-width:0;color:var(--accent-ink)">
-        <b style="font-size:13.5px">${t('Ongoing challenge')}</b>
-        <div style="font-size:11px;font-weight:700;opacity:.75;margin-top:1px">${t('day streak')} · ${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</div>
-        <div style="height:4px;border-radius:99px;background:rgba(20,26,5,.18);margin-top:6px;overflow:hidden"><i style="display:block;height:100%;width:${Math.min(100,Math.round(doneWk/(db.workouts.length||1)*100))}%;background:var(--accent-ink);border-radius:99px"></i></div>
+    ${remMsg?`<div class="ccard" style="border-color:rgba(200,240,75,.4);background:rgba(200,240,75,.06)">
+      <div class="row" style="gap:10px;align-items:flex-start">
+        <span style="font-size:20px;flex:none">⏰</span>
+        <div style="flex:1;min-width:0"><b style="font-size:13px">${t('Coach reminder')}</b>
+          <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(remMsg.body))}</div></div>
       </div>
+      <div class="row" style="gap:8px;margin-top:10px">
+        ${w?`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',14)}</button>`:`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="cnav" data-t="workouts">${t('Your Workouts')} ${ic('arrowR',14)}</button>`}
+        <button class="btn btn-outline btn-sm" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}">${t('Got it')}</button>
+      </div>
+    </div>`:''}
+    <div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border:none;padding:14px 16px;color:var(--accent-ink);box-shadow:0 8px 26px -10px rgba(200,240,75,.5)">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="row" style="gap:14px">
+          <div style="text-align:center"><div style="font-size:22px;font-weight:800;line-height:1">🔥 ${nf(c.dayStreak||0)}</div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('day streak')}</div></div>
+          <div style="width:1px;height:32px;background:rgba(20,26,5,.18)"></div>
+          <div style="text-align:center"><div style="font-size:22px;font-weight:800;line-height:1">⭐ ${nf(c.pts||0)}</div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('Points')}</div></div>
+        </div>
+        <button class="btn glass" style="padding:7px 12px;font-size:11.5px" data-act="gam-open">${t('Badges')} ${nf(earnedN)}/${nf(GAM.BADGES.length)}</button>
+      </div>
+      ${nb?`<div style="margin-top:11px">
+        <div class="row" style="justify-content:space-between;font-size:10.5px;font-weight:700;opacity:.85"><span>${t('Next badge')}: ${nb.b.e} ${t(nb.b.n)}</span><span>${nf(nb.pct)}%</span></div>
+        <div style="height:4px;border-radius:99px;background:rgba(20,26,5,.18);margin-top:4px;overflow:hidden"><i style="display:block;height:100%;width:${nb.pct}%;background:var(--accent-ink);border-radius:99px"></i></div>
+      </div>`:''}
+      <div style="font-size:10.5px;font-weight:700;opacity:.75;margin-top:9px">${t('Ongoing challenge')} · ${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</div>
     </div>
+    ${CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id)).slice(0,2).map(ch=>{
+      const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
+      const st=(ch.stages||[])[Math.min(node,(ch.stages||[]).length-1)]||{};
+      return `<div class="ccard" style="border-color:var(--acc-line2)">
+      <div class="row" style="justify-content:space-between" data-act="chal-open" data-id="${esc(ch.id)}">
+        <b style="font-size:13.5px;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font-size:17px">${ch.emoji||'🏆'}</span> ${esc(ch.name)}</b>
+        <span class="chip">${nf(pct)}%</span></div>
+      <div data-act="chal-open" data-id="${esc(ch.id)}" style="cursor:pointer;margin:8px 0 2px">${chalPath(ch.stages,node,{w:300,labels:false,rowH:54})}</div>
+      <div class="row" style="justify-content:space-between;font-size:11px;color:var(--ink2)">
+        <span>${t('Next stage')}: ${st.e||'⭐'} ${esc(t(st.n||''))}</span>
+        <span>⏳ ${nf(CHAL.left(ch))} ${t('days')}</span></div>
+      <div class="pbar" style="margin-top:7px"><i style="width:${pct}%"></i></div>
+      ${ch.metric==='custom'?`<button class="btn btn-lime btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',13)} ${t('Log progress')}</button>`:''}
+    </div>`}).join('')}
     ${!c.intake?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('note',14)} ${t('Intake form')}</div>
       <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Your coach needs your health background before the first session')}</div>
       <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button></div>`:''}
@@ -6179,6 +6943,20 @@ function cProgress(){
         <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
       </div>
     </div>
+    <div class="ccard">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px">
+        <b style="font-size:13.5px">${t('Achievements')}</b>
+        <span class="chip">⭐ ${nf(c.pts||0)} ${t('Points')}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        ${GAM.BADGES.slice(0,8).map(b=>{const on=(c.badges||[]).some(x=>x&&x.id===b.id);
+        return `<div style="text-align:center;padding:9px 4px;border-radius:12px;background:${on?'rgba(200,240,75,.08)':'rgba(255,255,255,.03)'};${on?'':'opacity:.4;filter:grayscale(1)'}">
+          <div style="font-size:20px">${b.e}</div>
+          <div style="font-size:9px;font-weight:700;margin-top:3px;color:var(--ink2)">${t(b.n)}</div>
+        </div>`}).join('')}
+      </div>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="gam-open">${t('View all')} ${t('Badges')} (${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)})</button>
+    </div>
     ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
       <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
     <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13.5px">${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,170)}</div>
@@ -6260,6 +7038,7 @@ function cChat(){
       ${ms.length?ms.map(m=>{const me=m.from==='client';
       return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
         ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
+        ${m.type==='reminder'?`<span class="ctx">⏰ ${t('Auto reminder')}</span>`:''}
         ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
         ${m.type==='form'?`<div class="vid" data-act="toast" data-msg="Video player (demo)">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
         <div>${esc(t(m.body))}</div>
@@ -6390,18 +7169,18 @@ function cPlayer(){
 }
 
 /* ================= SHELL / RENDER ================= */
-function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,settings:vSettings}[S.view]()}
+function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings}[S.view]()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
-  const nav=[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note'],['messages','Messages','mail']];
+  const nav=[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note'],['messages','Messages','mail']];
   const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
   return `<div class="shell">
   ${fbBtn('bottom:20px;inset-inline-start:20px;')}
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
     <nav class="nav">
-      <div class="nav-sec">${t('Workspace')}</div>${nav.slice(0,7).map(navIt).join('')}
-      <div class="nav-sec">${t('Manage')}</div>${nav.slice(7).map(navIt).join('')}
+      <div class="nav-sec">${t('Workspace')}</div>${nav.slice(0,8).map(navIt).join('')}
+      <div class="nav-sec">${t('Manage')}</div>${nav.slice(8).map(navIt).join('')}
     </nav>
     <div class="side-foot">
       <div class="nav-it" data-act="sb">${ic('chevL',17)}<span class="txt">${t('Collapse')}</span></div>
@@ -6450,7 +7229,7 @@ function renderInner(){
     if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
     return;
   }
-  if(S.view==='login'){$('app').innerHTML=vLogin();return}
+  if(S.view==='login'){$('app').innerHTML=vLogin();unlockWire();return}
   if(isNarrow()){
     $('app').innerHTML=renderMobile();
     if(S.mtab==='messages'&&S.msgThread)requestAnimationFrame(()=>{const el=$('mthrbody');if(el)el.scrollTop=el.scrollHeight});
@@ -6528,6 +7307,7 @@ function editClientModal(name){
       <div class="field"><label class="lbl">${t('Target Weight')} (${U?'lb':'kg'})</label><input class="inp" type="number" step="0.1" id="ec-targetw" value="${c.targetW?(U?uw(c.targetW):c.targetW):''}"></div>
       <div class="field"><label class="lbl">${t('Target Date')}</label><input class="inp" type="date" id="ec-targetd" value="${esc(c.targetDate||'')}"></div>
     </div>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="ec-rem" ${!c.noRemind?'checked':''}> ${t('Auto workout reminders')} <span class="muted" style="font-size:11px">· ${t('Message clients who skip 3+ days')}</span></label>
     <div style="margin-top:6px;padding-top:14px;border-top:1px solid var(--line2)">
       <div class="lbl" style="margin-bottom:6px">${t('Personal connection code')}</div>
       <div class="row" style="gap:8px;margin-bottom:8px"><span class="chip" style="font-weight:800;letter-spacing:.12em;font-size:14px">${esc(joinCodeOf(c))}</span>
@@ -6750,7 +7530,10 @@ document.addEventListener('click',e=>{
   switch(a){
     case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
     case 'role':S.loginRole=el.dataset.r;render();break;
-    case 'back-role':S.loginRole=null;S.joinCode=null;render();break;
+    case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
+    /* v18.41 — unlock stage */
+    case 'un-pick':S.pickCid=+el.dataset.cid;render();break;
+    case 'demo-client':S.demoPick=true;render();break;
     case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
     case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
       S.role='client';S.cid=S.pickCid||CLIENTS[0].id;S.ptab='today';S.player=null;S.joinCode=null;
@@ -6856,6 +7639,8 @@ document.addEventListener('click',e=>{
       // National ID — profile-only data for contracts/insurance. NEVER used for
       // login or join codes (those stay random secrets).
       c.nid=$('ec-nid')?($('ec-nid').value.trim()||undefined):c.nid;
+      // v18.38 — per-client auto-reminder opt-out (coach consent is per client).
+      c.noRemind=$('ec-rem')?!$('ec-rem').checked:c.noRemind;
       // v17.5 — goal target: startW anchors the progress bar at the weight the
       // target was set with (never re-anchored on later edits).
       const twv=$('ec-targetw').value;c.targetW=twv===''?undefined:wToKg(parseFloat(twv));
@@ -7117,8 +7902,9 @@ document.addEventListener('click',e=>{
       const body=`${t('Check-in')} · ${t('Energy')}: ${t(S.cEnergy)} · ${t('Soreness')}: ${t(S.cSore)} · ${t('Sleep')}: ${t(S.cSleep)}`;
       NOTES.unshift({id:uid(),client:c.name,from:'client',shared:true,type:'General',title:`${t('Check-in')} — ${t(c.name)}`,date:'Just now',body,pin:false,arch:false});
       MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
+      gamAward(c,'checkin'); // v18.38 — +3 pts, badge checks
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
-      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach');break}
+      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
     /* ===== v17.5 — competitor-parity actions ===== */
     case 'photo-add':pickPhoto('coach');break;
     case 'photo-add-client':pickPhoto('client');break;
@@ -7161,6 +7947,56 @@ document.addEventListener('click',e=>{
       else{try{navigator.clipboard.writeText(tp.body)}catch(e){}closeModal();toast(t('Copied ✓'))}break}
     case 'print-workout':printWorkout();break;
     case 'print-nutrition':printNutrition();break;
+    /* v18.38 — gamification + reminders + PDF export */
+    case 'gam-open':gamModal();break;
+    /* v18.39 — challenges */
+    case 'chal-new':chalEditor(null);break;
+    case 'chal-edit':chalEditor(el.dataset.id);break;
+    case 'chal-open':(S.role==='client'?chalClientModal:chalDetail)(el.dataset.id);break;
+    case 'mchal':chalListModal();break;
+    case 'chal-draft':{const d=S.chalDraft;if(!d)break;d[el.dataset.k]=el.dataset.v;
+      if(el.dataset.k==='type'&&el.dataset.v==='streak')d.unit='days';
+      renderChalEditor();break}
+    case 'chal-part':{const d=S.chalDraft;if(!d)break;const n=el.dataset.n;let ps=(d.parts||[]).slice();
+      if(n==='*'){ps=ps.includes('*')?[]:['*']}
+      else{ps=ps.filter(x=>x!=='*');ps=ps.includes(n)?ps.filter(x=>x!==n):ps.concat([n])}
+      d.parts=ps.length?ps:['*'];renderChalEditor();break}
+    case 'chal-stage-add':{const d=S.chalDraft;if(!d)break;chalReadStages();(d.stages=d.stages||[]).push({e:'⭐',n:''});renderChalEditor();break}
+    case 'chal-stage-del':{const d=S.chalDraft;if(!d)break;chalReadStages();d.stages.splice(+el.dataset.i,1);renderChalEditor();break}
+    case 'chal-save':{const d=S.chalDraft;if(!d)break;
+      d.name=($('ce-name')&&$('ce-name').value.trim())||d.name||'Challenge';
+      d.desc=($('ce-desc')&&$('ce-desc').value.trim())||'';
+      chalReadStages();
+      const tg=$('ce-target');if(tg)d.target=Math.max(1,parseInt(tg.value,10)||1);
+      const un=$('ce-unit');if(un)d.unit=un.value.trim()||d.unit||'';
+      const sd=$('ce-start');if(sd)d.start=sd.value||isoToday();
+      const dy=$('ce-days');if(dy)d.days=Math.max(1,parseInt(dy.value,10)||30);
+      const pt=$('ce-pts');if(pt)d.reward={pts:Math.max(0,parseInt(pt.value,10)||0),be:($('ce-be')&&$('ce-be').value.trim())||'🏅',bn:($('ce-bn')&&$('ce-bn').value.trim())||'Champion'};
+      if(d.type==='streak')d.unit='days';
+      if(d.type==='habit'){d.metric='checkins';d.unit=d.unit||'check-ins'}
+      const ci=CHALLENGES.findIndex(x=>String(x.id)===String(d.id));
+      if(ci>=0)CHALLENGES[ci]=d;else CHALLENGES.unshift(d);
+      S.chalDraft=null;saveData();closeModal();render();toast(t('Challenge saved ✓'));break}
+    case 'chal-end':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));if(!ch)break;
+      ch.status='ended';saveData();render();toast(t('Challenge ended'));break}
+    case 'chal-del':{if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
+      const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));if(!ch)break;
+      markDead('CHALLENGES',ch.id);CHALLENGES.splice(CHALLENGES.indexOf(ch),1);
+      saveData();render();toast(t('Challenge deleted'));break}
+    case 'chal-nudge':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const cn=el.dataset.c;if(!ch||!cn)break;
+      MSGS.push({id:uid(),type:'reminder',from:'coach',client:cn,body:lang==='fa'?`${ch.emoji||'🏆'} چالش «${ch.name}» منتظرته — ${nf(CHAL.left(ch))} روز فرصت داری!`:`${ch.emoji||'🏆'} Don't fall behind on "${ch.name}" — ${nf(CHAL.left(ch))} days left!`,time:'Just now',read:false,at:Date.now()});
+      saveData();chalDetail(ch.id);toast(t('Nudge sent ✓'));break}
+    case 'chal-bump':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const cid=el.dataset.c;const v=+el.dataset.v||1;if(!ch||!cid)break;
+      ch.prog=ch.prog||{};ch.prog[cid]=Math.max(0,((ch.prog[cid]||0)+v));
+      const cc=CLIENTS.find(x=>String(x.id)===String(cid));if(cc)chalEvalClient(cc);
+      saveData();chalDetail(ch.id);render();break}
+    case 'chal-log':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const c=client(S.cid);if(!ch||!c)break;
+      ch.prog=ch.prog||{};ch.prog[c.id]=(ch.prog[c.id]||0)+1;
+      const dc=chalEvalClient(c);saveData();render();
+      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({e:(x.reward&&x.reward.be)||x.emoji||'🏆',n:(x.reward&&x.reward.bn)||x.name})),dc.reduce((a,x)=>a+((x.reward&&x.reward.pts)||50),0));
+      else toast('⭐ +1 '+t('Points'));break}
+    case 'rem-dismiss':{const m=MSGS.find(x=>String(x.id)===String(el.dataset.id));if(m){m.read=true;saveData()}render();break}
+    case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
     case 'open-player':{const w=(DB[S.cid].workouts||[]).find(x=>x.id===el.dataset.wid);if(!w)break;
       const keys=[];w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++)keys.push(ei+'-'+si)});
       S.player={wid:w.id,checked:new Set(w.status==='completed'?keys:[]),rpe:{},rest:0,restTotal:1};
@@ -7178,10 +8014,18 @@ document.addEventListener('click',e=>{
       const w=DB[S.cid].workouts.find(x=>x.id===S.player?.wid);if(!w)break;
       const total=w.exercises.reduce((a,e)=>a+e.sets,0);
       w.status='completed';w.setsDone=`${S.player.checked.size}/${total}`;
+      w.doneAt=new Date().toISOString(); // v18.38 — the day-streak engine needs the completion date
       DB[S.cid].stats.done=(DB[S.cid].stats.done||0)+1;
-      const cn=t(client(S.cid).name);
+      const cNow=client(S.cid);
+      /* v18.38 — gamification: consecutive-day streak, points, badges. */
+      const __today=ymdOf(new Date()),__yst=ymdOf(new Date(Date.now()-864e5));
+      if(cNow.lastDone!==__today){cNow.dayStreak=cNow.lastDone===__yst?(cNow.dayStreak||0)+1:1;cNow.lastDone=__today}
+      const __before=cNow.pts||0;
+      gamAward(cNow,'workout');
+      const cn=t(cNow.name);
       ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
-      clearInterval(restIv);S.player=null;S.ptab='today';render();toast('Workout completed 💪');break}
+      clearInterval(restIv);S.player=null;S.ptab='today';render();
+      toast(`💪 ${t('Workout completed')} · ⭐ +${nf((cNow.pts||0)-__before)} ${t('Points')} · 🔥 ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
     case 'add-client':addClientModal();break;
     case 'save-client':{if(billGuard('client'))break;
       // Names are inserted into HTML all over the app and into quoted
@@ -7190,7 +8034,7 @@ document.addEventListener('click',e=>{
       // v16.3 — every client gets a PERSONAL connection code at creation; the
       // coach shares it and the student's device binds straight to this profile.
       // nid = optional national ID (contract/insurance paperwork only).
-      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined)};
+      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined),since:isoToday()};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
       closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
@@ -7437,6 +8281,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{
   if(e.target.matches('.exb [data-bf]')){render();return}
   const el=e.target.closest('[data-change]');if(!el)return;
+  if(el.dataset.change==='chal-draft'){const d=S.chalDraft;if(d){d[el.dataset.k]=el.value;renderChalEditor()}return}
   if(el.dataset.change==='client'){S.cid=+el.value;loadClientProgram(S.cid);render()}
   if(el.dataset.change==='lang'){lang=el.value;applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}
   if(el.dataset.change==='calclient'){S.calfClient=el.value;render()}
@@ -7568,7 +8413,7 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
       if(out&&out.ok){
         CLOUD.code=code;CLOUD.on=true;
         if(join){S.joinCode=join.pcode||code;if(join.cid)S.pickCid=join.cid}
-        if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync()}
+        if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync();S.wsConnected=true}
         else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
       }
     }

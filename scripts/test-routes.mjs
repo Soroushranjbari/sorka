@@ -233,6 +233,12 @@ try {
     body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, DB: [] } })
   });
   ok('PUT with DB as array -> 400 bad-payload', badDB.status === 400 && badDB.d?.error === 'bad-payload', badDB.d);
+  const badChal = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, CHALLENGES: 'x' } })
+  });
+  ok('PUT with CHALLENGES:"x" -> 400 bad-payload (v18.39)', badChal.status === 400 && badChal.d?.error === 'bad-payload', badChal.d);
 
   // Trial plan caps at 5 seats. The quota check used to run ONLY for
   // authenticated PUTs — an anonymous student device holding the code could
@@ -314,6 +320,42 @@ try {
     body: JSON.stringify({ current: 'x', password: 'y' })
   });
   ok('password change without token -> 401', noTokPw.status === 401, noTokPw.status);
+
+  console.log('== printable export /api/export/pdf (v18.38) ==');
+  // The export renders the STORED workspace payload server-side: exercise
+  // indexes must resolve through the generated EX_EN table, foods through the
+  // payload FOODS, and the QR must carry the per-client join code.
+  const expCur = await j(`/api/data?code=${ws}`);
+  const expData = {
+    v: 13, ownerName: 'Export Coach',
+    CLIENTS: [{ id: 1, name: 'Ali Export', code: 'ABCD1234', status: 'Active', goal: 'Muscle Gain', freq: '4x / week', dayStreak: 7, pts: 120 }],
+    DB: { 1: { workouts: [{ id: 'w1', name: 'Push A', day: 'Monday', dur: '60 min', status: 'assigned', exercises: [{ ex: 0, sets: 4, reps: 8, kg: 80, rest: 120 }] }], sessions: [], stats: { done: 3, missed: 0 }, measures: [] } },
+    NPLANS: [{ id: 'n1', name: 'Bulk Plan', client: 'Ali Export', arch: false, train: { kcal: 3000, p: 180, c: 400, f: 85 }, rest: { kcal: 2500, p: 160, c: 300, f: 70 }, days: [{ type: 'train', meals: [{ time: 'Breakfast', name: 'Meal 1', foods: [{ fi: 0, g: 200 }] }] }, { type: 'rest', meals: [] }, { type: 'rest', meals: [] }, { type: 'rest', meals: [] }, { type: 'rest', meals: [] }, { type: 'rest', meals: [] }, { type: 'rest', meals: [] }] }],
+    FOODS: [{ n: 'Chicken Breast', kcal: 165 }]
+  };
+  const expPut = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: expCur.d?.rev, data: expData })
+  });
+  ok('PUT export fixture -> 200', expPut.status === 200, expPut.d);
+  const expWeek = await fetch(`${BASE}/api/export/pdf?code=${ws}&client=1&kind=week&lang=fa`);
+  const expHtml = await expWeek.text();
+  ok('GET /api/export/pdf -> 200 html', expWeek.status === 200 && /text\/html/.test(expWeek.headers.get('content-type') || ''), expWeek.status);
+  ok('export page is CoachMint-branded', expHtml.includes('COACH') && expHtml.includes('MINT'), '');
+  ok('export renders the FA exercise name', expHtml.includes('پرس سینه هالتر'), '');
+  const expWeekEn = await fetch(`${BASE}/api/export/pdf?code=${ws}&client=1&kind=week&lang=en`);
+  const expHtmlEn = await expWeekEn.text();
+  ok('export resolves exercise index 0 (EN)', expWeekEn.status === 200 && expHtmlEn.includes('Barbell Bench Press'), '');
+  ok('export carries the join QR + per-client code', expHtml.includes('<svg') && expHtml.includes(`${ws}-ABCD1234`), '');
+  ok('export shows gamification chips', expHtml.includes('⭐') && expHtml.includes('۷'), '');
+  const expNut = await fetch(`${BASE}/api/export/pdf?code=${ws}&client=1&kind=nutrition&lang=en`);
+  const expNutHtml = await expNut.text();
+  ok('export kind=nutrition -> 200 with plan + food', expNut.status === 200 && expNutHtml.includes('Bulk Plan') && expNutHtml.includes('Chicken Breast'), expNut.status);
+  const expBad = await fetch(`${BASE}/api/export/pdf?code=nope!`);
+  ok('export with invalid code -> 400', expBad.status === 400, expBad.status);
+  const expMiss = await fetch(`${BASE}/api/export/pdf?code=ZZZZZZ99`);
+  ok('export with unknown code -> 404', expMiss.status === 404, expMiss.status);
 
   console.log('== static exposure (regression: secrets were downloadable) ==');
   for (const p of ['/data/prod-secrets.txt', '/data/prod-admin-pass.txt', '/data/kv-prod.json',

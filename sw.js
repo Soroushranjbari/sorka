@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v18-37';
+const CACHE = 'co-os-v18-41';
 
 /* v18.22 — Web Push: show the OS notification and focus/open the app. */
 self.addEventListener('push', e => {
@@ -21,7 +21,7 @@ self.addEventListener('notificationclick', e => {
     return self.clients.openWindow(url);
   }));
 });
-const ASSETS = ['./', './index.html', './manifest.json'];
+const ASSETS = ['./', './index.html', './manifest.json', './vendor/lucide/lucide.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
