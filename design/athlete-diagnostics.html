@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#121416;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary": "#2a313a", "on-surface-variant": "#b9cbbc", "tertiary-container": "#b6ebca", "on-primary": "#00391f", "on-tertiary": "#003822", "surface-bright": "#38393c", "primary": "#f4fff3", "on-error-container": "#ffdad6", "on-primary-fixed": "#002110", "secondary-fixed-dim": "#c0c7d3", "on-secondary-fixed": "#151c25", "outline": "#849587", "surface-container-low": "#1a1c1e", "primary-fixed": "#56ffa8", "tertiary-fixed-dim": "#9ed2b3", "error-container": "#93000a", "secondary-fixed": "#dce3ef", "outline-variant": "#3b4a3f", "primary-fixed-dim": "#00e38b", "surface-dim": "#121416", "inverse-primary": "#006d40", "surface-container": "#1e2022", "on-tertiary-container": "#3b6c52", "surface-container-highest": "#333537", "surface-tint": "#00e38b", "primary-container": "#00ff9d", "inverse-on-surface": "#2f3133", "surface-container-lowest": "#0c0e10", "on-secondary-container": "#afb6c1", "surface": "#121416", "surface-container-high": "#282a2c", "on-primary-container": "#007143", "secondary": "#c0c7d3", "tertiary": "#f2fff4", "on-error": "#690005", "secondary-container": "#404751", "on-primary-fixed-variant": "#00522f", "on-secondary-fixed-variant": "#404751", "on-surface": "#e2e2e5", "inverse-surface": "#e2e2e5", "surface-variant": "#333537", "background": "#121416", "on-tertiary-fixed": "#002112", "on-background": "#e2e2e5", "error": "#ffb4ab", "tertiary-fixed": "#b9efce", "on-tertiary-fixed-variant": "#1e5038" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2.5rem", "margin": "2rem", "gutter": "1rem", "space-xs": "0.25rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem", "gutter-mobile": "0.75rem" }, fontFamily: { "metric-xl": ["JetBrains Mono"], "caption": ["JetBrains Mono"], "headline-lg-mobile": ["Space Grotesk"], "body-md": ["JetBrains Mono"], "display-hero": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-lg": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "metric-md": ["JetBrains Mono"], "display-hero-mobile": ["Space Grotesk"], "label-code": ["JetBrains Mono"] }, fontSize: { "metric-xl": ["44px", { "lineHeight": "48px", "letterSpacing": "-0.05em", "fontWeight": "700" }], "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.04em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "metric-md": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-code": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs shrink-0"><img alt="COACHMINT Monogram Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UZFu9n1V3VTRuMcDgMOhbKR5rnCCDihDcfeU3WJ9RxkVkLd6_chBzHt1t52D4XLLgI53hHPr6uwDTGwOGGeWHkxwrN1OotDyOsqtSETQKoBB65Unav4ITk-qh9NrVIYLhil7SPxaAEfPYszzT7kaapCtGwrLtzsJZJj1JJlmxN45K1XU-yT18vJK4dx5QS9ybPXMTAQx_eLciSSm6tMbBijdW6RJAzUh__BsJ7c4Ebp1qIhmU3n5QqXRE"/><span class="hidden font-headline-md text-headline-md font-semibold tracking-tight text-on-surface">COACHMINT</span><span class="font-caption text-caption text-on-surface-variant font-medium uppercase tracking-wider px-space-xs hidden">Diagnostics Analytics</span></div><div class="flex items-center p-0.5 bg-surface-container-highest rounded-full"><button class="min-h-[32px] px-space-sm rounded-full bg-primary-container text-on-primary-container font-caption text-caption font-semibold transition-all" type="button">Workspace</button><button class="min-h-[32px] px-space-sm rounded-full text-on-surface-variant hover:text-on-surface font-caption text-caption font-medium transition-all" type="button">Athlete</button></div><div class="flex items-center justify-end shrink-0"><button aria-label="Profile" class="min-w-[44px] min-h-[44px] flex items-center justify-center p-0.5 focus:outline-none" type="button"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnsYtba2TyO8etT-egOYJdkyFC2PvqPZeGz5t1BmUWC7MXz1Jm0dghP0oMBymZ7l5Sh6A94qsfkcCOzM_dgoahXtGdf5VzHfc8ziggU2JPjwwkL9DlEu5LCLf_AGnaHhjZ80scz0avv0ilwdsDcvD2GgUXEgZGnUhjZT-8symn3YcxN6SgdIzsS9kNS4tcmoyWJmlyU3frwzIB3SLKwDtwcn9nNWuc815tuMiY2ZMHKL3KClCVt5iH"/></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<div class="px-margin-mobile pb-space-xs pt-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="inline-block w-1.5 h-1.5 bg-primary-container"></span>
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">DIAGNOSTICS // PROTOCOL: READY</span>
+</div>
+<span class="font-caption text-caption text-primary-container bg-surface-container-high px-space-xs py-0.5 rounded">AUTO-SYNC 06:42</span>
+</div>
+<div class="px-margin-mobile pt-space-xs pb-space-sm flex items-baseline justify-between">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-metric-xl text-metric-xl text-primary font-bold tracking-tighter">94</span>
+<span class="font-caption text-caption text-on-surface-variant tracking-normal">/100</span>
+<span class="ml-space-xs font-label-code text-label-code uppercase tracking-wider text-on-primary-container bg-primary-container px-space-xs py-0.5 font-semibold rounded-none">PEAK READINESS</span>
+</div>
+<div class="text-right">
+<span class="font-caption text-caption text-primary-container flex items-center gap-0.5 justify-end">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>+4.2%
+      </span>
+<span class="font-caption text-caption text-on-surface-variant">vs 7D BASELINE</span>
+</div>
+</div>
+<div class="px-margin-mobile mb-space-sm">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">HRV R-R VARIANCE (7-DAY MOMENTUM)</span>
+<span class="font-caption text-caption text-on-surface">Stable parasympathetic dominance</span>
+</div>
+<svg class="w-32 h-7" fill="none" viewbox="0 0 128 28">
+<path d="M2 20 L22 18 L42 22 L62 14 L82 15 L102 8 L126 4" stroke="#00ff9d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<circle cx="126" cy="4" fill="#00ff9d" r="2.5"></circle>
+</svg>
+</div>
+</div>
+<div class="px-margin-mobile grid grid-cols-2 gap-space-xs mb-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">SLEEP ARCHITECTURE</span>
+<span class="material-symbols-outlined text-primary-container text-[16px]">bedtime</span>
+</div>
+<div class="my-space-xs">
+<div class="font-metric-md text-metric-md text-on-surface font-semibold tracking-tight">8h 14m</div>
+<div class="font-caption text-caption text-on-surface-variant mt-0.5">Efficiency: 96.4%</div>
+</div>
+<div class="space-y-1 pt-space-xs">
+<div class="flex h-1.5 w-full bg-surface-container-highest rounded-none overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 27%"></div>
+<div class="bg-secondary h-full" style="width: 23%"></div>
+<div class="bg-surface-variant h-full" style="width: 50%"></div>
+</div>
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant pt-0.5">
+<span class="text-primary-container">DEEP 2h12m</span>
+<span class="text-secondary">REM 1h55m</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase">NEUROMUSCULAR</span>
+<span class="material-symbols-outlined text-primary-container text-[16px]">speed</span>
+</div>
+<div class="my-space-xs">
+<div class="font-metric-md text-metric-md text-on-surface font-semibold tracking-tight">64.2 <span class="font-body-md text-body-md font-normal text-on-surface-variant">kg</span></div>
+<div class="font-caption text-caption text-primary-container flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>+2.1% baseline
+        </div>
+</div>
+<div class="pt-space-xs">
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant mb-1">
+<span>ISOKINETIC GRIP</span>
+<span>DOMINANT RIGHT</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-none overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 88%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider">METABOLIC FUELING TARGET</span>
+<span class="font-label-code text-label-code bg-surface-container-highest px-space-xs py-0.5 text-on-surface rounded">CYCLE DAY 4</span>
+</div>
+<span class="font-metric-md text-metric-md text-primary font-bold">3,450 <span class="font-caption text-caption font-normal text-on-surface-variant">kcal</span></span>
+</div>
+<div class="space-y-space-xs pt-space-xs">
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface">Carbohydrates</span>
+<span class="text-on-surface-variant"><strong class="text-on-surface font-semibold">390g</strong> / 480g</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 81%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface">Protein Synthesis</span>
+<span class="text-on-surface-variant"><strong class="text-on-surface font-semibold">188g</strong> / 210g</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 89%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface">Lipids / Fatty Acids</span>
+<span class="text-on-surface-variant"><strong class="text-on-surface font-semibold">62g</strong> / 72g</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="bg-outline h-full" style="width: 86%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-start justify-between mb-space-xs">
+<div>
+<div class="font-label-code text-label-code text-on-surface-variant uppercase tracking-wider">14-DAY BIOMARKER OVERLAY</div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold mt-0.5">HRV vs. Strain Index</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-code text-label-code">
+<span class="flex items-center gap-1 text-primary-container"><span class="w-2 h-0.5 bg-primary-container"></span>HRV</span>
+<span class="flex items-center gap-1 text-secondary-fixed-dim"><span class="w-2 h-0.5 bg-secondary-fixed-dim"></span>STRAIN</span>
+</div>
+</div>
+<div class="relative w-full h-36 mt-space-sm">
+<svg class="w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 340 140">
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="340" y1="20" y2="20"></line>
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="340" y1="65" y2="65"></line>
+<line stroke="#282a2c" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="340" y1="110" y2="110"></line>
+<rect fill="#00e38b" fill-opacity="0.07" height="120" width="90" x="230" y="10"></rect>
+<text fill="#00ff9d" font-family="JetBrains Mono" font-size="8" letter-spacing="0.05em" x="235" y="24">SUPERCOMPENSATION</text>
+<path d="M10 115 L35 98 L60 85 L85 105 L110 70 L135 65 L160 55 L185 80 L210 92 L235 60 L260 45 L285 30 L310 24 L335 18" fill="none" stroke="#00ff9d" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M10 40 L35 48 L60 62 L85 50 L110 95 L135 90 L160 100 L185 70 L210 55 L235 78 L260 92 L285 105 L310 112 L335 118" fill="none" stroke="#c0c7d3" stroke-dasharray="4 2" stroke-width="1.5"></path>
+<circle cx="335" cy="18" fill="#00ff9d" r="3.5"></circle>
+</svg>
+</div>
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant pt-space-xs">
+<span>D-13</span>
+<span>D-9</span>
+<span>D-5 (PEAK LOAD)</span>
+<span>D-2</span>
+<span class="text-primary-container font-semibold">TODAY</span>
+</div>
+</div>
+</div>
+<div class="px-margin-mobile mb-space-sm">
+<div class="bg-surface-container-high p-space-sm rounded-lg relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-caption">
+            VK
+          </div>
+<div>
+<div class="font-caption text-caption text-on-surface font-semibold">Coach Viktor Kline</div>
+<div class="font-label-code text-label-code text-on-surface-variant">HIGH PERFORMANCE DIRECTOR</div>
+</div>
+</div>
+<span class="font-label-code text-label-code text-primary-container bg-surface-container px-space-xs py-0.5 rounded">DIRECT DISPATCH</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-snug my-space-xs">
+        “Your nervous system recovered ahead of schedule from Tuesday's volume. Green light for full intensity today.”
+      </p>
+<div class="bg-surface-container-lowest p-space-xs rounded flex items-center gap-space-sm my-space-xs">
+<button class="w-7 h-7 bg-primary-container text-on-primary-container rounded flex items-center justify-center transition-transform active:scale-95" id="playBtn">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex justify-between font-label-code text-label-code text-on-surface-variant mb-1">
+<span>VOICE BRIEFING</span>
+<span id="memoTimer">0:00 / 0:24</span>
+</div>
+<div class="flex items-center gap-0.5 h-3">
+<span class="w-1 h-2 bg-primary-container rounded-none"></span>
+<span class="w-1 h-3 bg-primary-container rounded-none"></span>
+<span class="w-1 h-2 bg-primary-container rounded-none"></span>
+<span class="w-1 h-4 bg-primary-container rounded-none"></span>
+<span class="w-1 h-2.5 bg-primary-container rounded-none"></span>
+<span class="w-1 h-3.5 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-2 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-3 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-1.5 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-3 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-2 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-3.5 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-1 bg-surface-variant rounded-none"></span>
+<span class="w-1 h-2.5 bg-surface-variant rounded-none"></span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs" id="reactionGroup">
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-bright rounded text-caption font-caption text-on-surface flex items-center gap-1 transition-colors">
+<span>⚡</span>
+<span class="text-on-surface-variant text-[11px]">Locked In</span>
+</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-bright rounded text-caption font-caption text-on-surface flex items-center gap-1 transition-colors">
+<span>🫡</span>
+<span class="text-on-surface-variant text-[11px]">Copy that</span>
+</button>
+</div>
+<button class="min-h-[32px] px-space-sm bg-primary-container text-on-primary-container font-label-code text-label-code font-bold uppercase tracking-wider rounded transition-all active:scale-95" id="ackBtn">
+          ACKNOWLEDGE
+        </button>
+</div>
+</div>
+</div>
+<div class="px-margin-mobile mb-space-sm">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">science</span>
+<div>
+<div class="font-caption text-caption text-on-surface font-semibold">CORTISOL / DHEA RATIO</div>
+<div class="font-label-code text-label-code text-primary-container">0.014 // LOW CATABOLIC DRIFT</div>
+</div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">SERUM LAB</span>
+</div>
+</div>
+<script>
+    (function initDiagnostics() {
+      const ackBtn = document.getElementById('ackBtn');
+      if (ackBtn) {
+        ackBtn.addEventListener('click', () => {
+          ackBtn.textContent = 'ACKNOWLEDGED';
+          ackBtn.classList.remove('bg-primary-container', 'text-on-primary-container');
+          ackBtn.classList.add('bg-surface-container-highest', 'text-primary-container');
+        });
+      }
+
+      const playBtn = document.getElementById('playBtn');
+      const memoTimer = document.getElementById('memoTimer');
+      let isPlaying = false;
+      let interval;
+      let seconds = 0;
+
+      if (playBtn && memoTimer) {
+        playBtn.addEventListener('click', () => {
+          isPlaying = !isPlaying;
+          const icon = playBtn.querySelector('.material-symbols-outlined');
+          if (isPlaying) {
+            if (icon) icon.textContent = 'pause';
+            interval = setInterval(() => {
+              seconds++;
+              if (seconds > 24) {
+                clearInterval(interval);
+                seconds = 0;
+                isPlaying = false;
+                if (icon) icon.textContent = 'play_arrow';
+              }
+              const displaySec = seconds < 10 ? '0' + seconds : seconds;
+              memoTimer.textContent = '0:' + displaySec + ' / 0:24';
+            }, 1000);
+          } else {
+            if (icon) icon.textContent = 'play_arrow';
+            clearInterval(interval);
+          }
+        });
+      }
+
+      const reactions = document.querySelectorAll('#reactionGroup button');
+      reactions.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('bg-primary-container');
+          btn.classList.toggle('text-on-primary-container');
+        });
+      });
+    })();
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl" data-active-classes="text-primary-container font-semibold"><div class="flex items-center justify-around h-16 px-gutter-mobile"><a aria-label="Athletes Roster" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="athletes-roster" href="#"><span class="material-symbols-outlined text-[22px]">groups</span><span class="font-label-code text-label-code uppercase tracking-wider">Roster</span></a><a aria-label="Program Studio" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="program-studio" href="#"><span class="material-symbols-outlined text-[22px]">terminal</span><span class="font-label-code text-label-code uppercase tracking-wider">Studio</span></a><a aria-current="page" aria-label="Diagnostics" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 transition-colors text-primary-container font-semibold" data-path="diagnostics-analytics" href="#"><span class="material-symbols-outlined text-[22px]">monitoring</span><span class="font-label-code text-label-code uppercase tracking-wider">Metrics</span></a><a aria-label="Operations" class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="operations" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-code text-label-code uppercase tracking-wider">Ops</span></a></div></nav></body></html>
