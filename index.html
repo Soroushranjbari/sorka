@@ -841,6 +841,23 @@ body.sb-open .scrim{display:block}
 .tbx-fab{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));inset-inline-start:16px;z-index:60;width:54px;height:54px;border-radius:50%;background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);box-shadow:0 10px 30px -6px rgba(0,0,0,.3);transition:transform .25s}
 .tbx-fab:hover{transform:translateY(-3px);border-color:var(--acc-line)}
 .tbx-fab .ic{stroke-width:2}
+/* v18.37 — orbital toolbox: tool icons fly out of the box and hover around it */
+.tbx-wrap{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));inset-inline-start:16px;z-index:60;width:54px;height:54px}
+.tbx-wrap .tbx-fab{position:absolute;inset:0;bottom:auto;inset-inline-start:auto}
+.tbx-wrap.open .tbx-fab{transform:rotate(-8deg) scale(1.06);border-color:var(--acc-line);box-shadow:0 10px 30px -6px rgba(0,227,139,.35)}
+.tbx-orb{position:absolute;top:50%;inset-inline-start:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--surface);color:var(--accent-deep);display:grid;place-items:center;cursor:pointer;border:1px solid var(--acc-line);box-shadow:0 8px 24px -6px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translate(0,0) scale(.3);transition:transform .38s var(--e,cubic-bezier(.22,.61,.2,1)),opacity .28s ease}
+.tbx-orb .ic{stroke-width:2}
+.tbx-wrap.open .tbx-orb{opacity:1;pointer-events:auto}
+/* orbit positions: arc up and around the box (RTL-safe via logical side) */
+.tbx-wrap.open .tbx-orb[data-orb="1"]{transform:translate(calc(var(--tbx-dx,1) * 58px),-46px) scale(1)}
+.tbx-wrap.open .tbx-orb[data-orb="2"]{transform:translate(calc(var(--tbx-dx,1) * 8px),-84px) scale(1)}
+.tbx-wrap.open .tbx-orb[data-orb="1"]:hover{transform:translate(calc(var(--tbx-dx,1) * 58px),-52px) scale(1.08)}
+.tbx-wrap.open .tbx-orb[data-orb="2"]:hover{transform:translate(calc(var(--tbx-dx,1) * 8px),-90px) scale(1.08)}
+/* staggered pop-out */
+.tbx-wrap.open .tbx-orb[data-orb="1"]{transition-delay:.05s}
+.tbx-wrap.open .tbx-orb[data-orb="2"]{transition-delay:.12s}
+/* RTL: orbit to the right side instead (box sits on the right in FA) */
+html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .sheet{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;animation:sheetUp .22s var(--e,cubic-bezier(.22,.61,.2,1))}
 @keyframes sheetUp{from{transform:translateY(40px);opacity:0}}
 .sh-h{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 10px;border-bottom:1px solid var(--line2)}
@@ -5086,7 +5103,14 @@ const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI As
 /* v18.36 — mobile FABs: the AI assistant becomes a circular robot button and a
    new coach TOOLBOX FAB sits in the opposite corner (form check + stopwatch). */
 const aiFabRound=()=>`<button class="ai-fab-round" data-act="ai-chat-fab" title="${t('AI Assistant')}" aria-label="${t('AI Assistant')}">${ic('robot',24)}</button>`;
-const toolboxFab=()=>`<button class="tbx-fab" data-act="tbx-open" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}</button>`;
+/* v18.37 — toolbox FAB: tapping it makes the tool icons (form check, stopwatch)
+   ORBIT out of the box and float around it (animated, staggered). Tapping the
+   box again (or anywhere else) pulls them back in. */
+const toolboxFab=()=>`<div class="tbx-wrap" id="tbxWrap">
+  <button class="tbx-orb" data-act="fc-open" data-orb="1" title="${t('Form check')}" aria-label="${t('Form check')}">${ic('camera',20)}</button>
+  <button class="tbx-orb" data-act="tbx-stopwatch" data-orb="2" title="${t('Stopwatch')}" aria-label="${t('Stopwatch')}">${ic('stopwatch',20)}</button>
+  <button class="tbx-fab" data-act="tbx-toggle" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}</button>
+</div>`;
 function toolboxSheet(){
   const c=(client(S.cid)||CLIENTS[0]||{}).name;
   const rest=S.player&&S.player.rest>0?nf(fmtMS(S.player.rest)):null;
@@ -5117,14 +5141,16 @@ function swPaint(){
   const s=Math.floor(ms/1000),d=Math.floor((ms%1000)/100);
   el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+d;
 }
-function swTick(){if(swRuns){swPaint();swIv=requestAnimationFrame(swTick)}}
+/* v18.37 — setInterval instead of rAF: rAF is throttled/paused in hidden tabs
+   and background windows, which froze the display while the timer "ran". */
+function swTick(){if(swRuns){swPaint()}}
 function swToggle(){
-  if(swRuns){swElapsed+=Date.now()-swT0;swRuns=false;cancelAnimationFrame(swIv)}
-  else{swT0=Date.now();swRuns=true;swTick()}
+  if(swRuns){swElapsed+=Date.now()-swT0;swRuns=false;clearInterval(swIv)}
+  else{swT0=Date.now();swRuns=true;swIv=setInterval(swTick,100)}
   const b=$('swGo');if(b)b.textContent=swRuns?t('Pause'):t('Start');
 }
-function swReset(){swRuns=false;cancelAnimationFrame(swIv);swElapsed=0;swPaint();const b=$('swGo');if(b)b.textContent=t('Start')}
-function swStop(){swRuns=false;cancelAnimationFrame(swIv)}
+function swReset(){swRuns=false;clearInterval(swIv);swElapsed=0;swPaint();const b=$('swGo');if(b)b.textContent=t('Start')}
+function swStop(){swRuns=false;clearInterval(swIv)}
 window.swStop=swStop;
 function aiChatOpen(){S.aiOpen=true;renderAiChat()}
 function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
@@ -5721,7 +5747,6 @@ function renderMobile(){
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
-    ${aiFab()}
     <div class="cnav">
       ${[['today','Today','zap'],['clients','Clients','users'],['messages','Messages','mail'],['more','More','more']].map(([k,l,i])=>`
       <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='messages'&&unreadN?'<span class="cdot"></span>':''}</button>`).join('')}
@@ -7176,9 +7201,9 @@ document.addEventListener('click',e=>{
     case 'qr-open':qrModal(el.dataset.name||'',el.dataset.code||'');break;
     case 'modal-x':closeModal();if(el.dataset.msg)toast(el.dataset.msg);break;
     case 'ovl-x':if(e.target===el)closeModal();break;
-    /* v18.36 — coach toolbox FAB (mobile) */
-    case 'tbx-open':toolboxSheet();break;
-    case 'tbx-stopwatch':stopwatchSheet();break;
+    /* v18.36/37 — coach toolbox FAB (mobile): toggle orbital tools */
+    case 'tbx-toggle':{const w=$('tbxWrap');if(w)w.classList.toggle('open');break}
+    case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');stopwatchSheet();break}
     case 'sw-toggle':swToggle();break;
     case 'sw-reset':swReset();break;
     case 'pk':pickerModal();break;
