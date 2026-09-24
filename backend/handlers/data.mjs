@@ -33,6 +33,23 @@ function clientMsgDiff(oldData, newData) {
   } catch { return null; }
 }
 
+/* v18.48 — a student device just LOGGED FOOD: one real-time push to the owner
+   (fire-and-forget). Water entries are skipped — hydration is not alert-worthy. */
+function nLogDiff(oldData, newData) {
+  try {
+    const oldIds = new Set(((oldData && Array.isArray(oldData.NLOGS)) ? oldData.NLOGS : []).map((l) => String(l && l.id)));
+    const logs = (newData && Array.isArray(newData.NLOGS)) ? newData.NLOGS : [];
+    const fresh = logs.filter((l) => l && l.client && l.type !== 'water' && !oldIds.has(String(l.id)));
+    if (!fresh.length) return null;
+    const last = fresh[fresh.length - 1];
+    return {
+      title: '🥗 New food log',
+      body: `${last.client}: ${last.meal || 'Meal'} · ~${last.kcal || 0} kcal · P${last.p || 0}g`.slice(0, 80),
+      tag: 'nlog', url: '/?view=nutrition'
+    };
+  } catch { return null; }
+}
+
 /* Workspace payload cap (default 5 MB — hundreds of clients with workouts,
    notes and measurements fit comfortably). Override with DATA_MAX_BYTES. */
 const DATA_MAX_BYTES = Number(process.env.DATA_MAX_BYTES) || 5_000_000;
@@ -43,7 +60,8 @@ const DATA_MAX_BYTES = Number(process.env.DATA_MAX_BYTES) || 5_000_000;
    arrays, DB must be a plain object, and every client needs an id (the whole
    merge/tenant model keys on it). */
 const ARRAY_FIELDS = ['CLIENTS', 'EVENTS', 'MSGS', 'NOTES', 'TEMPLATES', 'FILES', 'BUILDER',
-  'NPLANS', 'MTPL', 'PTPL', 'NHIST', 'ACTIVITY', 'NOTIFS', 'FOODS', 'PACKS', 'MSGTPL', 'CEXS', 'FORMS', 'CHALLENGES'];
+  'NPLANS', 'MTPL', 'PTPL', 'NHIST', 'ACTIVITY', 'NOTIFS', 'FOODS', 'PACKS', 'MSGTPL', 'CEXS', 'FORMS', 'CHALLENGES',
+  'NLOGS', 'NCHAT', 'NINS', 'NRULES'];
 function validatePayload(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return 'bad-payload';
   for (const k of ARRAY_FIELDS) {
@@ -203,7 +221,7 @@ async function handlePutLocked(st, req, code) {
     /* v18.22 — a student device just wrote client→coach messages: notify the
        owner's devices (fire-and-forget; never blocks or fails the PUT). */
     if (!coach && ws.owner && pushEnabled()) {
-      const note = clientMsgDiff(cur && cur.data, data);
+      const note = clientMsgDiff(cur && cur.data, data) || nLogDiff(cur && cur.data, data);
       if (note) {
         const ownerId = String(ws.owner).replace(/^coach:/, '');
         pushToAccount(st, ownerId, note).catch(() => {});
