@@ -35,6 +35,9 @@ const child = spawn(process.execPath, ['server.mjs'], {
     // that DB is unreachable, fail ~30 tests with server-error). Empty string
     // beats the .env loader too — env.mjs skips keys already defined.
     DATABASE_URL: '', POSTGRES_URL: '', PGURL: '',
+    // Same for the AI key: without this the nutri tests would hit the real
+    // OpenRouter upstream (slow, non-hermetic, burns quota).
+    AI_API_KEY: '', OPENROUTER_API_KEY: '',
     // The shop account proxy is server-to-server — point it back at this server
     // so the login/session round-trip is exercised for real.
     COACH_OS_URL: BASE,
@@ -88,6 +91,12 @@ try {
   ok('GET /api/ai/quota (no token) -> 401', aiQ.status === 401, aiQ.status);
   const aiD = await j('/api/ai/draft', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
   ok('POST /api/ai/draft (no token) -> 401', aiD.status === 401, aiD.status);
+
+  // v18.48 — Nutrition Assistant endpoint (student auth = workspace code)
+  const nutriBad = await j('/api/ai/nutri', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({}) });
+  ok('POST /api/ai/nutri (empty) -> 400', nutriBad.status === 400, nutriBad.status);
+  const nutriNoWs = await j('/api/ai/nutri', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code: 'ZZZZZZ99', client: 'X', message: 'hi' }) });
+  ok('POST /api/ai/nutri (unknown code) -> 404', nutriNoWs.status === 404, nutriNoWs.status);
 
   const badCode = await j('/api/data?code=nope!');
   ok('GET /api/data?code=<invalid> -> 400', badCode.status === 400, badCode.status);
@@ -264,6 +273,39 @@ try {
     body: JSON.stringify({ rev: put.d?.rev, data: { v: 13, CLIENTS: [{ id: 1, name: 'A', status: 'Active' }] } })
   });
   ok('PUT shrinking back to 1 client -> 200', shrink.status === 200 && shrink.d?.ok === true, shrink.d);
+
+  console.log('== nutrition assistant (v18.48) ==');
+  // The new payload arrays must pass validation (they ride the workspace blob).
+  const nutriPut = await j(`/api/data?code=${ws}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${signup.d?.token}` },
+    body: JSON.stringify({ rev: shrink.d?.rev, data: { v: 13, CLIENTS: [{ id: 1, name: 'A', status: 'Active' }], NLOGS: [{ id: 1, client: 'A', d: '2026-09-24', meal: 'Lunch', items: [], kcal: 0, p: 0, c: 0, f: 0 }], NCHAT: [], NINS: [], NRULES: [{ id: 'r1', metric: 'protein', op: 'below', thr: 85, days: 3, sev: 'warn', on: true }] } })
+  });
+  ok('PUT with NLOGS/NCHAT/NINS/NRULES arrays -> 200', nutriPut.status === 200 && nutriPut.d?.ok === true, nutriPut.d);
+  // Safety guard runs BEFORE the AI-key check: a medical topic gets the referral
+  // reply even on a server with no AI key configured.
+  const nutriSafety = await j('/api/ai/nutri', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ code: ws, client: 'A', message: 'I think I have an eating disorder, what should I eat?', lang: 'en' })
+  });
+  ok('nutri safety guard -> 200 referral (no AI key needed)', nutriSafety.status === 200 && nutriSafety.d?.safety === true && /doctor|dietitian/i.test(nutriSafety.d?.reply || ''), nutriSafety.d);
+  const nutriSafetyFa = await j('/api/ai/nutri', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ code: ws, client: 'A', message: 'باردار هستم چه بخورم؟', lang: 'fa' })
+  });
+  ok('nutri safety guard (Persian) -> 200 referral', nutriSafetyFa.status === 200 && nutriSafetyFa.d?.safety === true, nutriSafetyFa.d);
+  const nutriNoClient = await j('/api/ai/nutri', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ code: ws, client: 'Nobody', message: 'hi' })
+  });
+  ok('nutri unknown client -> 404', nutriNoClient.status === 404, nutriNoClient.status);
+  // Without an AI key the normal path is a clean 503 (the client falls back to
+  // its deterministic engine) — never a 500.
+  const nutriNoKey = await j('/api/ai/nutri', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ code: ws, client: 'A', message: 'what should I eat?' })
+  });
+  ok('nutri normal path without AI key -> 503 ai-not-configured', nutriNoKey.status === 503 && nutriNoKey.d?.error === 'ai-not-configured', nutriNoKey.d);
 
   console.log('== password change + session control (v18.9) ==');
   const pwEmail = signup.d?.coach?.email;

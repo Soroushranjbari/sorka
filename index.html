@@ -546,32 +546,39 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
    and the device binds to the profile. Always dark — a stage, not a form. */
 .unlock{position:fixed;inset:0;z-index:6;overflow:hidden;user-select:none;-webkit-user-select:none;background:radial-gradient(120% 90% at 50% 0%,#151A24 0%,#0A0B0E 55%,#050608 100%);perspective:1100px}
 .un-stage{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(calc(var(--ux,0)*9deg + var(--py,0deg)));transition:transform .18s ease-out}
-.un-glow{position:absolute;left:50%;top:32%;width:620px;height:620px;transform:translate(-50%,-50%) translateZ(-120px);background:radial-gradient(circle,rgba(200,240,75,.22),rgba(200,240,75,.05) 42%,transparent 68%);opacity:calc(.5 + var(--ux,0)*.5);pointer-events:none}
+.un-glow{position:absolute;left:50%;top:34%;width:620px;height:620px;transform:translate(-50%,-50%) translateZ(-120px);background:radial-gradient(circle,rgba(200,240,75,.22),rgba(200,240,75,.05) 42%,transparent 68%);opacity:calc(.5 + var(--ux,0)*.5);pointer-events:none}
 .un-grid{position:absolute;inset-inline:-20%;bottom:-14%;height:48%;transform:translateZ(-170px) rotateX(62deg);background:linear-gradient(rgba(200,240,75,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(200,240,75,.14) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:linear-gradient(to top,#000 26%,transparent 90%);mask-image:linear-gradient(to top,#000 26%,transparent 90%);opacity:.55;pointer-events:none}
 .un-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--accent);animation:unfloat 7s ease-in-out infinite;pointer-events:none}
 @keyframes unfloat{0%,100%{transform:translate3d(0,0,var(--z,0px))}50%{transform:translate3d(16px,-30px,var(--z,0px))}}
-.un-rings{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(40px) rotate(calc(var(--ux,0)*140deg));pointer-events:none}
+.un-rings{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%) translateZ(40px) rotate(calc(var(--ux,0)*140deg));pointer-events:none}
 .un-ring{position:absolute;left:50%;top:50%;border-radius:50%;border:1.5px solid rgba(200,240,75,.4);transform:translate(-50%,-50%)}
-.un-ring.r1{width:196px;height:196px;border-style:dashed;animation:unspin 14s linear infinite}
-.un-ring.r2{width:262px;height:262px;opacity:.55;animation:unspin 24s linear infinite reverse}
-.un-ring.r3{width:336px;height:336px;opacity:.28;animation:unspin 38s linear infinite}
+/* v18.47 — the big dashed circle is the dumbbell's FRAME: the bar sits exactly
+   on its center (like the reference screenshot). 260px keeps circle + hint +
+   card inside one viewport. */
+.un-ring.r1{width:260px;height:260px;border-style:dashed;opacity:.8;animation:unspin 14s linear infinite}
+.un-ring.r2{width:330px;height:330px;opacity:.4;animation:unspin 24s linear infinite reverse}
+.un-ring.r3{width:405px;height:405px;opacity:.2;animation:unspin 38s linear infinite}
 @keyframes unspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) translateY(calc(var(--ux,0)*-30px)) rotate(calc(var(--ux,0)*-3deg)) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
+/* v18.47 — the dumbbell sits in normal flow inside .un-hold (grid-centered),
+   so it is EXACTLY centered in the big dashed circle (position:absolute from
+   the padlock era broke place-items:center). */
+.un-lock{position:relative;transform:translateY(calc(var(--ux,0)*-30px)) rotate(calc(var(--ux,0)*-3deg)) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
 @keyframes unbob{0%,100%{margin-top:0}50%{margin-top:-9px}}
 .un-lock svg{filter:drop-shadow(0 0 22px rgba(200,240,75,.4)) drop-shadow(0 18px 40px rgba(0,0,0,.6))}
 /* v18.44 — HOLD-TO-LIFT: the dumbbell itself is the button (isometric hold,
    like a plank). Holding fills a progress ring around it, the plates glow
    toward the center, the whole bar LIFTS, rings/particles accelerate — and
    at 100% it bursts into the portal. Replaces slide-to-unlock. */
-.un-hold{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(80px);width:250px;height:250px;display:grid;place-items:center;cursor:grab;touch-action:none;z-index:3;-webkit-tap-highlight-color:transparent}
+.un-hold{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%) translateZ(80px);width:260px;height:260px;display:grid;place-items:center;cursor:grab;touch-action:none;z-index:3;-webkit-tap-highlight-color:transparent}
 .un-hold.dis{cursor:not-allowed}
 .un-hold.dis .un-lock{opacity:.45}
 .un-hold:active{cursor:grabbing}
-.un-ringp{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(60px);pointer-events:none;opacity:calc(.35 + var(--ux,0)*.65)}
-.un-holdhint{position:absolute;left:50%;top:45.5%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.04em;color:#B9C0CE;white-space:nowrap;pointer-events:none;opacity:calc(1 - var(--ux,0)*1.8)}
-.un-holdhint .ic{color:var(--accent);animation:unpulse 1.5s ease-in-out infinite}
+/* v18.47 — the floating hint line was removed (it collided with the card on
+   short viewports); the instruction lives in the FOOT status instead, with
+   the pulsing hand icon. */
+.un-hintline{display:inline-flex;gap:7px;align-items:center}
+.un-hintline .ic{color:var(--accent);animation:unpulse 1.5s ease-in-out infinite}
 @keyframes unpulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
-.un-pct{position:absolute;left:50%;top:45.5%;transform:translateX(-50%);font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.06em;pointer-events:none;opacity:0}
 .holding .un-ring.r1{animation-duration:3.5s}.holding .un-ring.r2{animation-duration:6s}.holding .un-ring.r3{animation-duration:9s}
 .holding .un-dot{animation-duration:2.2s}
 /* v18.42 — the hero is a 3D DUMBBELL (sporty element, not a padlock): the
@@ -583,11 +590,25 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .un-plate.ri{transform:translateX(calc(var(--ux,0)*-22px))}
 .un-plate.lo{transform:translateX(calc(var(--ux,0)*8px))}
 .un-plate.ro{transform:translateX(calc(var(--ux,0)*-8px))}
-.un-shock{position:absolute;left:50%;top:31%;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;border:2.5px solid var(--accent);opacity:0;transform:translateZ(60px);pointer-events:none}
-.un-card{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%) translateZ(34px);width:min(440px,90vw);text-align:center}
-.un-sub{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-.un-name{display:block;font-size:31px;font-weight:800;letter-spacing:-.02em;color:#F5F6F8;margin-top:8px}
+.un-shock{position:absolute;left:50%;top:34%;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;border:2.5px solid var(--accent);opacity:0;transform:translateZ(60px);pointer-events:none}
+.un-card{position:absolute;left:50%;top:71%;transform:translate(-50%,-50%) translateZ(34px);width:min(440px,90vw);text-align:center}
+/* v18.45 — the progress ring IS the avatar's halo: the photo sits in the
+   center of the hold ring, so the user literally "fills themselves up" while
+   holding. Typography: eyebrow → greeting → big name → coach chip. */
+.un-avwrap{position:relative;width:100px;height:100px;margin:0 auto;display:grid;place-items:center}
+.un-avwrap .av{box-shadow:0 0 0 4px rgba(200,240,75,.14),0 14px 34px -10px rgba(0,0,0,.75)}
+.un-avwrap .av img{transition:transform .2s ease-out}
+.un-avwrap .av img,.un-avwrap .av{transform:scale(calc(1 + var(--ux,0)*.06))}
+.un-avring{position:absolute;inset:0;transform:rotate(-90deg)}
+.un-avring .bg{stroke:rgba(255,255,255,.08)}
+.un-avring .fg{stroke:var(--accent);stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(200,240,75,.65));transition:stroke-dashoffset .1s linear}
+.un-sub{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+html[lang="fa"] .un-sub{letter-spacing:.02em}
+.un-hi{font-size:13.5px;font-weight:600;color:#8A90A0;margin-top:6px}
+.un-name{display:block;font-size:30px;font-weight:800;letter-spacing:-.02em;color:#F5F6F8;margin-top:2px;line-height:1.15}
 .un-meta{font-size:12.5px;color:#8A90A0;margin-top:7px;letter-spacing:.05em}
+.un-coach{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:6px 14px 6px 8px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:700;color:#C6CBD6}
+.un-coach .av{box-shadow:none}
 .un-codebox{display:flex;gap:8px;margin:16px auto 0;max-width:360px}
 .un-codebox .inp{flex:1;background:rgba(255,255,255,.06);border-color:rgba(200,240,75,.3);color:#F5F6F8}
 .un-pick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
@@ -614,8 +635,8 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 @keyframes unzoom{55%{opacity:1}100%{transform:translateZ(380px);opacity:0}}
 .unlocked .un-card{animation:none;opacity:0;transition:opacity .4s}
 .unlocked .un-lock{animation:unpop .6s ease-out forwards}
-@keyframes unpop{35%{transform:translate(-50%,-50%) translateZ(70px) translateY(-30px) scale(1.16)}100%{transform:translate(-50%,-50%) translateZ(70px) translateY(-30px) scale(1.05);opacity:0}}
-.unlocked .un-holdhint,.unlocked .un-pct,.unlocked .un-ringp{opacity:0;transition:opacity .3s}
+@keyframes unpop{35%{transform:translateY(-30px) scale(1.16)}100%{transform:translateY(-30px) scale(1.05);opacity:0}}
+.unlocked .un-card{opacity:0;transition:opacity .3s}
 @media (prefers-reduced-motion:reduce){.un-dot,.un-ring,.un-lock{animation:none}.un-stage{transition:none}}
 .ric{width:44px;height:44px;border-radius:13px;display:grid;place-items:center}
 .pickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 18px}
@@ -1265,7 +1286,7 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
-'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','I have a connection code':'کد اتصال دارم',
+'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
 'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
@@ -1289,6 +1310,8 @@ const FA={
 'Leaderboard':'جدول امتیازات','Average progress':'میانگین پیشرفت','On track':'در مسیر','Behind':'عقب‌تر از برنامه','Nudge':'یادآوری','Nudge sent ✓':'یادآوری ارسال شد ✓','You rank':'رتبه تو','completed the challenge':'چالش را به پایان رساند',
 'Video link':'لینک ویدیو','Watch video':'تماشای ویدیو','Paste a YouTube or GIF link — the client sees it on their workout':'لینک یوتیوب یا گیف را بچسبان — شاگرد آن را در تمرینش می‌بیند','GIF links play right inside the workout — other links open in a new tab.':'لینک گیف همان‌جا داخل تمرین پخش می‌شود — بقیه لینک‌ها در تب جدید باز می‌شوند.','Link must start with http':'لینک باید با http شروع شود','Video saved ✓':'ویدیو ذخیره شد ✓','Video removed':'ویدیو حذف شد','Search on YouTube':'جستجو در یوتیوب','Set a link once — it attaches to this exercise in every workout':'یک‌بار لینک را ذخیره کن — به این حرکت در همه‌ی تمرین‌ها می‌چسبد','Saved to video bank ✓':'در بانک ویدیو ذخیره شد ✓','Video bank':'بانک ویدیو','links':'لینک','with video':'با ویدیو','Import':'درون‌ریزی','Export':'برون‌بری','Import video links':'درون‌ریزی لینک‌های ویدیو','Export video links':'برون‌بری لینک‌های ویدیو','Paste lines like:':'خط‌هایی مثل این بچسبان:','Name | URL':'نام | لینک','One link per line: exercise name, then the URL — tab or | separated.':'هر خط یک لینک: اول نام حرکت، بعد لینک — با تب یا | جدا می‌شود.','links imported':'لینک وارد شد','not matched':'پیدا نشد','No links imported':'هیچ لینکی وارد نشد','Select and copy manually':'دستی انتخاب و کپی کن','Change photo':'تغییر عکس','Add photo':'افزودن عکس','Remove photo':'حذف عکس','Photo saved ✓':'عکس ذخیره شد ✓','Photo removed':'عکس حذف شد','Picture is too large':'عکس بیش از حد بزرگ است','Could not read the picture':'عکس خوانده نشد','Tap the photo to change it':'برای تغییر، روی عکس بزن',
 'Offline mode':'حالت آفلاین','Your coach':'مربی تو','Replies within':'پاسخ در حدود','Swaps':'جایگزین‌ها','Custom':'سفارشی','Favorite':'علاقه‌مندی','Exercise name':'نام حرکت','Custom exercise saved ✓':'حرکت سفارشی ذخیره شد ✓','Exercise deleted':'حرکت حذف شد','Custom exercises sync with your workspace and appear in the builder, templates and the client app':'حرکات سفارشی با فضای کاری‌ات همگام می‌شوند و در سازنده، قالب‌ها و اپ شاگرد ظاهر می‌شوند','Edit Meal Template':'ویرایش قالب وعده','Edit Plan Template':'ویرایش قالب برنامه','Template name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','No foods — macro-only template':'بدون غذا — قالب فقط ماکرو','Edit Note':'ویرایش یادداشت','Note updated ✓':'یادداشت به‌روزرسانی شد ✓','No snapshot stored for this entry (older record)':'برای این رکورد اسنپ‌شاتی ذخیره نشده (رکورد قدیمی)','File too large — max 300 KB per file':'فایل بزرگ است — حداکثر ۳۰۰ کیلوبایت','File storage is full — delete some files first':'حافظه فایل‌ها پر است — اول چند فایل حذف کن','File uploaded ✓':'فایل بارگذاری شد ✓','This file has no stored content (legacy entry)':'این فایل محتوای ذخیره‌شده ندارد (رکورد قدیمی)','Downloading':'در حال دانلود','No downloadable files yet':'فایل قابل دانلودی نیست','files':'فایل','Preview':'پیش‌نمایش','No inline preview for this type — download it instead':'پیش‌نمایش این نوع نیست — دانلودش کن','No files yet — upload the first document':'هنوز فایلی نیست — اولین سند را بارگذاری کن','Stored in your workspace and synced to every device — max 300 KB per file':'در فضای کاری‌ات ذخیره و بین همه دستگاه‌ها همگام می‌شود — حداکثر ۳۰۰ کیلوبایت','Photo attached':'عکس پیوست شد','Workspace exported ✓':'فضای کاری خروجی گرفته شد ✓','Current password is incorrect':'رمز فعلی اشتباه است','Password updated — other devices signed out':'رمز به‌روزرسانی شد — دستگاه‌های دیگر خارج شدند','Signed out of all other devices':'از همه دستگاه‌های دیگر خارج شدی','Enter your current password':'رمز فعلی را وارد کن','Changing your password signs out every other device':'با تغییر رمز، از همه دستگاه‌های دیگر خارج می‌شوی','this device':'این دستگاه','Name':'نام','Status':'وضعیت','Streak':'زنجیره','Done':'تمام','Connect a client':'اتصال شاگرد','Every client gets a personal code (Clients → copy icon). They enter it on the login screen and their device binds to your workspace instantly.':'هر شاگرد یک کد اختصاصی می‌گیرد (شاگردها → آیکن کپی). کد را در صفحه ورود وارد می‌کند و دستگاهش فوراً به فضای کاری تو وصل می‌شود.','Publish a workout':'انتشار تمرین','Build it in the Workout Builder, save it to the client — it appears on their phone the moment you save.':'در سازنده تمرین بساز و برای شاگرد ذخیره کن — همان لحظه روی گوشی‌اش ظاهر می‌شود.',"Nutrition plans":'برنامه‌های تغذیه',"The client sees today's meals, targets and your food swaps in their Nutrition tab.":'شاگرد وعده‌های امروز، اهداف و جایگزین‌های غذا را در تب تغذیه می‌بیند.','Log measurements and approve progress photos — charts update for both of you.':'اندازه‌گیری‌ها را ثبت کن و عکس‌های پیشرفت را تأیید کن — نمودارها برای هر دو به‌روز می‌شوند.','Drafts workouts, analyzes clients and writes your weekly report — you always decide before anything is sent.':'تمرین پیش‌نویس می‌کند، شاگردها را تحلیل می‌کند و گزارش هفتگی می‌نویسد — همیشه قبل از ارسال، تصمیم با توست.','Data syncs live across every signed-in device — offline edits merge automatically':'داده‌ها بین همه دستگاه‌های واردشده زنده همگام می‌شوند — ویرایش‌های آفلاین خودکار ادغام می‌شوند',
+/* v18.48 — Nutrition Assistant (student hub + coach monitoring) */
+'Nutrition':'تغذیه','Your nutrition companion':'همراه تغذیه تو','Log what you eat, ask for meal ideas and let your coach follow your progress.':'چیزی که می‌خوری را ثبت کن، ایده‌ی غذا بگیر و مربی‌ات پیشرفتت را ببیند.','Set up nutrition profile':'تنظیم پروفایل تغذیه','From your profile':'از پروفایل تو','Set targets':'تعیین هدف‌ها','Left':'باقی‌مانده','meals':'وعده','What should you eat now?':'الان چی بخوری؟','Based on what is left of your day':'بر اساس باقی‌مانده‌ی امروز تو','Log this':'ثبت این','Log this meal':'ثبت این وعده','Logged':'ثبت شد','Food log':'دفتر غذای تو','Entry removed':'ردیف حذف شد','Meal logged ✓':'وعده ثبت شد ✓','Water logged 💧':'آب ثبت شد 💧','Nutrition Assistant':'دستیار تغذیه','AI · not medical advice':'هوش مصنوعی · توصیه پزشکی نیست','Hi! Tell me what you ate, or ask what to eat next.':'سلام! بگو چی خوردی، یا بپرس بعدش چی بخورم.','Thinking…':'در حال فکر کردن…','What should I eat now?':'الان چی بخورم؟','Food for before my workout':'غذای قبل تمرین','Pre-workout':'قبل تمرین','Photo':'عکس','attached':'پیوست شد','Log a meal or ask anything…':'وعده ثبت کن یا هر چیزی بپرس…','Confirm & log':'تأیید و ثبت','I found these foods — confirm and I will log them:':'این غذاها را پیدا کردم — تأیید کن تا ثبتشان کنم:','I could not find':'پیدا نکردم','Pick it from the food library or tell me the amount in grams.':'از کتاب غذاهای مربی انتخابش کن یا مقدارش را به گرم بگو.','You have':'داری','left today':'برای امروز مانده','Try':'امتحان کن','Instead of':'به‌جای','Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.':'بگو چی خوردی (مثل «۲۰۰ گرم مرغ و ۳۰۰ گرم برنج») تا ثبتش کنم.','Nutrition profile':'پروفایل تغذیه','Daily targets':'هدف‌های روزانه','Water':'آب','Meals':'وعده‌ها','Leave empty to follow your coach plan.':'خالی بگذار تا از برنامه‌ی مربی‌ات پیروی شود.','Preferences':'ترجیحات','Allergies / intolerances':'حساسیت‌ها / عدم تحمل‌ها','Foods you dislike':'غذاهایی که دوست نداری','Favorite foods':'غذاهای مورد علاقه','Cooking time available':'وقت پخت‌وپز','Wake up':'بیدار شدن','Bed time':'خواب','Profile saved ✓':'پروفایل ذخیره شد ✓','Edit profile':'ویرایش پروفایل','Allergies':'حساسیت‌ها','Dislikes':'دوست نداردها','Favorites':'علاقه‌مندی‌ها','Cooking time':'وقت پخت','No foods to log':'غذایی برای ثبت نیست','Photo attached — describe your meal':'عکس پیوست شد — غذایت را توصیف کن','Quick meal':'وعده سریع','High-protein':'پروتئین بالا','Budget meal':'وعده اقتصادی','Light meal':'وعده سبک','No cooking':'بدون پخت','No food logs for 3 days':'۳ روز دفتر غذا خالی است','Protein below target the last 3 days':'پروتئین ۳ روز اخیر زیر هدف است','Calories off target the last 3 days':'کالری ۳ روز اخیر خارج از هدف است','Hydration well below target today':'آب امروز خیلی کمتر از هدف است','Nutrition Health':'سلامت تغذیه','Rules':'قوانین','Weekly report':'گزارش هفتگی','On Track':'در مسیر','Needs Attention':'نیاز به توجه','Action Required':'نیاز به اقدام','All clients with nutrition plans are on track.':'همه شاگردهای دارای برنامه تغذیه در مسیر هستند.','Recent insights':'بینش‌های اخیر','Nutrition monitoring rules':'قوانین پایش تغذیه','Get notified only when a pattern is real — thresholds, duration and severity are yours to set.':'فقط وقتی الگو واقعی باشد خبر می‌شوی — آستانه، مدت و شدت را خودت تعیین می‌کنی.','Protein % of target':'درصد پروتئین از هدف','Calories % of target':'درصد کالری از هدف','Logging':'ثبت غذا','Water % of target':'درصد آب از هدف','Weight trend vs goal':'روند وزن نسبت به هدف','Threshold %':'آستانه ٪','Days':'روز','Observe':'مشاهده','Warning':'هشدار','Alert':'هشدار جدی','Example: protein below 85% for 3 days → warning.':'مثال: پروتئین زیر ۸۵٪ برای ۳ روز → هشدار.','Rules saved ✓':'قوانین ذخیره شد ✓','Weekly nutrition report':'گزارش هفتگی تغذیه','Protein on target':'پروتئین در هدف','Below calorie target':'زیر هدف کالری','Below protein target':'زیر هدف پروتئین','No logs this week':'بدون ثبت این هفته','Days logged':'روزهای ثبت‌شده','Avg calories':'میانگین کالری','Avg protein':'میانگین پروتئین','Consistency':'ثبات','No food logs this week yet — students log from their Nutrition tab.':'این هفته هنوز غذایی ثبت نشده — شاگردها از تب تغذیه ثبت می‌کنند.','AI narrative':'روایت هوش مصنوعی','AI is not configured on this server — the table above is fully computed locally.':'هوش مصنوعی روی این سرور تنظیم نشده — جدول بالا کاملاً محلی محاسبه شده است.','AI report unavailable right now.':'گزارش هوش مصنوعی الان در دسترس نیست.','days without logs':'روز بدون ثبت','vs goal':'نسبت به هدف','avg':'میانگین','days':'روز','Protein below target':'پروتئین زیر هدف','Calories off target':'کالری خارج از هدف','Not logging food':'ثبت نمی‌کند','Hydration low':'آب کم','Weight trend off goal':'روند وزن دور از هدف','last 7 days':'۷ روز اخیر','No food logged yet — the student logs from their Nutrition tab.':'هنوز غذایی ثبت نشده — شاگرد از تب تغذیه ثبت می‌کند.','Assistant insights':'بینش‌های دستیار','No insights yet.':'هنوز بینشی نیست.','Assistant thread':'گفتگو با دستیار','last messages':'آخرین پیام‌ها','No assistant conversation yet.':'هنوز گفتگویی با دستیار نیست.','Meal':'وعده'
 };
 const t=s=>lang==='fa'?(FA[s]??s):s;
 /* muscle labels get their own lookup so the nav 'Back' and the muscle 'Back' never collide */
@@ -1700,6 +1723,28 @@ let FORMS=[
 let CHALLENGES=[
 {id:'ch1',name:'September Streak',emoji:'🔥',desc:'Keep your day streak alive all month — every day counts.',type:'streak',metric:'streak',target:14,unit:'days',start:__iso(-6),days:30,parts:['*'],reward:{pts:150,be:'🏅',bn:'Streak Master'},stages:[{e:'🌱',n:'Start'},{e:'🔥',n:'3 days'},{e:'💪',n:'7 days'},{e:'⚡',n:'10 days'},{e:'🏆',n:'14 days'}],prog:{},done:[],status:'active',createdAt:Date.now()},
 {id:'ch2',name:'Autumn Shred',emoji:'🏃',desc:'12 workouts in 4 weeks — consistency beats intensity.',type:'target',metric:'workouts',target:12,unit:'workouts',start:__iso(-10),days:28,parts:['Ali Rezaei','Sara Ahmadi','Mohammad Karimi'],reward:{pts:200,be:'🏆',bn:'Shred Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'4 done'},{e:'🔥',n:'8 done'},{e:'🏆',n:'12 done'}],prog:{},done:[],status:'active',createdAt:Date.now()}];
+/* v18.48 — NUTRITION ASSISTANT data layer. Four new payload arrays that ride
+   the workspace exactly like MSGS/PACKS/FORMS:
+   NLOGS  — what was actually EATEN: {id,client,d:'YYYY-MM-DD',meal,items:[{n,g,kcal,p,c,f}],kcal,p,c,f,water?,type?,src,at}
+            (type:'water' entries carry ml instead of items — one array, one merge path)
+   NCHAT  — the student ↔ Nutrition-Assistant conversation {id,client,role:'student'|'assistant',body,d,at,src?,card?}
+            card = a structured ACTION attached to an assistant message (log confirmation) so
+            every chat can end in data, not just words.
+   NINS   — Insight Engine output {id,client,kind:'observation'|'pattern'|'concern'|'suggestion',title,detail,sev,d,at}
+   NRULES — coach-configurable monitoring rules {id,metric,op,thr,days,sev,on}
+   The nutrition PROFILE lives on the client record (c.nprof) so it follows the
+   client through the existing CLIENTS id-merge. */
+let NLOGS=[];
+let NCHAT=[];
+let NINS=[];
+const NRULE_SEED=[
+ {id:'nr-protein',metric:'protein',op:'below',thr:85,days:3,sev:'warn',on:true},
+ {id:'nr-logging',metric:'logging',op:'missing',thr:0,days:3,sev:'alert',on:true},
+ {id:'nr-kcal',metric:'kcal',op:'below',thr:80,days:5,sev:'warn',on:true},
+ {id:'nr-water',metric:'water',op:'below',thr:60,days:5,sev:'info',on:true},
+ {id:'nr-weight',metric:'weight',op:'away',thr:0,days:14,sev:'alert',on:true}];
+let NRULES=NRULE_SEED.map(r=>({...r}));
+const defaultNrules=()=>NRULE_SEED.map(r=>({...r}));
 function threads(){
   const map={};
   MSGS.forEach(m=>{(map[m.client]=map[m.client]||[]).push(m)});
@@ -1848,7 +1893,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
 let __lastPack='';
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
@@ -1874,7 +1919,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1902,6 +1947,8 @@ function loadData(){
     repl(CLIENTS,d.CLIENTS);repl(EVENTS,d.EVENTS);repl(NOTES,d.NOTES);repl(MSGS,d.MSGS);
     repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
     repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
+    repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
+    if(Array.isArray(d.NRULES)&&d.NRULES.length){NRULES.length=0;d.NRULES.forEach(r=>NRULES.push(r))}
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
     repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
     // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
@@ -1976,6 +2023,8 @@ function freshWorkspace(){
   CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
   FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
+  NLOGS.length=0;NCHAT.length=0;NINS.length=0;NRULES.length=0;
+  defaultNrules().forEach(r=>NRULES.push(r));
   FORMS.length=0;CHALLENGES.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
@@ -2331,7 +2380,7 @@ const billErr=d=>{
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -2391,11 +2440,15 @@ function cloudMerge(d,adopt){
        if(rc.intake&&JSON.stringify(rc.intake)!==JSON.stringify(loc.intake||null)){loc.intake=rc.intake;ch=true}
        // v18.38 — earned badges ride the client record the same way.
        if(rc.badges&&JSON.stringify(rc.badges)!==JSON.stringify(loc.badges||[])){loc.badges=rc.badges;ch=true}
+       // v18.48 — nutrition profile is an OBJECT on the client record: compare
+       // by content (same rule as intake) or every pull would loop the sync flag.
+       if(rc.nprof&&JSON.stringify(rc.nprof)!==JSON.stringify(loc.nprof||null)){loc.nprof=rc.nprof;ch=true}
        ['done','missed','streak','week','pts','dayStreak'].forEach(f=>{if(typeof rc[f]==='number'&&rc[f]>(loc[f]||0)){loc[f]=rc[f];ch=true}});
      }})}
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS]].forEach(([k,arr])=>{
+  // v18.48 — NLOGS/NCHAT/NINS/NRULES join the same id-union path.
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -2542,6 +2595,9 @@ function cloudStart(){
   /* v18.21 — daily smart-report sweep: shortly after boot, then every 6h. */
   setTimeout(rptAutoRun,4000);
   CLOUD.rptT=setInterval(()=>{if(!document.hidden)rptAutoRun()},6*3600*1000);
+  /* v18.48 — nutrition monitoring sweep (rules → insights → alerts). */
+  setTimeout(nSweepAuto,5000);
+  CLOUD.nsT=setInterval(()=>{if(!document.hidden)nSweepAuto()},6*3600*1000);
   /* v18.38 — smart workout reminder sweep (coach devices only, see remSweep). */
   setTimeout(remSweep,6000);
   CLOUD.remT=setInterval(()=>{if(!document.hidden)remSweep()},6*3600*1000);
@@ -3046,6 +3102,173 @@ const mealKcal=m=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];retu
 const mealM=(m,k)=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];return a+(f?(f[k]||0)*x.g/100:0)},0):(m.mk&&k==='p'?m.mk.p:0);
 const daySum=ms=>({kcal:Math.round(ms.reduce((a,m)=>a+mealKcal(m),0)),p:Math.round(ms.reduce((a,m)=>a+mealM(m,'p'),0)),c:Math.round(ms.reduce((a,m)=>a+mealM(m,'c'),0)),f:Math.round(ms.reduce((a,m)=>a+mealM(m,'f'),0))});
 const nPlanOf=cl=>NPLANS.find(x=>x.client===cl&&x.status!=='Archived');
+
+/* ================= v18.48 — NUTRITION ASSISTANT ENGINE =================
+   DETERMINISTIC layer of the assistant (the LLM never computes numbers).
+   Everything the student sees and everything the server model is told comes
+   from these pure functions over FOODS + NPLANS + NLOGS + c.nprof:
+     targets()   → daily calorie/macro/water targets (plan day-type → nprof → null)
+     consumed()  → what was actually eaten (NLOGS)
+     remaining() → targets − consumed
+     adherence() → per-day hit/miss over a window (kcal ±15%, protein ≥90%)
+     status()    → 🟢 ok / 🟡 warn / 🔴 alert + human-readable reasons
+     parseText() → "200g chicken and 300g rice" → structured items (food DB match)
+     suggestNow()→ contextual "what should I eat now?" options ranked against
+                   remaining macros, time of day and preferences
+     swapsFor()  → nutritionally comparable alternatives (alt[] + macro similarity) */
+const NMEALS=['Breakfast','Snack','Lunch','Pre-Workout','Dinner','Before Bed'];
+const N_NO_COOK=['Greek Yogurt','Cottage Cheese','Whey Protein','Banana','Apple','Almonds','Whole Wheat Bread','Orange Juice'];
+const N_BUDGET=['Whole Eggs','Egg Whites','Oats','White Rice (cooked)','Whole Wheat Bread','Cottage Cheese','Banana','Broccoli','Lentils'];
+const NEng={
+  dow:iso=>{const d=new Date(iso+'T12:00:00');return (d.getDay()+6)%7},
+  /* Targets: the coach's ACTIVE plan wins (train/rest day type); the student's
+     own profile targets are the fallback; no targets → null (assistant still
+     logs, but frames everything as "no targets set"). */
+  targets(c,iso){
+    const p=nPlanOf(c.name);
+    if(p&&Array.isArray(p.days)){const day=p.days[this.dow(iso||isoToday())];if(day)return day.type==='train'?p.train:p.rest}
+    const np=c.nprof;
+    if(np&&np.kcal>0)return {kcal:Math.round(np.kcal),p:Math.round(np.p||0),c:Math.round(np.c||0),f:Math.round(np.f||0)};
+    return null;
+  },
+  waterT(c){const np=c.nprof;return np&&np.waterL>0?np.waterL:(nPlanOf(c.name)?3:2.5)},
+  logs(c,iso){return NLOGS.filter(l=>l&&l.client===c.name&&l.d===iso)},
+  consumed(c,iso){
+    const ls=this.logs(c,iso).filter(l=>l.type!=='water');
+    return {kcal:Math.round(ls.reduce((a,l)=>a+(l.kcal||0),0)),p:Math.round(ls.reduce((a,l)=>a+(l.p||0),0)),c:Math.round(ls.reduce((a,l)=>a+(l.c||0),0)),f:Math.round(ls.reduce((a,l)=>a+(l.f||0),0))};
+  },
+  waterOf(c,iso){return Math.round(this.logs(c,iso).reduce((a,l)=>a+(l.ml||0),0)/100)/10},
+  mealsLogged(c,iso){return new Set(this.logs(c,iso).filter(l=>l.type!=='water'&&l.meal).map(l=>l.meal)).size},
+  remaining(c,iso){
+    const tg=this.targets(c,iso),co=this.consumed(c,iso);
+    if(!tg)return null;
+    return {kcal:Math.max(0,tg.kcal-co.kcal),p:Math.max(0,tg.p-co.p),c:Math.max(0,tg.c-co.c),f:Math.max(0,tg.f-co.f)};
+  },
+  /* One day's scorecard: null when there is nothing to compare (no targets). */
+  dayHit(c,iso){
+    const tg=this.targets(c,iso);if(!tg||!tg.kcal)return null;
+    const co=this.consumed(c,iso);
+    const logged=co.kcal>0||this.waterOf(c,iso)>0;
+    return {logged,kcal:co.kcal>0&&co.kcal>=tg.kcal*0.85&&co.kcal<=tg.kcal*1.15,prot:co.p>=tg.p*0.9,kcalPct:Math.round(co.kcal/tg.kcal*100),protPct:tg.p?Math.round(co.p/tg.p*100):100};
+  },
+  adherence(c,days){
+    const n=days||7;let logged=0,kcalHits=0,protHits=0,withTg=0,kcalPctSum=0,protPctSum=0;
+    for(let i=0;i<n;i++){
+      const iso=__iso(-i);
+      const h=this.dayHit(c,iso);if(!h)continue;withTg++;
+      if(h.logged)logged++;
+      if(h.kcal){kcalHits++;kcalPctSum+=h.kcalPct}
+      if(h.prot){protHits++;protPctSum+=h.protPct}
+    }
+    return {days:n,withTg,logged,kcalHits,protHits,kcalPct:withTg?Math.round(kcalPctSum/Math.max(1,kcalHits)):0,protPct:withTg?Math.round(protPctSum/Math.max(1,protHits)):0,consistency:withTg?Math.round(logged/withTg*100):0};
+  },
+  /* Status for the coach dashboard: worst reason wins. Deliberately CONSERVATIVE —
+     a missing plan is 'ok' (nothing to monitor yet), only real logged behavior
+     raises flags. */
+  status(c){
+    const hasPlan=!!(nPlanOf(c.name)||(c.nprof&&c.nprof.kcal>0));
+    if(!hasPlan)return {level:'ok',reasons:[]};
+    const reasons=[];
+    const ad=this.adherence(c,3);
+    if(ad.withTg&&ad.logged===0)reasons.push({sev:'alert',k:'logging',d:t('No food logs for 3 days')});
+    else if(ad.withTg>=2&&ad.protHits===0)reasons.push({sev:'warn',k:'protein',d:t('Protein below target the last 3 days')});
+    if(ad.withTg>=2&&ad.kcalHits===0&&ad.logged>0)reasons.push({sev:'warn',k:'kcal',d:t('Calories off target the last 3 days')});
+    const w=this.waterOf(c,isoToday()),wt=this.waterT(c);
+    if(w>0&&w<wt*0.4)reasons.push({sev:'info',k:'water',d:t('Hydration well below target today')});
+    const level=reasons.some(r=>r.sev==='alert')?'alert':reasons.some(r=>r.sev==='warn')?'warn':'ok';
+    return {level,reasons};
+  },
+  /* Food lookup by ANY name: exact EN, FA display name, or substring. */
+  foodLookup(name){
+    const q=String(name||'').trim().toLowerCase();if(!q)return null;
+    let f=FOODS.find(x=>x.n.toLowerCase()===q);
+    if(!f)f=FOODS.find(x=>foodName(x.n).toLowerCase()===q);
+    if(!f)f=FOODS.find(x=>x.n.toLowerCase().includes(q)||foodName(x.n).toLowerCase().includes(q));
+    return f||null;
+  },
+  itemM(n,g){const f=this.foodLookup(n);if(!f)return null;return {n:f.n,g:Math.round(g),kcal:Math.round(f.kcal*g/100),p:Math.round(f.p*g/100),c:Math.round(f.c*g/100),f:Math.round(f.f*g/100)}},
+  /* Natural-language log parsing: "200g chicken and 300g rice" / "۲۰۰ گرم مرغ".
+     Numbers BEFORE the food name (200g chicken) or Persian digits both work.
+     Returns {items, unknown:[names]} — unknown foods are ASKED about, never guessed. */
+  parseText(txt){
+    const fa=lang==='fa';
+    let s=String(txt||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/،/g,',');
+    const chunks=s.split(/\s+(?:and|و|\+|,|؛|;)\s+/i).map(x=>x.trim()).filter(Boolean);
+    const items=[],unknown=[];
+    chunks.forEach(ch=>{
+      const m=ch.match(/(\d+(?:[.,]\d+)?)\s*(?:g|gr|gram|گرم)?\s*(?:of\s+)?(.+)/i)||ch.match(/(.+?)\s*(\d+(?:[.,]\d+)?)\s*(?:g|گرم)/i);
+      if(!m){const f=this.foodLookup(ch.replace(/\d+[gگرم]*\s*/i,'').trim());if(f)items.push(this.itemM(f.n,100));else if(ch.length>1)unknown.push(ch);return}
+      const g=parseFloat(String(m[1]).replace(',','.'));
+      const name=m[2]||m[1];
+      const f=this.foodLookup(name);
+      if(f&&g>0)items.push(this.itemM(f.n,Math.min(2000,g)));
+      else unknown.push(name.trim());
+    });
+    return {items:items.filter(Boolean),unknown,fa};
+  },
+  /* "What should I eat now?" — deterministic, contextual. Buckets map to the
+     product spec: quick / high-protein / budget / light / no-cook. Each option
+     is 1-3 REAL foods from the library scored against the REMAINING macros. */
+  suggestNow(c,iso){
+    const rem=this.remaining(c,iso)||{kcal:600,p:40,c:60,f:20};
+    const hour=TDATE.getHours();
+    const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<18?'Snack':hour<22?'Dinner':'Before Bed';
+    const pool=FOODS.filter(f=>f.kcal>0);
+    const dislikes=String((c.nprof||{}).dislikes||'').toLowerCase().split(/[,،]/).map(x=>x.trim()).filter(Boolean);
+    const allergies=String((c.nprof||{}).allergies||'').toLowerCase().split(/[,،]/).map(x=>x.trim()).filter(Boolean);
+    const okF=f=>!allergies.some(a=>a&&(f.n.toLowerCase().includes(a)||foodName(f.n).toLowerCase().includes(a)))&&!dislikes.some(a=>a&&(f.n.toLowerCase().includes(a)||foodName(f.n).toLowerCase().includes(a)));
+    const score=f=>{
+      const g=Math.max(30,Math.min(300,Math.round(rem.p>0?Math.min(rem.p*1.4/f.p*100||150,300):150)));
+      const it=this.itemM(f.n,g);if(!it)return 0;
+      const pFill=rem.p>0?Math.min(1.25,it.p/Math.max(10,rem.p)):0.5;
+      const kFill=rem.kcal>0?Math.min(1.25,it.kcal/Math.max(80,rem.kcal)):0.5;
+      return pFill*0.6+kFill*0.4;
+    };
+    const mk=(key,label,filter,sort)=>{
+      const capK=Math.min(Math.max(rem.kcal*0.45,250),900); // one MEAL, not the whole day
+      const picks=pool.filter(okF).filter(filter).sort(sort).slice(0,2).map(f=>{
+        const g=Math.max(30,Math.min(300,Math.round(rem.p>0&&f.p>5?Math.min(rem.p*1.3/f.p*100,300):150)));
+        return this.itemM(f.n,g)||{n:f.n,g,kcal:0,p:0,c:0,f:0}});
+      if(!picks.length)return null;
+      let sum=picks.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      if(sum.kcal>capK){ // scale the portion down to a sane single-meal size
+        const k=capK/sum.kcal;
+        picks.forEach(x=>{const it=this.itemM(x.n,Math.max(20,Math.round(x.g*k)));if(it)Object.assign(x,it)});
+        sum=picks.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      }
+      return {key,label,meal,items:picks,...sum};
+    };
+    const byScore=(a,b)=>score(b)-score(a);
+    const options=[
+      mk('quick',t('Quick meal'),f=>f.p>=10,byScore),
+      mk('protein',t('High-protein'),f=>f.p/f.kcal>0.15,byScore),
+      mk('budget',t('Budget meal'),f=>N_BUDGET.includes(f.n),byScore),
+      mk('light',t('Light meal'),f=>f.kcal<150&&f.p>=3,byScore),
+      mk('nocook',t('No cooking'),f=>N_NO_COOK.includes(f.n),byScore)
+    ].filter(Boolean);
+    return {rem,meal,options};
+  },
+  /* Meal replacement: the food's own alt[] chain first, then macro-similar
+     foods (same category, protein density within ±35%). */
+  swapsFor(name){
+    const f=this.foodLookup(name);if(!f)return [];
+    const out=new Set((f.alt||[]).map(a=>this.foodLookup(a)).filter(Boolean).map(x=>x.n));
+    FOODS.forEach(x=>{
+      if(x.n===f.n||out.has(x.n))return;
+      const sameCat=x.cat===f.cat;
+      const pd=f.p>0&&x.p>0?Math.abs(x.p-f.p)/Math.max(f.p,1):1;
+      if(sameCat&&pd<=0.35)out.add(x.n);
+    });
+    return [...out].slice(0,6).map(n=>FOODS.find(x=>x.n===n)).filter(Boolean);
+  },
+  /* Weekly roll-up for the coach report. */
+  weekStats(c){
+    const ad=this.adherence(c,7);
+    const co={kcal:0,p:0};let n=0;
+    for(let i=0;i<7;i++){const x=this.consumed(c,__iso(-i));if(x.kcal>0){co.kcal+=x.kcal;co.p+=x.p;n++}}
+    return {...ad,avgKcal:n?Math.round(co.kcal/n):0,avgP:n?Math.round(co.p/n):0,loggedDays:n};
+  }
+};
 const tplExN=tp=>tp.parts?tp.parts.reduce((a,p)=>a+(p.exs||[]).length,0):(tp.exs||[]).length;
 const tplSetN=tp=>tp.parts?tp.parts.reduce((a,p)=>a+(p.exs||[]).reduce((b,e)=>b+e.sets,0),0):(tp.exs||[]).reduce((a,e)=>a+e.sets,0);
 function lineChart(d,o={}){
@@ -3179,10 +3402,17 @@ function vUnlock(){
   const dots=[...Array(16)].map((_,i)=>`<span class="un-dot" style="left:${(i*61)%96+2}%;top:${(i*37)%88+4}%;--z:${((i%5)*34-50).toFixed(0)}px;animation-delay:${(i*.7).toFixed(1)}s;opacity:${(.22+(i%4)*.13).toFixed(2)}"></span>`).join('');
   let center='';
   if(known){
-    center=`<div class="un-sub">${t('Welcome back')}</div>
-      <div style="margin:14px 0 4px">${avC(known.name,74)}</div>
+    const first=t(known.name).split(' ')[0];
+    center=`<div class="un-avwrap">
+        <svg class="un-avring" width="118" height="118" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="bg" cx="50" cy="50" r="47" fill="none" stroke-width="3"/>
+          <circle class="fg" id="un-prog" cx="50" cy="50" r="47" fill="none" stroke-width="3" stroke-dasharray="295.3" stroke-dashoffset="295.3"/>
+        </svg>
+        ${avC(known.name,86,known.id-1)}
+      </div>
       <b class="un-name">${esc(t(known.name))}</b>
-      <div class="un-meta">${coach?esc(coach)+' · ':''}${esc(S.joinCode||'')}</div>`;
+      <div class="un-hi">${t('Hello')} ${esc(first)} 👋</div>
+      ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
   }else if(st==='pick'){
     center=`<div class="un-sub">${t('Who are you?')}</div>
       <div class="un-pick">${CLIENTS.map(c=>`<button class="un-chip ${S.pickCid===c.id?'on':''}" data-act="un-pick" data-cid="${c.id}">${avC(c.name,38)}<span>${esc(t(c.name))}</span></button>`).join('')}</div>`;
@@ -3201,10 +3431,6 @@ function vUnlock(){
     <div class="un-stage">
       <div class="un-glow"></div><div class="un-grid"></div>${dots}
       <div class="un-rings"><span class="un-ring r1"></span><span class="un-ring r2"></span><span class="un-ring r3"></span></div>
-      <div class="un-ringp"><svg width="252" height="252" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="2.5"/>
-        <circle id="un-prog" cx="50" cy="50" r="46" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(200,240,75,.6))"/>
-      </svg></div>
       <div class="un-hold ${armed?'':'dis'}" id="un-hold" data-armed="${armed?1:0}" role="button" tabindex="0" aria-label="${t('Hold the dumbbell to lift')}">
       <div class="un-lock"><svg width="210" height="130" viewBox="0 0 210 130" role="img" aria-label="dumbbell">
         <defs>
@@ -3222,9 +3448,7 @@ function vUnlock(){
       <div class="un-shock"></div>
       <div class="un-card">${center}</div>
     </div>
-    <div class="un-holdhint" id="un-hint">${ic('hand',16)} ${t('Hold the dumbbell to lift')}</div>
-    <div class="un-pct" id="un-pct">🔥 0%</div>
-    <div class="un-foot"><span id="un-status">${armed?t('Keep holding until it lifts'):t('Connect with your code first')}</span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
+    <div class="un-foot"><span id="un-status"><span class="un-hintline">${ic('hand',16)} ${armed?t('Hold the dumbbell to lift'):t('Connect with your code first')}</span></span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
   </div>`;
 }
 /* Pointer wiring for the unlock stage — v18.44 HOLD-TO-LIFT: press and HOLD
@@ -3233,15 +3457,14 @@ function vUnlock(){
    into the portal. Release early → spring back. Pointer tilt adds a subtle
    3D parallax on hover/move. */
 function unlockWire(){
-  const sc=$('un-scene'),lk=$('un-hold'),prog=$('un-prog'),pct=$('un-pct');
+  const sc=$('un-scene'),lk=$('un-hold'),prog=$('un-prog');
   if(!sc||!lk||lk.dataset.wired)return;
   lk.dataset.wired='1';
   S.unlock={ux:0,hold:false,fetching:false,raf:0,t0:0};
-  const CIRC=289;
+  const CIRC=295.3;
   const armed=()=>lk.dataset.armed==='1';
   const set=v=>{S.unlock.ux=v;sc.style.setProperty('--ux',v.toFixed(3));
     if(prog)prog.setAttribute('stroke-dashoffset',(CIRC*(1-v)).toFixed(1));
-    if(pct)pct.textContent='🔥 '+Math.round(v*100)+'%';
     sc.classList.toggle('holding',v>0.02&&S.unlock.hold)};
   const tick=()=>{
     if(!S.unlock.hold)return;
@@ -4543,6 +4766,7 @@ function nOverview(){
     ['Plans Needing Review',review,'bell'],
     ['Average Daily Calories',`${nf(avg)} kcal`,'utensils']];
   return `
+  ${nHealth()}
   <div class="stats n5" style="grid-template-columns:repeat(5,1fr)">${kpis.map(([k,v,i])=>`
     <div class="card stat"><div class="row"><span class="k">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,16)}</span></div><div class="v" style="font-size:21px">${nf(v)}</div></div>`).join('')}
   </div>
@@ -4575,6 +4799,151 @@ function nTabRows(rows){
   </tr>`}).join('');
 }
 window.nqUpd=v=>{S.nq=v;const el=$('ntab-body');if(el)el.innerHTML=nTabRows(NPLANS.filter(p=>(S.nstat==='All'||p.status===S.nstat)&&(!S.nq||t(p.client).toLowerCase().includes(S.nq.toLowerCase())||p.name.toLowerCase().includes(S.nq.toLowerCase()))))};
+/* ================= v18.48 — COACH NUTRITION MONITORING =================
+   The coach never reads food logs by hand: the Insight Engine classifies every
+   active client (🟢/🟡/🔴), surfaces the ones that need attention first and
+   turns coach-configurable rules into insights + alerts. */
+function nHealth(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const rows=act.map(c=>({c,...NEng.status(c)}));
+  const okN=rows.filter(r=>r.level==='ok').length;
+  const warnN=rows.filter(r=>r.level==='warn').length;
+  const alertN=rows.filter(r=>r.level==='alert').length;
+  const attention=rows.filter(r=>r.level!=='ok').sort((a,b)=>(b.level==='alert'?1:0)-(a.level==='alert'?1:0)).slice(0,5);
+  return `<div class="card" style="margin-bottom:14px">
+    <div class="card-h" style="flex-wrap:wrap">
+      <span class="card-t">${ic('zap',14)} ${t('Nutrition Health')}</span>
+      <div class="row" style="flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="nrules-open">${ic('bell',13)} ${t('Rules')}</button>
+        <button class="btn btn-outline btn-sm" data-act="nweekly-open">${ic('chart',13)} ${t('Weekly report')}</button>
+      </div>
+    </div>
+    <div class="row" style="gap:10px;flex-wrap:wrap;margin:4px 0 10px">
+      <span class="bdg bdg-green">🟢 ${t('On Track')} — ${nf(okN)}</span>
+      <span class="bdg bdg-amber">🟡 ${t('Needs Attention')} — ${nf(warnN)}</span>
+      <span class="bdg bdg-red">🔴 ${t('Action Required')} — ${nf(alertN)}</span>
+    </div>
+    ${attention.length?attention.map(r=>`
+    <div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line2)">
+      <div class="row" style="min-width:0">${avC(r.c.name,30)}<div style="min-width:0"><b style="font-size:12.5px">${t(r.c.name)}</b><div class="muted" style="font-size:11px">${r.reasons.map(x=>t(x.d)).join(' · ')||'—'}</div></div></div>
+      <div class="row" style="gap:6px;flex:none">
+        <span class="bdg ${r.level==='alert'?'bdg-red':'bdg-amber'}">${r.level==='alert'?t('Action Required'):t('Needs Attention')}</span>
+        <button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${r.c.id}" data-tab="nutrition">${t('Open')}</button>
+      </div>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12px;padding:6px 0">${t('All clients with nutrition plans are on track.')}</div>`}
+    ${NINS.slice(0,3).length?`<div style="margin-top:10px"><div class="fs-t">${t('Recent insights')}</div>${NINS.slice(0,3).map(x=>`
+      <div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><b>${t(x.client)}</b> — ${esc(t(x.title))} <span class="muted">· ${t(x.d)}</span></div>`).join('')}</div>`:''}
+  </div>`;
+}
+/* ---- rules modal: threshold / duration / severity / on-off per rule ---- */
+function nrulesModal(){
+  const MLBL={protein:t('Protein % of target'),kcal:t('Calories % of target'),logging:t('Logging'),water:t('Water % of target'),weight:t('Weight trend vs goal')};
+  openModal(`
+  <div class="modal-h"><h3>${t('Nutrition monitoring rules')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:10px">${t('Get notified only when a pattern is real — thresholds, duration and severity are yours to set.')}</div>
+    ${NRULES.map((r,i)=>`
+    <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;padding:9px 0;border-bottom:1px solid var(--line2)">
+      <label class="row" style="gap:6px;flex:1;min-width:170px;cursor:pointer"><input type="checkbox" id="nrl-on${i}" ${r.on?'checked':''}> <b style="font-size:12.5px">${MLBL[r.metric]||r.metric}</b></label>
+      ${r.metric!=='logging'&&r.metric!=='weight'?`<input class="inp" id="nrl-thr${i}" type="number" min="10" max="200" value="${r.thr}" style="width:76px" title="${t('Threshold %')}">`:''}
+      <input class="inp" id="nrl-days${i}" type="number" min="1" max="30" value="${r.days}" style="width:64px" title="${t('Days')}">
+      <select class="inp" id="nrl-sev${i}" style="width:110px">
+        ${['info','warn','alert'].map(s=>`<option value="${s}" ${r.sev===s?'selected':''}>${s==='info'?t('Observe'):s==='warn'?t('Warning'):t('Alert')}</option>`).join('')}
+      </select>
+    </div>`).join('')}
+    <div class="muted" style="font-size:11px;margin-top:8px">${t('Example: protein below 85% for 3 days → warning.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="nrules-save">${ic('check',14)} ${t('Save')}</button></div>`);
+}
+/* ---- weekly nutrition report: deterministic table + optional AI narrative ---- */
+function nweeklyModal(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const rows=act.map(c=>({c,s:NEng.weekStats(c)}));
+  const withData=rows.filter(r=>r.s.loggedDays>0);
+  const improved=withData.filter(r=>r.s.protHits>=Math.ceil(r.s.withTg/2)).length;
+  const lowK=withData.filter(r=>r.s.kcalPct&&r.s.kcalPct<80).length;
+  const lowP=withData.filter(r=>r.s.protPct&&r.s.protPct<85).length;
+  const silent=rows.filter(r=>r.s.loggedDays===0).length;
+  openModal(`
+  <div class="modal-h"><h3>${t('Weekly nutrition report')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="bdg bdg-green">${t('Protein on target')}: ${nf(improved)}</span>
+      <span class="bdg bdg-amber">${t('Below calorie target')}: ${nf(lowK)}</span>
+      <span class="bdg bdg-amber">${t('Below protein target')}: ${nf(lowP)}</span>
+      <span class="bdg bdg-gray">${t('No logs this week')}: ${nf(silent)}</span>
+    </div>
+    ${withData.length?`<table class="tbl"><thead><tr><th>${t('Client')}</th><th>${t('Days logged')}</th><th>${t('Avg calories')}</th><th>${t('Avg protein')}</th><th>${t('Consistency')}</th></tr></thead><tbody>
+      ${withData.sort((a,b)=>b.s.consistency-a.s.consistency).map(r=>`<tr>
+        <td><div class="row">${avC(r.c.name,28)}<b style="font-size:12.5px">${t(r.c.name)}</b></div></td>
+        <td>${nf(r.s.loggedDays)}/${nf(r.s.withTg||7)}</td><td>${nf(r.s.avgKcal)} kcal</td><td>${nf(r.s.avgP)}g</td>
+        <td><span class="bdg ${r.s.consistency>=70?'bdg-green':r.s.consistency>=40?'bdg-amber':'bdg-red'}">${nf(r.s.consistency)}%</span></td>
+      </tr>`).join('')}</tbody></table>`
+    :`<div class="muted" style="font-size:12.5px;padding:10px 0">${t('No food logs this week yet — students log from their Nutrition tab.')}</div>`}
+    <div id="nweekly-ai" style="margin-top:12px"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-outline" data-act="nweekly-ai">${ic('zap',14)} ${t('AI narrative')}</button><span class="sp"></span><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ---- rule evaluation (deterministic) ---- */
+/* AI narrative for the weekly report — the deterministic table above is the
+   source of truth; the model only narrates it. */
+async function nweeklyAI(){
+  const box=$('nweekly-ai');if(!box)return;
+  box.innerHTML=`<div class="muted" style="font-size:12px">${t('Thinking…')}</div>`;
+  try{
+    const {ok,d}=await authApi('/api/ai/insight',{method:'POST',body:JSON.stringify({kind:'nutrition',lang})});
+    box.innerHTML=ok&&d&&d.ok?`<div class="ccard" style="white-space:pre-wrap;font-size:12.5px;line-height:1.7">${esc(d.text)}</div>`
+      :`<div class="muted" style="font-size:12px">${d&&d.error==='ai-not-configured'?t('AI is not configured on this server — the table above is fully computed locally.'):t('AI report unavailable right now.')}</div>`;
+  }catch(e){box.innerHTML=`<div class="muted" style="font-size:12px">${t('AI report unavailable right now.')}</div>`}
+}
+function nRuleHit(c,r){
+  const days=r.days||3;
+  if(r.metric==='logging'){const ad=NEng.adherence(c,days);return ad.withTg>0&&ad.logged===0?`${nf(days)} ${t('days without logs')}`:null}
+  if(r.metric==='weight'){
+    const tr=RPT.trend(c);if(!tr||tr.dir==='flat'||!tr.delta)return null;
+    const bad=(/fat loss/i.test(c.goal||'')&&tr.dir==='up')||(/muscle gain/i.test(c.goal||'')&&tr.dir==='down');
+    return bad?`${tr.dir==='up'?'+':''}${tr.delta}kg ${t('vs goal')} ${c.goal||''}`:null;
+  }
+  let sum=0,logged=0;
+  for(let i=0;i<days;i++){
+    const iso=__iso(-i);const tg=NEng.targets(c,iso);if(!tg||!tg.kcal)continue;
+    const co=NEng.consumed(c,iso);
+    if(co.kcal<=0)continue;logged++;
+    if(r.metric==='protein')sum+=tg.p?co.p/tg.p*100:100;
+    else if(r.metric==='kcal')sum+=co.kcal/tg.kcal*100;
+    else if(r.metric==='water')sum+=NEng.waterT(c)>0?(NEng.waterOf(c,iso)/NEng.waterT(c))*100:100;
+  }
+  if(!logged||r.op!=='below')return null;
+  const avg=sum/logged;
+  return avg<r.thr?`${t('avg')} ${nf(Math.round(avg))}% · ${nf(logged)}/${nf(days)} ${t('days')}`:null;
+}
+const N_RULE_TITLE={protein:'Protein below target',kcal:'Calories off target',logging:'Not logging food',water:'Hydration low',weight:'Weight trend off goal'};
+/* Daily sweep: rules → insights (NINS) + alerts (NOTIFS). Coach devices only;
+   deduped per client+metric+day so nobody gets spammed. */
+function nSweepAuto(){
+  if(S.role==='client'||!CLIENTS.length)return;
+  try{
+    const key='co-nsweep-day';
+    if(localStorage.getItem(key)===rptDailyKey())return;
+    localStorage.setItem(key,rptDailyKey());
+    let fired=0;
+    CLIENTS.filter(c=>c.status!=='Archived').forEach(c=>{
+      NRULES.filter(r=>r.on).forEach(r=>{
+        const hit=nRuleHit(c,r);if(!hit)return;
+        if(NINS.some(x=>x.client===c.name&&x.metric===r.metric&&x.d===isoToday()))return;
+        const title=t(N_RULE_TITLE[r.metric]||r.metric);
+        NINS.unshift({id:uid(),client:c.name,metric:r.metric,kind:r.sev==='alert'?'concern':r.sev==='warn'?'pattern':'observation',title,detail:hit,sev:r.sev,d:isoToday(),at:Date.now()});
+        if(r.sev!=='info'){NOTIFS.unshift({t:`⚠️ ${t(c.name)} — ${title}`,d:'Just now',un:true});fired++}
+      });
+    });
+    if(NINS.length>80)NINS.length=80;
+    if(fired){
+      ACTIVITY.unshift({w:'Just now',i:'zap',h:lang==='fa'?`<b>دستیار تغذیه</b> ${nf(fired)} هشدار صادر کرد`:`<b>Nutrition assistant</b> raised ${nf(fired)} alert${fired>1?'s':''}`});
+      saveData();
+    }
+  }catch(e){}
+}
 function distBar(pk,ck,fk){
   return `<div class="dist"><i style="width:${pk}%;background:var(--blue)"></i><i style="width:${ck}%;background:var(--accent-deep)"></i><i style="width:${fk}%;background:var(--ink3)"></i></div>
   <div class="row" style="gap:12px;font-size:11px;font-weight:600;margin-top:6px;flex-wrap:wrap"><span style="color:var(--blue)">● ${t('Protein')} ${pct(pk)}</span><span style="color:var(--accent-deep)">● ${t('Carbs')} ${pct(ck)}</span><span style="color:var(--ink3)">● ${t('Fat')} ${pct(fk)}</span></div>`;
@@ -4812,6 +5181,21 @@ function wNutrition(){
     <div class="card" style="padding:18px"><div class="card-t" style="margin-bottom:8px">${t('Daily Target')} — ${t('Today')}</div>
       ${[['Calories',s.kcal,tg.kcal,'kcal'],['Protein',s.p,tg.p,'g'],['Carbs',s.c,tg.c,'g'],['Fat',s.f,tg.f,'g']].map(([k,a,b,u])=>`
       <div style="margin-bottom:10px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b>${nf(a)} / ${nf(b)} ${u}</b></div><div class="pbar" style="margin-top:4px"><i style="width:${Math.min(100,Math.round(b?a/b*100:0))}%"></i></div></div>`).join('')}
+    </div>
+  </div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('check',14)} ${t('Food log')} — ${t('last 7 days')}</span><span class="bdg ${NEng.status(c).level==='ok'?'bdg-green':NEng.status(c).level==='warn'?'bdg-amber':'bdg-red'}">${NEng.status(c).level==='ok'?t('On Track'):NEng.status(c).level==='warn'?t('Needs Attention'):t('Action Required')}</span></div>
+      ${(()=>{const ls=NLOGS.filter(l=>l.client===c.name&&l.type!=='water').slice(0,6);
+      return ls.length?ls.map(l=>`<div class="tl-row"><span class="mtime">${t(l.d===isoToday()?t('Today'):String(l.d).slice(5))}</span><div style="flex:1"><b style="font-size:13px">${t(l.meal||'Meal')}</b><div class="muted" style="font-size:11.5px">${(l.items||[]).map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' · ')}</div></div><span class="chip">${nf(l.kcal)} kcal · P${nf(l.p)}</span></div>`).join('')
+      :`<div class="muted" style="font-size:12px;padding:10px 0">${t('No food logged yet — the student logs from their Nutrition tab.')}</div>`})()}
+    </div>
+    <div class="stack">
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('zap',14)} ${t('Assistant insights')}</div>
+        ${NINS.filter(x=>x.client===c.name).slice(0,3).map(x=>`<div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><span class="bdg ${x.sev==='alert'?'bdg-red':x.sev==='warn'?'bdg-amber':'bdg-gray'}" style="font-size:9.5px">${x.kind}</span> <b>${esc(t(x.title))}</b><div class="muted" style="font-size:11px">${esc(t(x.detail))} · ${t(x.d)}</div></div>`).join('')||`<div class="muted" style="font-size:12px">${t('No insights yet.')}</div>`}
+      </div>
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('mail',14)} ${t('Assistant thread')} — ${t('last messages')}</div>
+        ${NCHAT.filter(m=>m.client===c.name).slice(-3).map(m=>`<div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><b>${m.role==='student'?t(c.name):t('Assistant')}</b> <span class="muted">· ${t(m.d)}</span><div class="muted" style="font-size:11.5px">${esc(t(m.body)).slice(0,120)}</div></div>`).join('')||`<div class="muted" style="font-size:12px">${t('No assistant conversation yet.')}</div>`}
+      </div>
     </div>
   </div>
   <div class="grid2b" style="margin-bottom:14px">
@@ -7016,41 +7400,209 @@ function cProgress(){
     </div>`:''}
   </div>`;
 }
+/* ================= v18.48 — STUDENT NUTRITION HUB =================
+   The student side of the Nutrition Assistant: daily dashboard, one-tap
+   logging, "what should I eat now?", the assistant chat and the personal
+   nutrition profile. The coach's PLAN stays the source of truth for targets —
+   the assistant works AROUND it and never overwrites it. */
+let NA_PIC=null; // photo attached to the next assistant message (vision-ready path)
+function naBar(k,a,b,u){
+  const pct=b>0?Math.min(100,Math.round(a/b*100)):0;
+  const over=b>0&&a>b;
+  return `<div style="margin-bottom:9px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b style="${over?'color:var(--amber)':''}">${nf(a)} / ${nf(b)} ${u}</b></div><div class="pbar" style="margin-top:3px"><i style="width:${pct}%"></i></div></div>`;
+}
 function cNutrition(){
   const c=client(S.cid);
   const p=nPlanOf(c.name);
-  if(!p)return `<div class="cbody"><div class="ccard cempty">${ic('utensils',26)}<b>${t('Nutrition Plan')}</b><span class="muted" style="font-size:12.5px">${t('Your coach has not published a nutrition plan yet')}</span></div></div>`;
-  const day=p.days[TODAY];
-  const tg=day.type==='train'?p.train:p.rest;
-  const s=daySum(day.meals);
+  const tg=NEng.targets(c),co=NEng.consumed(c,isoToday()),rem=NEng.remaining(c,isoToday());
+  const water=NEng.waterOf(c,isoToday()),waterT=NEng.waterT(c);
+  const logs=NEng.logs(c,isoToday()).filter(l=>l.type!=='water');
+  const mealsN=NEng.mealsLogged(c,isoToday());
+  const mealsGoal=(c.nprof&&c.nprof.meals>0)?c.nprof.meals:(p?5:4);
+  const np=c.nprof;
+  const fresh=!p&&!np&&!NLOGS.some(l=>l.client===c.name);
+  const sug=fresh?null:NEng.suggestNow(c);
   return `<div class="cbody">
-    <div class="csec">${t('Nutrition Plan')}</div>
+    <div class="csec">${t('Nutrition')}</div>
+    ${fresh?`<div class="ccard cempty">${ic('utensils',26)}<b>${t('Your nutrition companion')}</b><span class="muted" style="font-size:12.5px">${t('Log what you eat, ask for meal ideas and let your coach follow your progress.')}</span>
+      <button class="btn btn-lime" data-act="nprof-open" style="margin-top:10px">${ic('user',15)} ${t('Set up nutrition profile')}</button></div>`
+    :`
     <div class="ccard" style="border-color:rgba(200,240,75,.3)">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:6px">
-        <b style="font-size:14.5px">${t(p.name)}</b>
-        <span class="bdg ${day.type==='train'?'bdg-lime':'bdg-purple'}" style="font-size:10px">${day.type==='train'?t('Training Day'):t('Rest Day')}</span>
+        <b style="font-size:14.5px">${t('Today')}</b>
+        ${tg?`<span class="bdg ${NEng.dow(isoToday())===TODAY&&(p&&p.days[TODAY].type==='train')?'bdg-lime':'bdg-purple'}" style="font-size:10px">${p?(p.days[TODAY].type==='train'?t('Training Day'):t('Rest Day')):t('From your profile')}</span>`:`<button class="fchip" data-act="nprof-open">${ic('target',12)} ${t('Set targets')}</button>`}
       </div>
-      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">
-        <span class="chip" style="border-color:rgba(200,240,75,.35);color:var(--accent)">🔥 ${nf(tg.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(tg.p)}g</span><span class="chip">${t('Carbs')} ${nf(tg.c)}g</span><span class="chip">${t('Fat')} ${nf(tg.f)}g</span>
+      ${tg?`
+      <div class="row" style="align-items:baseline;gap:8px;margin-top:10px"><span style="font-size:30px;font-weight:800;letter-spacing:-1px">${nf(co.kcal)}</span><span class="muted" style="font-size:12.5px">/ ${nf(tg.kcal)} kcal</span><span class="sp"></span><span class="chip" style="border-color:rgba(200,240,75,.35);color:var(--accent)">${t('Left')}: ${nf(rem.kcal)}</span></div>
+      <div style="margin-top:10px">
+        ${naBar('Protein',co.p,tg.p,'g')}${naBar('Carbs',co.c,tg.c,'g')}${naBar('Fat',co.f,tg.f,'g')}
+      </div>`:`<div class="muted" style="font-size:12.5px;margin-top:8px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div>`}
+      <div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap">
+        <span class="chip">💧 ${nf(water)} / ${nf(waterT)} L</span>
+        <button class="fchip" data-act="na-water">+250 ml</button>
+        <span class="chip">🍽️ ${nf(mealsN)}/${nf(mealsGoal)} ${t('meals')}</span>
       </div>
-    </div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('target',14)} ${t('Daily Target')}</div>
-      ${[['Calories',s.kcal,tg.kcal,'kcal'],['Protein',s.p,tg.p,'g'],['Carbs',s.c,tg.c,'g'],['Fat',s.f,tg.f,'g']].map(([k,a,b,u])=>`
-      <div style="margin-bottom:9px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b>${nf(a)} / ${nf(b)} ${u}</b></div><div class="pbar" style="margin-top:3px"><i style="width:${Math.min(100,Math.round(b?a/b*100:0))}%"></i></div></div>`).join('')}
-    </div>
+    </div>`}
+    ${sug&&sug.options.length?`
+    <div class="ccard"><div class="card-t" style="margin-bottom:6px">${ic('zap',14)} ${t('What should you eat now?')}</div>
+      <div class="muted" style="font-size:11.5px;margin-bottom:8px">${t('Based on what is left of your day')} — ${nf(sug.rem.kcal)} kcal · ${nf(sug.rem.p)}g ${t('Protein')}</div>
+      ${sug.options.slice(0,3).map((o,i)=>`
+      <div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+        <div class="row" style="justify-content:space-between"><b style="font-size:12.5px">${esc(o.label)}</b><span class="chip">~${nf(o.kcal)} kcal · ${nf(o.p)}g ${t('Protein')}</span></div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${o.items.map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' + ')}</div>
+        <button class="fchip" style="margin-top:6px" data-act="na-log-sug" data-i="${i}">${ic('plus',12)} ${t('Log this')}</button>
+      </div>`).join('')}
+    </div>`:''}
+    ${p?`
     <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('utensils',14)} ${t("Today's Meals")}</div>
-      ${day.meals.map(m=>{const alts=[...new Set((m.foods||[]).flatMap(x=>((FOODS[x.fi]||{}).alt||[]).map(a=>foodName(a))))];
+      ${p.days[TODAY].meals.map((m,mi)=>{const logged=logs.some(l=>l.meal===m.name&&Math.abs(l.kcal-Math.round(mealKcal(m)))<5);
       return `<div style="padding:10px 0;border-bottom:1px solid var(--line2)">
         <div class="row" style="justify-content:space-between"><b style="font-size:13px;display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(200,240,75,.7);flex:none"></span>${t(m.time)} · ${t(m.name)}</b><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>
         <div class="muted" style="font-size:11.5px;margin-top:3px">${m.foods.map(x=>{const f=FOODS[x.fi];return f?`${foodName(f.n)} ${x.g}g${x.q?` (${esc(t(x.q))})`:''}`:''}).filter(Boolean).join(' · ')||'—'}</div>
-        ${(m.note||'')?`<div class="muted" style="font-size:11px;margin-top:2px;color:var(--accent-ink)">✎ ${esc(t(m.note))}</div>`:''}
-        ${alts.length?`<div class="muted" style="font-size:10.5px;margin-top:3px">🔄 ${t('Swaps')}: ${alts.join(' · ')}</div>`:''}
+        <button class="fchip ${logged?'on':''}" style="margin-top:6px" data-act="nlog-plan" data-d="${TODAY}" data-m="${mi}">${logged?'✓ '+t('Logged'):ic('plus',12)+' '+t('Log this meal')}</button>
       </div>`}).join('')}
-    </div>
-    ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).length?`<div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</div>
-      ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b><div class="muted" style="font-size:12px">${esc(t(n.body))}</div></div>`).join('')}
+    </div>`:''}
+    ${logs.length?`
+    <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('check',14)} ${t('Food log')} — ${t('Today')}</div>
+      ${logs.map(l=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+        <div class="row" style="justify-content:space-between"><b style="font-size:12.5px">${t(l.meal||'Meal')}</b><span class="row" style="gap:6px"><span class="chip">${nf(l.kcal)} kcal · ${nf(l.p)}g ${t('Protein')}</span><button class="btn btn-ghost btn-icon" style="width:26px;height:26px" data-act="nlog-del" data-id="${l.id}">${ic('x',13)}</button></span></div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${(l.items||[]).map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' · ')}</div>
+      </div>`).join('')}
+    </div>`:''}
+    ${naChat(c)}
+    ${np?`<div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('user',14)} ${t('Nutrition profile')}</div>
+      <div class="muted" style="font-size:11.5px;line-height:1.7">
+        ${np.allergies?`<div>⚠ ${t('Allergies')}: ${esc(np.allergies)}</div>`:''}
+        ${np.dislikes?`<div>✕ ${t('Dislikes')}: ${esc(np.dislikes)}</div>`:''}
+        ${np.likes?`<div>♥ ${t('Favorites')}: ${esc(np.likes)}</div>`:''}
+        ${np.cook?`<div>⏱ ${t('Cooking time')}: ${esc(np.cook)}</div>`:''}
+      </div>
+      <button class="fchip" style="margin-top:8px" data-act="nprof-open">${ic('edit',12)} ${t('Edit profile')}</button>
     </div>`:''}
   </div>`;
+}
+/* Assistant thread + composer. Quick chips push REAL intents, not small talk. */
+function naChat(c){
+  const ms=NCHAT.filter(m=>m.client===c.name).slice(-30);
+  return `<div class="ccard" style="border-color:var(--acc-line2)">
+    <div class="row" style="justify-content:space-between">
+      <div class="card-t" style="margin-bottom:0">${ic('zap',14)} ${t('Nutrition Assistant')}</div>
+      <span class="bdg bdg-lime" style="font-size:9.5px">${t('AI · not medical advice')}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;padding:10px 0;max-height:340px;overflow-y:auto">
+      ${ms.length?ms.map(m=>{const me=m.role==='student';
+      return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'};max-width:88%">
+        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
+        <div>${esc(t(m.body))}</div>
+        ${m.card&&!m.card.confirmed?naCard(m):''}
+        ${m.card&&m.card.confirmed?`<div class="ctx" style="margin-top:4px">✓ ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`:''}
+      </div>`}).join('')
+      :`<div class="muted" style="font-size:12px;padding:4px 2px">${t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`}
+      ${S.naTyping?`<div class="bub them" style="align-self:flex-start"><div class="muted" style="font-size:12px">${t('Thinking…')}</div></div>`:''}
+    </div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;padding-bottom:8px">
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('What should I eat now?'))}">${t('What should I eat now?')}</button>
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('Food for before my workout'))}">${t('Pre-workout')}</button>
+      <button class="fchip" data-act="na-photo">${ic('camera',12)} ${t('Photo')}</button>
+      ${NA_PIC?`<span class="fchip on">📷 ${t('attached')}</span>`:''}
+    </div>
+    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px">
+      <input class="inp" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()" style="border:none;box-shadow:none">
+      <button class="btn btn-primary btn-icon" data-act="na-send">${ic('arrowR',16)}</button>
+    </div>
+  </div>`;
+}
+/* Structured ACTION card inside an assistant message: the estimated meal with
+   deterministic macros + a confirm button. Chat → data, not just words. */
+function naCard(m){
+  const cd=m.card;
+  return `<div style="border:1px solid var(--acc-line2);border-radius:12px;padding:9px;margin-top:6px;background:var(--acc-soft)">
+    <div class="row" style="justify-content:space-between"><b style="font-size:12px">${t(cd.meal||'Meal')}</b><span class="chip">${nf(cd.kcal)} kcal · P${nf(cd.p)} C${nf(cd.c)} F${nf(cd.f)}</span></div>
+    ${(cd.items||[]).map(x=>`<div class="muted" style="font-size:11.5px;margin-top:2px">${foodName(x.n)} — ${nf(x.g)}g</div>`).join('')}
+    <button class="btn btn-lime btn-sm" style="margin-top:7px;width:100%" data-act="na-confirm" data-id="${m.id}">${ic('check',13)} ${t('Confirm & log')}</button>
+  </div>`;
+}
+/* Deterministic fallback — the assistant MUST be useful with the AI offline.
+   Intent match → real engine answers; unknown → honest capability list. */
+function naFallback(c,v){
+  const s=String(v||'');
+  const parsed=NEng.parseText(s);
+  if(parsed.items.length){
+    const hour=TDATE.getHours();
+    const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<16.5?'Snack':hour<18?'Pre-Workout':hour<22?'Dinner':'Before Bed';
+    const sum=parsed.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+    return {body:t('I found these foods — confirm and I will log them:'),card:{type:'log',meal,items:parsed.items,...sum,confirmed:false}};
+  }
+  if(parsed.unknown.length)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
+  if(/eat|خور|bukhor|meal|غذا/i.test(s)){
+    const sug=NEng.suggestNow(c);
+    const o=sug.options[0];
+    if(o)return {body:t('You have')+` ${nf(sug.rem.kcal)} kcal · ${nf(sug.rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Try')}: ${o.items.map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' + ')} (~${nf(o.kcal)} kcal).`};
+  }
+  if(/replace|swap|جایگزین|دوست ندارم/i.test(s)){
+    const f=FOODS.find(x=>s.toLowerCase().includes(x.n.toLowerCase())||s.includes(foodName(x.n)));
+    if(f){const sw=NEng.swapsFor(f.n);if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'}}
+  }
+  const rem=NEng.remaining(c);
+  if(rem)return {body:t('You have')+` ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} · ${nf(rem.c)}g ${t('Carbs')} · ${nf(rem.f)}g ${t('Fat')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`};
+  return {body:t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it. You can also ask what to eat next.')};
+}
+/* Send a message to the Nutrition Assistant. Tries the server AI endpoint
+   (LLM = conversation only — the server computes all numbers deterministically
+   from the workspace payload) and falls back to the local engine so the
+   assistant works offline / without an AI key. */
+window.naSend=async pre=>{
+  const inp=$('na-inp');
+  const v=String(pre!=null?pre:(inp?inp.value:'')).trim();
+  if(!v&&!NA_PIC)return;
+  const c=client(S.cid);if(!c)return;
+  NCHAT.push({id:uid(),client:c.name,role:'student',body:v||(NA_PIC?'📷':''),d:isoToday(),at:Date.now(),src:NA_PIC||undefined});
+  NA_PIC=null;if(inp)inp.value='';
+  S.naTyping=true;render();
+  let replied=false;
+  try{
+    const code=wsCode()||S.joinCode||'';
+    const r=await fetch('/api/ai/nutri',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({code,client:c.name,message:v,lang,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
+    const d=await r.json().catch(()=>null);
+    if(d&&d.ok){
+      NCHAT.push({id:uid(),client:c.name,role:'assistant',body:d.reply,d:isoToday(),at:Date.now(),
+        card:d.log?{type:'log',meal:d.log.meal,items:d.log.items,kcal:d.log.kcal,p:d.log.p,c:d.log.c,f:d.log.f,confirmed:false}:null,
+        safety:!!d.safety});
+      replied=true;
+    }
+  }catch(e){}
+  if(!replied){const fb=naFallback(c,v);NCHAT.push({id:uid(),client:c.name,role:'assistant',body:fb.body,d:isoToday(),at:Date.now(),card:fb.card||null})}
+  S.naTyping=false;saveData();render();
+};
+/* Nutrition profile modal (student's own; the coach sees it in the workspace). */
+function nprofModal(){
+  const c=client(S.cid);const np=c.nprof||{};
+  const tg=NEng.targets(c)||{kcal:'',p:'',c:'',f:''};
+  openModal(`
+  <div class="modal-h"><h3>${t('Nutrition profile')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fs-t">${t('Daily targets')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <input class="inp" id="npf-kcal" type="number" min="0" placeholder="${t('Calories')}" value="${np.kcal||tg.kcal||''}" style="width:90px">
+      <input class="inp" id="npf-p" type="number" min="0" placeholder="${t('Protein')} g" value="${np.p||tg.p||''}" style="width:90px">
+      <input class="inp" id="npf-c" type="number" min="0" placeholder="${t('Carbs')} g" value="${np.c||tg.c||''}" style="width:90px">
+      <input class="inp" id="npf-f" type="number" min="0" placeholder="${t('Fat')} g" value="${np.f||tg.f||''}" style="width:90px">
+      <input class="inp" id="npf-water" type="number" min="0" step="0.5" placeholder="${t('Water')} L" value="${np.waterL||''}" style="width:80px">
+      <input class="inp" id="npf-meals" type="number" min="1" max="8" placeholder="${t('Meals')}" value="${np.meals||''}" style="width:80px">
+    </div>
+    <div class="muted" style="font-size:11px;margin-top:4px">${t('Leave empty to follow your coach plan.')}</div>
+    <div class="fs-t" style="margin-top:12px">${t('Preferences')}</div>
+    <input class="inp" id="npf-allergies" placeholder="${t('Allergies / intolerances')}" value="${esc(np.allergies||'')}" style="margin-bottom:8px">
+    <input class="inp" id="npf-dislikes" placeholder="${t('Foods you dislike')}" value="${esc(np.dislikes||'')}" style="margin-bottom:8px">
+    <input class="inp" id="npf-likes" placeholder="${t('Favorite foods')}" value="${esc(np.likes||'')}" style="margin-bottom:8px">
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <input class="inp" id="npf-cook" placeholder="${t('Cooking time available')}" value="${esc(np.cook||'')}" style="flex:1;min-width:130px">
+      <input class="inp" id="npf-wake" placeholder="${t('Wake up')}" value="${esc(np.wake||'')}" style="width:100px">
+      <input class="inp" id="npf-sleep" placeholder="${t('Bed time')}" value="${esc(np.sleep||'')}" style="width:100px">
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="nprof-save">${ic('check',14)} ${t('Save')}</button></div>`);
 }
 function cSessions(){
   const c=client(S.cid);
@@ -7778,6 +8330,18 @@ document.addEventListener('click',e=>{
     case 'ndup':{const p=NPLANS[+el.dataset.i];const cp=JSON.parse(JSON.stringify(p));cp.name=p.name+' (Copy)';cp.updated='Just now';NPLANS.splice(+el.dataset.i+1,0,cp);render();toast('Plan duplicated');break}
     case 'narch':{NPLANS[+el.dataset.i].status='Archived';render();toast('Plan archived');break}
     case 'np-new':newPlanModal(el.dataset.c||null);break;
+    /* ===== v18.48 — coach nutrition monitoring ===== */
+    case 'nrules-open':nrulesModal();break;
+    case 'nrules-save':{
+      NRULES.forEach((r,i)=>{
+        r.on=!!$('nrl-on'+i)?.checked;
+        if($('nrl-thr'+i))r.thr=Math.max(10,Math.min(200,parseFloat($('nrl-thr'+i).value)||r.thr));
+        r.days=Math.max(1,Math.min(30,parseInt($('nrl-days'+i).value)||r.days));
+        const sv=$('nrl-sev'+i)?.value;if(['info','warn','alert'].includes(sv))r.sev=sv;
+      });
+      closeModal();saveData();render();toast(t('Rules saved ✓'));break}
+    case 'nweekly-open':nweeklyModal();break;
+    case 'nweekly-ai':nweeklyAI();break;
     case 'np-save':{const name=$('np-name').value.trim()||t('New Nutrition Plan');const cl=$('np-client').value;
       const kcal=+$('np-kcal').value||2600,p=+$('np-p').value||170,c=+$('np-c').value||300,f=+$('np-f').value||80;
       const std=$('np-type').value==='std';const scale=kcal/2772;
@@ -7915,6 +8479,52 @@ document.addEventListener('click',e=>{
     case 'back-inbox':S.msgThread=null;render();break;
     case 'send-coach':sendCoachMsg(el.dataset.c);break;
     case 'send-client':sendClientMsg();break;
+    /* ===== v18.48 — Nutrition Assistant (student side) ===== */
+    case 'na-send':naSend();break;
+    case 'na-quick':naSend(el.dataset.q);break;
+    case 'na-photo':{
+      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+      inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+        resizeImage(f,src=>{NA_PIC=src;render();toast(t('Photo attached — describe your meal'))})};
+      inp.click();break}
+    case 'na-confirm':{
+      const m=NCHAT.find(x=>String(x.id)===el.dataset.id);
+      if(!m||!m.card||m.card.confirmed)break;
+      const c=client(S.cid);
+      const cd=m.card;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:cd.meal||'Meal',items:cd.items.map(x=>({...x})),kcal:cd.kcal,p:cd.p,c:cd.c,f:cd.f,src:'chat',at:Date.now()});
+      cd.confirmed=true;saveData();render();toast(t('Meal logged ✓'));break}
+    case 'na-water':{
+      const c=client(S.cid);
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),type:'water',ml:250,meal:'',items:[],kcal:0,p:0,c:0,f:0,src:'quick',at:Date.now()});
+      saveData();render();toast(t('Water logged 💧'));break}
+    case 'na-log-sug':{
+      const c=client(S.cid);const sug=NEng.suggestNow(c);const o=sug&&sug.options[+el.dataset.i];
+      if(!o)break;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:o.meal,items:o.items.map(x=>({...x})),kcal:o.kcal,p:o.p,c:o.c,f:o.f,src:'quick',at:Date.now()});
+      saveData();render();toast(t('Meal logged ✓'));break}
+    case 'nlog-plan':{
+      const c=client(S.cid);const p=nPlanOf(c.name);if(!p)break;
+      const day=p.days[+el.dataset.d];const m=day&&day.meals[+el.dataset.m];if(!m)break;
+      const items=m.foods.map(x=>{const f=FOODS[x.fi];return f?NEng.itemM(f.n,x.g):null}).filter(Boolean);
+      if(!items.length){toast(t('No foods to log'));break}
+      const sum=items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:m.name,items,kcal:sum.kcal,p:sum.p,c:sum.c,f:sum.f,src:'plan',at:Date.now()});
+      saveData();render();toast(t('Meal logged ✓'));break}
+    case 'nlog-del':{
+      const id=el.dataset.id;const i=NLOGS.findIndex(l=>String(l.id)===id);if(i<0)break;
+      DEAD.NLOGS.push(String(NLOGS[i].id));NLOGS.splice(i,1);
+      saveData();render();toast(t('Entry removed'));break}
+    case 'nprof-open':nprofModal();break;
+    case 'nprof-save':{
+      const c=client(S.cid);
+      const num=v=>{const n=parseFloat(v);return Number.isFinite(n)&&n>0?n:0};
+      c.nprof={kcal:num($('npf-kcal').value),p:num($('npf-p').value),c:num($('npf-c').value),f:num($('npf-f').value),
+        waterL:num($('npf-water').value),meals:num($('npf-meals').value),
+        allergies:$('npf-allergies').value.trim().slice(0,200),dislikes:$('npf-dislikes').value.trim().slice(0,200),
+        likes:$('npf-likes').value.trim().slice(0,200),cook:$('npf-cook').value.trim().slice(0,60),
+        wake:$('npf-wake').value.trim().slice(0,20),sleep:$('npf-sleep').value.trim().slice(0,20)};
+      closeModal();saveData();render();toast(t('Profile saved ✓'));break}
     case 'msg-note':{const m=MSGS.find(x=>x.id===+el.dataset.id);if(!m||m.noted)break;
       NOTES.unshift({id:uid(),client:m.client,from:'coach',shared:false,type:'General',title:`${t('From chat')} — ${t(m.client)}`,date:'Just now',body:m.body,pin:false,arch:false});
       m.noted=true;render();toast('Saved as note');break}

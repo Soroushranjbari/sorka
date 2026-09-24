@@ -282,6 +282,28 @@ async function buildContext(st, acct, catalog, onlyName) {
         if (meals) line(P, `  day${di + 1} (${dy.type}): ${meals}`);
       });
     }
+    // v18.48 — what the student ACTUALLY ate (Nutrition Assistant food log).
+    // Deterministic summary only — the model explains real numbers, never invents them.
+    const nlogs = (Array.isArray(d.NLOGS) ? d.NLOGS : []).filter((l) => l && l.client === c.name);
+    if (nlogs.length) {
+      const today = new Date().toISOString().slice(0, 10);
+      const days = {};
+      nlogs.forEach((l) => {
+        if (l.type === 'water' || !l.d) return;
+        const k = days[l.d] = days[l.d] || { kcal: 0, p: 0 };
+        k.kcal += l.kcal || 0; k.p += l.p || 0;
+      });
+      const dk = Object.keys(days).sort();
+      const logged = dk.length;
+      const avgK = logged ? Math.round(dk.reduce((a, k) => a + days[k].kcal, 0) / logged) : 0;
+      const avgP = logged ? Math.round(dk.reduce((a, k) => a + days[k].p, 0) / logged) : 0;
+      const t = days[today];
+      line(P, `food log: ${logged} day(s) recorded, avg ${avgK}kcal/${avgP}g protein${t ? ` | today(${today}): ${t.kcal}kcal/${t.p}g protein` : ' | today: nothing logged yet'}`);
+      const lastLogs = nlogs.filter((l) => l.type !== 'water').slice(-3);
+      if (lastLogs.length) line(P, `  recent: ` + lastLogs.map((l) => `${l.d} ${l.meal || 'Meal'} (${(l.items || []).map((x) => `${x.n} ${x.g}g`).join(', ')}) = ${l.kcal}kcal`).join(' | '));
+    }
+    const nprof = c.nprof;
+    if (nprof) line(P, `nutrition profile: allergies=${nprof.allergies || '—'} | dislikes=${nprof.dislikes || '—'} | likes=${nprof.likes || '—'} | cooking=${nprof.cook || '—'}${nprof.kcal ? ` | own targets=${nprof.kcal}kcal P${nprof.p} C${nprof.c} F${nprof.f}` : ''}`);
     // Hard cap per client so one chatty client cannot eat the whole window.
     let sec = P.join('\n');
     if (sec.length > 6000) sec = sec.slice(0, 6000) + '\n  …[truncated]';
@@ -453,7 +475,9 @@ async function insight(req, st) {
   const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 100_000);
   if (big) return tooLarge(100_000);
   if (bad) return badJson();
-  const kind = body?.kind === 'reply' ? 'reply' : 'weekly';
+  /* v18.48 — kind 'nutrition': the coach's WEEKLY NUTRITION REPORT (adherence,
+     protein gaps, logging consistency) over the workspace food logs. */
+  const kind = ['reply', 'nutrition'].includes(body?.kind) ? body.kind : 'weekly';
   const clientName = String(body?.client || '').trim().slice(0, 80);
   const lang = body?.lang === 'fa' ? 'fa' : 'en';
   if (kind === 'reply' && !clientName) return j(400, { ok: false, error: 'bad-client' });
@@ -467,7 +491,18 @@ async function insight(req, st) {
     const used = Number((await st.get(ckey, { type: 'json' })) || 0);
     if (used >= CHAT_DAILY) return j(402, { ok: false, error: 'ai-quota', used, max: CHAT_DAILY });
     const context = await buildContext(st, acct, catalog, kind === 'reply' ? clientName : null);
-    const sys = kind === 'weekly'
+    const sys = kind === 'nutrition'
+      ? [
+        'You are the built-in AI assistant of CoachMint. Produce a WEEKLY NUTRITION REPORT for the signed-in coach from the live workspace data below.',
+        'Structure (plain text, short lines, "-" bullets, no markdown tables):',
+        '1) Snapshot — how many clients have nutrition plans, how many logged food this week, overall adherence.',
+        '2) Needs attention — clients with REAL patterns from the food-log data: protein below target, calories off target, days without logging, hydration. Cite the actual numbers.',
+        '3) Highlights — clients doing well (consistent logging, protein on target).',
+        '4) Suggestions — up to 3 concrete, food-level actions for the coach (e.g. which client to message about what).',
+        'You observe and suggest; the COACH decides and remains in control of every official plan. Never present estimates as medical facts.',
+        'Cite real names/numbers from the data. Never invent. Answer in ' + (lang === 'fa' ? 'Persian (Farsi)' : 'English') + '.'
+      ].join('\n')
+      : kind === 'weekly'
       ? [
         'You are the built-in AI assistant of CoachMint. Produce a WEEKLY REPORT for the signed-in coach from the live workspace data below.',
         'Structure (plain text, short lines, "-" bullets, no markdown tables):',
@@ -910,6 +945,180 @@ async function aiAction(req, st) {
   });
 }
 
+/* ================= v18.48 — NUTRITION ASSISTANT (student side) =================
+   POST /api/ai/nutri {code, client, message, date?, dow?, hour?, lang?, foods?}
+   The STUDENT has no account — auth is the workspace CODE (the same trust
+   model as the data API), and the daily quota is billed to the workspace
+   OWNER. The LLM handles CONVERSATION ONLY: every number it may mention is
+   computed here, deterministically, from the workspace payload:
+     engine block  → targets / consumed / remaining / water / adherence
+     log validation→ food names matched against the workspace FOOD library,
+                     grams clamped, macros computed from FOOD records.
+   A deterministic SAFETY GUARD runs BEFORE any model call: medical topics get
+   a referral to a qualified professional, never an AI opinion. */
+const NUTRI_MEALS = ['Breakfast', 'Snack', 'Lunch', 'Pre-Workout', 'Dinner', 'Before Bed'];
+const SAFETY_RE = /(pregnan|باردار|breastfeed|شیرده|diabet|دیابت|kidney|کلیه|liver disease|کبد|cancer|سرطان|cholester|کلسترول|blood pressure|فشار خون|medicat|دارو|insulin|انسولین|eating disorder|اختلال خوردن|anorexia|بولیمی|bulimia|self.harm|خودکشی|anaphyla|آنافیلاکسی|تغذیه ورزشی پزشکی)/i;
+function nutriSafetyReply(lang) {
+  return lang === 'fa'
+    ? 'این موضوع نیاز به نظر پزشک یا متخصص تغذیه دارای مجوز دارد — من دستیار تغذیه هستم، نه متخصص درمان، و در این موارد توصیه نمی‌کنم. اگر علائم جدی است لطفاً در اسرع وقت به متخصص مراجعه کن. من همچنان می‌توانم ثبت وعده‌ها و پیشنهادهای روزمره غذا را انجام دهم.'
+    : 'That is something to discuss with a doctor or a qualified dietitian — I am a nutrition assistant, not a medical professional, and I do not advise on medical conditions. If symptoms are serious, please seek professional care promptly. I can still help with logging meals and everyday food choices.';
+}
+/* Resolve a workspace + its payload by CODE (student auth). */
+async function wsByCode(st, code) {
+  try {
+    const ptr = await st.get(`ws-by-code:${code}`, { type: 'json' });
+    if (ptr && ptr.wid) {
+      const ws = await st.get(`ws:${ptr.wid}`, { type: 'json' });
+      if (ws) return { ws, meta: await st.get(`ws-meta:${ws.id}`, { type: 'json' }).catch(() => null) };
+    }
+  } catch {}
+  return {};
+}
+/* Deterministic engine block — the same math the client-side NENG runs,
+   recomputed SERVER-SIDE from the stored payload so the model is always
+   grounded in the persisted truth (not the client's possibly-stale copy). */
+function nutriEngine(d, clientName, dateISO, dow) {
+  const cl = (Array.isArray(d.CLIENTS) ? d.CLIENTS : []).find((x) => String(x.name || '').trim().toLowerCase() === String(clientName || '').trim().toLowerCase());
+  if (!cl) return null;
+  const logs = (Array.isArray(d.NLOGS) ? d.NLOGS : []).filter((l) => l && l.client === cl.name);
+  const plan = (Array.isArray(d.NPLANS) ? d.NPLANS : []).find((p) => p.client === cl.name && p.status !== 'Archived');
+  let targets = null, dayType = null;
+  if (plan && Array.isArray(plan.days) && plan.days[dow]) {
+    dayType = plan.days[dow].type;
+    targets = dayType === 'train' ? plan.train : plan.rest;
+  }
+  const np = cl.nprof;
+  if (!targets && np && np.kcal > 0) targets = { kcal: Math.round(np.kcal), p: Math.round(np.p || 0), c: Math.round(np.c || 0), f: Math.round(np.f || 0) };
+  const consumed = {
+    kcal: Math.round(logs.filter((l) => l.d === dateISO && l.type !== 'water').reduce((a, l) => a + (l.kcal || 0), 0)),
+    p: Math.round(logs.filter((l) => l.d === dateISO && l.type !== 'water').reduce((a, l) => a + (l.p || 0), 0)),
+    c: Math.round(logs.filter((l) => l.d === dateISO && l.type !== 'water').reduce((a, l) => a + (l.c || 0), 0)),
+    f: Math.round(logs.filter((l) => l.d === dateISO && l.type !== 'water').reduce((a, l) => a + (l.f || 0), 0))
+  };
+  const waterMl = Math.round(logs.filter((l) => l.d === dateISO && l.type === 'water').reduce((a, l) => a + (l.ml || 0), 0));
+  /* 7-day adherence (deterministic): logged days, kcal within ±15%, protein ≥90%. */
+  const dayKeys = [...new Set(logs.filter((l) => l.type !== 'water' && l.d).map((l) => l.d))].sort().slice(-7);
+  const logged7 = dayKeys.length;
+  const hits = dayKeys.filter((k) => {
+    const dk = logs.filter((l) => l.d === k && l.type !== 'water');
+    const kc = dk.reduce((a, l) => a + (l.kcal || 0), 0), pr = dk.reduce((a, l) => a + (l.p || 0), 0);
+    return targets ? (kc >= targets.kcal * 0.85 && kc <= targets.kcal * 1.15 && pr >= targets.p * 0.9) : kc > 0;
+  }).length;
+  const recent = logs.filter((l) => l.type !== 'water').slice(-4)
+    .map((l) => `${l.d} ${l.meal || 'Meal'}: ${(l.items || []).map((x) => `${x.n} ${x.g}g`).join(', ')} = ${l.kcal}kcal P${l.p}`);
+  return {
+    client: cl.name,
+    goal: cl.goal || '—',
+    weight: cl.weight != null ? cl.weight : null,
+    dayType: dayType || (plan ? 'unknown' : null),
+    targets: targets ? { kcal: targets.kcal, protein: targets.p, carbs: targets.c, fat: targets.f } : null,
+    consumed, remaining: targets ? { kcal: Math.max(0, targets.kcal - consumed.kcal), protein: Math.max(0, targets.p - consumed.p), carbs: Math.max(0, targets.c - consumed.c), fat: Math.max(0, targets.f - consumed.f) } : null,
+    water: { ml: waterMl, targetL: np && np.waterL > 0 ? np.waterL : 2.5 },
+    adherence7: { loggedDays: logged7, onTargetDays: hits },
+    preferences: np ? { allergies: np.allergies || '', dislikes: np.dislikes || '', likes: np.likes || '', cooking: np.cook || '' } : null,
+    recentLogs: recent
+  };
+}
+/* Validate the model's proposed log against the REAL food library. Names must
+   match the workspace FOODS (the client sends the name list); grams are
+   clamped; macros come from the food records — NEVER from the model. */
+function parseNutriLog(rawLog, d, foodsCatalog) {
+  if (!rawLog || typeof rawLog !== 'object') return null;
+  const foods = Array.isArray(d.FOODS) ? d.FOODS : [];
+  const cat = Array.isArray(foodsCatalog) ? foodsCatalog : [];
+  const match = (name) => {
+    const q = String(name || '').trim().toLowerCase();
+    if (!q) return null;
+    let f = foods.find((x) => String(x.n || '').toLowerCase() === q);
+    if (!f) { const cn = cat.find((x) => String(x.fa || '').toLowerCase() === q); if (cn) f = foods.find((x) => String(x.n).toLowerCase() === String(cn.n).toLowerCase()); }
+    if (!f) { const cn = cat.find((x) => String(x.n || '').toLowerCase() === q); if (cn) f = foods.find((x) => String(x.n).toLowerCase() === String(cn.n).toLowerCase()); }
+    if (!f) f = foods.find((x) => String(x.n || '').toLowerCase().includes(q));
+    return f || null;
+  };
+  const items = (Array.isArray(rawLog.items) ? rawLog.items : []).slice(0, 6).map((it) => {
+    const f = match(it && it.food);
+    if (!f) return null;
+    const g = Math.max(5, Math.min(1500, Math.round(Number(it && it.g) || 100)));
+    return { n: f.n, g, kcal: Math.round(f.kcal * g / 100), p: Math.round((f.p || 0) * g / 100), c: Math.round((f.c || 0) * g / 100), f: Math.round((f.f || 0) * g / 100) };
+  }).filter(Boolean);
+  if (!items.length) return null;
+  const meal = NUTRI_MEALS.includes(rawLog.meal) ? rawLog.meal : 'Snack';
+  const tot = items.reduce((a, x) => ({ kcal: a.kcal + x.kcal, p: a.p + x.p, c: a.c + x.c, f: a.f + x.f }), { kcal: 0, p: 0, c: 0, f: 0 });
+  return { meal, items, ...tot };
+}
+function parseNutri(raw) {
+  const d = parseJsonLoose(raw);
+  if (!d || typeof d !== 'object') return null;
+  const reply = clean(d.reply, 1200);
+  if (!reply) return null;
+  return { reply, log: d.log || null };
+}
+/** POST /api/ai/nutri — the student-facing Nutrition Assistant. */
+async function nutri(req, st) {
+  const r = rateLimit(`ai-nutri:${ipOf(req)}`, 30, 60_000);
+  if (!r.ok) return tooMany(r.retryAfter);
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 60_000);
+  if (big) return tooLarge(60_000);
+  if (bad) return badJson();
+  const code = String(body?.code || '').trim().toUpperCase().slice(0, 24);
+  const message = String(body?.message || '').trim().slice(0, 1500);
+  const clientName = String(body?.client || '').trim().slice(0, 80);
+  const lang = body?.lang === 'fa' ? 'fa' : 'en';
+  if (!code || !message || !clientName) return j(400, { ok: false, error: 'bad-request' });
+  const { ws, meta } = await wsByCode(st, code);
+  if (!ws || !meta || !meta.data) return j(404, { ok: false, error: 'workspace-not-found' });
+  const d = meta.data;
+  /* SAFETY FIRST — deterministic, before quota and before any model call. */
+  if (SAFETY_RE.test(message)) {
+    return j(200, { ok: true, safety: true, reply: nutriSafetyReply(lang) });
+  }
+  /* Quota on the WORKSPACE OWNER (students have no account of their own). */
+  const ownerId = ws.owner ? String(ws.owner).replace(/^coach:/, '') : null;
+  const dayKey = new Date().toISOString().slice(0, 10);
+  const ckey = `ai-chat:${ownerId || 'anon'}:${dayKey}`;
+  /* Client-local clock (the student's TODAY may differ from server UTC). */
+  const dateISO = /^\d{4}-\d{2}-\d{2}$/.test(String(body?.date || '')) ? body.date : dayKey;
+  const dow = Number.isInteger(body?.dow) && body.dow >= 0 && body.dow <= 6 ? body.dow : (new Date(dateISO + 'T12:00:00').getDay() + 6) % 7;
+  const hour = Number.isInteger(body?.hour) && body.hour >= 0 && body.hour <= 23 ? body.hour : new Date().getHours();
+  const engine = nutriEngine(d, clientName, dateISO, dow);
+  if (!engine) return j(404, { ok: false, error: 'client-not-found' });
+  if (!AI_KEY) return j(503, { ok: false, error: 'ai-not-configured' });
+  const used = Number((await st.get(ckey, { type: 'json' })) || 0);
+  if (used >= CHAT_DAILY) return j(402, { ok: false, error: 'ai-quota', used, max: CHAT_DAILY });
+  const foodsCatalog = (Array.isArray(body?.foods) ? body.foods : [])
+    .map((f) => ({ n: String((f && f.n) || '').slice(0, 60), fa: String((f && f.fa) || '').slice(0, 60) }))
+    .filter((f) => f.n).slice(0, 200);
+  const foodList = (Array.isArray(d.FOODS) ? d.FOODS : []).slice(0, 80)
+    .map((f) => `${f.n} (${f.kcal}kcal/${f.p}p per 100g)`).join(' | ');
+  const sys = [
+    'You are the Nutrition Assistant inside CoachMint — a companion for a fitness STUDENT (not the coach).',
+    'You help with everyday food decisions: what to eat now, logging meals, swaps, pre/post-workout food.',
+    'HARD RULES:',
+    '- The ENGINE block below is the ONLY source of numbers (targets, consumed, remaining). Never invent or recompute nutrition values.',
+    '- When the student says what they ATE with quantities, return a log object. Food names MUST come from the FOOD LIBRARY exactly. If a quantity is missing, ask for it and return NO log.',
+    '- If the student did not give quantities, do not guess — ask.',
+    '- Respect allergies/dislikes from the engine. Never suggest a food containing a stated allergen.',
+    '- You are NOT a doctor or dietitian: no diagnosis, no medical claims, no supplement megadoses. For medical topics recommend a qualified professional.',
+    '- Keep the reply SHORT (1-3 sentences), warm, practical, in ' + (lang === 'fa' ? 'Persian (Farsi)' : 'English') + '.',
+    'Respond with STRICT JSON only — no markdown fences:',
+    '{"reply":"...","log":{"meal":"Breakfast|Snack|Lunch|Pre-Workout|Dinner|Before Bed","items":[{"food":"<exact library name>","g":150}]}}',
+    'Omit "log" entirely when the student is just asking a question.'
+  ].join('\n');
+  const user = [
+    `Today for the student: ${dateISO} (day-of-week index ${dow}, 0=Monday). Hour: ${hour}.`,
+    `The student says: "${message}"`,
+    '=== ENGINE (deterministic, ground truth) ===',
+    JSON.stringify(engine),
+    '=== FOOD LIBRARY (pick names EXACTLY from here) ===',
+    foodList || '(empty)'
+  ].join('\n');
+  const out = await callModel([{ role: 'system', content: sys }, { role: 'user', content: user }], parseNutri);
+  if (!out) return j(502, { ok: false, error: 'ai-upstream' });
+  const log = parseNutriLog(out.parsed.log, d, foodsCatalog);
+  await st.setJSON(ckey, used + 1);
+  return j(200, { ok: true, reply: out.parsed.reply, log: log || undefined, engine: { targets: engine.targets, consumed: engine.consumed, remaining: engine.remaining }, model: out.model, usage: { chatToday: used + 1, chatMax: CHAT_DAILY } });
+}
+
 export default async (req) => {
   if (req.method === 'POST') {
     const r = rateLimit(`ai:${ipOf(req)}`, 20, 60_000);
@@ -925,6 +1134,7 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'insight') return secure(await insight(req, st));
     if (req.method === 'POST' && action === 'analyze') return secure(await analyze(req, st));
     if (req.method === 'POST' && action === 'action') return secure(await aiAction(req, st));
+    if (req.method === 'POST' && action === 'nutri') return secure(await nutri(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     console.error('[ai] handler error:', e.message);
