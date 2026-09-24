@@ -556,9 +556,24 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .un-ring.r2{width:262px;height:262px;opacity:.55;animation:unspin 24s linear infinite reverse}
 .un-ring.r3{width:336px;height:336px;opacity:.28;animation:unspin 38s linear infinite}
 @keyframes unspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) rotate(calc(var(--ux,0)*-3deg)) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
+.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) translateY(calc(var(--ux,0)*-30px)) rotate(calc(var(--ux,0)*-3deg)) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
 @keyframes unbob{0%,100%{margin-top:0}50%{margin-top:-9px}}
 .un-lock svg{filter:drop-shadow(0 0 22px rgba(200,240,75,.4)) drop-shadow(0 18px 40px rgba(0,0,0,.6))}
+/* v18.44 — HOLD-TO-LIFT: the dumbbell itself is the button (isometric hold,
+   like a plank). Holding fills a progress ring around it, the plates glow
+   toward the center, the whole bar LIFTS, rings/particles accelerate — and
+   at 100% it bursts into the portal. Replaces slide-to-unlock. */
+.un-hold{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(80px);width:250px;height:250px;display:grid;place-items:center;cursor:grab;touch-action:none;z-index:3;-webkit-tap-highlight-color:transparent}
+.un-hold.dis{cursor:not-allowed}
+.un-hold.dis .un-lock{opacity:.45}
+.un-hold:active{cursor:grabbing}
+.un-ringp{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(60px);pointer-events:none;opacity:calc(.35 + var(--ux,0)*.65)}
+.un-holdhint{position:absolute;left:50%;top:45.5%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;letter-spacing:.04em;color:#B9C0CE;white-space:nowrap;pointer-events:none;opacity:calc(1 - var(--ux,0)*1.8)}
+.un-holdhint .ic{color:var(--accent);animation:unpulse 1.5s ease-in-out infinite}
+@keyframes unpulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.18)}}
+.un-pct{position:absolute;left:50%;top:45.5%;transform:translateX(-50%);font-size:14px;font-weight:800;color:var(--accent);letter-spacing:.06em;pointer-events:none;opacity:0}
+.holding .un-ring.r1{animation-duration:3.5s}.holding .un-ring.r2{animation-duration:6s}.holding .un-ring.r3{animation-duration:9s}
+.holding .un-dot{animation-duration:2.2s}
 /* v18.42 — the hero is a 3D DUMBBELL (sporty element, not a padlock): the
    plates slide toward the center as the handle moves (inner plates travel
    farther than the outer ones for depth) and SLAM home on unlock. The
@@ -578,10 +593,7 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .un-pick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
 .un-chip{display:flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:99px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);color:#E8EAF0;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
 .un-chip.on{border-color:var(--accent);background:rgba(200,240,75,.12);box-shadow:0 0 0 3px rgba(200,240,75,.12)}
-.un-track{position:absolute;left:50%;bottom:calc(11vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateZ(50px);width:min(400px,86vw);height:64px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(200,240,75,.25);overflow:hidden;touch-action:none;box-shadow:0 18px 50px -18px rgba(0,0,0,.8)}
-.un-fill{position:absolute;inset:0;width:calc(var(--ux,0)*100%);background:linear-gradient(90deg,rgba(200,240,75,.04),rgba(200,240,75,.3));border-radius:99px}
-.un-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.05em;color:#B9C0CE;opacity:calc(1 - var(--ux,0)*1.5);padding-inline-start:56px;pointer-events:none}
-.un-handle{position:absolute;top:5px;left:5px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:var(--accent-ink);display:grid;place-items:center;cursor:grab;touch-action:none;box-shadow:0 6px 24px -6px rgba(200,240,75,.65);transition:opacity .2s}
+/* v18.44 — the slide track was removed; the dumbbell itself is the hold target */
 .un-foot{position:absolute;left:50%;bottom:calc(3.5vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:16px;align-items:center;font-size:11.5px;color:#7A8291;white-space:nowrap}
 .un-foot .lnk{color:#A9B2C3}
 /* unlock burst: rings blow out, shackle springs open, shockwave expands, the
@@ -600,9 +612,10 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 @keyframes unshock{0%{opacity:.95;transform:translateZ(60px) scale(1)}100%{opacity:0;transform:translateZ(60px) scale(7.5)}}
 .unlocked .un-stage{animation:unzoom .95s cubic-bezier(.5,0,.8,.4) forwards}
 @keyframes unzoom{55%{opacity:1}100%{transform:translateZ(380px);opacity:0}}
-.unlocked .un-track,.unlocked .un-card{animation:none;opacity:0;transition:opacity .4s}
+.unlocked .un-card{animation:none;opacity:0;transition:opacity .4s}
 .unlocked .un-lock{animation:unpop .6s ease-out forwards}
-@keyframes unpop{35%{transform:translate(-50%,-50%) translateZ(70px) scale(1.16)}100%{transform:translate(-50%,-50%) translateZ(70px) scale(1.05);opacity:0}}
+@keyframes unpop{35%{transform:translate(-50%,-50%) translateZ(70px) translateY(-30px) scale(1.16)}100%{transform:translate(-50%,-50%) translateZ(70px) translateY(-30px) scale(1.05);opacity:0}}
+.unlocked .un-holdhint,.unlocked .un-pct,.unlocked .un-ringp{opacity:0;transition:opacity .3s}
 @media (prefers-reduced-motion:reduce){.un-dot,.un-ring,.un-lock{animation:none}.un-stage{transition:none}}
 .ric{width:44px;height:44px;border-radius:13px;display:grid;place-items:center}
 .pickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 18px}
@@ -1252,7 +1265,7 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
-'Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','I have a connection code':'کد اتصال دارم',
+'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','I have a connection code':'کد اتصال دارم',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
 'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
@@ -3188,6 +3201,11 @@ function vUnlock(){
     <div class="un-stage">
       <div class="un-glow"></div><div class="un-grid"></div>${dots}
       <div class="un-rings"><span class="un-ring r1"></span><span class="un-ring r2"></span><span class="un-ring r3"></span></div>
+      <div class="un-ringp"><svg width="252" height="252" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="2.5"/>
+        <circle id="un-prog" cx="50" cy="50" r="46" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(200,240,75,.6))"/>
+      </svg></div>
+      <div class="un-hold ${armed?'':'dis'}" id="un-hold" data-armed="${armed?1:0}" role="button" tabindex="0" aria-label="${t('Hold the dumbbell to lift')}">
       <div class="un-lock"><svg width="210" height="130" viewBox="0 0 210 130" role="img" aria-label="dumbbell">
         <defs>
           <linearGradient id="unbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3140"/><stop offset=".5" stop-color="#171C26"/><stop offset="1" stop-color="#0D1016"/></linearGradient>
@@ -3200,34 +3218,55 @@ function vUnlock(){
         <g class="un-plate ro"><rect x="182" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="187" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
         <g transform="translate(97.2 57.5) scale(.13)"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="var(--accent)"/></g>
       </svg></div>
+      </div>
       <div class="un-shock"></div>
       <div class="un-card">${center}</div>
     </div>
-    <div class="un-track" id="un-track">
-      <div class="un-fill"></div>
-      <div class="un-hint">${ic('chevR',16)} ${t('Slide to unlock')}</div>
-      <div class="un-handle" id="un-handle" style="${armed?'':'opacity:.4;pointer-events:none'}">${ic('arrowR',22)}</div>
-    </div>
-    <div class="un-foot"><span id="un-status">${armed?t('Unlocking opens your portal'):t('Connect with your code first')}</span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
+    <div class="un-holdhint" id="un-hint">${ic('hand',16)} ${t('Hold the dumbbell to lift')}</div>
+    <div class="un-pct" id="un-pct">🔥 0%</div>
+    <div class="un-foot"><span id="un-status">${armed?t('Keep holding until it lifts'):t('Connect with your code first')}</span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
   </div>`;
 }
-/* Pointer wiring for the unlock stage: drag → --ux (0..1) drives the shackle,
-   rings, glow and tilt; release past 62% completes (burst + bind), otherwise
-   springs back. Pointer tilt adds a subtle 3D parallax on hover/move. */
+/* Pointer wiring for the unlock stage — v18.44 HOLD-TO-LIFT: press and HOLD
+   the dumbbell (isometric hold, like a plank). The hold fills the progress
+   ring, lifts the bar and accelerates the rings/particles; at 100% it bursts
+   into the portal. Release early → spring back. Pointer tilt adds a subtle
+   3D parallax on hover/move. */
 function unlockWire(){
-  const sc=$('un-scene'),tr=$('un-track'),hd=$('un-handle');
-  if(!sc||!tr||!hd||hd.dataset.wired)return;
-  hd.dataset.wired='1';
-  S.unlock={ux:0,drag:false,fetching:false};
-  const max=()=>Math.max(1,tr.clientWidth-hd.clientWidth-10);
-  const set=v=>{S.unlock.ux=v;sc.style.setProperty('--ux',v.toFixed(3));hd.style.transform=`translateX(${(v*max()).toFixed(1)}px)`};
-  sc.addEventListener('pointermove',e=>{if(S.unlock.drag)return;const r=sc.getBoundingClientRect();
+  const sc=$('un-scene'),lk=$('un-hold'),prog=$('un-prog'),pct=$('un-pct');
+  if(!sc||!lk||lk.dataset.wired)return;
+  lk.dataset.wired='1';
+  S.unlock={ux:0,hold:false,fetching:false,raf:0,t0:0};
+  const CIRC=289;
+  const armed=()=>lk.dataset.armed==='1';
+  const set=v=>{S.unlock.ux=v;sc.style.setProperty('--ux',v.toFixed(3));
+    if(prog)prog.setAttribute('stroke-dashoffset',(CIRC*(1-v)).toFixed(1));
+    if(pct)pct.textContent='🔥 '+Math.round(v*100)+'%';
+    sc.classList.toggle('holding',v>0.02&&S.unlock.hold)};
+  const tick=()=>{
+    if(!S.unlock.hold)return;
+    const v=Math.min(1,(performance.now()-S.unlock.t0)/1100);
+    set(v);
+    if(v>=1){S.unlock.hold=false;sc.classList.remove('holding');complete();return}
+    S.unlock.raf=requestAnimationFrame(tick);
+  };
+  const start=e=>{if(!armed()||S.unlock.hold)return;S.unlock.hold=true;S.unlock.t0=performance.now();
+    try{lk.setPointerCapture(e.pointerId)}catch(err){}e.preventDefault();S.unlock.raf=requestAnimationFrame(tick)};
+  const cancel=()=>{
+    if(!S.unlock.hold)return;S.unlock.hold=false;cancelAnimationFrame(S.unlock.raf);sc.classList.remove('holding');
+    const from=S.unlock.ux,t0=performance.now();
+    const back=()=>{if(S.unlock.hold)return;const k=Math.min(1,(performance.now()-t0)/240);set(from*(1-k)*(1-k));if(k<1)requestAnimationFrame(back)};
+    requestAnimationFrame(back);
+  };
+  lk.addEventListener('pointerdown',start);
+  lk.addEventListener('pointerup',cancel);
+  lk.addEventListener('pointercancel',cancel);
+  lk.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!S.unlock.hold){start(e)}});
+  lk.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')cancel()});
+  sc.addEventListener('pointermove',e=>{if(S.unlock.hold)return;const r=sc.getBoundingClientRect();
     sc.style.setProperty('--py',(((e.clientX-r.left)/r.width-.5)*8).toFixed(2)+'deg');
     sc.style.setProperty('--rx',((-.5+(e.clientY-r.top)/r.height)*6).toFixed(2)+'deg')});
-  hd.addEventListener('pointerdown',e=>{S.unlock.drag=true;hd.setPointerCapture(e.pointerId);hd.style.cursor='grabbing';e.preventDefault()});
-  hd.addEventListener('pointermove',e=>{if(!S.unlock.drag)return;const r=tr.getBoundingClientRect();
-    set(Math.max(0,Math.min(1,(e.clientX-r.left-hd.clientWidth/2)/max())))});
-  const reset=()=>{sc.classList.remove('unlocked');set(0);const st=$('un-status');if(st)st.textContent=t('Unlocking opens your portal')};
+  const reset=()=>{sc.classList.remove('unlocked');set(0);const st=$('un-status');if(st)st.textContent=t('Keep holding until it lifts')};
   const complete=async()=>{
     sc.classList.add('unlocked'); // plates slam + rings burst + shockwave + zoom
     const st=unlockStage();
@@ -3245,10 +3284,6 @@ function unlockWire(){
       if(me){S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' 🔓');return}}
     reset();toast(t('Invalid code'));
   };
-  const end=()=>{if(!S.unlock.drag)return;S.unlock.drag=false;hd.style.cursor='grab';
-    if(S.unlock.ux>=.62)complete();else set(0)};
-  hd.addEventListener('pointerup',end);
-  hd.addEventListener('pointercancel',end);
   /* QR / invite-link arrival: the personal code is in S.joinCode but the
      workspace is not fetched yet — bind silently so the personalized stage
      replaces the demo seed. Invalid code → back to the code input. */
