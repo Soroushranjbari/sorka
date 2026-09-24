@@ -556,10 +556,18 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .un-ring.r2{width:262px;height:262px;opacity:.55;animation:unspin 24s linear infinite reverse}
 .un-ring.r3{width:336px;height:336px;opacity:.28;animation:unspin 38s linear infinite}
 @keyframes unspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
+.un-lock{position:absolute;left:50%;top:31%;transform:translate(-50%,-50%) translateZ(70px) rotate(calc(var(--ux,0)*-3deg)) scale(calc(1 + var(--ux,0)*.07));animation:unbob 5.5s ease-in-out infinite;pointer-events:none}
 @keyframes unbob{0%,100%{margin-top:0}50%{margin-top:-9px}}
 .un-lock svg{filter:drop-shadow(0 0 22px rgba(200,240,75,.4)) drop-shadow(0 18px 40px rgba(0,0,0,.6))}
-.un-shackle{transform-origin:48px 80px;transform:rotate(calc(var(--ux,0)*-40deg)) translateY(calc(var(--ux,0)*-7px))}
+/* v18.42 — the hero is a 3D DUMBBELL (sporty element, not a padlock): the
+   plates slide toward the center as the handle moves (inner plates travel
+   farther than the outer ones for depth) and SLAM home on unlock. The
+   CoachMint bolt rides the bar between them. */
+.un-plate{transition:transform .18s ease-out}
+.un-plate.li{transform:translateX(calc(var(--ux,0)*22px))}
+.un-plate.ri{transform:translateX(calc(var(--ux,0)*-22px))}
+.un-plate.lo{transform:translateX(calc(var(--ux,0)*8px))}
+.un-plate.ro{transform:translateX(calc(var(--ux,0)*-8px))}
 .un-shock{position:absolute;left:50%;top:31%;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;border:2.5px solid var(--accent);opacity:0;transform:translateZ(60px);pointer-events:none}
 .un-card{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%) translateZ(34px);width:min(440px,90vw);text-align:center}
 .un-sub{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
@@ -580,13 +588,21 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
    whole stage zooms toward the viewer, then the portal renders */
 .unlocked .un-ring{animation:unburst .85s ease-out forwards}
 @keyframes unburst{to{transform:translate(-50%,-50%) scale(2.7);opacity:0}}
-.unlocked .un-shackle{animation:unopen .6s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes unopen{45%{transform:rotate(-62deg) translateY(-13px)}100%{transform:rotate(-48deg) translateY(-10px)}}
+.unlocked .un-plate.li{animation:unslamL .55s cubic-bezier(.34,1.56,.64,1) forwards}
+.unlocked .un-plate.ri{animation:unslamR .55s cubic-bezier(.34,1.56,.64,1) forwards}
+.unlocked .un-plate.lo{animation:unslamLo .55s cubic-bezier(.34,1.56,.64,1) forwards}
+.unlocked .un-plate.ro{animation:unslamRo .55s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes unslamL{to{transform:translateX(28px)}}
+@keyframes unslamR{to{transform:translateX(-28px)}}
+@keyframes unslamLo{to{transform:translateX(10px)}}
+@keyframes unslamRo{to{transform:translateX(-10px)}}
 .unlocked .un-shock{animation:unshock .95s ease-out forwards}
 @keyframes unshock{0%{opacity:.95;transform:translateZ(60px) scale(1)}100%{opacity:0;transform:translateZ(60px) scale(7.5)}}
 .unlocked .un-stage{animation:unzoom .95s cubic-bezier(.5,0,.8,.4) forwards}
 @keyframes unzoom{55%{opacity:1}100%{transform:translateZ(380px);opacity:0}}
-.unlocked .un-track,.unlocked .un-card,.unlocked .un-lock{animation:none;opacity:0;transition:opacity .4s}
+.unlocked .un-track,.unlocked .un-card{animation:none;opacity:0;transition:opacity .4s}
+.unlocked .un-lock{animation:unpop .6s ease-out forwards}
+@keyframes unpop{35%{transform:translate(-50%,-50%) translateZ(70px) scale(1.16)}100%{transform:translate(-50%,-50%) translateZ(70px) scale(1.05);opacity:0}}
 @media (prefers-reduced-motion:reduce){.un-dot,.un-ring,.un-lock{animation:none}.un-stage{transition:none}}
 .ric{width:44px;height:44px;border-radius:13px;display:grid;place-items:center}
 .pickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 18px}
@@ -1236,7 +1252,7 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
-'Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو',
+'Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','I have a connection code':'کد اتصال دارم',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
 'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
@@ -3050,36 +3066,15 @@ return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform
 
 /* ================= LOGIN ================= */
 function vLogin(){
-  /* v18.41 — students NEVER see the demo picker as the main path: a join code
-     (scanned QR / invite link / returning bound device) opens the cinematic
-     3D unlock stage. The old picker stays reachable via the small demo link. */
+  /* v18.43 — the role chooser is GONE. Coaches land straight on the login/
+     signup screen; students arrive via QR / invite link (or the "I have a
+     connection code" link) and get the cinematic unlock stage. Returning
+     sessions never see any login screen (bootstrap resume). */
   if(S.demoPick)return clientPicker();
-  if(S.joinCode)return vUnlock();
-  if(!S.loginRole)return roleSelect();
-  return S.loginRole==='coach'?coachLogin():vUnlock();
+  if(S.joinCode||S.loginRole==='client')return vUnlock();
+  return coachLogin();
 }
-function roleSelect(){return `
-<div class="login-right" style="min-height:100vh">
-  <div class="login-card" style="max-width:540px">
-    <div class="row" style="justify-content:space-between"><div class="row" style="gap:10px"><div class="brand-mark" style="background:var(--ink);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:var(--ink)">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>${langBtn('btn-outline btn-sm')}</div>
-    <h1 style="font-size:26px;margin-top:34px">${t('Sign in to CoachMint')}</h1>
-    <p class="sub" style="margin-top:6px">${t('Choose your role')}</p>
-    <div class="rolegrid">
-      <button class="rolecard" data-act="role" data-r="coach">
-        <span class="ric" style="background:var(--ink-bg);color:#fff">${ic('dumbbell',22)}</span>
-        <b>${t('I am a Coach')}</b>
-        <span class="muted" style="font-size:12.5px">${t('Manage clients, build workouts, track progress')}</span>
-        <span class="row" style="color:var(--accent-deep);font-size:12.5px;font-weight:700;margin-top:auto">${t('Continue')} ${ic('arrowR',14)}</span>
-      </button>
-      <button class="rolecard" data-act="role" data-r="client">
-        <span class="ric" style="background:var(--accent);color:var(--accent-ink)">${ic('activity',22)}</span>
-        <b>${t('I am a Client')}</b>
-        <span class="muted" style="font-size:12.5px">${t('See your workouts, progress and nutrition')}</span>
-        <span class="row" style="color:var(--accent-deep);font-size:12.5px;font-weight:700;margin-top:auto">${t('Continue')} ${ic('arrowR',14)}</span>
-      </button>
-    </div>
-  </div>
-</div>`}
+/* v18.43 — roleSelect() removed: the coach login IS the landing page now. */
 function coachLogin(){return `
 <div class="login">
   <div class="login-left">
@@ -3092,7 +3087,7 @@ function coachLogin(){return `
     <div class="lquote"><div>${t('"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."')}</div><div class="lq-a">${t('— Arman T. · Online Coach, 63 clients')}</div></div>
   </div>
   <div class="login-right"><form class="login-card" onsubmit="return false">
-    <a class="lnk" style="font-size:12.5px" data-act="back-role">← ${t('Back')}</a>
+    <a class="lnk" style="font-size:12.5px" data-act="client-entry">${ic('qr',13)} ${t('I have a connection code')}</a>
     <h1 style="font-size:24px;margin-top:10px">${S.authMode==='signup'?t('Create coach account'):t('Coach sign in')}</h1>
     <p class="muted" style="font-size:12px;margin:4px 0 20px">${S.authMode==='signup'?t('14-day free trial · no card required'):t('Welcome back to your workspace')}</p>
     ${S.authMode==='signup'?`<label class="lbl">${t('Full name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:14px">`:''}
@@ -3193,10 +3188,17 @@ function vUnlock(){
     <div class="un-stage">
       <div class="un-glow"></div><div class="un-grid"></div>${dots}
       <div class="un-rings"><span class="un-ring r1"></span><span class="un-ring r2"></span><span class="un-ring r3"></span></div>
-      <div class="un-lock"><svg width="148" height="170" viewBox="0 0 156 176">
-        <g class="un-shackle"><path d="M48 80V52a30 30 0 0 1 60 0v28" fill="none" stroke="rgba(200,240,75,.9)" stroke-width="14" stroke-linecap="round"/></g>
-        <rect x="28" y="76" width="100" height="86" rx="20" fill="#151922" stroke="rgba(200,240,75,.55)" stroke-width="2.5"/>
-        <circle cx="78" cy="112" r="12" fill="var(--accent)"/><rect x="73" y="118" width="10" height="24" rx="5" fill="var(--accent)"/>
+      <div class="un-lock"><svg width="210" height="130" viewBox="0 0 210 130" role="img" aria-label="dumbbell">
+        <defs>
+          <linearGradient id="unbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3140"/><stop offset=".5" stop-color="#171C26"/><stop offset="1" stop-color="#0D1016"/></linearGradient>
+          <linearGradient id="unplate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#242B39"/><stop offset="1" stop-color="#10141C"/></linearGradient>
+        </defs>
+        <rect x="25" y="57" width="160" height="14" rx="7" fill="url(#unbar)" stroke="rgba(200,240,75,.4)" stroke-width="1.5"/>
+        <g class="un-plate li"><rect x="42" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="48" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
+        <g class="un-plate ri"><rect x="144" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="150" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
+        <g class="un-plate lo"><rect x="8" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="13" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
+        <g class="un-plate ro"><rect x="182" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="187" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
+        <g transform="translate(97.2 57.5) scale(.13)"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="var(--accent)"/></g>
       </svg></div>
       <div class="un-shock"></div>
       <div class="un-card">${center}</div>
@@ -3227,10 +3229,12 @@ function unlockWire(){
     set(Math.max(0,Math.min(1,(e.clientX-r.left-hd.clientWidth/2)/max())))});
   const reset=()=>{sc.classList.remove('unlocked');set(0);const st=$('un-status');if(st)st.textContent=t('Unlocking opens your portal')};
   const complete=async()=>{
-    sc.classList.add('unlocked'); // rings burst + shackle springs + shockwave + zoom
+    sc.classList.add('unlocked'); // plates slam + rings burst + shockwave + zoom
     const st=unlockStage();
     const parts=S.joinCode?parseJoinCode(S.joinCode):null;
-    const known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+    let known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+    if(!known&&st==='ready1')known=CLIENTS[0];
+    if(!known&&st==='pick'&&S.pickCid)known=CLIENTS.find(c=>c.id===S.pickCid);
     const stat=$('un-status');if(stat)stat.textContent=t('Unlocking…');
     await new Promise(r=>setTimeout(r,820)); // let the burst play
     if(known){ // data already on this device (returning student / bare code)
@@ -7529,7 +7533,7 @@ document.addEventListener('click',e=>{
   const a=el.dataset.act,mw=el.closest('[data-mw]');
   switch(a){
     case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
-    case 'role':S.loginRole=el.dataset.r;render();break;
+    case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage */
     case 'un-pick':S.pickCid=+el.dataset.cid;render();break;
