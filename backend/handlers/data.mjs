@@ -25,8 +25,11 @@ function clientMsgDiff(oldData, newData) {
     if (!fresh.length) return null;
     const last = fresh[fresh.length - 1];
     const checkin = fresh.some((m) => m.type === 'checkin');
+    /* v18.56 — an intake (health questionnaire) submission gets its own title:
+       it is a MEDICAL-deliverable, not just another chat message. */
+    const intake = fresh.some((m) => m.type === 'intake');
     return {
-      title: checkin ? '📋 New check-in' : '💬 New message',
+      title: intake ? '📋 Intake form submitted' : (checkin ? '📋 New check-in' : '💬 New message'),
       body: `${last.client}: ${String(last.body || '').slice(0, 80)}`,
       tag: 'msg', url: '/?view=messages'
     };
