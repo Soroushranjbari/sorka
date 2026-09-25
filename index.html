@@ -1289,7 +1289,7 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
-'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
+'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
 'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
@@ -2661,8 +2661,8 @@ async function joinPersonal(v){
   return me;
 }
 async function cloudJoinCode(forced){ // client: connect with a connection code
-  /* v18.50 — a NEW attempt restarts the invalid/timeout/preselect state. */
-  S.unInvalid=false;S.unT0=0;S.unPicked=false;
+  /* v18.50 — a NEW attempt restarts the invalid/timeout state. */
+  S.unInvalid=false;S.unT0=0;
   const v=(forced||($('join-code')?.value||'')).toUpperCase().trim();
   if(!v){toast('Invalid code');return}
   /* v16.3 — personal code "<workspace>-<client>": resolves the tenant AND the
@@ -2708,7 +2708,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',player:null,msgThread:null,joinCode:null,tplEdit:null,
-unPicked:false,unInvalid:false,unT0:0,
+unInvalid:false,unT0:0,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
@@ -3404,17 +3404,14 @@ function unlockStage(){
     if(!S.unT0){S.unT0=Date.now();setTimeout(()=>{const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},8400)}
     return 'loading';
   }
-  /* Bare/legacy code: profile pick only after the workspace was actually
-     connected (S.wsConnected) — a fresh device still holds the demo seed.
-     v18.50 — ARCHIVED clients never count: one ACTIVE student auto-binds
-     (ready1), and the pick list only offers active profiles. */
+  /* Bare/legacy code: v18.51 — the profile PICKER IS GONE. A student must
+     always land on THEIR OWN name (the one the coach registered). A bare
+     workspace code can only auto-bind when exactly ONE active student exists;
+     with several, the student is sent to their PERSONAL invite code instead
+     of ever choosing an identity. */
   if(!S.joinCode||!S.wsConnected)return 'code';
   const act=CLIENTS.filter(c=>c.status!=='Archived');
-  if(act.length===1)return 'ready1';
-  /* v18.50 — no phantom pre-selection: the default S.pickCid must not arm the
-     hold button before the student actually tapped their name. */
-  if(!S.unPicked)S.pickCid=null;
-  return 'pick';
+  return act.length===1?'ready1':'multi';
 }
 function vUnlock(){
   const st=unlockStage();
@@ -3437,9 +3434,12 @@ function vUnlock(){
       <div class="un-hi">${t('Hello')} ${esc(first)} 👋</div>
       <b class="un-name">${esc(t(known.name))}</b>
       ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
-  }else if(st==='pick'){
-    center=`<div class="un-sub">${t('Who are you?')}</div>
-      <div class="un-pick">${act.map(c=>`<button class="un-chip ${S.pickCid===c.id?'on':''}" data-act="un-pick" data-cid="${c.id}">${avC(c.name,38)}<span>${esc(t(c.name))}</span></button>`).join('')}</div>`;
+  }else if(st==='multi'){
+    /* v18.51 — several active students share this (legacy) workspace code:
+       never ask "who are you?" — point the student at their PERSONAL code. */
+    center=`<div class="un-sub">${t('Personal code needed')}</div>
+      <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for your personal invite code')}</div>
+      <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
   }else if(st==='loading'){
     center=`<div class="un-sub">${t('Checking code…')}</div>
       <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>`;
@@ -3454,12 +3454,12 @@ function vUnlock(){
       <div class="un-codebox"><input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${esc(S.joinCode||'')}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700"><button class="btn btn-primary" data-act="join-code">${t('Connect')}</button></div>
       <div class="un-meta">${t('Enter the code your coach gave you')}</div>`;
   }
-  const armed=!!known||(st==='pick'&&S.unPicked&&S.pickCid&&CLIENTS.some(c=>c.id===S.pickCid&&c.status!=='Archived'));
+  const armed=!!known;
   /* v18.49 — the footer hint must match the CURRENT state. It used to show
      "Connect with your code first" even while the code was already connected
      (pick + loading states) — a contradictory, jumbled instruction. */
   const hint=!armed
-    ?(st==='loading'?t('Checking code…'):st==='invalid'?t('Code not found'):st==='pick'?t('Pick your name to continue'):t('Connect with your code first'))
+    ?(st==='loading'?t('Checking code…'):st==='invalid'?t('Code not found'):st==='multi'?t('Personal code needed'):t('Connect with your code first'))
     :t('Hold the dumbbell to lift');
   return `<div class="unlock" id="un-scene">
     <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">COACHMINT</div><div class="brand-tag" style="color:#7A8291">ONE COACH. ONE WORKSPACE.</div></div></div>
@@ -3533,7 +3533,6 @@ function unlockWire(){
     let known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
     /* v18.50 — archived profiles never auto-bind (ready1 = exactly one ACTIVE). */
     if(!known&&st==='ready1')known=CLIENTS.find(c=>c.status!=='Archived');
-    if(!known&&st==='pick'&&S.pickCid)known=CLIENTS.find(c=>c.id===S.pickCid&&c.status!=='Archived');
     const stat=$('un-status');if(stat)stat.textContent=t('Unlocking…');
     await new Promise(r=>setTimeout(r,820)); // let the burst play
     if(known){ // data already on this device (returning student / bare code)
@@ -3557,7 +3556,7 @@ function unlockWire(){
       /* v18.50 — a code that resolves to NO profile used to vanish with a
          transient toast (S.joinCode=null); now the persistent 'invalid'
          state shows with a retry button instead. */
-      if(me){S.wsConnected=true;S.pickCid=me.id;S.unPicked=true}else{S.unInvalid=true}
+      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.unInvalid=true}
       render();
     }).catch(()=>{S.unlock.fetching=false});
   }
@@ -8164,9 +8163,8 @@ document.addEventListener('click',e=>{
     case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
-    /* v18.41 — unlock stage */
-    case 'un-pick':S.pickCid=+el.dataset.cid;S.unPicked=true;render();break;
-    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unT0=0;S.unPicked=false;S.pickCid=null;render();break;
+    /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed) */
+    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unT0=0;S.pickCid=null;render();break;
     case 'demo-client':S.demoPick=true;render();break;
     case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
     case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
@@ -9104,7 +9102,7 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
       const out=await cloudFetch(code);
       if(out&&out.ok){
         CLOUD.code=code;CLOUD.on=true;
-        if(join){S.joinCode=join.pcode||code;if(join.cid){S.pickCid=join.cid;S.unPicked=true}}
+        if(join){S.joinCode=join.pcode||code;if(join.cid)S.pickCid=join.cid}
         if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync();S.wsConnected=true}
         else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
       }
