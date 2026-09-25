@@ -8651,7 +8651,18 @@ document.addEventListener('click',e=>{
     case 'intake-save':{const ic2=client(S.cid);
       const ans=INTAKE_Q.map((q,i)=>{const f=$('iq-'+i);return f?(f.value||'').trim():''});
       if(ans.some(v=>!v)){toast(t('Answer all questions'));break}
-      ic2.intake={a:ans,at:Date.now()};saveData();closeModal();render();toast(t('Intake form saved ✓'));break}
+      ic2.intake={a:ans,at:Date.now()};
+      /* v18.56 — DELIVER it to the coach: a submitted intake used to update
+         ONLY the client record (the coach never noticed until they opened
+         that client by hand). It now arrives exactly like a check-in: a
+         thread message + a bell notification + an activity entry — and the
+         server turns the new client→coach MSGS into a real web push
+         (clientMsgDiff in data.mjs). Re-submissions also notify: a changed
+         medical answer must reach the coach. */
+      MSGS.push({id:uid(),client:ic2.name,from:'client',type:'intake',body:`📋 ${t('Intake form')} — ${t('Submitted')}`,time:'Just now',read:false});
+      NOTIFS.unshift({t:`📋 ${t(ic2.name)} — ${t('Intake form')} — ${t('Submitted')}`,d:'Just now',un:true});
+      ACTIVITY.unshift({w:'Just now',i:'note',h:lang==='fa'?`<b>${t(ic2.name)}</b> فرم ورود اطلاعات (PAR-Q) را تکمیل کرد`:`<b>${t(ic2.name)}</b> completed the intake form (PAR-Q)`});
+      saveData();closeModal();render();toast(t('Intake form saved ✓'));break}
     case 'intake-view':intakeViewModal(el.dataset.c);break;
     case 'pack-open':packsModal(el.dataset.c);break;
     case 'pack-add':{const pname=el.dataset.c;
