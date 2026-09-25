@@ -2655,6 +2655,7 @@ async function joinPersonal(v){
   if(!me)return null;
   CLOUD.on=true;cloudStart();
   S.wsConnected=true;
+  S.joinCid=me.id; // v18.52 — remember the bound profile for silent re-bind
   try{localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:me.id,pcode:v}))}catch(e){}
   try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
   cloudResync();
@@ -2672,7 +2673,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
   if(parts){
     const me=await joinPersonal(v);
     if(!me){toast(t('Invalid code'));return}
-    S.pickCid=me.id;S.joinCode=v;
+    S.pickCid=me.id;S.joinCid=me.id;S.joinCode=v;
     /* On the unlock stage the slider completes the entry (the whole point of
        the welcome lock); from the legacy demo picker we enter directly. */
     if(S.role==='client'){S.cid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' ✓')}
@@ -2708,7 +2709,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',player:null,msgThread:null,joinCode:null,tplEdit:null,
-unInvalid:false,unT0:0,
+unInvalid:false,unT0:0,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
@@ -3411,6 +3412,10 @@ function unlockStage(){
      of ever choosing an identity. */
   if(!S.joinCode||!S.wsConnected)return 'code';
   const act=CLIENTS.filter(c=>c.status!=='Archived');
+  /* v18.52 — a device previously bound to a profile (co-join cid, saved by
+     older flows WITHOUT the personal pcode) re-binds SILENTLY: the student
+     always lands on THEIR OWN name — never the picker, never a dead end. */
+  if(S.joinCid&&act.some(c=>c.id===S.joinCid))return 'ready1';
   return act.length===1?'ready1':'multi';
 }
 function vUnlock(){
@@ -3418,7 +3423,7 @@ function vUnlock(){
   const parts=S.joinCode?parseJoinCode(S.joinCode):null;
   const me=st==='ready'?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
   const act=CLIENTS.filter(c=>c.status!=='Archived');
-  const known=me||(st==='ready1'?act[0]:null);
+  const known=me||(st==='ready1'?((S.joinCid&&act.find(c=>c.id===S.joinCid))||act[0]):null);
   const coach=wsOwnerName();
   const dots=[...Array(16)].map((_,i)=>`<span class="un-dot" style="left:${(i*61)%96+2}%;top:${(i*37)%88+4}%;--z:${((i%5)*34-50).toFixed(0)}px;animation-delay:${(i*.7).toFixed(1)}s;opacity:${(.22+(i%4)*.13).toFixed(2)}"></span>`).join('');
   let center='';
@@ -3531,12 +3536,13 @@ function unlockWire(){
     const st=unlockStage();
     const parts=S.joinCode?parseJoinCode(S.joinCode):null;
     let known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
-    /* v18.50 — archived profiles never auto-bind (ready1 = exactly one ACTIVE). */
-    if(!known&&st==='ready1')known=CLIENTS.find(c=>c.status!=='Archived');
+    /* v18.50 — archived profiles never auto-bind (ready1 = exactly one ACTIVE).
+       v18.52 — a persisted profile bind (joinCid) wins over "first active". */
+    if(!known&&st==='ready1')known=(S.joinCid&&CLIENTS.find(c=>c.id===S.joinCid&&c.status!=='Archived'))||CLIENTS.find(c=>c.status!=='Archived');
     const stat=$('un-status');if(stat)stat.textContent=t('Unlocking…');
     await new Promise(r=>setTimeout(r,820)); // let the burst play
     if(known){ // data already on this device (returning student / bare code)
-      S.role='client';S.cid=known.id;S.pickCid=known.id;S.ptab='today';S.player=null;S.joinCode=null;
+      S.role='client';S.cid=known.id;S.pickCid=known.id;S.joinCid=known.id;S.ptab='today';S.player=null;S.joinCode=null;
       render();toast(t('Welcome')+', '+t(known.name).split(' ')[0]+' 🔓');return;
     }
     if(parts){const me=await joinPersonal(S.joinCode);
@@ -8164,7 +8170,7 @@ document.addEventListener('click',e=>{
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed) */
-    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unT0=0;S.pickCid=null;render();break;
+    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unT0=0;S.pickCid=null;S.joinCid=null;render();break;
     case 'demo-client':S.demoPick=true;render();break;
     case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
     case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
@@ -8172,7 +8178,7 @@ document.addEventListener('click',e=>{
       try{if(CLOUD.on)localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:S.cid}))}catch(e){}
       try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}render();break}
     case 'join-code':cloudJoinCode();break;
-    case 'exitdemo':case 'signout':case 'switch-role':clearInterval(restIv);S.player=null;S.msgThread=null;S.role=null;S.loginRole=null;S.view='login';S.authMode='login';authLogout();try{localStorage.removeItem('co-join')}catch(e){}render();if(a!=='switch-role')toast(t('Signed out'));break;
+    case 'exitdemo':case 'signout':case 'switch-role':clearInterval(restIv);S.player=null;S.msgThread=null;S.role=null;S.loginRole=null;S.view='login';S.authMode='login';S.joinCid=null;S.unInvalid=false;S.unT0=0;authLogout();try{localStorage.removeItem('co-join')}catch(e){}render();if(a!=='switch-role')toast(t('Signed out'));break;
     case 'auth-mode':S.authMode=el.dataset.m==='signup'?'signup':'login';render();break;
     case 'auth-goto-signup':S.role=null;S.loginRole='coach';S.authMode='signup';S.view='login';render();break;
     case 'goto-shop':try{window.open('/shop/index.html#pricing','_blank','noopener')}catch(e){location.href='/shop/index.html#pricing'}break;
@@ -9102,7 +9108,7 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
       const out=await cloudFetch(code);
       if(out&&out.ok){
         CLOUD.code=code;CLOUD.on=true;
-        if(join){S.joinCode=join.pcode||code;if(join.cid)S.pickCid=join.cid}
+        if(join){S.joinCode=join.pcode||code;if(join.cid){S.pickCid=join.cid;S.joinCid=join.cid}}
         if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync();S.wsConnected=true}
         else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
       }
