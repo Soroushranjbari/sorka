@@ -1289,7 +1289,7 @@ const FA={
 'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
 'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
 'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
-'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
+'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Cannot reach the server':'اتصال به سرور برقرار نشد','Check your internet connection and try again':'اتصال اینترنت را بررسی کن و دوباره امتحان کن','Try again':'دوباره امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
 'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
@@ -2644,7 +2644,13 @@ async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legac
 async function joinPersonal(v){
   const parts=parseJoinCode(v);if(!parts)return null;
   const out=await cloudFetch(parts.ws);
-  if(!out||!out.ok||out.exists===false)return null;
+  /* v18.53 — distinguish "server unreachable" from "code not found": a dead
+     server (or offline phone) must NOT show the misleading "Code not found" —
+     the code may be perfectly valid. Returns 'offline' so the unlock screen
+     shows a retry-with-connection message instead. */
+  if(!out){S.unOffline=true;return null}
+  if(!out.ok||out.exists===false)return null;
+  S.unOffline=false;
   /* Joining must start from a CLEAN slate (see the legacy path below). */
   cloudReset();
   freshWorkspace();
@@ -2709,7 +2715,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',player:null,msgThread:null,joinCode:null,tplEdit:null,
-unInvalid:false,unT0:0,joinCid:null,
+unInvalid:false,unT0:0,unOffline:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
@@ -3398,7 +3404,7 @@ function unlockStage(){
        arrived (S.wsConnected), the fetch failed on its own (S.unInvalid) or
        the 8s timeout passed, the code simply is not valid — show an explicit
        error with a retry instead of loading forever. */
-    if(S.unInvalid||S.wsConnected||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
+    if(S.unInvalid||S.unOffline||S.wsConnected||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
     /* Start the clock ONCE per attempt + schedule the re-render that flips
        the state when the timeout fires (nothing else renders the login view
        while the code is being checked). */
@@ -3449,11 +3455,17 @@ function vUnlock(){
     center=`<div class="un-sub">${t('Checking code…')}</div>
       <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>`;
   }else if(st==='invalid'){
-    /* v18.50 — persistent error state (a toast disappears before the student
-       looks back). Keeps the bad code visible and offers a retry. */
-    center=`<div class="un-sub">${t('Code not found')}</div>
-      <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for a new invite code')}</div>
-      <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
+    /* v18.53 — two DIFFERENT failure reasons, two different messages: a dead
+       server is "check your connection / try again", a truly unknown code is
+       "ask your coach". Showing "Code not found" for an offline phone sent
+       users hunting for a new code that was never wrong. */
+    center=S.unOffline
+      ?`<div class="un-sub">${t('Cannot reach the server')}</div>
+        <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Check your internet connection and try again')}</div>
+        <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try again')}</button>`
+      :`<div class="un-sub">${t('Code not found')}</div>
+        <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for a new invite code')}</div>
+        <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
   }else{
     center=`<div class="un-sub">${t('Your coach invited you')}</div>
       <div class="un-codebox"><input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${esc(S.joinCode||'')}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700"><button class="btn btn-primary" data-act="join-code">${t('Connect')}</button></div>
@@ -3464,7 +3476,7 @@ function vUnlock(){
      "Connect with your code first" even while the code was already connected
      (pick + loading states) — a contradictory, jumbled instruction. */
   const hint=!armed
-    ?(st==='loading'?t('Checking code…'):st==='invalid'?t('Code not found'):st==='multi'?t('Personal code needed'):t('Connect with your code first'))
+    ?(st==='loading'?t('Checking code…'):st==='invalid'?(S.unOffline?t('Cannot reach the server'):t('Code not found')):st==='multi'?t('Personal code needed'):t('Connect with your code first'))
     :t('Hold the dumbbell to lift');
   return `<div class="unlock" id="un-scene">
     <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">COACHMINT</div><div class="brand-tag" style="color:#7A8291">ONE COACH. ONE WORKSPACE.</div></div></div>
@@ -8170,7 +8182,7 @@ document.addEventListener('click',e=>{
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed) */
-    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unT0=0;S.pickCid=null;S.joinCid=null;render();break;
+    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unOffline=false;S.unT0=0;S.pickCid=null;S.joinCid=null;render();break;
     case 'demo-client':S.demoPick=true;render();break;
     case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
     case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
