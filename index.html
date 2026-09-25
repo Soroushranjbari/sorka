@@ -506,6 +506,21 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 /* v18.39 — challenge journey path: the current node pulses */
 .ch-pulse{animation:chp 1.8s ease-in-out infinite}
 @keyframes chp{0%,100%{opacity:.55}50%{opacity:.1}}
+/* v18.55 — premium challenge iconography (coach + student): the challenge
+   emoji sits in a lime-gradient TILE with an inner sheen instead of a flat
+   tint square, and leaderboard ranks become gold/silver/bronze medals. */
+.chal-ico{display:grid;place-items:center;flex:none;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,var(--accent),var(--acc-mid));
+  box-shadow:0 6px 18px -7px rgba(200,240,75,.6),inset 0 1px 0 rgba(255,255,255,.4)}
+.chal-ico::after{content:'';position:absolute;inset:0;background:radial-gradient(130% 85% at 28% -10%,rgba(255,255,255,.4),transparent 55%)}
+.chal-ico>span{position:relative;z-index:1;line-height:1}
+.chal-medal{width:24px;height:24px;border-radius:50%;display:inline-grid;place-items:center;
+  font-size:11.5px;font-weight:800;color:#fff;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.28);font-variant-numeric:tabular-nums}
+.chal-medal.g1{background:linear-gradient(140deg,#FFD75E,#F0A020)}
+.chal-medal.g2{background:linear-gradient(140deg,#DFE4EB,#98A2B0)}
+.chal-medal.g3{background:linear-gradient(140deg,#EDB083,#B26A31)}
+.chal-medal.gx{background:var(--line2);color:var(--ink2);box-shadow:none}
+.ch-glow{filter:drop-shadow(0 0 5px rgba(200,240,75,.8))}
 .excards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .exc{padding:16px;display:flex;flex-direction:column;gap:10px}
 .exc .nm{font-weight:700;font-size:14px}
@@ -5900,7 +5915,7 @@ function chalPath(stages,doneN,opt){
     const fill=st==='done'?'var(--accent)':st==='cur'?'var(--surface)':'var(--line2)';
     const op=st==='lock'?.55:1;
     return `${st==='cur'?`<circle cx="${p.x}" cy="${p.y}" r="21" fill="none" stroke="var(--accent)" stroke-width="1.5" class="ch-pulse"/>`:''}
-    <circle cx="${p.x}" cy="${p.y}" r="15" fill="${fill}" stroke="${st==='cur'?'var(--accent)':'none'}" stroke-width="${st==='cur'?2.5:0}" opacity="${op}"/>
+    <circle cx="${p.x}" cy="${p.y}" r="15" fill="${fill}" stroke="${st==='cur'?'var(--accent)':'none'}" stroke-width="${st==='cur'?2.5:0}" opacity="${op}" class="${st==='done'?'ch-glow':''}"/>
     <text x="${p.x}" y="${p.y}" dy=".34em" text-anchor="middle" font-size="13" opacity="${st==='lock'?.5:1}">${esc(list[i].e||'⭐')}</text>
     ${opt.labels===false?'':`<text x="${p.x}" y="${p.y+27}" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--ink2)" opacity="${st==='lock'?.6:1}">${esc(String(list[i].n||'').slice(0,12))}</text>`}`;
   }).join('');
@@ -5909,20 +5924,24 @@ function chalPath(stages,doneN,opt){
     ${nodes}</svg>`;
 }
 /* ---------- coach: Challenges view ---------- */
+/* v18.55 — shared challenge visuals: gradient icon tile (emoji stays the
+   coach's own choice) + gold/silver/bronze rank medals for leaderboards. */
+const chalIco=(ch,s)=>{s=s||44;const fs=Math.round(s*(s<=34?.5:.48));
+  return `<span class="chal-ico" style="width:${s}px;height:${s}px;border-radius:${s<=34?11:14}px;font-size:${fs}px"><span>${ch.emoji||'🏆'}</span></span>`};
+const chalMedal=i=>`<span class="chal-medal ${i<3?'g'+(i+1):'gx'}">${nf(i+1)}</span>`;
 function chalCard(ch){
   const rows=CHAL.rows(ch);
   const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
-  const medals=['🥇','🥈','🥉'];
   return `<div class="card" style="padding:18px;margin-bottom:12px">
     <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
       <div class="row" style="gap:12px">
-        <span style="width:44px;height:44px;border-radius:13px;background:var(--accent-soft);display:grid;place-items:center;font-size:22px;flex:none">${ch.emoji||'🏆'}</span>
+        ${chalIco(ch,44)}
         <div><b style="font-size:15.5px">${esc(ch.name)}</b>
           <div class="row" style="gap:6px;margin-top:4px;flex-wrap:wrap">
             <span class="bdg bdg-lime" style="font-size:10px">${t(ch.type==='streak'?'Streak goal':ch.type==='habit'?'Habit':'Target')}</span>
-            <span class="chip">${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
-            ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">⏳ ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
-            <span class="chip">👥 ${nf(rows.length)}</span>
+            <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+            ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+            <span class="chip">${ic('users',11)} ${nf(rows.length)}</span>
           </div></div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <button class="btn btn-outline btn-sm" data-act="chal-open" data-id="${esc(ch.id)}">${ic('chart',13)} ${t('Open')}</button>
@@ -5935,7 +5954,7 @@ function chalCard(ch){
       <div style="flex:1;min-width:180px">
         <div class="row" style="justify-content:space-between;font-size:11px;font-weight:700"><span>${t('Average progress')}</span><span>${nf(avg)}%</span></div>
         <div class="pbar" style="margin-top:4px"><i style="width:${avg}%"></i></div></div>
-      <div class="row" style="gap:10px;font-size:12px;flex-wrap:wrap">${rows.slice(0,3).map((r,i)=>`<span>${medals[i]} ${esc(t(r.c.name).split(' ')[0])} ${nf(r.pct)}%</span>`).join('')}</div>
+      <div class="row" style="gap:12px;font-size:12px;flex-wrap:wrap">${rows.slice(0,3).map((r,i)=>`<span class="row" style="gap:6px">${chalMedal(i)} ${esc(t(r.c.name).split(' ')[0])} <b>${nf(r.pct)}%</b></span>`).join('')}</div>
     </div></div>`;
 }
 function vChallenges(){
@@ -5950,16 +5969,15 @@ function vChallenges(){
 function chalDetail(id){
   const ch=CHALLENGES.find(x=>String(x.id)===String(id));if(!ch)return;
   const rows=CHAL.rows(ch);
-  const medals=['🥇','🥈','🥉'];
   const pace=CHAL.pace(ch);
   openModal(`
-  <div class="modal-h"><h3>${ch.emoji||'🏆'} ${esc(ch.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3 class="row" style="gap:11px">${chalIco(ch,30)}<span>${esc(ch.name)}</span></h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
     <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px">
-      <span class="chip">${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
-      <span class="chip">${t('Start Date')}: ${fmtD(ch.start)}</span>
-      ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">⏳ ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+      <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">${ic('calendar',11)} ${t('Start Date')}: ${fmtD(ch.start)}</span>
+      ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
       <span class="chip">${ic('gift',12)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)} ${t('Points')}</span>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-bottom:14px">
@@ -5969,7 +5987,7 @@ function chalDetail(id){
     ${rows.length?rows.map((r,i)=>`
     <div class="card" style="padding:11px 13px;margin-bottom:7px">
       <div class="row" style="gap:10px">
-        <b style="width:24px;text-align:center">${medals[i]||nf(i+1)}</b>
+        ${chalMedal(i)}
         ${avC(r.c.name,32)}
         <div style="flex:1;min-width:120px">
           <div class="row" style="justify-content:space-between;font-size:12.5px"><b>${t(r.c.name)}</b><span>${nf(r.val)}/${nf(ch.target)} · ${nf(r.pct)}%</span></div>
@@ -6025,7 +6043,7 @@ function renderChalEditor(){
       <div class="field"><label class="lbl">${t('Duration (days)')}</label><input class="inp" type="number" id="ce-days" value="${d.days||30}" min="1"></div>
     </div>
     <div class="field"><label class="lbl">${t('Participants')}</label>
-      <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*','👥 '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
+      <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*',ic('users',12)+' '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('Reward')} (${t('Points')})</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
       <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
@@ -6046,15 +6064,15 @@ function chalClientModal(id){
   const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
   const rows=CHAL.rows(ch);const rank=rows.findIndex(r=>r.c.id===c.id)+1;
   openModal(`
-  <div class="modal-h"><h3>${ch.emoji||'🏆'} ${esc(ch.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3 class="row" style="gap:11px">${chalIco(ch,30)}<span>${esc(ch.name)}</span></h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
     <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 8px">${chalPath(ch.stages,node,{w:320})}</div>
     <div class="row" style="gap:6px;flex-wrap:wrap;margin:12px 0">
-      <span class="chip">${nf(val)}/${nf(ch.target)} ${esc(ch.unit||'')}</span>
-      <span class="chip">⏳ ${nf(CHAL.left(ch))} ${t('days')}</span>
-      ${rank>0?`<span class="chip">🏅 ${t('You rank')}: #${nf(rank)}</span>`:''}
-      <span class="chip">⭐ ${t('Reward')}: ${nf((ch.reward||{}).pts||50)}</span></div>
+      <span class="chip">${ic('target',11)} ${nf(val)}/${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span>
+      ${rank>0?`<span class="chip">${ic('trophy',11)} ${t('You rank')}: #${nf(rank)}</span>`:''}
+      <span class="chip">${ic('star',11)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)}</span></div>
     ${(ch.stages||[]).length?`<div class="lbl" style="margin-bottom:6px">${t('Path stages')}</div>
     ${ch.stages.map((s,i)=>`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${s.e||'⭐'} ${esc(t(s.n||''))}</span>${i<node?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Done')}</span>`:i===node?`<span class="bdg bdg-lime" style="font-size:10px">${t('You are here')}</span>`:`<span class="bdg bdg-gray" style="font-size:10px">${ic('lock',11)}</span>`}</div>`).join('')}`:''}
     ${ch.metric==='custom'?`<button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:12px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',14)} ${t('Log progress')}</button>`:''}
@@ -6068,8 +6086,8 @@ function chalListModal(){
   <div class="modal-b">
     ${act.length?act.map(ch=>{const rows=CHAL.rows(ch);const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
       return `<div class="card" style="padding:13px;margin-bottom:8px;cursor:pointer" data-act="chal-open" data-id="${esc(ch.id)}">
-      <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${ch.emoji||'🏆'} ${esc(ch.name)}</b><span class="chip">${nf(avg)}%</span></div>
-      <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip">👥 ${nf(rows.length)}</span><span class="chip">⏳ ${nf(CHAL.left(ch))} ${t('days')}</span></div></div>`}).join('')
+      <div class="row" style="justify-content:space-between;gap:10px"><span class="row" style="gap:10px;min-width:0">${chalIco(ch,34)}<b style="font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ch.name)}</b></span><span class="chip" style="color:var(--accent-ink);background:var(--accent-soft);font-weight:800">${nf(avg)}%</span></div>
+      <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap"><span class="chip">${ic('users',11)} ${nf(rows.length)}</span><span class="chip">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span></div></div>`}).join('')
     :`<div class="empty">${ic('trophy',22)}<b>${t('No active challenges')}</b></div>`}
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="chal-new">${ic('plus',14)} ${t('New Challenge')}</button></div>`);
@@ -7264,9 +7282,9 @@ function cToday(){
     <div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border:none;padding:14px 16px;color:var(--accent-ink);box-shadow:0 8px 26px -10px rgba(200,240,75,.5)">
       <div class="row" style="justify-content:space-between;align-items:center">
         <div class="row" style="gap:14px">
-          <div style="text-align:center"><div style="font-size:22px;font-weight:800;line-height:1">🔥 ${nf(c.dayStreak||0)}</div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('day streak')}</div></div>
+          <div style="text-align:center"><div class="row" style="gap:6px;justify-content:center;align-items:baseline;font-size:22px;font-weight:800;line-height:1">${ic('flame',17)}<span>${nf(c.dayStreak||0)}</span></div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('day streak')}</div></div>
           <div style="width:1px;height:32px;background:rgba(20,26,5,.18)"></div>
-          <div style="text-align:center"><div style="font-size:22px;font-weight:800;line-height:1">⭐ ${nf(c.pts||0)}</div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('Points')}</div></div>
+          <div style="text-align:center"><div class="row" style="gap:6px;justify-content:center;align-items:baseline;font-size:22px;font-weight:800;line-height:1">${ic('star',17)}<span>${nf(c.pts||0)}</span></div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('Points')}</div></div>
         </div>
         <button class="btn glass" style="padding:7px 12px;font-size:11.5px" data-act="gam-open">${t('Badges')} ${nf(earnedN)}/${nf(GAM.BADGES.length)}</button>
       </div>
@@ -7280,13 +7298,13 @@ function cToday(){
       const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
       const st=(ch.stages||[])[Math.min(node,(ch.stages||[]).length-1)]||{};
       return `<div class="ccard" style="border-color:var(--acc-line2)">
-      <div class="row" style="justify-content:space-between" data-act="chal-open" data-id="${esc(ch.id)}">
-        <b style="font-size:13.5px;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font-size:17px">${ch.emoji||'🏆'}</span> ${esc(ch.name)}</b>
-        <span class="chip">${nf(pct)}%</span></div>
+      <div class="row" style="justify-content:space-between;gap:8px" data-act="chal-open" data-id="${esc(ch.id)}">
+        <span class="row" style="gap:9px;min-width:0;cursor:pointer">${chalIco(ch,28)}<b style="font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ch.name)}</b></span>
+        <span class="chip" style="color:var(--accent-ink);background:var(--accent-soft);font-weight:800">${nf(pct)}%</span></div>
       <div data-act="chal-open" data-id="${esc(ch.id)}" style="cursor:pointer;margin:8px 0 2px">${chalPath(ch.stages,node,{w:300,labels:false,rowH:54})}</div>
       <div class="row" style="justify-content:space-between;font-size:11px;color:var(--ink2)">
         <span>${t('Next stage')}: ${st.e||'⭐'} ${esc(t(st.n||''))}</span>
-        <span>⏳ ${nf(CHAL.left(ch))} ${t('days')}</span></div>
+        <span class="row" style="gap:4px">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span></div>
       <div class="pbar" style="margin-top:7px"><i style="width:${pct}%"></i></div>
       ${ch.metric==='custom'?`<button class="btn btn-lime btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',13)} ${t('Log progress')}</button>`:''}
     </div>`}).join('')}
