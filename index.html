@@ -2715,7 +2715,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',player:null,msgThread:null,joinCode:null,tplEdit:null,
-unInvalid:false,unT0:0,unOffline:false,joinCid:null,
+unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
@@ -3404,7 +3404,7 @@ function unlockStage(){
        arrived (S.wsConnected), the fetch failed on its own (S.unInvalid) or
        the 8s timeout passed, the code simply is not valid — show an explicit
        error with a retry instead of loading forever. */
-    if(S.unInvalid||S.unOffline||S.wsConnected||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
+    if(S.unInvalid||S.unOffline||(S.wsConnected&&CLOUD.code===parts.ws)||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
     /* Start the clock ONCE per attempt + schedule the re-render that flips
        the state when the timeout fires (nothing else renders the login view
        while the code is being checked). */
@@ -3462,10 +3462,14 @@ function vUnlock(){
     center=S.unOffline
       ?`<div class="un-sub">${t('Cannot reach the server')}</div>
         <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Check your internet connection and try again')}</div>
-        <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try again')}</button>`
+        <div class="row" style="gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" data-act="un-retry">${ic('refresh',13)} ${t('Try again')}</button>
+          <button class="btn btn-outline btn-sm" data-act="un-newcode">${t('Try another code')}</button></div>`
       :`<div class="un-sub">${t('Code not found')}</div>
         <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for a new invite code')}</div>
-        <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
+        <div class="row" style="gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" data-act="un-retry">${ic('refresh',13)} ${t('Try again')}</button>
+          <button class="btn btn-outline btn-sm" data-act="un-newcode">${t('Try another code')}</button></div>`;
   }else{
     center=`<div class="un-sub">${t('Your coach invited you')}</div>
       <div class="un-codebox"><input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${esc(S.joinCode||'')}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700"><button class="btn btn-primary" data-act="join-code">${t('Connect')}</button></div>
@@ -3511,7 +3515,23 @@ function vUnlock(){
    3D parallax on hover/move. */
 function unlockWire(){
   const sc=$('un-scene'),lk=$('un-hold'),prog=$('un-prog');
-  if(!sc||!lk||lk.dataset.wired)return;
+  if(!sc||!lk)return;
+  /* v18.54 — the personal-code fetch runs on EVERY unlock render until it
+     binds (or fails definitively): the old one-shot `wired` guard let a SINGLE
+     transient failure (Render cold-start, a 429, a flaky signal) stick for the
+     whole session as "Code not found". */
+  const jp=S.joinCode?parseJoinCode(S.joinCode):null;
+  const jpBound=jp&&CLIENTS.some(c=>String(c.code||'').toUpperCase()===jp.pc);
+  if(jp&&!jpBound&&!S.unFetching&&!S.unInvalid&&!S.unOffline){
+    S.unFetching=true;
+    const jc=S.joinCode; // a result from an abandoned/replaced code must not poison the new state
+    joinPersonal(jc).then(me=>{S.unFetching=false;
+      if(S.joinCode!==jc)return; // stale attempt (user changed the code meanwhile)
+      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.unInvalid=true}
+      render();
+    }).catch(()=>{S.unFetching=false});
+  }
+  if(lk.dataset.wired)return;
   lk.dataset.wired='1';
   S.unlock={ux:0,hold:false,fetching:false,raf:0,t0:0};
   const CIRC=295.3;
@@ -3561,23 +3581,6 @@ function unlockWire(){
       if(me){S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' 🔓');return}}
     reset();toast(t('Invalid code'));
   };
-  /* QR / invite-link arrival: the personal code is in S.joinCode but the
-     workspace is not fetched yet — bind silently so the personalized stage
-     replaces the demo seed. Invalid code → back to the code input. */
-  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
-  const bound=parts&&CLIENTS.some(c=>String(c.code||'').toUpperCase()===parts.pc);
-  if(parts&&!bound&&!S.unlock.fetching){
-    S.unlock.fetching=true;
-    const jc=S.joinCode; // v18.50 — a result from an abandoned/replaced code must not poison the new state
-    joinPersonal(jc).then(me=>{S.unlock.fetching=false;
-      if(S.joinCode!==jc)return; // stale attempt (user retried or entered another code)
-      /* v18.50 — a code that resolves to NO profile used to vanish with a
-         transient toast (S.joinCode=null); now the persistent 'invalid'
-         state shows with a retry button instead. */
-      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.unInvalid=true}
-      render();
-    }).catch(()=>{S.unlock.fetching=false});
-  }
 }
 
 /* ================= COACH VIEWS ================= */
@@ -8181,8 +8184,14 @@ document.addEventListener('click',e=>{
     case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
-    /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed) */
-    case 'un-retry':S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unOffline=false;S.unT0=0;S.pickCid=null;S.joinCid=null;render();break;
+    /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed)
+       v18.54 — 'Try again' RETRIES with the SAME scanned code (it never clears
+       it — the student must not re-scan for a transient failure); 'Try another
+       code' is the only path that returns to the input. */
+    case 'un-retry':{S.unInvalid=false;S.unOffline=false;S.unT0=0;S.unFetching=false;S.wsConnected=false;
+      if(!S.joinCode){S.pickCid=null;S.joinCid=null}
+      render();break}
+    case 'un-newcode':{S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unOffline=false;S.unT0=0;S.unFetching=false;S.pickCid=null;S.joinCid=null;render();break}
     case 'demo-client':S.demoPick=true;render();break;
     case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
     case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
@@ -9096,6 +9105,10 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.
     let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
+    /* v18.54 — the QR's WORKSPACE wins over any stale local memory (co-ws /
+       co-legacy-ws from previous joins): a scanning student must fetch THEIR
+       workspace first, never merge an old one and short-circuit to errors. */
+    {const hp=S.joinCode?parseJoinCode(S.joinCode):null;if(!code&&hp)code=hp.ws}
     try{
       // `co-legacy-ws` holds the pre-account anonymous code that cloudReset()
       // parks before clearing `co-ws` on sign-in (see cloudReset()).
@@ -9120,7 +9133,11 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
       const out=await cloudFetch(code);
       if(out&&out.ok){
         CLOUD.code=code;CLOUD.on=true;
-        if(join){S.joinCode=join.pcode||code;if(join.cid){S.pickCid=join.cid;S.joinCid=join.cid}}
+        /* v18.54 — a stale co-join (WITHOUT its personal pcode) used to
+           OVERWRITE the QR's personal code with the bare workspace code,
+           breaking the scan. The hash always wins; co-join only fills the
+           gaps + remembers the bound profile. */
+        if(join){if(!S.joinCode)S.joinCode=join.pcode||code;if(join.cid){S.pickCid=join.cid;S.joinCid=join.cid}}
         if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true);cloudResync();S.wsConnected=true}
         else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
       }
