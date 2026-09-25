@@ -1932,6 +1932,11 @@ function adoptAccount(acct){
     if(DATA_OWNER&&DATA_OWNER!==id){try{localStorage.removeItem('co-ws')}catch(e){}}
   }
   DATA_OWNER=id;
+  /* v18.57 — seed the display name from the ACCOUNT the moment it is adopted
+     (signup / login / reload): saveData() below then writes the CORRECT
+     ownerName into the local payload, and the next push repairs the shared
+     one (heals workspaces poisoned by the old fallback). */
+  if(acct&&acct.name)WS_OWNER=acct.name;
   saveData();
 }
 function saveData(){
@@ -2013,7 +2018,15 @@ const coachName=()=>(AUTH.coach&&AUTH.coach.name)||'Coach Soroush';
 const coachFirst=()=>coachName().trim().split(/\s+/)[0]||'Coach';
 const coachEmail=()=>(AUTH.coach&&AUTH.coach.email)||'soroush@coachos.app';
 let WS_OWNER=''; // coach display name carried inside the workspace payload
-const wsOwnerName=()=>WS_OWNER||coachName();
+/* v18.57 — WHO is the source of truth for the coach name?
+   - A signed-in COACH: THEIR account name, always (never the payload — a
+     polluted payload must not stick to the coach's own UI or next push).
+   - A STUDENT (no auth): ONLY the payload's ownerName — NEVER the demo
+     persona. The old `WS_OWNER||coachName()` fallback made every student see
+     "Coach Soroush" when the payload name was empty, and cloudPack() then
+     WROTE that fallback into the shared payload (one dirty device poisoned
+     every student of every workspace — self-sustaining via cloudMerge). */
+const wsOwnerName=()=>AUTH.coach?coachName():(WS_OWNER||'');
 /* Full cloud-state reset — MUST run whenever the active account changes,
    otherwise the next coach's sync keeps targeting the previous coach's
    workspace (403 foreign) and pulls foreign data over local rows. */
@@ -2440,7 +2453,13 @@ function cloudMerge(d,adopt){
   let ch=false;const take=!!adopt&&!CLOUD.dirty;let __cexChanged=false;
   // The coach's display name rides the payload so CLIENT devices can greet
   // the right coach (they have no account of their own).
-  if(typeof d.ownerName==='string'&&d.ownerName.trim()&&d.ownerName!==WS_OWNER){WS_OWNER=d.ownerName;ch=true}
+  /* v18.57 — WS_OWNER MIRRORS the remote payload exactly (including clearing):
+     a device whose LOCAL copy still carries the old fallback "Coach Soroush"
+     must drop it the moment the remote payload says otherwise (empty = no
+     name yet). The old non-empty-only adopt let the poisoned local copy win
+     forever, so every student kept showing a wrong coach. Convergence: the
+     coach device always pushes its ACCOUNT name, students mirror it. */
+  if(typeof d.ownerName==='string'){const rn=d.ownerName.trim();if(rn!==WS_OWNER){WS_OWNER=rn;ch=true}}
   Object.keys(DEAD).forEach(k=>{const set=new Set(DEAD[k].map(String));((d.DEAD||{})[k]||[]).forEach(x=>{const s=String(x);if(!set.has(s)){set.add(s);DEAD[k].push(s);ch=true}})});
   const deadSets={};Object.keys(DEAD).forEach(k=>deadSets[k]=new Set(DEAD[k].map(String)));
   ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES','PACKS','MSGTPL','FORMS'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
@@ -2755,7 +2774,7 @@ function scrubNames(){
    they stay light in localStorage and in the sync payload. */
 let COACH_PIC='';
 const picOf=name=>{
-  if((name===coachName()||name===wsOwnerName())&&COACH_PIC)return COACH_PIC;
+  if(name&&((name===coachName()||name===wsOwnerName())&&COACH_PIC))return COACH_PIC;
   const c=CLIENTS.find(x=>x.name===name||t(x.name)===name);
   return (c&&c.pic)||'';
 };
@@ -2979,7 +2998,7 @@ function printDoc(title,inner,clientName){
   </style></head><body>
   <div class="brand"><svg viewBox="0 0 120 100" fill="none"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg><span class="wm">COACH<b>MINT</b></span><span class="dt">${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{year:'numeric',month:'long',day:'numeric'})}</span></div>
   ${inner}${qr}
-  <div class="foot"><span class="brand2">CoachMint</span> — ${esc(t('Coach'))}: ${esc(wsOwnerName())}</div></body></html>`);
+  <div class="foot"><span class="brand2">CoachMint</span> — ${esc(t('Coach'))}: ${esc(wsOwnerName()||'—')}</div></body></html>`);
   w.document.close();w.focus();setTimeout(()=>w.print(),250);
 }
 function printWorkout(){
@@ -7701,8 +7720,8 @@ function cChat(){
   const c=client(S.cid);
   const ms=MSGS.filter(m=>m.client===c.name);
   return `<div class="cbody" style="padding-bottom:20px">
-    <div class="ccard" style="display:flex;align-items:center;gap:10px;border-color:var(--acc-line2)">${av(wsOwnerName(),42,3)}
-      <div style="flex:1;min-width:0"><b>${esc(wsOwnerName())}</b><div class="muted" style="font-size:11px">${t('Your coach')} · ${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</div></div>
+    <div class="ccard" style="display:flex;align-items:center;gap:10px;border-color:var(--acc-line2)">${av(wsOwnerName()||t('Your coach'),42,3)}
+      <div style="flex:1;min-width:0"><b>${esc(wsOwnerName()||t('Your coach'))}</b><div class="muted" style="font-size:11px">${t('Your coach')} · ${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</div></div>
       <span class="bdg bdg-lime" style="font-size:10px">${t('Replies within ~4h')}</span>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;padding:2px 0">
@@ -7751,7 +7770,7 @@ function cProfile(){
     <div class="row" style="justify-content:space-between;margin:0 4px 8px"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
     <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('users',14)} ${t('Personal Information')}</div>
       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Connection')}</span><span class="bdg gbadge" style="font-size:10.5px">${CLOUD.on?'✓ '+t('Synced'):t('Offline mode')}</span></div>
-      ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
+      ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()||'—'],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px;text-align:end;min-width:0;word-break:break-word">${esc(String(v))}</b></div>`).join('')}
     </div>
     <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('ruler',14)} ${t('Body Metrics')}</div>
