@@ -7607,13 +7607,15 @@ function cToday(){
         <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${esc(t(n.date))} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
       </div>`).join('')}</div>`:''}
     ${sh('nutrition')?`
-    <div class="td-sec"><span class="td-sec-t">${t('Nutrition')}</span><span class="td-count">${nf(mealsN)}/${nf(mealsGoal)} ${t('meals')}</span></div>
+    <div class="td-sec"><span class="td-sec-t">${t('Nutrition')}</span>${tg?`<span class="td-count">${nf(mealsN)}/${nf(mealsGoal)} ${t('meals')}</span>`:''}</div>
     <div class="ccard">
+      ${tg?`
       <div class="row" style="justify-content:space-between;align-items:baseline">
-        <div><b style="font-size:26px;font-weight:800;letter-spacing:-.02em">${nf(remK.kcal)}</b> <span class="muted" style="font-size:12.5px">${t('Left')} kcal</span></div>
-        <span class="chip">${nf(coN.kcal)} / ${nf(tg?tg.kcal:0)} kcal</span>
+        <div><b style="font-size:26px;font-weight:800;letter-spacing:-.02em">${nf(remK?remK.kcal:0)}</b> <span class="muted" style="font-size:12.5px">${t('Left')} kcal</span></div>
+        <span class="chip">${nf(coN.kcal)} / ${nf(tg.kcal)} kcal</span>
       </div>
-      <div class="pbar" style="margin-top:10px"><i style="width:${tg&&tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
+      <div class="pbar" style="margin-top:10px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
+      `:`<div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div>`}
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="cnav" data-t="nutrition">${t('Nutrition')} ${ic('arrowR',13)}</button>
     </div>`:''}
     ${sh('habits')&&np&&(np.sleep||np.wake)?`
