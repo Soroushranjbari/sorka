@@ -712,6 +712,20 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .phone .chead{background:linear-gradient(180deg,#12151B,#171B22);color:#fff;border-bottom:1px solid rgba(200,240,75,.16)}
 .phone .chead .muted{color:rgba(255,255,255,.55);font-weight:600}
 .phone .chead .gbadge{background:rgba(200,240,75,.14);color:var(--accent);border:1px solid rgba(200,240,75,.25)}
+/* v18.59 — STITCH HEADER: accent eyebrow + page title left, streak pill +
+   notification bell + avatar right. Page titles live here now (the old .csec
+   divs moved up), so every tab keeps its exact previous heading text. */
+.chead-t{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:3px}
+.chead-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html[lang="fa"] .chead-eyebrow{letter-spacing:0}
+.chead-title{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.15;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html[lang="fa"] .chead-title{letter-spacing:0}
+.chead-a{display:flex;align-items:center;gap:8px;flex:none}
+.chead-streak{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--pf-ac);font-size:12.5px;font-weight:800}
+.chead-bell{position:relative;width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink2);cursor:pointer;transition:.15s}
+.chead-bell:hover{color:var(--ink)}
+.chead-bell .cdot{top:5px;inset-inline-end:5px}
+.chead-av{display:block;line-height:0;flex:none;border-radius:50%}
 .phone .chip{background:var(--accent-soft);color:var(--accent-ink)}
 .phone .fchip{background:var(--accent-soft);border-color:var(--acc-chip);color:var(--accent-ink)}
 .phone .fchip:hover{background:var(--accent);color:var(--accent-ink)}
@@ -856,6 +870,170 @@ html[lang="fa"] .phone .card-t{letter-spacing:0}
 /* FitFlow ring — lime gradient stroke (chart fns already use it) */
 .phone .set-row{border-color:#23272F;background:#171A20}
 .phone .set-row.on{background:rgba(200,240,75,.07);border-color:rgba(200,240,75,.35)}
+/* ============ v18.58 — PROFILE TAB REDESIGN (student app) =============
+   Visual-only reskin of cProfile to the neon profile board: ring avatar +
+   camera badge, icon-tile rows, metric tiles, pill language switch, footer
+   sign-out. No data or actions changed. --pf-ac re-tints every accent piece
+   per phone skin (carbon/ocean/sunset override it here). */
+.phone{--pf-ac:var(--accent);--pf-ac-ink:var(--accent-ink)}
+.phone[data-skin="carbon"]{--pf-ac:#FFFFFF;--pf-ac-ink:#0A0B0D}
+.phone[data-skin="ocean"]{--pf-ac:#38BDF8;--pf-ac-ink:#04121D}
+.phone[data-skin="sunset"]{--pf-ac:#FB923C;--pf-ac-ink:#2A1204}
+/* hero */
+.pf-hero{overflow:hidden;text-align:center;padding:24px 16px 18px}
+.pf-glow{position:absolute;border-radius:50%;filter:blur(48px);pointer-events:none}
+.pf-g1{top:-78px;right:-64px;width:210px;height:210px;background:var(--pf-ac);opacity:.15}
+.pf-g2{bottom:-92px;left:-72px;width:205px;height:205px;background:var(--pf-ac);opacity:.07}
+.pf-avwrap{position:relative;display:inline-block;padding:3.5px;border-radius:50%;
+  background:conic-gradient(from 200deg,var(--pf-ac),transparent 42%,var(--pf-ac) 78%,transparent);
+  box-shadow:0 0 32px -8px var(--pf-ac)}
+.pf-av{display:block;padding:0;border:none;background:none;border-radius:50%;cursor:pointer;line-height:0;transition:transform .15s}
+.pf-av:active{transform:scale(.96)}
+.pf-av .av{border:3px solid #14161B}
+.pf-cam{position:absolute;bottom:-2px;right:-2px;width:32px;height:32px;padding:0;border-radius:50%;
+  background:var(--pf-ac);color:var(--pf-ac-ink);display:flex;align-items:center;justify-content:center;
+  border:3px solid #171A20;cursor:pointer;transition:transform .15s}
+.pf-cam:active{transform:scale(.9)}
+.pf-name{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:15px;font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--ink);word-break:break-word}
+html[lang="fa"] .pf-name{letter-spacing:0}
+.pf-sub{margin-top:5px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+html[lang="fa"] .pf-sub{letter-spacing:0}
+.pf-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:13px}
+.pf-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;
+  font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink2)}
+html[lang="fa"] .pf-pill{letter-spacing:0}
+.pf-pill-acc{color:var(--pf-ac)}
+.pf-pill-ok{color:var(--green)}
+.pf-pill-off{color:var(--ink3)}
+.pf-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pfPulse 1.7s ease-in-out infinite}
+@keyframes pfPulse{0%,100%{opacity:1}50%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.pf-dot{animation:none}}
+/* member code strip */
+.pf-code{display:flex;align-items:center;gap:11px;margin-top:15px;padding:11px 12px;border-radius:14px;
+  background:rgba(0,0,0,.35);border:1px solid var(--line);text-align:start}
+.pf-code .pf-qr{color:var(--pf-ac);display:flex;flex:none}
+.pf-ck{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;font-weight:700;letter-spacing:.14em;color:var(--ink)}
+.pf-copy{margin-inline-start:auto;flex:none;display:flex;align-items:center;gap:5px;padding:7px 10px;border:none;border-radius:10px;
+  background:rgba(255,255,255,.07);color:var(--pf-ac);font-size:11.5px;font-weight:800;cursor:pointer;transition:.15s}
+.pf-copy:active{transform:scale(.94)}
+.pf-hint{display:flex;align-items:center;justify-content:space-between;margin:0 4px 4px}
+/* card header */
+.pf-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pf-hd h3{flex:1;min-width:0;margin:0;font-size:14.5px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+html[lang="fa"] .pf-hd h3{letter-spacing:0}
+.pf-ico{flex:none;width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06);color:var(--pf-ac);border:1px solid var(--line)}
+.pf-ico.n{color:var(--ink2)}
+/* coach strip */
+.pf-coach{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:14px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);margin-bottom:9px}
+.pf-cn{flex:1;min-width:0}
+.pf-cn b{display:block;font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf-cn span{font-size:11.5px;color:var(--ink3)}
+.pf-chat{flex:none;display:flex;align-items:center;gap:6px;padding:8px 13px;border:none;border-radius:11px;
+  background:var(--pf-ac);color:var(--pf-ac-ink);font-size:12px;font-weight:800;cursor:pointer;transition:transform .15s}
+.pf-chat:active{transform:scale(.95)}
+/* info rows */
+.pf-row{display:flex;align-items:center;gap:11px;padding:10px 11px;border:1px solid var(--line);border-radius:14px;
+  background:rgba(255,255,255,.025);margin-top:8px}
+.pf-hd + .pf-row,.pf-hd + .pf-coach{margin-top:0}
+.pf-rt{flex:1;min-width:0}
+.pf-rk{display:block;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+html[lang="fa"] .pf-rk{letter-spacing:0}
+.pf-rv{display:block;font-size:13px;font-weight:700;color:var(--ink);word-break:break-word;text-align:start}
+.pf-stat{margin-top:8px;padding:11px 12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.pf-stat .pf-tv{font-size:15px;font-weight:800;color:var(--ink)}
+/* metric tiles */
+.pf-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pf-tile{padding:12px 5px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);text-align:center}
+.pf-tk{display:block;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+html[lang="fa"] .pf-tk{letter-spacing:0}
+.pf-tile .pf-tv{display:block;font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+/* language switch */
+.pf-lang{flex:none;display:flex;gap:5px;padding:4px;border-radius:99px;background:rgba(0,0,0,.32);border:1px solid var(--line)}
+.pf-lang button{padding:7px 14px;border:none;border-radius:99px;background:none;color:var(--ink3);
+  font-size:12px;font-weight:800;cursor:pointer;transition:.18s}
+.pf-lang button.on{background:var(--pf-ac);color:var(--pf-ac-ink);box-shadow:0 0 14px -5px var(--pf-ac)}
+/* footer sign-out */
+.pf-out{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 16px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--red);
+  font-size:13.5px;font-weight:800;cursor:pointer;transition:.15s}
+.pf-out:hover{background:rgba(255,255,255,.07)}
+.pf-out:active{transform:scale(.985)}
+/* ============ v18.60 — TODAY REDESIGN (Stitch "Build Better Habits") ====
+   Visual-only: greeting strip, momentum hero, action banner, section tabs,
+   workout spotlight meta, sleep card. Accent via --pf-ac (skin-aware). */
+.td-greet{display:flex;flex-direction:column;gap:6px;padding:4px 2px 2px}
+.td-hi{display:flex;align-items:center;gap:7px;font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+html[lang="fa"] .td-hi{letter-spacing:0}
+.td-bolt{color:var(--pf-ac);font-size:15px;animation:tdPulse 2s ease-in-out infinite}
+@keyframes tdPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.td-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2)}
+.td-sub b{color:var(--pf-ac);font-weight:700}
+.td-dot{width:6px;height:6px;border-radius:50%;background:var(--pf-ac);flex:none}
+.td-cal-m{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+html[lang="fa"] .td-cal-m{letter-spacing:0;text-transform:none}
+.td-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:7px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink2)}
+.td-calbtn{display:flex;align-items:center;gap:3px;background:none;border:none;color:var(--pf-ac);font-size:12px;font-weight:700;cursor:pointer;padding:0}
+.td-day{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;border-radius:12px;background:rgba(255,255,255,.04);transition:.15s}
+.td-day.on{background:var(--pf-ac);box-shadow:0 4px 14px -5px var(--pf-ac)}
+.td-dl{font-size:9.5px;font-weight:800;letter-spacing:.05em;color:var(--ink3)}
+.td-dn{font-size:13px;font-weight:800;color:var(--ink)}
+.td-day.on .td-dl{color:var(--pf-ac-ink);opacity:.75}
+.td-day.on .td-dn{color:var(--pf-ac-ink)}
+.td-mom{position:relative;overflow:hidden}
+.td-glow{position:absolute;top:-70px;right:-60px;width:220px;height:220px;border-radius:50%;background:var(--pf-ac);opacity:.1;filter:blur(60px);pointer-events:none}
+.td-mom-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;position:relative;z-index:1}
+.td-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ac)}
+html[lang="fa"] .td-eyebrow{letter-spacing:0}
+.td-mom-big{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-top:3px}
+html[lang="fa"] .td-mom-big{letter-spacing:0}
+.td-mom-big span{font-size:13px;font-weight:700;color:var(--ink2);letter-spacing:0}
+.td-flame{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--pf-ac);flex:none}
+.td-flame b{font-size:14px;color:var(--ink)}
+.td-flame small{font-size:10.5px;color:var(--ink3);font-weight:700}
+.td-tiles{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:12px;position:relative;z-index:1}
+.td-tile{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:12px}
+.td-ring{position:relative;display:grid;place-items:center}
+.td-ring-c{position:absolute;font-size:13px;font-weight:800;color:var(--ink)}
+.td-rlbl{display:block;font-size:9.5px;font-weight:800;color:var(--ink3);text-align:center;margin-top:7px;text-transform:uppercase;letter-spacing:.05em}
+html[lang="fa"] .td-rlbl{letter-spacing:0}
+.td-xp{display:flex;flex-direction:column;justify-content:center}
+.td-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin:10px 0 8px}
+.td-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pf-ac),var(--acc-mid));box-shadow:0 0 10px -2px var(--pf-ac)}
+.td-xp-f{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10.5px;font-weight:700;color:var(--ink3)}
+.td-link{background:none;border:none;color:var(--pf-ac);font-size:10.5px;font-weight:800;cursor:pointer;padding:0;white-space:nowrap}
+.td-mom-ft{font-size:10.5px;font-weight:700;color:var(--ink3);margin-top:10px;position:relative;z-index:1}
+.td-act{position:relative;overflow:hidden;padding-top:16px!important}
+.td-neon{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pf-ac),var(--acc-mid),var(--pf-ac))}
+.td-act-top{display:flex;align-items:center;gap:8px}
+.td-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pf-ac)}
+html[lang="fa"] .td-pill{letter-spacing:0}
+.td-ping{width:6px;height:6px;border-radius:50%;background:var(--pf-ac);animation:pfPulse 1.4s infinite}
+.td-act-body{display:flex;gap:12px;align-items:flex-start;margin-top:10px}
+.td-act-t{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em;line-height:1.35}
+html[lang="fa"] .td-act-t{letter-spacing:0}
+.td-act-d{font-size:12.5px;color:var(--ink2);margin-top:4px;line-height:1.5}
+.td-act-ic{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid var(--line);display:grid;place-items:center;color:var(--pf-ac);flex:none}
+.td-tabs{display:flex;gap:6px;padding:5px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);margin:4px 0 2px}
+.td-tab{flex:1;padding:10px 6px;border-radius:12px;border:none;background:none;color:var(--ink3);font-size:12.5px;font-weight:800;cursor:pointer;transition:.15s;white-space:nowrap}
+.td-tab.on{background:rgba(255,255,255,.08);color:var(--pf-ac);box-shadow:0 2px 10px -4px rgba(0,0,0,.6)}
+.td-sec{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px 0}
+.td-sec-t{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+html[lang="fa"] .td-sec-t{letter-spacing:0}
+.td-count{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--pf-ac)}
+.td-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 10px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);margin-top:14px}
+.td-mi{display:flex;align-items:center;gap:8px;min-width:0}
+.td-mi svg{color:var(--pf-ac);flex:none}
+.td-mi span{display:block;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.6)}
+html[lang="fa"] .td-mi span{letter-spacing:0}
+.td-mi b{display:block;font-size:13px;font-weight:800;color:#fff;white-space:nowrap}
+.td-coach{font-size:12.5px;color:rgba(255,255,255,.7);margin-bottom:2px}
+.td-coach b{color:var(--pf-ac)}
+.td-sleep{display:flex;gap:14px;align-items:center}
+.td-sleep-ic{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);display:grid;place-items:center;color:var(--pf-ac);flex:none}
+@media(prefers-reduced-motion:reduce){.td-bolt,.td-ping{animation:none}}
 /* ================= v18.26 — CALM MOTION (slow, no 3D) =================
    Gentle life for the client app: cards fade+rise slowly as they enter the
    viewport (IntersectionObserver, once per element), the tab content cross-
@@ -1256,6 +1434,7 @@ const FA={
 'Current Password':'رمز عبور فعلی','New Password':'رمز عبور جدید','Confirm':'تأیید رمز','Update Password':'به‌روزرسانی رمز','Password updated':'رمز عبور به‌روز شد','Two-Factor Authentication':'ورود دو مرحله‌ای','Extra security for your coach account':'امنیت بیشتر برای حساب مربی','Active sessions':'نشست‌های فعال','MacBook Pro · Tehran · current':'MacBook Pro · تهران · فعلی','Sign out others':'خروج بقیه نشست‌ها','Signed out of all other devices':'از سایر دستگاه‌ها خارج شدی',
 'Pages':'صفحات','Go to page':'رفتن به صفحه','No results found.':'نتیجه‌ای پیدا نشد.','Search clients, workouts, templates, exercises, notes, files…':'جستجو در شاگردان، تمرین‌ها، قالب‌ها، حرکات، یادداشت‌ها، فایل‌ها…',
 'Sessions':'جلسات','Hi':'سلام','day streak':'روز پیاپی','Synced':'همگام',
+'Ready to crush your goals today?':'امروز آماده‌ای اهدافت رو بزنی؟','Daily Momentum':'مومنتوم روزانه','Action Needed':'اقدام لازم','All Tasks':'همه کارها','Habits':'عادت‌ها','Sleep readiness':'آمادگی خواب',
 "Today's Workout":'تمرین امروز','Start Workout':'شروع تمرین','No workout scheduled today':'امروز تمرینی ثبت نشده','Your coach publishes your plan here':'مربی برنامه‌ات را این‌جا منتشر می‌کند',
 'Shared with you':'همرسانی‌شده با تو','Quick check-in':'چک‌این سریع','How did training feel today?':'امروز تمرین چه‌حس داشت؟',
 'Energy':'انرژی','Soreness':'کوفتگی','Sleep':'خواب','Low':'کم','OK':'متوسط','High':'خوب','None':'هیچی','Some':'کمی','A lot':'زیاد','Poor':'بد','Fine':'خوب','Great':'عالی',
@@ -2748,7 +2927,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 }
 
 /* ================= STATE & HELPERS ================= */
-const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',player:null,msgThread:null,joinCode:null,tplEdit:null,
+const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
@@ -7246,6 +7425,9 @@ function vClient(){
   const c=client(S.cid);
   const cunread=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&!m.read).length;
   const tabs=[['today','Today','zap'],['workouts','Workouts','dumbbell'],['progress','Progress','chart'],['nutrition','Nutrition','utensils'],['sessions','Sessions','calendar'],['chat','Messages','mail'],['profile','Profile','user']];
+  /* v18.59 — header title per tab: the exact strings each page used to show
+     in its in-body .csec heading (nothing is lost, only relocated). */
+  const ptabTitle={today:'Today',workouts:'Your Workouts',progress:'Daily Report',nutrition:'Nutrition',sessions:'Sessions',chat:'Messages',profile:'My Profile'};
   const body={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile}[S.ptab]();
   return `
   <div class="clientwrap">
@@ -7255,12 +7437,14 @@ function vClient(){
     <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
       <div class="capp" id="capp">
         <div class="chead">
-          <div style="display:flex;align-items:center;gap:10px;min-width:0">
-            ${av(t(c.name),40,c.id-1)}
-            <div style="min-width:0">
-              <div class="muted" style="font-size:11.5px;font-weight:700">${t('Hello')} ${esc(t(c.name).split(' ')[0])}</div>
-              <div style="font-weight:800;font-size:19px;letter-spacing:-.02em;line-height:1.15">${t('Build')} <span style="color:var(--accent)">${t('Better Habits')}</span></div>
-            </div>
+          <div class="chead-t">
+            <span class="chead-eyebrow">${t('Build')} ${t('Better Habits')}</span>
+            <div class="chead-title">${t(ptabTitle[S.ptab]||'Today')}</div>
+          </div>
+          <div class="chead-a">
+            <span class="chead-streak" title="${t('day streak')}">${ic('flame',13)}${nf(c.dayStreak||0)}</span>
+            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
+            <span class="chead-av">${av(t(c.name),34,c.id-1)}</span>
           </div>
         </div>
         ${body}
@@ -7274,47 +7458,128 @@ function cToday(){
   const c=client(S.cid),db=DB[c.id];
   const w=db.workouts.find(x=>x.status==='assigned');
   const doneWk=db.workouts.filter(x=>x.status==='completed').length;
+  const totalWk=db.workouts.length;
+  const wkPct=totalWk?Math.round(doneWk/totalWk*100):0;
   const up=db.sessions.filter(s=>s.day>=TODAY).sort((a,b)=>a.day-b.day||a.start-b.start)[0];
   const notes=NOTES.filter(n=>n.client===c.name&&n.from==='coach'&&n.shared&&!n.arch).slice(0,2);
-  /* v18.14 — Fitness+ weekly letter circles: days with a completed workout glow
-     lime, today gets a lime ring. w.day is a weekday name → index map. */
-  const wkIdx=d=>({Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[d]??-1);
-  const doneDays=new Set(db.workouts.filter(x=>x.status==='completed').map(x=>wkIdx(x.day)).filter(i=>i>=0));
   /* v18.38 — gamification: day streak + points + next badge, and an unread
      coach reminder (auto-sent by the coach's device after 3+ skipped days). */
   const nb=GAM.next(c),earnedN=GAM.earned(c).length;
   const remMsg=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&m.type==='reminder'&&!m.read).slice(-1)[0];
+  const chs=CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id));
+  const np=c.nprof||null;
+  /* v18.60 — STITCH TODAY REDESIGN. Visual-only: greeting, momentum hero,
+     Action-Needed banners, segmented section tabs (filter of the SAME cards,
+     All = everything as before), workout spotlight, recovery card.
+     sh(k) = show a section for the active tab (S.ctoday, default 'all'). */
+  const cf=S.ctoday||'all';
+  const sh=k=>cf==='all'||cf===k;
+  /* Real nutrition snapshot for the Nutrition tab — NEng, the exact source
+     the Nutrition page uses (targets/consumed/meals). */
+  const tg=NEng.targets(c),coN=NEng.consumed(c,isoToday()),remK=NEng.remaining(c,isoToday());
+  const mealsN=NEng.mealsLogged(c,isoToday());
+  const mealsGoal=(np&&np.meals>0)?np.meals:(nPlanOf(c.name)?5:4);
+  const wkTotal=w?w.exercises.reduce((a,e)=>a+e.sets,0):0;
   return `<div class="cbody">
-    <div class="csec">${t('Today')}</div>
-    ${monthStrip()}
-    ${remMsg?`<div class="ccard" style="border-color:rgba(200,240,75,.4);background:rgba(200,240,75,.06)">
-      <div class="row" style="gap:10px;align-items:flex-start">
-        <span style="font-size:20px;flex:none">⏰</span>
-        <div style="flex:1;min-width:0"><b style="font-size:13px">${t('Coach reminder')}</b>
-          <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(remMsg.body))}</div></div>
+    <!-- Greeting strip (Stitch: "Hello سارا ⚡" + tier pill + energy line) -->
+    <div class="td-greet">
+      <div class="row" style="justify-content:space-between;gap:10px">
+        <span class="td-hi">${t('Hello')} ${esc(t(c.name).split(' ')[0])} <span class="td-bolt">⚡</span></span>
+        ${stBdg(c.status)||''}
       </div>
-      <div class="row" style="gap:8px;margin-top:10px">
+      <div class="td-sub"><span>${t('Ready to crush your goals today?')}</span><span class="td-dot"></span><b>${nf(doneWk)}/${nf(totalWk)} ${t('This week')}</b></div>
+    </div>
+    ${monthStrip()}
+    <!-- Daily Momentum hero (Stitch: eyebrow + big value + flame pill + ring/XP grid) -->
+    <div class="ccard td-mom">
+      <span class="td-glow"></span>
+      <div class="td-mom-hd">
+        <div>
+          <span class="td-eyebrow">${t('Daily Momentum')}</span>
+          <div class="td-mom-big">${nf(c.pts||0)} <span>${t('Points')}</span></div>
+        </div>
+        <span class="td-flame">${ic('flame',17)}<b>${nf(c.dayStreak||0)}</b><small>${t('days')}</small></span>
+      </div>
+      <div class="td-tiles">
+        <div class="td-tile" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div class="td-ring">${ring(wkPct,58)}<span class="td-ring-c">${nf(doneWk)}/${nf(totalWk)}</span></div>
+          <span class="td-rlbl">${t('This week')}</span>
+        </div>
+        <div class="td-tile td-xp" data-act="gam-open" style="cursor:pointer" title="${t('Badges')}">
+          <div class="row" style="justify-content:space-between">
+            <span class="row" style="gap:6px">${ic('trophy',15)}<b style="font-size:12.5px">${t('Badges')}</b></span>
+            <b style="font-size:12.5px;color:var(--pf-ac)">${nf(earnedN)}/${nf(GAM.BADGES.length)}</b>
+          </div>
+          <div class="td-bar"><i style="width:${nb?nf(nb.pct):0}%"></i></div>
+          <div class="td-xp-f"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nb?`${t('Next badge')}: ${nb.b.e} ${t(nb.b.n)}`:t('Achievements')}</span><span>${nf(nb?nb.pct:0)}%</span></div>
+        </div>
+      </div>
+      <div class="td-mom-ft">${t('Ongoing challenge')} · ${nf(doneWk)}/${nf(totalWk)} ${t('This week')}</div>
+    </div>
+    <!-- Action Needed banners (Stitch: gradient banner + neon top bar) -->
+    ${remMsg?`<div class="ccard td-act">
+      <span class="td-neon"></span>
+      <div class="td-act-top"><span class="td-pill"><span class="td-ping"></span>${t('Coach reminder')}</span></div>
+      <div class="td-act-body">
+        <div style="flex:1;min-width:0"><div class="td-act-t">${esc(t(remMsg.body))}</div></div>
+        <span class="td-act-ic">${ic('bell',20)}</span>
+      </div>
+      <div class="row" style="gap:8px;margin-top:12px">
         ${w?`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',14)}</button>`:`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="cnav" data-t="workouts">${t('Your Workouts')} ${ic('arrowR',14)}</button>`}
         <button class="btn btn-outline btn-sm" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}">${t('Got it')}</button>
       </div>
     </div>`:''}
-    <div class="ccard" style="background:linear-gradient(135deg,var(--accent),var(--acc-mid));border:none;padding:14px 16px;color:var(--accent-ink);box-shadow:0 8px 26px -10px rgba(200,240,75,.5)">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <div class="row" style="gap:14px">
-          <div style="text-align:center"><div class="row" style="gap:6px;justify-content:center;align-items:baseline;font-size:22px;font-weight:800;line-height:1">${ic('flame',17)}<span>${nf(c.dayStreak||0)}</span></div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('day streak')}</div></div>
-          <div style="width:1px;height:32px;background:rgba(20,26,5,.18)"></div>
-          <div style="text-align:center"><div class="row" style="gap:6px;justify-content:center;align-items:baseline;font-size:22px;font-weight:800;line-height:1">${ic('star',17)}<span>${nf(c.pts||0)}</span></div><div style="font-size:9.5px;font-weight:700;opacity:.75;margin-top:3px">${t('Points')}</div></div>
+    ${!c.intake?`<div class="ccard td-act">
+      <span class="td-neon"></span>
+      <div class="td-act-top"><span class="td-pill"><span class="td-ping"></span>${t('Action Needed')}</span></div>
+      <div class="td-act-body">
+        <div style="flex:1;min-width:0">
+          <div class="td-act-t">${t('Intake form')}</div>
+          <div class="td-act-d">${t('Your coach needs your health background before the first session')}</div>
         </div>
-        <button class="btn glass" style="padding:7px 12px;font-size:11.5px" data-act="gam-open">${t('Badges')} ${nf(earnedN)}/${nf(GAM.BADGES.length)}</button>
+        <span class="td-act-ic">${ic('note',20)}</span>
       </div>
-      ${nb?`<div style="margin-top:11px">
-        <div class="row" style="justify-content:space-between;font-size:10.5px;font-weight:700;opacity:.85"><span>${t('Next badge')}: ${nb.b.e} ${t(nb.b.n)}</span><span>${nf(nb.pct)}%</span></div>
-        <div style="height:4px;border-radius:99px;background:rgba(20,26,5,.18);margin-top:4px;overflow:hidden"><i style="display:block;height:100%;width:${nb.pct}%;background:var(--accent-ink);border-radius:99px"></i></div>
-      </div>`:''}
-      <div style="font-size:10.5px;font-weight:700;opacity:.75;margin-top:9px">${t('Ongoing challenge')} · ${nf(doneWk)}/${nf(db.workouts.length)} ${t('This week')}</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button>
+    </div>`:''}
+    <!-- Segmented section tabs (Stitch) — filter only, same content -->
+    <div class="td-tabs">
+      ${[['all','All Tasks'],['workouts','Workouts'],['habits','Habits'],['nutrition','Nutrition']].map(([k,l])=>`<button class="td-tab ${cf===k?'on':''}" data-act="ctoday" data-t="${k}">${t(l)}</button>`).join('')}
     </div>
-    ${CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id)).slice(0,2).map(ch=>{
-      const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
+    ${sh('workouts')?`
+    <div class="td-sec"><span class="td-sec-t">${t("Today's Workout")}</span>${w?`<span class="td-pill" style="text-transform:none;letter-spacing:.03em">${ic('clock',11)} ${t(w.dur)}</span>`:''}</div>
+    ${w?`<div class="fhero">
+      <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
+        <span class="chip" style="background:rgba(0,0,0,.45);border-color:rgba(255,255,255,.14);color:#fff">${t(w.day)}</span>
+        <span class="chip" style="background:rgba(0,0,0,.45);border-color:rgba(255,255,255,.14);color:#fff">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
+      </div>
+      <div style="font-weight:800;font-size:22px;margin:14px 0 4px;letter-spacing:-.02em;position:relative;z-index:1">${esc(w.name)}</div>
+      <div class="td-coach" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> • ${t(c.goal)}</div>
+      <div class="td-meta" style="position:relative;z-index:1">
+        <div class="td-mi">${ic('clock',16)}<div><span>${t('Duration')}</span><b>${t(w.dur)}</b></div></div>
+        <div class="td-mi">${ic('dumbbell',16)}<div><span>${t('exercises')}</span><b>${nf(w.exercises.length)}</b></div></div>
+        <div class="td-mi">${ic('list',16)}<div><span>${t('sets')}</span><b>${nf(wkTotal)}</b></div></div>
+      </div>
+      <div class="row" style="gap:8px;margin-top:14px;position:relative;z-index:1">
+        <button class="btn btn-lime" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${t('Start Workout')}</button>
+        <button class="btn glass" style="width:46px;height:46px;padding:0;justify-content:center;flex:none" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
+      </div>
+    </div>`
+    :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
+    ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
+      <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
+    ${up?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('clock',14)} ${t('Next session')}</div>
+      <div class="row" style="margin-top:10px"><div class="tl-time">${nf(fmtT(up.start))}</div>
+      <div style="flex:1"><b style="font-size:13.5px">${t(up.label)}</b><div class="muted" style="font-size:12px">${t(DAYS[up.day])} · ${nf(up.dur)} h</div></div>
+      ${attBadge(up)||`<span class="bdg ${up.type==='session'?'bdg-lime':up.type==='assess'?'bdg-blue':up.type==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[up.type])}</span>`}</div></div>`:''}
+    <div class="ccard">
+      <div class="card-t">${ic('ruler',14)} ${t('Form check')}</div>
+      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Point the camera at yourself — reps and form are checked on your device')}</div>
+      <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="fc-open">${ic('ruler',15)} ${t('Start form check')}</button>
+    </div>`:''}
+    ${sh('habits')?`
+    <div class="td-sec"><span class="td-sec-t">${t('Challenges')}</span><span class="td-count">${nf(chs.length)}</span></div>
+    ${chs.slice(0,2).map(ch=>{
+      const pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
       const st=(ch.stages||[])[Math.min(node,(ch.stages||[]).length-1)]||{};
       return `<div class="ccard" style="border-color:var(--acc-line2)">
       <div class="row" style="justify-content:space-between;gap:8px" data-act="chal-open" data-id="${esc(ch.id)}">
@@ -7327,33 +7592,6 @@ function cToday(){
       <div class="pbar" style="margin-top:7px"><i style="width:${pct}%"></i></div>
       ${ch.metric==='custom'?`<button class="btn btn-lime btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',13)} ${t('Log progress')}</button>`:''}
     </div>`}).join('')}
-    ${!c.intake?`<div class="ccard" style="border-color:var(--acc-line)"><div class="card-t">${ic('note',14)} ${t('Intake form')}</div>
-      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Your coach needs your health background before the first session')}</div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button></div>`:''}
-    ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
-      <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
-    ${w?`<div class="fhero">
-      <div class="card-t">${ic('dumbbell',13)} ${t("Today's Workout")}</div>
-      <div style="font-weight:800;font-size:22px;margin:10px 0 8px;letter-spacing:-.02em">${esc(w.name)}</div>
-      <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:14px">
-        <span class="chip">${t(w.day)}</span>
-        <span class="chip">${t(w.dur)}</span>
-        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(w.exercises.reduce((a,e)=>a+e.sets,0))} ${t('sets')}</span>
-      </div>
-      <button class="btn glass" data-act="open-player" data-wid="${w.id}" style="margin-bottom:8px">${ic('list',15)} ${t('Preview exercises')}</button>
-      <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',15)}</button>
-    </div>`
-    :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    ${up?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('clock',14)} ${t('Next session')}</div>
-      <div class="row" style="margin-top:10px"><div class="tl-time">${nf(fmtT(up.start))}</div>
-      <div style="flex:1"><b style="font-size:13.5px">${t(up.label)}</b><div class="muted" style="font-size:12px">${t(DAYS[up.day])} · ${nf(up.dur)} h</div></div>
-      ${attBadge(up)||`<span class="bdg ${up.type==='session'?'bdg-lime':up.type==='assess'?'bdg-blue':up.type==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[up.type])}</span>`}</div></div>`:''}
-    ${notes.length?`<div class="ccard"><div class="card-t">${ic('note',14)} ${t('Coach notes')}</div>
-      ${notes.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line2);${n===notes[notes.length-1]?'border-bottom:none':''}">
-        <b style="font-size:13px">${esc(t(n.title))}</b>
-        <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div>
-        <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${esc(t(n.date))} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
-      </div>`).join('')}</div>`:''}
     <div class="ccard">
       <div class="card-t">${ic('activity',14)} ${t('Quick check-in')}</div>
       <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('How did training feel today?')}</div>
@@ -7361,12 +7599,34 @@ function cToday(){
       <div style="margin-bottom:8px"><div class="lbl" style="margin-bottom:4px">${t(lbl)}</div>
       <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
       <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="send-checkin">${t('Send check-in')}</button>
-    </div>
+    </div>`:''}
+    ${cf==='all'&&notes.length?`<div class="ccard"><div class="card-t">${ic('note',14)} ${t('Coach notes')}</div>
+      ${notes.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line2);${n===notes[notes.length-1]?'border-bottom:none':''}">
+        <b style="font-size:13px">${esc(t(n.title))}</b>
+        <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div>
+        <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${esc(t(n.date))} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
+      </div>`).join('')}</div>`:''}
+    ${sh('nutrition')?`
+    <div class="td-sec"><span class="td-sec-t">${t('Nutrition')}</span><span class="td-count">${nf(mealsN)}/${nf(mealsGoal)} ${t('meals')}</span></div>
     <div class="ccard">
-      <div class="card-t">${ic('ruler',14)} ${t('Form check')}</div>
-      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Point the camera at yourself — reps and form are checked on your device')}</div>
-      <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="fc-open">${ic('ruler',15)} ${t('Start form check')}</button>
-    </div>
+      <div class="row" style="justify-content:space-between;align-items:baseline">
+        <div><b style="font-size:26px;font-weight:800;letter-spacing:-.02em">${nf(remK.kcal)}</b> <span class="muted" style="font-size:12.5px">${t('Left')} kcal</span></div>
+        <span class="chip">${nf(coN.kcal)} / ${nf(tg?tg.kcal:0)} kcal</span>
+      </div>
+      <div class="pbar" style="margin-top:10px"><i style="width:${tg&&tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="cnav" data-t="nutrition">${t('Nutrition')} ${ic('arrowR',13)}</button>
+    </div>`:''}
+    ${sh('habits')&&np&&(np.sleep||np.wake)?`
+    <div class="ccard td-sleep">
+      <span class="td-sleep-ic">${ic('moon',22)}</span>
+      <div style="flex:1;min-width:0">
+        <div class="row" style="justify-content:space-between;gap:8px">
+          <span class="td-eyebrow">${t('Sleep readiness')}</span>
+          <span style="font-size:11.5px;font-weight:700">${t('Bed time')}: ${esc(np.sleep||'—')}</span>
+        </div>
+        <b style="display:block;font-size:14.5px;margin-top:3px">${t('Wake up')}: ${esc(np.wake||'—')}</b>
+      </div>
+    </div>`:''}
   </div>`;
 }
 function cWorkouts(){
@@ -7376,7 +7636,6 @@ function cWorkouts(){
   const list=db.workouts.filter(w=>f==='All'||(f==='Pending'?w.status!=='completed':w.status==='completed'));
   const cnt=v=>v==='All'?db.workouts.length:db.workouts.filter(w=>v==='Pending'?w.status!=='completed':w.status==='completed').length;
   return `<div class="cbody">
-    <div class="csec">${t('Your Workouts')}</div>
     <div class="fpills">${['All','Pending','Completed'].map(v=>`<button class="fpill ${f===v?'on':''}" data-act="cwfilter" data-v="${v}">${t(v)}${cnt(v)?` · ${nf(cnt(v))}`:''}</button>`).join('')}</div>
     <div class="ccard"><div class="row" style="justify-content:space-between"><b>${t('Program progress')}</b><span class="chip">${t('Week')} ${nf(c.week)} ${t('of')} 12</span></div>
       <div class="pbar" style="margin-top:8px"><i style="width:${c.week/12*100}%"></i></div></div>
@@ -7407,18 +7666,26 @@ function monthStrip(){
   const letters=['S','M','T','W','T','F','S'];
   const faLetters=['ش','ی','د','س','چ','پ','ج']; // Persian week starts Saturday
   const order=lang==='fa'?[6,0,1,2,3,4,5]:[0,1,2,3,4,5,6]; // FA: ش ی د س چ پ ج = Sat..Fri
+  /* v18.60 — Stitch calendar strip: uppercase month + week chip + Calendar
+     link, full-width day tiles (today = accent fill). Same dates as before. */
   const cell=(i)=>{const idx=order[i];const d=days[idx];const isT=d.toDateString()===TDATE.toDateString();
-    return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px;flex:1">
-      <span style="font-size:10px;font-weight:700;color:${isT?'var(--accent)':'var(--ink3)'}">${lang==='fa'?faLetters[idx]:letters[idx]}</span>
-      <span style="min-width:30px;height:30px;padding:0 6px;border-radius:10px;display:grid;place-items:center;font-size:12.5px;font-weight:800;${isT?'background:var(--accent);color:var(--accent-ink);box-shadow:0 4px 14px -4px rgba(200,240,75,.6)':'background:#1C2026;color:var(--ink2);border:1px solid #262B33'}">${nf(d.getDate())}</span>
+    return `<div class="td-day ${isT?'on':''}">
+      <span class="td-dl">${lang==='fa'?faLetters[idx]:letters[idx]}</span>
+      <span class="td-dn">${nf(d.getDate())}</span>
     </div>`};
   const mName=lang==='fa'?TDATE.toLocaleDateString('fa-IR',{month:'long'}):TDATE.toLocaleDateString('en-US',{month:'long'});
+  /* ISO-ish week number of the displayed date (decorative chip, like the
+     design's "Week 42"). */
+  const wkOf=(d)=>{const t2=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+    const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);
+    const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));
+    return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)};
   return `<div class="ccard" style="padding:12px 14px">
-    <div class="row" style="justify-content:space-between;margin-bottom:8px">
-      <b style="font-size:13.5px">${esc(mName)} (${nf(TDATE.getFullYear())})</b>
-      <span class="row" style="gap:4px"><button class="btn btn-ghost btn-icon" style="width:26px;height:26px">${ic('chevL',14)}</button><button class="btn btn-ghost btn-icon" style="width:26px;height:26px">${ic('chevR',14)}</button></span>
+    <div class="row" style="justify-content:space-between;margin-bottom:9px">
+      <div class="row" style="gap:8px"><b class="td-cal-m">${esc(mName)} ${nf(TDATE.getFullYear())}</b><span class="td-chip">${t('Week')} ${nf(wkOf(TDATE))}</span></div>
+      <button class="td-calbtn" data-act="cnav" data-t="sessions">${t('Calendar')} ${ic('chevR',13)}</button>
     </div>
-    <div style="display:flex;gap:4px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
+    <div style="display:flex;gap:5px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
   </div>`;
 }
 function cProgress(){
@@ -7432,7 +7699,6 @@ function cProgress(){
   const range=S.prgRange||'Week';
   const cons=range==='Week'?CONSIST.slice(-7):range==='Month'?CONSIST.slice(-12):CONSIST;
   return `<div class="cbody">
-    <div class="csec">${t('Daily Report')}</div>
     <div class="ccard" style="display:flex;align-items:center;gap:14px;padding:16px">
       <div style="flex:1;min-width:0">
         <b style="font-size:16px;letter-spacing:-.02em">${t('Health Grade')}</b>
@@ -7522,7 +7788,6 @@ function cNutrition(){
   const fresh=!p&&!np&&!NLOGS.some(l=>l.client===c.name);
   const sug=fresh?null:NEng.suggestNow(c);
   return `<div class="cbody">
-    <div class="csec">${t('Nutrition')}</div>
     ${fresh?`<div class="ccard cempty">${ic('utensils',26)}<b>${t('Your nutrition companion')}</b><span class="muted" style="font-size:12.5px">${t('Log what you eat, ask for meal ideas and let your coach follow your progress.')}</span>
       <button class="btn btn-lime" data-act="nprof-open" style="margin-top:10px">${ic('user',15)} ${t('Set up nutrition profile')}</button></div>`
     :`
@@ -7757,39 +8022,63 @@ function cProfile(){
   const c=client(S.cid);
   const lm=lastM(S.cid);
   const remain=packRemain(c.name);
+  /* v18.58 — visual-only redesign (neon profile board). Every field, action
+     and translation key below is the SAME as before; only markup/classes. */
   return `<div class="cbody">
-    <div class="csec">${t('My Profile')}</div>
-    <div class="ccard" style="display:flex;align-items:center;gap:14px;padding:18px 16px">
-      <button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="cp-pic" title="${t(c.pic?'Change photo':'Add photo')}">${avPlus(t(c.name),62,c.id-1,!!c.pic)}</button>
-      <div style="flex:1;min-width:0"><b style="font-size:17px;letter-spacing:-.02em">${esc(t(c.name))}</b>
-        <div class="muted" style="font-size:12px">${t(c.goal)}</div>
-        ${c.code?`<div class="muted" style="font-size:11px;margin-top:4px">${t('Code')}: <b style="letter-spacing:.08em;color:var(--accent)">${esc(joinCodeOf(c))}</b></div>`:''}
+    <div class="ccard pf-hero">
+      <span class="pf-glow pf-g1"></span><span class="pf-glow pf-g2"></span>
+      <div class="pf-avwrap">
+        <button class="pf-av" data-act="cp-pic" title="${t(c.pic?'Change photo':'Add photo')}">${av(t(c.name),92,c.id-1)}</button>
+        <button class="pf-cam" data-act="cp-pic" title="${t(c.pic?'Change photo':'Add photo')}" aria-label="${t(c.pic?'Change photo':'Add photo')}">${ic('camera',15)}</button>
       </div>
-      ${stBdg(c.status)}
+      <div class="pf-name">${esc(t(c.name))}</div>
+      <div class="pf-sub">${t(c.goal)}</div>
+      <div class="pf-pills">${stBdg(c.status)||''}</div>
+      ${c.code?`<div class="pf-code">
+        <span class="pf-qr">${ic('qr',16)}</span>
+        <span class="pf-rt"><span class="pf-rk">${t('Code')}</span><b class="pf-ck">${esc(joinCodeOf(c))}</b></span>
+        <button class="pf-copy" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',13)} ${t('Copy')}</button>
+      </div>`:''}
     </div>
-    <div class="row" style="justify-content:space-between;margin:0 4px 8px"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('users',14)} ${t('Personal Information')}</div>
-      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Connection')}</span><span class="bdg gbadge" style="font-size:10.5px">${CLOUD.on?'✓ '+t('Synced'):t('Offline mode')}</span></div>
-      ${[['Email',c.email||'—'],['Phone',c.phone||'—'],['Coach',wsOwnerName()||'—'],['Training Frequency',t(c.freq||'—')],['Sessions remaining',remain!=null?nf(remain):'—']].map(([k,v])=>`
-      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px;text-align:end;min-width:0;word-break:break-word">${esc(String(v))}</b></div>`).join('')}
+    <div class="pf-hint"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
+    <div class="ccard">
+      <div class="pf-hd"><span class="pf-ico">${ic('users',16)}</span><h3>${t('Personal Information')}</h3>
+        <span class="pf-pill ${CLOUD.on?'pf-pill-ok':'pf-pill-off'}" style="font-size:9.5px">${CLOUD.on?'● '+t('Synced'):t('Offline mode')}</span></div>
+      <div class="pf-coach">
+        ${av(wsOwnerName()||t('Coach'),40,3)}
+        <span class="pf-rt"><span class="pf-rk">${t('Coach')}</span><b class="pf-rv">${esc(wsOwnerName()||'—')}</b></span>
+      </div>
+      ${[['mail','Email',c.email||'—'],['phone','Phone',c.phone||'—'],['calendar','Training Frequency',t(c.freq||'—')],['ticket','Sessions remaining',remain!=null?nf(remain):'—']].map(([i,k,v])=>`
+      <div class="pf-row"><span class="pf-ico n">${ic(i,15)}</span><span class="pf-rt"><span class="pf-rk">${t(k)}</span><b class="pf-rv">${esc(String(v))}</b></span></div>`).join('')}
     </div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('ruler',14)} ${t('Body Metrics')}</div>
-      ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
-      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
-      ${c.targetW?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Target Weight')}</span><b style="font-size:12.5px">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></div>
+    <div class="ccard">
+      <div class="pf-hd"><span class="pf-ico">${ic('ruler',16)}</span><h3>${t('Body Metrics')}</h3>
+        ${lm?`<span class="muted" style="font-size:10px">${fmtD(lm.d)}</span>`:''}</div>
+      <div class="pf-grid3">
+        ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
+        <div class="pf-tile"><span class="pf-tk">${t(k)}</span><b class="pf-tv">${v}</b></div>`).join('')}
+      </div>
+      ${c.targetW?`<div class="pf-stat" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <span class="pf-rt"><span class="pf-rk">${t('Target Weight')}</span><b class="pf-tv" style="text-align:start">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></span>
+        <span class="pf-pill pf-pill-acc">${nf(goalPct(c))}%</span></div>
       <div class="pbar" style="margin-top:8px"><i style="width:${goalPct(c)}%"></i></div>`:''}
       ${lm?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div>
       <div class="muted" style="font-size:10.5px;margin-top:6px">${t('Last measurement')}: ${fmtD(lm.d)}</div>`:''}
     </div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:8px">${ic('gear',14)} ${t('Settings')}</div>
-      <div class="lbl" style="margin-bottom:6px">${ic('globe',13)} ${t('Language')}</div>
-      <div class="seg" style="width:100%;display:flex">
-        <button style="flex:1" class="${lang==='fa'?'on':''}" data-act="lang">فارسی</button>
-        <button style="flex:1" class="${lang==='en'?'on':''}" data-act="lang">English</button>
+    <div class="ccard">
+      <div class="pf-hd"><span class="pf-ico">${ic('gear',16)}</span><h3>${t('Settings')}</h3></div>
+      <div class="pf-row" style="margin-top:0">
+        <span class="pf-ico n">${ic('globe',15)}</span>
+        <span class="pf-rt"><span class="pf-rk">${t('Language')}</span><b class="pf-rv">${lang==='fa'?'فارسی':'English'}</b></span>
+        <span class="pf-lang">
+          <button class="${lang==='fa'?'on':''}" data-act="lang">فا</button>
+          <button class="${lang==='en'?'on':''}" data-act="lang">EN</button>
+        </span>
       </div>
-      <div class="muted" style="font-size:11px;margin-top:6px">${t('App language')}</div>
+      <div class="muted" style="font-size:11px;margin-top:8px">${t('App language')}</div>
     </div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:10px">${ic('star',14)} ${t('App Theme')}</div>
+    <div class="ccard">
+      <div class="pf-hd"><span class="pf-ico">${ic('star',16)}</span><h3>${t('App Theme')}</h3></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       ${PHONESKINS.map(s=>`
       <button class="ccard" style="padding:10px;cursor:pointer;text-align:start;${(PREFS.phoneSkin||'fitflow')===s.id?'border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,240,75,.12)':''}" data-act="skin" data-s="${s.id}">
@@ -7803,7 +8092,7 @@ function cProfile(){
       </div>
       <div class="muted" style="font-size:11px;margin-top:8px">${t('Applies to this device only')}</div>
     </div>
-    <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;color:var(--red)" data-act="signout">${ic('x',14)} ${t('Sign out')}</button>
+    <button class="pf-out" data-act="signout">${ic('log-out',15)} ${t('Sign out')}</button>
   </div>`;
 }
 let restIv=null;
@@ -8559,6 +8848,7 @@ document.addEventListener('click',e=>{
     case 'cnav':S.ptab=el.dataset.t;
       if(S.ptab==='chat'){const c=client(S.cid);MSGS.forEach(m=>{if(m.client===c.name&&m.from==='coach')m.read=true})}
       render();break;
+    case 'ctoday':S.ctoday=el.dataset.t;render();break;
     case 'cv':S.cv=el.dataset.cv;render();break;
     /* ===== v17.11 — onboarding wizard + template sport filter ===== */
     case 'onb-open':{S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};onbWizard();break}
