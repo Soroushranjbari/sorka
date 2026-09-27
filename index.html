@@ -1432,7 +1432,7 @@ const FA={
 'Today · 08:20':'امروز · ۰۸:۲۰','Training':'تمرینی','General':'عمومی','Injury / Restriction':'آسیب / محدودیت','General Note':'یادداشت عمومی','Training Note':'یادداشت تمرینی','Progress Note':'یادداشت پیشرفت','Injury / Restriction Note':'یادداشت آسیب / محدودیت','Nutrition Note':'یادداشت تغذیه',
 'New Note':'یادداشت جدید','Title':'عنوان','Write your note…':'یادداشتت را بنویس…','Add Note':'ثبت یادداشت','Untitled note':'یادداشت بدون عنوان','Note added':'یادداشت ثبت شد','Note archived':'یادداشت آرشیو شد','Open a client workspace to add a note':'برای ثبت یادداشت، فضای کاری یک شاگرد را باز کن','Visible to client':'قابل مشاهده توسط شاگرد','Private':'خصوصی',
 'Workout Name':'نام تمرین','Training Day':'روز تمرین','Rest Day':'روز استراحت','Duration':'مدت','Coach Notes':'یادداشت مربی','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
-'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی',
+'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی','Back to calendar':'بازگشت به تقویم',
 'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
 'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
 'video & instructions on each card':'ویدیو و توضیحات برای هر حرکت','Create Custom Exercise':'ساخت حرکت سفارشی','Custom exercise form opened':'فرم حرکت سفارشی باز شد',
@@ -1966,7 +1966,7 @@ function splitRows(cid,o){
     const s=sp[i];const w=splitW(cid,s);const isT=i===TODAY;
     let right;
     if(s&&s.t==='rest')right=`<span class="bdg bdg-gray">${ic('moon',11)} ${t('Rest day')}</span>`;
-    else if(w)right=`<b style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(w.name))}</b>${wDone(w)?`<span class="bdg bdg-lime" style="font-size:9.5px;flex:none">${ic('check',10)}</span>`:''}`;
+    else if(w)right=`<b style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(w.name)||t('New workout'))}</b>${wDone(w)?`<span class="bdg bdg-lime" style="font-size:9.5px;flex:none">${ic('check',10)}</span>`:''}`;
     else right=`<span class="muted" style="opacity:.7">—</span>`;
     const act=opt.edit?`data-act="split-day" data-i="${i}"`:(w?`data-act="open-player" data-wid="${esc(String(w.id))}"`:'');
     const d=dayDate(i,0);
@@ -1987,20 +1987,20 @@ function splitDayModal(i,dISO){
   const cid=S.cid;const c=client(cid);const db=DB[cid]||{};
   const sp=splitOf(cid);const s=sp[i];const curW=splitW(cid,s);
   const ws=(db.workouts||[]);
-  const now=curW?esc(t(curW.name)):(s&&s.t==='rest'?t('Rest day'):t('No workout assigned'));
+  const now=curW?(esc(t(curW.name))||t('New workout')):(s&&s.t==='rest'?t('Rest day'):t('No workout assigned'));
   openModal(`
   <div class="modal-h"><h3>${t('Choose a workout for')} ${t(FULLDAYS[i])}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="muted" style="font-size:12px">${fmtFullDate(dISO?pd(dISO):dayDate(i,0))}</span><span class="bdg bdg-gray" style="font-size:10px">${t('Every week')}</span></div>
     <div class="row" style="gap:8px;margin-bottom:12px;padding:9px 12px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--acc-line)">${ic('calendar',14)}<b style="font-size:12.5px;color:var(--accent-ink)">${now}</b></div>
-    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" data-act="cal-new" data-i="${i}">${ic('plus',14)} ${t('New workout for this day')}</button>
     <div class="fs-t">${t('Saved workouts')}</div>
     ${ws.length?ws.map(w=>{const on=curW&&String(curW.id)===String(w.id);
       return `<div class="set-row" data-act="split-assign" data-i="${i}" data-w="${esc(String(w.id))}" style="cursor:pointer;${on?'background:var(--accent-soft);':''}${on?'padding:12px 10px;border-radius:10px':''}">
-        <span class="row" style="gap:10px;min-width:0">${ic('dumbbell',15)}<span style="min-width:0"><b style="font-size:13px">${esc(t(w.name))}</b><span class="muted" style="display:block;font-size:11px">${t(w.day)} · ${t(wDone(w)?'Completed':w.status==='assigned'?'Pending':'planned')}</span></span></span>
+        <span class="row" style="gap:10px;min-width:0">${ic('dumbbell',15)}<span style="min-width:0"><b style="font-size:13px">${esc(t(w.name)||t('New workout'))}</b><span class="muted" style="display:block;font-size:11px">${t(w.day)} · ${t(wDone(w)?'Completed':w.status==='assigned'?'Pending':'planned')}</span></span></span>
         ${on?`<span style="color:var(--accent-deep);flex:none">${ic('check',16)}</span>`:`<span style="flex:none;color:var(--ink3)">${ic('chevR',14)}</span>`}
       </div>`}).join('')
      :`<div class="muted" style="padding:16px;text-align:center;font-size:12.5px">${t('No workouts yet — build one first')}</div>`}
+    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:14px" data-act="cal-new" data-i="${i}">${ic('plus',14)} ${t('New workout for this day')}</button>
   </div>
   <div class="modal-f">
     <button class="btn btn-ghost" data-act="split-clear" data-i="${i}" style="color:var(--red)">${t('Clear day')}</button>
@@ -2022,7 +2022,7 @@ function weekPlanModal(kind){
       return `<div class="wprow ${i===TODAY?'today':''}" data-act="split-day" data-i="${i}">
         <span class="wp-d"><b>${t(WDN[i])}</b><small>${fmtNum(d)}</small></span>
         ${s&&s.t==='rest'?`<span class="wp-r">${ic('moon',13)} ${t('Rest day')}</span>`
-          :w?`<span class="wp-w">${ic('dumbbell',13)} ${esc(t(w.name))}${wDone(w)?`<i>${ic('check',12)}</i>`:''}</span>`
+          :w?`<span class="wp-w">${ic('dumbbell',13)} ${esc(t(w.name)||t('New workout'))}${wDone(w)?`<i>${ic('check',12)}</i>`:''}</span>`
           :`<span class="wp-a">${ic('plus',13)} ${t('Add workout')}</span>`}
         <span class="wp-s">${sd.slice(0,4).map(x=>`<span class="mdot" style="background:${SESS_DOT[x.type]||SESS_DOT.session}"></span>`).join('')}</span>
         <span class="wp-c">${ic('chevR',15)}</span>
@@ -3257,7 +3257,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 }
 
 /* ================= STATE & HELPERS ================= */
-const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,
+const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
@@ -4528,6 +4528,7 @@ function vCAttend(){
 function loadClientProgram(cid){
   const c=CLIENTS.find(x=>x.id===cid);if(!c)return;
   const ws=(DB[cid]&&DB[cid].workouts)||[];
+  S.wEdit=null; // v18.64 — the auto-prefill is a starting point, NOT an edit
   const cur=ws[0]; // newest first (b-save unshifts)
   if(cur&&cur.exercises&&cur.exercises.length){
     BUILDER.length=0;cur.exercises.forEach(x=>BUILDER.push({...x}));
@@ -4562,7 +4563,7 @@ function vBuilder(){
         ${(DB[c.id].workouts||[]).length?DB[c.id].workouts.map((w,wi)=>`
         <div class="tl-row">
           <span class="bdg ${w.status==='assigned'?'bdg-lime':'bdg-gray'}" style="flex:none;font-size:10px">${t(w.status==='assigned'?'Pending':w.status==='completed'?'completed':'planned')}</span>
-          <div style="flex:1;min-width:0"><div style="font-weight:600">${esc(w.name)}</div><div class="muted" style="font-size:11.5px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div>
+          <div style="flex:1;min-width:0"><div style="font-weight:600">${esc(w.name||t('New workout'))}</div><div class="muted" style="font-size:11.5px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div>
           <button class="btn btn-ghost btn-icon" data-act="w-load" data-wi="${wi}" title="${t('Load into the builder')}" style="color:var(--ink3)">${ic('edit',14)}</button>
           <button class="btn btn-ghost btn-icon" data-act="w-del" data-wi="${wi}" title="${t('Delete')}" style="color:var(--red)">${ic('trash',14)}</button>
         </div>`).join('')
@@ -4571,11 +4572,11 @@ function vBuilder(){
       <div class="card" style="padding:18px">
         <div class="fgrid">
           <div class="field"><label class="lbl">${t('Workout Name')}</label><input class="inp" id="w-name" value="${esc(wval())}"></div>
-          <div class="field"><label class="lbl">${t('Training Day')}</label><select class="sel" id="w-day">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(d=>`<option value="${d}" ${d===S.wday?'selected':''}>${t(d)}</option>`).join('')}</select></div>
+          <div class="field"><label class="lbl">${t('Training Day')}</label><select class="sel" id="w-day" data-change="wday">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(d=>`<option value="${d}" ${d===S.wday?'selected':''}>${t(d)}</option>`).join('')}</select></div>
           <div class="field"><label class="lbl">${t('Duration')}</label><input class="inp" id="w-dur" value="${esc(t(S.wdur))}"></div>
           <div class="field"><label class="lbl">${t('Coach Notes')}</label><input class="inp" id="w-note" value="${esc(t(S.wnote))}"></div>
         </div>
-        <div class="row" style="background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--accent-ink)">${ic('users',14)} ${t('Save Workout')} → ${t('Published to')} <b>${t(c.name)}</b> (${t('Visible to client')})</div>
+        <div class="row" style="background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--accent-ink);flex-wrap:wrap;gap:6px">${ic('users',14)} ${t('Save Workout')} → ${t('Published to')} <b>${t(c.name)}</b> (${t('Visible to client')}) <span style="opacity:.5">·</span> ${ic('calendar',13)} ${t('Training Day')}: <b>${t(S.wday)}</b>${S.calReturn?` <span class="bdg bdg-gray" style="font-size:10px">${t('Back to calendar')}</span>`:''}</div>
       </div>
       <div id="exList">${BUILDER.map((b,i)=>exBlock(b,i)).join('')}
         <button class="btn btn-outline" style="width:100%;justify-content:center;border-style:dashed;padding:13px" data-act="pk">${ic('plus',15)} ${t('Add Exercise')}</button>
@@ -4651,7 +4652,7 @@ function vCCal(){
     const sd=sessOf(i).slice(0,4);
     const body=s&&s.t==='rest'
       ?`<span class="calday-r">${ic('moon',12)} ${t('Rest')}</span>`
-      :w?`<span class="calday-w"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis">${esc(t(w.name))}</span>${wDone(w)?`<b style="flex:none;color:var(--green);display:flex">${ic('check',11)}</b>`:''}</span>`
+      :w?`<span class="calday-w"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis">${esc(t(w.name)||t('New workout'))}</span>${wDone(w)?`<b style="flex:none;color:var(--green);display:flex">${ic('check',11)}</b>`:''}</span>`
       :`<span class="calday-a">${ic('plus',12)} ${t('Add workout')}</span>`;
     return `<div class="calday ${i===TODAY?'today':''}" data-act="split-day" data-i="${i}">
       <span class="calday-h">${t(WDN[i])}</span>
@@ -9602,26 +9603,42 @@ document.addEventListener('click',e=>{
     case 'b-dn':{const i=+el.dataset.bi;if(i<BUILDER.length-1){[BUILDER[i+1],BUILDER[i]]=[BUILDER[i],BUILDER[i+1]];render()}break}
     case 'b-save':{const n=$('w-name');if(n)S.wname=n.value;const d=$('w-day');if(d)S.wday=d.value;
       const note=$('w-note');if(note)S.wnote=note.value;
-      const nid='w'+Date.now();
-      DB[S.cid].workouts.unshift({id:nid,name:S.wname.split(' — ')[0],day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'});
-      /* v18.62 — publishing a workout for day X puts it ON that day of the
-         week split (replacing that day's previous assignment). */
-      {const di=FULLDAYS.indexOf(S.wday);const dbS=DB[S.cid];
-        if(di>=0){if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);dbS.split[di]={t:'w',w:nid}}}
+      /* v18.64 — never publish a nameless workout: an empty name rendered an
+         INVISIBLE cell on the calendar ("nothing gets registered"). */
+      const wn=((S.wname.split(' — ')[0])||'').trim()||'New workout';
+      const dbS=DB[S.cid]||(DB[S.cid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()});
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      const di=FULLDAYS.indexOf(S.wday);
+      /* v18.64 — editing an existing workout (✎ in the saved list) UPDATES it
+         in place and MOVES its split assignment; only a fresh draft publishes
+         a new workout. Previously every save duplicated and the old day stayed
+         occupied — "changing the Training Day did nothing". */
+      const ed=S.wEdit?(dbS.workouts||[]).find(x=>String(x.id)===String(S.wEdit)):null;
+      let nid;
+      if(ed){ed.name=wn;ed.day=S.wday;ed.dur=S.wdur||'60 min';ed.note=S.wnote||'';ed.exercises=BUILDER.map(b=>({...b}));nid=ed.id;
+        dbS.split.forEach((s,j)=>{if(s&&s.t==='w'&&String(s.w)===String(nid))dbS.split[j]=null})}
+      else{nid='w'+Date.now();
+        dbS.workouts.unshift({id:nid,name:wn,day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'})}
+      if(di>=0)dbS.split[di]={t:'w',w:nid};
+      S.wEdit=null;
       /* v18.63 — if this save came from the calendar's "New workout for this
          day", land back on the calendar so the coach sees the new assignment. */
       if(isNarrow()){S.mview='client';S.mClient=S.cid}
       else{S.view='wspace';S.tab=S.calReturn?'calendar':'overview';window.scrollTo({top:0})}
       S.calReturn=false;
       render();toast(t('Published to')+' '+t(client(S.cid).name)+' ✓ · '+t(S.wday));break}
-    case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wday='Monday';S.wdur='60 min';S.wnote='';S.calReturn=false;
-      if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
-    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wday='Monday';S.wdur='60 min';S.wnote='';S.tplEdit=null;S.calReturn=false;
+    case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wdur='60 min';S.wnote='';S.tplEdit=null;S.wEdit=null;
+      /* v18.64 — KEEP the current Training Day + calendar-return: starting a
+         fresh draft must not silently reset the day the coach just picked.
+         Already in the workspace? Stay there (no jump to the standalone page). */
+      if(isNarrow()){S.mview='builder'}else if(S.view!=='wspace')S.view='builder';render();window.scrollTo({top:0});break}
+    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wdur='60 min';S.wnote='';S.tplEdit=null;S.wEdit=null;
       render();toast(t('Builder cleared'));break}
     case 'w-load':{const w=(DB[S.cid].workouts||[])[+el.dataset.wi];if(!w)break;
       BUILDER.length=0;(w.exercises||[]).forEach(x=>BUILDER.push({...x}));fillVids();
-      S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';S.calReturn=false;
-      if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
+      S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';
+      S.wEdit=String(w.id); /* v18.64 — save now UPDATES + MOVES this workout */
+      if(isNarrow()){S.mview='builder'}else if(S.view!=='wspace')S.view='builder';render();window.scrollTo({top:0});break}
     case 'w-del':{const list=DB[S.cid].workouts||[];const w=list[+el.dataset.wi];if(!w)break;
       if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
       list.splice(+el.dataset.wi,1);
@@ -9636,7 +9653,7 @@ document.addEventListener('click',e=>{
       /* New workout FOR this day: preset Training Day, remember the calendar
          so b-save lands back here, then open a clean draft. Desktop stays in
          the workspace (Workouts tab = same builder, same client context). */
-      BUILDER.length=0;S.tplEdit=null;
+      BUILDER.length=0;S.tplEdit=null;S.wEdit=null;
       S.wname='New Workout — '+client(S.cid).name;
       S.wday=FULLDAYS[i];S.wdur='60 min';S.wnote='';
       S.calReturn=true;
@@ -9887,6 +9904,10 @@ document.addEventListener('change',e=>{
   const el=e.target.closest('[data-change]');if(!el)return;
   if(el.dataset.change==='chal-draft'){const d=S.chalDraft;if(d){d[el.dataset.k]=el.value;renderChalEditor()}return}
   if(el.dataset.change==='client'){S.cid=+el.value;loadClientProgram(S.cid);render()}
+  /* v18.64 — the builder's Training Day select must sync on change: previously
+     its value only reached S.wday at save time, so ANY re-render (adding or
+     editing an exercise) silently reverted the coach's day choice. */
+  if(el.dataset.change==='wday'){S.wday=el.value;render()}
   if(el.dataset.change==='lang'){lang=el.value;applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}
   if(el.dataset.change==='calclient'){S.calfClient=el.value;render()}
   /* v15.7 — persisted selects (rest timer, response time) */
