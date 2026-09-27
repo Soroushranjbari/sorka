@@ -1413,7 +1413,8 @@ const FA={
 'Mon':'دوشنبه','Tue':'سه‌شنبه','Wed':'چهارشنبه','Thu':'پنجشنبه','Fri':'جمعه','Sat':'شنبه','Sun':'یکشنبه',
 'Upcoming':'پیش‌رو','Pull Workout':'تمرین پول','Mobility Prep':'آماده‌سازی تحرک','Push Workout':'تمرین پوش','Leg Day':'روز پا','Physio appointment':'نوبت فیزیوتراپی','Training Session':'جلسه تمرین','Rescheduled to':'جابه‌جا شد به','Tap an empty slot to add a session':'روی یک بازه خالی بزن تا جلسه ساخته شود',
 'Data across your clients':'داده‌های همه شاگردانت','7D':'۷ روز','30D':'۳۰ روز','3M':'۳ ماه','6M':'۶ ماه','1Y':'۱ سال',
-'Weight Progress':'روند وزن','Strength Progression':'روند قدرت','Bench':'پرس سینه','Squat':'اسکوات','Deadlift':'ددلیفت','Workout Completion':'تکمیل تمرین','weekly %':'٪ هفتگی','Training Volume':'حجم تمرین','tonnage (t / week)':'تناژ (تن / هفته)','Start':'شروع','Mid':'میانه','Now':'الان',
+'Weight Progress':'روند وزن','Strength Progression':'روند قدرت','Bench':'پرس سینه','Squat':'اسکوات','Deadlift':'ددلیفت','Workout Completion':'تکمیل تمرین','weekly %':'٪ هفتگی','Training Volume':'حجم تمرین','tonnage (t / week)':'تناژ (تن / هفته)','t':'تن','Start':'شروع','Mid':'میانه','Now':'الان',
+'No workout history yet':'هنوز تاریخچه تمرینی نیست','Session history':'تاریخچه جلسات','Complete a workout — your progress charts will build themselves':'تمرین را تمام کن — نمودارهای پیشرفت خودشان ساخته می‌شوند','Log a Bench, Squat or Deadlift session to see your progression':'یک جلسه پرس سینه، اسکوات یا ددلیفت ثبت کن تا روندت را ببینی','Beat your first logged set to set a PR':'اولین ست ثبت‌شده‌ات را بزن تا رکورد بزنی','Complete a workout to fill this chart':'برای پر شدن این نمودار یک تمرین تمام کن','Weekly check-in':'چک‌این هفتگی','Log weight & measurements':'ثبت وزن و اندازه‌گیری‌ها','your coach sees it instantly':'مربی‌ات همان لحظه می‌بیند','Save check-in':'ذخیره چک‌این','Check-in saved — your coach was notified':'چک‌این ذخیره شد — به مربی‌ات اطلاع داده شد',
 'Body metrics & progress photos':'شاخص‌های بدنی و عکس‌های پیشرفت','Add Progress Photos':'افزودن عکس پیشرفت','Waist':'کمر','Hips':'باسن','Arm (R)':'بازو (راست)','Thigh':'ران','prev':'قبلی','Last':'آخرین',
 'Weight History':'تاریخچه وزن','Measurement history':'تاریخچه اندازه‌گیری‌ها','Entry deleted':'ردیف حذف شد','Last measurement':'آخرین اندازه‌گیری','No measurements yet':'هنوز اندازه‌گیری‌ای ثبت نشده','Weight is required':'وزن الزامی است','At least two measurements needed for the trend':'برای دیدن روند، حداقل دو اندازه‌گیری لازم است',
 '12 weeks':'۱۲ هفته','Progress Photos':'عکس‌های پیشرفت','Front':'روبه‌رو','Side':'نیم‌رخ','Drag the slider to compare':'اسلایدر را برای مقایسه بکش','Measurement saved — charts updated':'اندازه‌گیری ثبت شد — نمودارها به‌روز شد','Save Measurement':'ذخیره اندازه‌گیری','Chest (cm)':'سینه (سانتی‌متر)','Waist (cm)':'کمر (سانتی‌متر)','Hips (cm)':'باسن (سانتی‌متر)','Arm (cm)':'بازو (سانتی‌متر)','Thigh (cm)':'ران (سانتی‌متر)','Calf (cm)':'ساق (سانتی‌متر)','Date':'تاریخ',
@@ -1685,10 +1686,10 @@ let BUILDER=[
 {ex:7,sets:4,reps:10,kg:60,rest:90,rpe:'RPE 7',rir:'RIR 3',tempo:'2-0-1-0',note:'Squeeze at contraction'},
 {ex:9,sets:3,reps:12,kg:10,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:'Lead with elbow'},
 {ex:13,sets:3,reps:12,kg:25,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:''}];
-const STRENGTH={bench:[62.5,65,67.5,70,72.5,75,77.5,80,80,82.5],squat:[85,87.5,90,95,97.5,100,102.5,105,107.5,110],dead:[110,115,120,125,127.5,130,132.5,137.5,140,145]};
-const CONSIST=[100,100,75,100,100,50,100,100,100,75,100,100];
-const VOLUME=[12.4,13.1,12.8,14.2,13.9,15.1,14.8,15.6,16.2,15.9,16.8,17.3];
-const PRS=[{n:'Bench Press',f:'70 kg',t:'82.5 kg',g:'+17.9%',d:'Jun 28, 2026'},{n:'Back Squat',f:'90 kg',t:'110 kg',g:'+22.2%',d:'Jun 20, 2026'},{n:'Deadlift',f:'120 kg',t:'145 kg',g:'+20.8%',d:'Jul 02, 2026'}];
+/* v18.61 — REMOVED the hardcoded demo chart arrays (STRENGTH/CONSIST/VOLUME/PRS).
+   Every progress chart is now COMPUTED from DB[cid].log — the real per-set
+   session history written by the player on Finish Workout (see lseeds /
+   consistWeeks / volumeWeeks / strengthSeries / prList below). */
 /* v15.6 — REAL measurements: per-client history (d = 'YYYY-MM-DD', oldest first) */
 /* v18.9 — REAL clock: TDATE used to be frozen at Jul 8 2026, so "today's
    meals", the calendar highlight, session states and measurement recency
@@ -1732,6 +1733,145 @@ const __MON=new Date(TDATE);__MON.setHours(0,0,0,0);__MON.setDate(__MON.getDate(
 const dayDate=(i,off=S.weekOff)=>{const d=new Date(__MON);d.setDate(__MON.getDate()+off*7+i);return d};
 /* Local ISO date (YYYY-MM-DD) for <input type=date> defaults */
 const isoToday=()=>`${TDATE.getFullYear()}-${String(TDATE.getMonth()+1).padStart(2,'0')}-${String(TDATE.getDate()).padStart(2,'0')}`;
+/* ================= v18.61 — REAL WORKOUT HISTORY =================
+   Every finished session in the client player writes a log entry into
+   DB[cid].log: {id,wid,n,d,at,sets:[{x,s,kg,reps,rpe}],done,total,vol,rpe}.
+   vol = Σ kg×reps (tonnage), rpe = avg of the per-set RPEs the client
+   actually picked. All analytics below are COMPUTED from these logs — no
+   more fake arrays. Demo personas (MSEED ids 1-3) get seeded history
+   anchored to the REAL current week so the demo charts show computed data;
+   real clients start empty and fill in as they train. */
+const wlogOf=cid=>((DB[cid]||{}).log)||[];
+/* Demo session history: 8 weeks × the client's weekly frequency, progressive
+   overload, 1 skipped session every 3rd week (so consistency isn't a flat
+   100), future dates skipped, deterministic ids (merge-stable across devices). */
+const lseeds=cid=>{
+  if(!MSEED[cid]||![1,2,3].includes(+cid))return [];
+  const c=CLIENTS.find(x=>x.id===+cid);if(!c)return [];
+  const W=8,tgt=Math.max(3,Math.min(5,parseInt(c.freq)||3));
+  const sc=(+c.weight||75)/75,r25=v=>Math.round(v/2.5)*2.5;
+  const rot=[
+    {n:'Push A',x:[['Barbell Bench Press',62.5,2,4,8],['Back Squat',85,2.5,4,5],['Dumbbell Curl',12,.5,3,12]]},
+    {n:'Push B',x:[['Barbell Bench Press',62.5,2,4,8],['Barbell Row',55,1.5,3,8],['Lat Pulldown',50,1,3,10]]},
+    {n:'Leg A',x:[['Back Squat',85,2.5,5,5],['Deadlift',110,3,3,5],['Leg Press',120,3,3,10]]},
+    {n:'Pull A',x:[['Deadlift',110,3,3,5],['Lat Pulldown',50,1,3,10],['Dumbbell Curl',12,.5,3,12]]},
+    {n:'Leg B',x:[['Leg Press',120,3,3,10],['Barbell Row',55,1.5,3,8],['Back Squat',85,2.5,4,8]]}];
+  const days=[0,2,4,1,5].slice(0,tgt); // Mon Wed Fri (Tue Sat)
+  const out=[];
+  for(let wi=0;wi<W;wi++){
+    const ago=W-1-wi; // 7 = oldest … 0 = this week
+    days.forEach((dow,di)=>{
+      if(wi%3===1&&di===days.length-1)return; // dip week → real <100% consistency
+      const d=new Date(__MON);d.setDate(__MON.getDate()-ago*7+dow);d.setHours(17,0,0,0);
+      if(d>Date.now())return; // never seed the future
+      const sets=[];
+      rot[di%rot.length].x.forEach(([x,base,step,ns,reps])=>{
+        const kg=r25((base+((W-1)-ago)*step)*sc);
+        for(let s=1;s<=ns;s++)sets.push({x,s,kg,reps,rpe:7+((wi+di+s)%3)});
+      });
+      const vol=sets.reduce((a,s)=>a+s.kg*s.reps,0);
+      const rpes=sets.map(s=>s.rpe);
+      const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      out.push({id:'ls'+cid+'-'+wi+'-'+di,n:rot[di%rot.length].n,d:iso,at:d.getTime(),
+        sets,done:sets.length,total:sets.length,vol,
+        rpe:Math.round(rpes.reduce((a,b)=>a+b,0)/rpes.length*10)/10});
+    });
+  }
+  out.sort((a,b)=>b.at-a.at); // newest first — same order unshift() produces on finish
+  return out;
+};
+/* Weekly consistency %: sessions that week ÷ the client's target frequency. */
+function consistWeeks(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const c=CLIENTS.find(x=>x.id===cid)||{};
+  const tgt=Math.max(1,parseInt(c.freq)||3);
+  const out=[];
+  for(let i=n-1;i>=0;i--){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-i*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const k=L.filter(l=>{const x=pd(l.d);return x>=w0&&x<w1}).length;
+    out.push(Math.min(100,Math.round(k/tgt*100)));
+  }
+  return out;
+}
+/* Weekly tonnage in tonnes (t/week). */
+function volumeWeeks(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const out=[];
+  for(let i=n-1;i>=0;i--){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-i*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const v=L.filter(l=>{const x=pd(l.d);return x>=w0&&x<w1}).reduce((a,l)=>a+(l.vol||0),0);
+    out.push(Math.round(v/100)/10);
+  }
+  return out;
+}
+/* Last n days: 100 if a session was logged that day, else 0 (+ weekday labels). */
+function dailyTrain(cid,n=7){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const out=[],labs=[];
+  for(let i=n-1;i>=0;i--){
+    const d=new Date(TDATE);d.setHours(0,0,0,0);d.setDate(d.getDate()-i);
+    const d2=new Date(d);d2.setDate(d.getDate()+1);
+    out.push(L.some(l=>{const x=pd(l.d);return x>=d&&x<d2})?100:0);
+    labs.push(t(DAYS[(d.getDay()+6)%7]));
+  }
+  return {d:out,labs};
+}
+/* Strength progression: weekly TOP set (kg) for the big-3, from real logs.
+   Timeline starts at the LATEST first-occurrence so every live line has data;
+   gaps carry the last known value. Returns null when history is too thin. */
+function strengthSeries(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const pats={bench:/^(barbell )?bench press$/i,squat:/^(back |barbell |box )?squat$/i,dead:/^(barbell )?deadlift$/i};
+  const keys=['bench','squat','dead'];
+  const wkMax=[];
+  for(let i=0;i<n;i++){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-(n-1-i)*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const m={bench:null,squat:null,dead:null};
+    L.forEach(l=>{const x=pd(l.d);if(x<w0||x>=w1)return;
+      (l.sets||[]).forEach(s=>{const kg=+s.kg||0;if(!kg)return;
+        keys.forEach(k=>{if(pats[k].test(s.x||'')&&(m[k]==null||kg>m[k]))m[k]=kg})})});
+    wkMax.push(m);
+  }
+  const first={};keys.forEach(k=>{for(let i=0;i<n;i++){if(wkMax[i][k]!=null){first[k]=i;break}}});
+  const live=keys.filter(k=>first[k]!=null);
+  if(!live.length)return null;
+  const start=Math.max(...live.map(k=>first[k]));
+  if(n-start<2)return null; // a single point cannot draw a line
+  const res={};
+  live.forEach(k=>{const arr=[];let last=null;
+    for(let i=start;i<n;i++){const v=wkMax[i][k];if(v!=null)last=v;arr.push(last!=null?last:wkMax[first[k]][k])}
+    res[k]=arr});
+  return res;
+}
+/* PRs: for each lift, first-ever top set vs best-ever top set (only where the
+   client actually got stronger), best gain first. */
+function prList(cid,limit=3){
+  const L=wlogOf(cid).slice().sort((a,b)=>(a.at||0)-(b.at||0));
+  const first={},best={};
+  L.forEach(l=>{const per={};
+    (l.sets||[]).forEach(s=>{const kg=+s.kg||0;if(!kg||!s.x)return;if(per[s.x]==null||kg>per[s.x])per[s.x]=kg});
+    Object.keys(per).forEach(x=>{
+      if(first[x]==null)first[x]={kg:per[x],d:l.d};
+      if(best[x]==null||per[x]>best[x].kg)best[x]={kg:per[x],d:l.d};});});
+  const out=[];
+  Object.keys(best).forEach(x=>{const f=first[x],b=best[x];
+    if(b.kg<=f.kg)return; // never improved on the first session → not a PR
+    out.push({n:x,f:f.kg+' kg',t:b.kg+' kg',g:'+'+Math.round((b.kg/f.kg-1)*1000)/10+'%',d:fmtShortDate(pd(b.d))});});
+  out.sort((a,b)=>parseFloat(b.g)-parseFloat(a.g));
+  return out.slice(0,limit);
+}
+/* Average RPE over the last N days (real per-set RPEs the client tapped). */
+function avgRpe(cid,days=28){
+  const cut=Date.now()-days*864e5;let s=0,n=0;
+  wlogOf(cid).forEach(l=>{if((l.at||0)<cut)return;
+    (l.sets||[]).forEach(x=>{const r=+x.rpe;if(r){s+=r;n++}})});
+  return n?Math.round(s/n*10)/10:null;
+}
+/* Honest empty state instead of fake chart data. */
+const chartEmpty=msg=>`<div class="empty">${ic('chart',22)}<b>${t('No workout history yet')}</b><span class="muted">${msg||t('Complete a workout — your progress charts will build themselves')}</span></div>`;
 /* ================= JALALI (SHAMSI) CALENDAR =================
    Standard 33-year cycle algorithm (jalaali-js, MIT) — accurate 1178–1633 AP. */
 const JMONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
@@ -2070,7 +2210,7 @@ function syncCustomEx(){
 }
 const DB={};
 CLIENTS.forEach(c=>{
-  DB[c.id]={workouts:[],sessions:[],stats:{done:c.done,missed:c.missed},nutrition:null,measures:mseeds(c.id)};
+  DB[c.id]={workouts:[],sessions:[],stats:{done:c.done,missed:c.missed},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id)};
   EVENTS.forEach(e=>{if(e.client===c.name)DB[c.id].sessions.push({start:e.start,dur:e.dur,label:e.label,type:e.type,day:e.day,att:e.att})});
 });
 DB[1].workouts=[
@@ -2174,8 +2314,12 @@ function loadData(){
       const seeds=defaultTemplates();
       TEMPLATES.forEach((tp,i)=>{if(!tp.exs&&!tp.parts){const sd=seeds.find(s=>s.n===tp.n);if(sd)TEMPLATES[i]=JSON.parse(JSON.stringify(sd))}});
     }
-    CLIENTS.forEach(c=>{if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:c.done||0,missed:c.missed||0},nutrition:null,measures:mseeds(c.id)}});
-    Object.keys(DB).forEach(k=>{if(!DB[k].measures){DB[k].measures=mseeds(k)}});
+    CLIENTS.forEach(c=>{if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:c.done||0,missed:c.missed||0},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id)}});
+    Object.keys(DB).forEach(k=>{if(!DB[k].measures){DB[k].measures=mseeds(k)}
+      // v18.61 — workspaces saved before the session log existed: backfill
+      // (demo personas get their seeded history, real clients start empty).
+      if(!Array.isArray(DB[k].log))DB[k].log=lseeds(+k);
+      DB[k].log.sort((a,b)=>(b.at||0)-(a.at||0));}); // newest first, everywhere
     scrubNames(); // stored payload may predate the escaping fix — strip markup from names
     return true;
   }catch(e){return false}
@@ -2775,6 +2919,15 @@ function cloudMerge(d,adopt){
         else if(take&&p.ok&&!L.photos[i].ok){L.photos[i].ok=true;ch=true}
       });
     }
+    // v18.61 — session logs: append-only id-union (newest first) so a log
+    // written on the client's phone reaches the coach's device on the next pull.
+    if(Array.isArray(R.log)){
+      if(!Array.isArray(L.log))L.log=[];
+      const lidx={};L.log.forEach((l,i)=>{if(l&&l.id!=null)lidx[l.id]=i});
+      R.log.forEach(l=>{if(!l||l.id==null)return;
+        if(lidx[l.id]===undefined){L.log.push(l);lidx[l.id]=L.log.length-1;ch=true}});
+      L.log.sort((a,b)=>(b.at||0)-(a.at||0));
+    }
   });
   if(__cexChanged){syncCustomEx();__cexChanged=false}
   if(ch)scrubNames(); // remote data is untrusted too (another device wrote it)
@@ -3001,7 +3154,7 @@ const client=id=>{
   if(c)return c;
   // Empty roster: hand back the placeholder and make sure its DB bucket exists
   // so the `DB[c.id].x` accesses in the per-client views cannot throw.
-  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
+  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
   return NO_CLIENT;
 };
 /* DB buckets are keyed by client id. The placeholder bucket (id 0) and any
@@ -3516,7 +3669,7 @@ function multiChart(series){
   return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">${g}${paths}</svg>`;
 }
 function barChart(d,o={}){
-  const w=640,h=200,p=26,mx=Math.max(...d)*1.15;const bw=Math.min(28,(w-2*p)/d.length*.5);
+  const w=640,h=200,p=26,mx=Math.max(1,Math.max(...d)*1.15);const bw=Math.min(28,(w-2*p)/d.length*.5); // v18.61 — guard: an all-zero (or single-day) series must not divide by 0
   let g='';for(let i=1;i<=3;i++){const y=(p+(h-2*p)*i/4).toFixed(1);g+=`<line x1="${p}" x2="${w-p}" y1="${y}" y2="${y}" stroke="var(--line2)"/>`}
   const bars=d.map((v,i)=>{const bh=v/mx*(h-2*p);const x=p+(i+.5)*(w-2*p)/d.length-bw/2;return `<rect x="${x.toFixed(1)}" y="${(h-p-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="4" fill="${o.c||'var(--accent-deep)'}" opacity="${i===d.length-1?1:.45}"/>`}).join('');
   const labs=(o.labels||[]).map((l,i)=>`<text x="${(p+(i+.5)*(w-2*p)/d.length).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10" fill="var(--ink3)">${l}</text>`).join('');
@@ -4144,14 +4297,18 @@ function vCOverview(){
       ${L(t('Workouts Completed'),nf(DB[c.id].stats.done))}${L(t('Workouts Missed'),nf(DB[c.id].stats.missed))}
       ${L(t('Attendance'),`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`)}
       ${L(t('Current Streak'),`${nf(c.streak)} ${t('wk')}`)}
-      ${L(t('Last Workout'),t(c.last))}${L(t('Next Workout'),t(c.nextW))}${L(t('Avg RPE (4 weeks)'),'7.8')}
+      ${L(t('Last Workout'),t(c.last))}${L(t('Next Workout'),t(c.nextW))}${L(t('Avg RPE (4 weeks)'),(()=>{const r=avgRpe(c.id);return r!=null?nf(r):'—'})())}
+      ${(()=>{ /* v18.61 — REAL recent sessions (from the per-set log). */
+        const hist=wlogOf(c.id);if(!hist.length)return '';
+        return `<div style="margin-top:12px"><div class="muted" style="font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">${t('Session history')}</div>
+        ${hist.slice(0,4).map(l=>`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${esc(t(l.n||''))} · ${fmtD(l.d)}</span><b style="font-size:12.5px">${nf(l.done||0)}/${nf(l.total||0)} ${t('sets')}${l.rpe!=null?` · RPE ${nf(l.rpe)}`:''}</b></div>`).join('')}</div>`})()}
     </div>
   </div>
   <div class="card" style="margin-bottom:14px">
     <div class="card-h"><span class="card-t">${ic('chart',14)} ${t('Progress Overview')}</span><span class="muted" style="font-size:12px">${t('Last 12 weeks')}</span></div>
     <div class="grid2b" style="padding:18px;gap:24px">
       <div><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight')}</b>${wtBadge(c.id)}</div>${wChart(c.id,190)}</div>
-      <div><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Workout Consistency')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${barChart(CONSIST,{h:190,labels:['W1','W3','W5','W7','W9','W11']})}</div>
+      <div><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Workout Consistency')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${(()=>{const s=consistWeeks(c.id);return s?barChart(s,{h:190,labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()})()}</div>
     </div>
   </div>
   <div class="card">
@@ -4257,9 +4414,9 @@ function vBuilder(){
       </div>
     </div>
     <div class="card" style="position:sticky;top:76px">
-      <div class="card-h"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(6)}/12</span></div>
+      <div class="card-h"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(c.week)}/12</span></div>
       <div style="padding:10px">
-        ${Array.from({length:12},(_,i)=>{const w=i+1;const st=w<6?'done':w===6?'cur':'';
+        ${Array.from({length:12},(_,i)=>{const w=i+1;const st=w<c.week?'done':w===c.week?'cur':'';
         return `<div class="wk-it ${st}" data-act="toast" data-msg="${t('Week')} ${nf(w)} — ${t(st==='done'?'completed':st==='cur'?'current':'planned')}">
         ${st==='done'?ic('check',14):`<span style="width:14px;text-align:center;font-size:12px">${st==='cur'?'▶':nf(w)}</span>`}
         <span>${t('Week')} ${nf(w)}</span>${st==='cur'?`<span class="sp"></span><span class="bdg bdg-lime">${t('Current')}</span>`:''}</div>`}).join('')}
@@ -4342,22 +4499,32 @@ function vCCal(){
   </div>`;
 }
 function vCProgress(){
+  /* v18.61 — every chart below is computed from the client's REAL session
+     log (DB[cid].log) or shows an honest empty state. */
+  const cid=S.cid;
+  const cons=consistWeeks(cid);
+  const vol=volumeWeeks(cid);
+  const str=strengthSeries(cid);
+  const prs=prList(cid);
+  const strSeries=str?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
+    .filter(([k])=>str[k]).map(([k,c,l])=>({d:str[k],c,l})):[];
   return `
   <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${['7D','30D','3M','6M','1Y'].map(r=>`<button class="fchip ${S.range===r?'on':''}" data-act="range" data-r="${r}">${t(r)}</button>`).join('')}</div>
   <div class="grid2b" style="margin-bottom:14px">
     <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,210,S.range)}</div>
     <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Strength Progression')}</b>
-      <span class="row" style="gap:10px;font-size:11.5px;font-weight:600;flex-wrap:wrap"><span style="color:var(--accent-deep)">● ${t('Bench')}</span><span style="color:var(--blue)">● ${t('Squat')}</span><span style="color:var(--purple)">● ${t('Deadlift')}</span></span></div>
-      ${multiChart([{d:STRENGTH.bench,c:'var(--accent-deep)'},{d:STRENGTH.squat,c:'var(--blue)'},{d:STRENGTH.dead,c:'var(--purple)'}])}</div>
+      <span class="row" style="gap:10px;font-size:11.5px;font-weight:600;flex-wrap:wrap">${strSeries.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</span></div>
+      ${strSeries.length?multiChart(strSeries.map(({d,c})=>({d,c}))):chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'))}</div>
   </div>
   <div class="grid2b" style="margin-bottom:14px">
-    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Workout Completion')}</b><span class="muted" style="font-size:12px">${t('weekly %')}</span></div>${barChart(CONSIST,{h:190,labels:['W1','W3','W5','W7','W9','W11']})}</div>
-    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Training Volume')}</b><span class="muted" style="font-size:12px">${t('tonnage (t / week)')}</span></div>${barChart(VOLUME,{h:190,c:'var(--blue)',labels:['W1','W3','W5','W7','W9','W11']})}</div>
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Workout Completion')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${cons?barChart(cons,{h:190,labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()}</div>
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Training Volume')}</b><span class="muted" style="font-size:12px">${t('tonnage (t / week)')}</span></div>${vol?barChart(vol,{h:190,c:'var(--blue)',labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()}</div>
   </div>
-  <div class="excards">${PRS.map(p=>`
+  ${prs.length?`<div class="excards">${prs.map(p=>`
     <div class="card" style="padding:18px"><div class="card-t">${ic('zap',14)} ${t(p.n)}</div>
     <div class="row" style="gap:12px;margin-top:10px;flex-wrap:wrap"><span style="font-size:22px;font-weight:800;color:var(--ink3)">${nf(p.f)}</span><span style="color:var(--accent-deep)">${ic('arrowR',18)}</span><span style="font-size:26px;font-weight:800">${nf(p.t)}</span></div>
-    <div class="row" style="margin-top:8px"><span class="bdg bdg-lime">${nf(p.g)}</span><span class="muted" style="font-size:12px">PR · ${t(p.d)}</span></div></div>`).join('')}</div>`;
+    <div class="row" style="margin-top:8px"><span class="bdg bdg-lime">${nf(p.g)}</span><span class="muted" style="font-size:12px">PR · ${t(p.d)}</span></div></div>`).join('')}</div>`
+   :`<div class="card" style="padding:18px">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}`;
 }
 function vMeasure(){
   const c=client(S.cid);
@@ -4471,7 +4638,7 @@ function vNotes(){
   const list=NOTES.filter(n=>!n.arch&&(S.nfilter==='All'||n.type===S.nfilter));
   return `
   <div class="page-h"><div><h1>${t('Notes')}</h1><div class="sub">${t('Open a client workspace to add a note')}</div></div>
-  <button class="btn btn-primary" data-act="toast" data-msg="Open a client workspace to add a note">${ic('plus',15)} ${t('Create Note')}</button></div>
+  <button class="btn btn-primary" data-act="qn-open">${ic('plus',15)} ${t('Create Note')}</button></div>
   <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${types.map(x=>`<button class="fchip ${S.nfilter===x?'on':''}" data-act="nfilter" data-t="${x}">${t(x)}</button>`).join('')}</div>
   <div class="card">${list.length?list.map(n=>noteRow(n,true)).join(''):`<div class="empty" style="margin:14px"><div>${ic('note',24)}</div><b>${t('No results found.')}</b><span class="muted">${t('Try a different filter')}</span></div>`}</div>`;
 }
@@ -4961,7 +5128,7 @@ function bubble(m){
   return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
     ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
     ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
-    ${m.type==='form'?`<div class="vid" data-act="toast" data-msg="Video player (demo)">${ic('play',30)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
+    ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',30)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
     <div>${esc(t(m.body))}</div>
     <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?'<span>✓✓</span>':''}</div>
     ${!me&&m.type!=='checkin'&&!m.noted?`<div style="margin-top:5px"><button class="lnk" style="font-size:11px" data-act="msg-note" data-id="${m.id}">${ic('note',11)} ${t('Save as note')}</button></div>`:''}
@@ -7599,6 +7766,7 @@ function cToday(){
       <div style="margin-bottom:8px"><div class="lbl" style="margin-bottom:4px">${t(lbl)}</div>
       <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
       <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="send-checkin">${t('Send check-in')}</button>
+      <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px" data-act="cmeas-open">${ic('ruler',14)} ${t('Log weight & measurements')}</button>
     </div>`:''}
     ${cf==='all'&&notes.length?`<div class="ccard"><div class="card-t">${ic('note',14)} ${t('Coach notes')}</div>
       ${notes.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line2);${n===notes[notes.length-1]?'border-bottom:none':''}">
@@ -7657,6 +7825,19 @@ function cWorkouts(){
       </div>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
+    ${(()=>{ /* v18.61 — REAL session history: every finished workout with the
+       sets/reps/weight/RPE the client actually did. */
+      const hist=wlogOf(c.id);
+      if(!hist.length)return '';
+      return `<div class="card-t" style="margin:16px 2px 8px">${ic('clock',13)} ${t('Session history')}</div>
+      <div class="ccard" style="padding:6px 14px">${hist.slice(0,12).map(l=>`
+        <div class="row" style="justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)">
+          <div style="min-width:0">
+            <b style="font-size:13.5px">${esc(t(l.n||''))}</b>
+            <div class="muted" style="font-size:11.5px;margin-top:2px">${fmtD(l.d)} · ${nf(l.done||0)}/${nf(l.total||0)} ${t('sets')} · ${nf(Math.round((l.vol||0)/10)/100)} ${t('t')}${l.rpe!=null?` · RPE ${nf(l.rpe)}`:''}</div>
+          </div>
+          <span class="chip" style="flex:none">${ic('check',12)} ${t('completed')}</span>
+        </div>`).join('')}</div>`})()}
   </div>`;
 }
 /* v18.24 — FitFlow month strip: S M T W T F S letter row + date row, today
@@ -7699,7 +7880,10 @@ function cProgress(){
   const tr=RPT.trend(c);
   const fm=RPT.form(c);
   const range=S.prgRange||'Week';
-  const cons=range==='Week'?CONSIST.slice(-7):range==='Month'?CONSIST.slice(-12):CONSIST;
+  /* v18.61 — real data: Week = last 7 days (did I train?), Day = today,
+     Month = last 12 weeks of consistency vs my weekly target. */
+  const daily=range!=='Month'?dailyTrain(c.id,range==='Day'?1:7):null;
+  const cons=range==='Month'?consistWeeks(c.id,12):null;
   return `<div class="cbody">
     <div class="ccard" style="display:flex;align-items:center;gap:14px;padding:16px">
       <div style="flex:1;min-width:0">
@@ -7727,7 +7911,7 @@ function cProgress(){
         <b style="font-size:13.5px">${t('Workout')}</b>
         <div class="seg">${['Week','Day','Month'].map(r=>`<button class="${range===r?'on':''}" data-act="prg-range" data-r="${r}">${t(r)}</button>`).join('')}</div>
       </div>
-      ${barChart(cons,{h:150,labels:range==='Week'?['Mon','Tue','Wed','Thu','Fri','Sat','Sun']:undefined,c:'var(--accent)'})}
+      ${daily?barChart(daily.d,{h:150,labels:daily.labs,c:'var(--accent)'}):cons?barChart(cons,{h:150,labels:['W1','W3','W5','W7','W9','W11'],c:'var(--accent)'}):chartEmpty(t('Complete a workout to fill this chart'))}
       <div class="row" style="gap:10px;margin-top:8px;font-size:11px;color:var(--ink2)">
         <span>${t('Workout completion')}: <b style="color:var(--ink)">${ad.pct!=null?nf(ad.pct)+'%':'—'}</b></span>
         <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
@@ -7749,16 +7933,23 @@ function cProgress(){
     </div>
     ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
       <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
-    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13.5px">${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,170)}</div>
+    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13.5px">${t('Weight Progress')} ${wtBadge(S.cid)}</b>
+      <button class="btn btn-outline btn-sm" data-act="cmeas-open">${ic('ruler',13)} ${t('Weekly check-in')}</button></div>${wChart(S.cid,170)}</div>
     <div class="ccard"><b style="font-size:13.5px">${t('Strength Progression')}</b>
-      <div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap"><span style="color:var(--accent-deep)">● ${t('Bench')}</span><span style="color:var(--blue)">● ${t('Squat')}</span><span style="color:var(--purple)">● ${t('Deadlift')}</span></div>
-      ${multiChart([{d:STRENGTH.bench,c:'var(--accent-deep)'},{d:STRENGTH.squat,c:'var(--blue)'},{d:STRENGTH.dead,c:'var(--purple)'}])}</div>
-    <div class="card-t" style="margin-top:4px">${ic('star',13)} ${t('New PR achieved')}</div>
-    <div class="row" style="gap:8px;flex-wrap:wrap">${PRS.map(p=>`
+      ${(()=>{const st=strengthSeries(c.id);
+        const ss=st?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
+          .filter(([k])=>st[k]).map(([k,col,l])=>({d:st[k],c:col,l})):[];
+        if(!ss.length)return chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'));
+        return `<div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap">${ss.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</div>
+      ${multiChart(ss.map(({d,c:col})=>({d,c:col})))}`})()}</div>
+    ${(()=>{const prs=prList(c.id);
+      if(!prs.length)return `<div class="ccard">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`;
+      return `<div class="card-t" style="margin-top:4px">${ic('star',13)} ${t('New PR achieved')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">${prs.map(p=>`
       <div class="ccard" style="flex:1;min-width:100px;padding:12px;text-align:center"><div style="color:var(--accent);display:flex;justify-content:center">${ic('star',16)}</div>
       <div class="muted" style="font-size:10.5px;font-weight:700;margin-top:4px">${t(p.n)}</div>
       <div style="font-weight:800;font-size:16px;margin-top:2px">${nf(p.t)}</div>
-      <span class="bdg bdg-lime" style="margin-top:6px;font-size:10px">${nf(p.g)}</span></div>`).join('')}</div>
+      <span class="bdg bdg-lime" style="margin-top:6px;font-size:10px">${nf(p.g)}</span></div>`).join('')}</div>`})()}
     ${PREFS.priv.photos?`<div class="ccard"><div class="card-t" style="margin-bottom:8px">${ic('camera',13)} ${t('My Photos')}</div>
       ${photos.length?`<div class="row" style="gap:8px;flex-wrap:wrap">${[...photos].sort((a,b)=>b.id-a.id).slice(0,4).map(p=>`
         <div style="width:calc(25% - 6px);aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid #2E333B"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`
@@ -7997,7 +8188,7 @@ function cChat(){
         ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
         ${m.type==='reminder'?`<span class="ctx">⏰ ${t('Auto reminder')}</span>`:''}
         ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
-        ${m.type==='form'?`<div class="vid" data-act="toast" data-msg="Video player (demo)">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
+        ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
         <div>${esc(t(m.body))}</div>
         <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?'<span>✓✓</span>':''}</div>
       </div>`}).join('')
@@ -8376,8 +8567,11 @@ function measModal(){
    (weight/bodyfat/height). requireWeight=false lets the AI button proceed with
    whatever was entered (or nothing) and just analyze. */
 function saveMeasurementFromModal(requireWeight){
-  const cid=+$('ms-client').value;const c=CLIENTS.find(x=>x.id===cid);if(!c)return null;
-  const d=$('ms-date').value||'2026-07-08';
+  /* v18.61 — the CLIENT portal has no client <select> (it's always S.cid),
+     so the select is optional now. */
+  const sel=$('ms-client');
+  const cid=sel?+sel.value:S.cid;const c=CLIENTS.find(x=>x.id===cid);if(!c)return null;
+  const d=$('ms-date').value||isoToday();
   const cvt=id=>{const raw=$('ms-'+id).value;if(raw==='')return null;const n=parseFloat(raw);
     return id==='w'?wToKg(n):(id==='bf'?n:lToCm(n))};
   const e={d,w:cvt('w'),ht:cvt('ht'),bf:cvt('bf'),ch:cvt('ch'),wa:cvt('wa'),hi:cvt('hi'),ar:cvt('ar'),th:cvt('th'),ca:cvt('ca')};
@@ -8388,8 +8582,34 @@ function saveMeasurementFromModal(requireWeight){
   if(e.w!=null)c.weight=e.w;
   if(e.bf!=null)c.bf=e.bf;
   if(e.ht!=null)c.h=e.ht;
-  ACTIVITY.unshift({w:'Just now',i:'ruler',h:lang==='fa'?`<b>شما</b> برای <b>${t(c.name)}</b> اندازه‌گیری ثبت کردید`:`<b>You</b> logged a measurement for <b>${t(c.name)}</b>`});
+  /* v18.61 — ACTIVITY is the coach's feed; a client device logging their own
+     check-in shouldn't claim "You logged…" on the coach's dashboard. */
+  if(S.role!=='client')ACTIVITY.unshift({w:'Just now',i:'ruler',h:lang==='fa'?`<b>شما</b> برای <b>${t(c.name)}</b> اندازه‌گیری ثبت کردید`:`<b>You</b> logged a measurement for <b>${t(c.name)}</b>`});
   return c;
+}
+/* v18.61 — CLIENT weekly check-in: the same measurement form as the coach
+   (fixed to the logged-in client, no client picker). Saving writes the real
+   measurement, syncs the profile AND sends a check-in message so the coach
+   is notified (message thread + OS push via the data.mjs MSGS trigger). */
+function clientMeasModal(){
+  const c=client(S.cid);
+  const m=lastM(c.id);
+  const U=PREFS.units==='Imperial';
+  const fld=(id,l,u,fb)=>{const v=(m&&m[id]!=null)?m[id]:(fb!=null?fb:null);
+    const dv=v==null?'':(id==='w'?uw(v):(id==='bf'?v:uc(v)));
+    return `<div class="field"><label class="lbl">${t(l)} (${u})</label><input class="inp" type="number" step="0.1" id="ms-${id}" value="${dv}"></div>`};
+  openModal(`
+  <div class="modal-h"><h3>${t('Weekly check-in')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Log weight & measurements')} — ${t('your coach sees it instantly')}</div>
+    <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" type="date" id="ms-date" value="${isoToday()}"></div>
+    <div class="fgrid">
+      ${fld('w','Weight',U?'lb':'kg')}${fld('ht','Height',U?'in':'cm',c.h)}${fld('bf','Body Fat','%')}${fld('ch','Chest',U?'in':'cm')}
+      ${fld('wa','Waist',U?'in':'cm')}${fld('hi','Hips',U?'in':'cm')}${fld('ar','Arm',U?'in':'cm')}${fld('th','Thigh',U?'in':'cm')}${fld('ca','Calf',U?'in':'cm')}
+    </div>
+    ${m?`<div class="muted" style="font-size:12px">${t('Last measurement')}: ${fmtD(m.d)} — ${t('Weight')} ${uwS(m.w)}${m.wa!=null?` · ${t('Waist')} ${ucS(m.wa)}`:''}</div>`:`<div class="muted" style="font-size:12px">${t('No measurements yet')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="cmeas-save">${ic('check',15)} ${t('Save check-in')}</button></div>`)
 }
 function quickNoteModal(pre,nt){
   openModal(`
@@ -9056,15 +9276,23 @@ document.addEventListener('click',e=>{
     case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
     case 'open-player':{const w=(DB[S.cid].workouts||[]).find(x=>x.id===el.dataset.wid);if(!w)break;
       const keys=[];w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++)keys.push(ei+'-'+si)});
-      S.player={wid:w.id,checked:new Set(w.status==='completed'?keys:[]),rpe:{},rest:0,restTotal:1};
+      /* v18.61 — resume REAL progress: ticks/RPE saved on the workout survive
+         close/reopen and page reloads (falls back to 'all checked' for old
+         completed workouts that predate persisted state). */
+      const ck=(Array.isArray(w.ck)&&w.ck.length)?w.ck.filter(k=>keys.includes(k)):(w.status==='completed'?keys:[]);
+      S.player={wid:w.id,checked:new Set(ck),rpe:{...(w.rpeM||{})},rest:0,restTotal:1};
       render();break}
     case 'togset':{if(!S.player)break;const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
       if(w&&w.status==='completed')break;
       const k=el.dataset.k;
       if(S.player.checked.has(k))S.player.checked.delete(k);
       else{S.player.checked.add(k);startRest(+el.dataset.rest)}
+      if(w){w.ck=[...S.player.checked];w.rpeM={...S.player.rpe}} // v18.61 — persist ticks (render→saveData below)
       render();break}
-    case 'rpe':{if(!S.player)break;S.player.rpe[el.dataset.k]=+el.dataset.v;render();break}
+    case 'rpe':{if(!S.player)break;S.player.rpe[el.dataset.k]=+el.dataset.v;
+      const wR=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===S.player.wid);
+      if(wR)wR.rpeM={...S.player.rpe}; // v18.61 — persist RPE
+      render();break}
     case 'skiprest':if(S.player){S.player.rest=0;clearInterval(restIv);render()}break;
     case 'close-player':S.player=null;clearInterval(restIv);render();break;
     case 'finish-workout':{
@@ -9072,8 +9300,23 @@ document.addEventListener('click',e=>{
       const total=w.exercises.reduce((a,e)=>a+e.sets,0);
       w.status='completed';w.setsDone=`${S.player.checked.size}/${total}`;
       w.doneAt=new Date().toISOString(); // v18.38 — the day-streak engine needs the completion date
+      /* v18.61 — THE REAL HISTORY: record every checked set with the weight,
+         reps and RPE the client actually used, so charts/PRs/consistency are
+         computed from real training instead of hardcoded demo arrays. */
+      {const sets=[];
+        w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++){const k=ei+'-'+si;
+          if(S.player.checked.has(k))sets.push({x:EXERCISES[ex.ex]?EXERCISES[ex.ex].n:'',s:si+1,kg:+ex.kg||0,reps:+ex.reps||0,rpe:S.player.rpe[k]||null})}});
+        const rpes=sets.map(s=>+s.rpe).filter(r=>r>0);
+        const bucket=DB[S.cid];bucket.log=bucket.log||[];
+        bucket.log.unshift({id:uid(),wid:w.id,n:w.name,d:ymdOf(new Date()),at:Date.now(),
+          sets,done:sets.length,total,vol:sets.reduce((a,s)=>a+s.kg*s.reps,0),
+          rpe:rpes.length?Math.round(rpes.reduce((a,b)=>a+b,0)/rpes.length*10)/10:null});
+        if(bucket.log.length>150)bucket.log.length=150; // payload cap
+        w.ck=[...S.player.checked];w.rpeM={...S.player.rpe};
+      }
       DB[S.cid].stats.done=(DB[S.cid].stats.done||0)+1;
       const cNow=client(S.cid);
+      cNow.last='Just now'; // real "last workout" instead of the frozen demo label
       /* v18.38 — gamification: consecutive-day streak, points, badges. */
       const __today=ymdOf(new Date()),__yst=ymdOf(new Date(Date.now()-864e5));
       if(cNow.lastDone!==__today){cNow.dayStreak=cNow.lastDone===__yst?(cNow.dayStreak||0)+1:1;cNow.lastDone=__today}
@@ -9092,7 +9335,7 @@ document.addEventListener('click',e=>{
       // coach shares it and the student's device binds straight to this profile.
       // nid = optional national ID (contract/insurance paperwork only).
       const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined),since:isoToday()};
-      CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[]};
+      CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
       closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
       clientCodeModal(nc);break}
@@ -9212,6 +9455,22 @@ document.addEventListener('click',e=>{
       closeModal();render();toast('Duplicated ✓');break}
     case 'ics':icsExport();break;
     case 'm-add':measModal();break;
+    /* v18.61 — client weekly check-in: save the measurement, then send the
+       coach a check-in message + notification (same path send-checkin uses). */
+    case 'cmeas-open':clientMeasModal();break;
+    case 'cmeas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
+      const lm=lastM(c.id);
+      const bits=[`${t('Weight')} ${uwS(lm&&lm.w)}`];
+      if(lm&&lm.bf!=null)bits.push(`${t('Body Fat')} ${nf(lm.bf)}%`);
+      if(lm&&lm.wa!=null)bits.push(`${t('Waist')} ${ucS(lm.wa)}`);
+      if(lm&&lm.ch!=null)bits.push(`${t('Chest')} ${ucS(lm.ch)}`);
+      const body=`${t('Weekly check-in')} · ${bits.join(' · ')}`;
+      MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
+      NOTES.unshift({id:uid(),client:c.name,from:'client',shared:true,type:'General',title:`${t('Weekly check-in')} — ${t(c.name)}`,date:'Just now',body,pin:false,arch:false});
+      gamAward(c,'checkin');
+      NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+      closeModal();render();
+      toast(t('Check-in saved — your coach was notified')+' · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
     case 'meas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       closeModal();
       if(isNarrow()){S.mClient=c.id;if(S.mview!=='client')S.mview='client'}
