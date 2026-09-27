@@ -487,6 +487,38 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .mday.click:hover{background:var(--row-h)}
 .mdots{display:flex;gap:3px;margin-top:8px;flex-wrap:wrap}
 .mdot{width:7px;height:7px;border-radius:50%}
+/* v18.63 — client calendar: week-plan rows (tap → add/assign workout per day)
+   + real month-grid markers for the same split. */
+.wprow{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line2);border-radius:12px;background:var(--surface);cursor:pointer;transition:.12s;margin-bottom:8px}
+.wprow:hover{border-color:var(--acc-line);background:var(--row-h)}
+.wprow.today{border-color:var(--accent);background:var(--accent-soft)}
+.wp-d{display:flex;flex-direction:column;align-items:center;min-width:46px;flex:none}
+.wp-d b{font-size:12px;color:var(--ink2)}
+.wprow.today .wp-d b{color:var(--accent-ink)}
+.wp-d small{font-size:11px;color:var(--ink3);font-weight:700}
+.wp-w{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-w i{color:var(--green);display:inline-flex;flex:none}
+.wp-r{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink3)}
+.wp-a{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:800;color:var(--accent-deep)}
+.wp-s{display:flex;gap:4px;align-items:center;margin-inline-start:auto;flex:none}
+.wp-c{color:var(--ink3);flex:none;display:flex}
+.mcal.compact .mday{min-height:74px;padding:7px 8px}
+.md-w{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:800;color:var(--accent-deep);margin-top:5px;min-width:0}
+.md-w span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.md-r{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--ink3);margin-top:5px}
+.mday.off{opacity:.42}
+/* v18.63 — client calendar week-plan rows (tap → assign/create workout per day). */
+.calweek{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(126px,1fr);gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px}
+.calday{display:flex;flex-direction:column;gap:5px;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer;transition:.12s;min-height:98px}
+.calday:hover{border-color:var(--acc-line);transform:translateY(-1px)}
+.calday.today{border-color:var(--accent);background:var(--accent-soft)}
+.calday-h{font-size:10.5px;font-weight:800;letter-spacing:.04em;color:var(--ink3)}
+.calday.today .calday-h{color:var(--accent-ink)}
+.calday-n{font-size:17px;font-weight:800;color:var(--ink)}
+.calday-w{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;color:var(--accent-deep);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calday-r{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ink3)}
+.calday-a{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:800;color:var(--accent-deep)}
+.calday-s{display:flex;gap:3px;margin-top:auto}
 .exb{display:flex;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:10px;box-shadow:var(--sh-1);transition:border-color .15s,box-shadow .15s,transform .15s}
 /* v18.11 tier-3 — builder blocks feel like cards: lime edge + numbered lime badge + hover lift */
 .exb{border-inline-start:3px solid var(--acc-line)}
@@ -982,6 +1014,10 @@ html[lang="fa"] .td-cal-m{letter-spacing:0;text-transform:none}
 .td-dn{font-size:13px;font-weight:800;color:var(--ink)}
 .td-day.on .td-dl{color:var(--pf-ac-ink);opacity:.75}
 .td-day.on .td-dn{color:var(--pf-ac-ink)}
+/* v18.62 — week-split marker under each date in the client strip:
+   dumbbell = training day, moon = rest day, nothing = not set. */
+.td-mk{display:flex;align-items:center;justify-content:center;height:11px;color:var(--accent)}
+.td-mk.rest{color:var(--ink3);opacity:.75}
 .td-mom{position:relative;overflow:hidden}
 .td-glow{position:absolute;top:-70px;right:-60px;width:220px;height:220px;border-radius:50%;background:var(--pf-ac);opacity:.1;filter:blur(60px);pointer-events:none}
 .td-mom-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;position:relative;z-index:1}
@@ -1396,6 +1432,7 @@ const FA={
 'Today · 08:20':'امروز · ۰۸:۲۰','Training':'تمرینی','General':'عمومی','Injury / Restriction':'آسیب / محدودیت','General Note':'یادداشت عمومی','Training Note':'یادداشت تمرینی','Progress Note':'یادداشت پیشرفت','Injury / Restriction Note':'یادداشت آسیب / محدودیت','Nutrition Note':'یادداشت تغذیه',
 'New Note':'یادداشت جدید','Title':'عنوان','Write your note…':'یادداشتت را بنویس…','Add Note':'ثبت یادداشت','Untitled note':'یادداشت بدون عنوان','Note added':'یادداشت ثبت شد','Note archived':'یادداشت آرشیو شد','Open a client workspace to add a note':'برای ثبت یادداشت، فضای کاری یک شاگرد را باز کن','Visible to client':'قابل مشاهده توسط شاگرد','Private':'خصوصی',
 'Workout Name':'نام تمرین','Training Day':'روز تمرین','Rest Day':'روز استراحت','Duration':'مدت','Coach Notes':'یادداشت مربی','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
+'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی',
 'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
 'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
 'video & instructions on each card':'ویدیو و توضیحات برای هر حرکت','Create Custom Exercise':'ساخت حرکت سفارشی','Custom exercise form opened':'فرم حرکت سفارشی باز شد',
@@ -1872,6 +1909,128 @@ function avgRpe(cid,days=28){
 }
 /* Honest empty state instead of fake chart data. */
 const chartEmpty=msg=>`<div class="empty">${ic('chart',22)}<b>${t('No workout history yet')}</b><span class="muted">${msg||t('Complete a workout — your progress charts will build themselves')}</span></div>`;
+/* ================= v18.62 — WEEK SPLIT (برنامه هفتگی به تفکیک روزها) =================
+   DB[cid].split = 7 slots, index = weekday 0=Mon … 6=Sun (same indexing as
+   TODAY / dayDate / WDN, so "today" is always split[TODAY]).
+   Slot = {t:'w', w:<workout id>} — training day bound to a saved workout
+        | {t:'rest'}            — explicit rest day
+        | null                  — day not set yet.
+   The split is the scheduling TRUTH: the client Today card, the week strip
+   markers and the coach's Week Split panel all read it. w.day mirrors the
+   slot (kept in sync on every assignment) so older displays stay correct.
+   Rides the DB bucket → no payload/backend change; cloudMerge adopts it. */
+const FULLDAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const splitBlank=()=>[null,null,null,null,null,null,null];
+/* Backfill: build a split from the workouts' own day field (legacy data and
+   any workspace saved before the split existed) — same order every device. */
+const splitFromWorkouts=db=>{
+  const sp=splitBlank();
+  ((db&&db.workouts)||[]).forEach(w=>{const i=FULLDAYS.indexOf(w&&w.day);if(i>=0&&!sp[i])sp[i]={t:'w',w:String(w.id)}});
+  return sp;
+};
+const splitOf=cid=>{const db=DB[cid]||{};return Array.isArray(db.split)?db.split:splitFromWorkouts(db)};
+const splitW=(cid,s)=>s&&s.t==='w'?((DB[cid]||{}).workouts||[]).find(x=>String(x.id)===String(s.w))||null:null;
+/* v18.62 — "completed" is scoped to the CURRENT week: the split is a
+   repeating weekly template, so last week's completion must not block this
+   week's round. wDone(w) = finished within Mon…Sun of this week (or a legacy
+   completion that predates doneAt — kept as done to preserve old data).
+   Status stays untouched (stats/challenges keep their cumulative meaning);
+   only display and the player consult wDone, which also lets a stale-completed
+   workout start a FRESH session instead of a read-only summary. */
+const wDone=w=>!!(w&&w.status==='completed'&&(!w.doneAt||(Date.parse(w.doneAt)>=+__MON&&Date.parse(w.doneAt)<+__MON+7*864e5)));
+/* Session-dot colors shared by the client calendar week rows / month grid / legend. */
+const SESS_DOT={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
+/* What the client should see TODAY: day plan first (train = that workout even
+   if already completed → summary; rest = rest card), legacy fallback (first
+   pending workout) only when today's slot carries no decision. */
+function todaysPlan(cid){
+  const db=DB[cid]||{};
+  const sp=splitOf(cid);
+  const s=sp[TODAY];
+  if(s&&s.t==='rest')return{w:null,rest:true,sp};
+  if(s&&s.t==='w'){const w=splitW(cid,s);if(w)return{w,rest:false,sp}}
+  /* v18.62 — day-aware: an unset slot means no workout today (the old
+     "first pending workout" fallback showed Monday's plan every weekday).
+     Narrow exception: a workspace whose split is ENTIRELY unset (never
+     derived / no day assigned anywhere) still falls back, so nobody's
+     pending workout becomes invisible mid-transition. */
+  if(!sp.some(Boolean)){const w=(db.workouts||[]).find(x=>x.status==='assigned');if(w)return{w,rest:false,sp}}
+  return{w:null,rest:false,sp};
+}
+/* Shared 7-row list. o.edit → coach: every row opens the assign modal;
+   client: tapping a training row opens that workout's player. */
+function splitRows(cid,o){
+  const opt=o||{};const db=DB[cid]||{};const sp=splitOf(cid);
+  const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6]; // FA week: ش ی د س چ پ ج
+  return order.map(i=>{
+    const s=sp[i];const w=splitW(cid,s);const isT=i===TODAY;
+    let right;
+    if(s&&s.t==='rest')right=`<span class="bdg bdg-gray">${ic('moon',11)} ${t('Rest day')}</span>`;
+    else if(w)right=`<b style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(w.name))}</b>${wDone(w)?`<span class="bdg bdg-lime" style="font-size:9.5px;flex:none">${ic('check',10)}</span>`:''}`;
+    else right=`<span class="muted" style="opacity:.7">—</span>`;
+    const act=opt.edit?`data-act="split-day" data-i="${i}"`:(w?`data-act="open-player" data-wid="${esc(String(w.id))}"`:'');
+    const d=dayDate(i,0);
+    const st=(isT?'background:var(--accent-soft);color:var(--accent-ink);':'')+(act?';cursor:pointer':'');
+    const cls=opt.cls||'set-row';
+    const dim=isT?'color:inherit;opacity:.8;':'';
+    return `<div class="${cls}" ${act} style="${st}justify-content:space-between;gap:8px">
+      <span class="row" style="gap:9px;min-width:0"><b style="flex:none;width:36px">${t(WDN[i])}</b><span class="muted" style="font-size:11px;${dim}">${fmtNum(d)}</span></span>
+      <span class="row" style="gap:6px;min-width:0;justify-content:flex-end;flex:1">${right}${opt.edit?ic('chevR',13):''}</span>
+    </div>`}).join('');
+}
+/* Assign modal for one day of the split: pick a saved workout, mark rest,
+   or clear the day. */
+/* v18.63 — dISO = the specific clicked date (month cell); without it the
+   date of THIS week's occurrence. The badge makes the recurring model
+   explicit: assigning here repeats every week on that weekday. */
+function splitDayModal(i,dISO){
+  const cid=S.cid;const c=client(cid);const db=DB[cid]||{};
+  const sp=splitOf(cid);const s=sp[i];const curW=splitW(cid,s);
+  const ws=(db.workouts||[]);
+  const now=curW?esc(t(curW.name)):(s&&s.t==='rest'?t('Rest day'):t('No workout assigned'));
+  openModal(`
+  <div class="modal-h"><h3>${t('Choose a workout for')} ${t(FULLDAYS[i])}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="muted" style="font-size:12px">${fmtFullDate(dISO?pd(dISO):dayDate(i,0))}</span><span class="bdg bdg-gray" style="font-size:10px">${t('Every week')}</span></div>
+    <div class="row" style="gap:8px;margin-bottom:12px;padding:9px 12px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--acc-line)">${ic('calendar',14)}<b style="font-size:12.5px;color:var(--accent-ink)">${now}</b></div>
+    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" data-act="cal-new" data-i="${i}">${ic('plus',14)} ${t('New workout for this day')}</button>
+    <div class="fs-t">${t('Saved workouts')}</div>
+    ${ws.length?ws.map(w=>{const on=curW&&String(curW.id)===String(w.id);
+      return `<div class="set-row" data-act="split-assign" data-i="${i}" data-w="${esc(String(w.id))}" style="cursor:pointer;${on?'background:var(--accent-soft);':''}${on?'padding:12px 10px;border-radius:10px':''}">
+        <span class="row" style="gap:10px;min-width:0">${ic('dumbbell',15)}<span style="min-width:0"><b style="font-size:13px">${esc(t(w.name))}</b><span class="muted" style="display:block;font-size:11px">${t(w.day)} · ${t(wDone(w)?'Completed':w.status==='assigned'?'Pending':'planned')}</span></span></span>
+        ${on?`<span style="color:var(--accent-deep);flex:none">${ic('check',16)}</span>`:`<span style="flex:none;color:var(--ink3)">${ic('chevR',14)}</span>`}
+      </div>`}).join('')
+     :`<div class="muted" style="padding:16px;text-align:center;font-size:12.5px">${t('No workouts yet — build one first')}</div>`}
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="split-clear" data-i="${i}" style="color:var(--red)">${t('Clear day')}</button>
+    <span class="sp"></span>
+    <button class="btn btn-outline" data-act="split-rest" data-i="${i}">${ic('moon',14)} ${t('Rest day')}</button>
+    <button class="btn btn-primary" data-act="modal-x">${t('Done')}</button>
+  </div>`);
+}
+/* v18.63 — "Add workout" day picker: 7 rows (real dates of THIS week) with
+   the current plan; tap a row → splitDayModal for that day. Used by the
+   desktop calendar header AND the coach-mobile client view. */
+function weekPlanModal(kind){
+  const cid=S.cid;const sp=splitOf(cid);const db=DB[cid]||{};
+  openModal(`
+  <div class="modal-h"><h3>${kind==='add'?t('Add workout to which day?'):t('This week plan')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${[0,1,2,3,4,5,6].map(i=>{const s=sp[i],w=splitW(cid,s);const d=dayDate(i,0);
+      const sd=(db.sessions||[]).filter(x=>x.day===i);
+      return `<div class="wprow ${i===TODAY?'today':''}" data-act="split-day" data-i="${i}">
+        <span class="wp-d"><b>${t(WDN[i])}</b><small>${fmtNum(d)}</small></span>
+        ${s&&s.t==='rest'?`<span class="wp-r">${ic('moon',13)} ${t('Rest day')}</span>`
+          :w?`<span class="wp-w">${ic('dumbbell',13)} ${esc(t(w.name))}${wDone(w)?`<i>${ic('check',12)}</i>`:''}</span>`
+          :`<span class="wp-a">${ic('plus',13)} ${t('Add workout')}</span>`}
+        <span class="wp-s">${sd.slice(0,4).map(x=>`<span class="mdot" style="background:${SESS_DOT[x.type]||SESS_DOT.session}"></span>`).join('')}</span>
+        <span class="wp-c">${ic('chevR',15)}</span>
+      </div>`;}).join('')}
+    <div class="muted" style="font-size:11.5px;text-align:center;margin-top:8px">${t('Tap a day to assign a workout or rest')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
 /* ================= JALALI (SHAMSI) CALENDAR =================
    Standard 33-year cycle algorithm (jalaali-js, MIT) — accurate 1178–1633 AP. */
 const JMONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
@@ -1949,8 +2108,8 @@ function fmtShortDate(d){
   return d.toLocaleDateString(dLoc());
 }
 /* Real month grid (35 or 42 cells) for the month containing the displayed week */
-function monthCells(){
-  const base=dayDate(0);let first,len,pm;
+function monthCells(base0){
+  const base=base0||dayDate(0);let first,len,pm;
   if(isJal()){
     const j=jOf(base);len=jMonthLen(j.jy,j.jm);
     const g=toGregorian(j.jy,j.jm,1);first=new Date(g.gy,g.gm-1,g.gd);
@@ -2011,8 +2170,9 @@ function attentionList(){
   const ACT=CLIENTS.filter(c=>c.status!=='Archived');
   threads().filter(x=>x.prio).forEach(x=>items.push({name:x.name,why:'Form check',d:t('Waiting on your reply'),icon:'camera',bt:'bdg-lime',act:'msg'}));
   threads().filter(x=>x.needs&&!x.prio).forEach(x=>{const pv=t(x.last.body);items.push({name:x.name,why:'Waiting on your reply',d:pv.length>60?pv.slice(0,60)+'…':pv,icon:'mail',bt:'bdg-blue',act:'msg'})});
-  ACT.forEach(c=>{const w=(DB[c.id]?.workouts||[]).find(x=>x.status==='assigned');
-    if(w)items.push({name:c.name,why:'Workout awaiting client',d:`${esc(w.name)} · ${t(w.day)}`,icon:'dumbbell',bt:'bdg-lime',act:'client',cid:c.id})});
+  ACT.forEach(c=>{ /* v18.62 — "awaiting" = today's planned workout is still pending */
+    const w=todaysPlan(c.id).w;
+    if(w&&!wDone(w))items.push({name:c.name,why:'Workout awaiting client',d:`${esc(w.name)} · ${t(w.day)}`,icon:'dumbbell',bt:'bdg-lime',act:'client',cid:c.id})});
   ACT.filter(c=>c.week>=11&&c.status==='Active').forEach(c=>items.push({name:c.name,why:'Program ending soon',d:`${t(c.prog)} — ${t('Week')} ${nf(c.week)} ${t('of')} 12`,icon:'chart',bt:'bdg-amber',act:'client',cid:c.id}));
   ACT.filter(c=>attCnt(c.name).m>=1).forEach(c=>{const m=attCnt(c.name).m;
     items.push({name:c.name,why:'Missed session',d:`${nf(m)} ${t('Missed session')} · ${t('Last Workout')}: ${t(c.last)}`,icon:'x',bt:'bdg-red',act:'client',cid:c.id})});
@@ -2210,12 +2370,23 @@ function syncCustomEx(){
 }
 const DB={};
 CLIENTS.forEach(c=>{
-  DB[c.id]={workouts:[],sessions:[],stats:{done:c.done,missed:c.missed},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id)};
+  DB[c.id]={workouts:[],sessions:[],stats:{done:c.done,missed:c.missed},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id),split:splitFromWorkouts({workouts:[]})};
   EVENTS.forEach(e=>{if(e.client===c.name)DB[c.id].sessions.push({start:e.start,dur:e.dur,label:e.label,type:e.type,day:e.day,att:e.att})});
 });
 DB[1].workouts=[
- {id:'w-seed2',name:'Pull A',day:'Thursday',dur:'55 min',exercises:BUILDER.slice(3,6).map(b=>({...b})),status:'completed',week:6},
+ {id:'w-seed2',name:'Pull A',day:'Thursday',dur:'55 min',exercises:BUILDER.slice(3,6).map(b=>({...b})),status:'completed',week:6,
+  // v18.62 — completion stamped INSIDE the current week so wDone() treats it
+  // as "finished this week" (and next Thursday it re-opens as a fresh session)
+  doneAt:new Date(Math.min(+__MON+4*864e5,Date.now())).toISOString()},
  {id:'w-seed1',name:'Push A',day:'Monday',dur:'60 min',exercises:BUILDER.map(b=>({...b})),status:'assigned',week:6}];
+/* v18.62 — demo week split: Mon = Push A, Thu = Pull A, Sat = Leg day,
+   Tue/Wed/Fri rest, Sun unset — exactly the "تفکیک روزها" flow a coach uses. */
+DB[1].split=[{t:'w',w:'w-seed1'},{t:'rest'},{t:'rest'},{t:'w',w:'w-seed2'},{t:'rest'},{t:'w',w:'w-seed3'},{t:'rest'}];
+DB[1].workouts.push({id:'w-seed3',name:'Leg A',day:'Saturday',dur:'65 min',status:'assigned',week:6,
+  exercises:[{ex:15,sets:5,reps:5,kg:100,rest:180,rpe:'RPE 8',rir:'RIR 2',tempo:'3-1-1-0',note:'Full depth, drive through midfoot'},
+             {ex:16,sets:3,reps:10,kg:140,rest:120,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''},
+             {ex:18,sets:3,reps:8,kg:90,rest:120,rpe:'RPE 9',rir:'RIR 1',tempo:'2-0-1-0',note:'Squeeze at lockout'},
+             {ex:19,sets:3,reps:12,kg:40,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:''}]});
 function syncClientSessions(name){
   const cc=CLIENTS.find(c=>c.name===name);if(!cc)return;
   DB[cc.id].sessions=EVENTS.filter(x=>x.client===name).map(x=>({start:x.start,dur:x.dur,label:x.label,type:x.type,day:x.day,att:x.att}));
@@ -2319,7 +2490,9 @@ function loadData(){
       // v18.61 — workspaces saved before the session log existed: backfill
       // (demo personas get their seeded history, real clients start empty).
       if(!Array.isArray(DB[k].log))DB[k].log=lseeds(+k);
-      DB[k].log.sort((a,b)=>(b.at||0)-(a.at||0));}); // newest first, everywhere
+      DB[k].log.sort((a,b)=>(b.at||0)-(a.at||0)); // newest first, everywhere
+      // v18.62 — week split backfill from the workouts' day field (legacy).
+      if(!Array.isArray(DB[k].split))DB[k].split=splitFromWorkouts(DB[k]);});
     scrubNames(); // stored payload may predate the escaping fix — strip markup from names
     return true;
   }catch(e){return false}
@@ -2906,6 +3079,10 @@ function cloudMerge(d,adopt){
     });
     if(L.measures&&L.measures.length)L.measures.sort((a,b)=>a.d<b.d?-1:1);
     if(R.stats){if(!L.stats)L.stats={done:0,missed:0};['done','missed'].forEach(f=>{if((R.stats[f]||0)>(L.stats[f]||0)){L.stats[f]=R.stats[f];ch=true}})}
+    // v18.62 — week split: content compare (the plan is small), remote wins on pull
+    if(Array.isArray(R.split)&&JSON.stringify(R.split)!==JSON.stringify(L.split||null)){
+      if(take||!Array.isArray(L.split)){L.split=R.split;ch=true}
+    }
     if(!L.nutrition&&R.nutrition){L.nutrition=R.nutrition;ch=true}
     // progress photos — union by id (an existing bucket used to NEVER merge
     // remote photos, making them effectively single-device)
@@ -3080,7 +3257,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 }
 
 /* ================= STATE & HELPERS ================= */
-const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,
+const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
@@ -3154,7 +3331,7 @@ const client=id=>{
   if(c)return c;
   // Empty roster: hand back the placeholder and make sure its DB bucket exists
   // so the `DB[c.id].x` accesses in the per-client views cannot throw.
-  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
   return NO_CLIENT;
 };
 /* DB buckets are keyed by client id. The placeholder bucket (id 0) and any
@@ -4204,7 +4381,7 @@ function vClients(){
       </div>
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(c.goal)}</span>
-        ${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
+        ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
         ${c.streak?`<span class="chip">🔥 ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
@@ -4221,7 +4398,7 @@ function vClients(){
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
       <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
       <td class="hide-md">${c.streak||c.dayStreak?`🔥 ${esc(streakLbl(c))}`:'—'}</td>
-      <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned')?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
+      <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
@@ -4234,7 +4411,7 @@ function vWorkspace(){
   const c=client(S.cid);
   const np=nPlanOf(c.name);
   const tabs=[['overview','Overview'],['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
-  const assigned=(DB[c.id]?.workouts||[]).filter(w=>w.status==='assigned');
+  const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
   return `
   ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
     <div class="row">${ic('dumbbell',16)}<div><b>${esc(w.name)}</b><div class="muted" style="font-size:12px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div></div>
@@ -4414,7 +4591,12 @@ function vBuilder(){
       </div>
     </div>
     <div class="card" style="position:sticky;top:76px">
-      <div class="card-h"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(c.week)}/12</span></div>
+      <div class="card-h"><span class="card-t">${ic('calendar',14)} ${t('Week Split')}</span><span class="bdg bdg-gray">${t(c.freq)}</span></div>
+      <div style="padding:6px 8px 8px">
+        ${splitRows(S.cid,{edit:true,cls:'wk-it'})}
+        <div class="muted" style="font-size:11px;padding:6px 4px 0;text-align:center">${t('Tap a day to assign a workout or rest')}</div>
+      </div>
+      <div class="card-h" style="border-top:1px solid var(--line2)"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(c.week)}/12</span></div>
       <div style="padding:10px">
         ${Array.from({length:12},(_,i)=>{const w=i+1;const st=w<c.week?'done':w===c.week?'cur':'';
         return `<div class="wk-it ${st}" data-act="toast" data-msg="${t('Week')} ${nf(w)} — ${t(st==='done'?'completed':st==='cur'?'current':'planned')}">
@@ -4454,23 +4636,61 @@ function exBlock(b,i){
 function vCCal(){
   const c=client(S.cid);
   const list=[...(DB[c.id].sessions||[])].sort((a,b)=>a.day-b.day||a.start-b.start);
-  const dotC={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
-  const dots={};list.forEach(s=>{(dots[s.day]=dots[s.day]||[]).push(dotC[s.type]||dotC.session)});
+  const dots={};list.forEach(s=>{(dots[s.day]=dots[s.day]||[]).push(SESS_DOT[s.type]||SESS_DOT.session)});
   const up=list.filter(s=>s.day>=TODAY);
   const past=list.filter(s=>s.day<TODAY).reverse();
+  const sp=splitOf(c.id);
+  const sessOf=i=>(DB[c.id].sessions||[]).filter(x=>x.day===i);
+  /* v18.63 — WEEK STRIP: real dates of the CURRENT week (off=0 — independent
+     of the coach global calendar's week navigation). Each cell is the day's
+     plan: workout name (✓ = done this week), Rest, or "+ Add workout" —
+     tapping any cell opens the day modal (assign / create / rest / clear). */
+  const strip=[0,1,2,3,4,5,6].map(i=>{
+    const d=dayDate(i,0);
+    const s=sp[i],w=splitW(c.id,s);
+    const sd=sessOf(i).slice(0,4);
+    const body=s&&s.t==='rest'
+      ?`<span class="calday-r">${ic('moon',12)} ${t('Rest')}</span>`
+      :w?`<span class="calday-w"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis">${esc(t(w.name))}</span>${wDone(w)?`<b style="flex:none;color:var(--green);display:flex">${ic('check',11)}</b>`:''}</span>`
+      :`<span class="calday-a">${ic('plus',12)} ${t('Add workout')}</span>`;
+    return `<div class="calday ${i===TODAY?'today':''}" data-act="split-day" data-i="${i}">
+      <span class="calday-h">${t(WDN[i])}</span>
+      <span class="calday-n">${fmtNum(d)}</span>
+      ${body}
+      ${sd.length?`<span class="calday-s">${sd.map(x=>`<span class="mdot" style="background:${SESS_DOT[x.type]||SESS_DOT.session}"></span>`).join('')}</span>`:''}
+    </div>`;}).join('');
+  /* v18.63 — REAL MONTH GRID (the old one was hardcoded: fake dates 29,30…1,2
+     and a frozen "today=8"; its session dots were keyed by weekday but looked
+     up by day-of-month — wrong cells). Now: the month of today (Jalali-aware),
+     every cell maps to its weekday split slot (💪 name / 🌙 rest), correct
+     session dots, real today; tap a cell → day modal with that exact date. */
+  const cells=monthCells(TDATE);
+  const mName=lang==='fa'?TDATE.toLocaleDateString('fa-IR',{month:'long',year:'numeric'}):TDATE.toLocaleDateString('en-US',{month:'long',year:'numeric'});
   return `
   <div class="row" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div class="row">${avC(c.name,40)}<div><b>${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.freq)}</div></div></div>
-    <div class="row">
+    <div class="row" style="flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" data-act="cal-add">${ic('dumbbell',14)} ${t('Add workout')}</button>
+      <button class="btn btn-outline btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button>
       <button class="btn btn-outline btn-sm" data-act="nav" data-view="calendar">${ic('calendar',14)} ${t('Open calendar →')}</button>
-      <button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button>
     </div>
   </div>
+  <div class="row" style="justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+    <b style="font-size:13px">${ic('calendar',14)} ${t('This week plan')}</b>
+    <span class="muted" style="font-size:11.5px">${t('Tap a day to assign a workout or rest')}</span>
+  </div>
+  <div class="calweek">${strip}</div>
   <div class="grid2" style="grid-template-columns:1fr 320px;align-items:start">
-    <div class="mcal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="mh">${t(d)}</div>`).join('')}
-      ${[29,30,...Array.from({length:31},(_,i)=>i+1),1,2].map((d,ix)=>{const dm=ix>1&&ix<33?d:0;
-      const dd=dots[dm]||[];
-      return `<div class="mday ${dm===8?'today':''}">${dm?nf(dm):`<span style="opacity:.3">${nf(d)}</span>`}${dd.length?`<div class="mdots">${dd.slice(0,3).map(cl=>`<span class="mdot" style="background:${cl}"></span>`).join('')}</div>`:''}</div>`}).join('')}
+    <div>
+      <div class="row" style="justify-content:space-between;margin-bottom:8px"><b style="font-size:13px">${mName}</b><span class="muted" style="font-size:11.5px">${t('Every week')}</span></div>
+      <div class="mcal compact">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="mh">${t(d)}</div>`).join('')}
+        ${cells.map(cl=>{const wd=(cl.date.getDay()+6)%7;
+        const isT=cl.date.toDateString()===TDATE.toDateString();
+        const s=sp[wd],w=splitW(c.id,s);
+        const dd=cl.cur?(dots[wd]||[]):[];
+        const mk=cl.cur?(s&&s.t==='rest'?`<div class="md-r">${ic('moon',9)} ${t('Rest')}</div>`:w?`<div class="md-w">${ic('dumbbell',9)} <span>${esc(t(w.name))}</span></div>`:''):'';
+        return `<div class="mday ${cl.cur?'click':'off'} ${isT?'today':''}" ${cl.cur?`data-act="split-day" data-i="${wd}" data-d="${ymdOf(cl.date)}"`:''}>${cl.cur?nf(cl.n):`<span style="opacity:.35">${nf(cl.n)}</span>`}${mk}${dd.length?`<div class="mdots">${dd.slice(0,3).map(col=>`<span class="mdot" style="background:${col}"></span>`).join('')}</div>`:''}</div>`;}).join('')}
+      </div>
     </div>
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('calendar',14)} ${t('Upcoming')}</span><span class="bdg bdg-gray">${nf(up.length)}</span></div>
@@ -4493,6 +4713,8 @@ function vCCal(){
           <span class="row" style="gap:5px"><span class="mdot" style="background:var(--blue)"></span>${t('Assessment')}</span>
           <span class="row" style="gap:5px"><span class="mdot" style="background:var(--purple)"></span>${t('Measurement')}</span>
           <span class="row" style="gap:5px"><span class="mdot" style="background:var(--amber)"></span>${t('Appointment')}</span>
+          <span class="row" style="gap:5px">${ic('dumbbell',11)} ${t('Workout')}</span>
+          <span class="row" style="gap:5px">${ic('moon',11)} ${t('Rest')}</span>
         </div>
       </div>
     </div>
@@ -7543,7 +7765,7 @@ function mMore(){
 }
 function mClientView(){
   const c=client(S.mClient),db=DB[c.id];
-  const w=db.workouts.find(x=>x.status==='assigned');
+  const w=todaysPlan(c.id).w; // v18.62 — today's slot decides, not "first pending"
   const ac=attCnt(c.name);
   return `<div class="mstack">
     <div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Client')}</b></div>
@@ -7560,7 +7782,7 @@ function mClientView(){
     </div>
     ${w?`<div class="ccard" style="border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
       <div class="row">${ic('dumbbell',15)}<b style="font-size:13.5px">${esc(w.name)}</b></div>
-      <span class="bdg bdg-lime" style="font-size:10px">${t('Pending')} — ${t('Visible to client')}</span></div>`:''}
+      <span class="bdg ${wDone(w)?'bdg-gray':'bdg-lime'}" style="font-size:10px">${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</span></div>`:''}
     <div class="ccard"><div class="card-t" style="margin-bottom:4px">${t('Training Summary')}</div>
       ${[['Workouts Completed',nf(db.stats.done)],['Workouts Missed',nf(db.stats.missed)],['Attendance',`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`],['Last Workout',t(c.last)],['Next Workout',t(c.nextW)]].map(([k,v])=>`
       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
@@ -7576,7 +7798,8 @@ function mClientView(){
     </div>
     <div class="row" style="gap:8px;flex-wrap:wrap">
       <button class="btn btn-dark btn-sm" data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',14)} ${t('Messages')}</button>
-      <button class="btn btn-primary btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+      <button class="btn btn-primary btn-sm" data-act="wp-open">${ic('calendar',14)} ${t('Week plan')}</button>
+      <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
       <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form reports')}</button>
       <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
       <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
@@ -7623,8 +7846,13 @@ function vClient(){
 }
 function cToday(){
   const c=client(S.cid),db=DB[c.id];
-  const w=db.workouts.find(x=>x.status==='assigned');
-  const doneWk=db.workouts.filter(x=>x.status==='completed').length;
+  /* v18.62 — Today follows the WEEK SPLIT: today's slot decides between a
+     training day (that exact workout, even when already completed → summary),
+     a rest day, or an unset day. */
+  const tp=todaysPlan(c.id);
+  const w=tp.w;
+  const restToday=tp.rest;
+  const doneWk=db.workouts.filter(wDone).length; // v18.62 — this week only
   const totalWk=db.workouts.length;
   const wkPct=totalWk?Math.round(doneWk/totalWk*100):0;
   const up=db.sessions.filter(s=>s.day>=TODAY).sort((a,b)=>a.day-b.day||a.start-b.start)[0];
@@ -7727,10 +7955,11 @@ function cToday(){
         <div class="td-mi">${ic('list',16)}<div><span>${t('sets')}</span><b>${nf(wkTotal)}</b></div></div>
       </div>
       <div class="row" style="gap:8px;margin-top:14px;position:relative;z-index:1">
-        <button class="btn btn-lime" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${t('Start Workout')}</button>
+        <button class="btn btn-lime" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
         <button class="btn glass" style="width:46px;height:46px;padding:0;justify-content:center;flex:none" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
       </div>
     </div>`
+    :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
     :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
     ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
       <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
@@ -7801,16 +8030,21 @@ function cToday(){
 }
 function cWorkouts(){
   const c=client(S.cid),db=DB[c.id];
-  /* v18.14 — Fitness+ pill filters (All / Pending / Completed) with counts */
+  /* v18.14 — Fitness+ pill filters (All / Pending / Completed) with counts.
+     v18.62 — Pending/Completed = THIS week (weekly split recurrence). */
   const f=S.cwfilter||'All';
-  const list=db.workouts.filter(w=>f==='All'||(f==='Pending'?w.status!=='completed':w.status==='completed'));
-  const cnt=v=>v==='All'?db.workouts.length:db.workouts.filter(w=>v==='Pending'?w.status!=='completed':w.status==='completed').length;
+  const list=db.workouts.filter(w=>f==='All'||(f==='Pending'?!wDone(w):wDone(w)));
+  const cnt=v=>v==='All'?db.workouts.length:db.workouts.filter(w=>v==='Pending'?!wDone(w):wDone(w)).length;
   return `<div class="cbody">
     <div class="fpills">${['All','Pending','Completed'].map(v=>`<button class="fpill ${f===v?'on':''}" data-act="cwfilter" data-v="${v}">${t(v)}${cnt(v)?` · ${nf(cnt(v))}`:''}</button>`).join('')}</div>
     <div class="ccard"><div class="row" style="justify-content:space-between"><b>${t('Program progress')}</b><span class="chip">${t('Week')} ${nf(c.week)} ${t('of')} 12</span></div>
       <div class="pbar" style="margin-top:8px"><i style="width:${c.week/12*100}%"></i></div></div>
+    ${(()=>{ /* v18.62 — the week split, client view: what happens each day. */
+      const sp=splitOf(c.id);
+      if(!sp.some(Boolean))return '';
+      return `<div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:4px"><b style="font-size:13.5px">${ic('calendar',14)} ${t('This week plan')}</b><span class="chip">${t(c.freq)}</span></div>${splitRows(c.id,{})}</div>`})()}
     ${list.length?list.map(w=>{const total=w.exercises.reduce((a,e)=>a+e.sets,0);
-    const done=w.status==='completed';
+    const done=wDone(w);
     return `<div class="wcard" data-act="open-player" data-wid="${w.id}" style="cursor:pointer">
       <div class="wcard-top">
         <span class="chip" style="background:rgba(0,0,0,.4);color:#fff;border:1px solid rgba(255,255,255,.12)">${ic('clock',12)} ${t(w.dur)}</span>
@@ -7852,9 +8086,13 @@ function monthStrip(){
   /* v18.60 — Stitch calendar strip: uppercase month + week chip + Calendar
      link, full-width day tiles (today = accent fill). Same dates as before. */
   const cell=(i)=>{const idx=order[i];const d=days[idx];const isT=d.toDateString()===TDATE.toDateString();
-    return `<div class="td-day ${isT?'on':''}">
+    /* v18.62 — split marker: 💪 training (named workout), 🌙 rest, none unset */
+    const s=splitOf(S.cid)[idx];
+    const mk=s?(s.t==='rest'?`<span class="td-mk rest">${ic('moon',10)}</span>`:`<span class="td-mk">${ic('dumbbell',10)}</span>`):`<span class="td-mk"></span>`;
+    return `<div class="td-day ${isT?'on':''}" title="${s?(s.t==='rest'?t('Rest day'):esc(t((splitW(S.cid,s)||{}).name||''))):''}">
       <span class="td-dl">${lang==='fa'?faLetters[idx]:letters[idx]}</span>
       <span class="td-dn">${nf(d.getDate())}</span>
+      ${mk}
     </div>`};
   const mName=lang==='fa'?TDATE.toLocaleDateString('fa-IR',{month:'long'}):TDATE.toLocaleDateString('en-US',{month:'long'});
   /* ISO-ish week number of the displayed date (decorative chip, like the
@@ -8305,7 +8543,7 @@ function startRest(sec){
 function cPlayer(){
   const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
   if(!w)return '';
-  const ro=w.status==='completed';
+  const ro=wDone(w); // v18.62 — read-only only when finished THIS week; a stale (last week's) completion re-opens as a fresh, finishable session
   const total=w.exercises.reduce((a,e)=>a+e.sets,0);
   const done=S.player.checked.size;
   return `<div class="cplayer">
@@ -8824,7 +9062,7 @@ document.addEventListener('click',e=>{
     case 'bill-request':billRequest(el.dataset.p);break;
     case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
     case 'signin':S.role='coach';S.view='dash';render();toast('Welcome back, Coach');cloudEnsure();break;
-    case 'nav':S.view=el.dataset.view;render();window.scrollTo({top:0});break;
+    case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
     case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();
       if(isNarrow()){S.mClient=+el.dataset.cid;S.mview='client'}else{S.view='wspace';S.cid=+el.dataset.cid}
       loadClientProgram(S.cid);
@@ -9146,7 +9384,7 @@ document.addEventListener('click',e=>{
       NOTES.unshift({id:uid(),client:m.client,from:'coach',shared:false,type:'General',title:`${t('From chat')} — ${t(m.client)}`,date:'Just now',body:m.body,pin:false,arch:false});
       m.noted=true;render();toast('Saved as note');break}
     case 'cform':{const c=client(S.cid);
-      const w=(DB[c.id].workouts||[]).find(x=>x.status==='assigned');
+      const w=todaysPlan(c.id).w; // v18.62 — reference today's planned workout
       const ctx=w?`${w.name} · ${t(EXERCISES[w.exercises[0].ex].n)} · ${t('Set')} 2`:`${t("Today's Workout")} · ${t('Set')} 2`;
       MSGS.push({id:uid(),client:c.name,from:'client',type:'form',body:t('Please check my form on this set'),ctx,time:'Just now',read:false,dur:'0:12'});
       NOTIFS.unshift({t:`🎥 ${t(c.name)} — ${t('Form check')}`,d:'Just now',un:true});
@@ -9278,12 +9516,16 @@ document.addEventListener('click',e=>{
       const keys=[];w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++)keys.push(ei+'-'+si)});
       /* v18.61 — resume REAL progress: ticks/RPE saved on the workout survive
          close/reopen and page reloads (falls back to 'all checked' for old
-         completed workouts that predate persisted state). */
-      const ck=(Array.isArray(w.ck)&&w.ck.length)?w.ck.filter(k=>keys.includes(k)):(w.status==='completed'?keys:[]);
+         completed workouts that predate persisted state).
+         v18.62 — weekly split: a completion from a PREVIOUS week opens a
+         FRESH session (fresh ticks, fresh RPE), not a read-only summary. */
+      const stale=w.status==='completed'&&!wDone(w);
+      if(stale){w.ck=[];w.rpeM={}}
+      const ck=(Array.isArray(w.ck)&&w.ck.length)?w.ck.filter(k=>keys.includes(k)):((w.status==='completed'&&!stale)?keys:[]);
       S.player={wid:w.id,checked:new Set(ck),rpe:{...(w.rpeM||{})},rest:0,restTotal:1};
       render();break}
     case 'togset':{if(!S.player)break;const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
-      if(w&&w.status==='completed')break;
+      if(w&&w.status==='completed'&&wDone(w))break; // v18.62 — stale (last week's) completion is re-tickable
       const k=el.dataset.k;
       if(S.player.checked.has(k))S.player.checked.delete(k);
       else{S.player.checked.add(k);startRest(+el.dataset.rest)}
@@ -9335,7 +9577,7 @@ document.addEventListener('click',e=>{
       // coach shares it and the student's device binds straight to this profile.
       // nid = optional national ID (contract/insurance paperwork only).
       const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined),since:isoToday()};
-      CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+      CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
       closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
       clientCodeModal(nc);break}
@@ -9360,21 +9602,66 @@ document.addEventListener('click',e=>{
     case 'b-dn':{const i=+el.dataset.bi;if(i<BUILDER.length-1){[BUILDER[i+1],BUILDER[i]]=[BUILDER[i],BUILDER[i+1]];render()}break}
     case 'b-save':{const n=$('w-name');if(n)S.wname=n.value;const d=$('w-day');if(d)S.wday=d.value;
       const note=$('w-note');if(note)S.wnote=note.value;
-      DB[S.cid].workouts.unshift({id:'w'+Date.now(),name:S.wname.split(' — ')[0],day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'});
+      const nid='w'+Date.now();
+      DB[S.cid].workouts.unshift({id:nid,name:S.wname.split(' — ')[0],day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'});
+      /* v18.62 — publishing a workout for day X puts it ON that day of the
+         week split (replacing that day's previous assignment). */
+      {const di=FULLDAYS.indexOf(S.wday);const dbS=DB[S.cid];
+        if(di>=0){if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);dbS.split[di]={t:'w',w:nid}}}
+      /* v18.63 — if this save came from the calendar's "New workout for this
+         day", land back on the calendar so the coach sees the new assignment. */
       if(isNarrow()){S.mview='client';S.mClient=S.cid}
-      else{S.view='wspace';S.tab='overview';window.scrollTo({top:0})}
-      render();toast(t('Published to')+' '+t(client(S.cid).name)+' ✓');break}
-    case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wday='Monday';S.wdur='60 min';S.wnote='';
+      else{S.view='wspace';S.tab=S.calReturn?'calendar':'overview';window.scrollTo({top:0})}
+      S.calReturn=false;
+      render();toast(t('Published to')+' '+t(client(S.cid).name)+' ✓ · '+t(S.wday));break}
+    case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wday='Monday';S.wdur='60 min';S.wnote='';S.calReturn=false;
       if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
-    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wday='Monday';S.wdur='60 min';S.wnote='';S.tplEdit=null;
+    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wday='Monday';S.wdur='60 min';S.wnote='';S.tplEdit=null;S.calReturn=false;
       render();toast(t('Builder cleared'));break}
     case 'w-load':{const w=(DB[S.cid].workouts||[])[+el.dataset.wi];if(!w)break;
       BUILDER.length=0;(w.exercises||[]).forEach(x=>BUILDER.push({...x}));fillVids();
-      S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';
+      S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';S.calReturn=false;
       if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
     case 'w-del':{const list=DB[S.cid].workouts||[];const w=list[+el.dataset.wi];if(!w)break;
       if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
-      list.splice(+el.dataset.wi,1);render();toast(t('Workout deleted'));break}
+      list.splice(+el.dataset.wi,1);
+      /* v18.62 — a deleted workout must not leave a dangling split slot. */
+      {const dbS=DB[S.cid];if(Array.isArray(dbS.split))dbS.split.forEach((s,i)=>{if(s&&s.t==='w'&&String(s.w)===String(w.id))dbS.split[i]=null})}
+      render();toast(t('Workout deleted'));break}
+    /* ===== v18.62 — WEEK SPLIT actions ===== */
+    case 'split-day':splitDayModal(+el.dataset.i,el.dataset.d);break;
+    /* ===== v18.63 — client calendar add-workout flow ===== */
+    case 'cal-add':weekPlanModal('add');break;
+    case 'cal-new':{const i=+el.dataset.i;
+      /* New workout FOR this day: preset Training Day, remember the calendar
+         so b-save lands back here, then open a clean draft. Desktop stays in
+         the workspace (Workouts tab = same builder, same client context). */
+      BUILDER.length=0;S.tplEdit=null;
+      S.wname='New Workout — '+client(S.cid).name;
+      S.wday=FULLDAYS[i];S.wdur='60 min';S.wnote='';
+      S.calReturn=true;
+      closeModal();
+      if(isNarrow()){S.mview='builder'}else{S.view='wspace';S.tab='workouts'}
+      render();window.scrollTo({top:0});
+      toast(t('Training Day')+': '+t(FULLDAYS[i]));break}
+    case 'split-assign':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      const w=(dbS.workouts||[]).find(x=>String(x.id)===String(el.dataset.w));
+      if(!w)break;
+      /* v18.62 — one workout lives on ONE day: assigning it here detaches it
+         from any other day, so "completed" can only ever mean that day. */
+      dbS.split.forEach((s,j)=>{if(j!==i&&s&&s.t==='w'&&String(s.w)===String(w.id))dbS.split[j]=null});
+      dbS.split[i]={t:'w',w:String(w.id)};
+      w.day=FULLDAYS[i]; // mirror so older displays (chips/lists) stay correct
+      closeModal();render();toast(t('Day updated ✓')+' · '+t(FULLDAYS[i]));break}
+    case 'split-rest':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      dbS.split[i]={t:'rest'};
+      closeModal();render();toast(t('Rest day set')+' · '+t(FULLDAYS[i]));break}
+    case 'split-clear':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      dbS.split[i]=null;
+      closeModal();render();toast(t('Day cleared')+' · '+t(FULLDAYS[i]));break}
     case 'ex-add':{const ex=EXERCISES[+el.dataset.i];S.view='builder';
       BUILDER.push({ex:+el.dataset.i,sets:3,reps:10,kg:20,rest:90,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''});fillVids();
       render();toast(ex.n+' '+t('added to workout'));break}
@@ -9587,6 +9874,7 @@ document.addEventListener('click',e=>{
       S.mview='tabs';S.mtab='messages';render();break}
     case 'mhome':S.mview='tabs';render();break;
     case 'mworkout':if(S.mClient!=null)S.cid=S.mClient;S.mview='builder';loadClientProgram(S.cid);render();break;
+    case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
     case 'msettings':S.mview='settings';render();break;
     case 'mtemplates':S.mview='templates';render();break;
     case 'mnut':S.mview='nutrition';render();break;
