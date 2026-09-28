@@ -4668,13 +4668,11 @@ function vBuilder(){
       </div>
     </div>
     <div class="card" style="position:sticky;top:76px">
-      <div class="card-h"><span class="card-t">${ic('calendar',14)} ${t('Week Split')}</span><span class="bdg bdg-gray">${t(c.freq)}</span>
-        <span class="sp"></span><button class="btn btn-outline btn-sm" style="font-size:11px;padding:3px 9px" data-act="ws-quick">${ic('zap',12)} ${t('Quick week setup')}</button></div>
-      <div style="padding:6px 8px 8px">
-        ${splitRows(S.cid,{edit:true,cls:'wk-it'})}
-        <div class="muted" style="font-size:11px;padding:6px 4px 0;text-align:center">${t('Tap a day to assign a workout or rest')}</div>
-      </div>
-      <div class="card-h" style="border-top:1px solid var(--line2)"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(c.week)}/12</span></div>
+      <!-- v18.69 — the Week Split sidebar was removed (redundant): the client
+           calendar is THE place to plan the week (v18.65) and Quick week setup
+           lives in its header (v18.67); the builder's own Training Day select
+           still assigns the day on save. -->
+      <div class="card-h"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(c.week)}/12</span></div>
       <div style="padding:10px">
         ${Array.from({length:12},(_,i)=>{const w=i+1;const st=w<c.week?'done':w===c.week?'cur':'';
         return `<div class="wk-it ${st}" data-act="toast" data-msg="${t('Week')} ${nf(w)} — ${t(st==='done'?'completed':st==='cur'?'current':'planned')}">
@@ -9765,7 +9763,7 @@ document.addEventListener('click',e=>{
       closeModal();render();toast(t('Day copied')+' · '+t(FULLDAYS[j]));break}
     case 'print-month':printMonthPlan();break;
     /* ===== v18.67 — quick week setup: the whole split in one modal ===== */
-    case 'cal-quick':case 'ws-quick':splitQuickModal();break;
+    case 'cal-quick':splitQuickModal();break; // v18.69 — ws-quick retired with the builder sidebar
     case 'quick-save':{const dbS=DB[S.cid];if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
       const seen=new Set();let dup=0;
       document.querySelectorAll('select[data-quick]').forEach(sel=>{const i=+sel.dataset.quick;const v=sel.value;
