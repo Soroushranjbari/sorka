@@ -25,18 +25,29 @@ import { SQLITE_PATH } from './backend/lib/db.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url)).replace(/[\\/]+$/, '');
 const PORT = Number(process.env.PORT) || 8888;
-/* Loopback by default: this server terminates nothing — plain HTTP on a public
-   interface means every session token crosses the wire in the clear. Put TLS
-   in nginx/Caddy and proxy to 127.0.0.1; set HOST=0.0.0.0 only on purpose. */
-const HOST = process.env.HOST || '127.0.0.1';
+/* Bind address — MUST stay platform-aware or PaaS deploys fail their port scan:
+   Render/Railway/Fly/Heroku route traffic to the container and VERIFY the app
+   listens on 0.0.0.0:$PORT during deploy; a loopback-only bind makes the
+   health check time out and the deployment is marked failed. Locally (no
+   platform signals) the safe default stays 127.0.0.1: plain HTTP on a public
+   interface means every session token crosses the wire in the clear — put TLS
+   in nginx/Caddy and proxy to loopback, or set HOST=0.0.0.0 on purpose. */
+const PAAAS = !!(process.env.RENDER || process.env.RENDER_EXTERNAL_URL ||
+  process.env.RAILWAY_ENVIRONMENT || process.env.FLY_APP_NAME ||
+  process.env.DYNO /* Heroku */ || process.env.WEBSITE_INSTANCE_ID /* Azure App Service */ ||
+  process.env.K_SERVICE /* Cloud Run */);
+const HOST = process.env.HOST || (PAAAS ? '0.0.0.0' : '127.0.0.1');
 const LISTEN_LOOPBACK = /^(127\.0\.0\.1|localhost|::1)$/i.test(HOST);
 const ROOT_REAL = await realpath(ROOT).catch(() => ROOT);
 
 /* Who is allowed to name the client? A proxy we can actually reach only from
    loopback — or an explicit TRUST_PROXY. Without this rule any client can send
    its own X-Forwarded-For, get a fresh rate-limit bucket per request and switch
-   off every limit in the app (login, signup, forgot-password, checkout, AI). */
-const TRUST_PROXY = /^(1|true|yes)$/i.test(process.env.TRUST_PROXY || '');
+   off every limit in the app (login, signup, forgot-password, checkout, AI).
+   Managed platforms (Render et al.) front the app with THEIR proxy and
+   always connect from an internal address — trust them automatically, TRUST_PROXY
+   can still override. */
+const TRUST_PROXY = /^(1|true|yes)$/i.test(process.env.TRUST_PROXY || '') || PAAAS;
 const LOOPBACK = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '::ffff:127.0.1.1']);
 const PEER_TRUSTABLE = TRUST_PROXY || LISTEN_LOOPBACK;
 function clientIp(req) {
@@ -286,4 +297,5 @@ server.listen(PORT, HOST, async () => {
   if (!TRUST_PROXY && !LISTEN_LOOPBACK) {
     console.warn('[deploy] listening on a public interface with TRUST_PROXY unset: every client shares one rate-limit bucket ("' + HOST + '"). Put nginx/Caddy front and set TRUST_PROXY=1, or bind HOST=127.0.0.1.');
   }
+  console.log(`[deploy] HOST=${HOST} · TRUST_PROXY=${TRUST_PROXY ? 'yes' : 'no'}${PAAAS ? ' · managed platform detected' : ''}`);
 });
