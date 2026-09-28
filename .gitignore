@@ -18,6 +18,11 @@ data/sqlite.db
 data/sqlite.db-shm
 data/sqlite.db-wal
 data/*.sqlite.db*
+data/*.db
+
+# automatic DB snapshots (db:backup / server.mjs 6h job) — same sensitivity
+# as the database itself (password hashes, session tokens inside)
+data/backups/
 
 # legacy KV JSON dumps (migration sources / backups — contain user data)
 data/kv*.json

@@ -62,9 +62,17 @@ export async function withLock(key, fn) {
   }
 }
 
-/** Best-effort client IP (proxy headers first, as on Netlify/Vercel/nginx). */
+/** Best-effort client IP.
+ *  `x-true-ip` is injected by the server itself (server.mjs / the platform
+ *  adapter) and a client-supplied copy is overwritten there, so it is the only
+ *  value the rate limiter may trust. The proxy headers below are kept as a
+ *  fallback for adapters that have not learned to set x-true-ip yet — on those
+ *  hosts they are written by the platform, not by the client. Never add a new
+ *  header here without making the adapter overwrite it first. */
 export function ipOf(req) {
   const h = req.headers || new Headers();
+  const trueIp = (h.get('x-true-ip') || '').trim();
+  if (trueIp) return trueIp;
   const xff = (h.get('x-forwarded-for') || '').split(',')[0].trim();
   return xff || h.get('x-real-ip') || h.get('cf-connecting-ip') || 'local';
 }

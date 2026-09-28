@@ -400,15 +400,21 @@ try {
   ok('export with unknown code -> 404', expMiss.status === 404, expMiss.status);
 
   console.log('== static exposure (regression: secrets were downloadable) ==');
+  // The exact-case list below once passed while GET /.ENV returned the whole
+  // .env: a case-INSENSITIVE filesystem (Windows/macOS) folds the name AFTER
+  // the deny-list matched. Every entry is now duplicated in another case.
   for (const p of ['/data/prod-secrets.txt', '/data/prod-admin-pass.txt', '/data/kv-prod.json',
                    '/backend/lib/db.mjs', '/scripts/create-admin.mjs', '/data/sqlite.db',
                    '/server.mjs', '/package.json', '/vercel.json', '/.env', '/DEPLOY.md', '/SELFHOST.md',
-                   // Regression: the .kilo agent-worktree folder contains a FULL project copy
-                   // (incl. prod-secrets.txt / schema.sql) and was not on the deny-list.
                    '/.kilo/worktrees/deep-lark/data/prod-secrets.txt',
                    '/.kilo/worktrees/deep-lark/data/prod-admin-pass.txt',
                    '/.kilo/worktrees/deep-lark/db/schema.sql',
-                   '/.kilo/worktrees/deep-lark/data/kv-prod.json']) {
+                   '/.kilo/worktrees/deep-lark/data/kv-prod.json',
+                   // case-variant bypasses (were 200 with the real bytes)
+                   '/.ENV', '/.Env', '/.env.', '/DATA/sqlite.db', '/Data/prod-secrets.txt',
+                   '/BACKEND/lib/db.mjs', '/Scripts/create-admin.mjs', '/.Git/config',
+                   // api/ and design/ were simply missing from the deny-list
+                   '/api/%5B...path%5D.mjs', '/design/coach-roster.html', '/skills-lock.json']) {
     const r = await fetch(BASE + p);
     ok(`blocked ${p} -> 404`, r.status === 404, r.status);
   }

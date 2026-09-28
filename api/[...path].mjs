@@ -35,7 +35,9 @@ import shopAccount from '../backend/handlers/shop-account.mjs';
    undici sets its own and a stale content-length makes it throw. */
 const SKIP_HEADERS = new Set([
   'host', 'connection', 'keep-alive', 'transfer-encoding', 'upgrade',
-  'content-length', 'accept-encoding', 'proxy-authenticate', 'proxy-authorization', 'te', 'trailer'
+  'content-length', 'accept-encoding', 'proxy-authenticate', 'proxy-authorization', 'te', 'trailer',
+  // server.mjs owns this one; a client must never arrive at ipOf() with it set.
+  'x-true-ip'
 ]);
 
 const json = (res, status, obj) => {
