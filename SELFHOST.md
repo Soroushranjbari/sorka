@@ -12,6 +12,10 @@ npm install
 npm start                      # http://localhost:8888
 ```
 
+This project is npm-only (`package-lock.json`) — on Render/Railway set the
+build/start commands to `npm install` / `npm start` (or switch Environment to
+Node) so the platform does not try Yarn.
+
 Storage is **SQLite** by default: one file at `data/sqlite.db` (table `kv`,
 WAL journal). Override with `SQLITE_PATH=/path/db.sqlite`. For multi-instance
 setups set `DATABASE_URL=postgres://...` instead — the `kv_store` table is
