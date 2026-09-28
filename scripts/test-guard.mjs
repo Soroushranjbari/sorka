@@ -42,6 +42,12 @@ console.log('== ip extraction ==');
   const req = new Request('http://x/', { headers: { 'x-forwarded-for': '1.2.3.4, 5.6.7.8' } });
   A('xff first ip', ipOf(req) === '1.2.3.4');
   A('missing ip -> local', ipOf(new Request('http://x/')) === 'local');
+  // server.mjs injects x-true-ip and overwrites whatever the client sent, so a
+  // forged X-Forwarded-For can no longer mint a fresh rate-limit bucket.
+  const spoof = new Request('http://x/', { headers: { 'x-true-ip': '10.0.0.9', 'x-forwarded-for': '1.2.3.4' } });
+  A('x-true-ip beats a forged xff', ipOf(spoof) === '10.0.0.9');
+  const all = ['x-real-ip', 'cf-connecting-ip'].map((h) => ipOf(new Request('http://x/', { headers: { [h]: '9.9.9.9' } })));
+  A('proxy headers still honoured as fallback', all.every((v) => v === '9.9.9.9'));
 }
 console.log('== withLock (per-key mutex) ==');
 {

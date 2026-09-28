@@ -17,7 +17,7 @@
 //   everything else -> static files from the project root (index.html, ...)
 import './backend/lib/env.mjs'; // loads .env FIRST — db.mjs reads env at module load
 import { createServer } from 'node:http';
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, realpath, stat } from 'node:fs/promises';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CSP, CSP_SHOP, SECURITY_HEADERS } from './backend/lib/guard.mjs';
@@ -25,7 +25,26 @@ import { SQLITE_PATH } from './backend/lib/db.mjs';
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url)).replace(/[\\/]+$/, '');
 const PORT = Number(process.env.PORT) || 8888;
-const HOST = process.env.HOST || '0.0.0.0';
+/* Loopback by default: this server terminates nothing — plain HTTP on a public
+   interface means every session token crosses the wire in the clear. Put TLS
+   in nginx/Caddy and proxy to 127.0.0.1; set HOST=0.0.0.0 only on purpose. */
+const HOST = process.env.HOST || '127.0.0.1';
+const LISTEN_LOOPBACK = /^(127\.0\.0\.1|localhost|::1)$/i.test(HOST);
+const ROOT_REAL = await realpath(ROOT).catch(() => ROOT);
+
+/* Who is allowed to name the client? A proxy we can actually reach only from
+   loopback — or an explicit TRUST_PROXY. Without this rule any client can send
+   its own X-Forwarded-For, get a fresh rate-limit bucket per request and switch
+   off every limit in the app (login, signup, forgot-password, checkout, AI). */
+const TRUST_PROXY = /^(1|true|yes)$/i.test(process.env.TRUST_PROXY || '');
+const LOOPBACK = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1', '::ffff:127.0.1.1']);
+const PEER_TRUSTABLE = TRUST_PROXY || LISTEN_LOOPBACK;
+function clientIp(req) {
+  const sock = (req.socket && req.socket.remoteAddress) || '';
+  const xff = String((req.headers && req.headers['x-forwarded-for']) || '').split(',')[0].trim();
+  if (PEER_TRUSTABLE && LOOPBACK.has(sock) && xff) return xff;
+  return sock || 'local';
+}
 
 /* Storage: SQLite at ./data/sqlite.db is the DEFAULT — no env needed. An
    explicit SQLITE_PATH moves the file; DATABASE_URL (or POSTGRES_URL/PGURL)
@@ -66,7 +85,9 @@ async function handleApi(req, res, url) {
       const abs = new URL(path + url.search, `http://${req.headers.host || 'localhost'}`);
       const webReq = new Request(abs, {
         method: req.method,
-        headers: req.headers,
+        // x-true-ip is OURS to set — overwrite any client-supplied copy so the
+        // rate limiter in backend/lib/guard.mjs can never be steered by a header.
+        headers: { ...req.headers, 'x-true-ip': clientIp(req) },
         body: ['GET', 'HEAD'].includes(req.method) ? undefined : req,
         duplex: 'half'
       });
@@ -117,13 +138,25 @@ const MIME = {
    The Vercel middleware blocks the same paths before the filesystem
    (middleware.js). NOTE: ROOT = project root means without this an attacker
    can simply GET /data/prod-secrets.txt. */
-const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', '.git/', '.kilo/'];
+const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', 'api/', 'design/', '.kilo/'];
 const DENY_FILES = new Set([
   'server.mjs', 'vercel.json', 'middleware.js', 'package.json', 'package-lock.json',
-  '.env', '.env.example', '.gitignore', 'DEPLOY.md', 'SELFHOST.md'
+  '.env', '.env.example', '.gitignore', 'skills-lock.json'
 ]);
-const isBlocked = (rel) =>
-  DENY_DIRS.some((d) => rel.startsWith(d)) || DENY_FILES.has(rel) || rel.endsWith('.md');
+const DENY_EXT = ['.env', '.md', '.db', '.sqlite', '.sqlite3', '.wal', '.shm', '.log', '.key', '.pem', '.cjs'];
+
+/* A case-SENSITIVE deny-list on a case-INSENSITIVE filesystem is no deny-list:
+   GET /.env answered 404 while GET /.ENV handed back the whole .env (DB URL,
+   ADMIN_API_KEY, AI keys), /DATA/sqlite.db the database and /BACKEND/... sources.
+   So: fold case, strip trailing dots/spaces (Win32 folds ".env." to ".env"),
+   and deny every dot-file / dot-dir by default instead of chasing names. */
+const isBlocked = (rel) => {
+  const r = rel.toLowerCase().split('/').map((s) => s.replace(/[. ]+$/, '')).join('/');
+  if (r.split('/').some((s) => s.startsWith('.'))) return true;
+  if (DENY_DIRS.some((d) => r.startsWith(d))) return true;
+  if (DENY_FILES.has(r)) return true;
+  return DENY_EXT.some((e) => r.endsWith(e));
+};
 
 async function serveStatic(req, res, url) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
@@ -148,6 +181,19 @@ async function serveStatic(req, res, url) {
   // Works on both path separators: the deny-lists are written POSIX-style.
   const rel = file.slice(ROOT.length + 1).split(sep).join('/');
   if (isBlocked(rel)) { res.statusCode = 404; res.end('not found'); return; }
+  // Belt and braces for case-insensitive filesystems: reject anything the OS
+  // resolved under a DIFFERENT CASE than requested (/Index.HTML), and anything
+  // that escapes ROOT through a symlink/junction. Comparison stays
+  // case-insensitive so a legitimately case-different ROOT (OneDrive) is fine.
+  const real = await realpath(file).catch(() => null);
+  if (real) {
+    if (!real.startsWith(ROOT_REAL + sep) && real !== ROOT_REAL) {
+      res.statusCode = 404; res.end('not found'); return;
+    }
+    if (real !== file && real.toLowerCase() === file.toLowerCase()) {
+      res.statusCode = 404; res.end('not found'); return;
+    }
+  }
   try {
     const st = await stat(file);
     if (st.isDirectory()) { res.statusCode = 404; res.end('not found'); return; }
@@ -201,8 +247,43 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, HOST, () => {
+server.listen(PORT, HOST, async () => {
   console.log(`CoachMint server → http://localhost:${PORT}`);
   const pgUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL;
   console.log(`KV backend: ${pgUrl ? 'postgres' : `sqlite (${SQLITE_PATH})`}`);
+  if (!pgUrl && (process.env.NODE_ENV || '').toLowerCase() === 'production') {
+    console.warn('[deploy] production without DATABASE_URL — all accounts, sessions and student DATA live in one local sqlite file. Set DATABASE_URL and back this file up.');
+  }
+  /* Item 4 — automatic backups. The whole business lives in one SQLite file;
+     without a backup a corrupt disk or a bad UPDATE is unrecoverable. A
+     consistent snapshot is taken every 6h with SQLite's online backup API
+     (safe while the server runs), kept under data/backups/ — the last
+     DB_BACKUP_KEEP (default 14) copies survive, older ones are pruned. */
+  if (!pgUrl) {
+    try {
+      const { join, dirname } = await import('node:path');
+      const { mkdirSync, readdirSync, unlinkSync } = await import('node:fs');
+      const KEEP = Number(process.env.DB_BACKUP_KEEP) || 14;
+      const backupNow = async () => {
+        try {
+          const dir = join(dirname(SQLITE_PATH), 'backups');
+          mkdirSync(dir, { recursive: true });
+          const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 19);
+          const target = join(dir, `coachmint-${stamp}.db`);
+          const { default: Database } = await import('better-sqlite3');
+          await new Database(SQLITE_PATH, { readonly: true }).backup(target);
+          try {
+            const files = readdirSync(dir).filter(f => /^coachmint-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}\.db$/.test(f)).sort().reverse();
+            for (const f of files.slice(KEEP)) { try { unlinkSync(join(dir, f)); } catch {} }
+          } catch {}
+        } catch (e) { console.error('[backup] failed:', e.message); }
+      };
+      setInterval(backupNow, 6 * 3600 * 1000).unref();
+      setTimeout(backupNow, 60_000).unref();
+      console.log(`[backup] automatic snapshots every 6h → data/backups/ (keep ${KEEP})`);
+    } catch (e) { console.error('[backup] init failed:', e.message); }
+  }
+  if (!TRUST_PROXY && !LISTEN_LOOPBACK) {
+    console.warn('[deploy] listening on a public interface with TRUST_PROXY unset: every client shares one rate-limit bucket ("' + HOST + '"). Put nginx/Caddy front and set TRUST_PROXY=1, or bind HOST=127.0.0.1.');
+  }
 });
