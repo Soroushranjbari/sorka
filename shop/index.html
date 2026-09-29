@@ -25,6 +25,7 @@ for(var i=0;i<f.length;i++){var l=document.createElement('link');l.rel='styleshe
   --brand:'Michroma','Space Grotesk','Segoe UI',system-ui,sans-serif;
   --body:'Inter','Segoe UI','Helvetica Neue',Arial,system-ui,sans-serif;
   --e:cubic-bezier(.22,.61,.2,1);
+  --e-fast:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}#spot{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1s;
@@ -51,7 +52,7 @@ body.loaded #bg3d{opacity:1}
 #bgCanvas{position:absolute;inset:0;width:100%;height:100%}
 html.engine [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .9s var(--e),transform .9s var(--e)}
 html.engine [data-reveal].in-view{opacity:1;transform:none}
-html.engine .fx-in{opacity:0;transform:translateY(42px);filter:blur(8px);transition:opacity 1.1s var(--e),transform 1.1s var(--e),filter 1.1s var(--e)}
+html.engine .fx-in{opacity:0;transform:translateY(28px);filter:blur(4px);transition:opacity .75s var(--e),transform .75s var(--e),filter .75s var(--e)}
 html.engine body.loaded .fx-in{opacity:1;transform:none;filter:blur(0)}
 body.loaded .fx-in:nth-child(2){transition-delay:.08s}body.loaded .fx-in:nth-child(3){transition-delay:.16s}
 body.loaded .fx-in:nth-child(4){transition-delay:.24s}body.loaded .fx-in:nth-child(5){transition-delay:.32s}
@@ -84,6 +85,10 @@ body.loaded .fx-in:nth-child(4){transition-delay:.24s}body.loaded .fx-in:nth-chi
 .btn.acc:hover{transform:translateY(-2px);box-shadow:0 12px 44px -8px var(--acc-line)}
 .btn.ghost{border:1px solid var(--line2);color:var(--txt)}
 .btn.ghost:hover{background:rgba(255,255,255,.06);transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.97);transition:transform .12s var(--e)}
+.btn.acc .ic{transition:transform .25s var(--e)}
+.btn.acc:hover .ic{transform:translateX(4px)}
+html[dir="rtl"] .btn.acc:hover .ic{transform:translateX(-4px)}
 section[id]{scroll-margin-top:70px}
 #nav{position:fixed;inset:0 0 auto;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:15px 28px;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
 #nav.scrolled{background:rgba(7,8,10,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
@@ -230,6 +235,10 @@ h1 .l2{color:var(--acc)}
 .ring-wrap .bgc{fill:none;stroke:#e8e8e3;stroke-width:3.4}
 .ring-wrap .fgc{fill:none;stroke:#8cbf26;stroke-width:3.4;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
 .ring-wrap b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-family:var(--disp)}
+/* Three activity rings in the week card: the two inner rings reuse the same
+   track/progress geometry with inline width+color overrides (inline style beats
+   the .bgc/.fgc class rules). */
+.week-card .ring-wrap b{font-size:11.5px}
 .week-card{display:flex;gap:13px;align-items:center}
 .week-card p{font-size:11px;color:var(--ui-mut)}
 .week-card p b{color:var(--lime-dk)}
@@ -510,7 +519,8 @@ h1 .l2{color:var(--acc)}
 #s9{height:300vh}
 #s9 .frame{gap:14px}
 .chips8{display:flex;flex-wrap:wrap;gap:8px}
-.chip8{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;border:1px solid var(--line2);color:var(--dim);border-radius:99px;padding:6px 13px;transition:all .4s}
+.chip8{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;border:1px solid var(--line2);color:var(--dim);border-radius:99px;padding:6px 13px;transition:transform .2s var(--e-fast),border-color .3s,background .3s,color .3s}
+.chip8:hover{transform:translateY(-2px)}
 .chip8.on{border-color:var(--acc-line);color:var(--txt);background:var(--acc-dim)}
 .pgrid8{flex:1;min-height:0;display:grid;grid-template-columns:1.1fr 1.1fr;grid-template-rows:1fr 1fr;gap:13px}
 .g8{background:rgba(17,20,25,.88);border:1px solid var(--line);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;min-height:0;backdrop-filter:blur(8px)}
@@ -550,7 +560,7 @@ h1 .l2{color:var(--acc)}
 .mtc b{font-size:20px;font-family:var(--disp);display:block;margin:2px 0 3px}
 .mtc em{font-style:normal;font-size:10px;color:var(--acc);font-weight:600}
 .mtc em i{font-style:normal;color:var(--dim);font-weight:400;margin-left:5px}
-.mrow2g{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr .85fr;gap:13px}
+.mrow2g{flex:1;min-height:0;display:grid;grid-template-columns:1.05fr .95fr .62fr;gap:13px}
 .cmp-tabs{display:flex;gap:6px;align-items:center;margin-bottom:8px}
 .cmp-tabs span{font-size:10px;font-weight:600;border:1px solid var(--line2);color:var(--mut);border-radius:99px;padding:3px 11px}
 .cmp-tabs span.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
@@ -563,6 +573,16 @@ h1 .l2{color:var(--acc)}
 .cmp-div{position:absolute;top:0;bottom:0;width:2px;background:#fff;left:80%}
 .cmp-div u{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#fff;color:#111;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .cmp-hint{font-size:9.5px;color:var(--dim);text-align:center;margin-top:7px}
+/* Body map: an outline silhouette in the third measurements panel; hotspots pop
+   in staggered when the panel scrolls in (driven by p10 in the scroll engine). */
+.bm-wrap{display:flex;align-items:center;gap:18px;flex:1;min-height:0;justify-content:center}
+.bodymap{height:100%;max-height:200px;width:auto;flex:none}
+.bodymap .sil circle,.bodymap .sil rect{fill:none;stroke:rgba(255,255,255,.28);stroke-width:1.4}
+.bodymap .hs{fill:var(--acc);filter:drop-shadow(0 0 5px rgba(198,241,78,.6));opacity:0;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:opacity .3s var(--e),transform .45s cubic-bezier(.34,1.56,.64,1)}
+.bm-wrap.on .hs{opacity:1;transform:scale(1)}
+.bm-legend{display:flex;flex-direction:column;gap:7px;flex:none}
+.bm-legend span{display:flex;align-items:center;gap:7px;font-size:9.5px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.bm-legend i{width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.85}
 @media(max-width:1020px){.mgrid{grid-template-columns:repeat(2,1fr)}.mrow2g{grid-template-columns:1fr}}
 #s11{height:240vh}
 #s11 .frame{align-items:center;text-align:center}
@@ -611,6 +631,16 @@ h1 .l2{color:var(--acc)}
 .step p{color:var(--mut);font-size:14px}
 .step.is-active{border-color:var(--acc-line);box-shadow:0 42px 90px -28px rgba(0,0,0,.92),0 0 52px -20px var(--acc-dim)}
 @media(max-width:860px){#s13 .steps{grid-template-columns:1fr;perspective:none}.step{min-height:240px}.step .num{font-size:48px}}
+/* Jersey numerals on scene heads: a big outlined section number behind each
+   heading, counted in document order via the sections that carry an eyebrow
+   (01-14, matching the existing eyebrow labels). The manifesto (s14) is a
+   deliberate visual break and stays unnumbered here. */
+body{counter-reset:sec}
+section[id]:has(.eyebrow){counter-increment:sec}
+.sc-head,#probHead,.wrap>div[data-reveal]{position:relative}
+.sc-head::after,#probHead::after,.wrap>div[data-reveal]::after{content:counter(sec,decimal-leading-zero);position:absolute;top:-6px;right:0;font-family:var(--disp);font-weight:700;font-size:clamp(48px,6vw,84px);line-height:.85;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);pointer-events:none;user-select:none;z-index:0}
+html[dir="rtl"] .sc-head::after,html[dir="rtl"] #probHead::after,html[dir="rtl"] .wrap>div[data-reveal]::after{right:auto;left:0}
+@media(max-width:860px){.sc-head::after,#probHead::after,.wrap>div[data-reveal]::after{font-size:44px;top:-4px}}
 #s14{padding:170px 0;position:relative;overflow:hidden}
 #s14::before{content:"";position:absolute;left:50%;top:50%;width:900px;height:900px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(198,241,78,.06),transparent 60%);pointer-events:none}
 #s14 .inner{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px}
@@ -642,6 +672,13 @@ h1 .l2{color:var(--acc)}
 .pcard:hover{transform:translateY(-4px)}
 .pcard.rec{border-color:var(--acc-line);background:linear-gradient(180deg,var(--acc-dim),rgba(255,255,255,.015))}
 .pcard .rec-chip{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+/* Jersey numerals on the pricing tiers: 01-04 in the same outlined --disp style
+   as the s13 step numbers. */
+.pgrid{counter-reset:tier}
+.pcard{position:relative;counter-increment:tier}
+.pcard::before{content:counter(tier,decimal-leading-zero);position:absolute;top:22px;right:22px;font-family:var(--disp);font-weight:700;font-size:34px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2);pointer-events:none;user-select:none}
+html[dir="rtl"] .pcard::before{right:auto;left:22px}
+@media(max-width:640px){.pcard::before{font-size:28px;top:18px;right:18px}}
 .pcard h3{font-family:var(--disp);font-size:17px;text-transform:uppercase}
 .pcard .for{font-size:12.5px;color:var(--dim);min-height:34px}
 .price{display:flex;align-items:baseline;gap:4px;margin:14px 0 4px}
@@ -664,6 +701,9 @@ h1 .l2{color:var(--acc)}
 .f-brand{margin-top:38px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
 .f-brand .mark{width:15px;height:15px;color:#fff}
 .f-brand b{color:var(--txt)}
+/* s17 start line: an athletics checker strip that wipes open (scaleX 0 to 1,
+   driven by p17 in the scroll engine) between the closing statement and the CTA. */
+.startline{width:min(560px,86%);height:16px;margin:30px auto 2px;background:repeating-conic-gradient(rgba(198,241,78,.8) 0% 25%,rgba(198,241,78,.1) 0% 50%);background-size:16px 16px;transform-origin:50% 50%;will-change:transform,opacity}
 footer{background:#050607;border-top:1px solid var(--line);padding:70px 0 34px;position:relative;z-index:2}
 .f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px}
 .f-brand2 .logo{margin-bottom:14px}
@@ -677,7 +717,7 @@ footer{background:#050607;border-top:1px solid var(--line);padding:70px 0 34px;p
 @media(max-width:860px){.f-grid{grid-template-columns:1fr 1fr}}
 html.fx-fallback #loader{display:none!important}
 html.fx-fallback body{overflow:auto!important;height:auto!important}
-html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.callout,.tool-chip,#probFreeze,.mtc,#macroPanel,.st-chip,.pr-chip,#dupToast,[data-reveal],.fx-in){opacity:1!important;transform:none!important}
+html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.callout,.tool-chip,#probFreeze,.mtc,#macroPanel,.st-chip,.pr-chip,#dupToast,[data-reveal],.fx-in,.bodymap .hs){opacity:1!important;transform:none!important}
 </style>
 </head>
 <body>
@@ -987,7 +1027,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
                     </div>
                     <div class="ui-card week-card" data-panel="4">
                       <div class="ring-wrap">
-                        <svg viewBox="0 0 36 36"><circle class="bgc" cx="18" cy="18" r="15.9"/><circle class="fgc" id="weekRing" cx="18" cy="18" r="15.9" pathLength="100"/></svg>
+                        <svg viewBox="0 0 36 36"><circle class="bgc" cx="18" cy="18" r="15.9"/><circle class="fgc" id="weekRing" cx="18" cy="18" r="15.9" pathLength="100"/><circle class="bgc" cx="18" cy="18" r="12.1" style="stroke-width:3"/><circle class="fgc" id="weekRing2" cx="18" cy="18" r="12.1" pathLength="100" style="stroke:#C6F14E;stroke-width:3"/><circle class="bgc" cx="18" cy="18" r="8.3" style="stroke-width:2.6"/><circle class="fgc" id="weekRing3" cx="18" cy="18" r="8.3" pathLength="100" style="stroke:rgba(198,241,78,.5);stroke-width:2.6"/></svg>
                         <b id="weekPct">0%</b>
                       </div>
                       <div><div class="uc-head" style="margin-bottom:4px"><b><svg class="ic"><use href="#i-target"/></svg>This week</b></div>
@@ -1505,6 +1545,41 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
           </div>
           <p class="cmp-hint">Drag the slider to compare</p>
         </div>
+        <div class="g8">
+          <div class="ghead"><b><svg class="ic"><use href="#i-ruler"/></svg>Muscle map</b><span>Front · W12</span></div>
+          <div class="bm-wrap" id="bmWrap">
+            <svg class="bodymap" viewBox="0 0 120 220" aria-hidden="true">
+              <g class="sil">
+                <circle cx="60" cy="15" r="9.5"/>
+                <rect x="38" y="28" width="44" height="64" rx="14"/>
+                <rect x="42" y="88" width="36" height="26" rx="10"/>
+                <rect x="22" y="33" width="12" height="59" rx="6"/>
+                <rect x="86" y="33" width="12" height="59" rx="6"/>
+                <rect x="44" y="112" width="14" height="80" rx="7"/>
+                <rect x="62" y="112" width="14" height="80" rx="7"/>
+                <rect x="41" y="192" width="18" height="9" rx="4"/>
+                <rect x="61" y="192" width="18" height="9" rx="4"/>
+              </g>
+              <g class="hs-g">
+                <circle class="hs" cx="44" cy="35" r="3.2" style="transition-delay:0ms"/>
+                <circle class="hs" cx="76" cy="35" r="3.2" style="transition-delay:60ms"/>
+                <circle class="hs" cx="60" cy="50" r="3.2" style="transition-delay:120ms"/>
+                <circle class="hs" cx="60" cy="84" r="3.2" style="transition-delay:180ms"/>
+                <circle class="hs" cx="28" cy="62" r="3.2" style="transition-delay:240ms"/>
+                <circle class="hs" cx="92" cy="62" r="3.2" style="transition-delay:300ms"/>
+                <circle class="hs" cx="51" cy="128" r="3.2" style="transition-delay:360ms"/>
+                <circle class="hs" cx="69" cy="128" r="3.2" style="transition-delay:420ms"/>
+              </g>
+            </svg>
+            <div class="bm-legend">
+              <span><i></i>Shoulders</span>
+              <span><i></i>Chest</span>
+              <span><i></i>Core</span>
+              <span><i></i>Arms</span>
+              <span><i></i>Legs</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1661,6 +1736,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     <div class="frame" style="align-items:center;text-align:center">
       <div class="f1"><p class="display">Stop managing your<br>coaching business<br>across multiple tools.</p></div>
       <div class="f2"><p class="display" style="color:var(--dim)">Bring everything<br><span style="color:var(--txt)">into one workspace.</span></p></div>
+      <div class="startline" aria-hidden="true"></div>
       <div class="f-cta">
         <a class="btn acc" href="#pricing">Start Free<svg class="ic" style="width:14px;height:14px"><use href="#i-arrow"/></svg></a>
         <a class="btn ghost" href="#product">Explore the Product</a>
@@ -1818,7 +1894,7 @@ function boot(){
   }
 
   var GLST={p1:0,p2:0,p3:0,fin:0,alpha:0,coreVis:1,intro:0,introStart:null,
-            shards:true,s3end:1e9,finS:1e9,finE:1e9,mx:.5,my:.5};
+            shards:true,s3end:1e9,finS:1e9,finE:1e9,mx:.5,my:.5,prPop:false};
   var exScatter=[[-140,-80,-8],[140,-60,7],[-80,120,-6],[120,140,6]];
   var mealScatter=[[-150,-60,-8],[150,30,7],[-90,110,-5],[110,150,6]];
 
@@ -1869,6 +1945,8 @@ function boot(){
     $$('[data-panel]').forEach(function(el){el.classList.toggle('hl',+el.getAttribute('data-panel')===idx);});
     var wk4=eo(map(p4,.25,.6));
     var wr2=$('#weekRing'); if(wr2)wr2.style.strokeDashoffset=String(100-86*wk4);
+    var wr3=$('#weekRing2'); if(wr3)wr3.style.strokeDashoffset=String(100-72*eo(map(p4,.32,.66)));
+    var wr4=$('#weekRing3'); if(wr4)wr4.style.strokeDashoffset=String(100-58*eo(map(p4,.4,.72)));
     setNum($('#weekPct'),86*wk4);
 
     rev($('#s5head'),p5,.01,.14);
@@ -1960,6 +2038,15 @@ function boot(){
     var prEls=$$('.prv'),tg=[82.5,110,145],sta=[70,90,120],dec=[1,0,0];
     prEls.forEach(function(el,i){setNum(el,lerp(sta[i],tg[i],eo(map(p9,.42+i*.05,.66+i*.05))),dec[i]);});
     $$('.pr-chip').forEach(function(ch){ch.style.opacity=String(map(p9,.55,.68));});
+    if(p9>=.68&&!GLST.prPop){GLST.prPop=true;
+      $$('.pr-chip').forEach(function(ch,i){
+        ch.style.transition='transform .32s cubic-bezier(.34,1.56,.64,1)';
+        ch.style.transitionDelay=(i*60)+'ms';
+        ch.style.transform='scale(1)';void ch.offsetWidth;
+        ch.style.transform='scale(1.14)';
+        setTimeout(function(){ch.style.transitionDelay='0ms';ch.style.transform='scale(1)';},360+i*60);});}
+    else if(p9<.6&&GLST.prPop){GLST.prPop=false;
+      $$('.pr-chip').forEach(function(ch){ch.style.transition='';ch.style.transitionDelay='';ch.style.transform='';});}
 
     rev($('#meashead'),p10,.01,.1);
     $$('.mtc').forEach(function(c,i){var start=.04+i*.035,end=start+.18,kk=eo(map(p10,start,end));
@@ -1977,6 +2064,7 @@ function boot(){
     var ca=$('#cmpAfter'), cd=$('#cmpDiv');
     if(ca)ca.style.width=(100-dv)+'%';
     if(cd)cd.style.left=dv+'%';
+    var bmw=$('#bmWrap'); if(bmw)bmw.classList.toggle('on',eo(map(p10,.3,.72))>.42);
 
     rev($('#s11head'),p11,.01,.13,30);
     var nstg=$('#netStage'), W2=nstg?nstg.clientWidth:0, H2=nstg?nstg.clientHeight:0;
@@ -2038,7 +2126,9 @@ function boot(){
       card.classList.toggle('is-active',s13k>.35&&Math.abs(p13-(.38+i*.12))<.09);});
 
     if(S.s17){rev($('.f1'),p17,.08,.28);rev($('.f2'),p17,.18,.4,30);
-      rev($('.f-cta'),p17,.3,.5,24);rev($('.f-brand'),p17,.42,.62,18);}
+      rev($('.f-cta'),p17,.3,.5,24);rev($('.f-brand'),p17,.42,.62,18);
+      var sln=$('.startline');if(sln){var sv=eo(map(p17,.24,.52));
+        sln.style.transform='scaleX('+sv.toFixed(4)+')';sln.style.opacity=String(Math.min(1,sv*1.4));}}
 
     var s3end=(S.s3?S.s3._t+S.s3._h:0)||0;
     var finS=(S.s17?S.s17._t:0)||0, finE=finS+((S.s17?S.s17._h:0)||0);
