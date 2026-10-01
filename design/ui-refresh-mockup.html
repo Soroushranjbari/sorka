@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Coach OS — UI Refresh Mockup (Trainerize-inspired)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Vazirmatn:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ Board ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F1114; --surface:#171A1F; --surface2:#1D2127;
+  --line:#262A31; --line2:#1F232A;
+  --ink:#F5F6F8; --ink2:#B4B9C4; --ink3:#7E8492;
+  --accent:#C8F04B; --accent-deep:#8FB51E; --accent-ink:#1A2205; --accent-soft:rgba(200,240,75,.12);
+  --blue:#4D7CFE; --purple:#8B5CF6; --amber:#E5A93C; --red:#EF5B5B; --green:#2FBF71;
+  --r-card:16px; --r-btn:10px;
+}
+html,body{background:#0A0C0E;color:var(--ink);font-family:Vazirmatn,system-ui,sans-serif}
+body{padding:34px 24px 70px}
+h1.page{font-size:26px;font-weight:900;text-align:center}
+p.pagesub{color:var(--ink3);text-align:center;font-size:13.5px;margin-top:8px}
+p.pagesub b{color:var(--accent)}
+.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px auto 34px;max-width:1200px}
+.legend span{font-size:12px;color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+.board{display:flex;flex-wrap:wrap;gap:38px 34px;justify-content:center;align-items:flex-start;max-width:1560px;margin:0 auto}
+.cell{width:356px}
+.cell.wide{width:900px}
+.celllabel{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.celllabel .n{width:24px;height:24px;border-radius:7px;background:var(--accent);color:var(--accent-ink);font-weight:900;font-size:13px;display:grid;place-items:center;flex:none}
+.celllabel b{font-size:14.5px}
+.celllabel .sub{font-size:11.5px;color:var(--ink3);display:block;font-weight:400;margin-top:2px}
+.notes{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 15px;font-size:12.5px;color:var(--ink2);line-height:2}
+.notes b{color:var(--accent);font-weight:700}
+.notes li{margin-inline-start:16px;margin-bottom:3px}
+.new{display:inline-block;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:900;border-radius:5px;padding:1px 7px;vertical-align:2px;margin-inline-start:6px}
+
+/* ============ Phone frame ============ */
+.phone{width:356px;height:724px;background:var(--bg);border:9px solid #05070A;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 34px 70px -30px rgba(0,0,0,.9);display:flex;flex-direction:column;direction:ltr}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:24px;background:#05070A;border-radius:14px;z-index:20}
+.app{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:78px}
+.app::-webkit-scrollbar{display:none}
+
+/* client header */
+.chead{padding:44px 18px 12px;display:flex;align-items:flex-start;gap:10px}
+.chead-t{flex:1;min-width:0}
+.chead-eyebrow{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:900}
+.chead-title{font-size:24px;font-weight:900;letter-spacing:-.02em;margin-top:3px}
+.chead-a{display:flex;align-items:center;gap:8px}
+.pill{height:30px;padding:0 11px;border-radius:999px;background:var(--accent-soft);border:1px solid rgba(200,240,75,.3);color:var(--accent);font-size:12.5px;font-weight:900;display:flex;align-items:center;gap:5px}
+.bell{width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.bell i{position:absolute;top:5px;right:6px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid var(--surface)}
+.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3D4A22,#20260F);border:1.5px solid var(--accent);display:grid;place-items:center;font-size:11.5px;font-weight:900;color:var(--accent)}
+
+/* generic card */
+.cc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);margin:0 14px 12px;padding:14px}
+.cc.tight{padding:12px 14px}
+.sec{display:flex;align-items:center;justify-content:space-between;margin:16px 16px 9px}
+.sec-t{font-size:13px;font-weight:900;display:flex;align-items:center;gap:7px}
+.sec-c{font-size:10.5px;font-weight:900;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 8px}
+.muted{color:var(--ink3);font-size:12px}
+.row{display:flex;align-items:center;gap:9px}
+.btn{border:none;border-radius:var(--r-btn);font-family:inherit;font-weight:800;cursor:pointer;font-size:13px}
+.btn-lime{background:var(--accent);color:var(--accent-ink)}
+.btn-out{background:transparent;border:1px solid var(--line);color:var(--ink2)}
+.pbar{height:7px;border-radius:99px;background:#22262D;overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* momentum hero */
+.hero-m{background:linear-gradient(145deg,#1C2118,#14171C 60%);border:1px solid rgba(200,240,75,.22);border-radius:18px;margin:0 14px 12px;padding:15px;position:relative;overflow:hidden}
+.hero-m .eyebrow{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:900}
+.hero-m .big{font-size:15.5px;font-weight:900;margin-top:6px}
+.mm{display:flex;gap:9px;margin-top:12px}
+.mt{flex:1;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:9px 8px;text-align:center}
+.mt b{display:block;font-size:16.5px;font-weight:900}
+.mt span{font-size:9.5px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+
+/* habit checklist (NEW) */
+.hab{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line2);cursor:pointer;user-select:none}
+.hab:last-child{border-bottom:none}
+.hab .tick{width:24px;height:24px;border-radius:8px;border:2px solid #333941;flex:none;display:grid;place-items:center;transition:.15s}
+.hab .tick svg{opacity:0;transform:scale(.5);transition:.15s}
+.hab.done .tick{background:var(--accent);border-color:var(--accent)}
+.hab.done .tick svg{opacity:1;transform:scale(1)}
+.hab .txt{flex:1;min-width:0}
+.hab .txt b{display:block;font-size:13.5px;font-weight:800}
+.hab .txt span{font-size:11px;color:var(--ink3)}
+.hab.done .txt b{color:var(--ink3);text-decoration:line-through}
+.hab .hv{font-size:11.5px;font-weight:900;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:3px 8px}
+.hab-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.hab-top b{font-size:13px;font-weight:900}
+
+/* workout spotlight */
+.fhero{margin:0 14px 12px;border-radius:18px;padding:15px;background:linear-gradient(160deg,#2A3118 0%,#171A1F 55%);border:1px solid rgba(200,240,75,.18);position:relative;overflow:hidden}
+.fhero .chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:10.5px;font-weight:800;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:3px 9px;color:#fff}
+.fhero h3{font-size:20px;font-weight:900;margin:10px 0 2px;letter-spacing:-.02em}
+.fhero .who{font-size:11.5px;color:var(--ink2)}
+.fhero .meta{display:flex;gap:14px;margin-top:11px}
+.fhero .meta div{font-size:10.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.fhero .meta b{display:block;font-size:14px;color:var(--ink);font-family:'JetBrains Mono',monospace}
+.fhero .cta{display:flex;gap:8px;margin-top:13px}
+.fhero .cta .btn{flex:1;height:42px;display:flex;align-items:center;justify-content:center;gap:7px}
+
+/* bottom nav — 5 tabs (NEW) */
+.cnav{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:8px 6px 12px;z-index:15;direction:ltr}
+.cnav button{flex:1;background:none;border:none;color:var(--ink3);font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9.5px;font-weight:800;cursor:pointer;position:relative;padding-top:6px;border-radius:12px;transition:.15s}
+.cnav button svg{width:20px;height:20px}
+.cnav button.on{color:var(--accent)}
+.cnav button.on::before{content:"";position:absolute;top:0;width:26px;height:3px;border-radius:99px;background:var(--accent)}
+.cnav .dot{position:absolute;top:4px;right:calc(50% - 16px);width:8px;height:8px;background:var(--red);border-radius:50%;border:1.5px solid #0D0F13}
+
+/* coach mobile */
+.mhead{padding:44px 16px 10px;display:flex;align-items:center;justify-content:space-between}
+.brandmini{display:flex;align-items:center;gap:8px;font-weight:900;font-size:13px;letter-spacing:.06em;font-style:italic}
+.brandmini .mark{width:26px;height:26px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:900}
+.mstrip{display:flex;gap:8px;margin:0 14px 12px;overflow-x:auto;scrollbar-width:none}
+.mstrip::-webkit-scrollbar{display:none}
+.dchip{flex:none;width:52px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-align:center;padding:8px 0;cursor:pointer}
+.dchip span{display:block;font-size:9.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.dchip b{font-size:16px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.dchip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.dchip.on span{color:var(--accent-ink);opacity:.75}
+.ev{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line2);align-items:center}
+.ev:last-child{border-bottom:none}
+.ev .tm{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:var(--accent);width:48px;flex:none}
+.ev .who{flex:1;min-width:0}
+.ev .who b{display:block;font-size:13.5px}
+.ev .who span{font-size:11px;color:var(--ink3)}
+.badge{font-size:10px;font-weight:900;border-radius:999px;padding:3px 9px}
+.b-lime{background:var(--accent-soft);color:var(--accent)}
+.b-blue{background:rgba(77,124,254,.15);color:#7EA0FF}
+.b-red{background:rgba(239,91,91,.15);color:#FF8484}
+.b-gray{background:#22262D;color:var(--ink3)}
+.fab{position:absolute;bottom:82px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;box-shadow:0 10px 26px -6px rgba(200,240,75,.45);z-index:16;border:none;cursor:pointer}
+
+/* desktop dashboard */
+.browser{background:var(--bg);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 60px -30px #000}
+.bbar{height:38px;background:#0B0D10;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 14px}
+.bbar i{width:11px;height:11px;border-radius:50%;background:#2A2F37;display:block}
+.bbar .url{margin-inline-start:12px;font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace}
+.dash{display:flex;direction:ltr}
+.dside{width:178px;background:#0B0D10;border-right:1px solid var(--line);padding:16px 10px;flex:none}
+.dside .it{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;color:var(--ink3);font-size:12.5px;font-weight:700;margin-bottom:3px}
+.dside .it.on{background:var(--accent);color:var(--accent-ink);font-weight:900}
+.dside .it .cnt{margin-inline-start:auto;background:var(--red);color:#fff;font-size:9.5px;border-radius:99px;padding:1px 6px;font-weight:900}
+.dside .lbl{font-size:9.5px;letter-spacing:.14em;color:#4A515C;text-transform:uppercase;padding:14px 10px 6px;font-weight:900}
+.dmain{flex:1;padding:18px 20px 24px;min-width:0}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px}
+.dhead .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:900}
+.dhead h2{font-size:20px;font-weight:900;margin-top:4px;letter-spacing:-.02em}
+.dhead .sub{font-size:12px;color:var(--ink3);margin-top:3px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.kpi span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:900}
+.kpi b{display:block;font-size:26px;font-weight:900;font-family:'JetBrains Mono',monospace;margin-top:4px;letter-spacing:-.03em}
+.kpi em{font-style:normal;font-size:10.5px;color:var(--accent);font-weight:800}
+.kpi em.warn{color:var(--amber)}
+.dgrid{display:grid;grid-template-columns:1.25fr .95fr;gap:12px}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:15px 16px}
+.dcard-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.dcard-h b{font-size:13.5px;font-weight:900;display:flex;gap:7px;align-items:center}
+.att{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line2)}
+.att:last-child{border-bottom:none}
+.icw{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none}
+.att .t{flex:1;min-width:0}
+.att .t b{display:block;font-size:13px}
+.att .t span{font-size:11.5px;color:var(--ink3)}
+.tline{position:relative;padding-inline-start:2px}
+.tl{display:flex;gap:12px;position:relative;padding-bottom:14px}
+.tl:last-child{padding-bottom:0}
+.tl::before{content:"";position:absolute;left:53px;top:26px;bottom:-2px;width:2px;background:var(--line)}
+.tl:last-child::before{display:none}
+.tl .h{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;width:44px;flex:none;color:var(--ink2);padding-top:12px}
+.tl .card{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.tl .card .t{flex:1;min-width:0}
+.tl .card .t b{font-size:13px;display:block}
+.tl .card .t span{font-size:11px;color:var(--ink3)}
+.tl .card .acts{display:flex;gap:5px}
+.tl .card .acts button{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--ink3);cursor:pointer;display:grid;place-items:center}
+.tl .card .acts button.ok:hover{color:var(--green);border-color:var(--green)}
+.tl .card .acts button.no:hover{color:var(--red);border-color:var(--red)}
+.tl.now .card{border-color:rgba(200,240,75,.4);box-shadow:0 0 0 3px rgba(200,240,75,.07)}
+.nowtag{font-size:9px;font-weight:900;background:var(--accent);color:var(--accent-ink);border-radius:5px;padding:1px 6px;margin-inline-start:6px;vertical-align:2px}
+
+/* tokens panel */
+.tokens{width:100%;max-width:1100px;margin:14px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px;direction:rtl}
+.tokens h3{font-size:15.5px;font-weight:900;margin-bottom:4px}
+.tokens .ts{font-size:12px;color:var(--ink3);margin-bottom:16px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.tbox{background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:14px}
+.tbox h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.sw{display:flex;gap:7px;margin-bottom:8px}
+.sw i{width:34px;height:34px;border-radius:9px;display:block;border:1px solid rgba(255,255,255,.09)}
+.tline2{font-size:12px;color:var(--ink2);display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line2);font-family:'JetBrains Mono',monospace}
+.tline2:last-child{border:none}
+.tline2 b{color:var(--ink)}
+footer{max-width:1100px;margin:34px auto 0;text-align:center;font-size:12px;color:var(--ink3);line-height:2.2}
+footer b{color:var(--accent)}
+@media(max-width:760px){.cell,.cell.wide{width:100%;max-width:390px}.phone{width:100%}}
+</style>
+</head>
+<body>
+
+<h1 class="page">موکاپ بازطراحی UI — با الهام از Trainerize</h1>
+<p class="pagesub">چهار صفحه کلیدی + پنل توکن‌های طراحی · تغییری در <b>index.html</b> داده نشده — فقط طرح پیشنهادی</p>
+
+<div class="legend">
+  <span>۱ · نوار ۵ تب شاگرد</span>
+  <span>۲ · کارت عادت روزانه (جدید)</span>
+  <span>۳ · موبایل مربی: تب Calendar + FAB</span>
+  <span>۴ · داشبورد action-first</span>
+  <span>۵ · توکن‌های مشترک</span>
+</div>
+
+<div class="board">
+
+  <!-- ========== SCREEN 1+2 : CLIENT TODAY ========== -->
+  <div class="cell">
+    <div class="celllabel"><span class="n">۱</span><div><b>شاگرد — صفحه Today</b><span class="sub">هدر جدید + هیرو مومنتوم + کارت عادت‌ها + نوار ۵ تب</span></div></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="app">
+        <div class="chead">
+          <div class="chead-t">
+            <div class="chead-eyebrow">Build Better Habits</div>
+            <div class="chead-title">Today</div>
+          </div>
+          <div class="chead-a">
+            <span class="pill">🔥 12</span>
+            <span class="bell"><i></i></span>
+            <span class="av">AR</span>
+          </div>
+        </div>
+
+        <div class="hero-m">
+          <div class="eyebrow">Daily Momentum</div>
+          <div class="big">Perfect progress, Ali — keep applying pressure 💪</div>
+          <div class="mm">
+            <div class="mt"><b class="mono">12</b><span>Day streak</span></div>
+            <div class="mt"><b class="mono">480</b><span>Points</span></div>
+            <div class="mt"><b class="mono">6/7</b><span>This week</span></div>
+          </div>
+        </div>
+
+        <div class="sec"><span class="sec-t">⚡ Action needed</span><span class="sec-c">2</span></div>
+        <div class="cc tight" style="border-color:rgba(229,169,60,.35)">
+          <div class="row"><span class="badge b-lime" style="background:rgba(229,169,60,.15);color:#F0B457">⏰</span>
+          <div style="flex:1"><b style="font-size:13px">Coach reminder — 3 days no workout</b><div class="muted">Start your session or send a check-in</div></div>
+          <button class="btn btn-lime" style="padding:8px 13px;font-size:12px">Start</button></div>
+        </div>
+
+        <div class="sec"><span class="sec-t">✅ Habits <span class="new">NEW</span></span><span class="sec-c mono" id="habcount">4/6</span></div>
+        <div class="cc" id="habcard">
+          <div class="hab-top"><b>Today's habits</b><span class="muted mono" id="habpct">67%</span></div>
+          <div class="pbar" style="margin-bottom:6px"><i id="habbar" style="width:67%"></i></div>
+          <div class="hab done" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Drink 2L water</b><span>Hydration · from food log</span></div><span class="hv">2.0/2L</span></div>
+          <div class="hab done" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Protein target</b><span>165 g of 165 g</span></div><span class="hv">✓</span></div>
+          <div class="hab done" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Morning check-in</b><span>Sent to coach · 07:40</span></div><span class="hv">✓</span></div>
+          <div class="hab done" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Steps 8,000</b><span>Manual log · 8,240</span></div><span class="hv">8.2k</span></div>
+          <div class="hab" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Stretch 10 min</b><span>Recovery · before bed</span></div><span class="hv" style="background:#22262D;color:var(--ink3)">10m</span></div>
+          <div class="hab" data-h><span class="tick"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A2205" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="txt"><b>Sleep by 23:00</b><span>Bed time · from profile</span></div><span class="hv" style="background:#22262D;color:var(--ink3)">23:00</span></div>
+        </div>
+
+        <div class="sec"><span class="sec-t">💪 Today's Workout</span><span class="muted mono">60 min</span></div>
+        <div class="fhero">
+          <div class="chips"><span class="chip">Push</span><span class="chip">7 exercises · 24 sets</span></div>
+          <h3>Push A — Strength</h3>
+          <div class="who"><b>Soroush</b> · Muscle Gain</div>
+          <div class="meta">
+            <div>Duration<b>60m</b></div>
+            <div>Exercises<b>7</b></div>
+            <div>Sets<b>24</b></div>
+          </div>
+          <div class="cta">
+            <button class="btn btn-lime">▶ Start Workout</button>
+            <button class="btn btn-out" style="width:46px;flex:none">☰</button>
+          </div>
+        </div>
+
+        <div class="sec"><span class="sec-t">🥗 Nutrition</span><span class="muted mono">1,720 / 2,850 kcal</span></div>
+        <div class="cc tight">
+          <div class="row" style="justify-content:space-between"><b style="font-size:13px">Left today</b><span class="badge b-lime mono">1,130 kcal</span></div>
+          <div class="pbar" style="margin-top:9px"><i style="width:60%"></i></div>
+          <div class="row" style="margin-top:9px;gap:6px"><span class="chip">P 128g</span><span class="chip">C 180g</span><span class="chip">F 62g</span></div>
+        </div>
+      </div>
+
+      <!-- 5-tab bottom nav (NEW) -->
+      <nav class="cnav">
+        <button class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>Today</button>
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 17.5 17.5"/><path d="M21 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3"/><path d="M3 10a1 1 0 0 0 1-1V6a1 1 0 0 0 1-1h3"/><path d="M3 21v-3a1 1 0 0 1 1-1h3"/><path d="M14 3h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3"/><rect x="2" y="12" width="6" height="6" rx="1"/><rect x="16" y="6" width="6" height="6" rx="1"/></svg>Training</button>
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>Nutrition</button>
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg>Progress</button>
+        <button><span class="dot"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Chat</button>
+      </nav>
+    </div>
+    <div class="notes">
+      <b>تغییرات:</b>
+      <ul>
+        <li>نوار پایین از <b>۷ تب → ۵ تب</b>: Calendar در Today و پروفایل، آواتار در هدر</li>
+        <li><b>کارت عادت روزانه</b> (NEW): داده‌ها از NLOGS، چک‌این‌ها و لاگ آب پر می‌شوند — تیک‌خوردنی است (امتحان کنید)</li>
+        <li>هیرو مومنتوم سه‌تایی استریک/امتیاز/هفته با اعداد مونو</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ========== SCREEN 3 : COACH MOBILE ========== -->
+  <div class="cell">
+    <div class="celllabel"><span class="n">۲</span><div><b>مربی — موبایل</b><span class="sub">تب Calendar مستقل + FAB شناور + نوار ۵ تب</span></div></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="app">
+        <div class="mhead">
+          <div class="brandmini"><span class="mark">C</span> COACHMINT</div>
+          <div class="row" style="gap:8px">
+            <span class="bell"><i></i></span>
+            <span class="av">SK</span>
+          </div>
+        </div>
+
+        <div class="sec" style="margin-top:2px"><span class="sec-t">📅 Thursday, Sep 30</span><span class="sec-c mono">4 sessions</span></div>
+        <div class="mstrip">
+          <div class="dchip"><span>Mon</span><b>28</b></div>
+          <div class="dchip"><span>Tue</span><b>29</b></div>
+          <div class="dchip on"><span>Thu</span><b>30</b></div>
+          <div class="dchip"><span>Fri</span><b>1</b></div>
+          <div class="dchip"><span>Sat</span><b>2</b></div>
+          <div class="dchip"><span>Sun</span><b>3</b></div>
+        </div>
+
+        <div class="cc">
+          <div class="ev">
+            <span class="tm">09:00</span>
+            <span class="av" style="width:34px;height:34px;border:none;background:#2E3A18;color:#C8F04B">AR</span>
+            <div class="who"><b>Ali Rezaei — Push A</b><span>Training session · 1h</span></div>
+            <span class="badge b-lime">Attended</span>
+          </div>
+          <div class="ev">
+            <span class="tm">11:00</span>
+            <span class="av" style="width:34px;height:34px;border:none;background:#1E2A44;color:#7EA0FF">SA</span>
+            <div class="who"><b>Sara Ahmadi — Check-in</b><span>Assessment · 45m</span></div>
+            <span class="badge b-blue">Now</span>
+          </div>
+          <div class="ev">
+            <span class="tm">14:30</span>
+            <span class="av" style="width:34px;height:34px;border:none;background:#3A2430;color:#F08BA8">MK</span>
+            <div class="who"><b>Mohammad Karimi — Leg A</b><span>Training session · 1h</span></div>
+            <span class="badge b-gray">Upcoming</span>
+          </div>
+          <div class="ev">
+            <span class="tm">17:00</span>
+            <span class="av" style="width:34px;height:34px;border:none;background:#2E3A18;color:#C8F04B">NH</span>
+            <div class="who"><b>Neda Hosseini — Measurement</b><span>Measurement · 30m</span></div>
+            <span class="badge b-gray">Upcoming</span>
+          </div>
+        </div>
+
+        <div class="sec"><span class="sec-t">🔔 Needs attention</span><span class="sec-c">3</span></div>
+        <div class="cc tight">
+          <div class="row" style="padding:8px 0;border-bottom:1px solid var(--line2)">
+            <span class="icw" style="background:rgba(239,91,91,.14);color:#FF8484">✕</span>
+            <div style="flex:1"><b style="font-size:13px">Reza Moradi</b><div class="muted">Missed 2 sessions · 9 days idle</div></div>
+            <span class="badge b-red">Act</span>
+          </div>
+          <div class="row" style="padding:8px 0;border-bottom:1px solid var(--line2)">
+            <span class="icw" style="background:rgba(229,169,60,.14);color:#F0B457">📋</span>
+            <div style="flex:1"><b style="font-size:13px">Maryam Sadeghi</b><div class="muted">Measurement due</div></div>
+            <span class="badge b-gray">Nudge</span>
+          </div>
+          <div class="row" style="padding:8px 0">
+            <span class="icw" style="background:rgba(77,124,254,.14);color:#7EA0FF">💬</span>
+            <div style="flex:1"><b style="font-size:13px">Hamed Naderi</b><div class="muted">Waiting on your reply</div></div>
+            <span class="badge b-blue">Reply</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="fab" title="New session">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+
+      <nav class="cnav">
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>Today</button>
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clients</button>
+        <button class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Calendar</button>
+        <button><span class="dot"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Messages</button>
+        <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></svg>More</button>
+      </nav>
+    </div>
+    <div class="notes">
+      <b>تغییرات:</b>
+      <ul>
+        <li>تب <b>Calendar</b> مستقل به نوار پایین اضافه شد (پرکاربردترین صفحه مربی در موبایل)</li>
+        <li><b>FAB وسط نوار</b> برای + New Session — الگوی همیشگی Trainerize</li>
+        <li>لیست جلسات امروز بالای صفحه با آواتار رنگی و وضعیت حضور</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ========== SCREEN 4 : COACH DASHBOARD (DESKTOP) ========== -->
+  <div class="cell wide">
+    <div class="celllabel"><span class="n">۳</span><div><b>مربی — داشبورد دسکتاپ (action-first)</b><span class="sub">توجه شاگردان اول · KPI فشرده · تایم‌لاین امروز با ✓/✗ حضور</span></div></div>
+    <div class="browser">
+      <div class="bbar"><i></i><i></i><i></i><span class="url">localhost:8888/#dash</span></div>
+      <div class="dash">
+        <aside class="dside">
+          <div class="it on">▦ Dashboard</div>
+          <div class="it">👥 Clients <span class="cnt">3</span></div>
+          <div class="it">🏋 Workouts</div>
+          <div class="it">📅 Calendar</div>
+          <div class="it">📈 Progress</div>
+          <div class="it">🥗 Nutrition</div>
+          <div class="lbl">Workspace</div>
+          <div class="it">✉ Messages <span class="cnt">3</span></div>
+          <div class="it">🏆 Challenges</div>
+          <div class="it">📚 Library</div>
+          <div class="it">🗂 Notes</div>
+          <div class="it">⚙ Settings</div>
+        </aside>
+        <main class="dmain">
+          <div class="dhead">
+            <div>
+              <div class="k">Dashboard · Thu, Sep 30</div>
+              <h2>Welcome back, Soroush 👋</h2>
+              <div class="sub">3 signals need your intervention today.</div>
+            </div>
+            <div class="row" style="gap:9px">
+              <button class="btn btn-out" style="padding:10px 15px">✉ Messages <span class="badge b-lime" style="margin-inline-start:5px">3</span></button>
+              <button class="btn btn-lime" style="padding:10px 17px">+ Create Workout</button>
+            </div>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Total clients</span><b>12</b><em>8 active</em></div>
+            <div class="kpi"><span>Sessions today</span><b>4</b><em>1 completed</em></div>
+            <div class="kpi"><span>Completion</span><b>87%</b><em class="warn">2 missed</em></div>
+            <div class="kpi"><span>Hours / week</span><b>18.5</b><em>Thu busiest</em></div>
+          </div>
+
+          <div class="dgrid">
+            <!-- attention first -->
+            <div class="dcard" style="border-color:rgba(229,169,60,.3)">
+              <div class="dcard-h"><b>🔔 Clients needing attention</b><span class="badge" style="background:rgba(229,169,60,.15);color:#F0B457">3</span></div>
+              <div class="att">
+                <span class="icw" style="background:rgba(239,91,91,.14);color:#FF8484">✕</span>
+                <div class="t"><b>Reza Moradi <span style="color:var(--ink3);font-weight:500">· Missed session</span></b><span>Last workout 9 days ago · 2 absences this week</span></div>
+                <button class="btn btn-out" style="padding:7px 13px;font-size:12px">Message</button>
+              </div>
+              <div class="att">
+                <span class="icw" style="background:rgba(229,169,60,.14);color:#F0B457">⏳</span>
+                <div class="t"><b>Maryam Sadeghi <span style="color:var(--ink3);font-weight:500">· Measurement due</span></b><span>Weekly check-in reminder not answered</span></div>
+                <button class="btn btn-out" style="padding:7px 13px;font-size:12px">Nudge</button>
+              </div>
+              <div class="att">
+                <span class="icw" style="background:rgba(77,124,254,.14);color:#7EA0FF">💬</span>
+                <div class="t"><b>Hamed Naderi <span style="color:var(--ink3);font-weight:500">· Waiting on your reply</span></b><span>“Can I swap Thursday Pull A to Friday?”</span></div>
+                <button class="btn btn-lime" style="padding:7px 13px;font-size:12px">Reply</button>
+              </div>
+              <div class="att">
+                <span class="icw" style="background:rgba(43,191,113,.14);color:#5EE2A0">📋</span>
+                <div class="t"><b>Sara Ahmadi <span style="color:var(--ink3);font-weight:500">· Intake form</span></b><span>PAR-Q submitted 2 h ago — review before 11:00</span></div>
+                <button class="btn btn-out" style="padding:7px 13px;font-size:12px">Review</button>
+              </div>
+            </div>
+
+            <!-- today timeline -->
+            <div class="dcard">
+              <div class="dcard-h"><b>📅 Today's timeline</b><a style="font-size:12px;color:var(--accent);cursor:pointer">Open calendar →</a></div>
+              <div class="tline">
+                <div class="tl">
+                  <span class="h">09:00</span>
+                  <div class="card">
+                    <span class="av" style="width:32px;height:32px;border:none;background:#2E3A18;color:#C8F04B;font-size:10.5px">AR</span>
+                    <div class="t"><b>Ali Rezaei · Push A</b><span>Training · 1h</span></div>
+                    <span class="badge b-lime">Done</span>
+                  </div>
+                </div>
+                <div class="tl now">
+                  <span class="h">11:00</span>
+                  <div class="card">
+                    <span class="av" style="width:32px;height:32px;border:none;background:#1E2A44;color:#7EA0FF;font-size:10.5px">SA</span>
+                    <div class="t"><b>Sara Ahmadi · Check-in<span class="nowtag">NOW</span></b><span>Assessment · 45m</span></div>
+                    <div class="acts"><button class="ok" title="Attended">✓</button><button class="no" title="Missed">✕</button></div>
+                  </div>
+                </div>
+                <div class="tl">
+                  <span class="h">14:30</span>
+                  <div class="card">
+                    <span class="av" style="width:32px;height:32px;border:none;background:#3A2430;color:#F08BA8;font-size:10.5px">MK</span>
+                    <div class="t"><b>Mohammad Karimi · Leg A</b><span>Training · 1h</span></div>
+                    <div class="acts"><button class="ok">✓</button><button class="no">✕</button></div>
+                  </div>
+                </div>
+                <div class="tl">
+                  <span class="h">17:00</span>
+                  <div class="card">
+                    <span class="av" style="width:32px;height:32px;border:none;background:#2E3A18;color:#C8F04B;font-size:10.5px">NH</span>
+                    <div class="t"><b>Neda Hosseini · Measurement</b><span>Measurement · 30m</span></div>
+                    <div class="acts"><button class="ok">✓</button><button class="no">✕</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div class="notes">
+      <b>تغییرات:</b>
+      <ul>
+        <li>ترتیب برعکس شد: اول <b>Clients needing attention</b> با دکمه اکشن مستقیم، بعد KPI</li>
+        <li>KPIها فشرده‌شده (۴ عدد بزرگ مونو بدون زیرمتن‌های ریز)</li>
+        <li>لیست امروز به <b>تایم‌لاین عمودی</b> با حالت NOW و دکمه‌های ✓/✗ حضور — جایگزین timeline افقی فعلی</li>
+        <li>سایدبار: badge قرمز فقط روی دو مورد واقعاً فوری</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ========== TOKENS ========== -->
+  <div class="cell wide">
+    <div class="celllabel"><span class="n">۴</span><div><b>توکن‌های طراحی مشترک</b><span class="sub">یک‌بار تعریف → همه صفحات از همین مقیاس استفاده کنند</span></div></div>
+    <div class="tokens">
+      <h3>Design tokens پیشنهادی</h3>
+      <div class="ts">مقیاس‌های جایگزین paddingهای پراکنده فعلی (14/16/18/20/40) و radiusهای نامنظم</div>
+      <div class="tgrid">
+        <div class="tbox">
+          <h4>Spacing</h4>
+          <div class="tline2"><span>--sp-1</span><b>6px</b></div>
+          <div class="tline2"><span>--sp-2</span><b>10px</b></div>
+          <div class="tline2"><span>--sp-3</span><b>16px</b></div>
+          <div class="tline2"><span>--sp-4</span><b>24px</b></div>
+          <div class="tline2"><span>--sp-5</span><b>32px</b></div>
+        </div>
+        <div class="tbox">
+          <h4>Radius</h4>
+          <div class="tline2"><span>card</span><b>16px</b></div>
+          <div class="tline2"><span>button / input</span><b>10px</b></div>
+          <div class="tline2"><span>chip / pill</span><b>999px</b></div>
+          <div class="tline2"><span>phone frame</span><b>44px</b></div>
+        </div>
+        <div class="tbox">
+          <h4>Type scale</h4>
+          <div class="tline2"><span>display</span><b>28 / 900</b></div>
+          <div class="tline2"><span>title</span><b>20 / 900</b></div>
+          <div class="tline2"><span>body</span><b>15 / 500</b></div>
+          <div class="tline2"><span>caption</span><b>13 / 400</b></div>
+          <div class="tline2"><span>label</span><b>11 / 900 · tracked</b></div>
+        </div>
+        <div class="tbox">
+          <h4>Color — default dark</h4>
+          <div class="sw">
+            <i style="background:#0F1114"></i><i style="background:#171A1F"></i><i style="background:#C8F04B"></i><i style="background:#4D7CFE"></i><i style="background:#E5A93C"></i><i style="background:#EF5B5B"></i>
+          </div>
+          <div class="tline2"><span>bg / surface / accent</span><b>#0F1114 · #171A1F · #C8F04B</b></div>
+          <div class="tline2"><span>Mono numbers</span><b>JetBrains Mono</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <b>قانون کلی:</b> عدد/درصد/ساعت ← همیشه <b>JetBrains Mono</b> · رنگ برند فقط در CTA، تب فعال و چارت · عنوان‌ها با <b>tracking منفی</b> و متن زیرین با اندازه و رنگ ثابت.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  موکاپ تعاملی: روی عادت‌های کارت Today و تب‌های نوار پایین کلیک کنید.<br>
+  مرحله بعد پس از تأیید: پیاده‌سازی در <b>index.html</b> + bump کردن <b>sw.js CACHE</b> + تست‌های <b>npm test</b>.
+</footer>
+
+<script>
+// habit toggle + live counter
+document.querySelectorAll('[data-h]').forEach(h=>{
+  h.addEventListener('click',()=>{
+    h.classList.toggle('done');
+    const all=[...document.querySelectorAll('[data-h]')];
+    const done=all.filter(x=>x.classList.contains('done')).length;
+    const pct=Math.round(done/all.length*100);
+    document.getElementById('habcount').textContent=done+'/'+all.length;
+    document.getElementById('habpct').textContent=pct+'%';
+    document.getElementById('habbar').style.width=pct+'%';
+  });
+});
+// bottom-nav active state (visual demo)
+document.querySelectorAll('.cnav').forEach(nav=>{
+  nav.querySelectorAll('button').forEach((b,i)=>{
+    b.addEventListener('click',()=>{
+      nav.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      b.querySelector('.dot')?.remove();
+    });
+  });
+});
+// day chips
+document.querySelectorAll('.mstrip .dchip').forEach(d=>{
+  d.addEventListener('click',()=>{
+    document.querySelectorAll('.mstrip .dchip').forEach(x=>x.classList.remove('on'));
+    d.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
