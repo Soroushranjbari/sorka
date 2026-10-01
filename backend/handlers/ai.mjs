@@ -32,6 +32,12 @@ const AI_BASE = (process.env.AI_BASE_URL || 'https://openrouter.ai/api/v1').repl
 const AI_MODELS = (process.env.AI_MODELS ||
   'openrouter/free,qwen/qwen3.8-27b:free,google/gemma-4-31b-it:free')
   .split(',').map((s) => s.trim()).filter(Boolean);
+/* v18.75 — plan 1ه: IMAGE chain. Kept separate from the text chain because a
+   text-only model silently DROPS the photo (or 400s), so a picture must never
+   fall into it. Free vision models rotate — override with AI_VISION_MODELS. */
+const AI_VISION_MODELS = (process.env.AI_VISION_MODELS ||
+  'openrouter/free,google/gemini-2.0-flash-exp:free,qwen/qwen-2.5-vl-72b-instruct:free')
+  .split(',').map((s) => s.trim()).filter(Boolean);
 /* Draft bodies carry the exercise catalog (~25 rows) + context — 64 KB is generous. */
 const MAX_BYTES = 64_000;
 const UPSTREAM_TIMEOUT_MS = 45_000;
@@ -102,8 +108,8 @@ function buildPrompt(ctx, catalog) {
 /** Try every free model in the chain until one yields a VALID answer.
  *  `messages` is the full chat-completions message array; `validate` turns the
  *  raw content into the final value (or null to reject and try the next model). */
-async function callModel(messages, validate) {
-  for (const model of AI_MODELS) {
+async function callModel(messages, validate, models) {
+  for (const model of (models && models.length ? models : AI_MODELS)) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), UPSTREAM_TIMEOUT_MS);
     try {
@@ -1053,23 +1059,36 @@ function parseNutri(raw) {
   if (!reply) return null;
   return { reply, log: d.log || null };
 }
+/* v18.75 — plan 1ه: the vision entry point. Returns null when NO model in the
+   chain could read the image, which the caller turns into an honest message. */
+const callVision = (messages, validate) => callModel(messages, validate, AI_VISION_MODELS);
 /** POST /api/ai/nutri — the student-facing Nutrition Assistant. */
 async function nutri(req, st) {
   const r = rateLimit(`ai-nutri:${ipOf(req)}`, 30, 60_000);
   if (!r.ok) return tooMany(r.retryAfter);
-  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, 60_000);
-  if (big) return tooLarge(60_000);
+  /* v18.75 — plan 1ه: an attached photo rides in the SAME body, so the cap has
+     to leave room for a downscaled JPEG data-URL (≈512px / q0.6 ≈ 60-90 KB). */
+  const NUTRI_MAX = 400_000;
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, NUTRI_MAX);
+  if (big) return tooLarge(NUTRI_MAX);
   if (bad) return badJson();
   const code = String(body?.code || '').trim().toUpperCase().slice(0, 24);
   const message = String(body?.message || '').trim().slice(0, 1500);
   const clientName = String(body?.client || '').trim().slice(0, 80);
   const lang = body?.lang === 'fa' ? 'fa' : 'en';
-  if (!code || !message || !clientName) return j(400, { ok: false, error: 'bad-request' });
+  /* photo: ONLY a data: image URL, hard-capped — never a remote URL (SSRF). */
+  const photo = (typeof body?.photo === 'string' &&
+    /^data:image\/(?:jpeg|jpg|png|webp);base64,[A-Za-z0-9+/=]+$/u.test(body.photo) &&
+    body.photo.length <= 380_000) ? body.photo : '';
+  const ask = message || (photo ? (lang === 'fa'
+    ? 'کالری و ماکروهای این عکس غذا را تخمین بزن و ثبتشان کن.'
+    : 'Estimate the calories and macros of this food photo and log them.') : '');
+  if (!code || !ask || !clientName) return j(400, { ok: false, error: 'bad-request' });
   const { ws, meta } = await wsByCode(st, code);
   if (!ws || !meta || !meta.data) return j(404, { ok: false, error: 'workspace-not-found' });
   const d = meta.data;
   /* SAFETY FIRST — deterministic, before quota and before any model call. */
-  if (SAFETY_RE.test(message)) {
+  if (SAFETY_RE.test(ask)) {
     return j(200, { ok: true, safety: true, reply: nutriSafetyReply(lang) });
   }
   /* Quota on the WORKSPACE OWNER (students have no account of their own). */
@@ -1106,14 +1125,40 @@ async function nutri(req, st) {
   ].join('\n');
   const user = [
     `Today for the student: ${dateISO} (day-of-week index ${dow}, 0=Monday). Hour: ${hour}.`,
-    `The student says: "${message}"`,
+    `The student says: "${ask}"`,
     '=== ENGINE (deterministic, ground truth) ===',
     JSON.stringify(engine),
     '=== FOOD LIBRARY (pick names EXACTLY from here) ===',
     foodList || '(empty)'
   ].join('\n');
-  const out = await callModel([{ role: 'system', content: sys }, { role: 'user', content: user }], parseNutri);
-  if (!out) return j(502, { ok: false, error: 'ai-upstream' });
+  /* v18.75 — plan 1ه: with a photo the user content becomes an ARRAY so the
+     vision model actually receives the pixels. Without one NOTHING changes. */
+  let out;
+  if (photo) {
+    const visionUser = user + '\n=== ATTACHED PHOTO ===\n' +
+      'The student attached a PHOTO of their food. Read the items AND the portion sizes from the image, ' +
+      'match them to the FOOD LIBRARY above, then return the log object. ' +
+      'Open with one short sentence saying the numbers are a visual estimate.';
+    out = await callVision([
+      { role: 'system', content: sys },
+      { role: 'user', content: [{ type: 'text', text: visionUser }, { type: 'image_url', image_url: { url: photo } }] }
+    ], parseNutri);
+    if (!out) {
+      /* No vision model answered — be honest and NEVER invent a log. */
+      await st.setJSON(ckey, used + 1);
+      return j(200, {
+        ok: true,
+        reply: lang === 'fa'
+          ? 'عکست رسید، ولی مدل تحلیل تصویر الان در دسترس نیست. مواد و مقدارشان را بنویس تا همان‌جا برایت ثبتشان کنم.'
+          : "I got the photo, but the image model is unavailable right now. Tell me the items and their amounts and I'll log them for you.",
+        engine: { targets: engine.targets, consumed: engine.consumed, remaining: engine.remaining },
+        usage: { chatToday: used + 1, chatMax: CHAT_DAILY }
+      });
+    }
+  } else {
+    out = await callModel([{ role: 'system', content: sys }, { role: 'user', content: user }], parseNutri);
+    if (!out) return j(502, { ok: false, error: 'ai-upstream' });
+  }
   const log = parseNutriLog(out.parsed.log, d, foodsCatalog);
   await st.setJSON(ckey, used + 1);
   return j(200, { ok: true, reply: out.parsed.reply, log: log || undefined, engine: { targets: engine.targets, consumed: engine.consumed, remaining: engine.remaining }, model: out.model, usage: { chatToday: used + 1, chatMax: CHAT_DAILY } });
