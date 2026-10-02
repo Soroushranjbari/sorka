@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='22' fill='%2312151B'/%3E%3Cpath d='M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z' fill='%23C8F04B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -430,7 +430,7 @@ html[dir="rtl"] .tbl tbody tr[data-act]:hover td:first-child{box-shadow:inset -3
 .set-row .t{font-weight:600;font-size:13.5px}
 .set-row .d{font-size:12.5px;color:var(--ink2);margin-top:2px}
 /* v17.6 — light-theme polish: sectioning, focus, scrollbars, empty states */
-.sec-t{display:flex;align-items:center;gap:10px;margin:24px 0 12px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.sec-t{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:900;color:var(--ink)}
 .sec-t::after{content:'';flex:1;height:1px;background:var(--line)}
 .sec-t .bdg{letter-spacing:0}
 html[lang="fa"] .sec-t{letter-spacing:0}
@@ -715,17 +715,26 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .vid .lbl{position:absolute;top:6px;inset-inline-start:8px;font-size:10px;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:1px 7px;border-radius:6px}
 .composer{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line2);background:var(--surface)}
 .clientwrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 20px;background:var(--bg)}
-.phone{width:410px;max-width:100%;height:min(870px,94vh);background:var(--bg);border:10px solid #0D0F13;border-radius:48px;box-shadow:0 30px 70px -25px rgba(13,15,19,.5);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none}
-.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:112px;height:26px;background:#0D0F13;border-radius:99px;z-index:6}
-.capp{flex:1;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-.chead{position:sticky;top:0;background:var(--glass2);backdrop-filter:blur(10px);padding:52px 16px 12px;padding-top:calc(52px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--line);z-index:5}
-.cbody{padding:14px 14px 96px;display:flex;flex-direction:column;gap:12px}
-.ccard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh-1)}
+/* v18.78 — mockup-exact phone frame: 356px wide, Vazirmatn, #0F1114 canvas */
+.phone{width:356px;max-width:100%;height:min(726px,94vh);background:#0F1114;border:9px solid #05070A;border-radius:44px;box-shadow:0 34px 70px -30px rgba(0,0,0,.9);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;font-family:Vazirmatn,system-ui,sans-serif}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:24px;background:#05070A;border-radius:14px;z-index:6}
+.capp{flex:1;overflow-y:auto;scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:78px}
+.capp::-webkit-scrollbar{display:none}
+/* v18.78 — mockup chead: transparent, in-flow (scrolls away), 24px/900 title */
+.chead{position:static;background:transparent;backdrop-filter:none;padding:44px 14px 12px;padding-top:calc(44px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:none;z-index:5}
+/* v18.78 — cards carry their own 14px mockup insets; cbody must NOT add more
+   (the old padding:14px made every card 28px from the edge) and no flex gap
+   (card margins already provide the 12px rhythm). */
+.cbody{padding:0 0 96px;display:flex;flex-direction:column;gap:0}
+.ccard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:none}
+.phone .cbody>.ccard{margin:0 14px 12px}
 .cstat{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px}
 .cempty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:34px 20px;text-align:center;color:var(--ink2)}
-.cnav{position:absolute;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);display:flex;padding:8px 8px 22px;padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:7}
-.cnav-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--ink3);cursor:pointer;padding:5px 0;border-radius:10px;position:relative}
-.cnav-it.on{color:var(--accent-deep)}
+/* v18.78 — mockup cnav: 70px, translucent blur bar, 9.5px labels, 26px indicator */
+.cnav{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:8px 6px 12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:7}
+.cnav-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9.5px;font-weight:800;color:var(--ink3);cursor:pointer;padding:6px 0 0;border-radius:12px;position:relative;transition:.15s}
+.cnav-it.on{color:var(--accent);background:none}
+.cnav-it.on::after{content:'';position:absolute;top:0;inset-inline:calc(50% - 13px);width:26px;height:3px;border-radius:99px;background:var(--accent)}
 .cdot{position:absolute;top:4px;inset-inline-end:calc(50% - 20px);width:8px;height:8px;border-radius:50%;background:var(--red)}
 .cplayer{position:absolute;inset:0;background:var(--bg);z-index:20;display:flex;flex-direction:column}
 .cphead{display:flex;align-items:center;gap:6px;padding:48px 12px 10px;padding-top:calc(48px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line2)}
@@ -751,11 +760,12 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .rpe.on{background:var(--ink-bg);color:#fff;border-color:var(--ink-bg)}
 .restbar{background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
 /* v18.71 — Habits checklist card (Today / Habits tab) */
-.hab-hd{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
-.hab-ic{width:30px;height:30px;border-radius:10px;background:rgba(200,240,75,.12);color:var(--accent);display:grid;place-items:center;flex:none}
+.hab-hd{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+.hab-ic{width:36px;height:36px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
 .hab-t{flex:1;min-width:0}
-.hab-t b{display:block;font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-.hab-t span{display:block;font-size:11px;color:var(--ink3);margin-top:1px;font-family:'JetBrains Mono',monospace}
+.hab-t b{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:900;color:var(--ink);letter-spacing:-.01em}
+.hab-t span{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.hab-t span b{color:var(--accent);font-weight:900}
 .hab-hd .ic{color:var(--ink3);transition:transform .28s cubic-bezier(.4,0,.2,1);flex:none}
 .hab-hd.open .ic{transform:rotate(180deg)}
 .hab-hd:hover .ic{color:var(--accent)}
@@ -778,16 +788,17 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .hab-r.on .hab-v{color:var(--accent)}
 /* client portal — black chrome, green brand accents */
 .phone .card-t{color:var(--accent-deep)}
-.phone .chead{background:linear-gradient(180deg,#12151B,#171B22);color:#fff;border-bottom:1px solid rgba(200,240,75,.16)}
+/* v18.78 — mockup chead: transparent, no gradient, no border (scrolls away) */
+.phone .chead{background:transparent;border-bottom:none}
 .phone .chead .muted{color:rgba(255,255,255,.55);font-weight:600}
 .phone .chead .gbadge{background:rgba(200,240,75,.14);color:var(--accent);border:1px solid rgba(200,240,75,.25)}
 /* v18.59 — STITCH HEADER: accent eyebrow + page title left, streak pill +
    notification bell + avatar right. Page titles live here now (the old .csec
    divs moved up), so every tab keeps its exact previous heading text. */
 .chead-t{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:3px}
-.chead-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chead-eyebrow{font-size:9.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--pf-ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html[lang="fa"] .chead-eyebrow{letter-spacing:0}
-.chead-title{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.15;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chead-title{font-size:24px;font-weight:900;letter-spacing:-.02em;line-height:1.15;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html[lang="fa"] .chead-title{letter-spacing:0}
 .chead-a{display:flex;align-items:center;gap:8px;flex:none}
 .chead-streak{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--pf-ac);font-size:12.5px;font-weight:800}
@@ -817,12 +828,18 @@ html[lang="fa"] .chead-title{letter-spacing:0}
    rules below are the shared dark skeleton; each skin overrides the palette
    via .phone[data-skin=…]. Default = fitflow. Chosen in Profile → App Theme,
    persisted in PREFS.phoneSkin (per device, like theme/accent). */
-.phone{--surface:#15171C;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
+.phone{--surface:#171A1F;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
+  --accent-soft:rgba(200,240,75,.12);
   --row-h:#1C2026;--seg-bg:#22262D;--seg-on:#2B3038;--kbd-bg:#1C2026;--cal-hd:#1B1F25;--cal-alt:#171A1F;
   --glass:rgba(5,6,8,.88);--glass2:rgba(5,6,8,.92);--btn-dark-bg:#F5F6F8;--btn-dark-fg:#12151B;
-  background:#0A0B0E;color:var(--ink)}
-.phone .ccard{box-shadow:none;background:linear-gradient(180deg,#171A20,#14161B);border:1px solid #23272F;border-radius:18px;position:relative}
-.phone .ccard::before{content:'';position:absolute;top:0;inset-inline:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,240,75,.28),transparent);pointer-events:none}
+  background:#0F1114;color:var(--ink)}
+/* v18.78 — mockup-exact phone cards: flat surface, no gradient, no hairline */
+.phone .ccard{box-shadow:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;position:relative}
+.phone .ccard::before{content:none}
+/* v18.78 — mockup buttons/progress inside the phone: flat lime, 10px radius */
+.phone .btn-lime{background:var(--accent);border-radius:10px;padding:10px 14px;font-size:13px;box-shadow:none}
+.phone .pbar{height:7px}
+.phone .pbar i{background:var(--accent)}
 .phone .chip{background:#22262D;color:#E9EAEE;border:1px solid #2E333B}
 .phone .fchip{background:#1C2026;border-color:#2E333B;color:#B4B9C4}
 .phone .fchip.on,.phone .fchip:hover{background:rgba(200,240,75,.1);border-color:var(--accent);color:var(--accent)}
@@ -835,23 +852,33 @@ html[lang="fa"] .chead-title{letter-spacing:0}
 .phone .seg button.on{background:rgba(200,240,75,.08);border-color:var(--accent);color:var(--accent);box-shadow:none}
 /* FitFlow bottom tab bar: charcoal glass, active = lime icon + label + glow dot */
 .phone .cnav,.mshell .cnav{background:rgba(13,15,19,.9);backdrop-filter:blur(18px);border-top:1px solid rgba(255,255,255,.06)}
-.phone .cnav-it,.mshell .cnav-it{color:#6B7280}
+.phone .cnav-it,.mshell .cnav-it{color:#7E8492}
 .phone .cnav-it.on,.mshell .cnav-it.on{color:var(--accent);background:none}
-.phone .cnav-it.on::after{content:'';position:absolute;top:0;inset-inline:calc(50% - 9px);width:18px;height:2.5px;border-radius:99px;background:var(--accent);box-shadow:0 0 10px rgba(200,240,75,.7)}
-/* FitFlow gradient hero card — charcoal base with lime energy glow */
-.fhero{position:relative;overflow:hidden;border-radius:20px;padding:18px;color:#fff;border:1px solid #2A2F38;
-  background:radial-gradient(110% 90% at 88% 0%,rgba(200,240,75,.16),transparent 55%),
-             radial-gradient(130% 110% at 8% 100%,rgba(200,240,75,.07),transparent 55%),
-             linear-gradient(150deg,#1B1F26,#14161B 60%,#101318)}
+/* v18.76 — mockup fhero (design 01): lime-tinted gradient card, 14px insets */
+.fhero{position:relative;overflow:hidden;border-radius:18px;margin:0 14px 12px;padding:15px;color:#fff;border:1px solid rgba(200,240,75,.18);
+  background:linear-gradient(160deg,#2A3118 0%,#171A1F 55%)}
+.fhero h3{font-size:19px;font-weight:900;margin:9px 0 2px;letter-spacing:-.02em}
+.fhero .who{font-size:11.5px;color:var(--ink2)}
+.fhero .who b{color:var(--ink)}
+.fhero .meta{display:flex;gap:14px;margin-top:10px}
+.fhero .meta div{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+html[lang="fa"] .fhero .meta div{letter-spacing:0}
+.fhero .meta b{display:block;font-size:14px;color:var(--ink);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.fhero .cta{display:flex;gap:8px;margin-top:12px}
+.fhero .cta .btn{flex:1;height:42px;width:auto;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px}
+.fhero .cta .btn-out{flex:none;width:46px}
 .fhero.pink{background:radial-gradient(110% 90% at 85% 5%,rgba(235,150,90,.2),transparent 55%),
              radial-gradient(130% 110% at 10% 95%,rgba(186,56,138,.14),transparent 60%),
              linear-gradient(150deg,#1B1F26,#14161B 60%,#101318)}
 .fhero .card-t{color:rgba(255,255,255,.85)}
-.fhero .chip{background:rgba(0,0,0,.3);color:#fff;border:1px solid rgba(255,255,255,.08)}
+.fhero .chip{background:rgba(255,255,255,.07);color:var(--ink2);border:1px solid rgba(255,255,255,.1);border-radius:999px;font-weight:800}
 .fhero .glass{width:100%;justify-content:center;background:rgba(0,0,0,.32);backdrop-filter:blur(6px);color:#fff;border-radius:13px;font-weight:700;border:1px solid rgba(255,255,255,.09)}
 /* FitFlow big lime CTA — glow shadow */
 .btn-lime{width:100%;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:#141A05;font-weight:800;border-radius:14px;padding:13px 16px;font-size:14px;box-shadow:0 6px 22px -6px rgba(200,240,75,.45)}
 .btn-lime:hover{filter:brightness(1.05)}
+/* v18.76 — .btn-lime is width:100% by default (full-card CTAs); inside flex
+   rows (mockup compact cards) it must size to content or it breaks the row. */
+.row .btn-lime,.mom-danger .btn{width:auto}
 /* FitFlow weekly letter circles — glowing done state */
 .wkc{display:flex;gap:7px}
 .wkc i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12.5px;background:#1C2026;color:#8A90A0;flex:none;border:1px solid #262B33}
@@ -990,7 +1017,7 @@ html[lang="fa"] .pf-pill{letter-spacing:0}
 .pf-copy{margin-inline-start:auto;flex:none;display:flex;align-items:center;gap:5px;padding:7px 10px;border:none;border-radius:10px;
   background:rgba(255,255,255,.07);color:var(--pf-ac);font-size:11.5px;font-weight:800;cursor:pointer;transition:transform .15s}
 .pf-copy:active{transform:scale(.94)}
-.pf-hint{display:flex;align-items:center;justify-content:space-between;margin:0 4px 4px}
+.pf-hint{display:flex;align-items:center;justify-content:space-between;margin:0 14px 4px}
 /* card header */
 .pf-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .pf-hd h3{flex:1;min-width:0;margin:0;font-size:14.5px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
@@ -1029,7 +1056,7 @@ html[lang="fa"] .pf-tk{letter-spacing:0}
   font-size:12px;font-weight:800;cursor:pointer;transition:background .18s,color .18s,box-shadow .18s}
 .pf-lang button.on{background:var(--pf-ac);color:var(--pf-ac-ink);box-shadow:0 0 14px -5px var(--pf-ac)}
 /* footer sign-out */
-.pf-out{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 16px;border-radius:14px;
+.pf-out{width:auto;margin:0 14px 12px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 16px;border-radius:14px;
   background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--red);
   font-size:13.5px;font-weight:800;cursor:pointer;transition:background .15s,transform .15s}
 .pf-out:hover{background:rgba(255,255,255,.07)}
@@ -1383,6 +1410,25 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .hab-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
 .hab-top b{font-size:13px;font-weight:900}
 .hab-card{padding:0;overflow:hidden}
+/* v18.76 — mockup .hab-card geometry: padded header, dashed divider, inset body */
+.hab-card .hab-hd{padding:13px 14px}
+.hab-card .hab-bd{border-top:1px dashed var(--line2)}
+.hab-card .hab-bd.closed{border-top-width:0}
+.hab-card .hab-wr{padding:0 14px 14px}
+/* v18.76 — mockup habit rows: 24px tick + name/sub + value pill */
+.hab{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line2)}
+.hab:last-child{border-bottom:none}
+.hab .tick{width:24px;height:24px;border-radius:8px;border:2px solid #333941;background:transparent;color:var(--accent-ink);flex:none;display:grid;place-items:center;transition:.15s;cursor:pointer;padding:0}
+.hab .tick:disabled{cursor:default;opacity:.55}
+.hab .tick svg{opacity:0;transform:scale(.5);transition:.15s}
+.hab.done .tick{background:var(--accent);border-color:var(--accent)}
+.hab.done .tick svg{opacity:1;transform:scale(1)}
+.hab .txt{flex:1;min-width:0}
+.hab .txt b{display:block;font-size:13.5px;font-weight:800;color:var(--ink)}
+.hab .txt span{font-size:11px;color:var(--ink3)}
+.hab.done .txt b{color:var(--ink3);text-decoration:line-through}
+.hab .hv{font-size:11px;font-weight:900;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:3px 8px;flex:none}
+.hab .hv.off{background:var(--surface3);color:var(--ink3)}
 .hab-chev{color:var(--ink3);transition:transform .3s ease;width:17px;height:17px}
 .hab-body{display:grid;grid-template-rows:1fr;transition:grid-template-rows .35s cubic-bezier(.4,0,.2,1),opacity .25s;border-top:1px dashed var(--line2);overflow:hidden}
 .hab-body.closed{grid-template-rows:0fr;border-top-width:0;opacity:0}
@@ -1744,6 +1790,15 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .tr-exdots{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
 .tr-exdots span{font-size:10px;background:var(--surface3);color:var(--ink2);border-radius:6px;padding:3px 7px;font-weight:700}
 .tr-exdots i{font-style:normal;font-size:10px;color:var(--accent);font-weight:900;padding:3px 4px}
+/* v18.76 — mockup02: right column of the workout card (badge + last RPE) */
+.wstate{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+/* v18.76 — mockup03: player demo-video block. Renamed .exvid because .vid is
+   already the chat form-check bubble (width:220px) and must not change. */
+.exvid{margin:2px 0 8px;height:170px;border-radius:14px;position:relative;overflow:hidden;background:linear-gradient(150deg,#242B16,#12151A 70%);border:1px solid rgba(200,240,75,.15);display:grid;place-items:center}
+.exvid::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(200,240,75,.14),transparent 60%)}
+.exvid .vt{position:absolute;top:11px;left:12px;z-index:2}
+.exvid .play{width:56px;height:56px;border-radius:50%;background:rgba(200,240,75,.92);color:var(--accent-ink);display:grid;place-items:center;position:relative;z-index:2;cursor:pointer;box-shadow:0 8px 30px -6px rgba(200,240,75,.5);border:none;padding:0;transition:transform .15s}
+.exvid .play:hover{transform:scale(1.05)}
 .ql-hero{width:100%;display:flex;align-items:center;gap:12px;background:linear-gradient(150deg,#232A18,#171A1F);border:1.5px solid rgba(200,240,75,.4);border-radius:16px;padding:14px;cursor:pointer;transition:.15s;font-family:inherit;text-align:start}
 .ql-hero:hover{border-color:var(--accent);transform:translateY(-1px)}
 .ql-hero .qi{width:44px;height:44px;border-radius:13px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
@@ -1932,6 +1987,9 @@ const FA={
 'Workout Name':'نام تمرین','Training Day':'روز تمرین','Rest Day':'روز استراحت','Duration':'مدت','Coach Notes':'یادداشت مربی','Coach cue':'نکته مربی','e.g. Elbows ~45°, full ROM':'مثلاً آرنج ~۴۵ درجه، دامنه کامل','Tap when done':'وقتی انجام شد بزن','Not yet':'هنوز نه','Sent':'ارسال شد',
     'pts today':'امتیاز امروز','Level':'سطح','pt to Level':'امتیاز تا سطح','streak at risk':'استریک در خطر',
     'Finish one habit today to keep it':'برای حفظش امروز یک عادت را تمام کن','Protect':'حفظ کن','Streak kept':'استریک حفظ شد',
+    /* v18.76 — mockup-exact strings (design/client-app-screens.html) */
+    'Demo video':'ویدیو آموزشی','Left today':'برای امروز مانده','today':'امروز',
+    'Start a session or send a check-in':'یک جلسه را شروع کن یا چک‌این بفرست','Workout · message · reminder':'تمرین · پیام · یادآور',
     'Activity logged today':'امروز فعالیت ثبت شد',
     'Upcoming sessions':'جلسات پیش‌رو','This month':'این ماه','Rest days':'روزهای استراحت','Tomorrow':'فردا',
     'Every week repeats · your coach plans it':'هر هفته تکرار می‌شود — مربی برنامه‌اش را می‌ریزد','Add to phone calendar (.ics)':'افزودن به تقویم گوشی (.ics)',
@@ -8704,9 +8762,31 @@ function vClient(){
      like design/client-app-screens.html. The other ptab keys still render (deep
      links / old state keep working); they're just not in the bottom bar. */
   const tabs=[['today','Today','zap'],['workouts','Training','dumbbell'],['nutrition','Nutrition','utensils'],['progress','Progress','chart'],['chat','Messages','mail']];
-  /* v18.59 — header title per tab: the exact strings each page used to show
-     in its in-body .csec heading (nothing is lost, only relocated). */
-  const ptabTitle={today:'Today',workouts:'Training',progress:'Daily Report',nutrition:'Nutrition',sessions:'Calendar',chat:'Messages',profile:'My Profile'};
+  /* v18.76 — mockup-exact header (design/client-app-screens.html): every screen
+     has its OWN eyebrow + right-side control. Today & Chat keep the full set
+     (streak · calendar · bell · avatar — the Calendar/Profile entry points);
+     Training shows the W6/12 program pill, Nutrition the Day-N pill, Progress
+     the grade pill, Calendar the Week pill; Profile has none (you are there). */
+  const pmH=progMeta(c);
+  const tgH=NEng.targets(c);
+  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1):0;
+  const scH=RPT.score(c).score,gradeH=scH>=80?'A':scH>=60?'B':'C';
+  const wkN=(()=>{const t2=new Date(Date.UTC(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate()));const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)})();
+  const monthYr=TDATE.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'long',year:'numeric'});
+  const headFull=`<span class="chead-streak" title="${t('day streak')}">${ic('flame',13)}${nf(c.dayStreak||0)}</span>
+            <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
+            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
+            <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>`;
+  const headA={today:headFull,chat:headFull,profile:'',
+    workouts:`<span class="pill">W${nf(pmH.wk)}/${nf(pmH.weeks)}</span>`,
+    nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
+    progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
+    sessions:`<span class="pill">${t('Week')} ${nf(wkN)}</span>`};
+  const headEyebrow={today:`${t('Build')} ${t('Better Habits')}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
+    workouts:pmH.name?esc(t(pmH.name)):t('Training'),
+    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:`${t('Build')} ${t('Better Habits')}`,
+    progress:t('Daily Report'),sessions:esc(monthYr)};
+  const ptabTitle={today:'Today',workouts:'Training',progress:'Progress',nutrition:'Nutrition',sessions:'Calendar',chat:'Messages',profile:'Profile'};
   /* v18.71 — guard: a stale/unknown ptab (old localStorage) must never make
      `undefined()` blow up the whole portal — fall back to Today. */
   const ptabView={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile};
@@ -8720,15 +8800,10 @@ function vClient(){
       <div class="capp" id="capp">
         <div class="chead">
           <div class="chead-t">
-            <span class="chead-eyebrow">${(()=>{const _c=client(S.cid);const _tg=_c?NEng.targets(_c):null;return (S.ptab==='nutrition'&&_tg)?`${t('Fuel Plan')} · ${nf(_tg.kcal)} kcal`:`${t('Build')} ${t('Better Habits')}`})()}</span>
+            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
             <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Today')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
           </div>
-          <div class="chead-a">
-            <span class="chead-streak" title="${t('day streak')}">${ic('flame',13)}${nf(c.dayStreak||0)}</span>
-            <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
-            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
-            <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>
-          </div>
+          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
         </div>
         ${body}
       </div>
@@ -8738,49 +8813,26 @@ function vClient(){
   </div>`;
 }
 function cToday(){
-  const c=client(S.cid),db=DB[c.id];
+  const c=client(S.cid);
   /* v18.62 — Today follows the WEEK SPLIT: today's slot decides between a
      training day (that exact workout, even when already completed → summary),
      a rest day, or an unset day. */
   const tp=todaysPlan(c.id);
   const w=tp.w;
   const restToday=tp.rest;
-  const doneWk=db.workouts.filter(wDone).length; // v18.62 — this week only
-  const totalWk=db.workouts.length;
-  const wkPct=totalWk?Math.round(doneWk/totalWk*100):0;
-  const up=db.sessions.filter(s=>s.day>=TODAY).sort((a,b)=>a.day-b.day||a.start-b.start)[0];
-  const notes=NOTES.filter(n=>n.client===c.name&&n.from==='coach'&&n.shared&&!n.arch).slice(0,2);
-  /* v18.38 — gamification: day streak + points + next badge, and an unread
-     coach reminder (auto-sent by the coach's device after 3+ skipped days). */
-  const nb=GAM.next(c),earnedN=GAM.earned(c).length;
+  /* v18.38 — unread coach reminder (auto-sent by the coach's device after
+     3+ skipped days). */
   const remMsg=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&m.type==='reminder'&&!m.read).slice(-1)[0];
-  const chs=CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id));
-  /* v18.71 — habits checklist (auto/count/tick) for Today + Habits tab. */
+  /* v18.71 — habits checklist (auto/count/tick) for Today. */
   const HS=habitsSummary(c,isoToday());
   const HL=(c.hlog||{})[isoToday()]||{};
-  const np=c.nprof||null;
-  /* v18.60 — STITCH TODAY REDESIGN. Visual-only: greeting, momentum hero,
-     Action-Needed banners, segmented section tabs (filter of the SAME cards,
-     All = everything as before), workout spotlight, recovery card.
-     sh(k) = show a section for the active tab (S.ctoday, default 'all'). */
-  const cf=S.ctoday||'all';
-  const sh=k=>cf==='all'||cf===k;
-  /* Real nutrition snapshot for the Nutrition tab — NEng, the exact source
-     the Nutrition page uses (targets/consumed/meals). */
+  const pmT=progMeta(c); /* v18.76 — mockup fhero "who" line shows the program week */
+  /* Real nutrition snapshot — NEng, the exact source the Nutrition page uses. */
   const tg=NEng.targets(c),coN=NEng.consumed(c,isoToday()),remK=NEng.remaining(c,isoToday());
-  const mealsN=NEng.mealsLogged(c,isoToday());
-  const mealsGoal=(np&&np.meals>0)?np.meals:(nPlanOf(c.name)?5:4);
   const wkTotal=w?w.exercises.reduce((a,e)=>a+e.sets,0):0;
   return `<div class="cbody">
-    <!-- Greeting strip (Stitch: "Hello سارا ⚡" + tier pill + energy line) -->
-    <div class="td-greet">
-      <div class="row" style="justify-content:space-between;gap:10px">
-        <span class="td-hi">${t('Hello')} ${esc(t(c.name).split(' ')[0])} <span class="td-bolt">⚡</span></span>
-        ${stBdg(c.status)||''}
-      </div>
-      <div class="td-sub"><span>${t('Ready to crush your goals today?')}</span><span class="td-dot"></span><b>${nf(doneWk)}/${nf(totalWk)} ${t('This week')}</b></div>
-    </div>
-    ${monthStrip()}
+    <!-- v18.76 — mockup 01 Today: momentum hero is the FIRST card (greeting
+         strip + month strip removed — the 7-day strip covers the week) -->
     <!-- v18.71 mockup 01 Today — Daily Momentum hero: today pts + level bar + 7-day strip + streak guard -->
     ${(()=>{ const P=c.pts||0, lvl=Math.floor(P/100)+1, toNext=100-(P%100);
       const today=isoToday(), ptsToday=(c.ptsDate===today)?(c.ptsDay||0):0;
@@ -8809,143 +8861,71 @@ function cToday(){
           :(actToday&&c.dayStreak>0?`<div class="mom-danger saved"><span class="md-ic">${ic('check-circle',16)}</span>
             <div class="md-txt"><b>${t('Streak kept')} — ${nf(c.dayStreak)} ${t('days')}</b><span>${t('Activity logged today')}</span></div></div>`:'')}
       </div>`; })()}
-    <!-- Action Needed banners (Stitch: gradient banner + neon top bar) -->
-    ${remMsg?`<div class="ccard td-act">
-      <span class="td-neon"></span>
-      <div class="td-act-top"><span class="td-pill"><span class="td-ping"></span>${t('Coach reminder')}</span></div>
-      <div class="td-act-body">
-        <div style="flex:1;min-width:0"><div class="td-act-t">${esc(t(remMsg.body))}</div></div>
-        <span class="td-act-ic">${ic('bell',20)}</span>
-      </div>
-      <div class="row" style="gap:8px;margin-top:12px">
-        ${w?`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${t('Start Workout')} ${ic('arrowR',14)}</button>`:`<button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="cnav" data-t="workouts">${t('Your Workouts')} ${ic('arrowR',14)}</button>`}
-        <button class="btn btn-outline btn-sm" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}">${t('Got it')}</button>
-      </div>
-    </div>`:''}
-    ${!c.intake?`<div class="ccard td-act">
-      <span class="td-neon"></span>
-      <div class="td-act-top"><span class="td-pill"><span class="td-ping"></span>${t('Action Needed')}</span></div>
-      <div class="td-act-body">
-        <div style="flex:1;min-width:0">
-          <div class="td-act-t">${t('Intake form')}</div>
-          <div class="td-act-d">${t('Your coach needs your health background before the first session')}</div>
+    <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
+    ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
+      if(!actN)return '';
+      return `<div class="sec"><span class="sec-t">⚡ ${t('Action Needed')}</span><span class="sec-c">${nf(actN)}</span></div>
+      ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
+        <div class="row">
+          <span class="badge b-amber">⏰</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted" style="font-size:11.5px">${t('Start a session or send a check-in')}</div></div>
+          ${w?`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="open-player" data-wid="${w.id}">${t('Start')}</button>`:`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
+          <button class="btn btn-ghost btn-icon" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}" title="${t('Got it')}" style="width:28px;height:28px;flex:none">${ic('x',13)}</button>
         </div>
-        <span class="td-act-ic">${ic('note',20)}</span>
+      </div>`:''}
+      ${!c.intake?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
+        <div class="row">
+          <span class="badge b-amber">📋</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${t('Intake form')}</b><div class="muted" style="font-size:11.5px">${t('Your coach needs your health background before the first session')}</div></div>
+          <button class="btn btn-lime" style="padding:8px 11px;font-size:11.5px;flex:none" data-act="intake-open">${t('Fill intake form')}</button>
+        </div>
+      </div>`:''}`})()}
+    <!-- Habits accordion — mockup .hab-card (header + dashed divider + tick rows) -->
+    <div class="cc hab-card">
+      <div class="hab-hd ${S.habOpen===false?'':'open'}" data-act="hab-toggle">
+        <span class="hab-ic">${ic('flame',18)}</span>
+        <div class="hab-t"><b>${t('Habits')} <span class="new">NEW</span></b><span><b>${nf(HS.done)}/${nf(HS.all)}</b> ${t('Done')} · <span>${nf(HS.pct)}%</span> ${t('today')}</span></div>
+        ${ic('chevD',17)}
       </div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" data-act="intake-open">${t('Fill intake form')} ${ic('arrowR',15)}</button>
-    </div>`:''}
-    <!-- Segmented section tabs (Stitch) — filter only, same content -->
-    <div class="td-tabs">
-      ${[['all','All Tasks'],['workouts','Workouts'],['habits','Habits'],['nutrition','Nutrition']].map(([k,l])=>`<button class="td-tab ${cf===k?'on':''}" data-act="ctoday" data-t="${k}">${t(l)}</button>`).join('')}
+      <div class="hab-bd ${S.habOpen===false?'closed':''}"><div class="hab-wr">
+        <div class="pbar" style="margin:0 0 8px"><i style="width:${HS.pct}%"></i></div>
+        ${HS.rows.map(({h,s})=>`
+        <div class="hab ${s.done?'done':''}">
+          ${h.type==='count'
+            ?`<input class="hab-n" type="number" min="0" inputmode="numeric" data-change="hab-num" data-k="${esc(h.id)}" value="${+HL[h.id]||0}">`
+            :`<button class="tick" data-act="hab-tick" data-k="${esc(h.id)}" ${h.type==='auto'?'disabled':''} aria-label="${esc(h.name)}">${ic('check',13)}</button>`}
+          <div class="txt"><b>${esc(t(h.name))}</b><span>${esc(s.sub)}</span></div>
+          ${h.type!=='count'?`<span class="hv ${s.done?'':'off'}">${esc(s.val)}</span>`:''}
+        </div>`).join('')}
+      </div></div>
     </div>
-    ${sh('workouts')?`
-    <div class="td-sec"><span class="td-sec-t">${t("Today's Workout")}</span>${w?`<span class="td-pill" style="text-transform:none;letter-spacing:.03em">${ic('clock',11)} ${t(w.dur)}</span>`:''}</div>
+    <!-- 💪 Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
+    <div class="sec"><span class="sec-t">💪 ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
     ${w?`<div class="fhero">
       <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
-        <span class="chip" style="background:rgba(0,0,0,.45);border-color:rgba(255,255,255,.14);color:#fff">${t(w.day)}</span>
-        <span class="chip" style="background:rgba(0,0,0,.45);border-color:rgba(255,255,255,.14);color:#fff">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
+        <span class="chip">${t(w.day)}</span>
+        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
       </div>
-      <div style="font-weight:800;font-size:22px;margin:14px 0 4px;letter-spacing:-.02em;position:relative;z-index:1">${esc(w.name)}</div>
-      <div class="td-coach" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> • ${t(c.goal)}</div>
-      <div class="td-meta" style="position:relative;z-index:1">
-        <div class="td-mi">${ic('clock',16)}<div><span>${t('Duration')}</span><b>${t(w.dur)}</b></div></div>
-        <div class="td-mi">${ic('dumbbell',16)}<div><span>${t('exercises')}</span><b>${nf(w.exercises.length)}</b></div></div>
-        <div class="td-mi">${ic('list',16)}<div><span>${t('sets')}</span><b>${nf(wkTotal)}</b></div></div>
+      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
+      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}`:''}</div>
+      <div class="meta" style="position:relative;z-index:1">
+        <div>${t('Duration')}<b>${t(w.dur)}</b></div>
+        <div>${t('exercises')}<b>${nf(w.exercises.length)}</b></div>
+        <div>${t('sets')}<b>${nf(wkTotal)}</b></div>
       </div>
-      <div class="row" style="gap:8px;margin-top:14px;position:relative;z-index:1">
-        <button class="btn btn-lime" style="flex:1;justify-content:center" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
-        <button class="btn glass" style="width:46px;height:46px;padding:0;justify-content:center;flex:none" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
+      <div class="cta" style="position:relative;z-index:1">
+        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
+        <button class="btn btn-out" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
       </div>
     </div>`
     :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
     :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    ${packRemain(c.name)!=null?`<div class="ccard" style="display:flex;justify-content:space-between;align-items:center">
-      <span class="muted" style="font-size:12.5px;font-weight:600">${t('Sessions remaining')}</span><b style="font-size:16px">${nf(packRemain(c.name))}</b></div>`:''}
-    ${up?`<div class="ccard" style="border-color:var(--acc-line2)"><div class="card-t">${ic('clock',14)} ${t('Next session')}</div>
-      <div class="row" style="margin-top:10px"><div class="tl-time">${nf(fmtT(up.start))}</div>
-      <div style="flex:1"><b style="font-size:13.5px">${t(up.label)}</b><div class="muted" style="font-size:12px">${t(DAYS[up.day])} · ${nf(up.dur)} h</div></div>
-      ${attBadge(up)||`<span class="bdg ${up.type==='session'?'bdg-lime':up.type==='assess'?'bdg-blue':up.type==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[up.type])}</span>`}</div></div>`:''}
-    <div class="ccard">
-      <div class="card-t">${ic('ruler',14)} ${t('Form check')}</div>
-      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('Point the camera at yourself — reps and form are checked on your device')}</div>
-      <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="fc-open">${ic('ruler',15)} ${t('Start form check')}</button>
-    </div>`:''}
-    ${sh('habits')?`
-    <div class="ccard hab-c">
-      <div class="hab-hd ${S.habOpen===false?'':'open'}" data-act="hab-toggle">
-        <span class="hab-ic">${ic('flame',17)}</span>
-        <div class="hab-t"><b>${t('Habits')}</b><span>${nf(HS.done)}/${nf(HS.all)} ${t('Done')} · ${nf(HS.pct)}%</span></div>
-        ${ic('chevD',17)}
-      </div>
-      <div class="hab-bd ${S.habOpen===false?'closed':''}"><div class="hab-wr">
-        <div class="pbar" style="margin:0 0 6px"><i style="width:${HS.pct}%"></i></div>
-        ${HS.rows.map(({h,s})=>`
-        <div class="hab-r ${s.done?'on':''}">
-          ${h.type==='count'
-            ?`<input class="hab-n" type="number" min="0" inputmode="numeric" data-change="hab-num" data-k="${esc(h.id)}" value="${+HL[h.id]||0}">`
-            :`<button class="hab-tk ${s.done?'on':''}" data-act="hab-tick" data-k="${esc(h.id)}" ${h.type==='auto'?'disabled':''} aria-label="${esc(h.name)}">${s.done?ic('check',12):''}</button>`}
-          <div class="hab-in"><b>${esc(t(h.name))}</b><span>${esc(s.sub)}</span></div>
-          ${h.type!=='count'?`<span class="hab-v">${esc(s.val)}</span>`:''}
-        </div>`).join('')}
-      </div></div>
-    </div>
-    <div class="td-sec"><span class="td-sec-t">${t('Challenges')}</span><span class="td-count">${nf(chs.length)}</span></div>
-    ${chs.slice(0,2).map(ch=>{
-      const pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
-      const st=(ch.stages||[])[Math.min(node,(ch.stages||[]).length-1)]||{};
-      return `<div class="ccard" style="border-color:var(--acc-line2)">
-      <div class="row" style="justify-content:space-between;gap:8px" data-act="chal-open" data-id="${esc(ch.id)}">
-        <span class="row" style="gap:9px;min-width:0;cursor:pointer">${chalIco(ch,28)}<b style="font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ch.name)}</b></span>
-        <span class="chip" style="color:var(--accent-ink);background:var(--accent-soft);font-weight:800">${nf(pct)}%</span></div>
-      <div data-act="chal-open" data-id="${esc(ch.id)}" style="cursor:pointer;margin:8px 0 2px">${chalPath(ch.stages,node,{w:300,labels:false,rowH:54})}</div>
-      <div class="row" style="justify-content:space-between;font-size:11px;color:var(--ink2)">
-        <span>${t('Next stage')}: ${st.e||'⭐'} ${esc(t(st.n||''))}</span>
-        <span class="row" style="gap:4px">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span></div>
-      <div class="pbar" style="margin-top:7px"><i style="width:${pct}%"></i></div>
-      ${ch.metric==='custom'?`<button class="btn btn-lime btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',13)} ${t('Log progress')}</button>`:''}
-    </div>`}).join('')}
-    ${cf==='all'?`<div class="row" style="gap:8px;margin:-2px 0 4px">
-      <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" data-act="chal-list">${ic('trophy',13)} ${t('See all challenges')} ${nf(chs.length)?`(${nf(chs.length)})`:''}</button>
-      <button class="btn btn-outline btn-sm" style="justify-content:center" data-act="chal-own">${ic('flag',13)} ${t('New Challenge')}</button>
-    </div>`:''}
-    <div class="ccard">
-      <div class="card-t">${ic('activity',14)} ${t('Quick check-in')}</div>
-      <div class="muted" style="font-size:12.5px;margin:4px 0 10px">${t('How did training feel today?')}</div>
-      ${[['Energy','cEnergy',['Low','OK','High']],['Soreness','cSore',['None','Some','A lot']],['Sleep','cSleep',['Poor','Fine','Great']]].map(([lbl,key,opts])=>`
-      <div style="margin-bottom:8px"><div class="lbl" style="margin-bottom:4px">${t(lbl)}</div>
-      <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
-      <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="send-checkin">${t('Send check-in')}</button>
-      <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px" data-act="cmeas-open">${ic('ruler',14)} ${t('Log weight & measurements')}</button>
-    </div>`:''}
-    ${cf==='all'&&notes.length?`<div class="ccard"><div class="card-t">${ic('note',14)} ${t('Coach notes')}</div>
-      ${notes.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line2);${n===notes[notes.length-1]?'border-bottom:none':''}">
-        <b style="font-size:13px">${esc(t(n.title))}</b>
-        <div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div>
-        <div style="font-size:10.5px;color:var(--ink3);margin-top:4px">${esc(t(n.date))} · <span class="bdg bdg-lime" style="padding:1px 7px;font-size:10px">${t('Shared with you')}</span></div>
-      </div>`).join('')}</div>`:''}
-    ${sh('nutrition')?`
-    <div class="td-sec"><span class="td-sec-t">${t('Nutrition')}</span>${tg?`<span class="td-count">${nf(mealsN)}/${nf(mealsGoal)} ${t('meals')}</span>`:''}</div>
-    <div class="ccard">
-      ${tg?`
-      <div class="row" style="justify-content:space-between;align-items:baseline">
-        <div><b style="font-size:26px;font-weight:800;letter-spacing:-.02em">${nf(remK?remK.kcal:0)}</b> <span class="muted" style="font-size:12.5px">${t('Left')} kcal</span></div>
-        <span class="chip">${nf(coN.kcal)} / ${nf(tg.kcal)} kcal</span>
-      </div>
-      <div class="pbar" style="margin-top:10px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
-      `:`<div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div>`}
-      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="cnav" data-t="nutrition">${t('Nutrition')} ${ic('arrowR',13)}</button>
-    </div>`:''}
-    ${sh('habits')&&np&&(np.sleep||np.wake)?`
-    <div class="ccard td-sleep">
-      <span class="td-sleep-ic">${ic('moon',22)}</span>
-      <div style="flex:1;min-width:0">
-        <div class="row" style="justify-content:space-between;gap:8px">
-          <span class="td-eyebrow">${t('Sleep readiness')}</span>
-          <span style="font-size:11.5px;font-weight:700">${t('Bed time')}: ${esc(np.sleep||'—')}</span>
-        </div>
-        <b style="display:block;font-size:14.5px;margin-top:3px">${t('Wake up')}: ${esc(np.wake||'—')}</b>
-      </div>
-    </div>`:''}
+    <!-- 🥗 Nutrition — mockup .sec header + compact "Left today" card -->
+    <div class="sec"><span class="sec-t">🥗 ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
+    ${tg?`<div class="cc tight">
+      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t('Left today')}</b><span class="badge b-lime mono">${nf(remK?remK.kcal:0)} kcal</span></div>
+      <div class="pbar" style="margin-top:9px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
+    </div>`:`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
   </div>`;
 }
 /* v18.75 — plan 1ج: the STRUCTURED current-program record (c.prog2) rides on
@@ -8999,9 +8979,11 @@ function cWorkouts(){
     const s=sp[dow];
     const inner=`<span>${DLBL[k]}</span><b>${nf(d.getDate())}</b>`;
     if(!s)return `<span class="wkd ${isT?'today':''}">${inner}<em>—</em></span>`;
-    if(s.t==='rest')return `<span class="wkd rest ${isT?'today':''}">${inner}<em>${ic('moon',11)}</em></span>`;
+    if(s.t==='rest')return `<span class="wkd rest ${isT?'today':''}">${inner}<em>${t('Rest')}</em></span>`;
     const w=splitW(c.id,s);
-    return `<span class="wkd ${w&&wDone(w)?'done':''} ${isT?'today':''}">${inner}<em>${ic('dumbbell',11)}</em></span>`;
+    /* v18.76 — mockup: the workout NAME under the date (first word keeps it short) */
+    const wn=w?String(t(w.name)).split(/[ —–-]+/)[0]:'…';
+    return `<span class="wkd ${w&&wDone(w)?'done':''} ${isT?'today':''}">${inner}<em>${esc(wn)}</em></span>`;
   }).join('');
   const hero=`
     <div class="tr-hero">
@@ -9026,7 +9008,7 @@ function cWorkouts(){
       ${lastLog?`<div class="tr-last">${t('Last')}: ${nf(lastLog.done)} ${t('sets')}${lastLog.rpe!=null?` · RPE ${nf(lastLog.rpe)}`:''}</div>`:''}
       <div class="tr-today-cta">
         <button class="btn btn-lime" data-act="open-player" data-wid="${esc(String(tw.id))}">${ic('play',13)} ${wDone(tw)?t('View summary'):t('Start Workout')}</button>
-        <button class="btn btn-out" data-act="cnav" data-t="today">${t('Today')}</button>
+        <button class="btn btn-out" data-act="open-player" data-wid="${esc(String(tw.id))}">${t('Preview')}</button>
       </div>
     </div>`:tRest?`
     <div class="tr-today">
@@ -9037,7 +9019,7 @@ function cWorkouts(){
   return `<div class="cbody">
     ${hero}
     ${spotlight}
-    <div class="sec"><span class="sec-t">${ic('calendar',14)} ${t('This week')}</span><span class="sec-c mono">${nf(weekDone)}/${nf(weekTotal)}</span></div>
+    <div class="sec"><span class="sec-t">${ic('calendar',14)} ${t('This week')}</span><span class="sec-c mono">${nf(weekDone)}/${nf(weekTotal)} ${t('Done')}</span></div>
     <div class="ccard" style="padding:13px 8px">
       <div class="tr-week">
         <div class="tr-wdays">${weekCells}</div>
@@ -9054,20 +9036,26 @@ function cWorkouts(){
     const dots=w.exercises.slice(0,3).map(e=>{const n=String(t(EXERCISES[e.ex].n)).split(' ');return `<span>${esc(n[n.length-1]||n)}</span>`}).join('')
       +(w.exercises.length>3?`<i>+${nf(w.exercises.length-3)}</i>`:'');
     const d3=String(w.day||'').slice(0,3).toUpperCase();
+    /* v18.76 — mockup: REAL date number on the day tile + tonnage + last RPE.
+       w.day is the full day NAME ("Thursday") — map it through WDN (Mon=0). */
+    const di=WDN.indexOf(String(w.day||'').slice(0,3));
+    const dnum=(()=>{const d=new Date(mon);d.setDate(mon.getDate()+(di>=0?di:0));return d.getDate()})();
+    const lg=done?wlogOf(c.id).slice().reverse().find(l=>l&&l.n===w.name):null;
+    const tons=lg&&lg.vol?Math.round(lg.vol/10)/100:Math.round(w.exercises.reduce((a,e)=>a+e.sets*(+e.kg||0)*(+e.reps||0),0)/100)/10;
     return `<div class="wcard" data-st="${done?'done':'pend'}" data-act="open-player" data-wid="${esc(String(w.id))}" style="cursor:pointer">
-      <div class="tr-day"><b>${esc(d3)}</b>${ic('dumbbell',11)}</div>
+      <div class="tr-day"><b>${esc(d3)}</b><span>${nf(dnum)}</span></div>
       <div class="t"><b>${esc(w.name)}</b>
         <div class="tr-exdots">${dots}</div>
-        <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(w.exercises.length)} ${t('exercises')}</i><i>${esc(t(w.dur))}</i></div>
+        <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(tons)} ${t('t')}</i><i>${esc(t(w.dur))}</i></div>
       </div>
-      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?'✓ '+t('Done'):'▶ '+t('Start')}</span></div>
+      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?'✓ '+t('Done'):'▶ '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
     ${(()=>{ /* v18.61 — REAL session history: every finished workout with the
        sets/reps/weight/RPE the client actually did. */
       const hist=wlogOf(c.id);
       if(!hist.length)return '';
-      return `<div class="card-t" style="margin:16px 2px 8px">${ic('clock',13)} ${t('Session history')}</div>
+      return `<div class="card-t" style="margin:16px 14px 8px">${ic('clock',13)} ${t('Session history')}</div>
       <div class="ccard" style="padding:6px 14px">${hist.slice(0,12).map(l=>`
         <div class="row" style="justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)">
           <div style="min-width:0">
@@ -9163,8 +9151,8 @@ function cProgress(){
         <button class="btn btn-outline btn-sm" data-act="cmeas-open">${ic('ruler',13)} ${t('Weekly check-in')}</button>
       </div>
     </div>
-    <div class="card-t" style="margin:2px 2px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="card-t" style="margin:2px 14px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px 12px">
       ${[
         ['Calories',(nPlanOf(c.name)?nPlanOf(c.name).train.kcal:0)||'—',(nPlanOf(c.name)?'kcal':'')],
         ['Weight',lm&&lm.w!=null?nf(lm.w):nf(c.weight||0),'kg'],
@@ -9620,7 +9608,7 @@ function cSessions(){
   const planned=cells.filter(cl=>cl.cur&&reached(cl)&&wday(cl)).length;
   const restN=cells.filter(cl=>cl.cur&&reached(cl)&&rday(cl)).length;
   const adh=planned?Math.min(100,Math.round(doneN/planned*100)):null;
-  const nav=`<div class="row" style="justify-content:space-between;margin:2px 0 8px;align-items:center">
+  const nav=`<div class="row" style="justify-content:space-between;margin:2px 14px 8px;align-items:center">
     <div class="row" style="gap:2px">
       <button class="btn btn-ghost btn-icon" data-act="cal-m" data-d="-1">${ic('chevL',15)}</button>
       <b style="font-size:13px;min-width:104px;text-align:center">${mName}</b>
@@ -9715,14 +9703,11 @@ function cChat(){
       <button class="fchip" data-act="cform">${ic('camera',13)} ${t('Record form check')}</button>
       <button class="fchip" data-act="cattach">${ic('folder',13)} ${t('Attach file')}</button>
     </div>
-    <div class="row" style="gap:8px;align-items:center;padding:0 14px 8px">
-      <button class="btn btn-ghost btn-icon" data-act="voice-rec" title="${t('Voice message')}" aria-label="${t('Voice message')}"
-        style="width:34px;height:34px;${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',15)}</button>
-      <span class="muted" style="font-size:11.5px;${S.recVoice?'color:var(--red);font-weight:700':''}">${S.recVoice?t('Recording… tap to stop'):t('Hold a quick voice note')}</span>
-      <span class="sp"></span>
-      ${S.recVoice?`<span class="muted" style="font-size:11.5px">${nf(VMAX)}s</span>`:''}
-    </div>
+    ${S.recVoice?`<div class="row" style="gap:8px;align-items:center;padding:0 14px 8px">
+      <span class="muted" style="font-size:11.5px;color:var(--red);font-weight:700">● ${t('Recording… tap to stop')} · ${nf(VMAX)}s</span></div>`:''}
     <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin:0 14px">
+      <button class="btn btn-ghost btn-icon" data-act="voice-rec" title="${t('Voice message')}" aria-label="${t('Voice message')}"
+        style="width:34px;height:34px;flex:none;${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',15)}</button>
       <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
       <button class="btn btn-primary btn-icon" data-act="send-client">${ic('arrowR',16)}</button>
     </div>
@@ -9797,6 +9782,7 @@ function cProfile(){
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
         <div class="langseg"><button class="${lang==='fa'?'on':''}" data-act="lang-set" data-l="fa">FA</button><button class="${lang==='en'?'on':''}" data-act="lang-set" data-l="en">EN</button></div></div>
       <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
+      <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
         <label class="sw"><input type="checkbox" ${PREFS.priv.photos?'checked':''} data-act="pref-sw" data-k="priv.photos"><i></i></label></div>
     </div>
@@ -9937,7 +9923,9 @@ function cPlayer(){
           <div class="cue-txt">${esc(t(e.note))}</div>
           ${pv?`<div class="cue-prev"><span class="k">${fmtD(pv.d)}</span><span class="v">${nf(pv.kg)} kg${pv.reps?` × ${nf(pv.reps)}`:''}</span>${pvDelta?`<span class="d">${pvDelta>0?'↑ +':'↓ '}${nf(Math.abs(pvDelta))} kg</span>`:''}</div>`:''}
         </div>`:''}
-        ${e.vid?(isImgUrl(e.vid)?`<img src="${esc(e.vid)}" alt="" loading="lazy" style="width:100%;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid var(--line2);background:var(--surface);margin:2px 0 6px">`:`<button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin:2px 0 6px" data-act="ex-video-url" data-url="${esc(e.vid)}">${ic('play',14)} ${t('Watch video')}</button>`):''}
+        ${e.vid&&isImgUrl(e.vid)?`<img src="${esc(e.vid)}" alt="" loading="lazy" style="width:100%;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid var(--line2);background:var(--surface);margin:2px 0 6px">`
+          :`<div class="exvid"><span class="vt badge b-lime">${ic('play',11)} ${t('Demo video')}</span>
+            <button class="play" data-act="${e.vid?'ex-video-url':'vid-yt'}" ${e.vid?`data-url="${esc(e.vid)}"`:`data-i="${e.ex}"`} aria-label="${t('Demo video')}">${ic('play',22)}</button></div>`}
         <div class="settbl">
           <div class="sth"><span>${t('Set')}</span><span>kg</span><span>${t('Reps')}</span><span>✓</span></div>
           ${Array.from({length:e.sets},(_,si)=>{const key=ei+'-'+si;const ck=S.player.checked.has(key);
