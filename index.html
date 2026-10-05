@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='22' fill='%2312151B'/%3E%3Cpath d='M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z' fill='%23C8F04B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Oxanium:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -916,6 +916,60 @@ html[lang="fa"] .fhero .meta div{letter-spacing:0}
 .fhero .card-t{color:rgba(255,255,255,.85)}
 .fhero .chip{background:rgba(255,255,255,.07);color:var(--ink2);border:1px solid rgba(255,255,255,.1);border-radius:999px;font-weight:800}
 .fhero .glass{width:100%;justify-content:center;background:rgba(0,0,0,.32);backdrop-filter:blur(6px);color:#fff;border-radius:13px;font-weight:700;border:1px solid rgba(255,255,255,.09)}
+/* ============ v18.111 — TODAY HERO (superdesign ①-④) ============
+   .fhero is deliberately KEPT as the element: the four phone skins target
+   `.phone[data-skin] .fhero` (lines 964/979/994) and would otherwise stop
+   styling the workout card. .ws-hero only layers typography + CTA weight on
+   top, and it sits at specificity (0,2,0) so every skin still wins. */
+.phone{
+  --font-display:'Oxanium','Vazirmatn',system-ui,sans-serif;
+  --hero-grad:linear-gradient(135deg,rgba(200,240,75,.17) 0%,rgba(200,240,75,.06) 44%,rgba(15,17,20,0) 100%);
+  --hero-edge:rgba(200,240,75,.30);
+  --sh-hero:0 18px 44px -20px rgba(200,240,75,.45),inset 0 1px 0 rgba(255,255,255,.05);
+  --sh-btn:0 10px 24px -10px rgba(200,240,75,.6);
+}
+.fhero.ws-hero{margin:0 14px 14px;padding:16px;border-radius:22px;
+  background:var(--hero-grad);border-color:var(--hero-edge);box-shadow:var(--sh-hero)}
+.fhero.ws-hero .ws-eye{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font:800 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.fhero.ws-hero .ws-eye .ws-dur{display:inline-flex;align-items:center;gap:5px;
+  color:var(--ink2);letter-spacing:.06em;text-transform:none}
+.fhero.ws-hero .ws-eye .ws-dur svg{width:13px;height:13px}
+.fhero.ws-hero h3{font-family:var(--font-display);font-size:26px;font-weight:700;
+  line-height:1.02;letter-spacing:-.028em;text-transform:uppercase;margin:11px 0 0}
+html[lang="fa"] .fhero.ws-hero h3{text-transform:none;letter-spacing:0;font-size:22px}
+.fhero.ws-hero .who{font-size:12.5px;color:var(--ink2);margin-top:6px}
+.fhero.ws-hero .ws-chips{display:flex;gap:7px;margin-top:14px}
+.fhero.ws-hero .ws-chip{flex:1;min-width:0;background:rgba(0,0,0,.34);border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:8px 7px;text-align:center}
+.fhero.ws-hero .ws-chip b{display:block;font:700 13px/1 'JetBrains Mono',monospace;letter-spacing:-.01em;color:var(--ink)}
+.fhero.ws-hero .ws-chip span{display:block;margin-top:4px;font:600 8.5px/1 'JetBrains Mono',monospace;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.fhero.ws-hero .cta{margin-top:15px}
+.fhero.ws-hero .cta .btn-lime{height:52px;border-radius:13px;font-size:14.5px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;box-shadow:var(--sh-btn)}
+html[lang="fa"] .fhero.ws-hero .cta .btn-lime{text-transform:none;letter-spacing:0}
+/* v18.111 — FA resets: these three carry .10–.16em tracking + uppercase for the
+   Latin athletic look, but letter-spacing on Arabic script visually SEPARATES
+   joined letters. Persian must inherit normal tracking and no transform. */
+html[lang="fa"] .fhero.ws-hero .ws-eye,
+html[lang="fa"] .fhero.ws-hero .ws-chip span,
+html[lang="fa"] .ring-row .rm .k{letter-spacing:0;text-transform:none}
+/* TODAY — nutrition ring, real NEng numbers */
+.ring-row{display:flex;align-items:center;gap:13px}
+.ring-row .rr{position:relative;width:74px;height:74px;flex:none}
+.ring-row .rr svg{transform:rotate(-90deg);display:block}
+.ring-row .rr .rv{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;line-height:1;gap:2px}
+.ring-row .rr .rv b{font:700 15px/1 'JetBrains Mono',monospace}
+.ring-row .rr .rv span{font:600 8px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--ink3)}
+.ring-row .rm{min-width:0;flex:1}
+.ring-row .rm .k{font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink3)}
+.ring-row .rm .big{font:700 22px/1 var(--font-display);letter-spacing:-.03em;margin-top:7px}
+.ring-row .rm .big i{font-style:normal;font-size:12px;color:var(--ink3);font-family:'JetBrains Mono',monospace}
+.ring-row .rm .sub{font-size:11.5px;color:var(--ink2);margin-top:5px}
+.ring-row .rm .sub b{color:var(--accent);font-weight:700}
 /* FitFlow big lime CTA — glow shadow */
 .btn-lime{width:100%;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:#141A05;font-weight:800;border-radius:14px;padding:13px 16px;font-size:14px;box-shadow:0 6px 22px -6px rgba(200,240,75,.45)}
 .btn-lime:hover{filter:brightness(1.05)}
@@ -2207,7 +2261,7 @@ const FA={
     'Recording… tap to stop':'در حال ضبط… برای توقف بزن','Hold a quick voice note':'یک یادداشت صوتی کوتاه بگیر',
     'Voice messages are not supported in this browser':'این مرورگر پیام صوتی را پشتیبانی نمی‌کند',
     'Microphone permission was denied':'دسترسی به میکروفون داده نشد','Could not start recording':'ضبط شروع نشد',
-    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
+    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Volume':'حجم تمرین','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
 'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی','Back to calendar':'بازگشت به تقویم','training days / week':'روز تمرین در هفته','Rest unplanned days':'استراحت روزهای بی‌برنامه','Unplanned days set to rest':'روزهای بی‌برنامه استراحت شدند','Quick week setup':'تنظیم سریع هفته','Unassigned':'بی‌برنامه','One workout per day':'هر تمرین فقط یک روز','Week updated':'هفته به‌روزرسانی شد','Pick a workout or rest for each day — repeats every week':'برای هر روز تمرین یا استراحت انتخاب کن — هر هفته تکرار می‌شود','Training days adherence':'پایبندی روزهای تمرین','last':'۸','weeks':'هفته اخیر','No data yet':'هنوز داده‌ای نیست','done / planned · from real logged sessions':'انجام‌شده / برنامه · از جلسات واقعی ثبت‌شده','Copy to':'کپی به','Day copied':'روز کپی شد','Monthly workout plan':'برنامه تمرینی ماهانه',
 'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
 'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
@@ -9079,9 +9133,14 @@ function vClient(){
     nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
     progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
     sessions:`<span class="pill">${t('Week')} ${nf(wkN)}</span>`};
-  const headEyebrow={today:`${t('Build')} ${t('Better Habits')}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
+  /* v18.111 — the Today eyebrow used to read "Build Better Habits", which is
+     habit-tracker language sitting on top of a workout app. It now states the
+     program context, so header + workout hero tell one sport story.
+     The program name is used alone when present because seed names already
+     carry the week ("Hypertrophy — Week 6") — appending Week 6/12 duplicated it. */
+  const headEyebrow={today:pmH.name?esc(t(pmH.name)):`${t('Week')} ${nf(pmH.wk)}/${nf(pmH.weeks)}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
     workouts:pmH.name?esc(t(pmH.name)):t('Training'),
-    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:`${t('Build')} ${t('Better Habits')}`,
+    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:t('Fuel Plan'),
     progress:t('Daily Report'),sessions:esc(monthYr)};
   const ptabTitle={today:'Today',workouts:'Training',progress:'Progress',nutrition:'Nutrition',sessions:'Calendar',chat:'Messages',profile:'Profile'};
   /* v18.71 — guard: a stale/unknown ptab (old localStorage) must never make
@@ -9147,46 +9206,49 @@ function cToday(){
   /* Real nutrition snapshot — NEng, the exact source the Nutrition page uses. */
   const tg=NEng.targets(c),coN=NEng.consumed(c,isoToday()),remK=NEng.remaining(c,isoToday());
   const wkTotal=w?w.exercises.reduce((a,e)=>a+e.sets,0):0;
+  /* v18.111 — hero chip "Volume": real tonnage = sets × reps × kg */
+  const wkKg=w?w.exercises.reduce((a,e)=>a+(+e.sets||0)*(+e.reps||0)*(+e.kg||0),0):0;
   return `<div class="cbody">
     <!-- v18.76 — mockup 01 Today: momentum hero is the FIRST card (greeting
          strip + month strip removed — the 7-day strip covers the week) -->
-    <!-- v18.71 mockup 01 Today — Daily Momentum hero: today pts + level bar + 7-day strip + streak guard -->
-    ${(()=>{ const P=c.pts||0, lvl=Math.floor(P/100)+1, toNext=100-(P%100);
-      const today=isoToday(), ptsToday=(c.ptsDate===today)?(c.ptsDay||0):0;
-      const WL=wlogOf(c.id), actToday=WL.some(l=>l&&l.d===today)||(HS&&HS.done>0);
-      const atRisk=(c.dayStreak||0)>0&&!actToday;
-      const mon=new Date(TDATE); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
-      const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6];
-      const DL=lang==='fa'?['ش','ی','د','س','چ','پ','ج']:['Mo','Tu','We','Th','Fr','Sa','Su'];
-      const cells=order.map((dow,k)=>{ const d=new Date(mon); d.setDate(mon.getDate()+dow);
-        const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const isT=d.toDateString()===TDATE.toDateString(), did=WL.some(l=>l&&l.d===iso);
-        return `<div class="mw-d ${did?'done':''} ${isT?'today':''}"><i>${DL[k]}</i><b>${did?ic('check',12):''}</b></div>`;
-      }).join('');
-      return `<div class="hero-m">
-        <div class="mom-top"><div class="eyebrow">${t('Daily Momentum')}</div>
-          <span class="pill" style="height:26px;font-size:11.5px">${ic('flame',13)}${nf(c.dayStreak||0)} ${t('days')}</span></div>
-        <div class="mom-big">
-          <div class="mom-num"><b>+${nf(ptsToday)}</b><span>${t('pts today')}</span></div>
-          <div class="mom-lvl"><div class="mom-lvl-l"><span>${t('Level')} ${nf(lvl)}</span><span class="mono">${nf(toNext)} ${t('pt to Level')} ${nf(lvl+1)}</span></div>
-            <div class="pbar"><i style="width:${100-toNext}%"></i></div></div>
-        </div>
-        <div class="mom-week">${cells}</div>
-        ${atRisk?`<div class="mom-danger"><span class="md-ic">${ic('alert-circle',16)}</span>
-            <div class="md-txt"><b>${nf(c.dayStreak)} ${t('streak at risk')}</b><span>${t('Finish one habit today to keep it')}</span></div>
-            <button class="btn btn-lime" data-act="jump-habits">${t('Protect')}</button></div>`
-          :(actToday&&c.dayStreak>0?`<div class="mom-danger saved"><span class="md-ic">${ic('check-circle',16)}</span>
-            <div class="md-txt"><b>${t('Streak kept')} — ${nf(c.dayStreak)} ${t('days')}</b><span>${t('Activity logged today')}</span></div></div>`:'')}
-      </div>`; })()}
+    <!-- v18.111 — TODAY HERO (superdesign ①-④). The workout is now the FIRST
+         thing on screen. "Daily Momentum" (pts / Level / 7-day strip / streak
+         guard) was cut — its streak already lives in the header pill. The
+         element stays .fhero so all four phone skins keep styling it. -->
+    ${w?`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('clock',13)} ${t(w.dur)}</span></div>
+      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
+      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}/${nf(pmT.weeks)}`:''}</div>
+      <div class="ws-chips" style="position:relative;z-index:1">
+        <div class="ws-chip"><b>${nf(w.exercises.length)}</b><span>${t('exercises')}</span></div>
+        <div class="ws-chip"><b>${nf(wkKg)}</b><span>${t('Volume')}</span></div>
+        <div class="ws-chip"><b>${nf(wkTotal)}</b><span>${t('sets')}</span></div>
+      </div>
+      <div class="cta ws-cta" style="position:relative;z-index:1">
+        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
+      </div>
+    </div>`
+    :restToday?`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('moon',13)} ${t('Rest day')}</span></div>
+      <h3 style="position:relative;z-index:1">${t('Rest day')}</h3>
+      <div class="who" style="position:relative;z-index:1">${t('Recovery is part of the program — come back stronger')}</div>
+      <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('calendar',15)} ${t('Week Split')}</button></div>
+    </div>`
+    :`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('calendar',13)}</span></div>
+      <h3 style="position:relative;z-index:1">${t('No workout scheduled today')}</h3>
+      <div class="who" style="position:relative;z-index:1">${t('Your coach publishes your plan here')}</div>
+      <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('list',15)} ${t('Week Split')}</button></div>
+    </div>`}
     <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
     ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
       if(!actN)return '';
-      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Action needed')}</span><span class="sec-c">${nf(actN)}</span></div>
+      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Next up')}</span><span class="sec-c">${nf(actN)}</span></div>
       ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
         <div class="row">
           <span class="badge b-amber">${ic('clock',13)}</span>
           <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted">${t('Start a session or send a check-in')}</div></div>
-          ${w?`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="open-player" data-wid="${w.id}">${t('Start')}</button>`:`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
+          ${w?'':`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
           <button class="btn btn-ghost btn-icon" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}" title="${t('Got it')}" style="width:28px;height:28px;flex:none">${ic('x',13)}</button>
         </div>
       </div>`:''}
@@ -9197,7 +9259,29 @@ function cToday(){
           <button class="btn btn-lime" style="padding:8px 11px;font-size:11.5px;flex:none" data-act="intake-open">${t('Fill intake form')}</button>
         </div>
       </div>`:''}`})()}
-    <!-- Habits accordion — mockup .hab-card (header + dashed divider + tick rows) -->
+    <!-- v18.111 — TODAY: the old habits slot now holds the nutrition ring
+         (real NEng numbers), so kcal / left / streak sit right under the hero. -->
+    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Today')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
+    ${tg?(()=>{const goal=+tg.kcal||1,pct=Math.max(0,Math.min(100,Math.round(coN.kcal/goal*100)));
+      const C=2*Math.PI*32,off=C-C*pct/100;
+      return `<div class="cc tight ring-row">
+        <div class="rr">
+          <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+            <circle cx="37" cy="37" r="32" fill="none" stroke="#22262D" stroke-width="7"></circle>
+            <circle cx="37" cy="37" r="32" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"></circle>
+          </svg>
+          <div class="rv"><b>${nf(coN.kcal)}</b><span>KCAL</span></div>
+        </div>
+        <div class="rm">
+          <div class="k">${t('Left today')}</div>
+          <div class="big">${nf(remK?remK.kcal:0)}<i> / ${nf(tg.kcal)}</i></div>
+          <div class="sub"><b>${nf(HS.done)}/${nf(HS.all)}</b> ${t('Done')} · ${nf(c.dayStreak||0)} ${t('days')}</div>
+        </div>
+      </div>`;})()
+    :`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
+    <!-- v18.111 — HABITS moved DOWN, past the hero/ring, exactly as the
+         approved layout asked: the six habit rows no longer own the top of
+         the screen. The accordion header already carries count + chevron. -->
     <div class="cc hab-card">
       <div class="hab-hd ${S.habOpen===false?'':'open'}" data-act="hab-toggle">
         <span class="hab-ic">${ic('flame',18)}</span>
@@ -9216,33 +9300,6 @@ function cToday(){
         </div>`).join('')}
       </div></div>
     </div>
-    <!-- Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
-    <div class="sec"><span class="sec-t">${ic('dumbbell',15)} ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
-    ${w?`<div class="fhero">
-      <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
-        <span class="chip">${t(w.day)}</span>
-        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
-      </div>
-      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
-      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}`:''}</div>
-      <div class="meta" style="position:relative;z-index:1">
-        <div>${t('Duration')}<b>${t(w.dur)}</b></div>
-        <div>${t('exercises')}<b>${nf(w.exercises.length)}</b></div>
-        <div>${t('sets')}<b>${nf(wkTotal)}</b></div>
-      </div>
-      <div class="cta" style="position:relative;z-index:1">
-        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
-        <button class="btn btn-out" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
-      </div>
-    </div>`
-    :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
-    :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    <!-- Nutrition — mockup .sec header + compact "Left today" card -->
-    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
-    ${tg?`<div class="cc tight">
-      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t('Left today')}</b><span class="badge b-lime mono">${nf(remK?remK.kcal:0)} kcal</span></div>
-      <div class="pbar" style="margin-top:9px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
-    </div>`:`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
     <!-- v18.81 — WIRING (below the mockup's last block, so everything above stays
          pixel-identical to the mockup): the client tools the mockup's Today does not
          draw but the system still needs reachable — daily check-in, challenges, form check. -->
