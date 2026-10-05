@@ -28,6 +28,8 @@ import aiHandler from '../backend/handlers/ai.mjs';
 import pushHandler from '../backend/handlers/push.mjs';
 import exportHandler from '../backend/handlers/export.mjs';
 import healthHandler from '../backend/handlers/health.mjs';
+import mediaHandler from '../backend/handlers/media.mjs';
+import chatHandler from '../backend/handlers/chat.mjs';
 import shopCheckout from '../backend/handlers/shop-checkout.mjs';
 import shopAccount from '../backend/handlers/shop-account.mjs';
 
@@ -84,9 +86,24 @@ async function sendResponse(webRes, res) {
     const sc = webRes.headers.getSetCookie();
     if (sc.length) headers['set-cookie'] = sc;
   }
+  if (String(headers['content-type'] || '').includes('text/event-stream') && webRes.body) {
+    return streamSse(webRes, res, headers);
+  }
   const buf = Buffer.from(await webRes.arrayBuffer());
   res.writeHead(webRes.status, headers);
   res.end(buf);
+}
+
+/* v18.108 — the default path buffers the whole body, which would turn an SSE
+   stream into one delivery at the very end. Events must leave as produced. */
+async function streamSse(webRes, res, headers) {
+  delete headers['content-length'];
+  res.writeHead(webRes.status, headers);
+  const reader = webRes.body.getReader();
+  try {
+    for (;;) { const { done, value } = await reader.read(); if (done) break; res.write(Buffer.from(value)); }
+  } catch { /* client went away */ }
+  res.end();
 }
 
 export default async function handler(req, res) {
@@ -105,6 +122,10 @@ export default async function handler(req, res) {
     else if (inner.startsWith('push/')) out = await pushHandler(webReq);
     else if (inner.startsWith('export/')) out = await exportHandler(webReq);
     else if (inner === 'data') out = await dataHandler(webReq);
+    /* v18.103 — /api/media and /api/media/<id> */
+    else if (inner === 'media' || inner.startsWith('media/')) out = await mediaHandler(webReq);
+    /* v18.108 — /api/chat/stream */
+    else if (inner.startsWith('chat/')) out = await chatHandler(webReq);
     else if (inner === 'health') out = await healthHandler(webReq);
     else if (inner === 'shop/api/checkout') out = await shopCheckout(webReq);
     else if (inner.startsWith('shop/api/account/')) out = await shopAccount(webReq);

@@ -99,7 +99,7 @@ async function pool() {
       connectionTimeoutMillis: 10000,
       ssl: local || /sslmode=/.test(DATABASE_URL) ? undefined : { rejectUnauthorized: false }
     });
-    _pool.on('error', (e) => console.error('[kv] pg pool error:', e.message));
+    _pool.on('error', (e) => cbFail('pool', e));
     // Self-healing schema: no external SQL file needed anymore.
     await _pool.query(`
       create table if not exists public.kv_store (
@@ -132,6 +132,48 @@ async function pgDel(fullKey) {
   await (await pool()).query('delete from public.kv_store where key = $1', [fullKey]);
 }
 
+/* ---------- Postgres circuit breaker (v18.107) ----------
+   A broken DATABASE_URL (expired password, host unreachable) used to make EVERY
+   KV call hang for connectionTimeoutMillis (10 s) and print a line — the
+   browser's /api/data then timed out while the log grew by thousands of lines a
+   minute, and nothing said WHY. After a few consecutive failures the circuit
+   opens: calls return immediately (null / no-op) and exactly ONE warning is
+   logged. It half-opens after a cooldown, so fixing the database brings the
+   app back on its own. SQLite is never affected. */
+const CB_AFTER = 3;            // consecutive failures before the circuit opens
+const CB_COOLDOWN = 30_000;    // ms to stay open before one probe gets through
+let cbFails = 0, cbOpenUntil = 0, cbWarned = false;
+
+function cbAllow() {
+  if (cbOpenUntil) {
+    if (Date.now() < cbOpenUntil) return false;
+    cbOpenUntil = 0; cbFails = 0; // half-open: let a single probe through
+  }
+  return true;
+}
+function cbFail(what, e) {
+  cbFails++;
+  if (cbFails >= CB_AFTER) {
+    const opening = !cbOpenUntil;
+    cbOpenUntil = Date.now() + CB_COOLDOWN;
+    // Log only when the circuit actually opens, and only once until it recovers.
+    if (opening && !cbWarned) {
+      console.error(`[kv] postgres unavailable (${what}): ${e && e.message} — ` +
+        `circuit open for ${CB_COOLDOWN / 1000}s. Check DATABASE_URL. ` +
+        `The app keeps working locally; cloud sync retries automatically.`);
+      cbWarned = true;
+    }
+  }
+}
+function cbOk() {
+  if (cbWarned) console.log('[kv] postgres reachable again');
+  cbFails = 0; cbOpenUntil = 0; cbWarned = false;
+}
+/** True while Postgres is known-unreachable — the API answers 503 with
+ *  {ok:false} instead of pretending the workspace does not exist (which would
+ *  make clients think their data vanished). cloudPull/cloudFetch bail on !ok. */
+export const kvDown = () => !isSqlite() && cbOpenUntil > Date.now();
+
 /**
  * Namespaced KV store with the exact surface Phase-1 expects:
  *   get(key, {type:'json'}), setJSON(key, val), delete(key)
@@ -142,20 +184,23 @@ export function kv(ns) {
   return {
     async get(key /* , opts */) {
       if (isSqlite()) return sqlGet(prefix + key);
-      try {
-        return await pgGet(prefix + key);
-      } catch (e) {
-        console.error('[kv] postgres read failed:', e.message);
-        return null;
-      }
+      if (!cbAllow()) return null;
+      try { const v = await pgGet(prefix + key); cbOk(); return v; }
+      catch (e) { cbFail('read', e); return null; }
     },
     async setJSON(key, val) {
       if (isSqlite()) return sqlSet(prefix + key, val);
-      await pgSet(prefix + key, val);
+      /* Never throws: the caller already persisted locally, and a throw would
+         turn a DB outage into a 500 for a write the client will retry. */
+      if (!cbAllow()) return;
+      try { await pgSet(prefix + key, val); cbOk(); }
+      catch (e) { cbFail('write', e); }
     },
     async delete(key) {
       if (isSqlite()) return sqlDel(prefix + key);
-      try { await pgDel(prefix + key); } catch {}
+      if (!cbAllow()) return;
+      try { await pgDel(prefix + key); cbOk(); }
+      catch (e) { cbFail('delete', e); }
     }
   };
 }

@@ -309,7 +309,10 @@ kbd{background:var(--kbd-bg);border:1px solid var(--line);border-bottom-width:2p
 .card-t{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);display:flex;align-items:center;gap:8px}
 .row{display:flex;align-items:center;gap:10px}
 .sp{flex:1}
-.muted{color:var(--ink3)}.sub{color:var(--ink2);font-size:13.5px}
+.muted{color:var(--ink3)}
+/* v18.79 — mockup .muted is 12px; the phone inherits body's 14px otherwise */
+.phone .muted{font-size:12px}
+.sub{color:var(--ink2);font-size:13.5px}
 .lnk{color:var(--accent-deep);font-weight:600;cursor:pointer;text-decoration:none}.lnk:hover{text-decoration:underline}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--sidebar);color:#A9AFBD;display:flex;flex-direction:column;z-index:60;transition:width .2s,transform .25s;user-select:none}
 .brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;color:#fff}
@@ -525,6 +528,8 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .mi input{width:64px;border:1px solid var(--line);border-radius:8px;padding:6px 7px;font-size:13px;font-weight:600;text-align:center;outline:none;background:var(--surface)}
 .ex-grid{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
 .chip{font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--line2);color:var(--ink2);white-space:nowrap}
+/* v18.79 — mockup .chip: 10.5px / 3px 9px (phone only) */
+.phone .chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px}
 .wk-it{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer}
 .wk-it.done{color:var(--ink3)}.wk-it.done .ic{color:var(--green)}
 .wk-it.cur{background:var(--accent-soft);color:var(--accent-ink)}
@@ -715,13 +720,19 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .vid .lbl{position:absolute;top:6px;inset-inline-start:8px;font-size:10px;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:1px 7px;border-radius:6px}
 .composer{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line2);background:var(--surface)}
 .clientwrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 20px;background:var(--bg)}
-/* v18.78 — mockup-exact phone frame: 356px wide, Vazirmatn, #0F1114 canvas */
-.phone{width:356px;max-width:100%;height:min(726px,94vh);background:#0F1114;border:9px solid #05070A;border-radius:44px;box-shadow:0 34px 70px -30px rgba(0,0,0,.9);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;font-family:Vazirmatn,system-ui,sans-serif}
+/* v18.78 — mockup-exact phone frame: 356px wide, Vazirmatn, #0F1114 canvas.
+   v18.79 — typography parity: the mockup html has NO font-size/line-height, so
+   it renders at the UA default 16px / normal. The app's body is 14px/1.5, which
+   alone accounted for ~100 of the 216 measured diffs. Scoped to .phone ONLY so
+   the coach platform keeps its own (unchanged) typography. */
+.phone{width:356px;max-width:100%;height:min(726px,94vh);background:#0F1114;border:9px solid #05070A;border-radius:44px;box-shadow:0 34px 70px -30px rgba(0,0,0,.9);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;font-family:Vazirmatn,system-ui,sans-serif;font-size:16px;line-height:normal}
 .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:24px;background:#05070A;border-radius:14px;z-index:6}
 .capp{flex:1;overflow-y:auto;scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:78px}
 .capp::-webkit-scrollbar{display:none}
 /* v18.78 — mockup chead: transparent, in-flow (scrolls away), 24px/900 title */
-.chead{position:static;background:transparent;backdrop-filter:none;padding:44px 14px 12px;padding-top:calc(44px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:none;z-index:5}
+/* v18.79 — mockup aligns flex-start (the pill sits level with the eyebrow) and
+   lets the eyebrow WRAP (the mockup's is 2 lines / 30px tall, ours was 1 line). */
+.chead{position:static;background:transparent;backdrop-filter:none;padding:44px 14px 12px;padding-top:calc(44px + env(safe-area-inset-top,0px));display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:none;z-index:5}
 /* v18.78 — cards carry their own 14px mockup insets; cbody must NOT add more
    (the old padding:14px made every card 28px from the edge) and no flex gap
    (card margins already provide the 12px rhythm). */
@@ -730,16 +741,30 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .phone .cbody>.ccard{margin:0 14px 12px}
 .cstat{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px}
 .cempty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:34px 20px;text-align:center;color:var(--ink2)}
-/* v18.78 — mockup cnav: 70px, translucent blur bar, 9.5px labels, 26px indicator */
-.cnav{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:8px 6px 12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:7}
+/* v18.110 — mockup cnav: 70px, translucent blur bar, 9.5px labels, 26px indicator.
+   direction:ltr pins the tab order to LTR in FA/RTL mode (mockup line 100) and makes
+   .cdot resolve to `right`. z-index:15 matches the mockup and still sits under .cplayer(20). */
+.cnav{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:8px 6px 12px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:15;direction:ltr}
 .cnav-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9.5px;font-weight:800;color:var(--ink3);cursor:pointer;padding:6px 0 0;border-radius:12px;position:relative;transition:.15s}
 .cnav-it.on{color:var(--accent);background:none}
 .cnav-it.on::after{content:'';position:absolute;top:0;inset-inline:calc(50% - 13px);width:26px;height:3px;border-radius:99px;background:var(--accent)}
-.cdot{position:absolute;top:4px;inset-inline-end:calc(50% - 20px);width:8px;height:8px;border-radius:50%;background:var(--red)}
+.cdot{position:absolute;top:4px;inset-inline-end:calc(50% - 16px);width:8px;height:8px;border-radius:50%;background:var(--red);border:1.5px solid #0D0F13}
 .cplayer{position:absolute;inset:0;background:var(--bg);z-index:20;display:flex;flex-direction:column}
-.cphead{display:flex;align-items:center;gap:6px;padding:48px 12px 10px;padding-top:calc(48px + env(safe-area-inset-top,0px));border-bottom:1px solid var(--line2)}
-.cpbody{flex:1;overflow-y:auto;padding:14px}
-.cpfoot{padding:12px 14px 24px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line2);background:var(--surface)}
+/* v18.89 — mockup .plhead / .app / .plfoot (screen 03). The rest timer moves
+   OUT of .cpfoot into the body, so the foot shrinks from 240px to the mockup's
+   72px translucent bar with a ghost + primary pair.
+   ⚠ .cpbody MUST hide its scrollbar (like .capp): `overflow-y:auto` laid out a
+     10px gutter, so EVERY block measured 300px instead of the mockup's 310px. */
+.cphead{display:flex;align-items:center;gap:10px;padding:44px 14px 10px;padding-top:calc(44px + env(safe-area-inset-top,0px));border-bottom:none}
+.cpbody{flex:1;overflow-y:auto;padding:0 0 84px;scrollbar-width:none}
+.cpbody::-webkit-scrollbar{display:none}
+.cpfoot{position:absolute;bottom:0;left:0;right:0;height:72px;background:rgba(13,15,19,.95);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.07);padding:11px 14px 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:9px;align-items:center;z-index:15}
+.cpfoot .btn{flex:1;height:44px;justify-content:center;gap:7px}
+.cpfoot .btn-ghost-btn{flex:none;width:46px;padding:0}
+/* mockup .plhead .back — a 32px square tile, not the generic ghost button.
+   Scoped with .phone because `.phone .btn` (0,2,0, later in the sheet) was
+   winning the specificity tie on font-size/weight. */
+.phone .cphead>.btn-ghost{width:32px;height:32px;padding:0;border-radius:10px;background:var(--surface);border:1px solid var(--line);color:var(--ink);display:grid;place-items:center;justify-content:center;flex:none;font-size:16px;font-weight:400;gap:normal;text-align:start}
 /* v18.71 — pro rest timer: fullscreen overlay */
 .restfs{position:absolute;inset:0;z-index:30;background:radial-gradient(120% 100% at 50% 0%,#1B2313,#0A0C0E 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:34px 26px}
 .restfs-x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:14px;width:34px;height:34px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink2);display:grid;place-items:center;cursor:pointer}
@@ -752,8 +777,16 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .restfs-c .btn{flex:1;height:44px}
 .restfs[data-s="pause"] .restfs-n,.restfs[data-s="pause"] .restfs-l{color:var(--amber);text-shadow:none}
 .restfs[data-s="pause"] .restfs-bar i{background:var(--amber)}
-.setrow{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:11px;margin-top:7px;background:var(--surface);transition:background .15s,border-color .15s}
-.setrow.on{background:var(--accent-soft);border-color:var(--acc-line)}
+/* v18.105 — mockup 08: setting rows are FLAT inside the section card (a
+   border-bottom divider), not one little card each. Profile is the only screen
+   that emits .setrow, so this change is scoped to it. */
+.setrow{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line2);cursor:pointer}
+.setrow:last-child{border:none}
+.setrow .si{width:32px;height:32px;border-radius:10px;background:var(--surface3);display:grid;place-items:center;flex:none;font-size:14px}
+.setrow .t{flex:1;min-width:0}
+.setrow .t b{font-size:13px;display:block;font-weight:700}
+.setrow .t span{font-size:10.5px;color:var(--ink3)}
+.setrow .chev{color:var(--ink3);display:flex;flex:none}
 .ckb{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:#fff;background:var(--surface);flex:none;cursor:pointer;padding:0}
 .ckb.on{background:var(--accent-deep);border-color:var(--accent-deep)}
 .rpe{width:25px;height:22px;border-radius:7px;border:1px solid var(--line);font-size:11px;font-weight:700;color:var(--ink2);background:var(--surface);cursor:pointer;padding:0}
@@ -763,9 +796,12 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 .hab-hd{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
 .hab-ic{width:36px;height:36px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
 .hab-t{flex:1;min-width:0}
-.hab-t b{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:900;color:var(--ink);letter-spacing:-.01em}
-.hab-t span{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px;font-family:'JetBrains Mono',monospace}
-.hab-t span b{color:var(--accent);font-weight:900}
+/* v18.79 — mockup uses DIRECT-CHILD selectors: `.hab-t span` was catching the
+   nested `.new` badge and turning it into a mono/ink3 block (90px taller header). */
+.hab-t>b{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:900;color:var(--ink)}
+.hab-t>span{display:block;font-size:11.5px;color:var(--ink3);margin-top:2px}
+.hab-t>span>b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:900}
+.hab-t>span>span{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:900}
 .hab-hd .ic{color:var(--ink3);transition:transform .28s cubic-bezier(.4,0,.2,1);flex:none}
 .hab-hd.open .ic{transform:rotate(180deg)}
 .hab-hd:hover .ic{color:var(--accent)}
@@ -795,20 +831,24 @@ html[lang="fa"] .un-hi,html[lang="fa"] .un-name,html[lang="fa"] .un-meta,html[la
 /* v18.59 — STITCH HEADER: accent eyebrow + page title left, streak pill +
    notification bell + avatar right. Page titles live here now (the old .csec
    divs moved up), so every tab keeps its exact previous heading text. */
-.chead-t{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:3px}
-.chead-eyebrow{font-size:9.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--pf-ac);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* v18.79 — mockup .chead-t is a plain block: the 3px gap lives on the TITLE */
+.chead-t{flex:1;min-width:0}
+.chead-eyebrow{display:block;font-size:9.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--pf-ac)}
+html[lang="fa"] .chead-eyebrow{letter-spacing:.06em}
 html[lang="fa"] .chead-eyebrow{letter-spacing:0}
-.chead-title{font-size:24px;font-weight:900;letter-spacing:-.02em;line-height:1.15;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* v18.79 — mockup: line-height:normal (not 1.15), ink colour, 3px top gap */
+.chead-title{font-size:24px;font-weight:900;letter-spacing:-.02em;line-height:normal;color:var(--ink);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html[lang="fa"] .chead-title{letter-spacing:0}
 .chead-a{display:flex;align-items:center;gap:8px;flex:none}
-.chead-streak{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--pf-ac);font-size:12.5px;font-weight:800}
-.chead-bell{position:relative;width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink2);cursor:pointer;transition:color .15s}
+/* v18.79 — mockup .pill is the header streak chip: lime-soft fill + lime border */
+.chead-streak{display:flex;align-items:center;gap:5px;height:30px;padding:0 11px;border-radius:999px;background:var(--accent-soft);border:1px solid rgba(200,240,75,.3);color:var(--accent);font-size:12.5px;font-weight:900;flex:none}
+.chead-bell{position:relative;width:30px;height:30px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line);color:var(--ink2);cursor:pointer;transition:color .15s}
 .chead-bell:hover{color:var(--ink)}
 .chead-bell .cdot{top:5px;inset-inline-end:5px}
 .chead-av{display:block;line-height:0;flex:none;border-radius:50%}
 /* v18.71 — pushed sub-page (Calendar/Profile): inline back chevron in the title.
    vertical-align:-6px puts the 26px box's centre on the 20px text's optical centre. */
-.chead-title .bk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);cursor:pointer;vertical-align:-6px;margin-inline-end:7px;padding:0;transition:.15s}
+.chead-title .bk{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--surface);border:1px solid var(--line);color:var(--ink);cursor:pointer;vertical-align:middle;margin-inline-end:7px;padding:0;transition:.15s}
 .chead-title .bk:hover{background:rgba(200,240,75,.14);border-color:var(--accent);color:var(--accent)}
 .phone .chip{background:var(--accent-soft);color:var(--accent-ink)}
 .phone .fchip{background:var(--accent-soft);border-color:var(--acc-chip);color:var(--accent-ink)}
@@ -828,7 +868,7 @@ html[lang="fa"] .chead-title{letter-spacing:0}
    rules below are the shared dark skeleton; each skin overrides the palette
    via .phone[data-skin=…]. Default = fitflow. Chosen in Profile → App Theme,
    persisted in PREFS.phoneSkin (per device, like theme/accent). */
-.phone{--surface:#171A1F;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
+.phone{--surface:#171A1F;--surface2:#1D2127;--surface3:#22262D;--line:#262A31;--line2:#1F232A;--ink:#F5F6F8;--ink2:#B4B9C4;--ink3:#7E8492;
   --accent-soft:rgba(200,240,75,.12);
   --row-h:#1C2026;--seg-bg:#22262D;--seg-on:#2B3038;--kbd-bg:#1C2026;--cal-hd:#1B1F25;--cal-alt:#171A1F;
   --glass:rgba(5,6,8,.88);--glass2:rgba(5,6,8,.92);--btn-dark-bg:#F5F6F8;--btn-dark-fg:#12151B;
@@ -850,12 +890,14 @@ html[lang="fa"] .chead-title{letter-spacing:0}
 .phone .seg{background:transparent;gap:6px}
 .phone .seg button{flex:1;background:#1C2026;border:1.5px solid transparent;border-radius:10px;color:#B4B9C4}
 .phone .seg button.on{background:rgba(200,240,75,.08);border-color:var(--accent);color:var(--accent);box-shadow:none}
-/* FitFlow bottom tab bar: charcoal glass, active = lime icon + label + glow dot */
-.phone .cnav,.mshell .cnav{background:rgba(13,15,19,.9);backdrop-filter:blur(18px);border-top:1px solid rgba(255,255,255,.06)}
-.phone .cnav-it,.mshell .cnav-it{color:#7E8492}
+/* FitFlow bottom tab bar: charcoal glass, active = lime icon + label + glow dot.
+   v18.110: the .cnav surface is no longer re-declared here (it was forcing blur(18px)
+   over a later opaque fill). The base rule is now the single source of truth. */
+.phone .cnav-it,.mshell .cnav-it{color:var(--ink3)}
 .phone .cnav-it.on,.mshell .cnav-it.on{color:var(--accent);background:none}
 /* v18.76 — mockup fhero (design 01): lime-tinted gradient card, 14px insets */
-.fhero{position:relative;overflow:hidden;border-radius:18px;margin:0 14px 12px;padding:15px;color:#fff;border:1px solid rgba(200,240,75,.18);
+/* v18.79 — mockup .fhero text inherits --ink (#F5F6F8), not pure white */
+.fhero{position:relative;overflow:hidden;border-radius:18px;margin:0 14px 12px;padding:15px;color:var(--ink);border:1px solid rgba(200,240,75,.18);
   background:linear-gradient(160deg,#2A3118 0%,#171A1F 55%)}
 .fhero h3{font-size:19px;font-weight:900;margin:9px 0 2px;letter-spacing:-.02em}
 .fhero .who{font-size:11.5px;color:var(--ink2)}
@@ -863,9 +905,10 @@ html[lang="fa"] .chead-title{letter-spacing:0}
 .fhero .meta{display:flex;gap:14px;margin-top:10px}
 .fhero .meta div{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
 html[lang="fa"] .fhero .meta div{letter-spacing:0}
-.fhero .meta b{display:block;font-size:14px;color:var(--ink);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.fhero .meta b{display:block;font-size:14px;color:var(--ink);font-family:'JetBrains Mono',monospace}
 .fhero .cta{display:flex;gap:8px;margin-top:12px}
-.fhero .cta .btn{flex:1;height:42px;width:auto;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px}
+/* v18.79 — mockup CTA buttons carry NO horizontal padding */
+.fhero .cta .btn{flex:1;height:42px;width:auto;display:flex;align-items:center;justify-content:center;gap:7px;padding:0}
 .fhero .cta .btn-out{flex:none;width:46px}
 .fhero.pink{background:radial-gradient(110% 90% at 85% 5%,rgba(235,150,90,.2),transparent 55%),
              radial-gradient(130% 110% at 10% 95%,rgba(186,56,138,.14),transparent 60%),
@@ -876,9 +919,15 @@ html[lang="fa"] .fhero .meta div{letter-spacing:0}
 /* FitFlow big lime CTA — glow shadow */
 .btn-lime{width:100%;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--acc-mid));color:#141A05;font-weight:800;border-radius:14px;padding:13px 16px;font-size:14px;box-shadow:0 6px 22px -6px rgba(200,240,75,.45)}
 .btn-lime:hover{filter:brightness(1.05)}
-/* v18.76 — .btn-lime is width:100% by default (full-card CTAs); inside flex
+/* v18.79 — .btn-lime is width:100% by default (full-card CTAs); inside flex
    rows (mockup compact cards) it must size to content or it breaks the row. */
 .row .btn-lime,.mom-danger .btn{width:auto}
+/* v18.79 — mockup .btn: 13px / 800 (app was 13.5px / 600) — phone only */
+.phone .btn{font-size:13px;font-weight:800}
+.phone .btn-out{font-weight:800}
+/* v18.79 — mockup lime button text = --accent-ink (#1A2205), not #141A05.
+   The mockup .btn has border:none (so border-color resolves to currentColor). */
+.phone .btn-lime{color:var(--accent-ink);border:none}
 /* FitFlow weekly letter circles — glowing done state */
 .wkc{display:flex;gap:7px}
 .wkc i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12.5px;background:#1C2026;color:#8A90A0;flex:none;border:1px solid #262B33}
@@ -955,18 +1004,29 @@ html[lang="fa"] .phone .card-t{letter-spacing:0}
 .phone .card-t svg{color:var(--accent)}
 /* FitFlow stat strip (streak card) — lime gradient kept, glow added */
 .phone .cstat{border:none;border-radius:18px;box-shadow:0 8px 26px -10px rgba(200,240,75,.5)}
-.phone .cnav{background:#0D0F13;border-top:1px solid rgba(255,255,255,.07)}
-.phone .cnav-it{color:#8A90A0}
+/* v18.110 — the opaque fill below was the "visual leak": it replaced the mockup's
+   frosted rgba(13,15,19,.94) with solid #0D0F13, so scrolling content hit a hard seam
+   instead of dissolving under a blurred, slightly transparent bar. */
+.phone .cnav-it{color:var(--ink3)}
 .phone .cnav-it.on{color:var(--accent);background:none}
 .phone .bub.me{background:var(--accent);color:var(--accent-ink);border:none}
 .phone .bub.me .ctx{background:rgba(20,28,5,.14);color:var(--accent-ink)}
 .phone .rpe.on{background:var(--accent-deep);border-color:var(--accent-deep)}
-.phone .btn-outline{border-color:var(--acc-line2);color:var(--accent-ink)}
+/* v18.83 — BUG: this used `color:var(--accent-ink)` (#1A2205, near-black) on the
+   phone's dark surface (#171A1F) → outline-button labels were invisible. The
+   border stays lime; the label falls back to the readable ink. */
+.phone .btn-outline{border-color:var(--acc-line2);color:var(--ink)}
+.phone .btn-outline:hover{color:var(--accent)}
 .phone .cempty svg{color:var(--accent-deep)}
-.phone .cphead{border-bottom:2px solid var(--accent)}
+/* v18.89 — the mockup's .plhead has NO bottom border; this FitFlow rule was
+   outranking `.cphead{border-bottom:none}` (0,2,0 > 0,1,0). */
+.phone .cphead{border-bottom:none}
 /* FitFlow progress bars — lime glow fill */
 .phone .pbar{background:#1C2026;border:1px solid #262B33}
 .phone .pbar i{background:linear-gradient(90deg,var(--accent-deep),var(--accent));box-shadow:0 0 10px -2px rgba(200,240,75,.6)}
+/* v18.79 — mockup overrides the two rules above (flat track, no border, flat fill) */
+.phone .pbar{background:#22262D;border:none;height:7px}
+.phone .pbar i{background:var(--accent);box-shadow:none;height:100%}
 /* FitFlow ring — lime gradient stroke (chart fns already use it) */
 .phone .set-row{border-color:#23272F;background:#171A20}
 .phone .set-row.on{background:rgba(200,240,75,.07);border-color:rgba(200,240,75,.35)}
@@ -1172,8 +1232,8 @@ html[lang="fa"] .td-mi span{letter-spacing:0}
 .mstack{display:flex;flex-direction:column;gap:12px}
 .mrow{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13.5px}
 .mrow:hover{background:var(--line2)}
-.mshell .cnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#12151B;border-top:1px solid rgba(255,255,255,.07)}
-.mshell .cnav-it{color:#8A90A0}
+.mshell .cnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07)}
+.mshell .cnav-it{color:var(--ink3)}
 .mshell .cnav-it.on{color:var(--accent);background:rgba(200,240,75,.12)}
 .mchat{display:flex;flex-direction:column;height:100%;min-height:0}
 .mchat-h{display:flex;align-items:center;gap:9px;padding:10px 12px;border-bottom:1px solid var(--line2);background:var(--surface)}
@@ -1365,6 +1425,18 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .cc.tight{padding:12px 14px}
 .sec{display:flex;align-items:center;justify-content:space-between;margin:16px 14px 9px}
 .sec-c{font-size:10.5px;font-weight:900;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 8px}
+/* v18.80 — mockup lucide hydration for section titles: `.eic` → our `.ic`.
+   CSS wins over the width/height/stroke-width presentation attributes. */
+.phone .sec-t .ic{color:var(--accent);width:15px;height:15px;stroke-width:2}
+/* v18.81 — `.ic` defaults to display:block, which stacks the icon ABOVE the
+   text inside non-flex parents (badge / chip / ctx / read-receipt / goal).
+   Flex + grid parents blockify their children anyway, so this is safe there. */
+.phone .ic{display:inline-block;vertical-align:-2px}
+.badge .ic{margin-inline-end:3px}
+.fchip .ic{margin-inline-end:5px}
+.ctx .ic,.logcard .h .ic,.cc-out .rd .ic{margin-inline-end:3px}
+.phero .goal .ic{color:var(--accent);margin-inline-end:4px}
+.phone .bg1 .em .ic{color:var(--accent)}
 .btn-out{background:transparent;border:1px solid var(--line);color:var(--ink2)}
 .mono{font-family:'JetBrains Mono',monospace}
 .badge{font-size:10px;font-weight:900;border-radius:999px;padding:3px 9px;flex:none}
@@ -1379,7 +1451,7 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .hero-m .big{font-size:15px;font-weight:900;margin-top:6px;line-height:1.7}
 .mom-top{display:flex;justify-content:space-between;align-items:center}
 .mom-big{display:flex;align-items:flex-end;gap:16px;margin-top:13px}
-.mom-num b{display:block;font-size:34px;font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--accent)}
+.mom-num b{display:block;font-size:34px;font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--accent);font-family:'JetBrains Mono',monospace}
 .mom-num span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:900;margin-top:6px}
 .mom-lvl{flex:1;padding-bottom:2px}
 .mom-lvl-l{display:flex;justify-content:space-between;font-size:10.5px;font-weight:800;margin-bottom:6px}
@@ -1418,9 +1490,10 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 /* v18.76 — mockup habit rows: 24px tick + name/sub + value pill */
 .hab{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line2)}
 .hab:last-child{border-bottom:none}
-.hab .tick{width:24px;height:24px;border-radius:8px;border:2px solid #333941;background:transparent;color:var(--accent-ink);flex:none;display:grid;place-items:center;transition:.15s;cursor:pointer;padding:0}
-.hab .tick:disabled{cursor:default;opacity:.55}
-.hab .tick svg{opacity:0;transform:scale(.5);transition:.15s}
+.hab .tick{width:24px;height:24px;border-radius:8px;border:2px solid #333941;background:transparent;color:var(--accent-ink);flex:none;display:grid;place-items:center;transition:.15s;cursor:pointer;padding:0;text-align:start}
+/* v18.79 — mockup does not dim a locked tick */
+.hab .tick:disabled{cursor:default;opacity:1}
+.hab .tick svg{opacity:0;transform:scale(.5);transition:.15s;stroke-width:4}
 .hab.done .tick{background:var(--accent);border-color:var(--accent)}
 .hab.done .tick svg{opacity:1;transform:scale(1)}
 .hab .txt{flex:1;min-width:0}
@@ -1435,6 +1508,29 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .habwrap{min-height:0;overflow:hidden;padding:12px 14px 14px;transition:padding .3s}
 .hab-body.closed .habwrap{padding-top:0;padding-bottom:0}
 .filters{display:flex;gap:7px;margin:0 14px 12px}
+/* v18.85 — Training (mockup 02) parity. Three leaks, one omission:
+   1. `.wkd` base never shipped here (only `.tr-week .wkd` did) → the strip
+      inherited 16px / 400 / start from the phone instead of 9.5px / 800 / center.
+   2. the app's base `.fchip` is the QUICK-CHIP pill (radius 999, padding 6px 13px,
+      12.5/600); the mockup's TRAINING filters are full-width segments
+      (radius 10, padding 8px 0, 12px/900, flex:1).
+   3. the coach-side FitFlow `.wcard` (flex-direction:column, min-height:190px,
+      color:#fff) leaks into the phone list — that is why cards were 220px vs 128px. */
+.wkd{flex:1;text-align:center;border-radius:10px;padding:7px 0;background:var(--surface3);font-size:9.5px;color:var(--ink3);font-weight:800}
+.wkd b{display:block;font-size:12.5px;color:var(--ink2);font-family:'JetBrains Mono',monospace}
+.wkd.done{color:var(--accent)}
+.phone .filters .fchip{flex:1;text-align:center;font-size:12px;font-weight:800;padding:8px 0;border-radius:10px;background:var(--surface);border:1px solid var(--line);color:var(--ink3)}
+/* mockup `.fchip.on` is weight 900 (the mockup's own line 197) */
+.phone .filters .fchip.on,.phone .filters .fchip:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:900}
+.phone .wcard{flex-direction:row;min-height:0;color:var(--ink)}
+/* mockup `.tr-today-cta .btn` carries no padding (the .btn-out re-adds its own) */
+.tr-today-cta .btn{padding:0}
+.tr-wfoot .lbl{margin:0}
+/* v18.85 — the mockup's exercise tags sit on ONE row (27px); the demo's longer
+   names wrapped `.tr-exrow` to 60px. Keep one line: tighter chip padding and no
+   wrap — ellipsis + overflow guard the case where names are longer still. */
+.phone .tr-exrow{flex-wrap:nowrap;overflow:hidden}
+.phone .tr-exrow span{padding:4px 6px;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .plhead{padding:44px 14px 10px;display:flex;align-items:center;gap:10px}
 .plhead .back{width:32px;height:32px;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;cursor:pointer;flex:none}
 .plhead .t{flex:1;min-width:0}
@@ -1471,7 +1567,13 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .str.done b{color:var(--ink3)}
 .str .go svg{opacity:0}
 .str.done .go svg{opacity:1}
-.rest{margin:0 14px 12px;background:var(--surface);border:1px solid rgba(200,240,75,.3);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;transition:border-color .25s}
+/* v18.86 — class-collision fix. This was a bare `.rest`, and the week strip's
+   REST days render as `<span class="wkd rest">`, so they inherited
+   `margin:0 14px 12px` (+ padding/border/background) from the Player's rest-timer
+   card. With gap:4px that pushed days 6-7 past the card edge (cells ended at 371px
+   inside a 310px card) — the "one circle out of place". Scoping to `.cplayer`
+   makes the collision impossible; the card only ever renders inside `.cplayer`. */
+.cplayer .rest{margin:0 14px 12px;background:var(--surface);border:1px solid rgba(200,240,75,.3);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;transition:border-color .25s}
 .rest-main{display:flex;align-items:center;gap:12px;width:100%}
 .rest .cd{font-size:22px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--accent);letter-spacing:-.03em;transition:color .2s}
 .rest .rlbl{font-size:9px;letter-spacing:.15em;font-weight:900;color:var(--accent);display:block;margin-top:2px}
@@ -1482,8 +1584,8 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .rpause:hover{border-color:rgba(200,240,75,.5);color:var(--accent)}
 .rest-bar{width:100%;height:6px;border-radius:99px;background:#22262D;overflow:hidden}
 .rest-bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .9s linear,background .25s}
-.rest-ctrls{display:flex;gap:7px;width:100%}
-.rbtn{flex:1;padding:8px 0;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink2);font-family:inherit;font-size:11.5px;font-weight:800;cursor:pointer;transition:.15s}
+.rest-ctrls{display:flex;gap:6px;width:100%}
+.rbtn{flex:1;padding:6px 0;border-radius:10px;border:1px solid var(--line);background:var(--surface2);color:var(--ink2);font-family:inherit;font-size:11.5px;font-weight:800;cursor:pointer;transition:.15s}
 .rbtn:hover{border-color:rgba(200,240,75,.45);color:var(--ink)}
 .rbtn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .rbtn.primary:hover{color:var(--accent-ink)}
@@ -1492,6 +1594,37 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .rest[data-state="done"]{border-color:rgba(43,191,113,.55)}
 .rest[data-state="done"] .cd,.rest[data-state="done"] .rlbl{color:var(--green)}
 .rest[data-state="done"] .rest-bar i{background:var(--green)}
+/* v18.90 — SMART REST TIMER (Strong / Hevy inspired).
+   • a ms-accurate RING replaces the horizontal bar as the primary visual — its
+     colour follows the card state through `currentColor`, so run/pause/done
+     recolour it for free;
+   • preset durations (30/60/90/120) for jumping straight to a length;
+   • per-alert toggles so the ticking can be silenced without leaving the set. */
+/* v18.91 — SIZE BUDGET: `.cpbody`'s usable band is (viewport - head - foot).
+   On a 439px-tall window that is only ~225px, and the card was 257px — so the
+   LAST row (the mode toggles) always sat under the foot no matter where the
+   card scrolled. Everything here is trimmed to land the card near ~210px:
+   ring 66->54, flex gap 12->8, card padding 11/16->9/13, control paddings -2. */
+.cplayer .rest{gap:8px;padding:9px 13px}
+.rest-ring{position:relative;width:54px;height:54px;flex:none;display:grid;place-items:center;color:var(--accent);transition:color .2s}
+.rest-ring svg{position:absolute;inset:0;transform:rotate(-90deg);overflow:visible}
+.rest-ring .trk{fill:none;stroke:#22262D;stroke-width:6}
+.rest-ring .prg{fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round}
+.rest-ring .val{position:relative;z-index:1;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:900;letter-spacing:-.05em;color:var(--ink)}
+.rest[data-state="pause"] .rest-ring{color:var(--amber)}
+.rest[data-state="done"] .rest-ring{color:var(--green)}
+.rest .info{flex:1;min-width:0}
+.rest-presets{display:flex;gap:6px;width:100%;margin-top:8px;align-items:center}
+.rest-presets .rbtn{padding:5px 0;font-size:11.5px;flex:1}
+.rest-presets .rbtn.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* v18.91 — the three MODE toggles now sit together and are LABELLED (icon-only
+   was cryptic): sound, vibration and AUTO-ADVANCE to the next set. */
+.rest-toggles{display:flex;gap:6px;width:100%;margin-top:8px}
+.rtog{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:5px;padding:6px 0;border-radius:9px;border:1px solid var(--line);background:var(--surface2);color:var(--ink3);font-family:inherit;font-size:11px;font-weight:800;cursor:pointer;transition:.15s;white-space:nowrap;overflow:hidden}
+.rtog.on{background:var(--accent-soft);border-color:rgba(200,240,75,.4);color:var(--accent)}
+.rtog svg{flex:none}
+/* the row auto-advance lands on, so the next tap is obvious */
+.cplayer .str.nextup{background:rgba(200,240,75,.14);box-shadow:inset 0 0 0 2px rgba(200,240,75,.6);border-radius:8px}
 .rfs{position:absolute;inset:0;z-index:40;background:radial-gradient(120% 100% at 50% 0%,#1B2313,#0A0C0E 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:34px 26px;direction:ltr;border-radius:44px}
 .rfs[hidden]{display:none}
 .rfs-eb{font-size:11px;letter-spacing:.34em;font-weight:900;color:var(--accent)}
@@ -1608,6 +1741,9 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .mtot span{color:var(--ink3);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:9.5px}
 .mtot b{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12.5px}
 .mlog-btn{width:100%;padding:9px 0;margin-top:10px}
+/* v18.93 — the mockup's meal-log button is full-bleed vertical padding; the
+   phone's `.btn-lime` (0,2,0) was winning on specificity with 10px 14px. */
+.phone .mlog-btn{padding:9px 0}
 .mlog-btn.done{background:transparent;border:1px dashed var(--line);color:var(--ink3);cursor:default;font-size:12px}
 .sugg{margin:0 14px 12px;border:1.5px dashed rgba(200,240,75,.4);background:rgba(200,240,75,.05);border-radius:16px;padding:14px}
 .sugg .eb{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:900}
@@ -1633,6 +1769,28 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .quick{display:flex;gap:7px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;direction:ltr}
 .quick::-webkit-scrollbar{display:none}
 .quick .fchip{flex:none;font-size:11.5px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink2);cursor:pointer}
+/* ===== v18.97 — 05 ASSISTANT: screen chrome (mockup cell 05) ===== */
+.capp.fs{padding-bottom:0}
+.capp.fs .cbody{padding-bottom:64px}
+.chathead .back{width:32px;height:32px;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ink)}
+.chathead .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3D4A22,#20260F);border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);flex:none}
+/* mockup --green is #2FBF71; the app token is #16A34A. Scoped to .chathead so
+   the rest of the app keeps its own token. */
+.chathead .t span{color:#2FBF71}
+.capp.na .chatbody{max-height:none;overflow:visible;padding:14px}
+.capp.na .bub{max-width:82%;font-size:13px;line-height:1.85;border-radius:15px}
+.capp.na .bub.them{border-bottom-left-radius:5px}
+.capp.na .bub.me{font-weight:600;border-bottom-right-radius:5px}
+.capp.fs .quick{padding:0 14px 10px}
+.capp.fs .quick .fchip{font-weight:800}
+.nsafe{align-self:flex-start;max-width:88%;display:flex;gap:6px;align-items:flex-start;background:rgba(240,180,87,.10);border:1px solid rgba(240,180,87,.35);border-radius:10px;padding:5px 9px;color:#F0B457;font-size:10.5px;line-height:1.45}
+.nlog-done{align-self:flex-start;display:flex;gap:5px;align-items:center;background:rgba(200,240,75,.10);border:1px solid rgba(200,240,75,.30);border-radius:10px;padding:5px 9px;font-size:11px;font-weight:700;color:var(--accent)}
+/* Sibling of .capp (like .cnav) so it can never scroll away with the thread. */
+.composer.fs{position:absolute;left:0;right:0;bottom:0;margin:0;padding:10px 12px 15px;background:rgba(13,15,19,.95);backdrop-filter:blur(14px);border:0;border-top:1px solid rgba(255,255,255,.07);border-radius:0;z-index:8;gap:8px;align-items:center}
+.composer.fs .plus{width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--ink2);display:grid;place-items:center;flex:none;cursor:pointer;padding:0;font-family:inherit}
+.composer.fs .fake{flex:1;min-width:0;height:38px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink3);font-size:12.5px;padding:0 14px;outline:none;font-family:inherit}
+.composer.fs .fake::placeholder{color:var(--ink3)}
+.composer.fs .snd{width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none;border:none;padding:0;cursor:pointer}
 .grade{margin:0 14px 12px;background:linear-gradient(145deg,#1C2118,#14171C 60%);border:1px solid rgba(200,240,75,.22);border-radius:18px;padding:15px;display:flex;gap:15px;align-items:center}
 .grade .ring{width:78px;height:78px;flex:none;position:relative}
 .grade .ring span{position:absolute;inset:0;display:grid;place-items:center;font-size:22px;font-weight:900;font-family:'JetBrains Mono',monospace}
@@ -1770,7 +1928,11 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .tr-today-cta .btn-out{padding:0 18px}
 .tr-week{margin:0 14px 14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 10px 12px}
 .tr-wdays{display:flex;gap:4px}
-.tr-week .wkd{flex:1;background:none;border:none;padding:4px 0 2px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-family:inherit}
+/* v18.86 — explicit margin:0 so no future generic rule can push a day out of
+   the strip (the `.rest` collision above was caught exactly this way). */
+.tr-week .wkd{flex:1;background:none;border:none;margin:0;padding:4px 0 2px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:default;font-family:inherit}
+/* v18.88 — only days that actually open something advertise a pointer */
+.tr-week .wkd[data-act]{cursor:pointer}
 .tr-week .wkd span{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:800}
 .tr-week .wkd b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-family:'JetBrains Mono',monospace;font-weight:900;background:var(--surface3);color:var(--ink2);border:1.5px solid transparent;transition:.15s}
 .tr-week .wkd em{font-style:normal;font-size:9px;font-weight:800;color:var(--ink3);white-space:nowrap}
@@ -1794,7 +1956,16 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .wstate{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 /* v18.76 — mockup03: player demo-video block. Renamed .exvid because .vid is
    already the chat form-check bubble (width:220px) and must not change. */
-.exvid{margin:2px 0 8px;height:170px;border-radius:14px;position:relative;overflow:hidden;background:linear-gradient(150deg,#242B16,#12151A 70%);border:1px solid rgba(200,240,75,.15);display:grid;place-items:center}
+.exvid{margin:0 0 12px;height:170px;border-radius:16px;position:relative;overflow:hidden;background:linear-gradient(150deg,#242B16,#12151A 70%);border:1px solid rgba(200,240,75,.15);display:grid;place-items:center}
+/* v18.89 — the player's exercise wrapper stops being a card: the mockup's blocks
+   (.exh / .exnote / .settbl / .exvid) are FLAT at phone level with margin:0 14px,
+   so the wrapper now supplies the 14px and the children supply only vertical
+   margins. Widths go 242 -> 310 to match. The .rest card stays OUT of the
+   wrapper (it is a sibling in the body), so it keeps its own 14px margins. */
+.phone .cplayer .ccard{margin:0 14px 12px;padding:0;background:none;border:none;box-shadow:none}
+.phone .cplayer .exh{margin:0 0 8px}
+.phone .cplayer .exnote{margin:0 0 12px}
+.phone .cplayer .settbl{margin:0 0 12px}
 .exvid::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(200,240,75,.14),transparent 60%)}
 .exvid .vt{position:absolute;top:11px;left:12px;z-index:2}
 .exvid .play{width:56px;height:56px;border-radius:50%;background:rgba(200,240,75,.92);color:var(--accent-ink);display:grid;place-items:center;position:relative;z-index:2;cursor:pointer;box-shadow:0 8px 30px -6px rgba(200,240,75,.5);border:none;padding:0;transition:transform .15s}
@@ -1988,7 +2159,8 @@ const FA={
     'pts today':'امتیاز امروز','Level':'سطح','pt to Level':'امتیاز تا سطح','streak at risk':'استریک در خطر',
     'Finish one habit today to keep it':'برای حفظش امروز یک عادت را تمام کن','Protect':'حفظ کن','Streak kept':'استریک حفظ شد',
     /* v18.76 — mockup-exact strings (design/client-app-screens.html) */
-    'Demo video':'ویدیو آموزشی','Left today':'برای امروز مانده','today':'امروز',
+    'Action needed':'اقدام لازم','Demo video':'ویدیو آموزشی','Left today':'برای امروز مانده','today':'امروز',
+    'Sound':'صدا','Vibrate':'لرزش','Auto next':'بعدی خودکار',
     'Start a session or send a check-in':'یک جلسه را شروع کن یا چک‌این بفرست','Workout · message · reminder':'تمرین · پیام · یادآور',
     'Activity logged today':'امروز فعالیت ثبت شد',
     'Upcoming sessions':'جلسات پیش‌رو','This month':'این ماه','Rest days':'روزهای استراحت','Tomorrow':'فردا',
@@ -2104,7 +2276,7 @@ const FA={
 'Copy Day':'کپی روز','Paste Day':'چسباندن روز','Apply to Week':'اعمال به هفته','Day copied':'روز کپی شد','Pasted ✓':'چسبانده شد ✓','Applied to week ✓':'به کل هفته اعمال شد ✓','Meal moved':'وعده جابه‌جا شد',
 'Chicken & Rice Lunch':'ناهار مرغ و برنج','Meal template created ✓':'قالب وعده ساخته شد ✓',
 'Meals':'وعده‌ها',
-"Today's Meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
+"Today's Meals":'وعده‌های امروز',"Today's meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
 'Data storage':'ذخیره داده‌ها','On this device (auto-save)':'روی همین دستگاه (ذخیره خودکار)','Reset demo data':'بازنشانی داده‌های دمو','Are you sure? Click again':'مطمئنی؟ دوباره کلیک کن','Feedback':'بازخورد',
 'Connect Client (Code)':'اتصال شاگرد (کد)','Connect':'اتصال','Connection code':'کد اتصال','Connection link':'لینک اتصال','Join with connection code':'اتصال با کد مربی','Connected with code':'اتصال با کد','Client connection codes':'کدهای اتصال شاگردها','Each client has a personal code — share only theirs':'هر شاگرد کد اختصاصی خودش را دارد — فقط کد خودش را برایش بفرست','Personal connection code':'کد اتصال اختصاصی','Personal code':'کد اختصاصی','The client enters this code on the login screen — their profile opens with everything you registered':'شاگرد این کد را در صفحه ورود وارد می‌کند — پروفایلش با همه‌ی مشخصاتی که ثبت کرده‌ای باز می‌شود','Client added ✓':'شاگرد اضافه شد ✓','added to your clients':'به شاگردانت اضافه شد','Code regenerated ✓':'کد جدید صادر شد ✓','Regenerate':'بازتولید کد','Enter the personal code your coach gave you':'کد اختصاصی‌ای که مربی‌ات به تو داده را وارد کن','Connected as':'وصل شدی به‌عنوان','Copy connection code':'کپی کد اتصال','Link':'لینک','Code':'کد','One code for your whole workspace — every client joins with it':'یک کد برای کل فضای کاری‌ات — همه‌ی شاگردها با همین کد وصل می‌شوند','Your clients join your workspace with this code — only your data, only your clients':'شاگردانت با این کد به فضای کاری تو وصل می‌شوند — فقط داده‌های تو، فقط شاگردهای تو','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','Copy':'کپی','Copied ✓':'کپی شد ✓','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
 'List':'لیست','No events this day':'این روز رویدادی نیست','Session updated ✓':'جلسه به‌روزرسانی شد ✓','Event deleted':'رویداد حذف شد','Duplicated ✓':'تکثیر شد ✓','Delete':'حذف','Edit Session':'ویرایش جلسه','Calendar exported (.ics)':'تقویم خروجی گرفته شد (.ics)','Sessions This Week':'جلسات این هفته','Total Hours':'مجموع ساعت‌ها','Busiest Day':'شلوغ‌ترین روز','⚠️ This client already has an event at this time':'⚠️ این شاگرد در این ساعت رویداد دیگری دارد','⚠️ You already have another event at this time':'⚠️ خودت در این ساعت رویداد دیگری داری','✓ No conflicts':'✓ تداخلی نیست','Export (.ics)':'خروجی (.ics)','All Clients':'همه شاگردان',
@@ -2166,9 +2338,12 @@ function applyLang(){
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
 const PREFS_KEY='co-prefs';
-const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',remind:true,
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',wtRange:'',remind:true,
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
-  wk:{rpe:true,adv:true,dup:true,rest:'120'},
+  /* v18.90 — rest-timer alerts. loadPrefs() merges `wk` so saved prefs from
+     before this line pick snd/vib up automatically (they default to ON; the
+     stored value is undefined until the user toggles it). */
+  wk:{rpe:true,adv:true,dup:true,rest:'120',snd:true,vib:true,autoNext:true},
   priv:{own:true,photos:true,others:false,consent:true},
   sec:{tfa:true},
   cal:{start:7,end:21,type:'auto'}});
@@ -2804,7 +2979,10 @@ function wChart(cid,h,range){
   if(ms.length<2)return `<div style="min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
   const conv=v=>PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v;
   const labs=[fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)];
-  return lineChart(ms.map(m=>conv(m.w)),{h,labels:labs});
+  /* v18.98 — lineChart() emits height:auto with a 640-wide viewBox, so h=90
+     rendered as 39px in a 280px container (aspect scaling). Force the element
+     height AND match the mockup's 300x90 viewBox so the drawing fills it. */
+  return lineChart(ms.map(m=>conv(m.w)),{h,w:300,labels:labs}).replace('height:auto',`height:${h}px`);
 }
 function attentionList(){
   const items=[];
@@ -3168,7 +3346,7 @@ const wsOwnerName=()=>AUTH.coach?coachName():(WS_OWNER||'');
    otherwise the next coach's sync keeps targeting the previous coach's
    workspace (403 foreign) and pulls foreign data over local rows. */
 function cloudReset(){
-  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;
+  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;sseStop();
   CLOUD.rej402=0;CLOUD.adopting402=false;
   clearTimeout(CLOUD.pushT);
   // The 7s poll used to be started with a bare setInterval() and never cleared,
@@ -3550,7 +3728,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
-const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false};
+const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
 const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
@@ -3564,8 +3742,28 @@ const cloudPut=async data=>{
   try{
     const r=await fetch('/api/data?code='+encodeURIComponent(CLOUD.code),{method:'PUT',headers:Object.assign({'content-type':'application/json'},authHeaders()),body:JSON.stringify({rev:CLOUD.rev,data})});
     const o=await r.json();
-    if(r.ok&&o.ok){CLOUD.rev=o.rev;return true}
+    if(r.ok&&o.ok){CLOUD.rev=o.rev;CLOUD.storageDown=0;return true}
     if(r.status===409){CLOUD.rev=o.rev||0;CLOUD.dirty=true}
+    /* v18.107 — 503 = the server's KV circuit is open (bad DATABASE_URL);
+       429 = it asked us to slow down. Either way: hold the push and let
+       cloudSchedule back off, instead of hammering every 1.5s. A later probe
+       that succeeds clears the flag. Local data is never at risk — saveData()
+       writes localStorage first. */
+    if(r.status===503||r.status===429){CLOUD.storageDown=Date.now();CLOUD.dirty=true;return false}
+    /* v18.101 — 413 = payload over DATA_MAX_BYTES (5MB). Without this branch the
+       caller just cloudSchedule(1500)s again → an infinite retry loop and a
+       silent failure. Hold the push and tell the user what is actually wrong. */
+    if(r.status===413){
+      CLOUD.dirty=false;
+      CLOUD.rej413=(CLOUD.rej413||0)+1;
+      if(CLOUD.rej413>=2){
+        CLOUD.over413=true;
+        if(!CLOUD.warned413){CLOUD.warned413=true;
+          toast(lang==='fa'?'همگام‌سازی متوقف شد — حجم داده از سقف سرور (۵ مگابایت) بیشتر است. عکس‌ها یا پیام‌های ضمیمه‌دار را حذف کن.':'Sync paused — the workspace payload exceeds the server limit (5 MB). Delete some photos or attachments.');
+        }
+      }
+      return false;
+    }
     /* P1 FIX — a rejected push must not retry forever. The server is
        AUTHORITATIVE on quota/subscription: when a workspace exceeds its
        plan's seat cap, the device was pushing stale rows (typically the demo
@@ -3828,6 +4026,29 @@ function adoptRemoteWorkspace(d){
   if(Array.isArray(d.DEAD))Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
 }
 const cloudResync=()=>CLIENTS.forEach(c=>syncClientSessions(c.name));
+/* v18.108 — realtime chat. The stream only carries the workspace REVISION; the
+   payload still comes from cloudPull(), which is O(1) when nothing changed.
+   EventSource reconnects on its own (the server sends retry: 3000) and the 7 s
+   poll covers any gap. No third-party domain and no new dependency — the CSP's
+   `connect-src 'self'` already allows it. */
+function sseStart(){
+  if(!CLOUD.on||CLOUD.sse||typeof EventSource==='undefined')return;
+  try{
+    const es=new EventSource('/api/chat/stream?code='+encodeURIComponent(CLOUD.code));
+    CLOUD.sse=es;
+    es.onmessage=e=>{
+      try{
+        const d=JSON.parse(e.data);
+        /* frames carry {rev}, {rev,hello} or {ping} — only a NEW rev triggers a
+           pull, and one that matches is a no-op (the client is already current). */
+        if(d&&d.rev&&d.rev!==CLOUD.rev)cloudPull();
+      }catch(_){}
+    };
+    es.onerror=()=>{}; /* let EventSource reconnect; the 7 s poll covers gaps */
+  }catch(e){CLOUD.sse=null}
+}
+function sseStop(){try{CLOUD.sse&&CLOUD.sse.close()}catch(e){}CLOUD.sse=null}
+
 async function cloudPull(){
   if(!CLOUD.on)return;
   const out=await cloudFetch(CLOUD.code,CLOUD.rev); // rev check: server skips the payload when unchanged
@@ -3838,6 +4059,23 @@ async function cloudPull(){
 }
 function cloudSchedule(ms){
   if(!CLOUD.on)return;
+  /* v18.101 — 413 guard. The server caps the workspace at DATA_MAX_BYTES (5MB)
+     and cloudPut had NO branch for 413, so the caller re-scheduled forever:
+     a silent 413 storm with no feedback. After two rejections we hold the push
+     and say why; we resume automatically once the payload fits again (the user
+     deleted media), so nothing is ever lost. */
+  if(CLOUD.over413){
+    let n=0;try{n=JSON.stringify(cloudPack()).length}catch(e){}
+    if(n>4800000){CLOUD.dirty=false;return}
+    CLOUD.over413=false;CLOUD.rej413=0;CLOUD.warned413=false;
+  }
+  /* v18.107 — storage circuit open: probe once every 30s instead of every 1.5s.
+     The gate clears itself when a push succeeds (cloudPut resets storageDown). */
+  if(CLOUD.storageDown&&Date.now()-CLOUD.storageDown<30000){
+    CLOUD.dirty=true;
+    clearTimeout(CLOUD.pushT);CLOUD.pushT=setTimeout(cloudPush,30000);
+    return;
+  }
   CLOUD.dirty=true;
   clearTimeout(CLOUD.pushT);CLOUD.pushT=setTimeout(cloudPush,ms||900);
 }
@@ -3855,6 +4093,10 @@ function cloudStart(){
   CLOUD.started=true;
   // Handle stored on CLOUD so cloudReset() can stop it (see cloudReset).
   CLOUD.pollT=setInterval(()=>{if(!document.hidden)cloudPull()},7000);
+  /* v18.108 — realtime: one EventSource replaces "wait up to 7 s". The 7 s poll
+     above STAYS as the safety net, and since v18.104 an unchanged poll is O(1),
+     so a dead stream degrades to "slower", never to "broken". */
+  sseStart();
   /* v18.21 — daily smart-report sweep: shortly after boot, then every 6h. */
   setTimeout(rptAutoRun,4000);
   CLOUD.rptT=setInterval(()=>{if(!document.hidden)rptAutoRun()},6*3600*1000);
@@ -3864,6 +4106,8 @@ function cloudStart(){
   /* v18.38 — smart workout reminder sweep (coach devices only, see remSweep). */
   setTimeout(remSweep,6000);
   CLOUD.remT=setInterval(()=>{if(!document.hidden)remSweep()},6*3600*1000);
+  /* v18.103 — lift any pre-existing inline voice blobs into /api/media. */
+  setTimeout(()=>migrateVoice(),9000);
 }
 async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legacy code
   if(CLOUD.on){cloudStart();return}
@@ -4085,7 +4329,23 @@ const packRemain=name=>{const ps=PACKS.filter(p=>p.client===name);return ps.leng
 const goalPct=c=>{if(!c||!c.targetW||!c.weight)return 0;const s=c.startW||c.weight;const span=c.targetW-s;if(!span)return 100;return Math.max(0,Math.min(100,Math.round((c.weight-s)/span*100)))};
 const INTAKE_Q=['Emergency contact (name & phone)','Injuries or medical conditions','Current medications','Chest pain or dizziness during exercise?','Heart condition diagnosed by a doctor?','Bone or joint problem that could worsen?','Currently doing other training?','Main goal & expectations'];
 const INTAKE_YN=[3,4,5,6]; // indexes of the yes/no (PAR-Q) questions
-function photoTotalBytes(){let n=0;Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=(p.src||'').length}));return n}
+/* v18.101 — count EVERY base64 blob that rides in the workspace payload, not just
+   progress photos: chat images (MSGS), assistant photos (NCHAT), attachments
+   (FILES) and the coach avatar are in the same JSON. Counting only DB[].photos
+   meant the 3.5MB guard never fired and the SERVER answered 413 instead. */
+function photoTotalBytes(){
+  /* v18.101 — count every blob that rides in the payload; v18.103 — only INLINE
+     base64 counts now, because a voice note that was lifted to /api/media is a
+     ~30-char URL, not 160 KB of base64. */
+  const dlen=v=>(typeof v==='string'&&v.startsWith('data:'))?v.length:0;
+  let n=0;
+  Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=dlen(p&&p.src)}));
+  (MSGS||[]).forEach(m=>{n+=dlen(m&&m.src)});
+  (NCHAT||[]).forEach(m=>{n+=dlen(m&&m.src)});
+  (FILES||[]).forEach(f=>{n+=dlen(f&&f.src)});
+  n+=dlen(COACH_PIC);
+  return n;
+}
 /* Downscale to ≤640px JPEG (~40-60 KB) — the workspace payload has a 5 MB cap,
    so raw phone photos (3-8 MB) would break sync after the first upload. */
 function resizeImage(file,cb){
@@ -4098,7 +4358,12 @@ function resizeImage(file,cb){
       cv.getContext('2d').drawImage(img,0,0,w,h);
       cb(cv.toDataURL('image/jpeg',0.7));
     };
+    /* v18.96 — a file that is not a decodable image took NEITHER branch, so cb
+       never ran: the caller did nothing at all and gave no feedback. Signal the
+       failure with an empty string so callers can report it. */
+    img.onerror=()=>cb('');
     img.src=rd.result};
+  rd.onerror=()=>cb('');
   rd.readAsDataURL(file);
 }
 function pickPhoto(by){
@@ -4111,6 +4376,7 @@ function pickPhoto(by){
     if(photos.length>=8){toast(t('Photo limit reached — delete an older photo first'));return}
     if(photoTotalBytes()>3500000){toast(t('Photo storage is full — delete some photos first'));return}
     resizeImage(f,src=>{
+      if(!src){toast(t('Could not read the picture'));return}
       photos.push({id:uid(),d:Date.now(),tag:({Front:'front',Back:'back',Side:'side'})[S.pose]||'front',src,by,ok:by==='coach'});
       saveData();render();
       toast(by==='coach'?t('Photo added ✓'):t('Photo sent — waiting for coach approval'));
@@ -4627,14 +4893,20 @@ function habitState(c,h,iso){
   if(h.type==='tick'){const v=log[h.id]===true||log[h.id]===1;
     return{done:v,val:v?'✓':'',sub:v?t('Done'):t('Tap when done')}}
   const tg=NEng.targets(c,iso),co=NEng.consumed(c,iso);
+  let st;
   if(h.metric==='water'){const w=NEng.waterOf(c,iso),wt=NEng.waterT(c)||2;
-    return{done:w>=wt-.05,val:nf(w)+'L',sub:nf(w)+' / '+nf(wt)+' L'}}
-  if(h.metric==='protein'){const p=co.p,tp=(tg&&tg.p)||0;
-    return{done:tp>0&&p>=tp*.9,val:nf(p)+'g',sub:tp?nf(p)+' / '+nf(tp)+' g':'—'}}
-  if(h.metric==='checkin'){
+    st={done:w>=wt-.05,val:nf(w)+'L',sub:nf(w)+' / '+nf(wt)+' L'}}
+  else if(h.metric==='protein'){const p=co.p,tp=(tg&&tg.p)||0;
+    st={done:tp>0&&p>=tp*.9,val:nf(p)+'g',sub:tp?nf(p)+' / '+nf(tp)+' g':'—'}}
+  else if(h.metric==='checkin'){
     const m=MSGS.find(x=>x&&x.type==='checkin'&&x.client===c.name&&(!x.at||habIso(x.at)===iso));
-    return{done:!!m,val:m?'✓':'',sub:m?t('Sent'):t('Not yet')}}
-  return{done:false,val:'',sub:''};
+    st={done:!!m,val:m?'✓':'',sub:m?t('Sent'):t('Not yet')}}
+  else st={done:false,val:'',sub:''};
+  /* v18.80 — every habit row is tickable (mockup). A manual tick on an AUTO
+     habit is an OVERRIDE written to hlog and wins over the computed metric;
+     the sub-line keeps showing the real measured value underneath. */
+  if(log[h.id]===true||log[h.id]===1)st={...st,done:true,val:st.val||'✓'};
+  return st;
 }
 function habitsSummary(c,iso){
   const hs=habitsOf(c).filter(h=>h&&h.on!==false);
@@ -4652,7 +4924,7 @@ function habNum(el){
   const was=+hd[hh.id]||0,tgt=+(hh.target||1);
   hd[hh.id]=v;
   if(v>=tgt&&was<tgt)gamAward(hc,'habit');
-  else if(v<tgt&&was>=tgt)hc.pts=Math.max(0,(hc.pts||0)-(GAM.PTS.habit||0));
+  else if(v<tgt&&was>=tgt)gamRevoke(hc,'habit');
   saveData();render();
   /* coach editing the SAME field from the habits modal → refresh it too. */
   if(S.role==='coach'&&document.getElementById('modal-root').firstChild)habCoachModal();
@@ -6249,16 +6521,18 @@ window.admFilter=v=>{S.admQ=v;const p=$('adm-q');if(!p)return;
 /* ================= MESSAGES (coach) ================= */
 function bubble(m){
   const me=m.from==='coach';
-  /* v18.75 — voice note: a player, not a text line. */
-  if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};display:flex;flex-direction:column;align-items:${me?'flex-end':'flex-start'};max-width:82%">
-    ${msgVoice(m)}
-    <span style="font-size:10px;opacity:.65;margin-top:4px">${t(m.time)}</span></div>`;
+  /* v18.75 — voice note: a player, not a text line.
+     v18.102 — no wrapper: .voice's max-width:78% resolved against a shrink-to-fit
+     parent (78% of 167 = 130) while the content needs 167, so it overflowed its
+     own border. Direct child of .chatbody → 78% of the thread, like the mockup. */
+  if(m.type==='voice')return `${msgVoice(m,me?'flex-end':'flex-start')}
+    <span style="display:block;font-size:10px;opacity:.65;text-align:${me?'end':'start'}">${t(m.time)}</span>`;
   return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
-    ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
+    ${m.ctx?`<span class="ctx">${ic('map-pin',12)} ${esc(m.ctx)}</span>`:''}
     ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
     ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',30)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
     <div>${esc(t(m.body))}</div>
-    <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?'<span>✓✓</span>':''}</div>
+    <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?`<span>${ic('check',11)}${ic('check',11)}</span>`:''}</div>
     ${!me&&m.type!=='checkin'&&!m.noted?`<div style="margin-top:5px"><button class="lnk" style="font-size:11px" data-act="msg-note" data-id="${m.id}">${ic('note',11)} ${t('Save as note')}</button></div>`:''}
     ${m.noted?`<div style="margin-top:5px"><span class="bdg bdg-lime" style="font-size:10px">📝 ${t('Saved as note')}</span></div>`:''}
   </div>`;
@@ -6769,7 +7043,7 @@ function wNutrition(){
     </div>
   </div>
   <div class="grid2b" style="margin-bottom:14px">
-    <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's Meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
+    <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
       ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>FOODS[x.fi]?foodName(FOODS[x.fi].n)+' '+nf(x.g)+'g':'').filter(Boolean).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
     </div>
     <div class="stack">
@@ -7227,7 +7501,7 @@ function rptAutoRun(){
     const rows=CLIENTS.filter(c=>c.status!=='Archived').map(c=>({c,...RPT.score(c)}));
     const weak=rows.filter(r=>r.score<60);
     if(weak.length){
-      NOTIFS.unshift({t:`📊 ${t('Smart report')}: ${nf(weak.length)} ${t('clients need attention')}`,d:'Just now',un:true});
+      NOTIFS.unshift({t:`${t('Smart report')}: ${nf(weak.length)} ${t('clients need attention')}`,d:'Just now',un:true});
       weak.slice(0,3).forEach(r=>NOTIFS.unshift({t:`⚠️ ${t(r.c.name)} — ${t('score')} ${nf(r.score)}`,d:'Just now',un:true}));
       ACTIVITY.unshift({w:'Just now',i:'chart',h:lang==='fa'?`<b>گزارش هوشمند</b> برای ${nf(rows.length)} شاگرد ساخته شد — ${nf(weak.length)} نیاز به توجه دارند`:`<b>Smart report</b> generated for ${nf(rows.length)} clients — ${nf(weak.length)} need attention`});
       saveData();
@@ -7243,14 +7517,14 @@ function rptAutoRun(){
 const GAM={
   PTS:{workout:10,checkin:3,form:5,badge:20,habit:2},
   BADGES:[
-    {id:'first',e:'🎯',n:'First Workout',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
-    {id:'w10',e:'💪',n:'10 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
-    {id:'w25',e:'🏋️',n:'25 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
-    {id:'w50',e:'🏆',n:'50 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
-    {id:'w100',e:'👑',n:'100 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
-    {id:'s3',e:'🔥',n:'3-Day Streak',t:c=>(c.dayStreak||0)>=3},
-    {id:'s7',e:'🔥',n:'7-Day Streak',t:c=>(c.dayStreak||0)>=7},
-    {id:'s14',e:'⚡',n:'14-Day Streak',t:c=>(c.dayStreak||0)>=14},
+    {id:'first',e:'🎯',n:'First Workout',s:'First',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
+    {id:'w10',e:'💪',n:'10 Workouts',s:'10 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
+    {id:'w25',e:'🏋️',n:'25 Workouts',s:'25 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
+    {id:'w50',e:'🏆',n:'50 Workouts',s:'50 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
+    {id:'w100',e:'👑',n:'100 Workouts',s:'100 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
+    {id:'s3',e:'🔥',n:'3-Day Streak',s:'3-day',t:c=>(c.dayStreak||0)>=3},
+    {id:'s7',e:'🔥',n:'7-Day Streak',s:'7-day',t:c=>(c.dayStreak||0)>=7},
+    {id:'s14',e:'⚡',n:'14-Day Streak',s:'14-day',t:c=>(c.dayStreak||0)>=14},
     {id:'s30',e:'🌟',n:'30-Day Streak',t:c=>(c.dayStreak||0)>=30},
     {id:'s100',e:'💎',n:'100-Day Streak',t:c=>(c.dayStreak||0)>=100},
     {id:'chk10',e:'📋',n:'10 Check-ins',t:c=>MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length>=10},
@@ -7303,6 +7577,20 @@ function gamAward(c,kind){
     if(S.role==='client')badgeModal(celeb,GAM.PTS.badge*nb.length+doneCh.reduce((a,ch)=>a+((ch.reward&&ch.reward.pts)||50),0));
   }
   return {nb,doneCh};
+}
+/* v18.84 — symmetric UNDO for gamAward. The three revoke paths (count habit drops
+   below target, habit untick, coach habit untick) only decremented `pts`, so the
+   momentum hero's "+pts today" on Today stayed INFLATED while the total fell —
+   the two counters drifted apart. Same shape as gamAward's tail. */
+function gamRevoke(c,kind){
+  if(!c)return;
+  const d=GAM.PTS[kind]||0;
+  if(!d)return;
+  const before=c.pts||0;
+  c.pts=Math.max(0,before-d);
+  /* Only touch ptsDay when it still represents TODAY — otherwise the hero
+     already resets it on a date mismatch and a stale value is irrelevant. */
+  if(c.ptsDate===isoToday())c.ptsDay=Math.max(0,(c.ptsDay||0)+(c.pts-before));
 }
 /* Badge celebration — shown on the client device right after a workout. */
 function badgeModal(list,pts){
@@ -8769,7 +9057,13 @@ function vClient(){
      the grade pill, Calendar the Week pill; Profile has none (you are there). */
   const pmH=progMeta(c);
   const tgH=NEng.targets(c);
-  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1):0;
+  /* v18.93 — the Nutrition "Day N" pill disappeared for any client whose
+     `since` was never set (the demo seed has none → dayN=0 → falsy → no pill,
+     which also collapsed the eyebrow/title widths). Fall back to the day-count
+     of the PROGRAM: (week-1)*7 + day-of-week. Derived from real data, never
+     invented, and always >=1. */
+  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1)
+    :Math.max(1,(pmH.wk-1)*7+((TDATE.getDay()+6)%7)+1);
   const scH=RPT.score(c).score,gradeH=scH>=80?'A':scH>=60?'B':'C';
   const wkN=(()=>{const t2=new Date(Date.UTC(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate()));const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)})();
   const monthYr=TDATE.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'long',year:'numeric'});
@@ -8777,7 +9071,10 @@ function vClient(){
             <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
             <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
             <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>`;
-  const headA={today:headFull,chat:headFull,profile:'',
+  const headA={today:headFull,chat:headFull,
+    /* v18.105 — mockup 08: a gear in the header. Settings live inline on this
+       screen (no separate route), so it scrolls to that section. */
+    profile:`<span class="icobtn" data-act="pf-gear" role="button" tabindex="0" title="${t('Settings')}">${ic('gear',15)}</span>`,
     workouts:`<span class="pill">W${nf(pmH.wk)}/${nf(pmH.weeks)}</span>`,
     nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
     progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
@@ -8790,24 +9087,42 @@ function vClient(){
   /* v18.71 — guard: a stale/unknown ptab (old localStorage) must never make
      `undefined()` blow up the whole portal — fall back to Today. */
   const ptabView={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile};
+  /* v18.94 — the Nutrition Assistant is now its OWN screen (mockup cell 05).
+     It used to be an inline card glued to the end of Nutrition, but mockup cell
+     04 ends at the quick-log block — the assistant is a separate full view.
+     HIDDEN tab (same pattern as Calendar/Profile): no bottom-bar entry, reached
+     from the quick-log "Type text" / "Assistant" tiles via na-focus. */
+  ptabView.assistant=cAssistant;
+  ptabTitle.assistant='Nutrition Assistant';
+  headEyebrow.assistant=headEyebrow.nutrition;
+  headA.assistant='';
   const body=(ptabView[S.ptab]||ptabView.today)();
+  /* v18.102 — mockup 05 AND 07 are FULL-SCREEN chat views: they swap .chead for
+     a .chathead, hide the bottom bar and float the composer. Chat is a real
+     bottom-bar TAB, so on that screen leaving means .chathead's back button. */
+  const full=S.ptab==='assistant'||S.ptab==='chat';
+  const head=S.ptab==='assistant'?naHead(c)
+    :S.ptab==='chat'?chatHead(c)
+    :`<div class="chead">
+          <div class="chead-t">
+            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
+            <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Back')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
+          </div>
+          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
+        </div>`;
+  const foot=full?(S.ptab==='assistant'?naComposer():chatComposer())
+    :`<div class="cnav">${tabs.map(([k,l,i])=>`<button class="cnav-it ${S.ptab===k?'on':''}" data-act="cnav" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='chat'&&cunread?'<span class="cdot"></span>':''}</button>`).join('')}</div>`;
   return `
   <div class="clientwrap">
     <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
     ${langBtn('btn-outline btn-sm')}
     ${fbBtn('top:18px;inset-inline-end:18px;')}
     <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
-      <div class="capp" id="capp">
-        <div class="chead">
-          <div class="chead-t">
-            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
-            <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Today')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
-          </div>
-          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
-        </div>
+      <div class="capp${S.ptab==='assistant'?' na':''}${full?' fs':''}" id="capp">
+        ${head}
         ${body}
       </div>
-      <div class="cnav">${tabs.map(([k,l,i])=>`<button class="cnav-it ${S.ptab===k?'on':''}" data-act="cnav" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='chat'&&cunread?'<span class="cdot"></span>':''}</button>`).join('')}</div>
+      ${foot}
       ${S.player?cPlayer():''}
     </div>
   </div>`;
@@ -8823,6 +9138,8 @@ function cToday(){
   /* v18.38 — unread coach reminder (auto-sent by the coach's device after
      3+ skipped days). */
   const remMsg=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&m.type==='reminder'&&!m.read).slice(-1)[0];
+  /* v18.81 — active challenges for the bottom wiring block (entry → chalListModal). */
+  const chs=CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id));
   /* v18.71 — habits checklist (auto/count/tick) for Today. */
   const HS=habitsSummary(c,isoToday());
   const HL=(c.hlog||{})[isoToday()]||{};
@@ -8864,19 +9181,19 @@ function cToday(){
     <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
     ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
       if(!actN)return '';
-      return `<div class="sec"><span class="sec-t">⚡ ${t('Action Needed')}</span><span class="sec-c">${nf(actN)}</span></div>
+      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Action needed')}</span><span class="sec-c">${nf(actN)}</span></div>
       ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
         <div class="row">
-          <span class="badge b-amber">⏰</span>
-          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted" style="font-size:11.5px">${t('Start a session or send a check-in')}</div></div>
+          <span class="badge b-amber">${ic('clock',13)}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted">${t('Start a session or send a check-in')}</div></div>
           ${w?`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="open-player" data-wid="${w.id}">${t('Start')}</button>`:`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
           <button class="btn btn-ghost btn-icon" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}" title="${t('Got it')}" style="width:28px;height:28px;flex:none">${ic('x',13)}</button>
         </div>
       </div>`:''}
       ${!c.intake?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
         <div class="row">
-          <span class="badge b-amber">📋</span>
-          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${t('Intake form')}</b><div class="muted" style="font-size:11.5px">${t('Your coach needs your health background before the first session')}</div></div>
+          <span class="badge b-amber">${ic('clipboard-list',13)}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${t('Intake form')}</b><div class="muted">${t('Your coach needs your health background before the first session')}</div></div>
           <button class="btn btn-lime" style="padding:8px 11px;font-size:11.5px;flex:none" data-act="intake-open">${t('Fill intake form')}</button>
         </div>
       </div>`:''}`})()}
@@ -8891,16 +9208,16 @@ function cToday(){
         <div class="pbar" style="margin:0 0 8px"><i style="width:${HS.pct}%"></i></div>
         ${HS.rows.map(({h,s})=>`
         <div class="hab ${s.done?'done':''}">
+          <button class="tick" data-act="hab-tick" data-k="${esc(h.id)}" aria-label="${esc(h.name)}">${ic('check',13)}</button>
+          <div class="txt"><b>${esc(t(h.name))}</b><span>${esc(s.sub)}</span></div>
           ${h.type==='count'
             ?`<input class="hab-n" type="number" min="0" inputmode="numeric" data-change="hab-num" data-k="${esc(h.id)}" value="${+HL[h.id]||0}">`
-            :`<button class="tick" data-act="hab-tick" data-k="${esc(h.id)}" ${h.type==='auto'?'disabled':''} aria-label="${esc(h.name)}">${ic('check',13)}</button>`}
-          <div class="txt"><b>${esc(t(h.name))}</b><span>${esc(s.sub)}</span></div>
-          ${h.type!=='count'?`<span class="hv ${s.done?'':'off'}">${esc(s.val)}</span>`:''}
+            :`<span class="hv ${s.done?'':'off'}">${s.val==='✓'?ic('check',12):esc(s.val)}</span>`}
         </div>`).join('')}
       </div></div>
     </div>
-    <!-- 💪 Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
-    <div class="sec"><span class="sec-t">💪 ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
+    <!-- Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
+    <div class="sec"><span class="sec-t">${ic('dumbbell',15)} ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
     ${w?`<div class="fhero">
       <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
         <span class="chip">${t(w.day)}</span>
@@ -8920,12 +9237,31 @@ function cToday(){
     </div>`
     :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
     :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    <!-- 🥗 Nutrition — mockup .sec header + compact "Left today" card -->
-    <div class="sec"><span class="sec-t">🥗 ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
+    <!-- Nutrition — mockup .sec header + compact "Left today" card -->
+    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
     ${tg?`<div class="cc tight">
       <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t('Left today')}</b><span class="badge b-lime mono">${nf(remK?remK.kcal:0)} kcal</span></div>
       <div class="pbar" style="margin-top:9px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
     </div>`:`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
+    <!-- v18.81 — WIRING (below the mockup's last block, so everything above stays
+         pixel-identical to the mockup): the client tools the mockup's Today does not
+         draw but the system still needs reachable — daily check-in, challenges, form check. -->
+    <div class="sec"><span class="sec-t">${ic('activity',15)} ${t('Quick check-in')}</span></div>
+    <div class="cc tight">
+      <div class="muted" style="font-size:12.5px;margin-bottom:8px">${t('How did training feel today?')}</div>
+      ${[['Energy','cEnergy',['Low','OK','High']],['Soreness','cSore',['None','Some','A lot']],['Sleep','cSleep',['Poor','Fine','Great']]].map(([lbl,key,opts])=>`
+      <div style="margin-bottom:8px"><div class="lbl" style="margin-bottom:4px">${t(lbl)}</div>
+      <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
+      <button class="btn btn-lime" data-act="send-checkin">${t('Send check-in')}</button>
+    </div>
+    <div class="sec"><span class="sec-t">${ic('flag',15)} ${t('Challenges')}</span>${chs.length?`<span class="sec-c">${nf(chs.length)}</span>`:''}</div>
+    <div class="cc tight">
+      <div class="row" style="gap:8px">
+        <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" data-act="chal-list">${ic('trophy',13)} ${t('See all')}</button>
+        <button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="chal-own">${ic('plus',13)} ${t('New')}</button>
+      </div>
+      <button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:8px" data-act="fc-open">${ic('camera',14)} ${t('Form check')}</button>
+    </div>
   </div>`;
 }
 /* v18.75 — plan 1ج: the STRUCTURED current-program record (c.prog2) rides on
@@ -8967,7 +9303,12 @@ function cWorkouts(){
   /* --- today spotlight --- */
   const DAYN=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
   const tp=todaysPlan(c.id),tw=tp.w,tRest=tp.rest;
-  const twChips=tw?tw.exercises.slice(0,3).map(e=>`<span>${esc(t(EXERCISES[e.ex].n))}</span>`).join('')+(tw.exercises.length>3?`<i>+${nf(tw.exercises.length-3)}</i>`:''):'';
+  /* v18.85 — mockup chips are short tags (Squat / RDL / Leg Press / Calf Raise)
+     that fit ONE row. The demo's names are long ("Incline Dumbbell Press"), which
+     wrapped the row to 60px instead of the mockup's 27px. Cap each chip at two
+     words / 16 chars — short names stay untouched, long ones stay readable. */
+  const chipNm=s=>{const w=String(s).split(' ');const n=w.length>2?w.slice(0,2).join(' '):s;return n.length>16?n.slice(0,15)+'…':n};
+  const twChips=tw?tw.exercises.slice(0,3).map(e=>`<span>${esc(chipNm(t(EXERCISES[e.ex].n)))}</span>`).join('')+(tw.exercises.length>3?`<i>+${nf(tw.exercises.length-3)}</i>`:''):'';
   const lastLog=tw?wlogOf(c.id).find(l=>l&&l.n===tw.name):null;
   /* --- week strip (mockup .tr-week/.wkd) --- */
   const mon=new Date(TDATE);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
@@ -8981,9 +9322,12 @@ function cWorkouts(){
     if(!s)return `<span class="wkd ${isT?'today':''}">${inner}<em>—</em></span>`;
     if(s.t==='rest')return `<span class="wkd rest ${isT?'today':''}">${inner}<em>${t('Rest')}</em></span>`;
     const w=splitW(c.id,s);
-    /* v18.76 — mockup: the workout NAME under the date (first word keeps it short) */
+    /* v18.88 — WIRING: every cell rendered cursor:pointer but carried NO data-act
+       (click = NO-OP, confirmed by a click test). A training day now opens THAT
+       day's workout via the same open-player path the cards use; rest/unset days
+       carry no action at all, and the CSS only shows a pointer for [data-act]. */
     const wn=w?String(t(w.name)).split(/[ —–-]+/)[0]:'…';
-    return `<span class="wkd ${w&&wDone(w)?'done':''} ${isT?'today':''}">${inner}<em>${esc(wn)}</em></span>`;
+    return `<span class="wkd ${w&&wDone(w)?'done':''} ${isT?'today':''}"${w?` data-act="open-player" data-wid="${esc(String(w.id))}"`:''}>${inner}<em>${esc(wn)}</em></span>`;
   }).join('');
   const hero=`
     <div class="tr-hero">
@@ -9020,12 +9364,10 @@ function cWorkouts(){
     ${hero}
     ${spotlight}
     <div class="sec"><span class="sec-t">${ic('calendar',14)} ${t('This week')}</span><span class="sec-c mono">${nf(weekDone)}/${nf(weekTotal)} ${t('Done')}</span></div>
-    <div class="ccard" style="padding:13px 8px">
-      <div class="tr-week">
-        <div class="tr-wdays">${weekCells}</div>
-        <div class="tr-wfoot"><div class="lbl"><span>${t('Weekly goal')} · ${nf(weekTotal)} ${t('sessions')}</span><b>${nf(wkPct)}%</b></div>
-        <div class="pbar"><i style="width:${wkPct}%"></i></div></div>
-      </div>
+    <div class="tr-week">
+      <div class="tr-wdays">${weekCells}</div>
+      <div class="tr-wfoot"><div class="lbl"><span>${t('Weekly goal')} · ${nf(weekTotal)} ${t('sessions')}</span><b>${nf(wkPct)}%</b></div>
+      <div class="pbar"><i style="width:${wkPct}%"></i></div></div>
     </div>
     <div class="sec"><span class="sec-t">${ic('dumbbell',14)} ${t('Workouts')}</span><span class="muted mono">${nf(list.length)} ${t('total')}</span></div>
     <div class="filters">
@@ -9046,24 +9388,15 @@ function cWorkouts(){
       <div class="tr-day"><b>${esc(d3)}</b><span>${nf(dnum)}</span></div>
       <div class="t"><b>${esc(w.name)}</b>
         <div class="tr-exdots">${dots}</div>
-        <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(tons)} ${t('t')}</i><i>${esc(t(w.dur))}</i></div>
+        <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(tons)} ${t('t')}</i><i>${esc(String(t(w.dur)).replace(/\s*(min\b|دقیقه)/i,'m'))}</i></div>
       </div>
-      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?'✓ '+t('Done'):'▶ '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
+      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?ic('check',11)+' '+t('Done'):ic('play',11)+' '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    ${(()=>{ /* v18.61 — REAL session history: every finished workout with the
-       sets/reps/weight/RPE the client actually did. */
-      const hist=wlogOf(c.id);
-      if(!hist.length)return '';
-      return `<div class="card-t" style="margin:16px 14px 8px">${ic('clock',13)} ${t('Session history')}</div>
-      <div class="ccard" style="padding:6px 14px">${hist.slice(0,12).map(l=>`
-        <div class="row" style="justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)">
-          <div style="min-width:0">
-            <b style="font-size:13.5px">${esc(t(l.n||''))}</b>
-            <div class="muted" style="font-size:11.5px;margin-top:2px">${fmtD(l.d)} · ${nf(l.done||0)}/${nf(l.total||0)} ${t('sets')} · ${nf(Math.round((l.vol||0)/10)/100)} ${t('t')}${l.rpe!=null?` · RPE ${nf(l.rpe)}`:''}</div>
-          </div>
-          <span class="chip" style="flex:none">${ic('check',12)} ${t('completed')}</span>
-        </div>`).join('')}</div>`})()}
+    <!-- v18.87 - Session history block removed from the student Training tab
+         (user request). The coach-side list in the client Overview card is a
+         different section and is untouched; wlogOf is still used for the
+         cards' tonnage/RPE and the mockup's "Last week" line. -->
   </div>`;
 }
 /* v18.24 — FitFlow month strip: S M T W T F S letter row + date row, today
@@ -9101,6 +9434,12 @@ function monthStrip(){
     <div style="display:flex;gap:5px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
   </div>`;
 }
+/* v18.81 — achievement badge emoji → lucide, PHONE ONLY. GAM.BADGES is shared with
+   the coach platform, so we map at the render site instead of mutating the data —
+   the two platforms stay independent (mockup's hydration MAP mirrored here). */
+const BADGE_ICONS={'🌱':'sprout','💪':'dumbbell','🏋':'dumbbell','🏆':'trophy','👑':'crown','🔥':'flame','⚡':'zap','🥗':'salad','📸':'camera','🎯':'target','💧':'droplet','✅':'check-circle'};
+/* Strip U+FE0F (emoji presentation selector) first — '🏋️' ≠ '🏋'. */
+const badgeIcon=e=>BADGE_ICONS[String(e||'').replace(/\uFE0F/g,'')]||null;
 function cProgress(){
   const lm=lastM(S.cid);
   const c=client(S.cid);
@@ -9108,20 +9447,20 @@ function cProgress(){
   const sc=RPT.score(c).score;
   const ad=RPT.adherence(c);
   const tr=RPT.trend(c);
-  const fm=RPT.form(c);
-  const range=S.prgRange||'Week';
-  /* v18.61 — real data: Week = last 7 days (did I train?), Day = today,
-     Month = last 12 weeks of consistency vs my weekly target. */
-  const daily=range!=='Month'?dailyTrain(c.id,range==='Day'?1:7):null;
-  const cons=range==='Month'?consistWeeks(c.id,12):null;
-  /* v18.71 — mockup 06 Progress: grade ring + weight chart + PR rows + photo
-     compare + badge board, all computed from the client's real data. */
-  const wtR=S.wtRange||'3M';
+  /* v18.101 — PREFS has its OWN localStorage store, so the chosen range now
+     survives a reload (S is runtime-only and is never persisted). */
+  const wtR=S.wtRange||PREFS.wtRange||'3M';
   const prs=prList(c.id,5);
   const sorted=[...photos].sort((a,b)=>(a.id||0)-(b.id||0));
   const older=sorted[0],newer=sorted[sorted.length-1];
   const first1=String(c.name||'').split(' ')[0];
   const train7=dailyTrain(c.id,7);
+  /* v18.98 mockup 06 — cell 06 is EXACTLY chead + grade + chart + 3 sections.
+     The Health-Metrics / Workout / Measurements / Strength cards, the Points
+     row and the check-in row were removed: the 'Heart beat' card carried a
+     HARDCODED '80' (invented data — never allowed) and none of them exist in
+     the mockup. NOTE: never park such a note inside the template literal below
+     — a C-style comment there is emitted as visible text on the page. */
   /* dailyTrain marks a trained day as 100 — count the DAYS, don't sum them. */
   const t7=train7&&Array.isArray(train7.d)?train7.d.filter(v=>+v>0).length:0;
   const adh7=NEng.adherence(c,7);
@@ -9137,83 +9476,55 @@ function cProgress(){
       <div class="t">
         <div class="eb">${t('Health grade')}</div>
         <b>${gName}, ${esc(first1)}</b>
-        <p>${t('Training')} ${nf(t7)}/7 · ${t('protein hit')} ${nf(adh7.protHits)} ${t('days')}</p>
+        <p>${t('Training')} ${nf(t7)}/7 · ${t('protein hit')} ${nf(adh7.protHits)} ${t('days')} · ${t('Score')} ${nf(sc)}</p>
         <div class="gm"><span class="up">${ad.pct!=null?'↑ '+nf(ad.pct)+'%':t('Not enough data')}</span><span>${t('Weight')} ${nf(gW)}kg</span><span>${trTxt}</span></div>
       </div>
     </div>
     <div class="chart">
       <div class="h"><b>${t('Weight trend')}</b>
-        <div class="rng">${[['30D','4W'],['3M','12W'],['1Y','1Y']].map(([r,l])=>`<i class="${wtR===r?'on':''}" data-act="wt-range" data-r="${r}">${l}</i>`).join('')}</div></div>
+        <span style="display:flex;align-items:center;gap:7px">
+          <div class="rng">${[['30D','4W'],['3M','12W'],['1Y','1Y']].map(([r,l])=>`<i class="${wtR===r?'on':''}" data-act="wt-range" data-r="${r}">${l}</i>`).join('')}</div>
+          <!-- v18.99 — the client's ONLY measurement entry point used to live in a
+               row that mockup 06 does not have. Moved into the chart header so the
+               weekly check-in stays reachable without breaking the mockup layout. -->
+          <button class="btn btn-ghost btn-icon" data-act="cmeas-open" aria-label="${t('Weekly check-in')}" title="${t('Weekly check-in')}" style="width:24px;height:24px;padding:0;flex:none">${ic('ruler',14)}</button>
+        </span>
+      </div>
       <div class="sub">${nf(gW)} kg · ${trTxt}</div>
       ${wChart(S.cid,90,wtR)}
-      <div class="row" style="justify-content:space-between;align-items:center;margin-top:9px">
-        <span>${wtBadge(S.cid)||`<span class="muted" style="font-size:11px">${t('Every week')}</span>`}</span>
-        <button class="btn btn-outline btn-sm" data-act="cmeas-open">${ic('ruler',13)} ${t('Weekly check-in')}</button>
-      </div>
     </div>
-    <div class="card-t" style="margin:2px 14px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px 12px">
-      ${[
-        ['Calories',(nPlanOf(c.name)?nPlanOf(c.name).train.kcal:0)||'—',(nPlanOf(c.name)?'kcal':'')],
-        ['Weight',lm&&lm.w!=null?nf(lm.w):nf(c.weight||0),'kg'],
-        ['Body Fat',lm&&lm.bf!=null?nf(lm.bf):nf(c.bf||0),'%'],
-        ['Heart beat','80','bpm']
-      ].map(([k,v,u])=>`
-      <div class="ccard" style="padding:12px 14px">
-        <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:11px;font-weight:700">${t(k)}</span><span style="color:var(--accent)">${ic(k==='Calories'?'utensils':k==='Weight'?'ruler':k==='Body Fat'?'user':'zap',13)}</span></div>
-        <div style="font-weight:800;font-size:19px;margin-top:6px;letter-spacing:-.02em">${typeof v==='number'?nf(v):v}</div>
-        ${u?`<div class="muted" style="font-size:10px;font-weight:700;margin-top:1px">${u}</div>`:''}
-      </div>`).join('')}
-    </div>
-    <div class="ccard">
-      <div class="row" style="justify-content:space-between;margin-bottom:6px">
-        <b style="font-size:13.5px">${t('Workout')}</b>
-        <div class="seg">${['Week','Day','Month'].map(r=>`<button class="${range===r?'on':''}" data-act="prg-range" data-r="${r}">${t(r)}</button>`).join('')}</div>
-      </div>
-      ${daily?barChart(daily.d,{h:150,labels:daily.labs,c:'var(--accent)'}):cons?barChart(cons,{h:150,labels:['W1','W3','W5','W7','W9','W11'],c:'var(--accent)'}):chartEmpty(t('Complete a workout to fill this chart'))}
-      <div class="row" style="gap:10px;margin-top:8px;font-size:11px;color:var(--ink2)">
-        <span>${t('Workout completion')}: <b style="color:var(--ink)">${ad.pct!=null?nf(ad.pct)+'%':'—'}</b></span>
-        <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
-      </div>
-    </div>
-    <div class="sec"><span class="sec-t">🏆 ${t('Personal records')}</span><span class="sec-c">${nf(prs.length)}</span></div>
+    <div class="sec"><span class="sec-t">${ic('trophy',15)} ${t('Personal records')}</span><span class="sec-c">${nf(prs.length)}</span></div>
     ${prs.length?`<div class="cc tight prs">
       ${prs.map(p=>`<div class="pr"><span class="ic">${ic('dumbbell',17)}</span><div class="t"><b>${t(p.n)}</b><span>${p.d} · ${p.g}</span></div><span class="v">${p.t}</span></div>`).join('')}
     </div>`:`<div class="cc tight">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}
     ${PREFS.priv.photos?`
-    <div class="sec"><span class="sec-t">📸 ${t('Progress photos')}</span><span class="sec-c muted">${t('Drag to compare')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('camera',15)} ${t('Progress photos')}</span><span class="sec-c muted">${t('Drag to compare')}</span></div>
     <div class="cc tight">
       ${sorted.length>=2?`<div class="compare">
         <div class="base" style="background-image:url('${older.src}');background-size:cover;background-position:center"><span class="lab">${t('Earlier')}</span></div>
         <div class="top" id="cmpTop" style="width:52%;background-image:url('${newer.src}');background-size:cover;background-position:left center"><span class="lab">${t('Latest')}</span></div>
         <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
       </div>`
-      :(sorted.length?`<div class="row" style="gap:8px">${sorted.slice(-4).map(p=>`<div style="flex:1;aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid #2E333B"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`
-        :`<div class="muted" style="font-size:12px">${t('No photos yet — add the first one')}</div>`)}
+      /* v18.98 — sits BETWEEN two template literals, i.e. in JS position, so a
+         C-style comment is correct here (an HTML comment would leak its second
+         line as code). Always show the compare frame: with fewer than two photos
+         we render the mockup's own gradients so the block keeps its 150px. */
+      :`<div class="compare">
+        <div class="base"><span class="lab">${t('Earlier')}</span></div>
+        <div class="top" id="cmpTop" style="width:52%"><span class="lab">${t('Latest')}</span></div>
+        <div class="ghost">${ic('camera',34)}</div>
+        <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
+      </div>
+      <div class="muted" style="font-size:11.5px;text-align:center;margin-top:7px">${t('No photos yet — add the first one')}</div>`}
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
     </div>`:''}
-    <div class="sec"><span class="sec-t">🎖 ${t('Achievements')}</span><span class="sec-c mono">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</span></div>
+    <div class="sec"><span class="sec-t">${ic('award',15)} ${t('Achievements')}</span><span class="sec-c mono">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</span></div>
     <div class="cc tight">
       <div class="badges">
         ${GAM.BADGES.slice(0,8).map(b=>{const on=(c.badges||[]).some(x=>x&&x.id===b.id);
-        return `<div class="bg1 ${on?'':'lock'}" data-act="gam-open" style="cursor:pointer"><div class="em">${b.e}</div><b>${esc(t(b.n))}</b></div>`}).join('')}
-      </div>
-      <div class="row" style="justify-content:space-between;margin-top:10px;align-items:center">
-        <span class="chip">⭐ ${nf(c.pts||0)} ${t('Points')}</span>
-        <button class="btn btn-outline btn-sm" data-act="gam-open">${t('View all')} ${t('Badges')}</button>
+        return `<div class="bg1 ${on?'':'lock'}" data-act="gam-open" style="cursor:pointer"><div class="em">${badgeIcon(b.e)?ic(badgeIcon(b.e),22):esc(b.e)}</div><b>${esc(t(b.s||b.n))}</b></div>`}).join('')}
       </div>
     </div>
-    ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
-      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
-    /* v18.71 mockup 06 — weight chart + check-in moved UP into the .chart card */
-    <div class="ccard"><b style="font-size:13.5px">${t('Strength Progression')}</b>
-      ${(()=>{const st=strengthSeries(c.id);
-        const ss=st?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
-          .filter(([k])=>st[k]).map(([k,col,l])=>({d:st[k],c:col,l})):[];
-        if(!ss.length)return chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'));
-        return `<div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap">${ss.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</div>
-      ${multiChart(ss.map(({d,c:col})=>({d,c:col})))}`})()}</div>
-    /* v18.71 mockup 06 — PRs + photos now live in the sections above */
   </div>`;
 }
 /* ================= v18.48 — STUDENT NUTRITION HUB =================
@@ -9252,10 +9563,11 @@ function cNutrition(){
     :`
     ${tg?`
     <div class="kcal">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <span class="eyebrow">${t('Remaining today')}</span>
-        <span class="bdg ${NEng.dow(isoToday())===TODAY&&(p&&p.days[TODAY].type==='train')?'bdg-lime':'bdg-purple'}" style="font-size:9.5px">${p?(p.days[TODAY].type==='train'?t('Training Day'):t('Rest Day')):t('From your profile')}</span>
-      </div>
+      <!-- v18.93 — mockup .kcal is eyebrow → big → bar → macros, nothing else.
+           The Training/Rest badge we used to show here forced a flex row, which
+           cut the eyebrow from full-width (278px) to content width (106px) and
+           made the hero 6px taller. Removed for mockup parity. -->
+      <div class="eyebrow">${t('Remaining today')}</div>
       <div class="big">${nf(rem.kcal)} <small>${t('kcal left')}</small></div>
       <div class="pbar" style="margin-top:9px"><i style="width:${mp(co.kcal,tg.kcal)}%"></i></div>
       <div class="macros">
@@ -9269,7 +9581,7 @@ function cNutrition(){
         <button class="fchip" data-act="nprof-open">${ic('target',12)} ${t('Set targets')}</button></div>
       <div class="muted" style="font-size:12.5px;margin-top:8px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}`}
     ${p?`
-    <div class="sec"><span class="sec-t">🍽 ${t("Today's Meals")}</span><span class="sec-c mono">${nf(mealsN)}/${nf(mealsGoal)}</span></div>
+    <div class="sec"><span class="sec-t">${ic('utensils-crossed',15)} ${t("Today's meals")}</span><span class="sec-c mono">${nf(mealsN)}/${nf(mealsGoal)}</span></div>
     <div class="cc tight">
       ${(()=>{const ms=p.days[TODAY].meals;
         const isLogged=mm=>logs.some(l=>l.meal===mm.name&&Math.abs(l.kcal-Math.round(mealKcal(mm)))<5);
@@ -9287,7 +9599,7 @@ function cNutrition(){
           <div class="macc-head" data-act="macc-toggle" data-i="${mi}">
             <span class="mi" style="background:${mic[2]};color:${mic[1]}">${ic(mic[0],17)}</span>
             <div class="t"><b>${t(m.name)}</b><span>${logged?t('Logged'):t('Planned')} · ${nf(m.foods.length)} ${t('items')}</span></div>
-            ${logged?`<span class="badge b-lime mbadge">✓</span>`:due?`<span class="badge b-amber mbadge">${t('Due')}</span>`:`<span class="badge b-gray mbadge">${t('Plan')}</span>`}
+            ${logged?`<span class="badge b-lime mbadge">${ic('check',13)}</span>`:due?`<span class="badge b-amber mbadge">${t('Due')}</span>`:`<span class="badge b-gray mbadge">${t('Plan')}</span>`}
             <span class="mkc">${nf(kcal)}</span>
           </div>
           <div class="macc-body">
@@ -9299,7 +9611,7 @@ function cNutrition(){
           </div>
         </div>`}).join('')})()}
     </div>`:''}
-    <div class="sec"><span class="sec-t">💧 ${t('Hydration')}</span><span class="sec-c muted mono">${nf(water)} / ${nf(waterT)} L · ${nf(Math.max(0,Math.round((waterT-water)*10)/10))} L ${t('to go')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('droplet',15)} ${t('Hydration')}</span><span class="sec-c muted mono">${nf(water)} / ${nf(waterT)} L · ${nf(Math.max(0,Math.round((waterT-water)*10)/10))} L ${t('to go')}</span></div>
     <div class="cc tight">
       <div class="wtank ${water>=waterT?'done':''}">
         <div class="wfill ${water>=waterT?'goal':''}" style="height:${wPct}%">
@@ -9321,7 +9633,7 @@ function cNutrition(){
       <div class="opt"><span>${sug.options[0].items.map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' + ')}</span><i>P${nf(sug.options[0].p)} C${nf(sug.options[0].c)} F${nf(sug.options[0].f)}</i></div>
       <button class="btn btn-lime" style="width:100%;padding:9px 0;margin-top:10px" data-act="na-log-sug" data-i="0">${t('Log this meal')}</button>
     </div>`:''}
-    <div class="sec"><span class="sec-t">⚡ ${t('Quick log')}</span><span class="lnk" style="font-size:11.5px;color:var(--accent);cursor:pointer" data-act="jump-flog">${t('History')} →</span></div>
+    <div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Quick log')}</span><span class="lnk" style="font-size:11.5px;color:var(--accent);cursor:pointer" data-act="jump-flog">${t('History')} →</span></div>
     <div class="cc" style="padding:13px">
       <button class="ql-hero" data-act="na-photo">
         <span class="qi">${ic('camera',21)}</span>
@@ -9329,7 +9641,9 @@ function cNutrition(){
         <span class="go">${ic('sparkles',15)}</span>
       </button>
       <div class="ql-row">
-        <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(77,124,254,.14);color:#7EA0FF">${ic('keyboard',16)}</span><b>${t('Type text')}</b><span class="ms">“200g chicken”</span></button>
+        <!-- v18.95 - "Type text" is its OWN fast path now (modal, no chat);
+             "Assistant" keeps the conversation screen. -->
+        <button class="ql-mini" data-act="ntext-open"><span class="mi-ic" style="background:rgba(77,124,254,.14);color:#7EA0FF">${ic('keyboard',16)}</span><b>${t('Type text')}</b><span class="ms">“200g chicken”</span></button>
         <button class="ql-mini" data-act="nbar-open"><span class="mi-ic" style="background:rgba(139,92,246,.14);color:#B79CFF">${ic('barcode',16)}</span><b>${t('Barcode')}</b><span class="ms">${t('Scan package')}</span></button>
         <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(229,169,60,.14);color:#F0B457">${ic('bot',16)}</span><b>${t('Assistant')}</b><span class="ms">${t('Chat to log')}</span></button>
       </div>
@@ -9345,7 +9659,8 @@ function cNutrition(){
         <div class="t"><b>${t(l.meal||'Meal')}</b><span>${(l.items||[]).map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' · ')||'—'} · P${nf(l.p||0)}</span></div>
         <button class="btn btn-ghost btn-icon" style="width:26px;height:26px" data-act="nlog-del" data-id="${l.id}">${ic('x',13)}</button></div>`).join('')}
     </div>`:''}
-    ${naChat(c)}
+    <!-- v18.94 - the assistant card was removed from here; naChat(c) now renders
+         as its own screen (cAssistant) reached from the quick-log tiles. -->
     ${np?`<div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('user',14)} ${t('Nutrition profile')}</div>
       <div class="muted" style="font-size:11.5px;line-height:1.7">
         ${np.allergies?`<div>⚠ ${t('Allergies')}: ${esc(np.allergies)}</div>`:''}
@@ -9357,53 +9672,113 @@ function cNutrition(){
     </div>`:''}
   </div>`;
 }
-/* Assistant thread + composer. Quick chips push REAL intents, not small talk.
-   v18.71 — mockup05: chathead, timestamps, logcard, water/summary chips. */
+/* v18.94 — the Nutrition Assistant as a SCREEN (mockup 05): a .cbody wrapper
+   around the same naChat card. HIDDEN tab — no bottom-bar entry. */
+function cAssistant(){
+  const c=client(S.cid);
+  return `<div class="cbody">${naChat(c)}</div>`;
+}
+/* v18.97 — mockup cell 05 has NO .chead and NO .cnav: it swaps the standard
+   header for a chat head and the bottom bar for the composer (composer is
+   absolute bottom:0 in the mockup). Both therefore live in vClient, outside
+   .capp — nested inside, the composer would scroll away with the thread. */
+function naHead(c){
+  return `<div class="chathead">
+    <button class="back" data-act="cnav" data-t="nutrition" aria-label="${t('Back')}">${ic('chevL',17)}</button>
+    <div class="t"><b>${t('Nutrition Assistant')}</b><span>${t('Online · knows your plan')}</span></div>
+    <span class="av">${ic('bot',15)}</span>
+  </div>`;
+}
+function naComposer(){
+  return `<div class="composer fs">
+    <button class="plus" data-act="na-plus" aria-label="${t('More')}" title="${t('More')}">${ic('plus',17)}</button>
+    <input class="fake" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()">
+    <button class="snd" data-act="na-send" aria-label="${t('Send')}" title="${t('Send')}">${ic('arrowR',16)}</button>
+  </div>`;
+}
+/* v18.102 — mockup 07: the coach's name + reply promise live in the chat head,
+   which is why the app's .coachcard is redundant here. */
+function chatHead(c){
+  return `<div class="chathead">
+    <button class="back" data-act="cnav" data-t="today" aria-label="${t('Back')}">${ic('chevL',17)}</button>
+    <div class="t"><b>${esc(wsOwnerName()||t('Your coach'))}</b><span>${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</span></div>
+    ${av(wsOwnerName()||t('Coach'),32,3)}
+  </div>`;
+}
+/* The mic is the DEFAULT state (that is what the mockup's .snd is) and it swaps
+   to a send arrow while there is text. Swapping data-act directly — no render —
+   so the caret never jumps. */
+function chatComposer(){
+  return `<div class="composer fs">
+    <button class="plus" data-act="chat-plus" aria-label="${t('More')}" title="${t('More')}">${ic('plus',17)}</button>
+    <input class="fake" id="cmsg-inp" placeholder="${t('Message coach…')}" oninput="chatSndState()" onkeydown="if(event.key==='Enter')sendClientMsg()">
+    <button class="snd" id="cmsg-snd" data-act="voice-rec" data-has="false" aria-label="${t('Voice message')}" title="${t('Voice message')}" style="${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',16)}</button>
+  </div>`;
+}
+window.chatSndState=function(){
+  const b=$('cmsg-snd'),i=$('cmsg-inp');if(!b||!i)return;
+  const has=!!String(i.value||'').trim();
+  if(String(b.dataset.has)===String(has))return;
+  b.dataset.has=String(has);
+  b.dataset.act=has?'send-client':'voice-rec';
+  b.innerHTML=has?ic('arrowR',16):ic('mic',16);
+  const lab=has?t('Send'):t('Voice message');
+  b.setAttribute('aria-label',lab);b.setAttribute('title',lab);
+};
+/* Assistant thread + quick chips (the head and composer live in vClient).
+   v18.97 — .logcard / the safety note are SIBLINGS of .bub in mockup 05.
+   Nested inside a bubble they inherited the bubble's content width: 184px
+   instead of 88% of the thread (273px). */
 function naChat(c){
   const ms=NCHAT.filter(m=>m.client===c.name).slice(-30);
   const ts=m=>m.at?new Date(m.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):t(m.time||'');
-  return `<div class="ccard" style="border-color:var(--acc-line2)">
-    <div class="row" style="gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--line2)">
-      <span style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#2E3A18,#1A1D22);display:grid;place-items:center;font-size:18px;flex:none;border:1px solid rgba(200,240,75,.3)">🤖</span>
-      <span style="flex:1;min-width:0"><b style="font-size:13.5px;display:block">${t('Nutrition Assistant')}</b><span class="muted" style="font-size:10.5px">${t('Online · knows your plan')}</span></span>
-      <span class="bdg bdg-lime" style="font-size:9.5px">${t('AI · not medical advice')}</span>
-    </div>
-    <div class="chatbody" style="padding:12px 0;max-height:340px;overflow-y:auto">
-      ${ms.length?ms.map(m=>{const me=m.role==='student';
-      return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'};max-width:88%">
-        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
-        <div>${esc(t(m.body))}</div>
-        ${m.card&&!m.card.confirmed?naCard(m):''}
-        ${m.card&&m.card.confirmed?`<div class="ctx" style="margin-top:4px">✓ ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`:''}
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${ts(m)}</span>
-      </div>`}).join('')
-      :`<div class="muted" style="font-size:12px;padding:4px 2px">${t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`}
+  const sep=d=>d===isoToday()?t('Today')
+    :new Date(d+'T12:00:00').toLocaleDateString(lang==='fa'?'fa-IR':'en-GB',{month:'short',day:'numeric'});
+  let last='';
+  const rows=ms.map(m=>{
+    const me=m.role==='student';
+    let out='';
+    if(m.d&&m.d!==last){last=m.d;out+=`<div class="datesep">${esc(sep(m.d))}</div>`}
+    out+=`<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
+      ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
+      <div>${esc(t(m.body))}</div>
+      <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;font-family:'JetBrains Mono',monospace;text-align:${me?'end':'start'}">${ts(m)}</span>
+    </div>`;
+    if(m.safety)out+=`<div class="nsafe">${ic('shield-alert',12)}<span>${t('AI · not medical advice')}</span></div>`;
+    if(m.card)out+=m.card.confirmed
+      ?`<div class="nlog-done">${ic('check',12)} ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`
+      :naCard(m);
+    return out;
+  }).join('');
+  /* Empty state = the mockup's opening line, computed from the REAL engine
+     (never invented — same keys naFallback already uses). */
+  const greet=rows?'':(()=>{const rem=NEng.remaining(c),first=String(c.name||'').split(' ')[0];
+    return `<div class="bub them" style="align-self:flex-start">${rem
+      ?`Hi ${esc(first)} — ${t('You have')} ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`
+      :t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`})();
+  return `<div class="chatbody">
+      ${greet}${rows}
       ${S.naTyping?`<div class="bub them" style="align-self:flex-start"><div class="muted" style="font-size:12px">${t('Thinking…')}</div></div>`:''}
     </div>
-    <div class="quick" style="padding:8px 0 0">
-      <button class="fchip" data-act="na-quick" data-q="${esc(t('What should I eat now?'))}">🍽 ${t('What should you eat now?')}</button>
+    <div class="quick">
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('What should I eat now?'))}">${ic('utensils-crossed',13)} ${t('What should you eat now?')}</button>
       <button class="fchip" data-act="na-quick" data-q="${esc(t('Food for before my workout'))}">${t('Pre-workout')}</button>
-      <button class="fchip" data-act="na-quick" data-q="${esc(t('Swap whey'))}">🔁 ${t('Swap whey')}</button>
-      <button class="fchip" data-act="na-water" data-v="500">💧 ${t('Log500ml water')}</button>
-      <button class="fchip" data-act="na-summary">📊 ${t('Today summary')}</button>
-      <button class="fchip" data-act="na-photo">${ic('camera',12)} ${t('Photo')}</button>
-      ${NA_PIC?`<span class="fchip on">📷 ${t('attached')}</span>`:''}
-    </div>
-    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin-top:8px">
-      <button class="btn btn-ghost btn-icon" data-act="na-photo" title="${t('Photo')}" style="width:34px;height:34px">${ic('camera',15)}</button>
-      <input class="inp" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()" style="border:none;box-shadow:none">
-      <button class="btn btn-primary btn-icon" data-act="na-send">${ic('arrowR',16)}</button>
-    </div>
-  </div>`;
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('Swap whey'))}">${ic('repeat',13)} ${t('Swap whey')}</button>
+      <button class="fchip" data-act="na-water" data-v="500">${ic('droplet',13)} ${t('Log500ml water')}</button>
+      <button class="fchip" data-act="na-summary">${ic('bar-chart-2',13)} ${t('Today summary')}</button>
+      <!-- v18.97 - photo moved to the composer "+" (mockup05 note: كمپرسور با دكمه +)،
+           so its duplicate chip is gone. -->
+      ${NA_PIC?`<span class="fchip on">${ic('camera',13)} ${t('attached')}</span>`:''}
+    </div>`;
 }
 /* Structured ACTION card — mockup05 .logcard: items + macros3 + confirm. */
 function naCard(m){
   const cd=m.card;
   return `<div class="logcard">
-    <div class="h"><b>📝 ${t('Meal log')}</b><span class="badge b-amber">${t('Confirm')}</span></div>
+    <div class="h"><b>${ic('clipboard-list',13)} ${t('Meal log')}</b><span class="badge b-amber">${t('Confirm')}</span></div>
     ${(cd.items||[]).map(x=>`<div class="li"><span>${esc(foodName(x.n))} · ${nf(x.g)}g</span><i>${nf(x.kcal)} kcal</i></div>`).join('')}
     <div class="macros3"><span>P ${nf(cd.p)}g</span><span>C ${nf(cd.c)}g</span><span>F ${nf(cd.f)}g</span></div>
-    <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="na-confirm" data-id="${m.id}">✓ ${t('Confirm & log')}</button>
+    <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="na-confirm" data-id="${m.id}">${ic('check',14)} ${t('Confirm & log')}</button>
   </div>`;
 }
 /* Deterministic fallback — the assistant MUST be useful with the AI offline.
@@ -9417,16 +9792,32 @@ function naFallback(c,v){
     const sum=parsed.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
     return {body:t('I found these foods — confirm and I will log them:'),card:{type:'log',meal,items:parsed.items,...sum,confirmed:false}};
   }
-  if(parsed.unknown.length)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
-  if(/eat|خور|bukhor|meal|غذا/i.test(s)){
+  /* v18.97 — INTENTS BEFORE "unknown". parseText() pushes ANY non-food text into
+     `unknown`, so the quick chips ("What should I eat now?", "Swap whey") used to
+     answer "I could not find: What should I eat now?" instead of the real engine
+     reply — i.e. the offline story advertised on cell 05 was broken.
+     Word-boundary-safe so a food like "wheat" can never match /eat/. */
+  const asksFood=/(^|\W)(eat|eating|hungry|meal|meals|breakfast|lunch|dinner|snack|food|workout)($|\W)|خور|غذا|وعده|بخور|تمرین/i.test(s);
+  const asksSwap=/(^|\W)(replace|swap|change|instead)($|\W)|جایگزین|دوست ندارم|عوض/i.test(s);
+  if(asksFood){
     const sug=NEng.suggestNow(c);
-    const o=sug.options[0];
+    const o=sug&&sug.options&&sug.options[0];
     if(o)return {body:t('You have')+` ${nf(sug.rem.kcal)} kcal · ${nf(sug.rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Try')}: ${o.items.map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' + ')} (~${nf(o.kcal)} kcal).`};
   }
-  if(/replace|swap|جایگزین|دوست ندارم/i.test(s)){
-    const f=FOODS.find(x=>s.toLowerCase().includes(x.n.toLowerCase())||s.includes(foodName(x.n)));
-    if(f){const sw=NEng.swapsFor(f.n);if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'}}
+  if(asksSwap){
+    /* Strip the intent words first, then match either direction — "Swap whey"
+       must find "Whey Protein" even though the library name is longer. */
+    const key=s.toLowerCase().replace(/(^|\W)(replace|swap|change|instead|with|to)($|\W)/g,' ').replace(/\s+/g,' ').trim();
+    const f=FOODS.find(x=>key&&key.includes(String(x.n).toLowerCase()))
+        ||FOODS.find(x=>key&&String(x.n).toLowerCase().includes(key));
+    const sw=f?NEng.swapsFor(f.n):[];
+    if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'};
+    /* No alternative exists (e.g. Whey Protein sits alone in Supplements) — the
+       fall-through below must skip "I could not find: Swap whey". */
   }
+  /* An intent already matched but had nothing to answer with — never let the
+     "I could not find: <the question itself>" branch swallow a question. */
+  if(parsed.unknown.length&&!asksFood&&!asksSwap)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
   const rem=NEng.remaining(c);
   if(rem)return {body:t('You have')+` ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} · ${nf(rem.c)}g ${t('Carbs')} · ${nf(rem.f)}g ${t('Fat')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`};
   return {body:t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it. You can also ask what to eat next.')};
@@ -9466,13 +9857,25 @@ window.naSend=async pre=>{
   let replied=false;
   try{
     const code=wsCode()||S.joinCode||'';
+    /* v18.96 — send the STUDENT's clock. ai.mjs reads body.date/dow/hour and, when
+       they are missing, falls back to the server's UTC date and local hour. For a
+       UTC+3:30 student that meant the engine answered with YESTERDAY's macros
+       between 00:00-03:30, and the meal bucket drifted ~3.5h (server snaps an
+       invalid meal to 'Snack'). NEng.dow is byte-for-byte the server's formula. */
+    const _iso=isoToday();
     const r=await fetch('/api/ai/nutri',{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({code,client:c.name,message:msg,lang,photo:photo||undefined,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
+      body:JSON.stringify({code,client:c.name,message:msg,lang,date:_iso,dow:NEng.dow(_iso),hour:TDATE.getHours(),
+        photo:photo||undefined,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
     const d=await r.json().catch(()=>null);
     if(d&&d.ok){
       NCHAT.push({id:uid(),client:c.name,role:'assistant',body:d.reply,d:isoToday(),at:Date.now(),
         card:d.log?{type:'log',meal:d.log.meal,items:d.log.items,kcal:d.log.kcal,p:d.log.p,c:d.log.c,f:d.log.f,confirmed:false}:null,
         safety:!!d.safety});
+      replied=true;
+    }else if(r.status===402||(d&&d.error==='ai-quota')){
+      /* v18.96 — hitting the daily cap used to drop straight into the local
+         fallback, so the student never learned WHY the assistant went quiet. */
+      NCHAT.push({id:uid(),client:c.name,role:'assistant',body:t('AI daily quota reached'),d:isoToday(),at:Date.now()});
       replied=true;
     }
   }catch(e){}
@@ -9536,6 +9939,45 @@ function nbarLookup(raw){
       <div class="muted" style="font-size:10.5px;margin-top:5px">${t('Per 100 g')}</div>
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:8px" data-act="nbar-save">${ic('check',13)} ${t('Save this product')}</button>`;
   })();
+}
+/* v18.95 — "Type text" is its OWN quick path, deliberately NOT the chat.
+   It reuses the exact same deterministic parser the assistant falls back on
+   (NEng.parseText → real FOODS + real grams), so the numbers are identical to
+   what the AI would produce — just without the conversation. One tap = logged. */
+function ntextModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Type text')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:8px">${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}</div>
+    <div class="row" style="gap:8px">
+      <input class="inp" id="nt-inp" placeholder="“200g chicken”" style="flex:1" onkeydown="if(event.key==='Enter'){const b=[...document.querySelectorAll('[data-act=nt-go]')][0];b&&b.click()}">
+      <button class="btn btn-primary" data-act="nt-go">${ic('search',14)} ${t('Search')}</button>
+    </div>
+    <div id="nt-res" style="margin-top:10px"></div>
+    <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="nt-to-chat">${ic('bot',14)} ${t('Chat to log')}</button>
+  </div>`);
+  setTimeout(()=>{const i=$('nt-inp');if(i)i.focus()},60);
+}
+function ntParse(raw){
+  const box=$('nt-res');if(!box)return;
+  const s=String(raw||'').trim();
+  S.nt=null;
+  if(!s){box.innerHTML='';return}
+  const p=NEng.parseText(s);
+  if(!p.items.length){
+    box.innerHTML=`<div class="muted" style="font-size:12px">${t('I could not find')}: ${esc((p.unknown||[]).join(', ')||s)}. ${t('Pick it from the food library or tell me the amount in grams.')}</div>`;
+    return;
+  }
+  const sum=p.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+  const hour=TDATE.getHours();
+  const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<16.5?'Snack':hour<18?'Pre-Workout':hour<22?'Dinner':'Before Bed';
+  S.nt={meal,items:p.items,kcal:sum.kcal,p:sum.p,c:sum.c,f:sum.f};
+  box.innerHTML=`<div class="cc tight" style="margin:0;padding:10px 12px">
+    ${p.items.map(x=>`<div class="sess" style="padding-top:5px"><span class="tm">${nf(x.kcal)}</span>
+      <div class="t"><b>${esc(foodName(x.n))}</b><span>${nf(x.g)} g · P${nf(x.p)} C${nf(x.c)} F${nf(x.f)}</span></div></div>`).join('')}
+    <div class="sess" style="padding-top:5px"><span class="tm">${nf(sum.kcal)}</span>
+      <div class="t"><b>${t('total')}</b><span>P${nf(sum.p)} C${nf(sum.c)} F${nf(sum.f)} · ${t(meal)}</span></div></div>
+    <button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:8px" data-act="nt-log">${ic('check',14)} ${t('Log this meal')}</button></div>`;
 }
 function nbarModal(){
   const rec=bscanAll().slice(0,8);
@@ -9623,7 +10065,7 @@ function cSessions(){
     <div class="wk">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<span class="dhn">${t(d)}</span>`).join('')}
     ${cells.map(cl=>{const isT=cl.date.toDateString()===TDATE.toDateString();
       const rest=rday(cl), w=cl.cur&&!rest&&splitW(c.id,_spOf(cl));
-      const mk=cl.cur?(rest?'🌙':w?'💪':''):'';
+      const mk=cl.cur?(rest?ic('moon',10):w?ic('dumbbell',10):''):'';
       return `<span class="day ${cl.cur?'':'out'} ${w?'w':''} ${rest?'r':''} ${isT?'today':''}">${nf(cl.n)}${mk?`<span class="mk">${mk}</span>`:''}</span>`;}).join('')}
     </div>
     <div class="row" style="justify-content:center;gap:14px;margin-top:10px;font-size:10.5px;color:var(--ink3)">
@@ -9636,7 +10078,12 @@ function cSessions(){
   const toDay=d=>(d-TODAY+7)%7;
   const ordered=[...list].sort((a,b)=>toDay(a.day)-toDay(b.day)||a.start-b.start);
   const when=d=>toDay(d)===0?t('Today'):toDay(d)===1?t('Tomorrow'):t(DAYS[d]);
-  const tb=s=>attBadge(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
+  /* v18.106 — mockup 09 wants the flat `.badge` pill (fs10/900, text only), not
+     the coach-side `.bdg` with its icon. `attBadge()` is shared by 10 other
+     screens, so the conversion lives here rather than at the source. */
+  const attPill=s=>s.att==='done'?`<span class="badge b-lime">${t('Attended')}</span>`
+    :s.att==='miss'?`<span class="badge b-red">${t('Missed')}</span>`:'';
+  const tb=s=>attPill(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
   return `<div class="cbody">
     ${nav}
     ${grid}
@@ -9663,54 +10110,50 @@ function cSessions(){
 function cChat(){
   const c=client(S.cid);
   const ms=MSGS.filter(m=>m.client===c.name);
-  /* v18.71 — mockup07 Chat: coach card + cc-in/cc-out bubbles + the daily
-     check-in rendered as the lime card + quick-reply chips. Same actions. */
-  return `<div class="cbody" style="padding-bottom:20px">
-    <div class="coachcard">${av(wsOwnerName()||t('Your coach'),44,3)}
-      <div class="t"><b>${esc(wsOwnerName()||t('Your coach'))}</b><span>${t('Your coach')} · ${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</span></div>
-      <span class="badge b-lime">${t('Replies within ~4h')}</span>
-    </div>
-    <div class="chatbody">
-      ${ms.length?ms.map(m=>{const me=m.from==='client';
-      if(m.type==='checkin'){
-        const all=String(m.body).split('·').map(s=>s.trim()).filter(Boolean);
-        const segs=(all[0]===t('Check-in'))?all.slice(1):all;
-        return `<div class="checkincard"><div class="h">${t('Daily check-in sent')}</div>
-          <div class="g">${segs.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
-          <span style="display:block;text-align:end;font-size:9px;opacity:.6;margin-top:5px">${t(m.time)}</span></div>`;
-      }
-      if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};max-width:82%">
-        ${msgVoice(m)}
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${t(m.time)}</span></div>`;
-      if(me)return `<div class="cc-out">
+  /* v18.102 — mockup 07: .datesep day separators + bubbles + the lime check-in
+     card + exactly 3 quick chips. The coach card moved into .chathead (vClient)
+     and the composer floats outside .capp, so neither lives here any more. */
+  /* MSGS only carries a DISPLAY time ("Just now", "2 h ago", "Yesterday"),
+     so group on what the text actually means rather than inventing a date. */
+  const dayKey=m=>{const s=String(m.time||'');
+    return (/just now/i.test(s)||/\d+\s*(min|h|hour)s?\s*ago/i.test(s))?t('Today'):t(s)};
+  const SEGI=['zap','activity','moon']; /* Energy · Soreness · Sleep — order is fixed */
+  let last='';
+  const rows=ms.map(m=>{
+    const me=m.from==='client';
+    let out='';
+    const k=dayKey(m);
+    if(k!==last){last=k;out+=`<div class="datesep">${esc(k)}</div>`}
+    if(m.type==='checkin'){
+      const all=String(m.body).split('·').map(s=>s.trim()).filter(Boolean);
+      const segs=(all[0]===t('Check-in'))?all.slice(1):all;
+      /* mockup's .g holds the VALUE only ("Low"), not "Energy: Low" — the long
+         form wrapped to two lines and pushed the card to 109px vs the mockup's 73. */
+      const val=s=>{const i=s.indexOf(':');return ((i<0?s:s.slice(i+1)).trim()||s)};
+      out+=`<div class="checkincard"><div class="h">${t('Daily check-in sent')}</div>
+        <div class="g">${segs.map((s,i)=>`<span>${ic(SEGI[i]||'circle',11)} ${esc(val(s))}</span>`).join('')}</div></div>`;
+      return out;
+    }
+    if(m.type==='voice')return out+msgVoice(m,me?'flex-end':'flex-start');
+    if(me)return out+`<div class="cc-out">
         ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
         ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
-        <div>${esc(t(m.body))}</div><span class="rd">✓✓ ${t(m.time)}</span></div>`;
-      return `<div class="cc-in"><span class="who">${esc(wsOwnerName()||t('Coach'))}</span>
-        ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
-        ${m.type==='reminder'?`<span class="ctx">⏰ ${t('Auto reminder')}</span>`:''}
+        <div>${esc(t(m.body))}</div><span class="rd">${ic('check',11)}${ic('check',11)} ${t(m.time)}</span></div>`;
+    return out+`<div class="cc-in"><span class="who">${esc(wsOwnerName()||t('Coach'))}</span>
+        ${m.ctx?`<span class="ctx">${ic('map-pin',12)} ${esc(m.ctx)}</span>`:''}
+        ${m.type==='reminder'?`<span class="ctx">${ic('clock',12)} ${t('Auto reminder')}</span>`:''}
         ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
         <div>${esc(t(m.body))}</div>
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px">${t(m.time)}</span></div>`}).join('')
-      :`<div class="ccard cempty">${ic('mail',24)}<b>${t('Messages')}</b><span class="muted" style="font-size:12px">${t('Your coach publishes your plan here')}</span></div>`}
-    </div>
+        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px">${t(m.time)}</span></div>`}).join('');
+  return `<div class="cbody">
+    <div class="chatbody">${rows||`<div class="ccard cempty">${ic('mail',24)}<b>${t('Messages')}</b><span class="muted" style="font-size:12px">${t('Your coach publishes your plan here')}</span></div>`}</div>
     <div class="quick">
-      <button class="fchip" data-act="quick-msg" data-m="✅ ${t('Done for today')}">${t('Done for today')}</button>
+      <button class="fchip" data-act="quick-msg" data-m="${t('Done for today')}">${t('Done for today')}</button>
       <button class="fchip" data-act="cattach">${ic('camera',13)} ${t('Send progress photo')}</button>
       <button class="fchip" data-act="cmsg-focus">${ic('help',13)} ${t('Ask a question')}</button>
     </div>
-    <div class="row" style="gap:6px;flex-wrap:wrap;padding:0 14px 8px">
-      <button class="fchip" data-act="cform">${ic('camera',13)} ${t('Record form check')}</button>
-      <button class="fchip" data-act="cattach">${ic('folder',13)} ${t('Attach file')}</button>
-    </div>
     ${S.recVoice?`<div class="row" style="gap:8px;align-items:center;padding:0 14px 8px">
       <span class="muted" style="font-size:11.5px;color:var(--red);font-weight:700">● ${t('Recording… tap to stop')} · ${nf(VMAX)}s</span></div>`:''}
-    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin:0 14px">
-      <button class="btn btn-ghost btn-icon" data-act="voice-rec" title="${t('Voice message')}" aria-label="${t('Voice message')}"
-        style="width:34px;height:34px;flex:none;${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',15)}</button>
-      <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
-      <button class="btn btn-primary btn-icon" data-act="send-client">${ic('arrowR',16)}</button>
-    </div>
   </div>`;
 }
 /* v18.27 — phone skins (client app themes). prev = mini preview gradient,
@@ -9729,14 +10172,20 @@ function cProfile(){
   const wos=(DB[c.id]&&DB[c.id].stats&&DB[c.id].stats.done)||0;
   const jcode=joinCodeOf(c)||''; /* clientCode() mints one on first use */
   const jlink=jcode?inviteLink(jcode):'';
+  /* v18.105 — mockup 08 always renders a SINCE line (14px, part of the hero's
+     rhythm). The demo seed has no `since`, so fall back to the client's
+     EARLIEST measurement — a real stored date, never an invented one. */
+  const meas0=((DB[c.id]||{}).measures)||[];
+  const sinceD=c.since||(meas0[0]&&meas0[0].d)||'';
+  const sinceTxt=sinceD?`${t('Since')} ${String(fmtD(sinceD)).toUpperCase()}`:'';
   /* v18.71 — mockup 08 Profile: hero with4 stats, session pack, REAL QR join
      code (qrcodegen) and a settings list. Same fields/actions as before. */
   return `<div class="cbody">
     <div class="phero">
       <span data-act="cp-pic" role="button" tabindex="0" title="${t(c.pic?'Change photo':'Add photo')}" style="cursor:pointer;display:block;width:72px;margin:0 auto">${av(t(c.name),72,c.id-1)}</span>
       <b>${esc(t(c.name))}</b>
-      <div class="goal">💪 ${t(c.goal)}</div>
-      <div class="since">${c.since?`${t('Since')} ${String(fmtD(c.since)).toUpperCase()}`:''}</div>
+      <div class="goal">${ic('dumbbell',13)} ${t(c.goal)}</div>
+      <div class="since">${sinceTxt}</div>
       <div class="pstats">
         <div><b>${nf(c.dayStreak||0)}</b><span>${t('Streak')}</span></div>
         <div><b>${nf(c.pts||0)}</b><span>${t('Points')}</span></div>
@@ -9746,23 +10195,22 @@ function cProfile(){
     </div>
     <div class="pf-hint"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
     ${pack?`
-    <div class="sec"><span class="sec-t">🎟 ${t('Session pack')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('ticket',15)} ${t('Session pack')}</span></div>
     <div class="cc tight"><div class="pack">
       <div class="t"><b>${esc(t(pack.name))}</b><span>${t('Used')} ${nf(pack.used||0)} · ${nf(Math.max(0,(pack.total||0)-(pack.used||0)))} ${t('remaining')}</span>
         <div class="pbar" style="margin-top:7px"><i style="width:${Math.round((pack.used||0)/Math.max(1,pack.total||1)*100)}%"></i></div></div>
       <span class="rem">${nf(Math.max(0,(pack.total||0)-(pack.used||0)))}</span>
     </div></div>`:''}
-    <div class="sec"><span class="sec-t">🔑 ${t('Personal Information')}</span><span class="sec-c" style="font-size:10px">${CLOUD.on?'● '+t('Synced'):t('Offline mode')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('key-round',15)} ${t('Personal Information')}</span><span class="sec-c" style="font-size:10px">${CLOUD.on?'● '+t('Synced'):t('Offline mode')}</span></div>
     <div class="cc tight">
       <div class="setrow" style="cursor:default"><span class="si" style="padding:0;overflow:hidden">${av(wsOwnerName()||t('Coach'),32,3)}</span><div class="t"><b>${t('Coach')}</b><span>${esc(wsOwnerName()||'—')}</span></div></div>
       ${[['mail','Email',c.email||'—'],['phone','Phone',c.phone||'—'],['calendar','Training Frequency',t(c.freq||'—')],['ticket','Sessions remaining',remain!=null?nf(remain):'—']].map(([i,k,v])=>`
       <div class="setrow" style="cursor:default"><span class="si">${ic(i,15)}</span><div class="t"><b>${t(k)}</b><span>${esc(String(v))}</span></div></div>`).join('')}
     </div>
-    <div class="sec"><span class="sec-t">📏 ${t('Body Metrics')}</span><span class="sec-c muted">${lm?fmtD(lm.d):''}</span></div>
+    <div class="sec"><span class="sec-t">${ic('ruler',15)} ${t('Body Metrics')}</span><span class="sec-c muted">${lm?fmtD(lm.d):''}</span></div>
     <div class="cc tight">
         ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
         <div class="pf-tile"><span class="pf-tk">${t(k)}</span><b class="pf-tv">${v}</b></div>`).join('')}
-      </div>
       ${c.targetW?`<div class="pf-stat" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px">
         <span class="pf-rt"><span class="pf-rk">${t('Target Weight')}</span><b class="pf-tv" style="text-align:start">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></span>
         <span class="pf-pill pf-pill-acc">${nf(goalPct(c))}%</span></div>
@@ -9771,13 +10219,13 @@ function cProfile(){
       <div class="muted" style="font-size:10.5px;margin-top:6px">${t('Last measurement')}: ${fmtD(lm.d)}</div>`:''}
     </div>
     ${jcode?`
-    <div class="sec"><span class="sec-t">🔗 ${t('My join code')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('qr',15)} ${t('My join code')}</span></div>
     <div class="cc tight"><div class="qr">
       <div class="code">${jlink?qrSvg(jlink,64):''}</div>
       <div class="t"><b>${esc(jcode)}</b><span>${t('Scan to connect this device · re-share anytime')}</span>
         <button class="btn btn-lime" data-act="qr-open" data-code="${esc(jcode)}" data-name="${esc(c.name)}">${ic('qr',14)} ${t('Show fullscreen')}</button></div>
     </div></div>`:''}
-    <div class="sec"><span class="sec-t">⚙ ${t('Settings')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
     <div class="cc tight">
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
         <div class="langseg"><button class="${lang==='fa'?'on':''}" data-act="lang-set" data-l="fa">FA</button><button class="${lang==='en'?'on':''}" data-act="lang-set" data-l="en">EN</button></div></div>
@@ -9785,8 +10233,10 @@ function cProfile(){
       <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
         <label class="sw"><input type="checkbox" ${PREFS.priv.photos?'checked':''} data-act="pref-sw" data-k="priv.photos"><i></i></label></div>
+      <!-- v18.105 - mockup 08's 5th row; reuses the existing theme-toggle handler -->
+      <div class="setrow" data-act="theme-toggle" style="cursor:pointer"><span class="si">${ic('moon',15)}</span><div class="t"><b>${t('Appearance')}</b><span>${PREFS.theme==='Dark'?t('Dark theme'):t('Light theme')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
     </div>
-    <div class="sec"><span class="sec-t">🎨 ${t('App Theme')}</span></div>
+    <div class="sec"><span class="sec-t">${ic('palette',15)} ${t('App Theme')}</span></div>
     <div class="cc tight">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       ${PHONESKINS.map(s=>`
@@ -9795,7 +10245,7 @@ function cProfile(){
           <span style="position:absolute;top:8px;inset-inline-start:8px;width:26px;height:5px;border-radius:99px;background:${s.dot}"></span>
           <span style="position:absolute;bottom:8px;inset-inline-start:8px;width:40%;height:14px;border-radius:6px;background:${s.dot};opacity:.85"></span>
         </div>
-        <b style="font-size:12.5px">${t(s.n)}${(PREFS.phoneSkin||'fitflow')===s.id?' ✓':''}</b>
+        <b style="font-size:12.5px">${t(s.n)}${(PREFS.phoneSkin||'fitflow')===s.id?' '+ic('check',12):''}</b>
         <div class="muted" style="font-size:10.5px;margin-top:2px">${t(s.d)}</div>
       </button>`).join('')}
       </div>
@@ -9809,13 +10259,24 @@ let restIv=null,restAC=null;
    not a decrementing counter: a background/throttled tab can no longer make
    rest run slow. Adds 3-2-1 countdown beeps, a completion chime + vibration,
    pause/resume, ± adjust, skip and an optional fullscreen view. */
-function restSecs(){
-  const p=S.player;if(!p)return 0;
-  if(p.restPaused)return Math.max(0,p.restLeft||0);
+/* v18.90 — SMART REST TIMER (Strong / Hevy inspired). Accuracy first, then feel:
+   1. REMAINING TIME IS MILLISECONDS. The old pause path stored `restLeft` as a
+      ceil()'d SECONDS value, so every pause/resume cycle could silently add up
+      to a full second — pausing repeatedly drifted the rest LONG.
+   2. The ring repaints every 100ms with sub-second precision. It used to paint
+      only when the displayed second changed, so progress jumped in 1s steps.
+   3. The warning window is ADAPTIVE: rests >=60s tick from 5s out, shorter ones
+      from 3s — long sets get more lead time without a beep every second.
+   4. restSeek() is the single mutation path for ±15/+30, presets and skip, so
+      every clock change goes through one clamp + one save. */
+const REST_C=2*Math.PI*24;             // ring circumference (r=24, stroke 6) — v18.91: 66->54px so the card fits above the foot
+const restMs=()=>{const p=S.player;if(!p)return 0;
+  if(p.restPaused)return Math.max(0,p.restLeftMs||0);
   if(!p.restEnd)return 0;
-  return Math.max(0,Math.ceil((p.restEnd-Date.now())/1000));
-}
+  return Math.max(0,p.restEnd-Date.now());};
+function restSecs(){return Math.ceil(restMs()/1000)}
 function restBeep(freq,dur,vol){
+  if(PREFS.wk.snd===false)return;        /* v18.90 — the bell toggle silences it */
   try{
     if(!restAC)restAC=new (window.AudioContext||window.webkitAudioContext)();
     if(restAC.state==='suspended')restAC.resume();
@@ -9827,42 +10288,164 @@ function restBeep(freq,dur,vol){
     o.start();o.stop(restAC.currentTime+dur+.02);
   }catch(e){}
 }
-const restVibe=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
-/* Paint bar + fullscreen numbers without a full re-render. */
+const restVibe=p=>{if(PREFS.wk.vib===false)return;
+  try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+/* Ring + fullscreen numbers, painted WITHOUT a full re-render. */
 function restPaint(){
   const p=S.player;if(!p)return;
-  const s=restSecs(),pc=p.restTotal>0?Math.max(0,Math.min(100,s/p.restTotal*100)):0,txt=nf(fmtMS(s));
-  const a=document.getElementById('restNum');if(a)a.textContent=txt;
+  const ms=restMs(),s=Math.ceil(ms/1000),total=Math.max(1,p.restTotal||1);
+  const pc=Math.max(0,Math.min(100,ms/(total*1000)*100));
+  const txt=nf(fmtMS(s));
+  const a=document.getElementById('restNum');if(a&&a.textContent!==txt)a.textContent=txt;
+  const ring=document.getElementById('restRing');
+  if(ring)ring.setAttribute('stroke-dashoffset',(REST_C*(1-pc/100)).toFixed(2));
   const b=document.getElementById('restFill');if(b)b.style.width=pc+'%';
-  const c=document.getElementById('restFsNum');if(c)c.textContent=txt;
+  const c=document.getElementById('restFsNum');if(c&&c.textContent!==txt)c.textContent=txt;
   const d=document.getElementById('restFsFill');if(d)d.style.width=pc+'%';
   const e=document.getElementById('restState');
   if(e)e.textContent=s<=0?t('Rest done'):(p.restPaused?t('On pause'):t('Rest'));
+  const box=document.querySelector('.rest-presets');   /* highlight the active preset */
+  if(box)box.querySelectorAll('.rbtn[data-s]').forEach(x=>x.classList.toggle('on',+x.dataset.s===s));
+}
+/* The end-of-rest fanfare — guarded so it can only fire once. */
+function restChime(p){
+  if(!p||p.restChimed)return;
+  p.restChimed=true;
+  restBeep(660,.18,.14);setTimeout(()=>restBeep(990,.3,.14),170);
+  restVibe([300,90,500]);
+}
+/* End a rest. `silent` = no chime (Skip, or restoring one that expired while
+   the app was closed). `advance` = move to the next unfinished set afterwards —
+   the AUTO half of the auto/manual switch (PREFS.wk.autoNext). */
+function restEnd(p,silent,advance){
+  clearInterval(restIv);restIv=null;
+  if(!silent)restChime(p);
+  p.rest=0;p.restEnd=0;p.restLeftMs=0;p.restPaused=false;p.restFs=false;
+  restSave();
+  if(advance&&PREFS.wk.autoNext!==false)setTimeout(restAdvance,220);
+}
+/* The next set not yet checked, walking exercises in order. */
+function restNext(){
+  const p=S.player;if(!p)return null;
+  const w=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===p.wid);if(!w)return null;
+  for(let ei=0;ei<w.exercises.length;ei++){
+    const e=w.exercises[ei];
+    for(let si=0;si<e.sets;si++)if(!p.checked.has(ei+'-'+si))return{ei,si};
+  }
+  return null;
+}
+/* v18.91 — the AUTO half: point the player at the next open set. It never
+   CHECKS anything for you (no invented data) — it navigates and highlights so
+   ONE tap logs it. Switching the toggle off leaves everything manual. */
+function restAdvance(){
+  const p=S.player;if(!p)return;
+  const n=restNext();if(!n)return;
+  if(p.wiz!=null&&p.wiz!==n.ei)p.wiz=n.ei;   // wizard mode follows to that exercise
+  render();
+  requestAnimationFrame(()=>{
+    const row=document.querySelector('.cplayer .str[data-k="'+n.ei+'-'+n.si+'"]');
+    if(!row)return;
+    const b=document.querySelector('.cplayer .cpbody');
+    if(b){const top=row.getBoundingClientRect().top-b.getBoundingClientRect().top;
+      try{b.scrollTo({top:Math.max(0,top-150),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top-150)}}
+    row.classList.add('nextup');
+    setTimeout(()=>{const el=document.querySelector('.cplayer .str.nextup');if(el)el.classList.remove('nextup')},3000);
+  });
+}
+/* THE single path for moving the clock (ms). `abs` = the planned total follows
+   the new value (presets); otherwise the total only GROWS (± buttons) so the
+   ring can never start past a full circle. A value of 0 ends the rest. */
+function restSeek(p,ms,abs){
+  if(!p)return;
+  ms=Math.max(0,Math.round(ms));
+  p.restBeeped=0;p.restChimed=false;
+  if(ms<=0){restEnd(p,false,true);return}
+  if(abs)p.restTotal=Math.max(1,Math.round(ms/1000));
+  else p.restTotal=Math.max(1,Math.max(p.restTotal||1,Math.round(ms/1000)));
+  p.rest=Math.ceil(ms/1000);
+  clearInterval(restIv);
+  if(p.restPaused)p.restLeftMs=ms;
+  else{p.restEnd=Date.now()+ms;restIv=setInterval(restTick,100)}
+  restSave();
 }
 function startRest(sec){
   if(!sec||!S.player)return;
   const p=S.player;
-  p.rest=sec;p.restTotal=sec;p.restPaused=false;p.restBeeped=0;p.restChimed=false;
+  p.rest=sec;p.restTotal=sec;p.restPaused=false;p.restLeftMs=0;
+  p.restBeeped=0;p.restChimed=false;
   p.restEnd=Date.now()+sec*1000;
   clearInterval(restIv);
-  restIv=setInterval(restTick,200);
-  restTick();
+  restIv=setInterval(restTick,100);
+  restTick();restSave();
+  restReveal();                       /* the card lives in the body — bring it up */
 }
 function restTick(){
   const p=S.player;
-  if(!p||!p.restEnd){clearInterval(restIv);restIv=null;return}
-  const s=restSecs();
-  if(s===p.rest)return;              // same second — nothing changed
-  p.rest=s;
-  if(s<=0){
-    clearInterval(restIv);restIv=null;
-    if(!p.restChimed){p.restChimed=true;restBeep(660,.18,.14);setTimeout(()=>restBeep(990,.3,.14),170);restVibe([300,90,500])}
-    p.restPaused=false;p.restEnd=0;p.restFs=false;
-    render();                        // rest===0 → bar & overlay drop away
-    return;
+  if(!p||(!p.restEnd&&!(p.restPaused&&p.restLeftMs))){clearInterval(restIv);restIv=null;return}
+  const ms=restMs(),s=Math.ceil(ms/1000);
+  if(s<=0){restEnd(p,false,true);render();return}
+  if(s!==p.rest){
+    p.rest=s;
+    const warn=(p.restTotal||0)>=60?5:3;   /* adaptive lead-in */
+    if(s<=warn&&p.restBeeped!==s){p.restBeeped=s;restBeep(880,.07,.09);restVibe(18)}
   }
-  if(s<=3&&p.restBeeped!==s){p.restBeeped=s;restBeep(880,.09,.10);restVibe(25)}
   restPaint();
+}
+/* The timer card scrolls with the body (mockup 03) — reveal it on every start
+   so the clock is never off-screen while it runs.
+   v18.91 BUGFIX: `togset` calls startRest() BEFORE its render(), so at call time
+   `.cplayer .rest` did not exist yet and this silently did nothing — the card
+   sat ~1000px below the fold (measured: card top 998 vs body viewport 137-434,
+   `visible:false`) which is why the whole control row looked "missing".
+   Deferring past the caller's render() is what makes it actually scroll.
+   v18.91b: scroll to offset 0 (was -70). On a short viewport the foot eats the
+   bottom of the body, so a 70px lead pushed the LAST row under it. */
+function restReveal(){
+  setTimeout(()=>{
+    const b=document.querySelector('.cplayer .cpbody'),el=document.querySelector('.cplayer .rest');
+    if(!b||!el)return;
+    const top=el.getBoundingClientRect().top-b.getBoundingClientRect().top;
+    try{b.scrollTo({top:Math.max(0,top),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top)}
+  },60);
+}
+/* v18.90 — a refresh used to KILL the whole session (S is never persisted).
+   We persist only the RUNNING clock; `togset` already writes ticks into w.ck, so
+   the player is rebuilt from the workout itself on the way back in. */
+const REST_KEY='co-rest';
+function restSave(){
+  try{
+    const p=S.player;
+    if(!p||!(p.rest>0)){localStorage.removeItem(REST_KEY);return}
+    localStorage.setItem(REST_KEY,JSON.stringify({cid:S.cid,wid:p.wid,rest:p.rest,
+      restTotal:p.restTotal||0,restEnd:p.restEnd||0,restPaused:!!p.restPaused,
+      restLeftMs:p.restLeftMs||0,at:Date.now()}));
+  }catch(e){}
+}
+function restClear(){try{localStorage.removeItem(REST_KEY)}catch(e){}}
+/* Called from renderInner on client devices. Rebuilds the player from w.ck when
+   the rest is still live (and <=4h old), so a refresh drops you back into the
+   same set with the clock intact instead of losing the session outright. */
+function restRestore(){
+  try{
+    if(S.player)return true;
+    const raw=localStorage.getItem(REST_KEY);if(!raw)return false;
+    const d=JSON.parse(raw);if(!d||!d.wid)return false;
+    const db=d.cid?DB[d.cid]:null;
+    const w=db&&db.workouts&&db.workouts.find(x=>x.id===d.wid);
+    if(!w||Date.now()-(d.at||0)>4*3600e3){restClear();return false}
+    S.role='client';S.cid=d.cid||S.cid;S.ptab='workouts';
+    const ck=(Array.isArray(w.ck)?w.ck:[]);
+    S.player={wid:w.id,checked:new Set(ck),rpe:{...(w.rpeM||{})},
+      rest:d.rest||0,restTotal:d.restTotal||120,restEnd:d.restEnd||0,
+      restPaused:!!d.restPaused,restLeftMs:d.restLeftMs||0,
+      lastKey:ck.length?ck[ck.length-1]:null};
+    if(S.player.rest>0){
+      if(S.player.restEnd>Date.now())restIv=setInterval(restTick,100);
+      else if(!S.player.restPaused)restEnd(S.player,true,false);   /* expired while away - no jump */
+      else restPaint();
+    }
+    return true;
+  }catch(e){return false}
 }
 function cPlayer(){
   const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
@@ -9927,13 +10510,13 @@ function cPlayer(){
           :`<div class="exvid"><span class="vt badge b-lime">${ic('play',11)} ${t('Demo video')}</span>
             <button class="play" data-act="${e.vid?'ex-video-url':'vid-yt'}" ${e.vid?`data-url="${esc(e.vid)}"`:`data-i="${e.ex}"`} aria-label="${t('Demo video')}">${ic('play',22)}</button></div>`}
         <div class="settbl">
-          <div class="sth"><span>${t('Set')}</span><span>kg</span><span>${t('Reps')}</span><span>✓</span></div>
+          <div class="sth"><span>${t('Set')}</span><span>kg</span><span>${t('Reps')}</span><span>${ic('check',12)}</span></div>
           ${Array.from({length:e.sets},(_,si)=>{const key=ei+'-'+si;const ck=S.player.checked.has(key);
           return `<div class="str ${ck?'done':''}" data-act="togset" data-k="${key}" data-rest="${e.rest}" role="button" tabindex="0" style="cursor:pointer">
             <span class="setn">${nf(si+1)}</span><b>${nf(e.kg)}</b><b>${nf(e.reps)}</b>
             <span class="go">${ck?ic('check',12):''}</span></div>`}).join('')}
         </div>
-        ${PREFS.wk.rpe&&lastKey&&lastKey.indexOf(ei+'-')===0?`<div style="border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:9px;background:rgba(255,255,255,.03)">
+        ${PREFS.wk.rpe&&lastKey&&lastKey.indexOf(ei+'-')===0?`<div class="cc" style="margin:0">
           <div class="rpe-top">
             <span class="badge b-purple">RPE</span>
             <span class="muted" style="flex:1">${t('Rate this set')} — <b style="color:var(--ink2)" id="rpeVal">RPE ${rpeVal?nf(rpeVal):'—'}</b></span>
@@ -9944,24 +10527,46 @@ function cPlayer(){
           </div>
         </div>`:''}
       </div>`}).join('')}
-    </div>
-    <div class="cpfoot">
+      <!-- v18.89 - ORDER: the rest timer now lives in the BODY (mockup .app runs
+           head -> vid -> exh -> exnote -> settbl -> rest -> RPE -> plfoot).
+           It used to sit inside .cpfoot, which stretched that sticky bar to 240px. -->
       ${S.player.rest>0?`<div class="rest" data-state="${S.player.restPaused?'pause':'run'}">
         <div class="rest-main">
-          <div><div class="cd" id="restNum">${nf(fmtMS(S.player.rest))}</div><span class="rlbl" id="restState">${S.player.restPaused?t('On pause'):t('Rest')}</span></div>
-          <div class="info">${nx?`<b>${t('Next')}: ${t(EXERCISES[nx.ex].n)}</b><span>${nf(nx.sets)} × ${nf(nx.reps)} @ ${nf(nx.kg)} kg</span>`:`<b>${t('Finish Workout')} 🏁</b><span>${nf(done)}/${nf(total)} ${t('sets')}</span>`}</div>
+          <div class="rest-ring">
+            <svg viewBox="0 0 54 54" width="54" height="54" aria-hidden="true">
+              <circle class="trk" cx="27" cy="27" r="24"/>
+              <circle class="prg" id="restRing" cx="27" cy="27" r="24" stroke-dasharray="${REST_C.toFixed(1)}" stroke-dashoffset="0"/>
+            </svg>
+            <span class="val" id="restNum">${nf(fmtMS(S.player.rest))}</span>
+          </div>
+          <div class="info">
+            <span class="rlbl" id="restState">${S.player.restPaused?t('On pause'):t('Rest')}</span>
+            <b>${nx?`${t('Next')}: ${t(EXERCISES[nx.ex].n)}`:`${t('Finish Workout')} 🏁`}</b>
+            <span>${nx?`${nf(nx.sets)} × ${nf(nx.reps)} @ ${nf(nx.kg)} kg`:`${nf(done)}/${nf(total)} ${t('sets')}`}</span>
+          </div>
           <button class="rpause" data-act="rest-pause" title="${t('Pause')}">${S.player.restPaused?ic('play',14):ic('pause',14)}</button>
           <button class="rpause" data-act="rest-fs" title="${t('Fullscreen')}">${ic('maximize',14)}</button>
         </div>
-        <div class="rest-bar"><i id="restFill" style="width:${S.player.restTotal?Math.max(0,Math.min(100,S.player.rest/S.player.restTotal*100)).toFixed(1):0}%"></i></div>
         <div class="rest-ctrls">
           <button class="rbtn" data-act="rest-shift" data-s="-15">−15s</button>
           <button class="rbtn" data-act="rest-shift" data-s="30">+30s</button>
           <button class="rbtn primary" data-act="skiprest">${t('Skip rest')} →</button>
         </div>
+        <div class="rest-presets">
+          ${[30,60,90,120].map(sn=>`<button class="rbtn" data-act="rest-set" data-s="${sn}">${nf(sn)}s</button>`).join('')}
+        </div>
+        <div class="rest-toggles">
+          <button class="rtog ${PREFS.wk.snd===false?'':'on'}" data-act="rest-snd">${ic('bell',13)} ${t('Sound')}</button>
+          <button class="rtog ${PREFS.wk.vib===false?'':'on'}" data-act="rest-vib">${ic('smartphone',13)} ${t('Vibrate')}</button>
+          <button class="rtog ${PREFS.wk.autoNext===false?'':'on'}" data-act="rest-auto">${ic('repeat',13)} ${t('Auto next')}</button>
+        </div>
       </div>`:''}
-      ${ro?`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="close-player">${t('Close')}</button>`
-        :`<button class="btn btn-primary" style="width:100%;justify-content:center" data-act="finish-workout">${ic('check',16)} ${t('Finish Workout')} (${nf(done)}/${nf(total)})</button>`}
+    </div>
+    <!-- v18.89 - mockup .plfoot: 72px translucent bar, ghost + primary pair -->
+    <div class="cpfoot">
+      <button class="btn btn-outline btn-ghost-btn" data-act="wiz-mode" data-v="${wiz==null?'wiz':'list'}" title="${t('All exercises')}">${ic('list',17)}</button>
+      ${ro?`<button class="btn btn-outline" data-act="close-player">${t('Close')}</button>`
+        :`<button class="btn btn-primary" data-act="finish-workout">${ic('check',16)} ${t('Finish Workout')} (${nf(done)}/${nf(total)})</button>`}
     </div>
     ${S.player.rest>0&&S.player.restFs?`<div class="restfs" data-s="${S.player.restPaused?'pause':'run'}">
       <button class="restfs-x" data-act="rest-fs-x" aria-label="${t('Close')}">${ic('x',17)}</button>
@@ -10043,9 +10648,13 @@ function shell(inner){
 }
 function renderInner(){
   if(S.role==='client'){
+    /* v18.90 — bring a RUNNING rest back after a reload. Must run before vClient()
+       so S.player exists when cPlayer() renders; no-ops when nothing is stored. */
+    restRestore();
     $('app').innerHTML=vClient();
     fxReveal(); // v18.26 — slow scroll-reveal for the client app cards
-    if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
+    /* v18.97 — a chat opens at the NEWEST message, not the oldest. */
+    if(S.ptab==='chat'||S.ptab==='assistant')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
     return;
   }
   if(S.view==='login'){$('app').innerHTML=vLogin();unlockWire();return}
@@ -10383,6 +10992,70 @@ window.sendClientMsg=()=>{
 const VMAX=15;
 let VREC=null,VCH=[],VSTART=0,SV=new Audio(),SVPLAY=null;
 const VURLS={}; // message id → blob: URL (one decode per voice note)
+/* v18.109 — waveform state. WAVE_BASE is the decorative fallback shown before a
+   note has been decoded; VWAVE[id] is the REAL envelope (12 bars, 5..21px).
+   VFAIL stops a note that cannot be decoded from being retried on every render. */
+const WAVE_BASE=[8,15,21,12,18,9,16,22,11,7,14,19];
+const VWAVE={},VFAIL=new Set();
+/** Build the real amplitude envelope for one note. Lazily called on first play
+    (decoding every visible note up front would cost far more than it is worth),
+    cached per id, and silent on failure — the static bars simply stay. */
+function genWave(m){
+  const id=String(m&&m.id);
+  if(!id||VWAVE[id]||VFAIL.has(id))return;
+  const src=m.src;
+  if(typeof src!=='string'||!src){VFAIL.add(id);return}
+  /* v18.109 — a data: URL must be decoded HERE, not fetched: the CSP is
+     `connect-src 'self'`, which does not permit fetch() against data: (or blob:)
+     URLs, so the obvious fetch() path silently failed. Same-origin /api/media
+     URLs do fetch fine. */
+  const toBuf=async()=>{
+    if(src.startsWith('data:')){
+      const i=src.indexOf(',');
+      const bin=atob(src.slice(i+1));
+      const u=new Uint8Array(bin.length);
+      for(let k=0;k<bin.length;k++)u[k]=bin.charCodeAt(k);
+      return u.buffer;
+    }
+    return (await fetch(src)).arrayBuffer();
+  };
+  (async()=>{
+    try{
+      const ab=await toBuf();
+      const AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC){VFAIL.add(id);return}
+      const ctx=new AC();
+      const buf=await ctx.decodeAudioData(ab);
+      const ch=buf.getChannelData(0);
+      const B=WAVE_BASE.length, block=Math.max(1,Math.floor(ch.length/B)), out=[];
+      for(let i=0;i<B;i++){
+        let peak=0;
+        for(let k=0;k<block;k++){const v=Math.abs(ch[i*block+k]||0);if(v>peak)peak=v}
+        out.push(Math.max(5,Math.min(21,Math.round(7+peak*18))));
+      }
+      try{ctx.close()}catch(e){}
+      if(out.length){VWAVE[id]=out;render()}
+      else VFAIL.add(id);
+    }catch(e){VFAIL.add(id)}
+  })();
+}
+/* Light up bars as playback advances — no re-render, just style writes. */
+function waveProgress(){
+  if(!SVPLAY)return;
+  const box=[...document.querySelectorAll('.voice')].find(x=>x.dataset.vid===SVPLAY);
+  if(!box)return;
+  const w=box.querySelector('.wave');
+  if(!w)return;
+  const base=String(w.dataset.h||'').split(',').map(Number);
+  const bars=w.querySelectorAll('i');
+  const p=SV.duration&&isFinite(SV.duration)?Math.min(1,SV.currentTime/SV.duration):0;
+  const lit=Math.round(p*bars.length);
+  bars.forEach((b,i)=>{
+    const on=i<lit, h=base[i]||8;
+    b.style.height=(on?Math.min(21,Math.round(h*1.3)):h)+'px';
+    b.style.opacity=on?'1':'.75';
+  });
+}
 const voiceMime=()=>{
   const c=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
   for(const m of c){try{if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m}catch(e){}}
@@ -10392,11 +11065,16 @@ window.voiceToggle=async ()=>{
   if(VREC){try{VREC.stop()}catch(e){}return}
   if(!navigator.mediaDevices||!window.MediaRecorder){toast(t('Voice messages are not supported in this browser'));return}
   let stream;
-  try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}})}
   catch(e){toast(t('Microphone permission was denied'));return}
   try{
     const mime=voiceMime();VCH=[];VSTART=Date.now();
-    VREC=new MediaRecorder(mime?{mimeType:mime}:undefined);
+    /* v18.109 — explicit quality knobs. Browsers disagree on MediaRecorder's
+       defaults (Chrome opus ≈64k, Safari AAC higher/lower by version), so 64 kbps
+       makes voice quality predictable and ≈120 KB for the full VMAX=15 s. The
+       constraints kill the room echo and hiss a phone mic otherwise picks up,
+       and a 1 s timeslice keeps memory flat if the tab is backgrounded. */
+    VREC=new MediaRecorder(mime?{mimeType:mime,audioBitsPerSecond:64000}:{audioBitsPerSecond:64000});
     VREC.ondataavailable=e=>{if(e.data&&e.data.size)VCH.push(e.data)};
     VREC.onstop=()=>{
       const dur=Math.max(1,Math.min(VMAX,Math.round((Date.now()-VSTART)/1000)));
@@ -10408,17 +11086,51 @@ window.voiceToggle=async ()=>{
       rd.onerror=()=>{render();toast(t('Could not start recording'))};
       rd.readAsDataURL(blob);
     };
-    VREC.start();
+    VREC.start(1000);
     setTimeout(()=>{if(VREC&&VREC.state==='recording'){try{VREC.stop()}catch(e){}}},VMAX*1000);
     S.recVoice=true;render();
   }catch(e){VREC=null;S.recVoice=false;render();toast(t('Could not start recording'))}
 };
 window.voiceSend=(src,dur)=>{
   const c=client(S.cid);if(!c||!src)return;
-  MSGS.push({id:uid(),client:c.name,from:'client',type:'voice',
-    body:`🎙 ${t('Voice message')} · ${fmtMS(dur||0)}`,src,dur:dur||0,time:'Just now',read:false});
+  const m={id:uid(),client:c.name,from:'client',type:'voice',
+    /* v18.109 — no 🎙 here: the bubble already shows a waveform, and this string
+       is plain TEXT that surfaces in the coach's list preview, where a lucide
+       icon cannot go. */
+    body:`${t('Voice message')} · ${fmtMS(dur||0)}`,src,dur:dur||0,time:'Just now',read:false};
+  MSGS.push(m);
   NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
   saveData();render();toast(t('Voice message sent'));
+  /* v18.103 — lift the blob OUT of the workspace payload (5 MB shared with every
+     plan, note and photo; a 15 s note is ~160 KB of base64). Optimistic: the
+     data: URL already plays, so nothing blocks — the swap to /api/media/… lands
+     when the upload does, and a failed upload just leaves the inline copy. */
+  moveMedia(m);
+};
+window.moveMedia=async m=>{
+  if(!m||typeof m.src!=='string'||!m.src.startsWith('data:'))return false;
+  try{
+    const code=wsCode()||S.joinCode||'';
+    if(!code)return false;
+    const r=await fetch('/api/media?code='+encodeURIComponent(code),{method:'POST',
+      headers:{'content-type':'application/json'},body:JSON.stringify({data:m.src})});
+    const d=await r.json().catch(()=>null);
+    if(d&&d.ok&&d.url){m.src=d.url;saveData();render();return true}
+  }catch(e){}
+  return false;
+};
+/* v18.103 — older voice notes still sit inline. A few per tick so a long history
+   never fires a burst of uploads at once. Only runs when we are actually online
+   (called from cloudStart), because there is no code to upload with otherwise. */
+window.migrateVoice=async()=>{
+  let n=0;
+  for(const m of MSGS.slice()){
+    if(n>=3)break;
+    if(!m||m.type!=='voice'||typeof m.src!=='string'||!m.src.startsWith('data:'))continue;
+    if(await moveMedia(m))n++;
+  }
+  if(n)setTimeout(()=>migrateVoice(),800);
+  return n;
 };
 window.voicePlay=id=>{
   const m=MSGS.find(x=>String(x.id)===String(id));if(!m||!m.src)return;
@@ -10444,16 +11156,25 @@ window.voicePlay=id=>{
   SV=new Audio(url);SVPLAY=String(id);
   SV.onended=()=>{SVPLAY=null;render()};
   SV.onerror=()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))};
+  /* v18.109 — real envelope (cached) + live bar progress while it plays. */
+  genWave(m);
+  SV.ontimeupdate=waveProgress;
   const p=SV.play();
   if(p&&p.catch)p.catch(()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))});
   render();
 };
 /* The voice bubble — used by BOTH the student thread and the coach inbox. */
-function msgVoice(m){
+function msgVoice(m,align){
   const playing=SVPLAY===String(m.id);
-  return `<div class="voice">
+  /* v18.102 — .voice carries max-width:78%. Wrapped in a shrink-to-fit div that
+     percentage resolved against the WRAPPER (78% of 167 = 130) while the content
+     needs 167, so it overflowed. As a direct child of .chatbody it resolves
+     against the thread (78% of 310 = 242) like the mockup — hence align goes on
+     the bubble itself instead of a wrapper. */
+  const hs=(m&&VWAVE[String(m.id)])||WAVE_BASE;
+  return `<div class="voice"${align?` style="align-self:${align}"`:''} data-vid="${esc(m&&m.id)}">
     <button class="play" data-act="voice-play" data-id="${esc(m.id)}" aria-label="${t('Play')}" title="${t('Play')}">${playing?ic('square',12):ic('play',13)}</button>
-    <span class="wave">${[8,15,21,12,18,9,16,22,11,7,14,19].map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
+    <span class="wave" data-h="${hs.join(',')}">${hs.map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
     <span class="dur">${fmtMS(m.dur||0)}</span>
   </div>`;
 }
@@ -10855,12 +11576,17 @@ document.addEventListener('click',e=>{
     case 'na-send':naSend();break;
     case 'na-quick':naSend(el.dataset.q);break;
     case 'na-photo':{
+      closeModal(); /* the + sheet may have opened us — don't leave it behind */
       const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
       /* v18.75 — plan 1ه: "Snap a photo" opens the CAMERA on a phone (desktop
          ignores capture and still shows the normal picker). */
       try{inp.setAttribute('capture','environment')}catch(e){}
       inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
-        resizeImage(f,src=>{NA_PIC=src;render();toast(t('Photo attached — describe your meal'))})};
+        /* v18.95 — since v18.94 the assistant left the Nutrition tab, so a photo
+           taken from the quick-log hero would attach to a screen nobody sees.
+           Land on the assistant screen with it (the in-chat buttons are already there). */
+        resizeImage(f,src=>{if(!src){toast(t('Could not read the picture'));return}
+          NA_PIC=src;if(S.ptab!=='assistant')S.ptab='assistant';render();toast(t('Photo attached — describe your meal'))})};
       inp.click();break}
     case 'na-confirm':{
       const m=NCHAT.find(x=>String(x.id)===el.dataset.id);
@@ -10895,12 +11621,12 @@ document.addEventListener('click',e=>{
       if(!it){toast(t('I could not find')+': '+el.dataset.n);break}
       NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:t('Quick log'),items:[it],kcal:it.kcal,p:it.p,c:it.c,f:it.f,src:'qfav',at:Date.now()});
       saveData();render();toast(`✓ ${nf(it.kcal)} kcal · ${t('Logged')}`);break}
-    /* Jump the .capp scroller (smooth scrollIntoView is unreliable in it). */
-    case 'na-focus':{const el2=$('na-inp');if(!el2)break;
-      const sc=document.querySelector('#app .capp')||document.querySelector('.capp');
-      const card=el2.closest('.ccard');
-      if(sc&&card){const r=card.getBoundingClientRect(),sr=sc.getBoundingClientRect();sc.scrollTop+=r.top-sr.top-30}
-      el2.focus({preventScroll:true});break}
+    /* v18.94 — the assistant lives on its OWN screen now (mockup 05): both quick-log
+       tiles ("Type text" and "Assistant") navigate there, then focus the composer. */
+    case 'na-focus':{S.ptab='assistant';render();
+      const el2=$('na-inp');
+      if(el2)el2.focus({preventScroll:true});
+      break}
     case 'jump-flog':{const _sc=document.querySelector('#app .capp')||document.querySelector('.capp');
       const _el=document.getElementById('flog');
       if(_sc&&_el){const r=_el.getBoundingClientRect(),sr=_sc.getBoundingClientRect();_sc.scrollTop+=r.top-sr.top-60}
@@ -10925,12 +11651,32 @@ document.addEventListener('click',e=>{
     case 'nprof-open':nprofModal();break;
     /* v18.71 plan 1ب — barcode → OpenFoodFacts lookup → real macros per100 g. */
     case 'nbar-open':nbarModal();break;
+    /* v18.95 — Type text: parse → preview → one-tap log. No chat involved. */
+    case 'ntext-open':ntextModal();break;
+    /* v18.97 — composer "+" sheet: mockup05's note says the + holds عکس/بارکد. */
+    case 'na-plus':openModal(`
+      <div class="modal-h"><h3>${t('Add')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+      <div class="modal-b">
+        <div class="row" style="gap:8px">
+          <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="na-photo">${ic('camera',15)} ${t('Photo')}</button>
+          <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="nbar-open">${ic('barcode',15)} ${t('Barcode')}</button>
+        </div>
+      </div>`);break;
+    case 'nt-go':{const i=$('nt-inp');ntParse(i?i.value:'');break}
+    case 'nt-log':{
+      const c=client(S.cid);const nt=S.nt;
+      if(!c||!nt||!nt.items||!nt.items.length)break;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:nt.meal,items:nt.items.map(x=>({...x})),kcal:nt.kcal,p:nt.p,c:nt.c,f:nt.f,src:'text',at:Date.now()});
+      S.nt=null;saveData();closeModal();render();toast(`✓ ${nf(nt.kcal)} kcal · ${t('Logged')}`);break}
+    case 'nt-to-chat':{closeModal();S.ptab='assistant';render();const i=$('na-inp');if(i)i.focus({preventScroll:true});break}
     /* Today summary — deterministic chat answer from the real engine. */
     case 'na-summary':{const c=client(S.cid);if(!c)break;
       const tg=NEng.targets(c),co=NEng.consumed(c,isoToday());
       const w=NEng.waterOf(c,isoToday()),wt=NEng.waterT(c),meals=NEng.mealsLogged(c,isoToday());
-      const line=tg?`📊 ${nf(co.kcal)} / ${nf(tg.kcal)} kcal · P${nf(co.p)} C${nf(co.c)} F${nf(co.f)} · ${t('Water')} ${nf(w)}/${nf(wt)} L · ${nf(meals)} ${t('meals')}`
-        :`📊 ${t('No targets yet — set your profile or ask your coach for a plan.')}`;
+      /* v18.109 — no 📊: this is plain chat TEXT, so an icon can't ride along,
+         and every other bubble in the thread carries none. */
+      const line=tg?`${nf(co.kcal)} / ${nf(tg.kcal)} kcal · P${nf(co.p)} C${nf(co.c)} F${nf(co.f)} · ${t('Water')} ${nf(w)}/${nf(wt)} L · ${nf(meals)} ${t('meals')}`
+        :`${t('No targets yet — set your profile or ask your coach for a plan.')}`;
       NCHAT.push({id:uid(),client:c.name,role:'assistant',body:line,d:isoToday(),at:Date.now()});
       saveData();render();break}
     case 'nbar-go':{nbarLookup($('nb-inp')?.value);break}
@@ -10956,21 +11702,36 @@ document.addEventListener('click',e=>{
         likes:$('npf-likes').value.trim().slice(0,200),cook:$('npf-cook').value.trim().slice(0,60),
         wake:$('npf-wake').value.trim().slice(0,20),sleep:$('npf-sleep').value.trim().slice(0,20)};
       closeModal();saveData();render();toast(t('Profile saved ✓'));break}
+    /* v18.81 — WIRING FIX: chat images carried data-act="img-open" but there was
+       no case for it (clicking a photo did nothing). Open the real viewer. */
+    case 'img-open':{const im=MSGS.find(x=>String(x.id)===String(el.dataset.id));
+      if(im&&im.src)imgModal(im.src,t('Photo'));break}
     case 'msg-note':{const m=MSGS.find(x=>x.id===+el.dataset.id);if(!m||m.noted)break;
       NOTES.unshift({id:uid(),client:m.client,from:'coach',shared:false,type:'General',title:`${t('From chat')} — ${t(m.client)}`,date:'Just now',body:m.body,pin:false,arch:false});
       m.noted=true;render();toast('Saved as note');break}
-    case 'cform':{const c=client(S.cid);
+    case 'cform':{const c=client(S.cid);closeModal(); /* may have come from the + sheet */
       const w=todaysPlan(c.id).w; // v18.62 — reference today's planned workout
       const ctx=w?`${w.name} · ${t(EXERCISES[w.exercises[0].ex].n)} · ${t('Set')} 2`:`${t("Today's Workout")} · ${t('Set')} 2`;
       MSGS.push({id:uid(),client:c.name,from:'client',type:'form',body:t('Please check my form on this set'),ctx,time:'Just now',read:false,dur:'0:12'});
       NOTIFS.unshift({t:`🎥 ${t(c.name)} — ${t('Form check')}`,d:'Just now',un:true});
       render();toast('Form check sent');break}
     case 'ck':S[el.dataset.k]=el.dataset.v;render();break;
+    /* v18.102 — composer "+" sheet. The two chips mockup 07 does not have
+       (Record form check / Attach file) moved here, so neither action became
+       unreachable when they were removed from the chip row. */
+    case 'chat-plus':openModal(`
+      <div class="modal-h"><h3>${t('Add')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+      <div class="modal-b"><div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="cattach">${ic('camera',15)} ${t('Send progress photo')}</button>
+        <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="cform">${ic('video',15)} ${t('Record form check')}</button>
+      </div></div>`);break;
     case 'cattach':{
+      closeModal(); /* the + sheet may have opened us */
       const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
       inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
         const c=client(S.cid);
         resizeImage(f,src=>{
+          if(!src){toast(t('Could not read the picture'));return}
           MSGS.push({id:uid(),client:c.name,from:'client',type:'file',body:`📎 ${f.name}`,src,time:'Just now',read:false});
           NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
           saveData();render();toast(t('Photo attached'))});
@@ -10984,7 +11745,7 @@ document.addEventListener('click',e=>{
       MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
       gamAward(c,'checkin'); // v18.38 — +3 pts, badge checks
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
-      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
     /* ===== v17.5 — competitor-parity actions ===== */
     case 'photo-add':pickPhoto('coach');break;
     case 'photo-add-client':pickPhoto('client');break;
@@ -11122,7 +11883,7 @@ document.addEventListener('click',e=>{
       ch.prog=ch.prog||{};ch.prog[c.id]=(ch.prog[c.id]||0)+1;
       const dc=chalEvalClient(c);saveData();render();
       if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({e:(x.reward&&x.reward.be)||x.emoji||'🏆',n:(x.reward&&x.reward.bn)||x.name})),dc.reduce((a,x)=>a+((x.reward&&x.reward.pts)||50),0));
-      else toast('⭐ +1 '+t('Points'));break}
+      else toast('+1 '+t('Points'));break}
     /* v18.71 — Habits checklist: collapse / tick (number entry lives in
        habNum(), bound from the shared `change` listener via data-change). */
     /* Protect → jump the scroll container to the habits checklist (plain
@@ -11136,12 +11897,17 @@ document.addEventListener('click',e=>{
     case 'hab-tick':{
       const hc=client(S.cid);if(!hc)break;
       const hh=habitsOf(hc).find(x=>x&&x.id===el.dataset.k);
-      if(!hh||hh.type==='auto')break; // auto habits are read-only (computed)
+      if(!hh)break;
       const hi=isoToday(),hl=hlogOf(hc),hd=hl[hi]||(hl[hi]={});
-      const on=!(hd[hh.id]===true||hd[hh.id]===1);
-      hd[hh.id]=on;
+      /* v18.80 — every row toggles: auto = manual override, count = 0/target. */
+      const cur=hh.type==='count'
+        ?(+hd[hh.id]||0)>=+(hh.target||1)
+        :(hd[hh.id]===true||hd[hh.id]===1);
+      const on=!cur;
+      if(hh.type==='count')hd[hh.id]=on?+(hh.target||1):0;
+      else hd[hh.id]=on;
       if(on)gamAward(hc,'habit');
-      else hc.pts=Math.max(0,(hc.pts||0)-(GAM.PTS.habit||0));
+      else gamRevoke(hc,'habit');
       saveData();render();break}
     /* v18.75 — plan 1د part 2: the COACH's habit builder. */
     case 'hab-open':{if(S.role!=='coach'){toast(t('Only the coach can manage habits'));break}S.habEdit=null;habCoachModal();break}
@@ -11192,7 +11958,7 @@ document.addEventListener('click',e=>{
       const hi2=isoToday(),hl2=hlogOf(hc2),hd2=hl2[hi2]||(hl2[hi2]={});
       const on2=!(hd2[hh2.id]===true||hd2[hh2.id]===1);
       hd2[hh2.id]=on2;
-      if(on2)gamAward(hc2,'habit');else hc2.pts=Math.max(0,(hc2.pts||0)-(GAM.PTS.habit||0));
+      if(on2)gamAward(hc2,'habit');else gamRevoke(hc2,'habit');
       saveData();render();habCoachModal();break}
     case 'rem-dismiss':{const m=MSGS.find(x=>String(x.id)===String(el.dataset.id));if(m){m.read=true;saveData()}render();break}
     case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
@@ -11236,25 +12002,27 @@ document.addEventListener('click',e=>{
       const base=S.player.wiz==null?0:S.player.wiz;
       S.player.wiz=Math.max(0,Math.min(wW2.exercises.length-1,base+(+el.dataset.d||0)));
       render();break}
-    case 'skiprest':if(S.player){S.player.rest=0;S.player.restEnd=0;S.player.restFs=false;clearInterval(restIv);restIv=null;render()}break;
-    /* v18.71 — pro rest timer controls */
+    /* v18.90 — smart rest timer: every clock change funnels through restSeek,
+       pause stores MILLISECONDS (the old seconds + ceil() drifted a second per
+       pause/resume cycle), and the two alert toggles persist in PREFS.wk. */
+    case 'skiprest':if(S.player){restEnd(S.player,true,true);render()}break;
     case 'rest-pause':{const p=S.player;if(!p||p.rest<=0)break;
-      if(p.restPaused){p.restEnd=Date.now()+(p.restLeft||0)*1000;p.restPaused=false;p.restBeeped=0;
-        clearInterval(restIv);restIv=setInterval(restTick,200)}
-      else{p.restLeft=restSecs();p.restPaused=true;clearInterval(restIv);restIv=null}
-      render();break}
+      if(p.restPaused){p.restEnd=Date.now()+(p.restLeftMs||0);p.restPaused=false;p.restBeeped=0;
+        clearInterval(restIv);restIv=setInterval(restTick,100)}
+      else{p.restLeftMs=Math.max(0,p.restEnd-Date.now());p.restPaused=true;clearInterval(restIv);restIv=null}
+      restSave();render();break}
     case 'rest-shift':{const p=S.player;if(!p||p.rest<=0)break;
-      const ns=Math.max(0,restSecs()+(+el.dataset.s||0));
-      p.rest=ns; // v18.71 — repaint must not show the stale second for a frame
-      p.restTotal=Math.max(p.restTotal||0,ns);
-      if(ns<=0){p.rest=0;p.restEnd=0;clearInterval(restIv);restIv=null}
-      else if(p.restPaused){p.restLeft=ns}
-      else{p.restEnd=Date.now()+ns*1000;p.restBeeped=0;p.restChimed=false;
-        clearInterval(restIv);restIv=setInterval(restTick,200)}
-      render();break}
+      restSeek(p,restMs()+(+el.dataset.s||0)*1000,false);render();break}
+    case 'rest-set':{const p=S.player;if(!p)break;
+      restSeek(p,(+el.dataset.s||0)*1000,true);render();break}
+    case 'rest-snd':{PREFS.wk.snd=(PREFS.wk.snd===false);savePrefs();
+      if(PREFS.wk.snd!==false)restBeep(760,.07,.12);render();break}
+    case 'rest-vib':{PREFS.wk.vib=(PREFS.wk.vib===false);savePrefs();
+      if(PREFS.wk.vib!==false)restVibe(30);render();break}
+    case 'rest-auto':{PREFS.wk.autoNext=(PREFS.wk.autoNext===false);savePrefs();render();break}
     case 'rest-fs':if(S.player&&S.player.rest>0){S.player.restFs=true;render()}break;
     case 'rest-fs-x':if(S.player){S.player.restFs=false;render()}break;
-    case 'close-player':S.player=null;clearInterval(restIv);restIv=null;render();break;
+    case 'close-player':S.player=null;clearInterval(restIv);restIv=null;restClear();render();break;
     case 'finish-workout':{
       const w=DB[S.cid].workouts.find(x=>x.id===S.player?.wid);if(!w)break;
       const total=w.exercises.reduce((a,e)=>a+e.sets,0);
@@ -11284,7 +12052,7 @@ document.addEventListener('click',e=>{
       gamAward(cNow,'workout');
       const cn=t(cNow.name);
       ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
-      clearInterval(restIv);S.player=null;S.ptab='today';render();
+      clearInterval(restIv);S.player=null;restClear();S.ptab='today';render();
       toast(`💪 ${t('Workout completed')} · ⭐ +${nf((cNow.pts||0)-__before)} ${t('Points')} · 🔥 ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
     case 'add-client':addClientModal();break;
     case 'save-client':{if(billGuard('client'))break;
@@ -11511,6 +12279,13 @@ document.addEventListener('click',e=>{
     /* v18.61 — client weekly check-in: save the measurement, then send the
        coach a check-in message + notification (same path send-checkin uses). */
     case 'cmeas-open':clientMeasModal();break;
+    /* v18.105 — header gear: Settings are a section of this screen, not a route. */
+    case 'pf-gear':{
+      const sc=document.querySelector('#capp');
+      const row=[...document.querySelectorAll('.cbody .sec')]
+        .find(s=>/Settings/.test((s.querySelector('.sec-t')||{}).textContent||''));
+      if(sc&&row)sc.scrollTop+=row.getBoundingClientRect().top-sc.getBoundingClientRect().top-40;
+      break}
     case 'cmeas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       const lm=lastM(c.id);
       const bits=[`${t('Weight')} ${uwS(lm&&lm.w)}`];
@@ -11523,7 +12298,7 @@ document.addEventListener('click',e=>{
       gamAward(c,'checkin');
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
       closeModal();render();
-      toast(t('Check-in saved — your coach was notified')+' · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      toast(t('Check-in saved — your coach was notified')+' · +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
     case 'meas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       closeModal();
       if(isNarrow()){S.mClient=c.id;if(S.mview!=='client')S.mview='client'}
@@ -11598,8 +12373,7 @@ document.addEventListener('click',e=>{
     case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
     case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
     case 'cm-filter':{S.cfilter=el.dataset.v;render();break}
-    case 'prg-range':{S.prgRange=el.dataset.r;render();break}
-    case 'wt-range':{S.wtRange=el.dataset.r;render();break}
+    case 'wt-range':{S.wtRange=el.dataset.r;PREFS.wtRange=S.wtRange;savePrefs();render();break}
     /* Profile settings (mockup 08): units toggle + explicit language pick. */
     case 'units-tog':{PREFS.units=PREFS.units==='Imperial'?'Metric':'Imperial';savePrefs();render();
       toast(t('Units')+': '+(PREFS.units==='Imperial'?'lb · in':'kg · cm'));break}

@@ -1,0 +1,157 @@
+/* =============================================================================
+   COACH OS — Today screen redesign · THEME (step ② of the superdesign workflow)
+   File:  .superdesign/design_iterations/theme_1.css
+   Scope: client phone `.phone` → Today tab hero + reordered blocks.
+   Rule:  this EXTENDS the existing system — it never renames or overrides a
+          token the other 8 screens already depend on (--ink/--surface/--accent…).
+   ========================================================================== */
+
+/* Chrome may request this from fonts.googleapis.com — allowed by CSP
+   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com
+   and font-src  'self' data: https://fonts.gstatic.com */
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&display=swap');
+
+:root {
+  /* -----------------------------------------------------------------------
+     1 · SURFACE  (unchanged — copied verbatim from the mockup, line 13-16)
+     -------------------------------------------------------------------- */
+  --bg:            #0F1114;
+  --surface:       #171A1F;
+  --surface2:      #1D2127;
+  --surface3:      #22262D;
+  --line:          #262A31;
+  --line2:         #1F232A;
+
+  /* -----------------------------------------------------------------------
+     2 · INK  (unchanged — `--ink3` is what the bottom nav now reads)
+     -------------------------------------------------------------------- */
+  --ink:           #F5F6F8;
+  --ink2:          #B4B9C4;
+  --ink3:          #7E8492;
+
+  /* -----------------------------------------------------------------------
+     3 · ACCENT  (unchanged — the lime already reads "sport"; the redesign
+         spends it on ONE action instead of on six habit rows)
+     -------------------------------------------------------------------- */
+  --accent:        #C8F04B;
+  --accent-deep:   #8FB51E;
+  --accent-ink:    #1A2205;          /* text ON a lime fill — AA on #C8F04B */
+  --accent-soft:   rgba(200, 240, 75, .12);
+  --red:           #DC2626;
+
+  /* -----------------------------------------------------------------------
+     4 · TYPE SYSTEM
+         Oxanium   → athletic / angular display face: hero + section labels.
+                     Loaded only 600·700·800 (the weights we actually use).
+         JetBrains → every NUMBER (sets, kg, RPE, kcal, time). Already the
+                     mockup's `.mono` convention, so data feels instrumented.
+         Vazirmatn → body copy — identical to the mockup, Persian-safe.
+         Inter     → button labels at 800/900 (Oxanium is a display face and
+                     reads too techy at small button sizes).
+     -------------------------------------------------------------------- */
+  --font-ui:       'Vazirmatn', system-ui, sans-serif;
+  --font-display:  'Oxanium', 'Vazirmatn', system-ui, sans-serif;
+  --font-mono:     'JetBrains Mono', ui-monospace, monospace;
+  --font-btn:      'Inter', 'Vazirmatn', system-ui, sans-serif;
+
+  /* Type roles — the point of this redesign is HIERARCHY, so each role is
+     pinned rather than re-declared per component. */
+  --t-hero:        700 27px/1.02 var(--font-display);   /* UPPER BODY        */
+  --t-hero-eyebrow:800 10.5px/1 var(--font-mono);       /* TODAY'S WORKOUT   */
+  --t-hero-sub:    600 12.5px/1.35 var(--font-ui);      /* Block 2 · Wk 3/6  */
+  --t-sec:         700 10.5px/1 var(--font-display);    /* ── NEXT UP ──     */
+  --t-metric:      700 13px/1 var(--font-mono);         /* 4,320 kg          */
+  --t-cap:         600 9.5px/1.1 var(--font-mono);      /* chip / unit label */
+  --t-body:        400 13.5px/1.55 var(--font-ui);      /* default           */
+  --t-btn:         800 15px/1 var(--font-btn);          /* START WORKOUT     */
+
+  /* Tracking — uppercase athletic text needs OPEN tracking at small sizes
+     and TIGHT tracking when it gets big. Doing this backwards is the single
+     most common way a "sporty" header ends up looking like a sale banner. */
+  --tr-hero:       -0.028em;
+  --tr-hero-eyebrow:.16em;
+  --tr-sec:        .14em;
+  --tr-metric:     -0.01em;
+
+  /* -----------------------------------------------------------------------
+     5 · GEOMETRY / SPACING
+         14px inset matches the mockup's screen gutter; 18px between sections
+         (the current page uses ~12px, which is what made it read as a wall
+         of equal-weight cards).
+     -------------------------------------------------------------------- */
+  --inset:         14px;
+  --gap-sec:       18px;
+  --gap-card:      10px;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;
+  --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+
+  --r-xs: 7px;  --r-sm: 10px;  --r-md: 13px;
+  --r-lg: 16px; --r-xl: 20px;  --r-hero: 22px;
+
+  /* -----------------------------------------------------------------------
+     6 · SHADOW / EFFECT
+         Cards stay FLAT (1px hairline). Only two things get to glow:
+         the hero and the Start button. Everything else glowing is exactly
+         how the old screen lost its sense of priority.
+     -------------------------------------------------------------------- */
+  --sh-card:       0 1px 2px rgba(0, 0, 0, .5);
+  --sh-hero:       0 18px 44px -20px rgba(200, 240, 75, .45),
+                   inset 0 1px 0 rgba(255, 255, 255, .05);
+  --sh-btn:        0 10px 24px -10px rgba(200, 240, 75, .6);
+
+  /* Hero fill: lime wash that dies out to the right so the START button
+     still has somewhere brighter to go. */
+  --hero-grad:     linear-gradient(135deg,
+                     rgba(200, 240, 75, .17) 0%,
+                     rgba(200, 240, 75, .06) 44%,
+                     rgba(15, 17, 20, 0)    100%);
+  --hero-edge:     rgba(200, 240, 75, .30);
+  --hero-sheen:    linear-gradient(90deg,
+                     transparent 0%, rgba(255, 255, 255, .07) 50%, transparent 100%);
+
+  /* -----------------------------------------------------------------------
+     7 · MOTION  (consumed by step ③)
+     -------------------------------------------------------------------- */
+  --e-out:         cubic-bezier(.16, 1, .3, 1);
+  --e-spring:      cubic-bezier(.34, 1.56, .64, 1);
+  --d-fast:        140ms;
+  --d-base:        260ms;
+  --d-hero:        420ms;
+}
+
+/* -----------------------------------------------------------------------------
+   Light theme — the phone follows `html[data-theme]`, so every NEW token needs
+   a light twin or the hero will be an unreadable lime wash on white.
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] {
+  --bg:            #DDDDD0;
+  --surface:       #FFFFFF;
+  --surface2:      #F4F4EE;
+  --surface3:      #ECECE4;
+  --line:          #C8C8B6;
+  --line2:         #D5D5C6;
+
+  --ink:           #15181E;
+  --ink2:          #5C6270;
+  --ink3:          #9AA0AE;
+
+  --accent:        #C8F04B;
+  --accent-deep:   #6E8F14;
+  --accent-ink:    #1A2205;
+  --accent-soft:   rgba(200, 240, 75, .30);
+  --red:           #DC2626;
+
+  --sh-card:       0 1px 2px rgba(18, 21, 27, .09), 0 6px 18px -6px rgba(18, 21, 27, .16);
+  --sh-hero:       0 18px 40px -22px rgba(110, 143, 20, .55),
+                   inset 0 1px 0 rgba(255, 255, 255, .7);
+  --sh-btn:        0 10px 22px -12px rgba(110, 143, 20, .7);
+
+  --hero-grad:     linear-gradient(135deg,
+                     rgba(200, 240, 75, .55) 0%,
+                     rgba(200, 240, 75, .22) 46%,
+                     rgba(255, 255, 255, 0)  100%);
+  --hero-edge:     rgba(143, 181, 30, .45);
+  --hero-sheen:    linear-gradient(90deg,
+                     transparent 0%, rgba(255, 255, 255, .85) 50%, transparent 100%);
+}
