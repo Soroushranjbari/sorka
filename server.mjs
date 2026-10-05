@@ -72,6 +72,10 @@ const shopAccountFn = await import('./backend/handlers/shop-account.mjs');
 const aiFn = await import('./backend/handlers/ai.mjs');
 const pushFn = await import('./backend/handlers/push.mjs');
 const exportFn = await import('./backend/handlers/export.mjs');
+/* v18.103 — voice/media blobs live OUTSIDE the 5 MB workspace payload. */
+const mediaFn = await import('./backend/handlers/media.mjs');
+/* v18.108 — realtime chat stream (one long-lived SSE connection). */
+const chatFn = await import('./backend/handlers/chat.mjs');
 
 // Vercel maps "/api/auth/signup" -> handler URL "/api/auth/signup" (rewrite),
 // so the handler sees the full path. Reproduce that here.
@@ -82,6 +86,8 @@ const ROUTES = [
   { re: /^\/api\/push\/(.*)$/, fn: pushFn.default },
   { re: /^\/api\/export\/(.*)$/, fn: exportFn.default },
   { re: /^\/api\/data\/?$/, fn: dataFn.default },
+  { re: /^\/api\/media\/?/, fn: mediaFn.default },
+  { re: /^\/api\/chat\/(.*)$/, fn: chatFn.default },
   { re: /^\/api\/health\/?$/, fn: healthFn.default },
   { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default },
   { re: /^\/shop\/api\/account\/(.*)$/, fn: shopAccountFn.default }
@@ -106,6 +112,18 @@ async function handleApi(req, res, url) {
       res.statusCode = out.status;
       out.headers.forEach((v, k) => { if (k !== 'content-length') res.setHeader(k, v); });
       for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
+      for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
+      /* v18.108 — SSE must never be buffered: frames have to leave as they are
+         produced, or the client sees a burst once the connection closes.
+         Returns before the content-length/copy path below. */
+      if ((out.headers.get('content-type') || '').includes('text/event-stream') && out.body) {
+        const reader = out.body.getReader();
+        try {
+          for (;;) { const { done, value } = await reader.read(); if (done) break; res.write(Buffer.from(value)); }
+        } catch { /* client disconnected mid-stream */ }
+        res.end();
+        return;
+      }
       const buf = out.body ? Buffer.from(await out.arrayBuffer()) : null;
       if (buf) res.setHeader('content-length', buf.length);
       res.end(buf || undefined);

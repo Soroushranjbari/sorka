@@ -10,7 +10,8 @@ import {
   ownerOf, accessOf, CODE_RE, newId
 } from '../lib/saas.mjs';
 import { planOf, countSeats } from '../lib/billing.mjs';
-import { readJsonCapped, tooLarge, badJson, secure, withLock } from '../lib/guard.mjs';
+import { readJsonCapped, tooLarge, badJson, secure, withLock, rateLimit, ipOf, tooMany } from '../lib/guard.mjs';
+import { kvDown } from '../lib/db.mjs';
 import { pushToAccount, pushEnabled } from './push.mjs';
 
 /* v18.22 — push the OWNER when a student device adds client→coach messages
@@ -118,22 +119,54 @@ async function metaOf(st, ws) {
   catch { return null }
 }
 
+/* v18.104 — O(1) polling.
+   The `?rev=` fast path below used to read `ws-meta:<id>`, which holds
+   {rev, DATA} — so every 7-second poll JSON.parse'd the ENTIRE workspace
+   (127 KB in the demo, up to DATA_MAX_BYTES = 5 MB). The REPLY was small; the
+   READ was not, and on SQLite better-sqlite3 runs that parse synchronously on
+   the Node event loop. A tiny sibling key now carries just the revision, so a
+   poll that finds no change never touches the payload at all: O(payload) -> O(1).
+   The full blob is read only when the client is genuinely behind, and `ws-rev`
+   is backfilled from `ws-meta` on that path — so workspaces written before this
+   change self-heal after one such read. The wire protocol is unchanged, so no
+   client edit is needed. */
+const revKeyOf = (wsId) => `ws-rev:${wsId}`;
+async function revOf(st, key) {
+  try {
+    const r = await st.get(key, { type: 'json' });
+    return r && r.rev != null ? (+r.rev || 0) : null;
+  } catch { return null; }
+}
+async function setRev(st, key, rev) {
+  /* Best effort: if this write fails, polling still works — it just costs a
+     parse again until the key is written successfully. */
+  try { await st.setJSON(key, { rev }); } catch {}
+}
+
 async function handleGet(st, req, code) {
   const { ws, legacy } = await resolveWs(st, code);
   if (!ws && !legacy) {
     return j(200, { ok: true, rev: 0, data: null, exists: false, owned: false, mine: false });
   }
   /* Cheap poll: ?rev=N returns {unchanged:true} (no payload) when the caller
-     already has the current revision — cuts ~95% of polling bandwidth at
-     hundreds of connected coaches/clients. */
+     already has the current revision. */
   const want = Number(new URL(req.url).searchParams.get('rev')) || 0;
   if (ws) {
-    const m = await metaOf(st, ws);
-    const rev = (m && m.rev) || 0;
+    const rkey = revKeyOf(ws.id);
+    let rev = await revOf(st, rkey);
+    let m = null;
+    if (rev == null) {
+      /* cold path: written before v18.104 (or a direct ws-meta write) — pay the
+         parse once, backfill the tiny key, and every later poll is O(1). */
+      m = await metaOf(st, ws);
+      rev = (m && m.rev) || 0;
+      await setRev(st, rkey, rev);
+    }
     if (want && rev === want) return j(200, { ok: true, rev, unchanged: true });
+    if (!m) m = await metaOf(st, ws); // genuinely behind (or first load) — full read
     const coach = await coachOf(st, req);
     return j(200, {
-      ok: true, rev, data: (m && m.data) || null,
+      ok: true, rev: (m && m.rev) || rev, data: (m && m.data) || null,
       exists: true, owned: !!ws.owner,
       mine: !!(coach && ws.owner && ws.owner === ownerOf(coach))
     });
@@ -179,6 +212,7 @@ async function handlePutLocked(st, req, code) {
       await st.setJSON(`acct:${coach.email}`, coach);
     }
     await st.setJSON(`ws-meta:${ws.id}`, { rev: now, data, owner: ws.owner, code, updatedAt: now });
+    await setRev(st, revKeyOf(ws.id), now); /* v18.104 — keep the O(1) poll key fresh */
     return j(200, { ok: true, rev: now, mine: true });
   }
 
@@ -221,6 +255,7 @@ async function handlePutLocked(st, req, code) {
     }
     const rev = Date.now();
     await st.setJSON(`ws-meta:${ws.id}`, { rev, data, owner: ws.owner || null, code, updatedAt: rev });
+    await setRev(st, revKeyOf(ws.id), rev); /* v18.104 */
     /* v18.22 — a student device just wrote client→coach messages: notify the
        owner's devices (fire-and-forget; never blocks or fails the PUT). */
     if (!coach && ws.owner && pushEnabled()) {
@@ -245,6 +280,7 @@ async function handlePutLocked(st, req, code) {
     }
     const rev = Date.now();
     await st.setJSON(`ws-meta:${ws.id}`, { rev, data, owner: ws.owner, code, updatedAt: rev });
+    await setRev(st, revKeyOf(ws.id), rev); /* v18.104 */
     return j(200, { ok: true, rev, mine: true, imported: true });
   }
   // Anonymous student sync to a legacy code (backward compatible).
@@ -260,6 +296,19 @@ export default async (req) => {
   const url = new URL(req.url);
   const code = normCode(url.searchParams.get('code'));
   if (!CODE_RE.test(code)) return j(400, { ok: false, error: 'bad code' });
+  /* v18.107 — the KV circuit is open (bad DATABASE_URL): say so instead of
+     handing back {rev:0, exists:false}, which a client would read as "your
+     workspace vanished". cloudFetch returns null on !r.ok and cloudPull bails
+     without touching state, so a DB outage never corrupts local data. */
+  if (kvDown()) return j(503, { ok: false, error: 'storage-unavailable' });
+  /* v18.107 — /api/data was the ONE endpoint with no rate limit, yet it is the
+     hot path every device hits every 7 s. Caps are deliberately generous so a
+     shared NAT (gym/school) never trips them: a client polls ~9×/min and pushes
+     only after an edit, so 600 GET/min ≈ 70 devices, and 300 PUT/min is ~4× the
+     900 ms debounce. They still stop a flood that would parse megabytes/second. */
+  const lim = rateLimit(`${req.method === 'PUT' ? 'data-put' : 'data-get'}:${ipOf(req)}`,
+    req.method === 'PUT' ? 300 : 600, 60_000);
+  if (!lim.ok) return tooMany(lim.retryAfter);
   if (req.method === 'GET') return secure(handleGet(st, req, code));
   if (req.method === 'PUT') return secure(handlePut(st, req, code));
   return j(405, { ok: false, error: 'method not allowed' });
