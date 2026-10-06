@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coach Desktop — Dashboard → Messages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme_2.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+/* ============ SHELL + COMPONENTS — all values come from theme_2.css ==== */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:var(--t-body);font-family:var(--font-ui);
+     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3{font-weight:inherit;font-size:inherit;margin:0}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:99px;border:3px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+
+.app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;height:100dvh;overflow:hidden}
+
+/* ---------------------------------------------------------------- SIDEBAR */
+.side{background:var(--surface);border-right:1px solid var(--line);
+      display:flex;flex-direction:column;padding:var(--s-5) var(--s-3) var(--s-4);overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:0 var(--s-3) var(--s-6)}
+.brand .lg{width:30px;height:30px;border-radius:9px;background:var(--accent);color:var(--accent-ink);
+           display:grid;place-items:center;font:800 13px/1 var(--font-display)}
+.brand b{font:700 13px/1 var(--font-display);letter-spacing:.08em;text-transform:uppercase}
+.brand span{display:block;font:600 8.5px/1 var(--font-mono);letter-spacing:.16em;
+            color:var(--ink3);margin-top:3px}
+.grp{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+     color:var(--ink3);padding:var(--nav-group) var(--s-3) var(--s-2)}
+.grp:first-of-type{padding-top:0}
+.it{display:flex;align-items:center;gap:10px;height:var(--nav-h);padding:0 var(--s-3);
+    border-radius:var(--r-sm);color:var(--nav-idle-fg);font:600 13px/1 var(--font-ui);
+    transition:background var(--d-fast) var(--e-out),color var(--d-fast),transform var(--d-fast) var(--e-out)}
+.it svg{width:16px;height:16px;flex:none}
+.it:hover{background:var(--surface2);color:var(--ink2);transform:translateX(2px)}
+.it.on{background:var(--nav-active-bg);color:var(--nav-active-fg);font-weight:700}
+.it .bd{margin-left:auto;min-width:18px;height:17px;padding:0 5px;border-radius:99px;
+        background:var(--st-bad-bg);color:var(--st-bad);font:700 10px/17px var(--font-mono);text-align:center}
+.side-foot{margin-top:auto;padding-top:var(--s-4);border-top:1px solid var(--line)}
+.me{display:flex;align-items:center;gap:10px;padding:var(--s-2) var(--s-3);border-radius:var(--r-sm)}
+.me:hover{background:var(--surface2)}
+.me .av{width:28px;height:28px;border-radius:8px;background:var(--surface3);color:var(--ink2);
+        display:grid;place-items:center;font:700 11px/1 var(--font-mono)}
+.me b{display:block;font:600 12.5px/1.2 var(--font-ui)}
+.me span{display:block;font:600 8.5px/1 var(--font-mono);letter-spacing:.12em;color:var(--accent);margin-top:3px}
+
+/* ----------------------------------------------------------------- TOPBAR */
+.main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.top{height:var(--topbar-h);flex:none;display:flex;align-items:center;gap:var(--s-3);
+     padding:0 var(--panel-gap);border-bottom:1px solid var(--line);
+     background:var(--topbar-bg);backdrop-filter:var(--topbar-blur);z-index:5}
+.srch{flex:1;max-width:420px;display:flex;align-items:center;gap:9px;height:34px;
+      padding:0 12px;background:var(--surface2);border:1px solid var(--line);
+      border-radius:var(--btn-radius);color:var(--ink3);font-size:13px;transition:border-color var(--d-fast)}
+.srch:hover{border-color:var(--line-strong)}
+.srch svg{width:15px;height:15px}
+.srch kbd{margin-left:auto;font:600 10px/1 var(--font-mono);color:var(--ink3);
+          background:var(--surface3);border-radius:5px;padding:3px 6px}
+.top .sp{flex:1}
+.iconb{width:34px;height:34px;border-radius:var(--btn-radius);border:1px solid var(--line);
+       background:var(--surface);display:grid;place-items:center;color:var(--ink2);
+       transition:background var(--d-fast),border-color var(--d-fast),transform var(--d-fast) var(--e-out)}
+.iconb:hover{background:var(--surface3);border-color:var(--line-strong);transform:translateY(-1px)}
+.iconb svg{width:16px;height:16px}
+.btn{height:var(--btn-h);padding:0 15px;border-radius:var(--btn-radius);
+     display:inline-flex;align-items:center;justify-content:center;gap:7px;
+     font:700 13px/1 var(--font-ui);transition:transform var(--d-fast) var(--e-out),
+     background var(--d-fast),box-shadow var(--d-fast),border-color var(--d-fast)}
+.btn svg{width:15px;height:15px}
+.btn-pri{background:var(--btn-primary-bg);color:var(--btn-primary-fg);box-shadow:var(--btn-primary-sh)}
+.btn-pri:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.btn-pri:active{transform:translateY(0) scale(.985);transition-duration:80ms}
+.btn-out{border:1px solid var(--line);color:var(--ink2);background:var(--surface)}
+.btn-out:hover{border-color:var(--line-strong);background:var(--surface3);color:var(--ink)}
+.btn-sm{height:var(--btn-h-sm);padding:0 11px;font-size:12.5px;border-radius:9px}
+
+/* --------------------------------------------------------------- VIEWS */
+.scroll{flex:1;overflow-y:auto;padding:var(--s-6) var(--panel-gap) var(--s-8)}
+.view{display:none}
+.view.on{display:block;animation:viewIn var(--d-base) var(--e-out) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s-4);
+           margin-bottom:var(--s-6);flex-wrap:wrap}
+.page-head .k{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink3)}
+.page-head h1{font:var(--t-h1);letter-spacing:var(--tr-display);margin-top:7px}
+.page-head .acts{display:flex;gap:var(--s-2)}
+
+/* ---------------------------------------------------------------- PANELS */
+.p{background:var(--panel-bg);border:var(--panel-border);border-radius:var(--r-md);
+   padding:var(--panel-pad);animation:panelIn var(--d-panel) var(--e-out) both}
+.p+.p{margin-top:var(--panel-gap)}
+@keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.p:nth-child(1){animation-delay:0ms}.p:nth-child(2){animation-delay:40ms}
+.p:nth-child(3){animation-delay:80ms}.p:nth-child(4){animation-delay:120ms}
+.p-h{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);margin-bottom:var(--s-4)}
+.p-h h2{font:var(--panel-title);letter-spacing:-.01em}
+.p-h .sub{font:var(--t-body-sm);color:var(--ink3);margin-top:3px}
+.p-h .more{font:600 12.5px/1 var(--font-ui);color:var(--ink3);display:flex;align-items:center;gap:4px}
+.p-h .more:hover{color:var(--accent)}
+.p-h .more svg{width:13px;height:13px}
+
+/* HERO — the only elevated, lime-edged panel */
+.hero{background:var(--hero-bg);border:var(--hero-border);box-shadow:var(--sh-hero);
+      position:relative;overflow:hidden}
+.hero .n{font:var(--t-hero);letter-spacing:var(--tr-display);color:var(--accent);
+         font-family:var(--font-mono)}
+.att{display:flex;flex-direction:column;gap:2px}
+.att-row{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:var(--r-sm);
+         background:rgba(0,0,0,.22);border:1px solid transparent;
+         transition:background var(--d-fast),border-color var(--d-fast),transform var(--d-fast) var(--e-out)}
+.att-row:hover{background:rgba(0,0,0,.38);border-color:var(--accent-line);transform:translateX(3px)}
+.att-row .av{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+             font:700 11px/1 var(--font-mono);flex:none}
+.att-row .who{flex:1;min-width:0}
+.att-row .who b{display:block;font:600 13.5px/1.3 var(--font-ui)}
+.att-row .who span{display:block;font:var(--t-body-sm);color:var(--ink3);margin-top:2px}
+.att-row .go{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);
+             display:grid;place-items:center;flex:none;transition:transform var(--d-fast) var(--e-spring)}
+.att-row:hover .go{transform:translateX(2px)}
+.att-row .go svg{width:14px;height:14px}
+
+/* KPI — flat, hairline, the value is the loudest thing in it */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--panel-gap)}
+.kpi{background:var(--panel-bg);border:var(--panel-border);border-radius:var(--r-md);
+     padding:var(--s-4) var(--s-5);min-height:var(--kpi-h);position:relative;overflow:hidden;
+     animation:panelIn var(--d-panel) var(--e-out) both}
+.kpi:nth-child(1){animation-delay:160ms}.kpi:nth-child(2){animation-delay:200ms}
+.kpi:nth-child(3){animation-delay:240ms}.kpi:nth-child(4){animation-delay:280ms}
+.kpi .l{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink3)}
+.kpi .v{font:var(--t-kpi);letter-spacing:var(--tr-display);margin-top:11px;font-family:var(--font-mono)}
+.kpi .d{font:var(--t-num);margin-top:7px;color:var(--ink3);display:flex;align-items:center;gap:5px}
+.kpi .d svg{width:12px;height:12px}
+.kpi .d.up{color:var(--st-ok)}.kpi .d.down{color:var(--st-bad)}
+.kpi.lead{grid-column:span 2}
+.kpi.lead .v{color:var(--accent)}
+
+/* ---------------------------------------------------------------- TABLES */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{height:var(--tbl-head-h);background:var(--tbl-head-bg);text-align:left;
+        font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+        color:var(--ink3);padding:0 14px;white-space:nowrap}
+.tbl th:first-child{border-radius:9px 0 0 9px}.tbl th:last-child{border-radius:0 9px 9px 0}
+.tbl td{height:var(--tbl-row-h);padding:0 14px;border-bottom:var(--tbl-sep);font-size:13px;white-space:nowrap}
+.tbl tbody tr{transition:background var(--d-fast)}
+.tbl tbody tr:hover{background:var(--tbl-row-hover)}
+.tbl tbody tr:hover td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
+.tbl .nm{display:flex;align-items:center;gap:9px}
+.tbl .nm .av{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+             font:700 10.5px/1 var(--font-mono)}
+.tbl .num{font:var(--t-num);letter-spacing:var(--tr-num)}
+.tbl .mut{color:var(--ink3)}
+
+/* status pill — colour IS the message, so no border */
+.pill{display:inline-flex;align-items:center;gap:5px;height:var(--pill-h);padding:0 9px;
+      border-radius:var(--pill-radius);font:700 var(--pill-size)/1 var(--font-ui);white-space:nowrap;
+      animation:pillIn var(--d-base) var(--e-spring) both}
+.pill i{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.pill.ok{background:var(--st-ok-bg);color:var(--st-ok)}
+.pill.warn{background:var(--st-warn-bg);color:var(--st-warn)}
+.pill.bad{background:var(--st-bad-bg);color:var(--st-bad)}
+.pill.idle{background:var(--st-idle-bg);color:var(--st-idle)}
+@keyframes pillIn{0%{transform:scale(.94)}70%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ---------------------------------------------------------------- MISC */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--panel-gap)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--panel-gap)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--panel-gap)}
+
+/* week strip (Next up / calendar) */
+.wk{display:flex;gap:6px}
+.wk .d{flex:1;text-align:center;padding:9px 4px;border-radius:var(--r-sm);
+       background:var(--surface2);border:1px solid transparent;transition:border-color var(--d-fast),background var(--d-fast)}
+.wk .d:hover{border-color:var(--line-strong)}
+.wk .d i{display:block;font:600 9.5px/1 var(--font-mono);letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
+.wk .d b{display:block;font:var(--t-num);margin-top:6px}
+.wk .d.today{background:var(--accent-soft);border-color:var(--accent-line)}
+.wk .d.today b,.wk .d.today i{color:var(--accent)}
+.wk .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin:5px auto 0}
+.wk .dot.off{background:var(--st-idle);opacity:.5}
+
+/* list rows (Next up, notes, messages) */
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row .tm{font:var(--t-num);color:var(--accent);min-width:44px}
+.row .bd{flex:1;min-width:0}
+.row .bd b{display:block;font:600 13.5px/1.3 var(--font-ui)}
+.row .bd span{display:block;font:var(--t-body-sm);color:var(--ink3);margin-top:3px}
+
+/* bars */
+.bar{height:6px;border-radius:99px;background:var(--viz-track);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;
+       transition:width 600ms var(--e-out)}
+.bar.sm{height:4px}
+
+/* cards grid (templates / library) */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:var(--panel-gap)}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+      padding:15px;transition:border-color var(--d-fast),transform var(--d-fast) var(--e-out)}
+.tile:hover{border-color:var(--accent-line);transform:translateY(-2px)}
+.tile .ic{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);
+          display:grid;place-items:center;margin-bottom:11px}
+.tile .ic svg{width:17px;height:17px}
+.tile b{display:block;font:600 13.5px/1.3 var(--font-ui)}
+.tile span{display:block;font:var(--t-body-sm);color:var(--ink3);margin-top:5px}
+
+/* messages / notes */
+.msg{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--line)}
+.msg:last-child{border-bottom:0}
+.msg .av{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
+         font:700 11px/1 var(--font-mono);flex:none}
+.msg .bd{flex:1;min-width:0}
+.msg .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.msg .top b{font:600 13.5px/1.3 var(--font-ui)}
+.msg .top span{font:600 10.5px/1 var(--font-mono);color:var(--ink3);white-space:nowrap}
+.msg .bd p{font:var(--t-body-sm);color:var(--ink2);margin-top:4px;
+           overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msg.unread .top b{font-weight:800}
+.msg.unread .av{background:var(--accent-soft);color:var(--accent)}
+
+/* charts */
+.spark{width:100%;height:74px;display:block}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+.legend span{display:flex;align-items:center;gap:6px;font:var(--t-body-sm);color:var(--ink3)}
+.legend i{width:9px;height:9px;border-radius:3px;flex:none}
+
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+       padding:30px 16px;text-align:center;color:var(--ink3)}
+.empty svg{width:22px;height:22px;opacity:.6}
+.empty b{font:600 13px/1 var(--font-ui);color:var(--ink2)}
+.empty span{font:var(--t-body-sm)}
+
+/* =================================================== RESPONSIVE ========= */
+@media (max-width:1080px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi.lead{grid-column:span 2}
+  .grid3{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;inset:0 auto 0 0;width:250px;transform:translateX(-100%);
+        transition:transform var(--d-base) var(--e-out);z-index:30}
+  .side.open{transform:none;box-shadow:var(--sh-float)}
+  .burger{display:grid !important}
+  .grid2,.grid3,.grid4{grid-template-columns:1fr}
+}
+.burger{display:none}
+@media (max-width:560px){
+  .kpis{grid-template-columns:1fr}
+  .kpi.lead{grid-column:span 1}
+  .top{gap:8px;padding:0 12px}
+  .srch{max-width:none}
+  .tiles{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.12s !important;animation-delay:0s !important;
+                       transition-duration:.12s !important}
+  .view.on,.p,.kpi{animation-name:fadeOnly !important;transform:none !important}
+  @keyframes fadeOnly{from{opacity:0}to{opacity:1}}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- ============================================================ SIDEBAR -->
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="lg">C</div>
+      <div><b>Coachmint</b><span>ONE COACH · ONE WORKSPACE</span></div>
+    </div>
+
+    <div class="grp">Workspace</div>
+    <button class="it on" data-go="dash"><i data-lucide="layout-dashboard"></i>Dashboard</button>
+    <button class="it" data-go="clients"><i data-lucide="users"></i>Clients<span class="bd">3</span></button>
+    <button class="it" data-go="builder"><i data-lucide="dumbbell"></i>Workouts</button>
+    <button class="it" data-go="calendar"><i data-lucide="calendar-days"></i>Calendar</button>
+    <button class="it" data-go="messages"><i data-lucide="message-circle"></i>Messages<span class="bd">2</span></button>
+
+    <div class="grp">Today</div>
+    <button class="it" data-go="progress"><i data-lucide="line-chart"></i>Progress</button>
+    <button class="it" data-go="measure"><i data-lucide="ruler"></i>Measurements</button>
+    <button class="it" data-go="nutrition"><i data-lucide="salad"></i>Nutrition</button>
+
+    <div class="grp">Manage</div>
+    <button class="it" data-go="challenges"><i data-lucide="trophy"></i>Challenges</button>
+    <button class="it" data-go="templates"><i data-lucide="copy"></i>Templates</button>
+    <button class="it" data-go="library"><i data-lucide="book-open"></i>Exercise Library</button>
+    <button class="it" data-go="notes"><i data-lucide="sticky-note"></i>Notes</button>
+
+    <div class="side-foot">
+      <button class="it" data-go="settings"><i data-lucide="settings"></i>Settings</button>
+      <div class="me"><div class="av">CS</div><div><b>Coach Soroush</b><span>PRO PLAN</span></div></div>
+    </div>
+  </aside>
+
+  <!-- =============================================================== MAIN -->
+  <div class="main">
+    <header class="top">
+      <button class="iconb burger" id="burger" aria-label="Menu"><i data-lucide="menu"></i></button>
+      <div class="srch"><i data-lucide="search"></i>Search clients, foods, plans…<kbd>⌘K</kbd></div>
+      <div class="sp"></div>
+      <button class="iconb" aria-label="Theme"><i data-lucide="sun"></i></button>
+      <button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>Quick Add</button>
+      <button class="iconb" aria-label="Profile"><i data-lucide="user"></i></button>
+    </header>
+
+    <div class="scroll" id="scroll">
+
+      <!-- ============================================ 01 · DASHBOARD ===== -->
+      <section class="view on" data-view="dash">
+        <div class="page-head">
+          <div><div class="k">Tuesday, October 6</div><h1>Dashboard</h1></div>
+          <div class="acts">
+            <button class="btn btn-out btn-sm"><i data-lucide="calendar-plus"></i>Schedule</button>
+            <button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>New workout</button>
+          </div>
+        </div>
+
+        <!-- HERO — the only elevated panel: who needs me right now -->
+        <div class="p hero">
+          <div class="p-h">
+            <div><h2>Needs you</h2><div class="sub">Clients waiting on a reply, a plan or a fix</div></div>
+            <div class="n">3</div>
+          </div>
+          <div class="att">
+            <div class="att-row">
+              <div class="av" style="background:var(--st-bad-bg);color:var(--st-bad)">AR</div>
+              <div class="who"><b>Ali Rezaei</b><span>Action required · form check overdue · 4 days</span></div>
+              <span class="pill bad"><i></i>Overdue</span>
+              <button class="go" aria-label="Open"><i data-lucide="arrow-right"></i></button>
+            </div>
+            <div class="att-row">
+              <div class="av" style="background:var(--st-warn-bg);color:var(--st-warn)">MK</div>
+              <div class="who"><b>Mohammad Karimi</b><span>Missed 2 sessions · last seen 5 days ago</span></div>
+              <span class="pill warn"><i></i>At risk</span>
+              <button class="go" aria-label="Open"><i data-lucide="arrow-right"></i></button>
+            </div>
+            <div class="att-row">
+              <div class="av" style="background:var(--st-idle-bg);color:var(--st-idle)">NH</div>
+              <div class="who"><b>Neda Hosseini</b><span>Intake form not filled in before first session</span></div>
+              <span class="pill idle"><i></i>Waiting</span>
+              <button class="go" aria-label="Open"><i data-lucide="arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOUR KPIs — the first is the lead metric -->
+        <div class="kpis" style="margin-top:var(--panel-gap)">
+          <div class="kpi lead">
+            <div class="l">Adherence · this week</div>
+            <div class="v">68%</div>
+            <div class="d up"><i data-lucide="trending-up"></i>+9% vs last week</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Sessions</div>
+            <div class="v">2<span style="font-size:15px;color:var(--ink3)"> / 8</span></div>
+            <div class="d">this week</div>
+          </div>
+          <div class="kpi">
+            <div class="l">Check-ins</div>
+            <div class="v">6</div>
+            <div class="d down"><i data-lucide="trending-down"></i>−2 vs last week</div>
+          </div>
+        </div>
+
+        <!-- NEXT UP — the whole week, never empty -->
+        <div class="p">
+          <div class="p-h">
+            <div><h2>Next up</h2><div class="sub">Everything scheduled, this week</div></div>
+            <button class="more">Open calendar<i data-lucide="arrow-right"></i></button>
+          </div>
+          <div class="wk" style="margin-bottom:16px">
+            <div class="d today"><i>Mon</i><b>5</b><div class="dot off"></div></div>
+            <div class="d today"><i>Tue</i><b>6</b><div class="dot"></div></div>
+            <div class="d"><i>Wed</i><b>7</b><div class="dot"></div></div>
+            <div class="d"><i>Thu</i><b>8</b><div class="dot off"></div></div>
+            <div class="d"><i>Fri</i><b>9</b><div class="dot"></div></div>
+            <div class="d"><i>Sat</i><b>10</b><div class="dot off"></div></div>
+            <div class="d"><i>Sun</i><b>11</b><div class="dot off"></div></div>
+          </div>
+          <div class="row"><div class="tm">09:00</div><div class="bd"><b>Mobility Prep</b><span>Ali Rezaei · 1.25 h · form check due</span></div><span class="pill bad"><i></i>Missed</span><button class="btn btn-out btn-sm">Review</button></div>
+          <div class="row"><div class="tm">11:00</div><div class="bd"><b>Push Workout · Block 2</b><span>Sara Ahmadi · 1.25 h · Week 3 of 6</span></div><span class="pill idle"><i></i>Upcoming</span><button class="btn btn-pri btn-sm">Start</button></div>
+          <div class="row"><div class="tm">14:30</div><div class="bd"><b>Form check — squat</b><span>Neda Hosseini · video review</span></div><span class="pill idle"><i></i>Upcoming</span><button class="btn btn-out btn-sm">Review</button></div>
+        </div>
+
+        <!-- WEEK AT A GLANCE — replaces the empty Recent Activity panel -->
+        <div class="grid2" style="margin-top:var(--panel-gap)">
+          <div class="p">
+            <div class="p-h"><div><h2>Week at a glance</h2><div class="sub">Sessions completed per day</div></div></div>
+            <svg class="spark" viewBox="0 0 320 74" preserveAspectRatio="none" aria-hidden="true">
+              <g fill="var(--viz-grid)">
+                <rect x="0" y="18" width="320" height="1"/><rect x="0" y="38" width="320" height="1"/><rect x="0" y="58" width="320" height="1"/>
+              </g>
+              <g fill="var(--viz-accent)">
+                <rect x="6"   y="34" width="34" height="32" rx="5"/>
+                <rect x="52"  y="20" width="34" height="46" rx="5" opacity=".75"/>
+                <rect x="98"  y="46" width="34" height="20" rx="5" opacity=".5"/>
+                <rect x="144" y="12" width="34" height="54" rx="5"/>
+                <rect x="190" y="40" width="34" height="26" rx="5" opacity=".5"/>
+                <rect x="236" y="52" width="34" height="14" rx="5" opacity=".3"/>
+                <rect x="282" y="60" width="34" height="6"  rx="3" opacity=".2"/>
+              </g>
+            </svg>
+            <div class="legend">
+              <span><i style="background:var(--accent)"></i>Completed</span>
+              <span><i style="background:var(--st-idle);opacity:.5"></i>Rest / none</span>
+            </div>
+          </div>
+
+          <div class="p">
+            <div class="p-h"><div><h2>Needs attention</h2><div class="sub">Sorted by how urgent</div></div></div>
+            <div class="row"><div class="av" style="width:26px;height:26px;border-radius:8px;background:var(--st-bad-bg);color:var(--st-bad);display:grid;place-items:center;font:700 10px/1 var(--font-mono)">AR</div><div class="bd"><b>Ali Rezaei</b><span>Attendance 40% · 1 of last 5 sessions</span></div><span class="pill bad"><i></i>40%</span></div>
+            <div class="row"><div class="av" style="width:26px;height:26px;border-radius:8px;background:var(--st-warn-bg);color:var(--st-warn);display:grid;place-items:center;font:700 10px/1 var(--font-mono)">MK</div><div class="bd"><b>Mohammad Karimi</b><span>Attendance 60% · missed 2 this week</span></div><span class="pill warn"><i></i>60%</span></div>
+            <div class="row"><div class="av" style="width:26px;height:26px;border-radius:8px;background:var(--st-ok-bg);color:var(--st-ok);display:grid;place-items:center;font:700 10px/1 var(--font-mono)">SA</div><div class="bd"><b>Sara Ahmadi</b><span>Attendance 95% · on track</span></div><span class="pill ok"><i></i>95%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================= 02 · CLIENTS == -->
+      <section class="view" data-view="clients">
+        <div class="page-head">
+          <div><div class="k">8 total · 7 active</div><h1>Clients</h1></div>
+          <div class="acts"><button class="btn btn-out btn-sm"><i data-lucide="upload"></i>Import</button>
+            <button class="btn btn-pri btn-sm"><i data-lucide="user-plus"></i>Add client</button></div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>All clients</h2><div class="sub">Sorted by who needs you first</div></div>
+            <button class="more">Filter<i data-lucide="sliders-horizontal"></i></button></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Client</th><th>Goal</th><th>Program</th><th>Adherence</th><th>Last seen</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-bad-bg);color:var(--st-bad)">AR</span>Ali Rezaei</div></td>
+                    <td class="mut">Muscle Gain</td><td class="num">Hypertrophy · W6</td>
+                    <td><span class="pill bad"><i></i>40%</span></td><td class="mut">4 days ago</td>
+                    <td><span class="pill bad"><i></i>Action needed</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-warn-bg);color:var(--st-warn)">MK</span>Mohammad Karimi</div></td>
+                    <td class="mut">Strength</td><td class="num">Strength 5×5 · W8</td>
+                    <td><span class="pill warn"><i></i>60%</span></td><td class="mut">Yesterday</td>
+                    <td><span class="pill warn"><i></i>At risk</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-ok-bg);color:var(--st-ok)">SA</span>Sara Ahmadi</div></td>
+                    <td class="mut">Fat Loss</td><td class="num">Cutting · W3</td>
+                    <td><span class="pill ok"><i></i>95%</span></td><td class="mut">Today</td>
+                    <td><span class="pill ok"><i></i>On track</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-idle-bg);color:var(--st-idle)">NH</span>Neda Hosseini</div></td>
+                    <td class="mut">Muscle Gain</td><td class="num">Hypertrophy · W2</td>
+                    <td><span class="pill idle"><i></i>—</span></td><td class="mut">Not yet</td>
+                    <td><span class="pill warn"><i></i>Intake pending</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-ok-bg);color:var(--st-ok)">RA</span>Reza Ahmadi</div></td>
+                    <td class="mut">Recomp</td><td class="num">Push / Pull · W4</td>
+                    <td><span class="pill ok"><i></i>88%</span></td><td class="mut">Today</td>
+                    <td><span class="pill ok"><i></i>On track</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+                <tr><td><div class="nm"><span class="av" style="background:var(--st-ok-bg);color:var(--st-ok)">AM</span>Amir Mahdi</div></td>
+                    <td class="mut">Mobility</td><td class="num">Restore · W1</td>
+                    <td><span class="pill ok"><i></i>100%</span></td><td class="mut">Yesterday</td>
+                    <td><span class="pill ok"><i></i>On track</span></td>
+                    <td style="text-align:right"><button class="btn btn-out btn-sm">Open</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================== 03 · WORKOUTS === -->
+      <section class="view" data-view="builder">
+        <div class="page-head">
+          <div><div class="k">6 templates · 3 this week</div><h1>Workouts</h1></div>
+          <div class="acts"><button class="btn btn-out btn-sm"><i data-lucide="copy"></i>Duplicate</button>
+            <button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>Create workout</button></div>
+        </div>
+
+        <div class="p hero">
+          <div class="p-h">
+            <div><h2>Push A — Block 2</h2><div class="sub">Hypertrophy · Week 3 of 6 · assigned to 3 clients</div></div>
+            <div class="n">6</div>
+          </div>
+          <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+            <div class="kpi" style="animation:none"><div class="l">Volume</div><div class="v" style="font-size:22px">4,320<span style="font-size:13px;color:var(--ink3)"> kg</span></div></div>
+            <div class="kpi" style="animation:none"><div class="l">Avg RPE</div><div class="v" style="font-size:22px">7.5</div></div>
+            <div class="kpi" style="animation:none"><div class="l">Duration</div><div class="v" style="font-size:22px">60<span style="font-size:13px;color:var(--ink3)"> min</span></div></div>
+          </div>
+          <div class="row" style="margin-top:14px"><div class="tm">01</div><div class="bd"><b>Barbell Bench Press</b><span>4 × 8 · 80 kg · rest 120s</span></div><span class="pill idle"><i></i>Compound</span></div>
+          <div class="row"><div class="tm">02</div><div class="bd"><b>Incline Dumbbell Press</b><span>3 × 10 · 28 kg · rest 90s</span></div><span class="pill idle"><i></i>Compound</span></div>
+          <div class="row"><div class="tm">03</div><div class="bd"><b>Cable Fly</b><span>3 × 15 · 18 kg · rest 60s</span></div><span class="pill idle"><i></i>Isolation</span></div>
+        </div>
+
+        <div class="grid3" style="margin-top:var(--panel-gap)">
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Pull A</b><span>4 exercises · 55 min</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Leg A</b><span>5 exercises · 70 min</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Upper B</b><span>6 exercises · 65 min</span></div>
+        </div>
+      </section>
+
+      <!-- =============================================== 04 · CALENDAR === -->
+      <section class="view" data-view="calendar">
+        <div class="page-head">
+          <div><div class="k">Week 41 · 8 sessions</div><h1>Calendar</h1></div>
+          <div class="acts"><button class="btn btn-out btn-sm"><i data-lucide="chevron-left"></i></button>
+            <button class="btn btn-out btn-sm">Today</button>
+            <button class="btn btn-out btn-sm"><i data-lucide="chevron-right"></i></button>
+            <button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>Add session</button></div>
+        </div>
+
+        <div class="p">
+          <div class="p-h"><div><h2>October 2026</h2><div class="sub">Drag a session to reschedule it</div></div></div>
+          <div class="wk" style="gap:8px">
+            <div class="d"><i>Mon</i><b>5</b><div class="dot off"></div></div>
+            <div class="d today"><i>Tue</i><b>6</b><div class="dot"></div></div>
+            <div class="d"><i>Wed</i><b>7</b><div class="dot"></div></div>
+            <div class="d"><i>Thu</i><b>8</b><div class="dot off"></div></div>
+            <div class="d"><i>Fri</i><b>9</b><div class="dot"></div></div>
+            <div class="d"><i>Sat</i><b>10</b><div class="dot off"></div></div>
+            <div class="d"><i>Sun</i><b>11</b><div class="dot off"></div></div>
+          </div>
+        </div>
+
+        <div class="grid2" style="margin-top:var(--panel-gap)">
+          <div class="p">
+            <div class="p-h"><div><h2>Tuesday, Oct 6</h2><div class="sub">Today</div></div><span class="pill idle"><i></i>2 sessions</span></div>
+            <div class="row"><div class="tm">09:00</div><div class="bd"><b>Mobility Prep</b><span>Ali Rezaei · 1.25 h</span></div><span class="pill bad"><i></i>Missed</span></div>
+            <div class="row"><div class="tm">11:00</div><div class="bd"><b>Push Workout</b><span>Sara Ahmadi · 1.25 h</span></div><span class="pill idle"><i></i>Upcoming</span></div>
+          </div>
+          <div class="p">
+            <div class="p-h"><div><h2>Rest of the week</h2><div class="sub">Next 6 days</div></div></div>
+            <div class="row"><div class="tm">Wed</div><div class="bd"><b>Push Workout</b><span>Sara Ahmadi · 11:00</span></div><span class="pill idle"><i></i>Upcoming</span></div>
+            <div class="row"><div class="tm">Fri</div><div class="bd"><b>Form check — squat</b><span>Neda Hosseini · 14:30</span></div><span class="pill idle"><i></i>Upcoming</span></div>
+            <div class="row"><div class="tm">Sat</div><div class="bd"><b>Pull Workout</b><span>Ali Rezaei · 10:00</span></div><span class="pill idle"><i></i>Upcoming</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================== 05 · PROGRESS ==== -->
+      <section class="view" data-view="progress">
+        <div class="page-head">
+          <div><div class="k">Across 8 clients</div><h1>Progress</h1></div>
+          <div class="acts"><button class="btn btn-out btn-sm"><i data-lucide="download"></i>Export</button></div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi lead"><div class="l">Avg adherence</div><div class="v">68%</div>
+            <div class="d up"><i data-lucide="trending-up"></i>+9% this week</div></div>
+          <div class="kpi"><div class="l">Sessions done</div><div class="v">24</div><div class="d">of 32 scheduled</div></div>
+          <div class="kpi"><div class="l">Check-ins</div><div class="v">6</div><div class="d down"><i data-lucide="trending-down"></i>−2</div></div>
+        </div>
+
+        <div class="p" style="margin-top:var(--panel-gap)">
+          <div class="p-h"><div><h2>Adherence trend</h2><div class="sub">Last 7 weeks · all clients</div></div></div>
+          <svg class="spark" viewBox="0 0 320 74" preserveAspectRatio="none" aria-hidden="true">
+            <g fill="var(--viz-grid)"><rect x="0" y="18" width="320" height="1"/><rect x="0" y="38" width="320" height="1"/><rect x="0" y="58" width="320" height="1"/></g>
+            <polyline fill="none" stroke="var(--viz-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="8,54 60,46 112,50 164,34 216,38 268,24 312,16"/>
+            <g fill="var(--viz-accent)">
+              <circle cx="8" cy="54" r="3"/><circle cx="60" cy="46" r="3"/><circle cx="112" cy="50" r="3"/>
+              <circle cx="164" cy="34" r="3"/><circle cx="216" cy="38" r="3"/><circle cx="268" cy="24" r="3"/><circle cx="312" cy="16" r="3.5"/>
+            </g>
+          </svg>
+          <div class="legend"><span><i style="background:var(--accent)"></i>Adherence %</span></div>
+        </div>
+
+        <div class="p">
+          <div class="p-h"><div><h2>By client</h2></div></div>
+          <div class="row"><div class="bd"><b>Sara Ahmadi</b><span>12 of 13 sessions · 4 check-ins</span></div><div style="width:180px"><div class="bar"><i style="width:95%"></i></div></div><span class="pill ok"><i></i>95%</span></div>
+          <div class="row"><div class="bd"><b>Reza Ahmadi</b><span>11 of 13 sessions · 3 check-ins</span></div><div style="width:180px"><div class="bar"><i style="width:88%"></i></div></div><span class="pill ok"><i></i>88%</span></div>
+          <div class="row"><div class="bd"><b>Mohammad Karimi</b><span>8 of 13 sessions · 1 check-in</span></div><div style="width:180px"><div class="bar"><i style="width:60%"></i></div></div><span class="pill warn"><i></i>60%</span></div>
+          <div class="row"><div class="bd"><b>Ali Rezaei</b><span>5 of 13 sessions · 0 check-ins</span></div><div style="width:180px"><div class="bar"><i style="width:40%;background:var(--st-bad)"></i></div></div><span class="pill bad"><i></i>40%</span></div>
+        </div>
+      </section>
+
+      <!-- =========================================== 06 · MEASUREMENTS === -->
+      <section class="view" data-view="measure">
+        <div class="page-head">
+          <div><div class="k">Last check-in · Oct 2</div><h1>Measurements</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>Add measurement</button></div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi lead"><div class="l">Body weight · Ali</div><div class="v">89<span style="font-size:15px;color:var(--ink3)"> kg</span></div>
+            <div class="d up"><i data-lucide="trending-down"></i>−1.0 kg this month</div></div>
+          <div class="kpi"><div class="l">Body fat</div><div class="v">16.4%</div><div class="d">−0.8%</div></div>
+          <div class="kpi"><div class="l">Chest</div><div class="v">101<span style="font-size:15px;color:var(--ink3)"> cm</span></div><div class="d">+1.0 cm</div></div>
+        </div>
+
+        <div class="p" style="margin-top:var(--panel-gap)">
+          <div class="p-h"><div><h2>Body weight</h2><div class="sub">Ali Rezaei · last 8 entries</div></div></div>
+          <svg class="spark" viewBox="0 0 320 74" preserveAspectRatio="none" aria-hidden="true">
+            <g fill="var(--viz-grid)"><rect x="0" y="18" width="320" height="1"/><rect x="0" y="38" width="320" height="1"/><rect x="0" y="58" width="320" height="1"/></g>
+            <polyline fill="none" stroke="var(--viz-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="8,18 52,22 96,20 140,30 184,34 228,42 272,46 312,52"/>
+          </svg>
+        </div>
+
+        <div class="p">
+          <div class="p-h"><div><h2>Latest entries</h2></div></div>
+          <div style="overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Date</th><th>Weight</th><th>Body fat</th><th>Chest</th><th>Waist</th><th>Hips</th><th>Arm</th></tr></thead>
+              <tbody>
+                <tr><td class="num">Oct 2</td><td class="num">89.0 kg</td><td class="num">16.4%</td><td class="num">101 cm</td><td class="num">84 cm</td><td class="num">100 cm</td><td class="num">36 cm</td></tr>
+                <tr><td class="num">Sep 18</td><td class="num">90.0 kg</td><td class="num">17.2%</td><td class="num">100 cm</td><td class="num">85 cm</td><td class="num">100 cm</td><td class="num">36 cm</td></tr>
+                <tr><td class="num">Sep 4</td><td class="num">90.6 kg</td><td class="num">17.6%</td><td class="num">99 cm</td><td class="num">86 cm</td><td class="num">101 cm</td><td class="num">35 cm</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== 07 · NUTRITION ==== -->
+      <section class="view" data-view="nutrition">
+        <div class="page-head">
+          <div><div class="k">Plans · 6 assigned</div><h1>Nutrition</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>New plan</button></div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi lead"><div class="l">Logging compliance</div><div class="v">74%</div>
+            <div class="d up"><i data-lucide="trending-up"></i>+6% this week</div></div>
+          <div class="kpi"><div class="l">Active plans</div><div class="v">6</div><div class="d">of 8 clients</div></div>
+          <div class="kpi"><div class="l">Flags</div><div class="v">2</div><div class="d down"><i data-lucide="alert-triangle"></i>protein below target</div></div>
+        </div>
+
+        <div class="p" style="margin-top:var(--panel-gap)">
+          <div class="p-h"><div><h2>Per client</h2><div class="sub">Last 7 days of logging</div></div></div>
+          <div class="row"><div class="bd"><b>Sara Ahmadi</b><span>Cutting · 1,650 kcal · 140g protein</span></div>
+            <div style="width:180px"><div class="bar"><i style="width:96%"></i></div></div><span class="pill ok"><i></i>On track</span></div>
+          <div class="row"><div class="bd"><b>Ali Rezaei</b><span>Muscle Gain · 2,850 kcal · 180g protein</span></div>
+            <div style="width:180px"><div class="bar"><i style="width:72%"></i></div></div><span class="pill warn"><i></i>Under protein</span></div>
+          <div class="row"><div class="bd"><b>Mohammad Karimi</b><span>Strength · 3,100 kcal · 200g protein</span></div>
+            <div style="width:180px"><div class="bar"><i style="width:38%;background:var(--st-bad)"></i></div></div><span class="pill bad"><i></i>Not logging</span></div>
+          <div class="row"><div class="bd"><b>Neda Hosseini</b><span>No plan yet</span></div>
+            <div style="width:180px"><div class="bar"><i style="width:0%"></i></div></div><span class="pill idle"><i></i>Not assigned</span></div>
+        </div>
+      </section>
+
+      <!-- ============================================ 08 · CHALLENGES ==== -->
+      <section class="view" data-view="challenges">
+        <div class="page-head">
+          <div><div class="k">2 active · 1 finished</div><h1>Challenges</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>New challenge</button></div>
+        </div>
+
+        <div class="grid2">
+          <div class="p hero">
+            <div class="p-h">
+              <div><h2>September Streak</h2><div class="sub">Keep your day streak alive all month</div></div>
+              <div class="n">14</div>
+            </div>
+            <div class="row" style="padding-top:0">
+              <div class="bd"><b>7 of 14 days</b><span>Ends in 12 days · 8 participants</span></div>
+              <span class="pill warn"><i></i>50%</span>
+            </div>
+            <div class="bar" style="margin-top:12px"><i style="width:50%"></i></div>
+            <div class="wk" style="margin-top:16px">
+              <div class="d today"><i>Mo</i><b>✓</b></div><div class="d today"><i>Tu</i><b>✓</b></div>
+              <div class="d today"><i>We</i><b>✓</b></div><div class="d"><i>Th</i><b>✓</b></div>
+              <div class="d"><i>Fr</i><b>—</b></div><div class="d"><i>Sa</i><b>—</b></div>
+              <div class="d"><i>Su</i><b>—</b></div>
+            </div>
+          </div>
+
+          <div class="p">
+            <div class="p-h"><div><h2>Autumn Shred</h2><div class="sub">12 workouts in 4 weeks</div></div>
+              <span class="pill idle"><i></i>Target</span></div>
+            <div class="row" style="padding-top:0">
+              <div class="bd"><b>4 of 12 workouts</b><span>Ends in 18 days · 3 participants</span></div>
+              <span class="pill warn"><i></i>33%</span>
+            </div>
+            <div class="bar" style="margin-top:12px"><i style="width:33%"></i></div>
+            <div class="row" style="margin-top:14px"><div class="bd"><b>Sara Ahmadi</b><span>3 / 12</span></div><div style="width:110px"><div class="bar sm"><i style="width:25%"></i></div></div></div>
+            <div class="row"><div class="bd"><b>Ali Rezaei</b><span>1 / 12</span></div><div style="width:110px"><div class="bar sm"><i style="width:8%;background:var(--st-bad)"></i></div></div></div>
+          </div>
+        </div>
+
+        <div class="p" style="margin-top:var(--panel-gap)">
+          <div class="p-h"><div><h2>Finished</h2><div class="sub">Kept for the record</div></div></div>
+          <div class="row"><div class="bd"><b>July Consistency</b><span>Ended Jul 31 · 6 participants</span></div><span class="pill ok"><i></i>Completed</span></div>
+        </div>
+      </section>
+
+      <!-- ============================================= 09 · TEMPLATES ==== -->
+      <section class="view" data-view="templates">
+        <div class="page-head">
+          <div><div class="k">6 templates</div><h1>Templates</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>New template</button></div>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Push A</b><span>6 exercises · 60 min · Hypertrophy</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Pull A</b><span>4 exercises · 55 min · Hypertrophy</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Leg A</b><span>5 exercises · 70 min · Strength</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Upper B</b><span>6 exercises · 65 min · Hypertrophy</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="activity"></i></div><b>Mobility Prep</b><span>4 exercises · 25 min · Recovery</span></div>
+          <div class="tile"><div class="ic"><i data-lucide="flame"></i></div><b>Conditioning 20</b><span>5 rounds · 20 min · Fat loss</span></div>
+        </div>
+      </section>
+
+      <!-- ======================================== 10 · EXERCISE LIBRARY === -->
+      <section class="view" data-view="library">
+        <div class="page-head">
+          <div><div class="k">142 exercises · 9 groups</div><h1>Exercise Library</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>Add exercise</button></div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>Chest</h2><div class="sub">18 exercises</div></div></div>
+          <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Bench Press</b><span>Compound · barbell</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Incline DB Press</b><span>Compound · dumbbell</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Cable Fly</b><span>Isolation · cable</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Chest Dip</b><span>Compound · bodyweight</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Machine Press</b><span>Compound · machine</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Pec Deck</b><span>Isolation · machine</span></div>
+          </div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>Back</h2><div class="sub">21 exercises</div></div></div>
+          <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Deadlift</b><span>Compound · barbell</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Pull-up</b><span>Compound · bodyweight</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Barbell Row</b><span>Compound · barbell</span></div>
+            <div class="tile"><div class="ic"><i data-lucide="dumbbell"></i></div><b>Lat Pulldown</b><span>Compound · cable</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================== 11 · NOTES === -->
+      <section class="view" data-view="notes">
+        <div class="page-head">
+          <div><div class="k">14 notes · 3 pinned</div><h1>Notes</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="plus"></i>New note</button></div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>Pinned</h2></div></div>
+          <div class="row"><div class="bd"><b>Ali Rezaei — knee</b><span>Box split squats OK at depth, stop before pain. Re-test in 2 weeks.</span></div><span class="pill bad"><i></i>Training</span></div>
+          <div class="row"><div class="bd"><b>Sara Ahmadi — sleep</b><span>Shift work, mornings are unreliable. Move sessions to 18:00.</span></div><span class="pill warn"><i></i>Schedule</span></div>
+          <div class="row"><div class="bd"><b>Mohammad Karimi — deload</b><span>Week 8 he complained twice about elbow. Deload after Block 2.</span></div><span class="pill warn"><i></i>Programming</span></div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>All notes</h2></div></div>
+          <div class="row"><div class="bd"><b>Neda Hosseini — intake</b><span>Waiting on health background before first session.</span></div><span class="pill idle"><i></i>Admin</span></div>
+          <div class="row"><div class="bd"><b>Amir Mahdi — mobility</b><span>Shoulder internal rotation improved 15° this block.</span></div><span class="pill ok"><i></i>Progress</span></div>
+        </div>
+      </section>
+
+      <!-- ================================================= 12 · MESSAGES == -->
+      <section class="view" data-view="messages">
+        <div class="page-head">
+          <div><div class="k">2 unread</div><h1>Messages</h1></div>
+          <div class="acts"><button class="btn btn-pri btn-sm"><i data-lucide="square-pen"></i>Compose</button></div>
+        </div>
+        <div class="p">
+          <div class="p-h"><div><h2>Inbox</h2><div class="sub">Newest first</div></div>
+            <button class="more">Mark all read<i data-lucide="check-check"></i></button></div>
+          <div class="msg unread">
+            <div class="av" style="background:var(--st-bad-bg);color:var(--st-bad)">AR</div>
+            <div class="bd"><div class="top"><b>Ali Rezaei</b><span>09:14</span></div>
+              <p>My knee feels better this week — can we try box split squats on Thursday?</p></div>
+          </div>
+          <div class="msg unread">
+            <div class="av" style="background:var(--st-warn-bg);color:var(--st-warn)">MK</div>
+            <div class="bd"><div class="top"><b>Mohammad Karimi</b><span>Yesterday</span></div>
+              <p>Elbow is nagging again on the overhead press. Any alternative?</p></div>
+          </div>
+          <div class="msg">
+            <div class="av" style="background:var(--st-ok-bg);color:var(--st-ok)">SA</div>
+            <div class="bd"><div class="top"><b>Sara Ahmadi</b><span>Yesterday</span></div>
+              <p>Hit all sets at RPE 8 today — the new rep scheme feels great.</p></div>
+          </div>
+          <div class="msg">
+            <div class="av" style="background:var(--st-idle-bg);color:var(--st-idle)">NH</div>
+            <div class="bd"><div class="top"><b>Neda Hosseini</b><span>Mon</span></div>
+              <p>Just submitted the intake form — let me know if anything is missing.</p></div>
+          </div>
+        </div>
+
+        <div class="p">
+          <div class="p-h"><div><h2>Quick reply</h2><div class="sub">To Ali Rezaei</div></div></div>
+          <div class="srch" style="max-width:none;height:auto;padding:12px;align-items:flex-start">
+            <i data-lucide="message-square" style="margin-top:2px"></i>
+            <span style="color:var(--ink3)">Type a message, attach a video, or send a plan…</span>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+            <button class="btn btn-out btn-sm"><i data-lucide="paperclip"></i>Attach</button>
+            <button class="btn btn-pri btn-sm"><i data-lucide="send"></i>Send</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================= 13 · SETTINGS == -->
+      <section class="view" data-view="settings">
+        <div class="page-head"><div><div class="k">Workspace</div><h1>Settings</h1></div></div>
+        <div class="p">
+          <div class="p-h"><div><h2>Profile</h2><div class="sub">How clients see you</div></div></div>
+          <div class="row"><div class="bd"><b>Display name</b><span>Coach Soroush</span></div><button class="btn btn-out btn-sm">Edit</button></div>
+          <div class="row"><div class="bd"><b>Language</b><span>English</span></div></div>
+          <div class="row"><div class="bd"><b>Units</b><span>Metric (kg · cm)</span></div><button class="btn btn-out btn-sm">Change</button></div>
+          <div class="row"><div class="bd"><b>Appearance</b><span>Dark</span></div><button class="btn btn-out btn-sm">Change</button></div>
+        </div>
+      </section>
+
+    </div><!-- /scroll -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+if (window.lucide) lucide.createIcons();
+
+/* ---- view switching: content swaps instantly, THEN animates -------------- */
+const scroller = document.getElementById('scroll');
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+  const id = b.dataset.go;
+  document.querySelectorAll('.it').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.dataset.view === id));
+  scroller.scrollTop = 0;
+  document.getElementById('side').classList.remove('open');
+  document.querySelectorAll('.view.on .p, .view.on .kpi').forEach(el => {
+    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  });
+}));
+
+/* ---- mobile drawer ------------------------------------------------------ */
+document.getElementById('burger').addEventListener('click', () =>
+  document.getElementById('side').classList.toggle('open'));
+
+/* ---- hero + KPI count-up: ONCE per view load (a tool you open 50× a day
+       must not re-perform for you) --------------------------------------- */
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el, to, dur){
+  if (RM){ el.textContent = to.toLocaleString(); return; }
+  const t0 = performance.now();
+  (function tick(now){
+    const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(to * e).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+const seen = new Set();
+function runCounts(view){
+  if (seen.has(view)) return;          // re-visits are instant
+  seen.add(view);
+  const root = document.querySelector('.view.on'); if (!root) return;
+  const hero = root.querySelector('.hero .n');
+  if (hero){ const n = parseInt(hero.textContent.replace(/\D/g,''), 10); if (!isNaN(n)) { hero.textContent = '0'; countUp(hero, n, 700); } }
+}
+runCounts('dash');
+document.querySelectorAll('[data-go]').forEach(b =>
+  b.addEventListener('click', () => requestAnimationFrame(() => runCounts(b.dataset.go))));
+</script>
+</body>
+</html>
