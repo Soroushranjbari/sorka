@@ -12100,6 +12100,10 @@ document.addEventListener('click',e=>{
     case 'qr-open':qrModal(el.dataset.name||'',el.dataset.code||'');break;
     case 'modal-x':closeModal();if(el.dataset.msg)toast(el.dataset.msg);break;
     case 'ovl-x':if(e.target===el)closeModal();break;
+    /* v18.120 — the bottom-sheet ✕ (Coach Toolbox + Stopwatch) had a data-act
+       with NO case, so clicking it did nothing and the sheet was only
+       dismissable via the backdrop. Same closeModal() the other two use. */
+    case 'sheet-x':closeModal();break;
     /* v18.36/37 — coach toolbox FAB (mobile): toggle orbital tools */
     case 'tbx-toggle':{const w=$('tbxWrap');if(w)w.classList.toggle('open');break}
     case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');stopwatchSheet();break}
