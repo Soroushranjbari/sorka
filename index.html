@@ -5499,7 +5499,13 @@ function vDash(){
   const roster=CLIENTS;
   const active=CLIENTS.filter(c=>c.status==='Active').length;
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
-  const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+  /* v18.119 — a past event the coach marked "miss" used to count in BOTH
+     "Completed" and "Missed", so one event rendered as "1 Completed · ✗ 1".
+     Completed now excludes misses, and Upcoming is counted on its own instead
+     of `today.length - doneT` (which swept misses into Upcoming as well).
+     Scoped to vDash: vDashCm has an identical line and is left untouched. */
+  const doneT=today.filter(e=>e.att!=='miss'&&e.start+e.dur<=NOW).length;
+  const upT=today.filter(e=>e.att!=='miss'&&e.start+e.dur>NOW).length;
   const missT=today.filter(e=>e.att==='miss').length;
   const perDayCnt=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).length);
   const perDayHrs=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).reduce((a,e)=>a+e.dur,0));
@@ -5518,9 +5524,13 @@ function vDash(){
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
-    ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users','accent'],
+    /* v18.119 — "Total Clients" and "Active Clients" showed the same 6 twice
+       (8 total, 6 active, 2 inactive). Replaced the first with Adherence, a
+       metric the dashboard did not surface at all and the one that actually
+       predicts churn. The roster count is still derivable from card 2. */
+    ['Adherence',pct(pctW),`${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)} ${t('Workouts Completed')}`,avStack,'target','accent'],
     ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check','green'],
-    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(today.length-doneT)} ${t('Upcoming')}${missT?` · ✗ ${nf(missT)}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
     ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple']];
   const attRow=it=>`<div class="tl-row">
     <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,13)}</span>
@@ -5546,7 +5556,7 @@ function vDash(){
        on the screen, which is what makes it read as the anchor. -->
   <div class="card" style="border-color:rgba(200,240,75,.32);box-shadow:0 18px 44px -22px rgba(200,240,75,.30);margin-bottom:14px">
     <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
-    ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
+    ${att.length?att.slice(0,3).map(attRow).join('')+(att.length>3?`<div class="tl-row" style="justify-content:center"><button class="btn btn-outline btn-sm" data-act="nav" data-view="clients">${t('View all →')}</button></div>`:'')
     :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
   </div>
   <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
@@ -5570,9 +5580,9 @@ function vDash(){
     </div>
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
-        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+        <div style="padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:6px">
         ${qa.map(([l,i])=>`
-          <button class="btn btn-ghost" style="justify-content:flex-start" data-act="qa-item" data-item="${l}">${ic('plus',15)} ${t(l)}</button>`).join('')}
+          <button class="btn btn-ghost" style="justify-content:flex-start;font-size:12.5px;padding:0 8px" data-act="qa-item" data-item="${l}">${ic('plus',14)} ${t(l)}</button>`).join('')}
         </div>
       </div>
       <div class="card" style="padding:18px"><div class="card-t">${ic('target',14)} ${t('Workout Completion')}</div>
@@ -5593,7 +5603,7 @@ function vDash(){
       <div class="card">
         <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="act-all">${t('View all →')}</a></div>
         <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ACTIVITY.slice(0,7).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
+          ${ACTIVITY.slice(0,4).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
         </div>
       </div>
     </div>
