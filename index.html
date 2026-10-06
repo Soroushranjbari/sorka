@@ -2354,7 +2354,7 @@ const FA={
 'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Cannot reach the server':'اتصال به سرور برقرار نشد','Check your internet connection and try again':'اتصال اینترنت را بررسی کن و دوباره امتحان کن','Try again':'دوباره امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
-'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
+'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Challenge complete':'چالش تمام شد','Progress logged':'پیشرفت ثبت شد','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
 'First Workout':'اولین تمرین','10 Workouts':'۱۰ تمرین','25 Workouts':'۲۵ تمرین','50 Workouts':'۵۰ تمرین','100 Workouts':'۱۰۰ تمرین',
 '3-Day Streak':'۳ روز پیاپی','7-Day Streak':'۷ روز پیاپی','14-Day Streak':'۱۴ روز پیاپی','30-Day Streak':'۳۰ روز پیاپی','100-Day Streak':'۱۰۰ روز پیاپی',
 '10 Check-ins':'۱۰ چک‌این','Form Master':'استاد فرم','5 Measurements':'۵ اندازه‌گیری','Fuel Plan':'برنامه تغذیه',
@@ -5658,7 +5658,7 @@ function vWorkspace(){
       <div style="flex:1;min-width:240px">
         <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
         <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
-          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))],['Points',`⭐ ${nf(c.pts||0)}`]].map(([k,v])=>`
+          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))]].map(([k,v])=>`
           <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
           ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
         </div>
@@ -7636,10 +7636,13 @@ function gamAward(c,kind){
   const doneCh=chalEvalClient(c);
   /* ptsToday for the momentum hero — reset whenever the local date rolls over */
   const _iso=isoToday(); if(c.ptsDate!==_iso){c.ptsDate=_iso;c.ptsDay=0;} c.ptsDay=(c.ptsDay||0)+((c.pts||0)-_pre);
-  const celeb=[...nb,...doneCh.map(ch=>({e:(ch.reward&&ch.reward.be)||ch.emoji||'🏆',n:(ch.reward&&ch.reward.bn)||ch.name}))];
-  if(celeb.length){
-    NOTIFS.unshift({t:`🏅 ${t(c.name)} — ${celeb.map(b=>b.e+' '+t(b.n)).join(' · ')}`,d:'Just now',un:true});
-    if(S.role==='client')badgeModal(celeb,GAM.PTS.badge*nb.length+doneCh.reduce((a,ch)=>a+((ch.reward&&ch.reward.pts)||50),0));
+  /* v18.113 — this was the loudest gamification surface in the app: a "🏅 name —
+     🎯 Form Master" notification plus the emoji/points modal on every badge.
+     Points and badges keep accruing in the engine; only a COMPLETED CHALLENGE
+     still announces itself, with no emoji and no points. */
+  if(doneCh.length){
+    NOTIFS.unshift({t:`${t(c.name)} — ${doneCh.map(ch=>t(ch.name)).join(' · ')}`,d:'Just now',un:true});
+    if(S.role==='client')badgeModal(doneCh.map(ch=>({n:(ch.reward&&ch.reward.bn)||ch.name})));
   }
   return {nb,doneCh};
 }
@@ -7657,49 +7660,23 @@ function gamRevoke(c,kind){
      already resets it on a date mismatch and a stale value is irrelevant. */
   if(c.ptsDate===isoToday())c.ptsDay=Math.max(0,(c.ptsDay||0)+(c.pts-before));
 }
-/* Badge celebration — shown on the client device right after a workout. */
-function badgeModal(list,pts){
+/* v18.113 — CHALLENGE completion only. Was the badge celebration: emoji at 52px,
+   "Badge unlocked!" and "⭐ +40 Points" / "Awesome! 🔥". Now a neutral training
+   confirmation — lucide trophy, no emoji, no points. Points/badges keep accruing
+   in the engine, invisibly. */
+function badgeModal(list){
   openModal(`
   <div class="modal-b" style="text-align:center;padding:30px 22px 22px">
-    <div style="font-size:52px;line-height:1">${list.map(b=>b.e).join(' ')}</div>
-    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Badge unlocked!')}</b>
+    <div style="color:var(--accent)">${ic('trophy',44)}</div>
+    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Challenge complete')}</b>
     <div class="muted" style="font-size:13px;margin-top:6px">${list.map(b=>esc(t(b.n))).join(' · ')}</div>
-    <div style="margin-top:12px"><span class="bdg bdg-lime" style="font-size:12px;padding:5px 14px">⭐ +${nf(pts)} ${t('Points')}</span></div>
   </div>
-  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Awesome!')} 🔥</button></div>`);
+  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Done')}</button></div>`);
 }
-/* Full achievements grid — earned badges colored + dated, locked ones dimmed. */
-function gamModal(){
-  const c=client(S.cid);
-  const has=id=>(c.badges||[]).some(x=>x&&x.id===id);
-  const at=id=>{const x=(c.badges||[]).find(y=>y&&y.id===id);return x&&x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—'};
-  openModal(`
-  <div class="modal-h"><h3>${ic('crown',16)} ${t('Achievements')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
-  <div class="modal-b">
-    <div class="row" style="gap:16px;margin-bottom:14px">
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Points')}</span><b style="font-size:22px">⭐ ${nf(c.pts||0)}</b></div>
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('day streak')}</span><b style="font-size:22px">🔥 ${nf(c.dayStreak||0)}</b></div>
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Badges')}</span><b style="font-size:22px">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</b></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px">
-      ${GAM.BADGES.map(b=>{const on=has(b.id);return `
-      <div class="ccard" style="padding:12px 8px;text-align:center;${on?'':'opacity:.45;filter:grayscale(1)'}">
-        <div style="font-size:26px">${b.e}</div>
-        <b style="font-size:10.5px;display:block;margin-top:5px">${t(b.n)}</b>
-        <div class="muted" style="font-size:9.5px;margin-top:2px">${on?esc(at(b.id)):'🔒'}</div>
-      </div>`}).join('')}
-      ${(c.badges||[]).filter(x=>x&&String(x.id).startsWith('chal-')).map(x=>{const ch=CHALLENGES.find(y=>String(y.id)===String(String(x.id).slice(5)));
-        if(!ch)return '';
-        return `<div class="ccard" style="padding:12px 8px;text-align:center;border-color:var(--acc-line)">
-        <div style="font-size:26px">${(ch.reward||{}).be||ch.emoji||'🏆'}</div>
-        <b style="font-size:10.5px;display:block;margin-top:5px">${esc(t((ch.reward||{}).bn||ch.name))}</b>
-        <div class="muted" style="font-size:9.5px;margin-top:2px">${esc(x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—')}</div>
-      </div>`}).join('')}
-    </div>
-    <div class="muted" style="font-size:11.5px;margin-top:12px">${t('Earn points: workout +10 · check-in +3 · form check +5 · each badge +20')}</div>
-  </div>
-  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
-}
+/* v18.113 — gamModal() (the Achievements grid: ⭐ Points, 🔥 streak, 14 emoji
+   badges, "Earn points: workout +10…") is gone together with its only trigger,
+   the Progress Achievements section. Challenges still report their own status in
+   the Challenges list; badges/points keep accruing in the engine, invisibly. */
 /* ================= v18.39 — CHALLENGE BUILDER + JOURNEY PATHS =================
    The coach designs challenges (Target / Streak / Habit) with a GRAPHICAL
    journey path: a serpentine trail of stages the client walks node by node.
@@ -7708,7 +7685,7 @@ function gamModal(){
    hitting 100% auto-awards the reward badge + points through the gamification
    engine. Everything rides the workspace payload. */
 const CHAL={
-  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',points:'Points',custom:'Manual log'},
+  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',custom:'Manual log'},
   EMOJIS:['🏆','🔥','💪','⚡','🌟','🥇','🎯','🚀','🏃','🥗','💎','👑'],
   parts(ch){const ps=ch.parts||['*'];return CLIENTS.filter(c=>c.status!=='Archived'&&(ps.includes('*')||ps.includes(c.name)))},
   val(ch,c){
@@ -7827,7 +7804,7 @@ function chalDetail(id){
       <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
       <span class="chip">${ic('calendar',11)} ${t('Start Date')}: ${fmtD(ch.start)}</span>
       ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
-      <span class="chip">${ic('gift',12)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)} ${t('Points')}</span>
+      <span class="chip">${ic('gift',12)} ${t('Reward')}</span>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-bottom:14px">
       ${chalPath(ch.stages,rows.length?CHAL.node(ch,rows[0].pct):0,{w:520})}
@@ -7894,7 +7871,7 @@ function renderChalEditor(){
     <div class="field"><label class="lbl">${t('Participants')}</label>
       <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*',ic('users',12)+' '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
     <div class="fgrid">
-      <div class="field"><label class="lbl">${t('Reward')} (${t('Points')})</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
+      <div class="field"><label class="lbl">${t('Reward')}</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
       <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
       <div class="field"><label class="lbl">${t('Badge name')}</label><input class="inp" id="ce-bn" value="${esc((d.reward||{}).bn||'')}" placeholder="${t('Challenge Champion')}"></div>
     </div>
@@ -9596,13 +9573,6 @@ function cProgress(){
       <div class="muted" style="font-size:11.5px;text-align:center;margin-top:7px">${t('No photos yet — add the first one')}</div>`}
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
     </div>`:''}
-    <div class="sec"><span class="sec-t">${ic('award',15)} ${t('Achievements')}</span><span class="sec-c mono">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</span></div>
-    <div class="cc tight">
-      <div class="badges">
-        ${GAM.BADGES.slice(0,8).map(b=>{const on=(c.badges||[]).some(x=>x&&x.id===b.id);
-        return `<div class="bg1 ${on?'':'lock'}" data-act="gam-open" style="cursor:pointer"><div class="em">${badgeIcon(b.e)?ic(badgeIcon(b.e),22):esc(b.e)}</div><b>${esc(t(b.s||b.n))}</b></div>`}).join('')}
-      </div>
-    </div>
   </div>`;
 }
 /* ================= v18.48 — STUDENT NUTRITION HUB =================
@@ -11830,7 +11800,7 @@ document.addEventListener('click',e=>{
       MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
       gamAward(c,'checkin'); // v18.38 — +3 pts, badge checks
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
-      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach');break}
     /* ===== v17.5 — competitor-parity actions ===== */
     case 'photo-add':pickPhoto('coach');break;
     case 'photo-add-client':pickPhoto('client');break;
@@ -11884,8 +11854,10 @@ document.addEventListener('click',e=>{
       else{try{navigator.clipboard.writeText(tp.body)}catch(e){}closeModal();toast(t('Copied ✓'))}break}
     case 'print-workout':printWorkout();break;
     case 'print-nutrition':printNutrition();break;
-    /* v18.38 — gamification + reminders + PDF export */
-    case 'gam-open':gamModal();break;
+    /* v18.38 — reminders + PDF export. v18.113: the `gam-open` case and its
+       Achievements modal are gone; the case is kept as a no-op so a stale
+       data-act in an old tab can never throw a ReferenceError. */
+    case 'gam-open':break;
     /* v18.39 — challenges */
     case 'chal-new':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(null);break}
     case 'chal-edit':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(el.dataset.id);break}
@@ -11967,8 +11939,8 @@ document.addEventListener('click',e=>{
     case 'chal-log':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const c=client(S.cid);if(!ch||!c)break;
       ch.prog=ch.prog||{};ch.prog[c.id]=(ch.prog[c.id]||0)+1;
       const dc=chalEvalClient(c);saveData();render();
-      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({e:(x.reward&&x.reward.be)||x.emoji||'🏆',n:(x.reward&&x.reward.bn)||x.name})),dc.reduce((a,x)=>a+((x.reward&&x.reward.pts)||50),0));
-      else toast('+1 '+t('Points'));break}
+      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({n:(x.reward&&x.reward.bn)||x.name})));
+      else toast(t('Progress logged'));break}
     /* v18.71 — Habits checklist: collapse / tick (number entry lives in
        habNum(), bound from the shared `change` listener via data-change). */
     /* Protect → jump the scroll container to the habits checklist (plain
@@ -12133,12 +12105,14 @@ document.addEventListener('click',e=>{
       /* v18.38 — gamification: consecutive-day streak, points, badges. */
       const __today=ymdOf(new Date()),__yst=ymdOf(new Date(Date.now()-864e5));
       if(cNow.lastDone!==__today){cNow.dayStreak=cNow.lastDone===__yst?(cNow.dayStreak||0)+1:1;cNow.lastDone=__today}
-      const __before=cNow.pts||0;
       gamAward(cNow,'workout');
       const cn=t(cNow.name);
       ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
       clearInterval(restIv);S.player=null;restClear();S.ptab='today';render();
-      toast(`💪 ${t('Workout completed')} · ⭐ +${nf((cNow.pts||0)-__before)} ${t('Points')} · 🔥 ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
+      /* v18.113 — was "💪 Workout completed · ⭐ +10 Points · 🔥 12 day streak".
+         Points are no longer surfaced anywhere; the toast reports the streak,
+         which is the number a trainee actually cares about. */
+      toast(`${t('Workout completed')} · ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
     case 'add-client':addClientModal();break;
     case 'save-client':{if(billGuard('client'))break;
       // Names are inserted into HTML all over the app and into quoted
@@ -12383,7 +12357,7 @@ document.addEventListener('click',e=>{
       gamAward(c,'checkin');
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
       closeModal();render();
-      toast(t('Check-in saved — your coach was notified')+' · +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      toast(t('Check-in saved — your coach was notified'));break}
     case 'meas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       closeModal();
       if(isNarrow()){S.mClient=c.id;if(S.mview!=='client')S.mview='client'}
