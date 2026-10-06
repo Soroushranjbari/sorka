@@ -2274,7 +2274,7 @@ const FA={
 'Day 1 — Push':'روز ۱ — پوش','Day 2 — Pull':'روز ۲ — پول','Day 3 — Legs':'روز ۳ — پا','Day 4 — Upper':'روز ۴ — بالاتنه','Day 5 — Lower':'روز ۵ — پایتنه','Day 1 — Squat':'روز ۱ — اسکوات','Day 2 — Bench':'روز ۲ — پرس سینه','Day 3 — Deadlift':'روز ۳ — ددلیفت',
 'Upper':'بالاتنه','Lower':'پایتنه','Conditioning':'آمادگی',
 'Template Name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','Template saved ✓':'قالب ذخیره شد ✓','Editing template':'ویرایش قالب','Update Template':'به‌روزرسانی قالب','This template has multiple days — pick one to load into the builder':'این قالب چند روز دارد — یکی را برای بارگذاری در سازنده انتخاب کن','Load':'بارگذاری','Current builder content will be saved into the template':'محتوای فعلی سازنده در قالب ذخیره می‌شود','This template has no exercises yet':'این قالب هنوز حرکتی ندارد','Add exercises first':'اول حرکت اضافه کن',
-'July 6 — 12, 2026':'۱۵ – ۲۱ تیر ۱۴۰۵','Month':'ماه','Day':'روز','Today':'امروز','💡 Drag events between days to reschedule':'💡 برای جابه‌جایی، رویدادها را بین روزها درگ کن',
+'July 6 — 12, 2026':'۱۵ – ۲۱ تیر ۱۴۰۵','Month':'ماه','Day':'روز','Today':'امروز','Drag events between days to reschedule':'برای جابه‌جایی، رویدادها را بین روزها درگ کن',
 'Session':'جلسه','Appointment':'قرار',
 'Mon 6':'دوشنبه ۱۵','Tue 7':'سه‌شنبه ۱۶','Wed 8':'چهارشنبه ۱۷','Thu 9':'پنجشنبه ۱۸','Fri 10':'جمعه ۱۹','Sat 11':'شنبه ۲۰','Sun 12':'یکشنبه ۲۱',
 'Mon':'دوشنبه','Tue':'سه‌شنبه','Wed':'چهارشنبه','Thu':'پنجشنبه','Fri':'جمعه','Sat':'شنبه','Sun':'یکشنبه',
@@ -4619,7 +4619,7 @@ function printWorkout(){
     return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td><td>${esc(t(b.note||''))}</td></tr>`}).join('');
   printDoc(name,`<h1>${esc(t(name))}</h1>
     <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
-    ${note?`<div class="meta">✎ ${esc(t(note))}</div>`:''}
+    ${note?`<div class="meta">${esc(t(note))}</div>`:''}
     <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`,c.name);
 }
 function printNutrition(){
@@ -5219,7 +5219,7 @@ function vUnlock(){
         </svg>
         ${avC(known.name,86,known.id-1)}
       </div>
-      <div class="un-hi">${t('Hello')} ${esc(first)} 👋</div>
+      <div class="un-hi">${t('Hello')} ${esc(first)}</div>
       <b class="un-name">${esc(t(known.name))}</b>
       ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
   }else if(st==='multi'){
@@ -5475,7 +5475,7 @@ function vClientsCm(){
         <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
         <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
           <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
-          ${c.streak?`<span class="cm-meta">🔥 ${esc(streakLbl(c))}</span>`:''}
+          ${c.streak?`<span class="cm-meta">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
           <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
         </div>
       </div>
@@ -5524,7 +5524,7 @@ function vDash(){
   </div>`;
   return `
   <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
-    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')} 👋</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
+    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
     <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
     <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
   </div></div>
@@ -5616,7 +5616,7 @@ function vClients(){
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(c.goal)}</span>
         ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
-        ${c.streak?`<span class="chip">🔥 ${esc(streakLbl(c))}</span>`:''}
+        ${c.streak?`<span class="chip">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
         <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
@@ -5631,7 +5631,7 @@ function vClients(){
     <tr data-act="open-client" data-cid="${c.id}">
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
       <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
-      <td class="hide-md">${c.streak||c.dayStreak?`🔥 ${esc(streakLbl(c))}`:'—'}</td>
+      <td class="hide-md">${c.streak||c.dayStreak?`${ic('flame',13)} ${esc(streakLbl(c))}`:'—'}</td>
       <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
@@ -5857,7 +5857,7 @@ function exBlock(b,i){
       <div class="mi" style="margin-top:9px"><span>${t('Coach cue')}</span><input type="text" value="${esc(t(b.note||''))}" data-bf="note" maxlength="140" placeholder="${t('e.g. Elbows ~45°, full ROM')}"></div>
       <div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap">
         <span class="chip">${b.rpe}</span><span class="chip">${b.rir}</span><span class="chip">${t('Tempo')} ${b.tempo}</span>
-        ${b.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(b.note))}</span>`:''}
+        ${b.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">${esc(t(b.note))}</span>`:''}
         ${b.vid?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">▶ ${t('Video')} ✓</span>`:''}
       </div>
     </div>
@@ -6279,7 +6279,7 @@ function vCalendar(){
     <button class="fchip ${S.calfType==='All'?'on':''}" data-act="calf-type" data-t="All">${t('All Types')}</button>
     ${['session','assess','meas','appt'].map(k=>`<button class="fchip ${S.calfType===k?'on':''}" data-act="calf-type" data-t="${k}">${t(EVLBL[k])}</button>`).join('')}
     <select class="sel" style="width:auto" data-change="calclient"><option value="All">${t('All Clients')}</option>${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${S.calfClient===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
-    <span class="sp"></span><span class="muted" style="font-size:12px">${t('💡 Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
+    <span class="sp"></span><span class="muted" style="font-size:12px">${t('Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
   </div>
   <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
     <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>
@@ -6727,9 +6727,9 @@ function nHealth(){
       </div>
     </div>
     <div class="row" style="gap:10px;flex-wrap:wrap;margin:4px 0 10px">
-      <span class="bdg bdg-green">🟢 ${t('On Track')} — ${nf(okN)}</span>
-      <span class="bdg bdg-amber">🟡 ${t('Needs Attention')} — ${nf(warnN)}</span>
-      <span class="bdg bdg-red">🔴 ${t('Action Required')} — ${nf(alertN)}</span>
+      <span class="bdg bdg-green">${t('On Track')} — ${nf(okN)}</span>
+      <span class="bdg bdg-amber">${t('Needs Attention')} — ${nf(warnN)}</span>
+      <span class="bdg bdg-red">${t('Action Required')} — ${nf(alertN)}</span>
     </div>
     ${attention.length?attention.map(r=>`
     <div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line2)">
@@ -6925,7 +6925,7 @@ function nMealCard(p,day,m,mi){
   const MC={Breakfast:['var(--amber-soft)','var(--amber)'],Lunch:['var(--green-soft)','var(--green)'],Dinner:['var(--blue-soft)','var(--blue)'],Snack:['var(--purple-soft)','var(--purple)']}[m.name]||['var(--accent-soft)','var(--accent-deep)'];
   return `<div class="card" style="padding:14px 16px;border-top:3px solid ${MC[1]}">
     <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">
-      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(m.note))}</span>`:''}</div>
+      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">${esc(t(m.note))}</span>`:''}</div>
       <div class="row" style="gap:2px">
         <button class="btn btn-ghost btn-icon" data-act="mealup" data-mi="${mi}">${ic('chevL',14)}</button>
         <button class="btn btn-ghost btn-icon" data-act="mealdn" data-mi="${mi}">${ic('chevR',14)}</button>
@@ -6970,7 +6970,7 @@ function nWeekly(){
     <button class="btn btn-outline btn-sm" data-act="wcopy">${ic('copy',14)} ${t('Copy Day')}</button>
     <button class="btn btn-outline btn-sm" data-act="wpaste" ${S.nclip?'':'disabled style="opacity:.5"'}>${ic('upload',14)} ${t('Paste Day')}</button>
     <button class="btn btn-outline btn-sm" data-act="wapply">${ic('stack',14)} ${t('Apply to Week')}</button>
-    <span class="muted" style="font-size:12px">💡 ${t('💡 Drag events between days to reschedule').replace('events','meals').replace('جلسات','وعده‌ها')}</span>
+    <span class="muted" style="font-size:12px">${t('Drag events between days to reschedule').replace('events','meals').replace('جلسات','وعده‌ها')}</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px">
     ${DAYS.map((d,di)=>{const day=p.days[di];const s=daySum(day.meals);
