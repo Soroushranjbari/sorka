@@ -1,0 +1,239 @@
+/* =============================================================================
+   COACH OS — COACH DESKTOP · THEME (step ② of the superdesign workflow)
+   File:  .superdesign/design_iterations/theme_2.css
+   Scope: the COACH workspace on desktop (sidebar + topbar + dashboard panels).
+          The client phone app is untouched — see theme_1.css.
+
+   DESIGN BRIEF
+   ------------
+   User: "شبیه به طراحی اپلیکیشن‌های مطرح … البته با حفظ ساختار خودمان"
+   (like the leading apps — but keep our own structure).
+
+   The codebase already names the targets (line ~4373):
+       Gap-closers vs Trainerize / Everfit / TrueCoach / Practice Better
+   Their shared design language, and what we are adopting:
+       1. ONE hero number per dashboard, everything else demoted
+       2. Colour is reserved for STATUS only — never decoration
+       3. In dark mode, cards are FLAT + hairline; only the hero and
+          overlays get elevation
+       4. A strict 8px spacing grid so panels predict each other
+       5. One primary action per panel, never two competing buttons
+
+   What we are NOT adopting (our identity, preserved):
+       · the lime #C8F04B accent (Trainerize=blue, Everfit=purple — ours is lime)
+       · the dark canvas #0F1114
+       · JetBrains Mono for every number (it already reads as "instrument")
+       · the sidebar + topbar architecture
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     1 · TYPE
+         Two families, three jobs.
+         Oxanium  → display ONLY: the hero number, section labels, KPI values.
+                    It is the same face the client app uses for the workout
+                    hero (v18.111), which is what ties the two halves of the
+                    product together.
+         Inter    → every piece of running text. This is what Trainerize,
+                    Everfit and TrueCoach all use; it is the neutral,
+                    information-dense choice and it must NOT be replaced by a
+                    personality face — a dashboard's job is to be read.
+         JetBrains→ every metric that wants to align in a column.
+     ------------------------------------------------------------------ */
+  --font-ui:       'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display:  'Oxanium', 'Inter', system-ui, sans-serif;
+  --font-mono:     'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Scale — a 4-step ramp with two "display" steps. Nothing in between:
+     intermediate sizes are what make a dashboard feel mushy. */
+  --t-hero:        800 40px/1 var(--font-display);   /* the ONE big number   */
+  --t-hero-unit:   700 15px/1 var(--font-display);   /* its unit / suffix    */
+  --t-kpi:         700 26px/1 var(--font-display);   /* the four KPI values  */
+  --t-h1:          700 21px/1.25 var(--font-display);
+  --t-h2:          700 15px/1.3 var(--font-ui);      /* panel titles         */
+  --t-body:        400 13.5px/1.5 var(--font-ui);
+  --t-body-sm:     400 12.5px/1.45 var(--font-ui);
+  --t-label:       700 10.5px/1 var(--font-mono);    /* uppercase, tracked   */
+  --t-num:         700 13px/1 var(--font-mono);
+  --t-num-lg:      700 17px/1 var(--font-mono);
+
+  /* Tracking rule (the same one the client hero uses): small ALL-CAPS opens
+     up, big display tightens. Getting this backwards is the classic reason a
+     "sporty" header ends up looking like a sale banner. */
+  --tr-label:      .14em;
+  --tr-display:    -.028em;
+  --tr-num:        -.01em;
+
+  /* ---------------------------------------------------------------------
+     2 · SPACING — strict 8px grid (4px only for optical nudges)
+     ------------------------------------------------------------------ */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 20px;  --s-6: 24px;  --s-7: 32px;  --s-8: 40px;
+
+  --panel-pad:    20px;   /* inner padding of every dashboard panel        */
+  --panel-gap:    20px;   /* gutter between panels — MUST equal --panel-pad
+                             so a panel's right edge lines up with the
+                             next column's text                          */
+  --row-h:        44px;   /* one table / list row                        */
+  --sidebar-w:    240px;
+  --topbar-h:     60px;
+
+  /* ---------------------------------------------------------------------
+     3 · COLOUR — three surfaces, one hairline, and STATUS-ONLY semantics
+     ------------------------------------------------------------------ */
+  --bg:           #0F1114;   /* canvas                                   */
+  --surface:      #171A1F;   /* a panel                                  */
+  --surface2:     #1D2127;   /* inset: a table header, a chip, an input   */
+  --surface3:     #22262D;   /* hover / selected                         */
+  --line:         #262A31;   /* THE hairline — 1px, never thicker        */
+  --line-strong:  #343A44;   /* only for focus and table separators      */
+
+  --ink:          #F5F6F8;
+  --ink2:         #B4B9C4;
+  --ink3:         #7E8492;   /* 4.6:1 on --surface — the AA floor        */
+
+  --accent:       #C8F04B;   /* OUR identity. Reserved for: the primary
+                                CTA, the active nav item, and the single
+                                hero number. Never a background wash.     */
+  --accent-ink:   #1A2205;   /* text ON lime — the only legible inverse   */
+  --accent-soft:  rgba(200, 240, 75, .12);
+  --accent-line:  rgba(200, 240, 75, .30);
+
+  /* STATUS ONLY. These three must never be used to make something look
+     nice — they are a promise about state. */
+  --st-ok:        #34D399;   --st-ok-bg:    rgba(52, 211, 153, .12);
+  --st-warn:      #FBBF24;   --st-warn-bg:  rgba(251, 191, 36, .12);
+  --st-bad:       #F87171;   --st-bad-bg:   rgba(248, 113, 113, .12);
+  --st-idle:      #7E8492;   --st-idle-bg:  rgba(126, 132, 146, .12);
+
+  /* ---------------------------------------------------------------------
+     4 · ELEVATION — deliberately nearly nothing
+         Dark-mode cards that all cast shadows read as floating confetti.
+         Flat + hairline is the Trainerize/Everfit convention; elevation is
+         spent on exactly three things: the hero panel, menus, modals.
+     ------------------------------------------------------------------ */
+  --r-xs: 8px;  --r-sm: 10px;  --r-md: 14px;  --r-lg: 18px;  --r-pill: 999px;
+
+  --sh-flat:      none;
+  --sh-raised:    0 1px 2px rgba(0, 0, 0, .45);
+  --sh-float:     0 14px 34px -14px rgba(0, 0, 0, .72),
+                  0 2px 6px rgba(0, 0, 0, .4);
+  --sh-hero:      0 22px 50px -26px rgba(200, 240, 75, .38),
+                  inset 0 1px 0 rgba(255, 255, 255, .05);
+  --ring:         0 0 0 3px rgba(200, 240, 75, .35);   /* focus ring      */
+
+  /* ---------------------------------------------------------------------
+     5 · COACH-SPECIFIC COMPONENT TOKENS
+     ------------------------------------------------------------------ */
+
+  /* Topbar — sticky, one hairline at the bottom, nothing else. */
+  --topbar-bg:    rgba(15, 17, 20, .88);
+  --topbar-blur:  blur(14px);
+
+  /* Sidebar — the active item is the ONLY place lime appears in the rail,
+     so the eye can always find "where am I". */
+  --nav-h:        36px;
+  --nav-gap:      4px;
+  --nav-group:    18px;   /* vertical space ABOVE a group label            */
+  --nav-active-bg:var(--accent-soft);
+  --nav-active-fg:var(--accent);
+  --nav-idle-fg:  var(--ink3);
+
+  /* Dashboard panels */
+  --panel-bg:     var(--surface);
+  --panel-border: 1px solid var(--line);
+  --panel-title:  var(--t-h2);
+
+  /* The hero panel ("Needs you") — the only elevated, lime-edged panel.
+     Its border is the accent at 30% so it separates without shouting. */
+  --hero-bg:      linear-gradient(135deg,
+                    rgba(200, 240, 75, .10) 0%,
+                    rgba(200, 240, 75, .03) 42%,
+                    rgba(15, 17, 20, 0)    100%);
+  --hero-border:  1px solid var(--accent-line);
+
+  /* KPI tiles — flat, hairline, and the value is the loudest thing in them */
+  --kpi-h:        96px;
+  --kpi-label:    var(--t-label);
+  --kpi-value:    var(--t-kpi);
+  --kpi-delta-up:   var(--st-ok);
+  --kpi-delta-down: var(--st-bad);
+
+  /* Tables / dense lists — leading apps win on row rhythm, not decoration */
+  --tbl-head-h:   38px;
+  --tbl-head-bg:  var(--surface2);
+  --tbl-row-h:    var(--row-h);
+  --tbl-row-hover:var(--surface3);
+  --tbl-sep:      1px solid var(--line);
+
+  /* Buttons — one primary per panel, everything else is a ghost/outline */
+  --btn-h:        36px;
+  --btn-h-sm:     30px;
+  --btn-radius:   10px;
+  --btn-primary-bg:   var(--accent);
+  --btn-primary-fg:   var(--accent-ink);
+  --btn-primary-sh:   0 8px 20px -10px rgba(200, 240, 75, .55);
+  --btn-ghost-bg:     transparent;
+  --btn-outline-fg:   var(--ink2);
+
+  /* Status pill — text + tint, no border. Colour carries the meaning so a
+     border would be a second, competing signal. */
+  --pill-h:       22px;
+  --pill-radius:  var(--r-pill);
+  --pill-size:    10.5px;
+
+  /* Sparklines / bars */
+  --viz-accent:   var(--accent);
+  --viz-grid:     rgba(255, 255, 255, .05);
+  --viz-track:    var(--surface3);
+
+  /* ---------------------------------------------------------------------
+     6 · MOTION — consumed by step ③
+         Dashed value = this is a WORK tool. Motion must never delay a
+         click, so everything is short, and only state-changes animate.
+     ------------------------------------------------------------------ */
+  --e-out:        cubic-bezier(.16, 1, .3, 1);
+  --e-spring:     cubic-bezier(.34, 1.4, .64, 1);
+  --d-fast:       120ms;
+  --d-base:       200ms;
+  --d-panel:      320ms;
+}
+
+/* -----------------------------------------------------------------------------
+   LIGHT THEME — the coach app has a theme toggle, so every NEW token needs a
+   light twin or the hero panel and status pills become unreadable on white.
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] {
+  --bg:           #F6F7F9;
+  --surface:      #FFFFFF;
+  --surface2:     #F1F3F6;
+  --surface3:     #E8EBF0;
+  --line:         #E3E6EB;
+  --line-strong:  #CDD2DA;
+
+  --ink:          #14171C;
+  --ink2:         #4A5160;
+  --ink3:         #6B7280;   /* 4.6:1 on white */
+
+  --accent:       #C8F04B;
+  --accent-deep:  #6E8F14;   /* lime at #8FB515 fails AA on white */
+  --accent-ink:   #1A2205;
+  --accent-soft:  rgba(200, 240, 75, .42);
+  --accent-line:  rgba(110, 143, 20, .38);
+
+  --st-ok:        #059669;   --st-ok-bg:    rgba(5, 150, 105, .10);
+  --st-warn:      #B45309;   --st-warn-bg:  rgba(180, 83, 9, .10);
+  --st-bad:       #DC2626;   --st-bad-bg:   rgba(220, 38, 38, .10);
+  --st-idle:      #6B7280;   --st-idle-bg:  rgba(107, 114, 128, .10);
+
+  --sh-raised:    0 1px 2px rgba(20, 23, 28, .06);
+  --sh-float:     0 14px 34px -14px rgba(20, 23, 28, .18), 0 2px 6px rgba(20, 23, 28, .06);
+  --sh-hero:      0 22px 50px -30px rgba(110, 143, 20, .45),
+                  inset 0 1px 0 rgba(255, 255, 255, .8);
+  --ring:         0 0 0 3px rgba(110, 143, 20, .32);
+
+  --topbar-bg:    rgba(255, 255, 255, .88);
+  --viz-grid:     rgba(20, 23, 28, .07);
+
+  --btn-primary-sh: 0 8px 18px -10px rgba(110, 143, 20, .7);
+}
