@@ -4989,7 +4989,6 @@ function habNum(el){
   const was=+hd[hh.id]||0,tgt=+(hh.target||1);
   hd[hh.id]=v;
   if(v>=tgt&&was<tgt)gamAward(hc,'habit');
-  else if(v<tgt&&was>=tgt)gamRevoke(hc,'habit');
   saveData();render();
   /* coach editing the SAME field from the habits modal → refresh it too. */
   if(S.role==='coach'&&document.getElementById('modal-root').firstChild)habCoachModal();
@@ -7573,93 +7572,30 @@ function rptAutoRun(){
     }
   }catch(e){}
 }
-/* ================= v18.38 — GAMIFICATION (day streak · points · badges) =================
-   c.streak (weeks) was demo-only and never updated by real activity. The real
-   engine lives on the client record: dayStreak (consecutive DAYS with a
-   completed workout), lastDone (local YYYY-MM-DD of the last completion),
-   pts (points) and badges [{id,at}]. All four ride the workspace payload —
-   cloudMerge merges them like the other client fields. */
-const GAM={
-  PTS:{workout:10,checkin:3,form:5,badge:20,habit:2},
-  BADGES:[
-    {id:'first',e:'🎯',n:'First Workout',s:'First',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
-    {id:'w10',e:'💪',n:'10 Workouts',s:'10 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
-    {id:'w25',e:'🏋️',n:'25 Workouts',s:'25 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
-    {id:'w50',e:'🏆',n:'50 Workouts',s:'50 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
-    {id:'w100',e:'👑',n:'100 Workouts',s:'100 WOs',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
-    {id:'s3',e:'🔥',n:'3-Day Streak',s:'3-day',t:c=>(c.dayStreak||0)>=3},
-    {id:'s7',e:'🔥',n:'7-Day Streak',s:'7-day',t:c=>(c.dayStreak||0)>=7},
-    {id:'s14',e:'⚡',n:'14-Day Streak',s:'14-day',t:c=>(c.dayStreak||0)>=14},
-    {id:'s30',e:'🌟',n:'30-Day Streak',t:c=>(c.dayStreak||0)>=30},
-    {id:'s100',e:'💎',n:'100-Day Streak',t:c=>(c.dayStreak||0)>=100},
-    {id:'chk10',e:'📋',n:'10 Check-ins',t:c=>MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length>=10},
-    {id:'form85',e:'🎯',n:'Form Master',t:c=>{const f=FORMS.filter(x=>x.client===c.name);return f.length>0&&f.reduce((a,x)=>a+(x.score||0),0)/f.length>=85}},
-    {id:'meas5',e:'📏',n:'5 Measurements',t:c=>((DB[c.id]||{}).measures||[]).length>=5},
-    {id:'nut',e:'🥗',n:'Fuel Plan',t:c=>!!nPlanOf(c.name)}
-  ],
-  earned:c=>GAM.BADGES.filter(b=>(c.badges||[]).some(x=>x&&x.id===b.id)),
-  /* First un-earned badge + progress toward it (drives the Today card bar). */
-  next(c){
-    const done=((DB[c.id]||{}).stats||{}).done||0;
-    const chk=MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length;
-    const meas=((DB[c.id]||{}).measures||[]).length;
-    const fs=FORMS.filter(x=>x.client===c.name);
-    const fmAvg=fs.length?Math.round(fs.reduce((a,x)=>a+(x.score||0),0)/fs.length):0;
-    const prog={first:[done,1],w10:[done,10],w25:[done,25],w50:[done,50],w100:[done,100],
-      s3:[c.dayStreak||0,3],s7:[c.dayStreak||0,7],s14:[c.dayStreak||0,14],s30:[c.dayStreak||0,30],s100:[c.dayStreak||0,100],
-      chk10:[chk,10],meas5:[meas,5],form85:[fmAvg,85],nut:[nPlanOf(c.name)?1:0,1]};
-    const b=GAM.BADGES.find(x=>!(c.badges||[]).some(y=>y&&y.id===x.id));
-    if(!b)return null;
-    const [v,mx]=prog[b.id]||[0,1];
-    return {b,pct:Math.min(100,Math.round(v/mx*100))};
-  }
-};
+/* ============ v18.114 — the POINTS / BADGE engine is GONE ============
+   v18.38 built `GAM` (PTS + 14 emoji badges + gamAward + gamRevoke) around
+   c.pts / c.badges. v18.113 removed every VISIBLE surface of it, so v18.114
+   removes the engine as well:
+     · gamAward no longer accrues points or evaluates badges — it is now purely
+       the action → CHALLENGE trigger (chalEvalClient), which is the only part       the rest of the app ever depended on.
+     · gamRevoke, GAM.earned, GAM.next, BADGE_ICONS are dead and deleted.
+   c.pts / c.badges / c.ptsDay still RIDE THE PAYLOAD untouched: cloudMerge
+   reads them (line ~3910), so stripping them would be a SYNC change, not a       cleanup. They simply stop changing. */
 /* Local YYYY-MM-DD — streaks are day-granular in the device's timezone. */
 const ymdOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-/* Award points for an action, evaluate every badge test AND every active
-   challenge. Returns {nb, doneCh}; the celebration modal + coach notification
-   are centralized here so callers stay one-liners. */
-function gamAward(c,kind){
+/* v18.114 — the action → CHALLENGE trigger. Points accrual and badge
+   evaluation were removed with the gamification engine; this function survives   because it is the ONLY main-path caller of chalEvalClient() — habit   threshold, habit tick, check-in ×2, form check and workout complete all   funnel through it. `kind` stays in the signature so those seven call sites   do not have to change. */
+function gamAward(c){
   if(!c)return {nb:[],doneCh:[]};
-  const _pre=c.pts||0;
-  c.pts=(c.pts||0)+(GAM.PTS[kind]||0);
-  const nb=[];
-  GAM.BADGES.forEach(b=>{
-    if((c.badges||[]).some(x=>x&&x.id===b.id))return;
-    let ok=false;try{ok=b.t(c)}catch(e){}
-    if(ok)nb.push(b);
-  });
-  if(nb.length){
-    c.badges=(c.badges||[]).concat(nb.map(b=>({id:b.id,at:Date.now()})));
-    c.pts+=nb.length*GAM.PTS.badge;
-  }
   const doneCh=chalEvalClient(c);
-  /* ptsToday for the momentum hero — reset whenever the local date rolls over */
-  const _iso=isoToday(); if(c.ptsDate!==_iso){c.ptsDate=_iso;c.ptsDay=0;} c.ptsDay=(c.ptsDay||0)+((c.pts||0)-_pre);
-  /* v18.113 — this was the loudest gamification surface in the app: a "🏅 name —
-     🎯 Form Master" notification plus the emoji/points modal on every badge.
-     Points and badges keep accruing in the engine; only a COMPLETED CHALLENGE
-     still announces itself, with no emoji and no points. */
+  /* v18.113 — only a COMPLETED CHALLENGE announces itself: no emoji, no points. */
   if(doneCh.length){
     NOTIFS.unshift({t:`${t(c.name)} — ${doneCh.map(ch=>t(ch.name)).join(' · ')}`,d:'Just now',un:true});
     if(S.role==='client')badgeModal(doneCh.map(ch=>({n:(ch.reward&&ch.reward.bn)||ch.name})));
   }
-  return {nb,doneCh};
+  return {nb:[],doneCh};
 }
-/* v18.84 — symmetric UNDO for gamAward. The three revoke paths (count habit drops
-   below target, habit untick, coach habit untick) only decremented `pts`, so the
-   momentum hero's "+pts today" on Today stayed INFLATED while the total fell —
-   the two counters drifted apart. Same shape as gamAward's tail. */
-function gamRevoke(c,kind){
-  if(!c)return;
-  const d=GAM.PTS[kind]||0;
-  if(!d)return;
-  const before=c.pts||0;
-  c.pts=Math.max(0,before-d);
-  /* Only touch ptsDay when it still represents TODAY — otherwise the hero
-     already resets it on a date mismatch and a stale value is irrelevant. */
-  if(c.ptsDate===isoToday())c.ptsDay=Math.max(0,(c.ptsDay||0)+(c.pts-before));
-}
+/* v18.114 — gamRevoke deleted with the points engine. Its three call sites   (habit count drops below target, habit untick, coach habit untick) now simply   do nothing on the way down, which matches gamAward no longer doing anything   on the way up. */
 /* v18.113 — CHALLENGE completion only. Was the badge celebration: emoji at 52px,
    "Badge unlocked!" and "⭐ +40 Points" / "Awesome! 🔥". Now a neutral training
    confirmation — lucide trophy, no emoji, no points. Points/badges keep accruing
@@ -9489,12 +9425,8 @@ function monthStrip(){
     <div style="display:flex;gap:5px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
   </div>`;
 }
-/* v18.81 — achievement badge emoji → lucide, PHONE ONLY. GAM.BADGES is shared with
-   the coach platform, so we map at the render site instead of mutating the data —
-   the two platforms stay independent (mockup's hydration MAP mirrored here). */
-const BADGE_ICONS={'🌱':'sprout','💪':'dumbbell','🏋':'dumbbell','🏆':'trophy','👑':'crown','🔥':'flame','⚡':'zap','🥗':'salad','📸':'camera','🎯':'target','💧':'droplet','✅':'check-circle'};
-/* Strip U+FE0F (emoji presentation selector) first — '🏋️' ≠ '🏋'. */
-const badgeIcon=e=>BADGE_ICONS[String(e||'').replace(/\uFE0F/g,'')]||null;
+/* v18.114 — BADGE_ICONS + badgeIcon deleted: their only caller was the
+   Progress Achievements grid, removed in v18.113. */
 function cProgress(){
   const lm=lastM(S.cid);
   const c=client(S.cid);
@@ -10217,7 +10149,6 @@ function cProfile(){
   const lm=lastM(S.cid);
   const remain=packRemain(c.name);
   const pack=PACKS.find(p=>p&&p.client===c.name);
-  const earned=GAM.earned(c).length;
   const wos=(DB[c.id]&&DB[c.id].stats&&DB[c.id].stats.done)||0;
   /* v18.112 — sport metrics for the hero, replacing Points / Badges. These are
      numbers a trainee actually trains against (this week's split + program
@@ -11964,7 +11895,6 @@ document.addEventListener('click',e=>{
       if(hh.type==='count')hd[hh.id]=on?+(hh.target||1):0;
       else hd[hh.id]=on;
       if(on)gamAward(hc,'habit');
-      else gamRevoke(hc,'habit');
       saveData();render();break}
     /* v18.75 — plan 1د part 2: the COACH's habit builder. */
     case 'hab-open':{if(S.role!=='coach'){toast(t('Only the coach can manage habits'));break}S.habEdit=null;habCoachModal();break}
@@ -12015,7 +11945,7 @@ document.addEventListener('click',e=>{
       const hi2=isoToday(),hl2=hlogOf(hc2),hd2=hl2[hi2]||(hl2[hi2]={});
       const on2=!(hd2[hh2.id]===true||hd2[hh2.id]===1);
       hd2[hh2.id]=on2;
-      if(on2)gamAward(hc2,'habit');else gamRevoke(hc2,'habit');
+      if(on2)gamAward(hc2,'habit');
       saveData();render();habCoachModal();break}
     case 'rem-dismiss':{const m=MSGS.find(x=>String(x.id)===String(el.dataset.id));if(m){m.read=true;saveData()}render();break}
     case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
