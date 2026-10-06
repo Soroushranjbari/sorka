@@ -5530,11 +5530,25 @@ function vDash(){
      :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
+  <!-- v18.118 — header down to TWO lines. Was: eyebrow + "Welcome back, Coach"
+       + a subtitle that only restated the page name ("Here's what's happening…").
+       The coaching context (sport · style) is KEPT — it moved into the eyebrow,
+       so nothing is lost except the filler line. -->
   <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
-    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
+    <div><div class="hero-k">${fmtFullDate(TDATE)}${ONBOARD.done&&ONBOARD.sport?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div><h1>${t('Dashboard')}</h1></div>
     <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
     <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
   </div></div>
+  <!-- v18.118 — FOCAL PANEL. This was the 4th of six cards, behind two rows of
+       equal-weight content. It is now first because it is the only panel that
+       is ACTIONABLE: the coach's opening question is "who needs me?", not
+       "how many clients do I have". The lime hairline is the only elevation
+       on the screen, which is what makes it read as the anchor. -->
+  <div class="card" style="border-color:rgba(200,240,75,.32);box-shadow:0 18px 44px -22px rgba(200,240,75,.30);margin-bottom:14px">
+    <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
+    ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
+    :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
+  </div>
   <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
     <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
@@ -5567,12 +5581,10 @@ function vDash(){
       </div>
     </div>
   </div>
-  <div class="grid2" style="grid-template-columns:1.15fr .85fr">
-    <div class="card">
-      <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
-      ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
-      :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
-    </div>
+  <!-- v18.118 — the attention panel was hoisted above (see the comment up top),
+       so this row is now Smart Reports beside Recent Activity. It was a
+       1.15fr/.85fr grid whose left cell is gone; a plain stack is honest
+       about that instead of leaving a half-width hole. -->
     <div class="stack">
       <div class="card" style="padding:16px 18px;cursor:pointer" data-act="rpt-all">
         <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Smart Reports')}</span><span class="bdg bdg-lime">${t('Auto daily')}</span></div>
@@ -10589,15 +10601,24 @@ function cPlayer(){
 function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings}[S.view]()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
-  const nav=[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note'],['messages','Messages','mail']];
+  /* v18.118 — regrouped from 2 sections to 3. `Messages` moved OUT of "Manage"
+     (it is a daily communication tool, not a configuration screen) and the
+     three numbers screens got their own "Today" group, so the rail scans as:
+     who/what → today's numbers → configuration. */
+  const nav={
+    workspaces:[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['messages','Messages','mail']],
+    today:[['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils']],
+    manage:[['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
+  };
   const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
   return `<div class="shell">
   ${fbBtn('bottom:20px;inset-inline-start:20px;')}
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
     <nav class="nav">
-      <div class="nav-sec">${t('Workspace')}</div>${nav.slice(0,8).map(navIt).join('')}
-      <div class="nav-sec">${t('Manage')}</div>${nav.slice(8).map(navIt).join('')}
+      <div class="nav-sec">${t('Workspace')}</div>${nav.workspaces.map(navIt).join('')}
+      <div class="nav-sec">${t('Today')}</div>${nav.today.map(navIt).join('')}
+      <div class="nav-sec">${t('Manage')}</div>${nav.manage.map(navIt).join('')}
     </nav>
     <div class="side-foot">
       <div class="nav-it" data-act="sb">${ic('chevL',17)}<span class="txt">${t('Collapse')}</span></div>
