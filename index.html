@@ -3015,8 +3015,19 @@ const sparkBars=(arr,c='var(--accent-deep)')=>{const mx=Math.max(...arr,1);
 /* v18.11 — Strava-style gradient bars + native per-bar tooltips (day: value) */
 const gid='sg'+Math.random().toString(36).slice(2,7);
 return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"><title>${t(DAYS[i]||'')} · ${nf(v)}</title></rect>`}).join('')}</svg>`};
-const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
-const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
+/* v18.112 — an event that hasn't happened yet cannot have been attended. The
+   demo seed marks some upcoming sessions done/miss, which rendered "Attended"
+   on TOMORROW's row.
+   NOTE: evState() is deliberately DAY-BLIND — it only compares start+dur with
+   NOW, because every coach-side caller filters to one day first (byDay(d)).
+   attOK() therefore resolves the weekday itself: (day-TODAY+7)%7 is 0 today,
+   1 tomorrow, and negative for an earlier day this week. Without that, a
+   "Tomorrow 09:00" event evaluated as past whenever the clock was past 09:00. */
+const dayInWeek=d=>((d==null?NaN:d)-TODAY+7)%7;
+const attOK=e=>{if(!e)return false;const k=dayInWeek(e.day);
+  if(k>0)return false; if(k<0)return true; return evState(e).k!=='future';};
+const attBadge=e=>!attOK(e)?'':(e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'');
+const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name&&attOK(e));return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
 const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
 const fmtD=dstr=>fmtShortDate(pd(dstr));
 const daysSince=dstr=>Math.round((TDATE-pd(dstr))/864e5);
@@ -9240,10 +9251,20 @@ function cToday(){
       <div class="who" style="position:relative;z-index:1">${t('Your coach publishes your plan here')}</div>
       <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('list',15)} ${t('Week Split')}</button></div>
     </div>`}
-    <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
-    ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
+    <!-- v18.112 — Next up now LEADS with today's session and its real start time
+         (the mockup's "18:00 · Upper Body"), then the pending to-dos. -->
+    ${(()=>{const todaysEv=EVENTS.filter(e=>e.client===c.name&&e.day===TODAY).sort((a,b)=>a.start-b.start);
+      const nextEv=todaysEv.find(e=>evState(e).k!=='past')||todaysEv[0]||null;
+      const actN=(nextEv?1:0)+(remMsg?1:0)+(!c.intake?1:0);
       if(!actN)return '';
       return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Next up')}</span><span class="sec-c">${nf(actN)}</span></div>
+      ${nextEv?`<div class="cc tight">
+        <div class="row">
+          <span class="badge b-lime mono">${nf(fmtT(nextEv.start))}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(nextEv.label))}</b><div class="muted">${nf(nextEv.dur)} h · ${t(EVLBL[nextEv.type]||'Session')}</div></div>
+          ${attBadge(nextEv)||`<span class="bdg ${evState(nextEv).b}">${t(evState(nextEv).l)}</span>`}
+        </div>
+      </div>`:''}
       ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
         <div class="row">
           <span class="badge b-amber">${ic('clock',13)}</span>
@@ -10138,8 +10159,9 @@ function cSessions(){
   /* v18.106 — mockup 09 wants the flat `.badge` pill (fs10/900, text only), not
      the coach-side `.bdg` with its icon. `attBadge()` is shared by 10 other
      screens, so the conversion lives here rather than at the source. */
-  const attPill=s=>s.att==='done'?`<span class="badge b-lime">${t('Attended')}</span>`
-    :s.att==='miss'?`<span class="badge b-red">${t('Missed')}</span>`:'';
+  /* v18.112 — same future guard as attBadge(): "Tomorrow · Attended" was wrong. */
+  const attPill=s=>!attOK(s)?'':(s.att==='done'?`<span class="badge b-lime">${t('Attended')}</span>`
+    :s.att==='miss'?`<span class="badge b-red">${t('Missed')}</span>`:'');
   const tb=s=>attPill(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
   return `<div class="cbody">
     ${nav}
@@ -10227,6 +10249,12 @@ function cProfile(){
   const pack=PACKS.find(p=>p&&p.client===c.name);
   const earned=GAM.earned(c).length;
   const wos=(DB[c.id]&&DB[c.id].stats&&DB[c.id].stats.done)||0;
+  /* v18.112 — sport metrics for the hero, replacing Points / Badges. These are
+     numbers a trainee actually trains against (this week's split + program
+     week); Streak and Workouts were already honest. */
+  const pmF=progMeta(c);
+  const spFW=splitOf(c.id).map(s=>s&&s.t==='w'?splitW(c.id,s):null).filter(Boolean);
+  const wkTotal=spFW.length, wkDone=spFW.filter(w=>wDone(w)).length;
   const jcode=joinCodeOf(c)||''; /* clientCode() mints one on first use */
   const jlink=jcode?inviteLink(jcode):'';
   /* v18.105 — mockup 08 always renders a SINCE line (14px, part of the hero's
@@ -10245,9 +10273,9 @@ function cProfile(){
       <div class="since">${sinceTxt}</div>
       <div class="pstats">
         <div><b>${nf(c.dayStreak||0)}</b><span>${t('Streak')}</span></div>
-        <div><b>${nf(c.pts||0)}</b><span>${t('Points')}</span></div>
-        <div><b>${nf(earned)}/${nf(GAM.BADGES.length)}</b><span>${t('Badges')}</span></div>
         <div><b>${nf(wos)}</b><span>${t('Workouts')}</span></div>
+        <div><b>${nf(wkDone)}/${nf(wkTotal)}</b><span>${t('this week')}</span></div>
+        <div><b>${nf(pmF.wk)}/${nf(pmF.weeks)}</b><span>${t('Week')}</span></div>
       </div>
     </div>
     <div class="pf-hint"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
