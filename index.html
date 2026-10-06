@@ -35,6 +35,22 @@
   --row-h:#F7F7F3; --seg-bg:#E9E9E3; --seg-on:#FFFFFF; --kbd-bg:#EFEFEA; --cal-hd:#F9F9F5; --cal-alt:#F7F7F3;
   --sh-1:0 1px 2px rgba(18,21,27,.09),0 6px 18px -6px rgba(18,21,27,.16);
   --sh-2:0 12px 32px -8px rgba(18,21,27,.18);
+  /* v18.121 — theme_2 tokens that the coach desktop did NOT already have.
+     Deliberately NEW NAMES ONLY: nothing the other 21 screens depend on can
+     shift. `.phone` re-declares --font-display, so the client app keeps its
+     own value.
+       --font-display : Oxanium, loaded since v18.111 (shared with the client
+                        workout hero — this is what ties the two halves of the
+                        product together)
+       --panel-pad/-gap: both 20px on PURPOSE, so a panel's inner padding
+                        equals the gutter between panels and the next column's
+                        text lines up with the previous column's right edge
+       --t-label/-tr  : the tracked mono caps used for every field label */
+  --font-display:'Oxanium','Inter',system-ui,sans-serif;
+  --panel-pad:20px;
+  --panel-gap:20px;
+  --t-label:700 10.5px/1 'JetBrains Mono',monospace;
+  --tr-label:.14em;
   --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 }
 html{color-scheme:light}
@@ -398,10 +414,14 @@ html[dir="rtl"] .tbl tbody tr[data-act]:hover td:first-child{box-shadow:inset -3
 .fs{margin-bottom:20px}
 .fs-t{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);padding-bottom:8px;border-bottom:1px solid var(--line2);margin-bottom:14px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+/* v18.121 — theme_2: the KPI row now shares the dashboard's panel gutter
+   (14 → 20px) instead of a tighter, unrelated one. */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--panel-gap);margin-bottom:20px}
 .stat{padding:17px 19px;display:flex;flex-direction:column;gap:2px}
-.stat .k{font-size:12.5px;font-weight:600;color:var(--ink2)}
-.stat .v{font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+/* label → tracked mono caps (quiet, instrument-style) */
+.stat .k{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink3)}
+/* value → Oxanium so the dashboard's numbers are DISPLAY type, not body type */
+.stat .v{font-family:var(--font-display);font-size:30px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .delta{font-size:12px;font-weight:600}
 .delta.up{color:var(--green)}.delta.down{color:var(--red)}
 .grid2{display:grid;grid-template-columns:2fr 1fr;gap:14px;align-items:start}
