@@ -2146,7 +2146,10 @@ let lang='en';
 /* Falls back to the shop's locale key (coach-os-locale, see shop/README.md) so
    a buyer who browsed the shop in Persian gets the app in Persian on first
    boot; after that co-lang (the app's own choice) wins. */
-try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){}
+/* v18.116 — Persian removed for now ("فعلا"): never restore the locale from
+   storage. Keeping the read would let a stale co-lang='fa' reach the 60
+   `lang==='fa'` branches before the boot-time applyLang() pin runs. */
+lang='en';
 const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
@@ -2383,11 +2386,14 @@ const t=s=>lang==='fa'?(FA[s]??s):s;
 const tmus=m=>lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m;
 const nf=v=>{v=String(v);return lang==='fa'?v.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):v};
 const pct=n=>nf(n)+(lang==='fa'?'٪':'%');
+/* v18.116 — applyLang() is the single choke point: every language-changing
+   handler calls it, so pinning lang='en' here makes the FA dictionary, all 60   `lang==='fa'` branches and all 73 html[lang="fa"] rules unreachable no matter   what else runs. Fully reversible: delete this pin and the whole FA surface   comes back untouched — that is why the dictionary itself was NOT deleted. */
 function applyLang(){
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==='fa'?'rtl':'ltr';
-  document.title=lang==='fa'?'CoachMint — فضای کاری مربی و شاگرد':'CoachMint — Coach & Client Workspace';
-  try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang)}catch(e){}
+  lang='en';
+  document.documentElement.lang='en';
+  document.documentElement.dir='ltr';
+  document.title='CoachMint — Coach & Client Workspace';
+  try{localStorage.setItem('co-lang','en');localStorage.setItem('coach-os-locale','en')}catch(e){}
 }
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
@@ -4720,7 +4726,8 @@ function packCharge(ev,was){
     ev.packId=undefined;
   }
 }
-const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
+/* v18.116 — language switcher removed; kept as a no-op so its six call sites   render nothing instead of needing six separate edits. */
+const langBtn=()=>'';
 /* v18.12 — one-tap theme switch: shows the theme you'll GET (sun in dark mode,
    moon in light mode), like GitHub/Linear. System pref stays available in
    Settings → Appearance; this button flips Light↔Dark directly. */
@@ -5136,7 +5143,7 @@ function coachLogin(){return `
         <div class="divider"><span>${t('or')}</span></div>
         <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
         <div class="row" style="justify-content:center;margin-top:20px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${t('Create account')}</a></div>`}
-    <div class="row" style="justify-content:center;margin-top:20px">${langBtn('btn-outline btn-sm')}</div>
+    <div class="row" style="justify-content:center;margin-top:8px">${t('English')}</div>
   </form></div>
 </div>`}
 function clientPicker(){
@@ -6458,7 +6465,7 @@ function vSettings(){
     </div>
     <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
     <div class="fs-t" style="margin-top:18px">${t('Preferences')}</div>
-    <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
+    <div class="set-row"><div><span class="t">${t('Language')}</span></div><div class="muted" style="font-size:12.5px">${t('English')}</div></div>
     <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
       ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
     <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
@@ -10214,7 +10221,7 @@ function cProfile(){
     <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
     <div class="cc tight">
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
-        <div class="langseg"><button class="${lang==='fa'?'on':''}" data-act="lang-set" data-l="fa">FA</button><button class="${lang==='en'?'on':''}" data-act="lang-set" data-l="en">EN</button></div></div>
+        <div class="muted" style="font-size:12.5px">${t('English')}</div></div>
       <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
@@ -11171,7 +11178,7 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act,mw=el.closest('[data-mw]');
   switch(a){
-    case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
+    case 'lang':break; /* v18.116 — language switcher removed */
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed)
