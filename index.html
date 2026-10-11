@@ -23,12 +23,30 @@
      too subtle — the canvas is now clearly darker than the cards and the
      hairlines/shadow carry real weight, so the layout has depth un-dimmed. */
   --bg:#DDDDD0; --surface:#FFFFFF; --sidebar:#12151B;
-  --ink:#15181E; --ink2:#5C6270; --ink3:#9AA0AE;
+  --ink:#15181E; --ink2:#505666; --ink3:#626875;
+  /* v19.10 — AA on the surfaces they ACTUALLY sit on, not on white:
+       --ink2 on --line2 (chip) was 4.12, on --bg (.sub) 4.46
+       --ink3 on --seg-bg (.tbl th) was 3.97
+     Measured after: 5.09 / 5.48 / 4.61. */
+  /* --side3: the rail is #12151B in BOTH themes, so text on it needs its own
+     token. #9AA0AE reads 6.97:1 there. Sharing --ink3 would have made the   contrast fix (above) push the brand line from 6.97 down to 3.78. */
+  --side3:#9AA0AE;
   --line:#C8C8B6; --line2:#D5D5C6;
   --accent:#C8F04B; --accent-deep:#8FB51E; --accent-ink:#1A2205; --accent-soft:#F4FAE0;
+  /* v19.10 — ACCENT AS TEXT needs its own token. --accent is 1.31:1 on white   and --accent-deep is 2.39:1: both are fine as FILLS and ICONS, unusable
+     as glyphs. #547009 measures 5.61 on surface, 4.62 on --seg-bg. */
+  --accent-text:#547009;
+  /* v19.13 — the §12 key node's FILL must be theme-aware: it sits under
+     --accent-text, which is dark olive on light and bright lime on dark. Using   --accent-soft here (never redefined in dark) put lime on pale lime = 2.23. */
+  --accent-key:#F4FAE0;
   --acc-line:#CDE694; --acc-line2:#CFE49B; --acc-mid:#A6D437; --acc-mid2:#9CC53E; --acc-stat:#B4D95B; --acc-chip:#D8E9AF;
   --green:#16A34A; --green-soft:#E9F6EE; --red:#DC2626; --red-soft:#FDEDED;
   --amber:#C77414; --amber-soft:#FBF2E2; --blue:#2563EB; --blue-soft:#EAF1FE;
+  /* v19.10 — badge TEXT: the base hues measure 2.96 / 3.18 on their own soft
+     backgrounds. They stay unchanged as fills and icons; only .bdg-* text
+     switches to these (4.59 / 4.60). Dark inherits both, because dark never
+     redefines --green-soft/--amber-soft either. */
+  --green-ink:#15803D; --amber-ink:#A15C0F;
   --purple:#7C3AED; --purple-soft:#F2EDFD;
   --glass:rgba(221,221,208,.85); --glass2:rgba(221,221,208,.92);
   --ink-bg:#15181E; --btn-dark-bg:#15181E; --btn-dark-fg:#fff;
@@ -57,7 +75,11 @@ html{color-scheme:light}
 html[data-theme="dark"]{
   color-scheme:dark;
   --bg:#0F1114; --surface:#171A1F; --sidebar:#0B0D10;
-  --ink:#E9EAEE; --ink2:#A9AFBA; --ink3:#707786;
+  --ink:#E9EAEE; --ink2:#A9AFBA; --ink3:#878F9F;
+  /* v19.10 — #7E8695 measured 4.14 on --seg-bg and 4.46 on --row-h (both AA
+     failures). #878F9F gives 4.65 / 5.03 while staying 5.39 on --surface. */
+  --accent-text:#8FB51E;
+  --accent-key:rgba(200,240,75,.10);
   --line:#2E333B; --line2:#262B33;
   --glass:rgba(15,17,20,.85); --glass2:rgba(15,17,20,.92);
   --ink-bg:#0B0D10; --btn-dark-bg:#E9EAEE; --btn-dark-fg:#12151B;
@@ -77,6 +99,7 @@ html[data-tpl="coachmint"]{
   --acc-line:#9ED2B3; --acc-line2:#BCEBDA; --acc-mid:#00B86B; --acc-mid2:#00A862; --acc-stat:#5ED9A4; --acc-chip:#CDEFDF;
   --green:#008A4D; --green-soft:#E0F6EB; --red:#C62828; --red-soft:#FDEBEA;
   --amber:#B26A00; --amber-soft:#FBF1E0; --blue:#1565C0; --blue-soft:#EAF1FB;
+  --accent-text:#00704A; --green-ink:#007040; --amber-ink:#8A5200; --accent-key:#E0F6EB;
   --purple:#6A3AB2; --purple-soft:#F1EBFB;
   --glass:rgba(233,237,233,.85); --glass2:rgba(233,237,233,.92);
   --row-h:#F2F5F1; --seg-bg:#E3E8E2; --seg-on:#FFFFFF; --kbd-bg:#EEF1ED; --cal-hd:#F4F7F3; --cal-alt:#EFF2EE;
@@ -91,6 +114,7 @@ html[data-tpl="coachmint"][data-theme="dark"]{
   --acc-line:rgba(0,255,157,.42); --acc-line2:rgba(0,255,157,.28); --acc-mid:#00E38B; --acc-mid2:#00C97B; --acc-stat:#56FFA8; --acc-chip:rgba(0,255,157,.16);
   --green:#00E38B; --green-soft:rgba(0,255,157,.12); --red:#FFB4AB; --red-soft:rgba(255,180,171,.12);
   --amber:#FFB871; --amber-soft:rgba(255,184,113,.12); --blue:#8AB4F8; --blue-soft:rgba(138,180,248,.12);
+  --accent-text:#00E38B; --green-ink:#00E38B; --amber-ink:#FFB871; --accent-key:rgba(0,255,157,.12);
   --purple:#C9A7F5; --purple-soft:rgba(201,167,245,.12);
   --glass:rgba(12,14,16,.85); --glass2:rgba(12,14,16,.92);
   --ink-bg:#0C0E10; --btn-dark-bg:#E2E2E5; --btn-dark-fg:#121416;
@@ -319,7 +343,7 @@ h1,h2,h3{letter-spacing:-.02em}
    confident than the old 11.5px/600). Colour still carries the meaning, so
    there is still no border — a border would be a second, competing signal. */
 .bdg{display:inline-flex;align-items:center;justify-content:center;gap:5px;height:22px;padding:0 9px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.01em;white-space:nowrap}
-.bdg-green{background:var(--green-soft);color:var(--green)}.bdg-amber{background:var(--amber-soft);color:var(--amber)}
+.bdg-green{background:var(--green-soft);color:var(--green-ink)}.bdg-amber{background:var(--amber-soft);color:var(--amber-ink)}
 .bdg-red{background:var(--red-soft);color:var(--red)}.bdg-gray{background:var(--seg-bg);color:var(--ink2)}
 .bdg-blue{background:var(--blue-soft);color:var(--blue)}.bdg-purple{background:var(--purple-soft);color:var(--purple)}
 .bdg-lime{background:var(--accent-soft);color:var(--accent-ink)}
@@ -330,7 +354,8 @@ h1,h2,h3{letter-spacing:-.02em}
 .field{margin-bottom:14px}
 kbd{background:var(--kbd-bg);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;font-size:11px;font-family:inherit;color:var(--ink2)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh-1)}
-.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line)}
+/* flex-wrap: without it the min-content of this header is title+gap+button,   so a right-hand column could never shrink below that sum — the dashboard   overflowed the viewport by 16px at ~890px. Wrapping lets it fall back to   the wider SINGLE child instead. */
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 /* v18.122 — theme_2: panel titles were 12px UPPERCASE in --ink2, i.e. they
    shouted while being SMALLER than the content they introduce. Now sentence-
    case 15px in --ink: larger than the body it heads, quieter in colour.
@@ -347,11 +372,11 @@ kbd{background:var(--kbd-bg);border:1px solid var(--line);border-bottom-width:2p
 .brand{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;color:#fff}
 .brand-mark{width:32px;height:32px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
 .brand-name{font-weight:800;font-size:15.5px;white-space:nowrap;font-style:italic;text-transform:uppercase;letter-spacing:.01em}
-.brand-name b{color:var(--ink3);font-weight:800}
-.brand-tag{font-size:8.5px;font-weight:700;letter-spacing:.24em;color:var(--ink3);margin-top:3px;white-space:nowrap}
+.brand-name b{color:var(--side3);font-weight:800}
+.brand-tag{font-size:8.5px;font-weight:700;letter-spacing:.24em;color:var(--side3);margin-top:3px;white-space:nowrap}
 body.sb-c .brand-tag{display:none}
 .nav{flex:1;padding:4px 10px 10px;overflow-y:auto}
-.nav-sec{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#565D6B;padding:14px 10px 6px;white-space:nowrap}
+.nav-sec{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7E8695;padding:14px 10px 6px;white-space:nowrap}
 .nav-it{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;font-size:13.5px;font-weight:500;color:#A9AFBD;margin-bottom:2px;cursor:pointer;position:relative;white-space:nowrap}
 .nav-it:hover{background:rgba(255,255,255,.06);color:#fff}
 /* v18.11 — active nav = solid lime pill (was a faint 13% tint nobody saw) */
@@ -379,6 +404,10 @@ body.sb-c .sprof{justify-content:center}
 .content{padding:24px;max-width:1400px;width:100%;margin:0 auto;flex:1;animation:fade .2s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}}
 .page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+/* The page-header toolbar (.row) was nowrap: its min-content is the SUM of
+   search+Filter+Sort+seg+Connect+Add = 798px, which overflowed a 766px header
+   by 8px at ~900px. Wrapping makes it fall back to the widest SINGLE child. */
+.page-h>.row{flex-wrap:wrap;min-width:0}
 /* v18.11 tier-3 — dashboard hero banner (dark gradient + lime glow, both themes) */
 .hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#12151B 0%,#1C2530 55%,#27351B 100%);border-radius:18px;padding:24px 26px;margin-bottom:20px;box-shadow:var(--sh-2)}
 .hero::after{content:'';position:absolute;inset-inline-end:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(200,240,75,.28),transparent 70%);pointer-events:none}
@@ -502,7 +531,11 @@ button:focus-visible,[data-act]:focus-visible,a:focus-visible,.tab:focus-visible
 .cal-hd.today{color:var(--accent-ink);background:var(--accent-soft)}
 .cal-hd.click{cursor:pointer;transition:background .12s}
 .cal-hd.click:hover{background:var(--accent-soft)}
-.cal-hd span{display:block;font-weight:600;font-size:11px;color:var(--ink3)}
+/* v19.10 — `:not(.bdg)` : this rule styles the DAY NUMBER, but it also caught
+   the session-count badge nested in the same cell and overrode .bdg-lime's
+   --accent-ink with --ink3, putting grey text on the always-light lime tint
+   (3.44:1 dark, and 3.03 after --ink3 was lightened for --seg-bg). */
+.cal-hd span:not(.bdg){display:block;font-weight:600;font-size:11px;color:var(--ink3)}
 .cal-hd.today span{color:var(--accent-ink)}
 .cal-time{font-size:10.5px;font-weight:600;color:var(--ink3);text-align:end;padding:4px 8px 0 0;border-top:1px solid var(--line2);height:48px}
 .cal-col{position:relative;border-inline-start:1px solid var(--line2);min-height:624px;cursor:cell}
@@ -3235,6 +3268,56 @@ const ONB_SCALE=[['starting','Just starting','Less than 5 clients','basic'],['gr
 const ONB_FOCUS=[['programs','Program design','builder'],['nutrition','Nutrition planning','nutrition'],['progress','Progress tracking','progress'],['clients','Client management','clients']];
 const landingView=()=>({programs:'builder',nutrition:'nutrition',progress:'progress',clients:'clients'}[ONBOARD.focus]||'dash');
 const suggestedPlan=()=>({starting:'basic',growing:'professional',established:'club'}[ONBOARD.scale]||null);
+/* v19.1 — SPORT EXTENSION TABLE.
+   The rule: a section belongs to a sport and appears ONLY when that sport is
+   picked in the wizard above. ONB_SPORTS says which sports can be chosen;
+   this table says what each one ADDS on top of the base rail. A future
+   discipline (CrossFit, swimming, cycling) is one row here — shell(), the   command palette and every view stay untouched.
+
+   No entry means base workspace only, which is the default for every existing
+   workspace, for the demo and for every test: nothing on the rail moves until
+   a sport actually claims a section.
+
+   groups[] render as their own nav group directly after "Workspace", in the   same [key,label,icon] shape nav.workspaces already uses, so navIt() and
+   data-act="nav" keep working unchanged:
+     {label:'Athletics', items:[['athletes','Athletes','users'], …]} */
+const SPORT_EXT={
+  /* v19.12 — §3 ATHLETICS PROFILE is no longer a rail section. It is per-athlete
+     data, so it moved onto the athlete's own page (workspace tab / mobile client
+     view) where the athlete is already known and the duplicate ap-pick chips
+     could be deleted. ATH_KEYS derives from this table, so the gate follows
+     automatically. */
+  'Running & Endurance':{groups:[{label:'Athletics',items:[
+    ['races','Races','flag'],
+    ['phases','Training Phases','clock'],['runbuild','Run Builder','dumbbell'],
+    ['load','Training Load','trending-up'],['pbs','Personal Bests','medal'],
+    ['wear','Wearables','watch']]}]}
+};
+const sportSections=()=>{
+  const e=SPORT_EXT[ONBOARD.sport];
+  return (e&&Array.isArray(e.groups))?e.groups:[];
+};
+/* v19.7 — every key ANY sport extension claims. Keeping a section off the rail
+   is not a gate on its own: a restored or bookmarked S.view would still render
+   a screen the coach never picked in setup. sportKey() closes that hole — a key
+   no selected sport owns resolves to the dashboard, in currentView() and in
+   renderMobile()'s sport dispatch alike. Adding a sport = adding rows above;
+   this function never changes. */
+const ATH_KEYS=Object.keys(SPORT_EXT).flatMap(s=>SPORT_EXT[s].groups.flatMap(g=>g.items.map(i=>i[0])));
+const sportKey=k=>(ATH_KEYS.indexOf(k)>=0&&!sportSections().some(g=>g.items.some(i=>i[0]===k)))?'dash':k;
+/* v19.8 — ATHLETICS §11. The spec's coach route is
+   `f:()=>isAthletic()?vCoachAth():vCoachBase()` — an athletics sport owns the
+   WHOLE dashboard, not an extra card on it. One row per sport; a sport with no
+   row keeps the generic dashboard, so nothing moves for Bodybuilding, the demo
+   or any existing workspace. */
+const DASH_EXT={'Running & Endurance':1};
+/* §10/§8 read the SAME table: a sport that owns a coach dashboard also owns the
+   athletics blocks on the athlete's Today screen. One row, two consumers. */
+/* v19.12 — widened: "the sport added athletics sections" (SPORT_EXT), not just
+   "it replaces the coach dashboard" (DASH_EXT). Same result today, but a sport
+   that adds sections without claiming the dashboard still gets the §10/§8
+   athlete blocks and this profile tab. */
+const isAthletics=()=>sportSections().length>0;
 const NCATS=['Meat','Chicken','Fish','Eggs','Dairy','Rice & Grains','Bread','Fruit','Vegetables','Nuts','Oils','Drinks','Supplements','Other'];
 const D01=[1,1,0,1,1,1,0];
 const TRAIN_T=[
@@ -3290,6 +3373,108 @@ let NHIST=[
    customs are APPENDED after it, sorted by id (uid() is time-based → the same
    order on every device), keeping every index deterministic. */
 let CEXS=[];
+/* v19.2 — ATHLETICS spec §8 RACES / §9 PERSONAL BESTS.
+   Both are coach-owned rows joined to a client by name, exactly how EVENTS   already works, so no new ownership model is introduced.
+   PBSD is a HISTORY, not a latest-value column: §9 explicitly requires the   previous mark, the date, the source and a note, because "100m → 11.80" alone   cannot show progression or where a mark came from. */
+function defaultRaces(){return [
+ {id:'rc1',name:'City Half Marathon',event:'Half Marathon',dist:'21.1 km',date:'2026-10-18',loc:'Bristol',target:'1:29:00',goal:'Top 20 overall',notes:'',ath:''},
+ {id:'rc2',name:'Regional Open',event:'100m · 200m',dist:'100 m',date:'2026-10-12',loc:'Leeds',target:'10.60',goal:'National standard',notes:'',ath:'Daniel Okoye'},
+ {id:'rc3',name:'Autumn 10K',event:'10K',dist:'10 km',date:'2026-11-02',loc:'Bristol',target:'44:30',goal:'Negative split',notes:'',ath:'Maya Lindqvist'},
+ {id:'rc0',name:'Regional Open',event:'1500m',dist:'1500 m',date:'2026-08-29',loc:'Leeds',target:'4:22.0',goal:'Season best',notes:'Went out too hard on the bell.',ath:'Lina Farahani',result:{time:'4:21.6',pos:'2nd',pb:true,notes:'PB by 0.4s'}}
+ ]}
+function defaultPbs(){return [
+ {id:'pb1',ev:'100m',val:'11.80',prev:'11.94',date:'2026-09-12',src:'Race result',notes:'Season opener'},
+ {id:'pb2',ev:'200m',val:'24.20',prev:'24.41',date:'2026-08-29',src:'Time trial',notes:'Wind +1.1'},
+ {id:'pb3',ev:'400m',val:'54.10',prev:'54.52',date:'2026-08-29',src:'Race result',notes:''},
+ {id:'pb4',ev:'5K',val:'21:32',prev:'21:47',date:'2026-09-06',src:'Race result',notes:'Chip time'},
+ {id:'pb5',ev:'10K',val:'45:10',prev:'45:44',date:'2026-09-20',src:'Road race',notes:'Hilly course'},
+ {id:'pb6',ev:'Half Marathon',val:'1:31:24',prev:'1:32:58',date:'2026-04-14',src:'Race result',notes:'Still standing'}
+ ]}
+let RACES=defaultRaces();
+let PBSD=defaultPbs();
+/* v19.3 — ATHLETICS §3 ATHLETE PROFILE.
+   Deliberately top-level and keyed by client id rather than DB[cid].ath:   cloudMerge only unions workouts / measures / stats / split inside DB, so a   new DB field would keep working locally and silently never sync. Top-level   rides the same id-union table RACES/PBSD already use. */
+function defaultAprof(){return [
+ {id:'ap1',cid:1,disc:'Middle distance',event:'1500m',dist:'1500 m',level:'National',age:'U23',
+  pb:'4:21.6 (1500m) · 1:31:24 (Half)',target:'City Half Marathon',targetDate:'2026-10-18',
+  avail:'Mon–Sat, mornings',freq:'5',mileage:'42',history:'4 seasons · 118 sessions',
+  injury:'Left Achilles — mild tendinopathy (Jul 2026), physio-cleared',
+  notes:'Responds well to volume, dislikes the treadmill. Key session Thursday.'},
+ {id:'ap2',cid:2,disc:'Sprint',event:'100m',dist:'100 m',level:'Senior',age:'Senior',
+  pb:'10.42 (100m) · 21.47 (200m)',target:'Regional Open',targetDate:'2026-10-12',
+  avail:'Mon–Fri evenings',freq:'6',mileage:'28',history:'2 seasons · 64 sessions',
+  injury:'None recorded',notes:'Needs 48 h between maximal velocity sessions.'}
+ ]}
+let APROF=defaultAprof();
+/* §3: "Events should be extensible… adding a discipline means adding a row,   never editing the engine." A plain list + datalist, exactly like ONB_SPORTS. */
+const AEVTS=['60m','100m','200m','400m','800m','1500m','3000m','5000m','10K',
+  'Half Marathon','Marathon','400mH','Steeplechase','Marathon relay'];
+const aprofOf=cid=>APROF.find(p=>String(p.cid)===String(cid))||null;
+/* v19.4 — ATHLETICS §7 TRAINING PHASES.
+   Deliberately methodology-agnostic: the coach names the phase, sets its week   range, its focus and a load %. Nothing here assumes base→build→peaktaper is   THE model — the spec forbids hard-coding one. `now` marks the current block. */
+function defaultPhases(){return [
+ {id:'ph1',name:'Base',weeks:'W1–W6',focus:'Aerobic volume · easy mileage · general strength',load:35,now:false},
+ {id:'ph2',name:'Build',weeks:'W7–W14',focus:'Threshold · intervals · hills · power',load:78,now:true},
+ {id:'ph3',name:'Peak / taper',weeks:'W15–W16',focus:'Sharpening · volume down · intensity held',load:52,now:false},
+ {id:'ph4',name:'Recovery',weeks:'W17',focus:'Unload · easy running · address niggles',load:20,now:false}
+ ]}
+let PHASES=defaultPhases();
+/* v19.5 — ATHLETICS §4 BLOCK WORKOUT BUILDER.
+   Its own top-level store rather than TEMPLATES: the template screens render   `exs` (sets/reps/kg), and a block workout has none of that — folding blocks   in would break vTemplates/vBuilder. Sports stay filterable via `sp` like   every other template, so nothing in the library needs to change.   A workout is an ordered list of BLOCKS; each block type owns its own field   schema (BLK_FIELDS) so Distance / Time / Pace / Speed / Recovery / Intensity   stay visibly distinct instead of collapsing into one generic row. */
+const BLK_TYPES=[['warmup','Warm-up'],['drills','Drills'],['main','Main set'],
+  ['recovery','Recovery'],['cooldown','Cool-down']];
+const BLK_FIELDS={
+ warmup:[['name','Block name'],['dur','Duration'],['pace','Target pace'],['note','Note']],
+ drills:[['name','Block name'],['items','Drills'],['reps','Repetitions'],['rpe','RPE']],
+ main:[['name','Block name'],['reps','Repetitions'],['dist','Distance'],['dur','Duration'],
+   ['target','Target pace'],['speed','Speed'],['rec','Recovery'],['rpe','Intensity (RPE)'],
+   ['surface','Surface']],
+ recovery:[['name','Block name'],['dur','Duration'],['type','Recovery type'],['rpe','RPE']],
+ cooldown:[['name','Block name'],['dur','Duration'],['pace','Target pace'],['note','Note']]
+};
+const blkLabel=t=>(BLK_TYPES.find(x=>x[0]===t)||[,'Block'])[1];
+function defaultRunW(){return [
+ {id:'rw1',name:'Interval session — 6 × 400m',day:'Thursday',sp:['Running & Endurance'],blocks:[
+  {t:'warmup',name:'Warm-up',dur:'10 min',pace:'5:40/km',note:'Easy and relaxed'},
+  {t:'drills',name:'Drills',items:'A-skips · B-skips · High knees',reps:'2 × 30 m',rpe:'5'},
+  {t:'main',name:'Main set',reps:'6 × 400 m',dist:'400 m',dur:'—',target:'1:40–1:45',
+   speed:'16.0–16.6 km/h',rec:'90 s easy jog',rpe:'8',surface:'Track'},
+  {t:'cooldown',name:'Cool-down',dur:'10 min',pace:'6:00/km',note:'Flush and stretch'}]},
+ {id:'rw2',name:'Long run — 28 km',day:'Saturday',sp:['Running & Endurance'],blocks:[
+  {t:'warmup',name:'Warm-up',dur:'10 min',pace:'6:00/km',note:'Walk then easy jog'},
+  {t:'main',name:'Main set',reps:'1 × 28 km',dist:'28 km',dur:'2:35',target:'5:15–5:30',
+   speed:'10.4–10.9 km/h',rec:'—',rpe:'6',surface:'Road'},
+  {t:'recovery',name:'Recovery',dur:'8 min',type:'Walk',rpe:'2'},
+  {t:'cooldown',name:'Cool-down',dur:'8 min',pace:'6:30/km',note:''}]}
+ ]}
+let RUNW=defaultRunW();
+/* v19.6 — ATHLETICS §6 TRAINING LOAD.
+   Completed sessions, not plans: §6 asks for weekly distance/duration/session   count/high-intensity/long/recovery/RPE/load, none of which RUNW (a plan) has.   `w` is an explicit week index (0 = oldest, last = current) rather than a   parsed date, so grouping never disagrees with a timezone.   Session load = Foster's session-RPE: Σ(minutes/60 × RPE) — a standard,   citable measure. NO acute:chronic ratio and NO injury-risk reading: the spec   forbids presenting this as a medical or diagnostic tool. */
+const TLOG_KINDS=[['hi','High-intensity'],['long','Long run'],['easy','Easy'],
+  ['recovery','Recovery'],['strength','Strength & conditioning']];
+function defaultTLog(){
+  const out=[];let n=0;const day=864e5,base=Date.now();
+  const tpl=[
+   {d:1,k:'hi',      km:9.6, min:48, rpe:8, name:'Intervals · 6 × 400m'},
+   {d:2,k:'strength',km:0,   min:55, rpe:7, name:'Strength & conditioning'},
+   {d:3,k:'easy',    km:12,  min:66, rpe:4, name:'Easy run'},
+   {d:4,k:'hi',      km:10,  min:50, rpe:7, name:'Tempo · 4 × 2 km'},
+   {d:6,k:'long',    km:28,  min:155,rpe:6, name:'Long run'},
+   {d:0,k:'recovery',km:8,   min:44, rpe:3, name:'Recovery jog'}];
+  /* 8 weeks, oldest → current, with a gentle ramp so progression is visible   without inventing a dramatic curve. Week 7 is the current one. */
+  for(let w=0;w<8;w++){
+    const ramp=0.86+w*0.02;
+    tpl.forEach((t,ti)=>{
+      const dt=new Date(base-(7-w)*7*day-(6-t.d)*day);
+      /* spread across three athletes so the filter is meaningful */
+      out.push({id:'tl'+(++n),cid:(ti%3)+1,w:w,date:dt.toISOString().slice(0,10),
+        name:t.name,kind:t.k,km:+(t.km*ramp).toFixed(1),min:Math.round(t.min*ramp),rpe:t.rpe});
+    });
+  }
+  return out;
+}
+let TLOG=defaultTLog();
+const tlogLoad=rows=>+rows.reduce((s,x)=>s+((+x.min||0)/60)*(+x.rpe||0),0).toFixed(1);
 let CEXBASE=0;
 function syncCustomEx(){
   if(!CEXBASE)CEXBASE=EXERCISES.length;
@@ -3329,7 +3514,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
 let __lastPack='';
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
@@ -3360,7 +3545,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -3391,7 +3576,22 @@ function loadData(){
     repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
     if(Array.isArray(d.NRULES)&&d.NRULES.length){NRULES.length=0;d.NRULES.forEach(r=>NRULES.push(r))}
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
-    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);
+    /* v19.2 — payloads saved before these existed carry no key at all, so ||[]   (a bare repl() would wipe the seeded demo rows). */
+    /* v19.2 — a payload saved BEFORE this feature has no RACES/PBSD key at   all. That means "never configured", so backfill the demo rows — the same   rule FOODS uses below. An explicit empty array means the coach cleared them   and must stay empty. */
+    const hadRACES=Array.isArray(d.RACES),hadPBSD=Array.isArray(d.PBSD);
+    repl(RACES,d.RACES||[]);repl(PBSD,d.PBSD||[]);
+    repl(APROF,d.APROF||[]);
+    repl(PHASES,d.PHASES||[]);
+    repl(RUNW,d.RUNW||[]);
+    repl(TLOG,d.TLOG||[]);
+    if(!hadRACES)defaultRaces().forEach(r=>RACES.push(r));
+    if(!hadPBSD)defaultPbs().forEach(p=>PBSD.push(p));
+    if(!Array.isArray(d.APROF))defaultAprof().forEach(p=>APROF.push(p));
+    if(!Array.isArray(d.PHASES))defaultPhases().forEach(p=>PHASES.push(p));
+    if(!Array.isArray(d.RUNW))defaultRunW().forEach(w=>RUNW.push(w));
+    if(!Array.isArray(d.TLOG))defaultTLog().forEach(x=>TLOG.push(x));
+    syncCustomEx();
     // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
     // (freshWorkspace used to leave it empty). There is no food-delete UI, so
     // an empty library is always a broken state, never intentional: backfill.
@@ -3481,7 +3681,7 @@ function freshWorkspace(){
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
   NLOGS.length=0;NCHAT.length=0;NINS.length=0;NRULES.length=0;
   defaultNrules().forEach(r=>NRULES.push(r));
-  FORMS.length=0;CHALLENGES.length=0;
+  FORMS.length=0;CHALLENGES.length=0;RACES.length=0;PBSD.length=0;APROF.length=0;PHASES.length=0;RUNW.length=0;TLOG.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
   // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
@@ -3838,7 +4038,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -3975,7 +4175,7 @@ function cloudMerge(d,adopt){
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
   // v18.48 — NLOGS/NCHAT/NINS/NRULES join the same id-union path.
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['RACES',RACES],['PBSD',PBSD],['APROF',APROF],['PHASES',PHASES],['RUNW',RUNW],['TLOG',TLOG],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -5532,7 +5732,199 @@ function vClientsCm(){
       </div>
     </div>`}).join('')}</div>`}`;
 }
+/* v19.11 — §11's Event filter is a CATALOGUE, not a value derived from the
+   roster. Deriving it from APROF.disc meant the option list changed whenever a
+   profile was added or cleared, and it only ever offered the disciplines some
+   athlete happened to have — Distance and Road never appeared at all. Same rule
+   §3 uses for AEVTS: a discipline is a row, never something the engine invents.
+   An option that matches nobody lands on the existing empty state, which is
+   honest; an option that silently does not exist is not. */
+const ADISCS=['Sprint','Middle distance','Distance','Road'];
+/* ============ ATHLETICS §11 — COACH DASHBOARD ============
+   Replaces the generic dashboard while an athletics sport is selected — the
+   spec's coach route is literally `isAthletic()? vCoachAth(): vCoachBase()`.
+   Every one of the five filters is backed by REAL data, no placeholder:
+     Event   ← APROF.disc (§3)                     Athlete ← CLIENTS
+     Phase   ← CLIENTS.week ∩ PHASES[].weeks (§7)  DERIVED, no second store
+     Date    ← ISO date math on RACES; today/week on the schedule
+     Status  ← EVENTS.att + evState()
+   Recent PBs is deliberately NOT filtered: PBSD carries no per-athlete key (a
+   documented §9 limitation), so filtering it by athlete would advertise a
+   breakdown that does not exist. The panel says so instead of faking one.
+   Delays to a race are descriptive countdowns only — no readiness or risk
+   reading, same constraint §6 works under. */
+function vDashAth(){
+  const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+  const parseW=s=>{const n=String(s||'').match(/\d+/g)||[];
+    return n.length?[+n[0],+(n[n.length-1]||n[0])]:null};
+  const phaseOf=wk=>{const ps=PHASES;for(let i=0;i<ps.length;i++){const r=parseW(ps[i].weeks);
+    if(r&&wk>=r[0]&&wk<=r[1])return ps[i]}return null};
+  const roster=CLIENTS.filter(c=>c.status!=='Archived');
+  const disc=c=>(aprofOf(c.id)||{}).disc||'';
+  const phName=c=>(phaseOf(+c.week||0)||{}).name||'—';
+  const ath=F.ath==='all'?null:roster.filter(c=>String(c.id)===String(F.ath))[0]||null;
+  const squad=roster.filter(c=>
+    (F.ev==='all'||disc(c)===F.ev)&&
+    (F.ath==='all'||String(c.id)===String(F.ath))&&
+    (F.ph==='all'||phName(c)===F.ph));
+  const names=new Set(squad.map(c=>c.name));
+  const stOf=e=>e.att==='miss'?'Missed':(e.att==='done'||evState(e).k==='past'?'Completed':'Scheduled');
+  const sess=EVENTS.filter(e=>names.has(e.client)
+      &&(F.dt!=='today'||e.day===TODAY)
+      &&(F.st==='all'||stOf(e)===F.st))
+    .sort((a,b)=>a.day-b.day||a.start-b.start);
+  const todaySess=sess.filter(e=>e.day===TODAY);
+  const now0=new Date(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate());
+  const dOf=r=>{const p=String(r.date||'').split('-');return new Date(+p[0]||2000,(+p[1]||1)-1,+p[2]||1)};
+  const dLeft=r=>Math.round((dOf(r)-now0)/864e5);
+  const races=RACES.filter(r=>{
+    if(ath&&r.ath&&r.ath!==ath.name)return false;
+    const dd=dLeft(r);
+    if(F.dt==='season')return true;
+    if(dd<0)return false;
+    if(F.dt==='today')return dd===0;
+    if(F.dt==='week')return dd<=7;
+    return dd<=28;
+  }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const cw=TLOG.length?Math.max.apply(null,TLOG.map(r=>+r.w)):0;
+  const ids=new Set(squad.map(c=>String(c.id)));
+  const wkRows=TLOG.filter(r=>+r.w===cw&&ids.has(String(r.cid)));
+  const kmW=+wkRows.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const nextR=races.filter(r=>dLeft(r)>=0)[0];
+  const adhOf=c=>{const s=(DB[c.id]||{}).stats||{};const d=+s.done||0,m=+s.missed||0;
+    return Math.round(d/((d+m)||1)*100)};
+  const weekKm=c=>+TLOG.filter(r=>+r.w===cw&&String(r.cid)===String(c.id))
+    .reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const sel=(k,opts)=>`<select class="sel" style="height:30px;width:auto;min-width:118px;flex:none"
+      data-change="athf" data-k="${k}">${opts.map(v=>
+      `<option value="${esc(String(v[0]))}"${F[k]===String(v[0])?' selected':''}>${v[1]}</option>`).join('')}</select>`;
+  /* §11 FILTERS — chips, not a boxed row of dropdowns.
+     The box read as a form and every option repeated its category name
+     ("Event: all"), which made five controls shout at once. Now each dimension
+     is a tiny label followed by pills: an unselected pill is quiet white, only
+     the ACTIVE one takes the accent, so four groups read as four calm lines and
+     a switch is ONE click instead of click-then-pick. Athlete keeps a menu —
+     eight names cannot be pills without swallowing the row. */
+  const fchip=(k,v,label)=>`<button class="fchip ${F[k]===v?'on':''}" data-act="ath-f" data-k="${k}" data-v="${esc(v)}">${label}</button>`;
+  const flbl=t2=>`<span style="flex:none;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);min-width:50px">${t(t2)}</span>`;
+  const grp=(label,inner)=>`<span class="row" style="gap:6px;align-items:center;flex:none">${flbl(label)}${inner}</span>`;
+  const filters=`<div class="row" style="gap:11px 26px;flex-wrap:wrap;align-items:center;margin-bottom:18px">
+    ${grp('Event',[fchip('ev','all',t('All'))].concat(ADISCS.map(d=>fchip('ev',d,t(d)))).join(''))}
+    ${grp('Phase',[fchip('ph','all',t('All'))].concat(PHASES.map(p=>fchip('ph',p.name,t(p.name)))).join(''))}
+    ${grp('Date',[fchip('dt','today',t('Today')),fchip('dt','week',t('This week')),
+      fchip('dt','4w',t('Next 4 weeks')),fchip('dt','season',t('Season'))].join(''))}
+    ${grp('Status',[fchip('st','all',t('All')),fchip('st','Completed',t('Completed')),
+      fchip('st','Scheduled',t('Scheduled')),fchip('st','Missed',t('Missed'))].join(''))}
+    <span class="row" style="gap:6px;align-items:center;flex:none">${flbl('Athlete')}
+      ${sel('ath',[['all',t('All athletes')]].concat(roster.map(c=>[String(c.id),c.name])))}</span>
+    <button class="btn btn-ghost btn-sm" data-act="ath-reset" style="margin-inline-start:auto;flex:none">${ic('refresh',13)} ${t('Reset')}</button>
+  </div>`;
+  if(!squad.length)return `<div class="page-h"><div><h1>${t('Dashboard')}</h1>
+    <div class="sub">${t('Athletics')} · ${t('no athletes match the current filters')}</div></div>
+    <button class="btn btn-outline" data-act="ath-reset">${ic('refresh',15)} ${t('Reset')}</button></div>${filters}
+    <div class="empty">${ic('users',24)}<b>${t('No athletes in view')}</b>
+      <span class="muted" style="font-size:12.5px">${t('Widen the Event, Athlete or Phase filter')}</span></div>`;
+  const cell=(l,v,u,sub,i,c)=>`<div class="card stat">
+      <div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':'--'+c})">${ic(i,17)}</span>
+        <span class="k">${t(l)}</span><span class="sp"></span></div>
+      <div class="v">${v}${u?`<span style="font-size:15px;font-weight:700;margin-inline-start:3px;color:var(--ink3)">${u}</span>`:''}</div>
+      <div class="muted" style="font-size:11.5px;font-weight:600">${sub}</div></div>`;
+  const kpis=`<div class="stats" style="margin-bottom:14px">
+    ${cell('Athletes',nf(squad.filter(c=>c.status==='Active').length),'',
+      `${nf(squad.length)} ${t('in view')} · ${nf(roster.length)} ${t('roster')}`,'users','accent')}
+    ${cell('Weekly volume',nf(kmW),'km',
+      `${nf(wkRows.length)} ${t('sessions')} · ${t('Week')} ${nf(cw+1)}`,'chart','blue')}
+    ${cell('Sessions today',nf(todaySess.length),'',
+      `${nf(sess.length)} ${t('in scope')} · ${nf(todaySess.filter(e=>stOf(e)==='Completed').length)} ${t('done')}`,'calendar','purple')}
+    ${cell('Next race',nextR?nf(dLeft(nextR)):'—',nextR?`${t('days')}`:'',
+      nextR?esc(nextR.name):t('No race in range'),'flag','amber')}
+  </div>`;
+  const sessRows=sess.slice(0,8).map(e=>{const st=evState(e);
+    return `<tr class="click" data-act="ev-open" data-eid="${e.id}">
+      <td><b>${esc(e.client)}</b></td><td>${esc(t(e.label))}</td>
+      <td class="num">${t(dayLbl(e.day))} ${nf(fmtT(e.start))}</td>
+      <td class="num">${nf(e.dur)} ${t('h')}</td>
+      <td class="num"><span class="bdg ${st.b}">${t(stOf(e))}</span></td></tr>`}).join('');
+  const raceRows=races.slice(0,5).map(r=>{const dd=dLeft(r);
+    const pill=r.result?`<span class="bdg bdg-green">${t('Set')}</span>`
+      :(dd<0?`<span class="bdg bdg-gray">${t('Done')}</span>`
+      :`<span class="bdg ${dd<=7?'bdg-lime':'bdg-gray'}">${nf(dd)} ${t('d')}</span>`);
+    return `<div class="tl-row">
+      <span class="bdg bdg-gray" style="flex:none">${ic('flag',13)}</span>
+      <div style="flex:1;min-width:0"><div style="font-weight:600">${esc(r.name)}</div>
+        <div class="muted" style="font-size:12.5px">${esc(r.event||'')} · ${esc(fmtD(r.date))}${r.loc?` · ${esc(r.loc)}`:''}</div></div>
+      <div class="row" style="gap:8px;flex:none"><b style="font-size:13px">${esc(r.target||'—')}</b>${pill}</div>
+    </div>`}).join('');
+  const squadRows=squad.map(c=>{const p=aprofOf(c.id)||{};const ph=phName(c);const a=adhOf(c);
+    return `<tr>
+      <td><b>${esc(c.name)}</b><div class="muted" style="font-size:11.5px">${esc(p.level||p.goal||'')} ${p.age?`· ${esc(p.age)}`:''}</div></td>
+      <td><span class="chip">${esc(p.event||p.disc||'—')}</span></td>
+      <td class="num"><span class="bdg ${ph==='Recovery'?'bdg-amber':'bdg-lime'}">${esc(ph)}</span></td>
+      <td class="num">${nf(weekKm(c))} km</td>
+      <td class="num"><span class="bdg ${a>=90?'bdg-green':a>=75?'bdg-amber':'bdg-gray'}">${nf(a)}%</span></td>
+      <td class="num">${esc((p.pb||'—').split(' · ')[0])}</td></tr>`}).join('');
+  const wks=[...new Set(TLOG.map(r=>+r.w))].sort((a,b)=>a-b);
+  const wOf=w=>+TLOG.filter(r=>+r.w===w&&ids.has(String(r.cid))).reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const maxW=Math.max(1,...wks.map(wOf));
+  const pbs=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,3);
+  const scopeNote=F.dt==='4w'||F.dt==='season'?` · ${t('schedule holds one week')}`:'';
+  return `<div class="page-h"><div><h1>${t('Dashboard')}</h1>
+    <div class="sub">${t(ONBOARD.sport||'Athletics')} · ${nf(squad.length)} ${t(squad.length===1?'athlete':'athletes')}${F.ph!=='all'?` · ${t('Phase')}: ${esc(F.ph)}`:''}</div></div>
+    <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
+  ${filters}
+  ${kpis}
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:0;overflow-x:auto">
+      <div style="padding:16px 18px 6px"><span class="card-t">${ic('calendar',14)} ${t('Sessions')}</span>
+        <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${nf(sess.length)} ${t('in scope')}${scopeNote}</span></div>
+      ${sessRows?`<table class="tbl"><thead><tr><th>${t('Athlete')}</th><th>${t('Session')}</th>
+        <th class="num">${t('When')}</th><th class="num">${t('Dur')}</th><th class="num">${t('Status')}</th></tr></thead>
+        <tbody>${sessRows}</tbody></table>`
+      :`<div class="empty" style="margin:14px 18px 18px">${ic('calendar',22)}<b>${t('No sessions match')}</b>
+        <span class="muted" style="font-size:12.5px">${t('Try a wider Date or Status filter')}</span></div>`}
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('flag',14)} ${t('Race calendar')}</span>
+        <span class="bdg bdg-gray" style="font-size:10px">${nf(races.length)}</span></div>
+      <div style="margin-top:6px">${raceRows||`<div class="muted" style="font-size:12.5px;padding:10px 0">${t('No races in this date range')}</div>`}</div>
+      <button class="btn btn-outline" style="width:100%;margin-top:12px" data-act="nav" data-view="races">${ic('plus',14)} ${t('Open races')}</button>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:0;overflow-x:auto">
+      <div style="padding:16px 18px 6px"><span class="card-t">${ic('users',14)} ${t('Squad')}</span>
+        <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${nf(squad.length)} ${t('athletes')}</span></div>
+      <table class="tbl"><thead><tr><th>${t('Athlete')}</th><th>${t('Event')}</th><th>${t('Phase')}</th>
+        <th class="num">${t('wk km')}</th><th class="num">${t('Adh')}</th><th class="num">${t('PB')}</th></tr></thead>
+        <tbody>${squadRows}</tbody></table>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Weekly volume')}</span>
+        <span class="bdg bdg-gray" style="font-size:10px">${nf(wks.length)} ${t('weeks')}</span></div>
+      <div class="row" style="gap:5px;align-items:flex-end;height:92px;margin-top:12px">
+        ${wks.map(w=>{const k=wOf(w);const h=Math.max(4,Math.round(k/maxW*64));const now=w===cw;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%">
+            <span style="font:700 9.5px/1 var(--font);font-variant-numeric:tabular-nums;color:${now?'var(--accent-text)':'var(--ink3)'}">${nf(k)}</span>
+            <div style="width:100%;height:${h}px;border-radius:4px 4px 0 0;background:${now?'var(--accent-deep)':'var(--ink3)'};opacity:${now?1:.45}"></div></div>`}).join('')}
+      </div>
+      <div class="row" style="gap:5px;margin-top:6px">${wks.map(w=>`<span style="flex:1;text-align:center;font:700 9px/1 var(--font);font-variant-numeric:tabular-nums;color:${w===cw?'var(--accent-text)':'var(--ink3)'}">${nf(w+1)}</span>`).join('')}</div>
+      <div style="height:1px;background:var(--line2);margin:13px 0 11px"></div>
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('medal',14)} ${t('Recent PBs')}</span>
+        <span class="muted" style="font-size:10.5px">${t('all athletes')}</span></div>
+      <div style="margin-top:6px">${pbs.map(p=>`<div class="tl-row" style="padding:7px 0">
+        <span class="bdg bdg-lime" style="flex:none">${esc(p.ev)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:13.5px">★ ${esc(p.val)}</b>
+          <span class="muted" style="font-size:11.5px">${t('prev')} ${esc(p.prev||'—')}</span></div>
+        <span class="muted" style="font-size:11.5px;flex:none">${esc(fmtD(p.date))}</span>
+      </div>`).join('')||`<div class="muted" style="font-size:12.5px">${t('No PBs recorded')}</div>`}</div>
+    </div>
+  </div>
+  <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('Phase is derived from each athlete\u2019s program week against the phase ranges you set in Training Phases — no phase is assumed. Counts and countdowns are descriptive only.')}</div>`;
+}
 function vDash(){
+  /* v19.8 — ATHLETICS §11. Checked BEFORE the ui template so the sport always
+     owns its dashboard; a sport with no DASH_EXT row keeps everything below. */
+  if(DASH_EXT[ONBOARD.sport])return vDashAth();
   if(PREFS.uiTpl==='coachmint')return vDashCm();
   const roster=CLIENTS;
   const active=CLIENTS.filter(c=>c.status==='Active').length;
@@ -5618,9 +6010,9 @@ function vDash(){
     </div>
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
-        <div style="padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px">
         ${qa.map(([l,i])=>`
-          <button class="btn btn-ghost" style="justify-content:flex-start;font-size:12.5px;padding:0 8px" data-act="qa-item" data-item="${l}">${ic('plus',14)} ${t(l)}</button>`).join('')}
+          <button class="btn btn-ghost" style="justify-content:flex-start;font-size:12.5px;padding:0 8px;white-space:normal;text-align:start;min-width:0" data-act="qa-item" data-item="${l}">${ic('plus',14)} ${t(l)}</button>`).join('')}
         </div>
       </div>
       <div class="card" style="padding:18px"><div class="card-t">${ic('target',14)} ${t('Workout Completion')}</div>
@@ -5660,6 +6052,13 @@ function vClients(){
      sort (name / status / streak / next session) applied to BOTH views. */
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
   const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  /* v19.12 — §3 completion surfaced WHERE THE COACH ALREADY LOOKS. Without it,
+     "who has not filled their athletics profile?" was only answerable by
+     opening athletes one at a time — and the profile screen itself now lives
+     inside the workspace, so the rail no longer advertises it. Gated on the sport. */
+  const profBdg=cid=>{const p=aprofOf(cid);
+    return p&&p.id?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Profile set')}</span>`
+      :`<span class="bdg bdg-gray" style="font-size:10px">${t('Not set')}</span>`};
   return `
   <div class="page-h"><div><h1>${t('Clients')}</h1><div class="sub">${sub}</div></div>
   <div class="row">
@@ -5683,6 +6082,7 @@ function vClients(){
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(c.goal)}</span>
         ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
+        ${isAthletics()?profBdg(c.id):''}
         ${c.streak?`<span class="chip">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
@@ -5699,7 +6099,7 @@ function vClients(){
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
       <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
       <td class="hide-md">${c.streak||c.dayStreak?`${ic('flame',13)} ${esc(streakLbl(c))}`:'—'}</td>
-      <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
+      <td><div class="row" style="gap:6px;flex-wrap:wrap">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}${isAthletics()?profBdg(c.id):''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
@@ -5711,7 +6111,15 @@ function vClients(){
 function vWorkspace(){
   const c=client(S.cid);
   const np=nPlanOf(c.name);
-  const tabs=[['overview','Overview'],['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
+  /* v19.12 — §3 Athletics Profile is the second tab and only exists when the
+     sport has athletics sections. The body map is built the same way, so a
+     stale S.tab='athletics' with no athletics sport falls through to Overview   instead of calling an undefined function. */
+  const tabs=[['overview','Overview'],...(isAthletics()?[['athletics','Athletics']]:[]),
+    ['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],
+    ['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
+  const body={overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
+    measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles};
+  if(isAthletics())body.athletics=()=>vAprofile(S.cid);
   const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
   return `
   ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
@@ -5753,7 +6161,7 @@ function vWorkspace(){
     </div>
   </div>
   <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${t(l)}</button>`).join('')}</div>
-  ${({overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles})[S.tab]()}
+  ${(body[S.tab]||body.overview)()}
   `;
 }
 function vCOverview(){
@@ -6507,6 +6915,15 @@ function vSettings(){
     <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
     <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
+    <!-- v19.14 — the sport used to be writable ONLY by the wizard, so a wrong   pick meant redoing all four steps just to change one value. This writes the
+       same ONBOARD.sport the wizard commits, and nothing downstream needs a reset:   SPORT_EXT / DASH_EXT / sportSections / isAthletics all read it at render time,
+       so the rail, dashboard, tabs and Clients badge re-derive on their own. -->
+    <div class="set-row" style="margin:6px 0 2px"><div><span class="t">${t('Sport')}</span>
+      <div class="d">${t('Drives the athletics sections, dashboard and athlete screens')}</div></div>
+      <select class="sel" style="width:212px" data-change="osport">
+        <option value=""${!ONBOARD.sport?' selected':''}>${t('None (base workspace)')}</option>
+        ${ONB_SPORTS.map(s=>`<option value="${esc(s)}"${ONBOARD.sport===s?' selected':''}>${t(s)}</option>`).join('')}
+      </select></div>
     <div class="set-row" style="margin:6px 0 14px"><div><span class="t">${t('Setup wizard')}</span><div class="d">${t('Sport, coaching style and home screen')}</div></div><button class="btn btn-outline btn-sm" data-act="onb-open">${t('Redo')}</button></div>
     <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
   account:`<div class="card" style="padding:22px">
@@ -8821,12 +9238,20 @@ function loadTpl(tp){
 function renderMobile(){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
   let body='';
+  /* v19.3 — sport sections on mobile. Keyed by the SAME view keys the desktop   rail claims, so a future sport's screens appear here with no new branch. */
+  /* v19.12 — aprof is NOT in SPORT_EXT any more, so sportKey() cannot gate it;
+     the map entry is added only while the sport has athletics sections. The
+     athlete is passed in explicitly (S.mClient) — vAprofile takes a cid. */
+  const mvMap={races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+  if(isAthletics())mvMap.aprof=vAprofile;
+  const sportMv=mvMap[sportKey(S.mview)];
   if(S.mview==='client')body=mClientView();
   else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
   else if(S.mview==='settings')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vSettings();
   else if(S.mview==='nutrition')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+nNutrition();
   else if(S.mview==='templates')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vTemplates();
   else if(S.mview==='calendar')body=mCalView();
+  else if(sportMv)body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+sportMv(S.mClient);
   else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
   return `<div class="mshell">
     ${aiFabRound()}
@@ -9018,6 +9443,8 @@ function mMore(){
     ['Templates','stack','mtemplates'],
     ['Nutrition','utensils','mnut'],
     ['Challenges','trophy','mchal']];
+  /* v19.3 — the mobile entry point for sport sections comes from the SAME   SPORT_EXT table the desktop rail uses, so a future sport needs no edit here. */
+  sportSections().forEach(g=>g.items.forEach(([k,l,i])=>rows.push([l,i,'mnav',k])));
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
@@ -9027,7 +9454,7 @@ function mMore(){
     <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
     <div class="ccard" style="padding:6px">
       <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      ${rows.map(([l,i,act])=>`<div class="mrow" data-act="${act}">${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
+      ${rows.map(([l,i,act,v])=>`<div class="mrow" data-act="${act}"${v?` data-v="${v}"`:''}>${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
       <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
     </div>
     <div class="ccard" style="padding:6px">
@@ -9080,6 +9507,7 @@ function mClientView(){
       <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
       <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
       <button class="btn btn-outline btn-sm" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>
+      ${isAthletics()?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Athletics Profile')}</button>`:''}
       <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
     </div>
     <button class="btn btn-ghost btn-sm" style="align-self:flex-start" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
@@ -9177,6 +9605,107 @@ function vClient(){
     </div>
   </div>`;
 }
+/* ============ ATHLETICS §10 + §8 — ATHLETE DASHBOARD ============
+   Injected into the athlete's Today screen only while the workspace sport has
+   athletics sections. Everything is READ from the stores the coach side owns —
+   this is a view of the coach's data, never a second source of truth:
+     This week  ← TLOG[ w === current week, cid === this athlete ]
+     Race card  ← RACES (ath empty = squad-wide, or matching this name), with a
+                  fallback to APROF.target/targetDate when no race row exists
+     PBs        ← APROF.pb (§3, per athlete). PBSD is deliberately NOT used:
+                  it carries no cid, so its marks belong to the whole squad and
+                  would be wrong on one athlete's phone.
+   §5 optional metrics are deliberately omitted: TLOG holds no HR, cadence or
+   elevation, and printing zeros there would break §5's "absent must read as
+   absent" rule. Countdowns are descriptive days only. */
+function athToday(c){
+  if(!isAthletics())return '';
+  const p=aprofOf(c.id)||{};
+  const hm=m=>{m=Math.round(m);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')};
+  const cw=TLOG.length?Math.max.apply(null,TLOG.map(r=>+r.w)):0;
+  const mine=TLOG.filter(r=>+r.w===cw&&String(r.cid)===String(c.id));
+  const km=+mine.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const mins=mine.reduce((s,x)=>s+(+x.min||0),0);
+  const byDow=[0,0,0,0,0,0,0];
+  mine.forEach(r=>{const q=String(r.date||'').split('-');if(q.length<3)return;
+    const d=new Date(+q[0],+q[1]-1,+q[2]);if(isNaN(d))return;
+    byDow[(d.getDay()+6)%7]+=(+r.km||0)});
+  const maxD=Math.max(1,...byDow);
+  const nowDow=(TDATE.getDay()+6)%7;
+  const now0=new Date(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate());
+  const dOf=r=>{const q=String(r.date||'').split('-');return new Date(+q[0]||2000,(+q[1]||1)-1,+q[2]||1)};
+  const cands=RACES.filter(r=>!r.ath||r.ath===c.name)
+    .map(r=>({r:r,dd:Math.round((dOf(r)-now0)/864e5)}))
+    .filter(x=>x.dd>=0).sort((a,b)=>a.dd-b.dd);
+  let race=null,dd=-1;
+  if(cands.length){race=cands[0].r;dd=cands[0].dd}
+  else if(p.target&&p.targetDate){const x=Math.round((dOf({date:p.targetDate})-now0)/864e5);
+    if(x>=0){race={name:p.target,event:'',date:p.targetDate,loc:'',target:''};dd=x}}
+  const pbs=(p.pb||'').split(' \u00b7 ').filter(s=>s.trim());
+  const pbRow=s=>{const m=/\(([^)]+)\)/.exec(s);
+    return {val:(m?s.replace(/\s*\(.*$/,''):s).trim(),ev:m?m[1]:''}};
+  const week=`<div class="sec"><span class="sec-t">${ic('chart',15)} ${t('This week')}</span>
+      <span class="muted">${nf(mine.length)} ${t('sessions')}</span></div>
+    <div class="cc tight">
+      <div class="row" style="gap:12px">
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Distance')}</div>
+          <b style="font-size:17px">${nf(km)}<i style="font-style:normal;font-size:11px;color:var(--ink3)"> km</i></b></div>
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Duration')}</div>
+          <b style="font-size:17px">${hm(mins)}</b></div>
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Sessions')}</div>
+          <b style="font-size:17px">${nf(mine.length)}</b></div>
+      </div>
+      <div style="display:flex;gap:5px;align-items:flex-end;height:54px;margin-top:12px">
+        ${byDow.map((v,i)=>{const h=v>0?Math.max(4,Math.round(v/maxD*44)):3;const cur=i===nowDow;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${v>0?(cur?'var(--accent)':'var(--ink2)'):'var(--line2)'}"></div></div>`}).join('')}
+      </div>
+      <div style="display:flex;gap:5px;margin-top:5px">${['M','T','W','T','F','S','S'].map((d,i)=>
+        `<span style="flex:1;text-align:center;font:700 9px/1 var(--font);color:${i===nowDow?'var(--accent-text)':'var(--ink3)'}">${d}</span>`).join('')}</div>
+    </div>`;
+  const raceCard=race?`<div class="sec"><span class="sec-t">${ic('flag',15)} ${t('Upcoming race')}</span>
+      <span class="badge b-lime mono">${nf(dd)} ${t('D')}</span></div>
+    <div class="cc tight">
+      <div class="row">
+        <span class="badge b-lime mono" style="flex:none">${nf(dd)}<i style="font-style:normal;font-size:10px"> ${t('d')}</i></span>
+        <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(race.name||'')}</b>
+          <div class="muted" style="font-size:12px">${esc(fmtD(race.date))}${race.target?` \u00b7 ${t('target')} ${esc(race.target)}`:''}${race.event?` \u00b7 ${esc(race.event)}`:''}</div></div>
+      </div>
+      ${dd<=7?`<div class="muted" style="font-size:11.5px;margin-top:8px">${ic('info',12)} ${t('Race week — keep the easy days easy')}</div>`:''}
+    </div>`:'';
+  const pbCard=pbs.length?`<div class="sec"><span class="sec-t">${ic('medal',15)} ${t('Personal bests')}</span>
+      <span class="muted">${t('yours')}</span></div>
+    <div class="cc tight">${pbs.map(s=>{const b=pbRow(s);
+      return `<div class="row" style="padding:5px 0"><div style="flex:1;min-width:0">
+        <b style="font-size:13.5px">${esc(b.val)}</b>${b.ev?` <span class="muted" style="font-size:12px">${esc(b.ev)}</span>`:''}</div>
+        <span class="bdg bdg-lime" style="flex:none;font-size:9.5px">${t('PB')}</span></div>`}).join('')}</div>`:'';
+  /* §5 — optional metrics. Absent must READ as absent: a missing device is
+     never filled with 0 or a plausible-looking guess. */
+  const lastRow=TLOG.map((r,i)=>[i,r]).filter(x=>String(x[1].cid)===String(c.id))
+    .sort((a,b)=>(b[1].w-a[1].w)||(b[0]-a[0]))[0];
+  const lv=lastRow?lastRow[1]:null;
+  const paceOf=(k,mn)=>(k>0&&mn>0)?pvClock(mn*60/k):'';
+  const mTile=(l,v,u,note,none)=>`<div style="background:var(--surface);padding:11px 12px">
+      <div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${l}</div>
+      ${none?`<div style="font-weight:700;font-size:13px;margin-top:5px;color:var(--ink3)">— ${t('not recorded')}</div>
+        ${note?`<div style="font-size:9.5px;color:var(--ink3);margin-top:6px;letter-spacing:.07em;font-weight:700">${t(note)}</div>`:''}`
+      :`<div style="font-weight:800;font-size:16px;margin-top:5px;font-variant-numeric:tabular-nums">${v}${u?`<span style="font-size:11px;font-weight:700;color:var(--ink3);margin-inline-start:3px">${u}</span>`:''}</div>`}</div>`;
+  const metricCard=lv?`<div class="sec"><span class="sec-t">${ic('activity',15)} ${t('Last session · metrics')}</span>
+      <span class="badge" style="background:var(--line2);color:var(--ink3);font-size:9.5px">${t('MANUAL LOG')}</span></div>
+    <div class="cc tight">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden">
+        ${mTile(t('Distance'),lv.km?nf(lv.km):'—','km')}
+        ${mTile(t('Avg pace'),paceOf(+lv.km,+lv.min)||'—','/km')}
+        ${mTile(t('Duration'),nf(+lv.min||0),'min')}
+        ${mTile('RPE',nf(+lv.rpe||0),'')}
+        ${mTile(t('Avg HR'),'','','NO DEVICE',true)}
+        ${mTile(t('Cadence'),'','','NO DEVICE',true)}
+        ${mTile(t('Elevation'),'','','NO GPS',true)}
+      </div>
+      <div class="muted" style="font-size:11.5px;margin-top:9px">${ic('info',12)} ${t('3 of 7 metrics unavailable — connect a device to fill them in.')}</div>
+    </div>`:'';
+  return week+raceCard+pbCard+metricCard;
+}
 function cToday(){
   const c=client(S.cid);
   /* v18.62 — Today follows the WEEK SPLIT: today's slot decides between a
@@ -9231,6 +9760,7 @@ function cToday(){
       <div class="who" style="position:relative;z-index:1">${t('Your coach publishes your plan here')}</div>
       <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('list',15)} ${t('Week Split')}</button></div>
     </div>`}
+    ${athToday(c)}
     <!-- v18.112 — Next up now LEADS with today's session and its real start time
          (the mockup's "18:00 · Upper Body"), then the pending to-dos. -->
     ${(()=>{const todaysEv=EVENTS.filter(e=>e.client===c.name&&e.day===TODAY).sort((a,b)=>a.start-b.start);
@@ -10645,8 +11175,682 @@ function cPlayer(){
   </div>`;
 }
 
+/* ================= ATHLETICS §8 — RACES =================
+   Target race + countdown + result. The coach owns the row; `ath` is optional   so a squad-wide event and an athlete's target both fit the same shape. */
+function raceCard(r){
+  const d=Math.round((Date.parse(r.date+'T00:00:00')-Date.parse(isoToday()+'T00:00:00'))/864e5);
+  return `<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:12px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <b style="font-size:14.5px">${esc(r.name)}</b>
+          ${r.event?`<span class="chip">${ic('flag',11)} ${esc(r.event)}</span>`:''}
+          ${r.ath?`<span class="chip">${ic('user',11)} ${esc(r.ath)}</span>`:''}
+        </div>
+        <div class="muted" style="font-size:12.5px;margin-top:5px">${fmtD(r.date)}${r.loc?' · '+esc(r.loc):''}${r.dist?' · '+esc(r.dist):''}</div>
+        ${r.goal?`<div class="muted" style="font-size:12.5px;margin-top:4px">${ic('target',12)} ${esc(r.goal)}</div>`:''}
+      </div>
+      <div style="text-align:right;min-width:98px">
+        <div class="lbl" style="font-size:10.5px">${t('Target')}</div>
+        <b style="font-size:16px">${esc(r.target||'—')}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:3px">${d>0?`${nf(d)} ${t('days left')}`:d===0?t('Today'):t('Past')}</div>
+      </div>
+    </div>
+    <div class="row" style="gap:6px;margin-top:11px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="race-del" data-id="${esc(r.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      <button class="btn btn-outline btn-sm" data-act="race-edit" data-id="${esc(r.id)}">${ic('edit',13)} ${t('Edit')}</button>
+      <button class="btn btn-primary btn-sm" data-act="race-result" data-id="${esc(r.id)}">${ic('check',13)} ${t('Log result')}</button>
+    </div>
+  </div>`;
+}
+function vRaces(){
+  const up=RACES.filter(r=>!r.result).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const done=RACES.filter(r=>r.result).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="page-h"><div><h1>${t('Races')}</h1>
+    <div class="sub">${t('Target races, countdowns and results')}</div></div>
+    <button class="btn btn-primary" data-act="race-new">${ic('plus',15)} ${t('New Race')}</button></div>
+  ${up.length?up.map(raceCard).join(''):`<div class="empty">${ic('flag',24)}
+    <b>${t('No upcoming races')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Add a target race so the whole block is built around it')}</span>
+    <button class="btn btn-primary btn-sm" data-act="race-new" style="margin-top:4px">${ic('plus',14)} ${t('New Race')}</button></div>`}
+  ${done.length?`<div class="sec-t" style="margin:20px 0 10px">${t('Results')}</div>
+  <div class="card" style="padding:0;overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('Race')}</th><th>${t('Date')}</th><th>${t('Target')}</th>
+      <th>${t('Result')}</th><th>${t('Position')}</th><th>${t('PB')}</th></tr></thead>
+    <tbody>${done.map(r=>`<tr>
+      <td><b>${esc(r.name)}</b><span class="muted" style="font-size:11.5px;display:block">${esc(r.event||'')}</span></td>
+      <td>${fmtD(r.date)}</td><td>${esc(r.target||'—')}</td>
+      <td><b>${esc(r.result.time||'—')}</b></td><td>${esc(r.result.pos||'—')}</td>
+      <td>${r.result.pb?`<span class="bdg bdg-green" style="font-size:10px">${t('PB')}</span>`:'—'}</td>
+    </tr>`).join('')}</tbody></table></div>`:''}`;
+}
+function raceEditor(id){
+  const r=id!=null?RACES.find(x=>String(x.id)===String(id)):null;
+  S.raceDraft=r?JSON.parse(JSON.stringify(r)):{id:'rc'+Date.now(),name:'',event:'',dist:'',date:isoToday(),loc:'',target:'',goal:'',notes:'',ath:''};
+  const d=S.raceDraft;
+  const f=(k,l,ph,ty)=>`<div class="field"><label class="lbl">${t(l)}</label>
+    <input class="inp" id="rc-${k}"${ty?` type="${ty}"`:''} value="${esc(d[k]||'')}" placeholder="${ph||''}"></div>`;
+  openModal(`
+  <div class="modal-h"><h3>${ic('flag',16)} ${r?t('Edit Race'):t('New Race')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${f('name','Race name','City Half Marathon')}
+    <div class="fgrid">${f('event','Event','Half Marathon')}${f('dist','Distance','21.1 km')}</div>
+    <div class="fgrid">${f('date','Date','','date')}${f('loc','Location','Bristol')}</div>
+    <div class="fgrid">${f('target','Target time','1:29:00')}${f('ath','Athlete (optional)','Whole squad')}</div>
+    ${f('goal','Goal','Top 20 overall')}
+    ${f('notes','Notes','Anything the block must respect')}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="race-save">${ic('check',14)} ${t('Save Race')}</button></div>`);
+}
+function raceResult(id){
+  const r=RACES.find(x=>String(x.id)===String(id));if(!r)return;
+  openModal(`
+  <div class="modal-h"><h3>${ic('check-circle',16)} ${t('Log result')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(r.name)} · ${t('Target')}: ${esc(r.target||'—')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Actual time')}</label><input class="inp" id="rs-time" placeholder="4:21.6"></div>
+      <div class="field"><label class="lbl">${t('Position')}</label><input class="inp" id="rs-pos" placeholder="2nd"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Coach notes')}</label><input class="inp" id="rs-notes" placeholder="Positive first 3 km"></div>
+    <label class="row" style="gap:8px;align-items:center;font-size:13px">
+      <input type="checkbox" id="rs-pb"> ${t('This was a personal best')}</label>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="result-save" data-id="${esc(r.id)}">${ic('check',14)} ${t('Save result')}</button></div>`);
+}
+/* ================= ATHLETICS §9 — PERSONAL BESTS =================
+   One row per recorded mark, newest first; the latest mark per event is   highlighted. `prev` is never dropped — §9 asks for history, not a value. */
+function vPbs(){
+  const rows=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const latestOf=ev=>rows.find(p=>p.ev===ev);
+  return `<div class="page-h"><div><h1>${t('Personal Bests')}</h1>
+    <div class="sub">${t('Every mark with its history — not just the latest value')}</div></div>
+    <button class="btn btn-primary" data-act="pb-new">${ic('plus',15)} ${t('Record mark')}</button></div>
+  ${rows.length?`<div class="card" style="padding:0;overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th>
+      <th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th></tr></thead>
+    <tbody>${rows.map(p=>{const top=latestOf(p.ev)===p;return `<tr>
+      <td><b>${esc(p.ev)}</b></td>
+      <td><b style="font-size:14px;${top?'color:var(--accent-text)':''}">${esc(p.val)}</b>${top?` <span class="bdg bdg-green" style="font-size:9.5px">${t('PB')}</span>`:''}</td>
+      <td class="muted">${esc(p.prev||'—')}</td>
+      <td>${fmtD(p.date)}</td>
+      <td><span class="chip">${esc(p.src||'Manual')}</span></td>
+      <td class="muted">${esc(p.notes||'')}</td></tr>`}).join('')}</tbody></table></div>`:
+  `<div class="empty">${ic('medal',24)}<b>${t('No marks recorded yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Record a mark and every future one is compared against it')}</span>
+    <button class="btn btn-primary btn-sm" data-act="pb-new" style="margin-top:4px">${ic('plus',14)} ${t('Record mark')}</button></div>`}`;
+}
+function pbEditor(){
+  const evs=['60m','100m','200m','400m','800m','1500m','3000m','5000m','10K','Half Marathon','Marathon'];
+  openModal(`
+  <div class="modal-h"><h3>${ic('medal',16)} ${t('Record mark')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Event')}</label>
+      <input class="inp" id="pb-ev" list="pb-evs" placeholder="5K">
+      <datalist id="pb-evs">${evs.map(e=>`<option value="${e}"></option>`).join('')}</datalist></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('New mark')}</label><input class="inp" id="pb-val" placeholder="21:32"></div>
+      <div class="field"><label class="lbl">${t('Previous mark')}</label><input class="inp" id="pb-prev" placeholder="21:47"></div>
+    </div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" id="pb-date" type="date" value="${isoToday()}"></div>
+      <div class="field"><label class="lbl">${t('Source')}</label>
+        <select class="sel" id="pb-src"><option>Race result</option><option>Time trial</option>
+          <option>Road race</option><option>Manual</option></select></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Notes')}</label><input class="inp" id="pb-notes" placeholder="Wind, course, conditions"></div>
+    <div class="muted" style="font-size:12px">${t('The previous mark is kept so the history shows progression, not just the latest number.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="pb-save">${ic('check',14)} ${t('Record mark')}</button></div>`);
+}
+
+/* ================= ATHLETICS §3 — ATHLETE PROFILE =================
+   The athletics layer ON TOP of the existing athlete: discipline, target,   availability. Nothing here replaces a CLIENTS field — it extends it. */
+/* v19.12 — §3 now renders INSIDE the athlete's workspace as the "Athletics" tab
+   (desktop) or from the mobile client view. The athlete arrives as an explicit
+   cid — S.apCid and the ap-pick chip row are gone, because Clients already IS
+   the athlete picker. The Save button carries data-cid so the handler needs no
+   hidden "currently editing" state either. */
+function vAprofile(cid){
+  const c=client(cid||S.cid);
+  if(!c)return '';
+  const p=aprofOf(c.id)||{};
+  const F=(k,l,ph,dl)=>`<div class="field"><label class="lbl">${t(l)}</label>
+    <input class="inp" id="ap-${k}"${dl?` list="${dl}"`:''} value="${esc(p[k]||'')}" placeholder="${ph||''}"></div>`;
+  return `<div class="page-h"><div><h1>${t('Athletics Profile')}</h1>
+    <div class="sub">${esc(c.name)} · ${t('Discipline, target and availability — the layer the athletics engine reads')}</div></div>
+    <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button></div>
+  <div class="card" style="padding:16px">
+    <div class="row" style="gap:10px;margin-bottom:14px">${avC(c.name,40)}
+      <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(c.name)}</b>
+        <div class="muted" style="font-size:12.5px">${esc(c.goal||'')} · ${esc(c.prog||'')}</div></div>
+      ${p.id?`<span class="bdg bdg-green" style="font-size:10px">${t('Profile set')}</span>`:`<span class="bdg bdg-gray" style="font-size:10px">${t('Not set')}</span>`}</div>
+    <div class="fgrid">
+      ${F('disc','Primary discipline','Middle distance')}
+      ${F('event','Event','1500m','ap-evts')}
+      ${F('dist','Distance','1500 m')}
+      ${F('level','Competitive level','National')}
+      ${F('age','Age category','U23')}
+      ${F('pb','Personal bests','4:21.6 (1500m) · 1:31:24 (Half)')}
+      ${F('target','Target race','City Half Marathon')}
+      ${F('targetDate','Target race date','2026-10-18')}
+      ${F('avail','Training availability','Mon–Sat, mornings')}
+      ${F('freq','Weekly sessions','5')}
+      ${F('mileage','Current weekly mileage (km)','42')}
+      ${F('history','Training history','4 seasons · 118 sessions')}
+      ${F('injury','Injury / limitation notes','Left Achilles — mild tendinopathy')}
+      ${F('notes','Coach notes','Responds well to volume')}
+    </div>
+    <datalist id="ap-evts">${AEVTS.map(e=>`<option value="${e}"></option>`).join('')}</datalist>
+    <div class="muted" style="font-size:12px;margin-top:12px">${ic('database',12)} ${t('Events are data, not code — add a row to the catalogue, never a branch in the engine.')}</div>
+  </div>`;
+}
+
+/* ================= ATHLETICS §7 — TRAINING PHASES =================
+   The coach names the blocks; nothing here assumes one periodization model. */
+function vPhases(){
+  const now=PHASES.find(p=>p.now)||PHASES[0]||null;
+  const bar=v=>`<div class="pbar"><i style="width:${Math.max(4,Math.min(100,+v||0))}%"></i></div>`;
+  return `<div class="page-h"><div><h1>${t('Training Phases')}</h1>
+    <div class="sub">${t('Your season blocks — named by you, not by a fixed methodology')}</div></div>
+    <button class="btn btn-primary" data-act="ph-new">${ic('plus',15)} ${t('New phase')}</button></div>
+  ${now?`<div class="card" style="padding:16px 18px;margin-bottom:14px;border-color:var(--acc-line)">
+    <div class="row" style="gap:8px;flex-wrap:wrap"><span class="bdg bdg-lime">${t('Current phase')}</span>
+      <b style="font-size:15px">${esc(now.name)}</b>
+      ${now.weeks?`<span class="chip">${ic('clock',11)} ${esc(now.weeks)}</span>`:''}</div>
+    ${now.focus?`<div class="muted" style="font-size:12.5px;margin-top:7px">${esc(now.focus)}</div>`:''}
+    <div style="margin-top:10px">${bar(now.load)}</div></div>`:''}
+  ${PHASES.length?PHASES.map(ph=>`<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:10px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px;flex-wrap:wrap"><b style="font-size:14.5px">${esc(ph.name)}</b>
+          ${ph.weeks?`<span class="chip">${ic('calendar',11)} ${esc(ph.weeks)}</span>`:''}
+          ${ph.now?`<span class="bdg bdg-lime" style="font-size:10px">${t('Current')}</span>`:''}</div>
+        ${ph.focus?`<div class="muted" style="font-size:12.5px;margin-top:5px">${esc(ph.focus)}</div>`:''}
+      </div>
+      <div style="text-align:right;min-width:76px">
+        <div class="lbl" style="font-size:10.5px">${t('Load')}</div>
+        <b style="font-size:15px">${nf(ph.load||0)}<span class="muted" style="font-size:11px">%</span></b></div>
+    </div>
+    <div style="margin-top:9px">${bar(ph.load)}</div>
+    <div class="row" style="gap:6px;margin-top:10px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="ph-del" data-id="${esc(ph.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      ${ph.now?'':`<button class="btn btn-outline btn-sm" data-act="ph-now" data-id="${esc(ph.id)}">${ic('check',13)} ${t('Set current')}</button>`}
+    </div>
+  </div>`).join(''):`<div class="empty">${ic('calendar',24)}<b>${t('No phases yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Define the blocks your season is built from')}</span></div>`}
+  <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Phases are yours to name — CoachMint does not impose a periodization model, and your weekly plan stays where it is.')}</div>`;
+}
+function phEditor(){
+  const d=S.phDraft||{name:'',weeks:'',focus:'',load:50};
+  openModal(`
+  <div class="modal-h"><h3>${ic('clock',16)} ${t('Phase')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Phase name')}</label>
+      <input class="inp" id="ph-name" value="${esc(d.name||'')}" placeholder="Build"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Weeks')}</label>
+        <input class="inp" id="ph-weeks" value="${esc(d.weeks||'')}" placeholder="W7–W14"></div>
+      <div class="field"><label class="lbl">${t('Load')} %</label>
+        <input class="inp" id="ph-load" value="${esc(d.load!=null?d.load:'')}" placeholder="78"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Focus')}</label>
+      <input class="inp" id="ph-focus" value="${esc(d.focus||'')}" placeholder="Threshold · intervals · hills"></div>
+    <div class="muted" style="font-size:12px">${t('Name it the way YOU coach it — this is not a fixed methodology.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="ph-save">${ic('check',14)} ${t('Save phase')}</button></div>`);
+}
+
+/* ================= ATHLETICS §4 — BLOCK WORKOUT BUILDER ================= */
+function blkSummary(b){
+  const bits=[];
+  if(b.dist)bits.push(b.dist);
+  if(b.dur&&b.dur!=='—')bits.push(b.dur);
+  if(b.target)bits.push(b.target);
+  if(b.pace)bits.push(b.pace);
+  if(b.speed)bits.push(b.speed);
+  if(b.rec&&b.rec!=='—')bits.push(t('Rec')+': '+b.rec);
+  if(b.rpe)bits.push('RPE '+b.rpe);
+  if(b.items)bits.push(b.items);
+  if(b.reps)bits.push(b.reps);
+  if(b.type)bits.push(b.type);
+  if(b.surface)bits.push(b.surface);
+  if(!bits.length&&b.note)bits.push(b.note);
+  return bits.join(' · ')||t('No parameters');
+}
+function runCard(w){
+  return `<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <b style="font-size:14.5px">${esc(w.name)}</b>
+      <span class="chip">${ic('calendar',11)} ${esc(w.day||'—')}</span>
+      <span class="chip">${nf((w.blocks||[]).length)} ${t('blocks')}</span>
+    </div>
+    <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+      ${(w.blocks||[]).map(b=>`<div class="row" style="gap:10px;align-items:baseline;
+        padding:7px 10px;background:var(--row-h);border-radius:8px;
+        border-inline-start:3px solid ${b.t==='main'?'var(--accent)':'var(--line2)'}">
+        <span class="chip" style="min-width:82px;justify-content:center;flex:none">${esc(blkLabel(b.t))}</span>
+        <b style="font-size:12.5px;flex:none">${esc(b.name||'')}</b>
+        <span class="muted" style="font-size:12px;flex:1;min-width:0">${esc(blkSummary(b))}</span>
+      </div>`).join('')}
+    </div>
+    <div class="row" style="gap:6px;margin-top:11px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="run-del" data-id="${esc(w.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      <button class="btn btn-outline btn-sm" data-act="run-edit" data-id="${esc(w.id)}">${ic('edit',13)} ${t('Edit')}</button>
+    </div>
+  </div>`;
+}
+function vRunBuilder(){
+  return `<div class="page-h"><div><h1>${t('Run Builder')}</h1>
+    <div class="sub">${t('Block-based running sessions — warm-up to cool-down')}</div></div>
+    <button class="btn btn-primary" data-act="run-new">${ic('plus',15)} ${t('New workout')}</button></div>
+  ${RUNW.length?RUNW.map(runCard).join(''):`<div class="empty">${ic('dumbbell',24)}
+    <b>${t('No running workouts yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Build one from blocks — warm-up, drills, main set, recovery, cool-down')}</span>
+    <button class="btn btn-primary btn-sm" data-act="run-new" style="margin-top:4px">${ic('plus',14)} ${t('New workout')}</button></div>`}
+  <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Blocks keep Distance, Time, Pace, Speed, Recovery and Intensity separate — they are never collapsed into one field.')}</div>`;
+}
+/* Flush EVERY visible input into the draft. Without this, adding or deleting
+   a block (or changing a block's type, which swaps its whole field set) would   re-render the modal and silently discard whatever the coach had typed. */
+function runReadAll(){
+  const d=S.runDraft;if(!d)return;
+  const nm=$('rw-name'),dy=$('rw-day');
+  if(nm)d.name=nm.value;if(dy)d.day=dy.value;
+  const keys=[...new Set(Object.values(BLK_FIELDS).flat().map(f=>f[0]))];
+  (d.blocks||[]).forEach((b,i)=>{const sel=$('rw-t-'+i);if(sel)b.t=sel.value;
+    keys.forEach(k=>{const e2=$('rw-b'+i+'-'+k);if(e2)b[k]=e2.value.trim()})});
+}
+function renderRunEditor(){
+  const d=S.runDraft;if(!d)return;
+  const fields=[...new Set(Object.values(BLK_FIELDS).flat().map(f=>f[0]))];
+  const wide=['items','note','target','surface','type','rec','speed'];
+  const blocksHtml=(d.blocks||[]).map((b,i)=>`
+    <div class="ccard" style="padding:10px 12px;margin-bottom:8px">
+      <div class="row" style="gap:8px;margin-bottom:8px">
+        <span class="chip">${nf(i+1)}</span>
+        <div style="flex:1;min-width:0"><select class="sel" id="rw-t-${i}" data-change="run-btype" data-i="${i}">${BLK_TYPES.map(([k,l])=>`<option value="${k}" ${b.t===k?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+        <button class="btn btn-ghost btn-icon" data-act="run-block-del" data-i="${i}" style="color:var(--red)">${ic('trash',13)}</button>
+      </div>
+      <div class="fgrid" style="gap:8px">
+        ${(BLK_FIELDS[b.t]||BLK_FIELDS.main).map(([k,l])=>{
+          const v=b[k]==null?'':b[k];
+          return `<div class="field"${wide.includes(k)?' style="grid-column:1/-1"':''}>
+            <label class="lbl">${t(l)}</label>
+            <input class="inp" id="rw-b${i}-${k}" value="${esc(v)}"></div>`}).join('')}
+      </div>
+    </div>`).join('');
+  openModal(`
+  <div class="modal-h"><h3>${ic('dumbbell',16)} ${RUNW.some(x=>String(x.id)===String(d.id))?t('Edit workout'):t('New workout')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Workout name')}</label>
+      <input class="inp" id="rw-name" value="${esc(d.name||'')}" placeholder="Interval session — 6 × 400m"></div>
+    <div class="field"><label class="lbl">${t('Day')}</label>
+      <input class="inp" id="rw-day" value="${esc(d.day||'')}" placeholder="Thursday"></div>
+    <div class="lbl" style="margin:6px 0 8px">${t('Blocks')}</div>
+    ${blocksHtml}
+    <button class="btn btn-outline btn-sm" data-act="run-block-add" style="width:100%">${ic('plus',13)} ${t('Add block')}</button>
+    <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Each block keeps its own Distance, Time, Pace, Speed, Recovery and Intensity.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="run-save">${ic('check',14)} ${t('Save workout')}</button></div>`);
+  window.lucide&&lucide.createIcons();
+}
+function runEditor(id){
+  const w=id!=null?RUNW.find(x=>String(x.id)===String(id)):null;
+  S.runDraft=w?JSON.parse(JSON.stringify(w)):{id:'rw'+Date.now(),name:'',day:'Monday',
+    sp:['Running & Endurance'],blocks:[{t:'warmup',name:'Warm-up',dur:'10 min',pace:'',note:''}]};
+  renderRunEditor();
+}
+
+/* ============ ATHLETICS §16/§17 — PLANNED VS ACTUAL helpers ============
+   A plan stores STRINGS the coach typed ('400 m', '6 × 400 m', '5:40/km',
+   '10 min', '2:35'), so parsing is unavoidable. Every number derived here comes
+   from a value the coach wrote — nothing is invented, and a field left blank
+   yields 0 / '' rather than a guess. */
+const pvNum=s=>{const m=/(-?\d+(?:\.\d+)?)/.exec(String(s||''));return m?parseFloat(m[1]):0};
+const pvPaceSec=s=>{const m=/(\d+):(\d+)/.exec(String(s||''));return m?(+m[1])*60+(+m[2]):0};
+const pvDurSec=s=>{s=String(s||'').trim();if(!s||s==='—')return 0;
+  if(/min/i.test(s))return pvNum(s)*60;
+  const m=/^(\d+):(\d{1,2})$/.exec(s);return m?(+m[1])*3600+(+m[2])*60:0};
+/* distance a block contributes: explicit dist × reps, else pace × duration */
+const pvBlockKm=b=>{if(!b)return 0;
+  if(b.dist){const km=/km/i.test(b.dist)?pvNum(b.dist):pvNum(b.dist)/1000;
+    const reps=/×/.test(b.reps||'')?pvNum(b.reps):1;return +(km*reps).toFixed(2)}
+  const p=pvPaceSec(b.pace),d=pvDurSec(b.dur);return p&&d?+(d/p).toFixed(2):0};
+/* planned pace — only when BOTH distance and duration are stated, otherwise '' */
+const pvPlanPace=b=>{if(!b||!b.dist)return '';
+  const km=/km/i.test(b.dist)?pvNum(b.dist):pvNum(b.dist)/1000,d=pvDurSec(b.dur);
+  if(!(km>0&&d>0))return '';const s=Math.round(d/km);
+  return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const pvClock=s=>Math.floor(s/60)+':'+String(Math.round(s)%60).padStart(2,'0');
+const pvDelta=(p,a)=>{const sec=x=>{const m=/(\d+):(\d+)/.exec(x);return m?(+m[1])*60+(+m[2]):0};
+  const d=sec(a)-sec(p);if(!d)return '0:00';const ab=Math.abs(d);
+  return (d<0?'-':'+')+Math.floor(ab/60)+':'+String(ab%60).padStart(2,'0')};
+/* RUNW.day is a FULLDAYS name ('Thursday'); TLOG carries a date. Both sides
+   reduce to Monday=0, which is what TODAY and EVENTS.day already use. */
+const pvDayIdx=name=>{for(let i=0;i<7;i++){if(FULLDAYS[i]===name||t(FULLDAYS[i])===name)return i}return -1};
+
+/* ================= ATHLETICS §6 — TRAINING LOAD =================
+   Every number below is computed from TLOG. Deltas are deliberately NEUTRAL:   a rise in load is not "good", so it never gets a green/red treatment.   Nothing here estimates injury risk or readiness — §6 forbids presenting   this as a diagnostic tool. */
+function vLoad(){
+  const sel=S.loadCid||'all';
+  const rows=sel==='all'?TLOG:TLOG.filter(r=>String(r.cid)===String(sel));
+  const weeks=[...new Set(rows.map(r=>r.w))].sort((a,b)=>a-b);
+  const cur=weeks.length?weeks[weeks.length-1]:0;
+  const inW=w=>rows.filter(r=>r.w===w);
+  const sum=(a,k)=>a.reduce((s,x)=>s+(+x[k]||0),0);
+  const hm=m=>{m=Math.round(m);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')};
+  const pct=(a,b)=>{if(!b)return a>0?'new':'0%';const d=Math.round((a-b)/b*100);return (d>0?'+':'')+d+'%'};
+  const c=inW(cur),p=inW(cur-1);
+  const km=sum(c,'km'),mins=sum(c,'min'),ses=c.length;
+  const hi=c.filter(r=>r.kind==='hi').length;
+  const lng=c.filter(r=>r.kind==='long').length;
+  const rec=c.filter(r=>r.kind==='recovery').length;
+  const load=tlogLoad(c),pload=tlogLoad(p);
+  /* §6's load card carries a metric switch — Distance / Duration / Session RPE.
+     Bars are normalised against the selected metric only, never mixed. */
+  const met=S.loadMet||'km';
+  const METS=[['km','Distance'],['min','Duration'],['load','Session RPE']];
+  const valOf=w=>{const g=inW(w);return met==='km'?+sum(g,'km').toFixed(1):met==='min'?Math.round(sum(g,'min')):+tlogLoad(g)};
+  const metFmt=v=>met==='min'?hm(v):nf(v);
+  const metUnit=met==='km'?'km':met==='min'?'min':'sRPE';
+  const maxV=Math.max(1,...weeks.map(valOf));
+  /* RPE distribution for the current week — §6 reads it beside session mix. */
+  const rpeDist=[1,2,3,4,5,6,7,8,9,10].map(r=>({r:r,n:c.filter(x=>(+x.rpe||0)===r).length}))
+    .filter(x=>x.n>0), maxRpe=Math.max(1,...rpeDist.map(x=>x.n));
+  /* Most-recently-written first, so the session just logged sits on top. */
+  const recent=rows.map((r,i)=>[i,r]).sort((a,b)=>(b[1].w-a[1].w)||(b[0]-a[0])).slice(0,6).map(x=>x[1]);
+  /* The app's stat tile is `.stats > .card.stat` (icw chip + .k + .v). `.kpi`   exists only in shop/index.html — using it here would render an unstyled block. */
+  const cell=(l,v,u,d,i,c)=>`<div class="card stat">
+      <div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':'--'+c})">${ic(i,17)}</span>
+        <span class="k">${t(l)}</span><span class="sp"></span></div>
+      <div class="v">${v}${u?`<span style="font-size:15px;font-weight:700;margin-inline-start:3px;color:var(--ink3)">${u}</span>`:''}</div>
+      <div class="muted" style="font-size:11.5px;font-weight:600">${ic('trending-up',11)} ${t('vs last week')}: ${d}</div></div>`;
+  const kindRows=TLOG_KINDS.map(([k,l])=>{
+    const g=c.filter(r=>r.kind===k);
+    return `<tr><td><b>${t(l)}</b></td><td class="num">${nf(g.length)}</td>
+      <td class="num">${nf(+sum(g,'km').toFixed(1))} km</td>
+      <td class="num">${hm(sum(g,'min'))}</td></tr>`}).join('');
+  const weekRows=weeks.slice().reverse().map(w=>{
+    const g=inW(w),kmw=+sum(g,'km').toFixed(1);
+    return `<tr${w===cur?' style="background:var(--seg-on)"':''}>
+      <td><b>${t('Week')} ${w+1}</b>${w===cur?` <span class="bdg bdg-lime" style="font-size:9.5px">${t('Now')}</span>`:''}</td>
+      <td class="num">${nf(kmw)} km</td><td class="num">${hm(sum(g,'min'))}</td>
+      <td class="num">${nf(g.length)}</td><td class="num">${nf(tlogLoad(g))}</td></tr>`}).join('');
+  const chips=`<div class="row" style="gap:7px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="fchip ${sel==='all'?'on':''}" data-act="load-pick" data-cid="all">${t('All athletes')}</button>
+    ${CLIENTS.map(x=>`<button class="fchip ${String(sel)===String(x.id)?'on':''}" data-act="load-pick" data-cid="${x.id}">${esc(x.name)}</button>`).join('')}</div>`;
+  if(!rows.length)return `<div class="page-h"><div><h1>${t('Training Load')}</h1>
+    <div class="sub">${t('Distance, duration, session mix and progression')}</div></div>
+    <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>${chips}
+    <div class="empty">${ic('chart',24)}<b>${t('No sessions logged yet')}</b>
+      <span class="muted" style="font-size:12.5px">${t('Log a session to start tracking volume and progression')}</span></div>`;
+  /* §16/§17 — planned vs actual. TWO PANELS, never one blended score, and a
+     planned day with no log says "Not logged yet" instead of showing zeros.
+     Paired by WEEKDAY: a plan workout owns a day name, TLOG rows carry a date. */
+  const pvPairs=RUNW.map(w=>{const di=pvDayIdx(w.day);
+    /* Pair by NAME first: a plan workout and its log entry share a leading word
+       ('Interval session — 6 × 400m' ↔ 'Intervals · 6 × 400m',
+       'Long run — 28 km' ↔ 'Long run'). Weekday-only pairing compared the
+       plan's Thursday interval session against the log's Thursday long run —
+       a big but meaningless Δ. No name match ⇒ "Not logged yet" rather than a
+       wrong pairing. Scoped to the CURRENT week (c), never the whole log. */
+    const sig=String(w.name||'').toLowerCase().split(/[^a-z]+/).filter(Boolean)[0]||'';
+    const act=sig?c.filter(r=>String(r.name||'').toLowerCase().indexOf(sig)>=0):[];
+    const main=(w.blocks||[]).filter(b=>b.t==='main')[0]||null;
+    const pkm=+(w.blocks||[]).reduce((a,b)=>a+pvBlockKm(b),0).toFixed(1);
+    const akm=+act.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+    const amin=act.reduce((s,x)=>s+(+x.min||0),0);
+    const apace=(akm>0&&amin>0)?pvClock(amin*60/akm):'';
+    const ppace=pvPlanPace(main);
+    return {w:w,di:di,act:act,main:main,pkm:pkm,akm:akm,amin:amin,
+      dKm:+(akm-pkm).toFixed(1),ppace:ppace,apace:apace,
+      arpe:act.reduce((s,x)=>s+(+x.rpe||0),0)};});
+  const pvCard=RUNW.length?`<div class="card" style="padding:16px 18px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span class="card-t">${ic('target',14)} ${t('Planned vs actual')}</span>
+      <span class="bdg bdg-gray" style="font-size:10px">${t('DATA FOUNDATION')}</span></div>
+    <div style="margin-top:12px">${pvPairs.map(x=>`
+      <div style="margin-bottom:14px">
+        <div class="row" style="justify-content:space-between;gap:8px;margin-bottom:7px">
+          <span class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">${x.di<0?'':t(FULLDAYS[x.di])} · ${esc(x.w.name)}</span>
+          ${x.act.length?`<span class="bdg bdg-green" style="font-size:9.5px">${t('Logged')}</span>`
+            :`<span class="bdg bdg-gray" style="font-size:9.5px">${t('Not logged yet')}</span>`}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:12px 13px">
+            <div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t('Planned')}</div>
+            <div style="font-weight:700;font-size:14px;margin-top:5px">${x.pkm?nf(x.pkm)+' km':t('distance not stated')}</div>
+            <div class="muted" style="font-size:12px;margin-top:5px">${x.main&&x.main.target?`${t('Target')} ${esc(x.main.target)}`:''}${x.main&&x.main.rpe?`${x.main.target?' · ':''}RPE ${esc(x.main.rpe)}`:''}</div></div>
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:linear-gradient(180deg,rgba(200,240,75,.07),transparent),var(--surface)">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-text)">${t('Actual')}</div>
+            ${x.act.length?`<div style="font-weight:700;font-size:14px;margin-top:5px">${nf(x.akm)} km<span style="font-size:11px;font-weight:700;color:var(--ink3);margin-inline-start:4px">${nf(x.amin)} min</span></div>
+              <div class="muted" style="font-size:12px;margin-top:5px">${x.apace?x.apace+` ${t('min/km')}${' · '}`:''}${t('RPE')} ${nf(x.arpe)}</div>`
+            :`<div style="font-weight:700;font-size:13.5px;margin-top:5px;color:var(--ink3)">— ${t('not logged yet')}</div>
+              <div class="muted" style="font-size:12px;margin-top:5px">${t('Log the session to compare')}</div>`}</div>
+        </div>
+        ${x.act.length?`<div class="row" style="gap:18px;flex-wrap:wrap;margin-top:9px;padding-top:9px;border-top:1px solid var(--line2)">
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Distance Δ')}</div>
+            <b style="font-variant-numeric:tabular-nums">${(x.dKm>0?'+':'')+nf(x.dKm)} km</b></div>
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Pace Δ')}</div>
+            <b style="font-variant-numeric:tabular-nums">${x.ppace&&x.apace?pvDelta(x.ppace,x.apace):'—'}</b></div>
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Sessions')}</div>
+            <b style="font-variant-numeric:tabular-nums">${nf(x.act.length)}</b></div>
+        </div>`:''}
+      </div>`).join('')}</div>
+    <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Objective differences only — no interpretation and no medical or performance conclusions. Planned distance is derived from the fields typed in each block.')}${sel==='all'?'':` ${t('The plan is workspace-wide; Actual follows the athlete filter above.')}`}</div>
+  </div>`:'';
+  return `<div class="page-h"><div><h1>${t('Training Load')}</h1>
+    <div class="sub">${t('Distance, duration, session mix and progression')}</div></div>
+    <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>
+  ${chips}
+  <div class="stats" style="margin-bottom:14px">
+    ${cell('Weekly distance',nf(km),'km',pct(km,sum(p,'km')),'chart','accent')}
+    ${cell('Weekly duration',hm(mins),'h:mm',pct(mins,sum(p,'min')),'clock','blue')}
+    ${cell('Sessions',nf(ses),'',pct(ses,p.length),'calendar','purple')}
+    ${cell('Session load',nf(load),'sRPE',pct(load,pload),'zap','amber')}
+  </div>
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="card-t">${ic('chart',14)} ${t('Weekly volume')}</span>
+        <div class="seg">${METS.map(([a,l])=>`<button class="${met===a?'on':''}" data-act="load-met" data-v="${a}">${t(l)}</button>`).join('')}</div></div>
+      <div class="row" style="gap:6px;align-items:flex-end;height:104px;margin-top:14px">
+        ${weeks.map(w=>{const k=valOf(w);
+          const h=Math.max(5,Math.round(k/maxV*72));const now=w===cur;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%">
+            <span style="font:700 10px/1 var(--font);font-variant-numeric:tabular-nums;color:${now?'var(--accent-text)':'var(--ink3)'}">${metFmt(k)}</span>
+            <div style="width:100%;height:${h}px;border-radius:5px 5px 0 0;background:${now?'var(--accent-deep)':'var(--ink3)'};opacity:${now?1:.45}"></div></div>`}).join('')}
+      </div>
+      <div class="row" style="gap:6px;margin-top:7px">${weeks.map(w=>`<span style="flex:1;text-align:center;font:700 9.5px/1 var(--font);font-variant-numeric:tabular-nums;color:${w===cur?'var(--accent-text)':'var(--ink3)'}">${w+1}</span>`).join('')}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:9px">${t('Weeks')} 1–${nf(weeks.length)} · ${metUnit} · ${t('last one is current')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <span class="card-t" style="display:block;margin-bottom:10px">${ic('filter',14)} ${t('Session mix')} · ${t('this week')}</span>
+      <table class="tbl"><thead><tr><th>${t('Type')}</th><th class="num">${t('Count')}</th>
+        <th class="num">${t('Distance')}</th><th class="num">${t('Duration')}</th></tr></thead>
+        <tbody>${kindRows}</tbody></table>
+      <div class="muted" style="font-size:11.5px;margin-top:10px">${ic('zap',11)} ${t('High-intensity')}: ${nf(hi)} · ${t('Long runs')}: ${nf(lng)} · ${t('Recovery')}: ${nf(rec)}</div>
+      <div style="height:1px;background:var(--line2);margin:13px 0 11px"></div>
+      <span class="card-t" style="display:block;margin-bottom:9px">${ic('activity',14)} ${t('RPE distribution')}</span>
+      ${rpeDist.length?rpeDist.map(x=>`<div class="row" style="gap:8px;align-items:center;margin-bottom:6px">
+          <span class="bdg bdg-gray" style="flex:none;min-width:52px;justify-content:center">RPE ${nf(x.r)}</span>
+          <span style="flex:1;height:7px;background:var(--line2);border-radius:99px;overflow:hidden">
+            <i style="display:block;height:100%;width:${Math.round(x.n/maxRpe*100)}%;background:var(--ink2);border-radius:99px"></i></span>
+          <span style="font:700 11.5px var(--font);font-variant-numeric:tabular-nums;min-width:16px;text-align:right">${nf(x.n)}</span>
+        </div>`).join(''):`<div class="muted" style="font-size:11.5px">${t('No RPE logged this week')}</div>`}
+    </div>
+  </div>
+  <div class="card" style="padding:0;overflow-x:auto;margin-bottom:14px">
+    <div style="padding:16px 18px 6px"><span class="card-t">${ic('calendar',14)} ${t('Week by week')}</span></div>
+    <table class="tbl"><thead><tr><th>${t('Week')}</th><th class="num">${t('Distance')}</th>
+      <th class="num">${t('Duration')}</th><th class="num">${t('Sessions')}</th>
+      <th class="num">${t('Load')}</th></tr></thead><tbody>${weekRows}</tbody></table>
+  </div>
+  ${pvCard}
+  <div class="card" style="padding:0;overflow-x:auto;margin-bottom:14px">
+    <div style="padding:16px 18px 6px"><span class="card-t">${ic('list',14)} ${t('Recent sessions')}</span>
+      <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${t('Newest first')}</span></div>
+    <table class="tbl"><thead><tr><th>${t('Session')}</th><th>${t('Type')}</th>
+      <th class="num">${t('Distance')}</th><th class="num">${t('Duration')}</th>
+      <th class="num">RPE</th><th class="num">${t('Load')}</th><th></th></tr></thead>
+      <tbody>${recent.map(r=>{const kl=TLOG_KINDS.find(k=>k[0]===r.kind);
+        const rl=(+r.min||0)/60*(+r.rpe||0);
+        return `<tr><td><b>${esc(r.name)}</b><div class="muted" style="font-size:11px">${t('Week')} ${nf(+r.w+1)}${r.date?` · ${esc(r.date)}`:''}</div></td>
+          <td>${kl?`<span class="bdg bdg-gray">${t(kl[1])}</span>`:''}</td>
+          <td class="num">${(+r.km||0)>0?nf(+r.km)+' km':'—'}</td>
+          <td class="num">${hm(+r.min||0)}</td>
+          <td class="num">${nf(+r.rpe||0)}</td>
+          <td class="num">${nf(+rl.toFixed(1))}</td>
+          <td class="num"><button class="btn btn-ghost btn-icon" data-act="load-del" data-id="${r.id}" title="${t('Delete')}">${ic('trash',15)}</button></td></tr>`}).join('')}</tbody></table>
+  </div>
+  <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Session load is duration × RPE (sRPE) — a plain arithmetic total to help you read the trend. CoachMint does not interpret it, and it is not a medical or readiness score.')}</div>`;
+}
+function tlogEditor(){
+  openModal(`
+  <div class="modal-h"><h3>${ic('plus',16)} ${t('Log session')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Session name')}</label>
+      <input class="inp" id="tl-name" placeholder="Tempo · 4 × 2 km"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Distance')} (km)</label>
+        <input class="inp" id="tl-km" inputmode="decimal" placeholder="10"></div>
+      <div class="field"><label class="lbl">${t('Duration')} (min)</label>
+        <input class="inp" id="tl-min" inputmode="numeric" placeholder="50"></div>
+    </div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">RPE</label>
+        <input class="inp" id="tl-rpe" inputmode="numeric" placeholder="7"></div>
+      <div class="field"><label class="lbl">${t('Type')}</label>
+        <select class="sel" id="tl-kind">${TLOG_KINDS.map(([k,l])=>`<option value="${k}">${t(l)}</option>`).join('')}</select></div>
+    </div>
+    <div class="muted" style="font-size:12px">${t('Saved into the current week. Load = duration × RPE.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="load-save">${ic('check',14)} ${t('Log session')}</button></div>`);
+}
+
+/* ================= ATHLETICS §12 — WEARABLES =================
+   NOTHING HERE IS WIRED. No Strava credential exists in this deployment
+   (.env is not ours to change), so the screen refuses to pretend otherwise:
+   no fake "Connected", no fake last-sync time, no seeded activity rows.
+   What it DOES ship is real: the provider contract the engine will read
+   (§11/§12), the import policy (§15/§9), the privacy promises (§21) and the
+   human error copy the UI is designed to show (§20). §16/§17's planned-vs-
+   actual panel already lives in vLoad(), so it is not duplicated here. */
+const WEAR_ERRS=[
+ ['OAuth denied','You cancelled the Strava authorization. Nothing was connected.'],
+ ['Invalid authorization','That authorization link expired. Start the connection again.'],
+ ['Expired access token','Access expired — CoachMint refreshed it automatically.'],
+ ['Refresh failure','Strava no longer accepts this connection. Reconnect to keep syncing.'],
+ ['Rate limit','Strava rate limit reached. Automatic sync resumes in 14 minutes.'],
+ ['Missing athlete mapping','This Strava account is not linked to a CoachMint athlete yet.'],
+ ['Duplicate activity','Already imported — the existing record was updated instead.']];
+function vWear(){
+  /* v19.13 — the key node must READ as the key: a pale-lime fill plus a real
+     lime edge, so it separates from the two grey nodes beside it instead of
+     sitting on the same --seg-bg as they do. The EDGE is --accent-deep (a border
+     only has to be recognisable, and the different fill already carries the
+     boundary); the LABEL stays --accent-text because #8FB51E as 12.5px bold text
+     measures 1.96:1 — illegible, which is why it was darkened in the first place. */
+  const node=(a,b,key)=>`<div style="border:1px solid ${key?'var(--accent-deep)':'var(--line)'};border-radius:9px;padding:8px 13px;background:${key?'var(--accent-key)':'var(--seg-bg)'};text-align:center">
+      <b style="font-size:12.5px;${key?'color:var(--accent-text)':''}">${a}</b>
+      ${b?`<div class="muted" style="font-size:10.5px;margin-top:2px">${b}</div>`:''}</div>`;
+  const kv=(k,v)=>`<div><div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t(k)}</div>
+    <b style="font-size:15px;font-variant-numeric:tabular-nums">${v}</b></div>`;
+  return `<div class="page-h"><div><h1>${t('Wearables')}</h1>
+      <div class="sub">${t('External activity providers — what would connect, and how it would land')}</div></div>
+    <div class="row" style="gap:8px;min-width:0"><span class="bdg bdg-amber">${t('NOT CONNECTED')}</span>
+      <button class="btn btn-primary" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button></div></div>
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('link',14)} ${t('Connected apps')}</span>
+        <span class="bdg bdg-amber">${t('NOT CONNECTED')}</span></div>
+      <div class="row" style="gap:12px;margin-top:14px">
+        <span style="width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center;flex:none">${ic('watch',18)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:14.5px">Strava</b>
+          <div class="muted" style="font-size:12.5px">${t('Running activities and training data')}</div></div>
+        <span class="bdg bdg-gray" style="flex:none">${t('Off')}</span></div>
+      <div class="row" style="gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--line2)">
+        ${kv('Last sync','—')}${kv('Auto-sync',t('OFF'))}${kv('Imported','0')}${kv('Token','—')}</div>
+      <button class="btn btn-outline" style="margin-top:14px" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button>
+      <div class="muted" style="font-size:12px;margin-top:11px">${ic('shield-check',12)} ${t('The athlete authorizes their own account through the official OAuth flow. CoachMint never asks for a provider password, and no access or refresh token is ever returned to the browser.')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('refresh-cw',14)} ${t('Sync log')}</span>
+        <span class="bdg bdg-gray">${t('LIMIT 200 / 15 MIN')}</span></div>
+      <div class="empty" style="margin:14px 0 4px">${ic('refresh-cw',22)}<b>${t('No syncs yet')}</b>
+        <span class="muted" style="font-size:12.5px">${t('Connect an account and every sync attempt will be listed here')}</span></div>
+      <div class="muted" style="font-size:12px;margin-top:10px">${ic('info',12)} ${t('Strava allows 200 requests / 15 min and 2 000 / day — automatic sync and any manual refresh share that budget.')}</div>
+    </div>
+  </div>
+  <div class="card" style="padding:16px 18px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span class="card-t">${ic('git-branch',14)} ${t('Provider abstraction')}</span>
+      <span class="bdg bdg-lime">${t('STRAVA ONLY')}</span></div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      ${node('Strava',t('OAuth · webhook'),false)}<span class="muted">→</span>
+      ${node('ExternalActivityProvider','',true)}<span class="muted">→</span>
+      ${node('CoachMint Activity','',false)}<span class="muted">→</span>
+      ${node(t('Athletics engine'),'',false)}</div>
+    <div style="height:1px;background:var(--line2);margin:15px 0 12px"></div>
+    <div class="muted" style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t('Normalization')} (§11)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:9px;margin-top:9px">
+      ${[['moving_time','duration'],['average_heartrate','heartRate']].map(x=>
+        `<div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px">
+          <div class="muted" style="font-size:10.5px">Strava</div><b style="font-size:13px">${x[0]}</b>
+          <div class="muted" style="font-size:10.5px;margin-top:7px">CoachMint</div>
+          <b style="font-size:13px;color:var(--accent-text)">${x[1]}</b></div>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:12px">${ic('info',12)} ${t('The athletics engine reads')} <b style="color:var(--ink)">CoachMint Activity</b>, ${t('never a provider payload. Garmin, Apple Health, Health Connect and Coros plug into the same interface later — none of them are implemented, and the unique key is')} <b style="color:var(--ink)">provider + providerActivityId</b> ${t('so a re-delivered webhook updates the record instead of duplicating it.')}</div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:16px 18px">
+      <span class="card-t">${ic('download',14)} ${t('What is imported')}</span>
+      <div class="row" style="gap:7px;flex-wrap:wrap;margin-top:12px">
+        ${['Run','Trail Run','Walk'].map(x=>`<span class="bdg bdg-lime">${t(x)}</span>`).join('')}
+        ${['Ride','Swim'].map(x=>`<span class="bdg bdg-gray">${t(x)} ${t('skipped')}</span>`).join('')}</div>
+      <div class="muted" style="font-size:12px;margin-top:10px">${ic('filter',12)} ${t('Run, Trail Run and Walk are imported; Ride and Swim are not. Skipped types are shown on purpose — nothing is pulled in merely because the API offers it.')}</div>
+      <div style="height:1px;background:var(--line2);margin:14px 0 12px"></div>
+      <span class="card-t">${ic('shield-check',14)} ${t('Privacy')}</span>
+      <div style="margin-top:9px">${[
+        [t('What is imported'),t('distance, duration, pace, heart rate, elevation')],
+        [t('What is not'),t('Routes, GPS, followers, profile')],
+        [t('Who can see it'),t('You + your assigned coach')],
+        [t('How to disconnect'),t('sync stops and credentials are removed — your training history in CoachMint is kept')]]
+        .map(x=>`<div class="row" style="gap:10px;padding:7px 0;align-items:flex-start">
+          <span class="muted" style="min-width:118px;font-size:11.5px;font-weight:700;flex:none">${x[0]}</span>
+          <span style="flex:1;min-width:0;font-size:12.5px">${x[1]}</span></div>`).join('')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('alert-triangle',14)} ${t('Error states')}</span>
+        <span class="bdg bdg-gray">${t('REFERENCE')}</span></div>
+      <div style="margin-top:7px">${WEAR_ERRS.map((e,i)=>
+        `<div class="row" style="gap:10px;padding:8px 0;align-items:flex-start${i<WEAR_ERRS.length-1?';border-bottom:1px solid var(--line2)':''}">
+          <b style="min-width:130px;font-size:12.5px;flex:none">${t(e[0])}</b>
+          <span class="muted" style="flex:1;min-width:0;font-size:12.5px">${t(e[1])}</span></div>`).join('')}</div>
+      <div class="muted" style="font-size:12px;margin-top:11px">${ic('eye-off',12)} ${t('Raw API responses, tokens and secrets are never surfaced to the athlete or the coach.')}</div>
+    </div>
+  </div>
+  <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('No provider is connected in this deployment — the cards above describe the contract this screen will honour once one is, and no sync, activity or timestamp on this page is invented.')}</div>`;
+}
+
 /* ================= SHELL / RENDER ================= */
-function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings}[S.view]()}
+function currentView(){const m={dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+  /* v19.1 — a view the current sport does not own (or a stale key from an old
+     bookmark) must not throw; fall back to the dashboard instead. v19.7 made
+     that a real gate: sportKey() also drops keys no selected sport owns. */
+  return (m[sportKey(S.view)]||m.dash)()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
   /* v18.118 — regrouped from 2 sections to 3. `Messages` moved OUT of "Manage"
@@ -10659,12 +11863,17 @@ function shell(inner){
     manage:[['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
   };
   const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
+  /* v19.1 — sport extensions render as their own group between Workspace and
+     Today. With an empty table this joins to '' and the rail is unchanged. */
+  const extNav=sportSections().map(g=>
+    `<div class="nav-sec">${t(g.label)}</div>${(g.items||[]).map(navIt).join('')}`).join('');
   return `<div class="shell">
   ${fbBtn('bottom:20px;inset-inline-start:20px;')}
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
     <nav class="nav">
       <div class="nav-sec">${t('Workspace')}</div>${nav.workspaces.map(navIt).join('')}
+      ${extNav}
       <div class="nav-sec">${t('Today')}</div>${nav.today.map(navIt).join('')}
       <div class="nav-sec">${t('Manage')}</div>${nav.manage.map(navIt).join('')}
     </nav>
@@ -10689,7 +11898,7 @@ function shell(inner){
       <span class="sp"></span>
       ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
-      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${t('Coach')}</span>
+      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${ONBOARD.sport?t(ONBOARD.sport):t('Coach')}</span>
       <div class="mwrap" data-mw>
         <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
         <div class="menu"><div class="menu-hd">${t('Create')}</div>
@@ -11342,6 +12551,95 @@ document.addEventListener('click',e=>{
     case 'bill-request':billRequest(el.dataset.p);break;
     case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
     case 'signin':S.role='coach';S.view='dash';render();toast('Welcome back, Coach');cloudEnsure();break;
+    /* v19.8 — ATHLETICS §11 dashboard filters */
+    case 'ath-f':{const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+      F[el.dataset.k]=el.dataset.v;render();break;}
+    case 'ath-reset':S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'};render();break;
+    /* v19.9 — ATHLETICS §12. No OAuth is configured in this deployment, so
+       connecting cannot be faked: the button says exactly what is missing. */
+    case 'wear-connect':toast(t('Strava OAuth is not configured here — a Strava application (client id and secret) is needed before an athlete can authorize.'));break;
+    /* v19.6 — ATHLETICS §6 training load */
+    case 'load-pick':S.loadCid=el.dataset.cid;render();break;
+    case 'load-met':S.loadMet=el.dataset.v;render();break;
+    case 'load-del':{const i=TLOG.findIndex(x=>String(x.id)===String(el.dataset.id));
+      /* markDead before splice, exactly as run-del/ph-del/race-del do — without
+         it cloudMerge would resurrect the session on the next sync. */
+      if(i>-1){markDead('TLOG',TLOG[i].id);TLOG.splice(i,1);saveData();render();toast(t('Session removed'))}break;}
+    case 'load-new':tlogEditor();break;
+    case 'load-save':{const g=k=>{const e2=$('tl-'+k);return e2?e2.value:''};
+      const km=parseFloat(g('km')),mn=parseInt(g('min')),rp=parseInt(g('rpe'));
+      if(!g('name').trim()||isNaN(mn)){toast(t('Name and duration are required'));break}
+      const weeks=TLOG.map(x=>x.w);const w=weeks.length?Math.max.apply(null,weeks):0;
+      TLOG.push({id:'tl'+Date.now(),cid:S.loadCid&&S.loadCid!=='all'?S.loadCid:1,
+        w:w,date:new Date().toISOString().slice(0,10),name:g('name').trim(),
+        kind:g('kind')||'easy',km:isNaN(km)?0:+km.toFixed(1),min:mn,
+        rpe:isNaN(rp)?5:Math.max(1,Math.min(10,rp))});
+      closeModal();saveData();render();toast(t('Session logged'));break;}
+    /* v19.5 — ATHLETICS §4 block builder */
+    case 'run-new':runEditor(null);break;
+    case 'run-edit':runEditor(el.dataset.id);break;
+    case 'run-del':{const i=RUNW.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){markDead('RUNW',RUNW[i].id);RUNW.splice(i,1);saveData();render();toast(t('Workout deleted'))}break;}
+    case 'run-block-add':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.blocks=d.blocks||[];d.blocks.push({t:'main',name:t('Main set')});
+      renderRunEditor();break;}
+    case 'run-block-del':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.blocks.splice(+el.dataset.i,1);renderRunEditor();break;}
+    case 'run-save':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.name=(d.name||'').trim();
+      if(!d.name){toast(t('Workout name is required'));break}
+      const i=RUNW.findIndex(x=>String(x.id)===String(d.id));
+      if(i<0)RUNW.push(d);else RUNW[i]=d;
+      closeModal();saveData();render();toast(t('Workout saved'));break;}
+    /* v19.4 — ATHLETICS §7 phases */
+    case 'ph-new':S.phDraft=null;phEditor();break;
+    case 'ph-save':{const g=k=>{const e2=$('ph-'+k);return e2?e2.value:''};
+      const p={id:'ph'+Date.now(),name:g('name').trim(),weeks:g('weeks').trim(),
+        focus:g('focus').trim(),load:Math.max(0,Math.min(100,parseInt(g('load'))||0)),now:false};
+      if(!p.name){toast(t('Phase name is required'));break}
+      PHASES.push(p);closeModal();saveData();render();toast(t('Phase added'));break;}
+    case 'ph-now':{const i=PHASES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){PHASES.forEach((x,j)=>{x.now=(j===i)});saveData();render();toast(t('Current phase set'))}break;}
+    case 'ph-del':{const i=PHASES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){const was=!!PHASES[i].now;markDead('PHASES',PHASES[i].id);PHASES.splice(i,1);
+        if(was&&PHASES[0])PHASES[0].now=true;saveData();render();toast(t('Phase removed'))}break;}
+    /* v19.3 → v19.12 — §3 profile lives in the client's own page now: the
+       athlete comes from the button's data-cid, so ap-pick and S.apCid are gone. */
+    case 'ap-save':{const cid=+el.dataset.cid||el.dataset.cid;if(!cid)break;
+      const g=k=>{const e2=$('ap-'+k);return e2?e2.value.trim():''};
+      const rec={id:'ap'+cid,cid:cid,disc:g('disc'),event:g('event'),dist:g('dist'),
+        level:g('level'),age:g('age'),pb:g('pb'),target:g('target'),targetDate:g('targetDate'),
+        avail:g('avail'),freq:g('freq'),mileage:g('mileage'),history:g('history'),
+        injury:g('injury'),notes:g('notes')};
+      const i=APROF.findIndex(x=>String(x.id)===String(rec.id));
+      if(i<0)APROF.push(rec);else APROF[i]=rec;
+      saveData();render();toast(t('Profile saved'));break;}
+    /* v19.2 — ATHLETICS §8 races */
+    case 'race-new':raceEditor(null);break;
+    case 'race-edit':raceEditor(el.dataset.id);break;
+    case 'race-del':{const i=RACES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){markDead('RACES',RACES[i].id);RACES.splice(i,1);}
+      closeModal();saveData();render();toast(t('Race deleted'));break;}
+    case 'race-save':{const d=S.raceDraft;if(!d)break;
+      ['name','event','dist','date','loc','target','goal','notes','ath'].forEach(k=>{const e2=$('rc-'+k);if(e2)d[k]=e2.value.trim()});
+      if(!d.name){toast(t('Race name is required'));break}
+      const i=RACES.findIndex(x=>String(x.id)===String(d.id));
+      if(i<0)RACES.push(d);else RACES[i]=d;
+      closeModal();saveData();render();toast(t('Race saved'));break;}
+    case 'race-result':raceResult(el.dataset.id);break;
+    case 'result-save':{const r=RACES.find(x=>String(x.id)===String(el.dataset.id));
+      if(r){const g=id=>{const e2=$(id);return e2?e2.value:''};
+        r.result={time:g('rs-time').trim(),pos:g('rs-pos').trim(),
+          pb:!!($('rs-pb')||{}).checked,notes:g('rs-notes').trim()};}
+      closeModal();saveData();render();toast(t('Result saved'));break;}
+    /* v19.2 — ATHLETICS §9 personal bests */
+    case 'pb-new':pbEditor();break;
+    case 'pb-save':{const g=id=>{const e2=$(id);return e2?e2.value:''};
+      const p={id:'pb'+Date.now(),ev:g('pb-ev').trim(),val:g('pb-val').trim(),
+        prev:g('pb-prev').trim(),date:g('pb-date')||isoToday(),
+        src:g('pb-src')||'Manual',notes:g('pb-notes').trim()};
+      if(!p.ev||!p.val){toast(t('Event and mark are required'));break}
+      PBSD.unshift(p);closeModal();saveData();render();toast(t('Mark recorded'));break;}
     case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
     case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();S.calOff=0;
       if(isNarrow()){S.mClient=+el.dataset.cid;S.mview='client'}else{S.view='wspace';S.cid=+el.dataset.cid}
@@ -12496,7 +13794,11 @@ document.addEventListener('click',e=>{
     case 'mclient':{S.mClient=+el.dataset.cid;S.mview='client';loadClientProgram(S.mClient);render();break}
     case 'mmsg':{S.msgThread=el.dataset.c;MSGS.forEach(m=>{if(m.client===S.msgThread&&m.from==='client')m.read=true});
       S.mview='tabs';S.mtab='messages';render();break}
-    case 'mhome':S.mview='tabs';render();break;
+    /* v19.12 — Back from §3 returns to the athlete it belongs to, not to the
+       More tab it no longer appears in. Every other sport screen keeps 'tabs'. */
+    case 'mhome':S.mview=(S.mview==='aprof')?'client':'tabs';render();break;
+    /* v19.3 — sport sections from the mobile More menu */
+    case 'mnav':S.mview=el.dataset.v;render();window.scrollTo({top:0});break;
     case 'mworkout':if(S.mClient!=null)S.cid=S.mClient;S.mview='builder';loadClientProgram(S.cid);render();break;
     case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
     case 'msettings':S.mview='settings';render();break;
@@ -12509,6 +13811,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{
   if(e.target.matches('.exb [data-bf]')){render();return}
   const el=e.target.closest('[data-change]');if(!el)return;
+  if(el.dataset.change==='run-btype'){runReadAll();const d=S.runDraft;
+    if(d&&d.blocks&&d.blocks[+el.dataset.i]){d.blocks[+el.dataset.i].t=el.value;renderRunEditor()}return}
   if(el.dataset.change==='chal-draft'){const d=S.chalDraft;if(d){d[el.dataset.k]=el.value;renderChalEditor()}return}
   if(el.dataset.change==='client'){S.cid=+el.value;loadClientProgram(S.cid);render()}
   /* v18.71 — count habit (steps/mins): shared numeric entry. */
@@ -12527,6 +13831,18 @@ document.addEventListener('change',e=>{
     savePrefs();render();toast(t('Working hours updated'))}
   /* calendar type — Jalali (Shamsi) / Gregorian / auto */
   if(el.dataset.change==='caltype'){PREFS.cal.type=el.value;savePrefs();render();toast(t('Calendar type updated'))}
+  /* v19.8 — ATHLETICS §11 dashboard filters (Event · Athlete · Phase · Date · Status) */
+  if(el.dataset.change==='athf'){const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+    F[el.dataset.k]=el.value;render()}
+  /* v19.14 — change the sport AFTER setup (Settings › Profile). Same writer the
+     wizard commits to; no view state is reset because every gate reads
+     ONBOARD.sport at render time. Switching away from an athletics sport leaves
+     its data in the payload on purpose — switch back and it is all still there. */
+  if(el.dataset.change==='osport'){
+    const v=el.value||'';
+    if(v!==(ONBOARD.sport||'')){ONBOARD.sport=v;saveData();render();
+      toast(`${t('Sport updated')}: ${v?t(v):t('None (base workspace)')}`)}
+  }
 });
 document.addEventListener('input',e=>{
   if(e.target.matches('.exb [data-bf]')){

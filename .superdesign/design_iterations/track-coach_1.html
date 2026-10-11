@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoachMint · Track &amp; Field — Onboarding + Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- step ② deliverable. It imports theme_2.css itself, so the general coach
+     theme stays the single source of truth and this file only layers T&F on. -->
+<link rel="stylesheet" href="theme_3.css">
+<style>
+/* =============================================================================
+   MOCKUP SHELL — not part of the product. This thin top strip exists only so
+   the design can be reviewed screen-by-screen in one file. It is deliberately
+   drawn in JetBrains Mono on pure black so it can never be confused with the
+   app chrome underneath it.
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:var(--t-body);
+     -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+.mockbar{position:sticky;top:0;z-index:90;display:flex;gap:6px;align-items:center;
+  flex-wrap:wrap;padding:8px 14px;background:#000;border-bottom:1px solid #1b1b1b}
+.mockbar .mb-l{font:var(--t-label);letter-spacing:var(--tr-label);color:#666;
+  text-transform:uppercase;margin-right:6px}
+.mb{font:700 10.5px/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;
+  color:#8a8a8a;background:#141414;border:1px solid #262626;padding:7px 10px;
+  border-radius:6px;cursor:pointer;transition:color .12s,background .12s,border-color .12s}
+.mb:hover{color:#ddd;background:#1e1e1e}
+.mb.on{color:#C8F04B;border-color:rgba(200,240,75,.4);background:rgba(200,240,75,.08)}
+.mb-sp{flex:1}
+.mb-th{color:#8a8a8a}
+
+.scr{display:none}
+.scr.on{display:block}
+
+/* =============================================================================
+   ONBOARDING — steps ①
+   ========================================================================== */
+.ob{max-width:880px;margin:0 auto;padding:48px 24px 72px}
+.ob-prog{display:flex;align-items:center;gap:0;margin-bottom:44px}
+.ob-dot{display:flex;align-items:center;flex:1}
+.ob-dot:last-child{flex:none}
+.ob-dot .d{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font:700 11px/1 var(--font-mono);background:var(--surface2);color:var(--ink3);
+  border:1px solid var(--line);flex:none;transition:all .18s var(--e-out)}
+.ob-dot .bar{height:1px;flex:1;background:var(--line);position:relative;overflow:hidden}
+.ob-dot .bar i{position:absolute;inset:0;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .32s var(--e-out)}
+.ob-dot.done .d{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ob-dot.now  .d{background:var(--accent-soft);color:var(--accent);
+  border-color:var(--accent-line);box-shadow:0 0 0 4px rgba(200,240,75,.07)}
+.ob-dot.done .bar i{transform:scaleX(1)}
+.ob-lab{position:absolute;top:32px;inset-inline-start:0;white-space:nowrap;
+  font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);text-transform:uppercase}
+.ob-dot{position:relative}
+
+.obstep{display:none}
+.obstep.on{display:block;animation:stepIn .26s var(--e-out) both}
+.obstep.back.on{animation:stepInBack .26s var(--e-out) both}
+@keyframes stepIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes stepInBack{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+
+.ob-eyebrow{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--accent);
+  text-transform:uppercase;margin-bottom:12px}
+.ob-h{font:var(--t-h1);letter-spacing:var(--tr-display);margin:0 0 8px;color:var(--ink)}
+.ob-sub{font:var(--t-body);color:var(--ink3);margin:0 0 32px;max-width:56ch}
+
+.ob-f{margin-bottom:18px}
+.ob-f label{display:block;font:var(--t-label);letter-spacing:var(--tr-label);
+  color:var(--ink3);text-transform:uppercase;margin-bottom:7px}
+.ob-f input,.ob-f select{width:100%;height:44px;padding:0 14px;background:var(--surface2);
+  border:1px solid var(--line);border-radius:var(--r-sm);color:var(--ink);
+  font:var(--t-body);outline:none;transition:border-color .14s,box-shadow .14s}
+.ob-f input:focus,.ob-f select:focus{border-color:var(--accent-line);box-shadow:var(--ring)}
+.ob-f .hint{font:var(--t-body-sm);color:var(--ink3);margin-top:6px}
+
+/* Sport cards — rule (C): NO hue. Groups are told apart by icon + label only. */
+.sports{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.sport{position:relative;text-align:start;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:18px 16px;cursor:pointer;
+  transition:border-color .16s var(--e-out),background .16s var(--e-out),transform .16s var(--e-out)}
+.sport:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.sport .si{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:var(--surface2);color:var(--ink2);margin-bottom:12px;transition:all .16s}
+.sport b{display:block;font:700 14px/1.25 var(--font-ui);color:var(--ink);margin-bottom:5px}
+.sport span{display:block;font:var(--t-body-sm);color:var(--ink3)}
+.sport .sck{position:absolute;top:14px;inset-inline-end:14px;width:20px;height:20px;
+  border-radius:50%;display:grid;place-items:center;background:var(--accent);
+  color:var(--accent-ink);opacity:0;transform:scale(0) rotate(-12deg);
+  transition:opacity .14s,transform .22s var(--e-spring)}
+.sport.sel{border-color:var(--accent-line);background:
+  linear-gradient(180deg,rgba(200,240,75,.07),rgba(200,240,75,.02)),var(--surface)}
+.sport.sel .si{background:var(--accent-soft);color:var(--accent)}
+.sport.sel .sck{opacity:1;transform:scale(1) rotate(0)}
+.sports.has-sel .sport:not(.sel){opacity:.55}
+.sport.wide{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px 16px}
+.sport.wide .si{margin:0}
+
+.ob-nav{display:flex;gap:10px;align-items:center;margin-top:30px;
+  padding-top:22px;border-top:1px solid var(--line)}
+.ob-nav .sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:var(--btn-h);
+  padding:0 16px;border-radius:var(--btn-radius);font:700 13px/1 var(--font-ui);
+  border:1px solid transparent;cursor:pointer;transition:all .14s var(--e-out);
+  text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:var(--btn-primary-sh)}
+.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--ink2);border-color:var(--line)}
+.btn-outline:hover{border-color:var(--line-strong);color:var(--ink);background:var(--surface2)}
+.btn-ghost{background:transparent;color:var(--ink3)}
+.btn-ghost:hover{color:var(--ink);background:var(--surface2)}
+.btn-lg{height:44px;padding:0 22px;font-size:14px}
+
+/* ---- Step 4 · BUILD — the signature moment -------------------------------- */
+.build-hd{animation:stepIn .3s var(--e-out) both}
+.build-ok{display:inline-flex;align-items:center;gap:9px;font:700 13px/1 var(--font-ui);
+  color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);
+  border-radius:var(--r-pill);padding:8px 14px;margin-bottom:18px}
+.build-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 20px}
+.build-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:18px}
+.build-box h4{margin:0 0 14px;font:var(--t-label);letter-spacing:var(--tr-label);
+  color:var(--ink3);text-transform:uppercase}
+.brow{display:flex;align-items:center;gap:9px;padding:7px 0;position:relative;
+  font:500 13px/1.4 var(--font-ui);color:var(--ink)}
+.brow.kept{color:var(--ink2);opacity:.7}
+.brow .bt{width:16px;height:16px;flex:none;display:grid;place-items:center}
+.brow .rule{position:absolute;left:25px;right:0;bottom:0;height:1px;background:var(--line);
+  transform:scaleX(0);transform-origin:left}
+.build-anim .brow{animation:listIn .24s var(--e-out) both;animation-delay:var(--d,0ms)}
+.build-anim .brow .rule{animation:ruleIn .4s linear both;
+  animation-delay:calc(var(--d,0ms) + 60ms)}
+.build-anim .brow .bt svg{stroke-dasharray:22;stroke-dashoffset:22;
+  animation:checkDraw .26s linear both;animation-delay:var(--d,0ms)}
+.build-anim .brow.kept{animation:keptIn .2s var(--e-out) both;
+  animation-delay:var(--d,0ms)}
+/* THE STAGGER. Each box counts from its own child 1, so "ADDED" and
+   "REPLACED" fill side by side instead of one waiting on the other.
+   40ms is the ceiling from step ③ — past that it stops reading as order. */
+.build-anim .brow:nth-child(1){--d:40ms}
+.build-anim .brow:nth-child(2){--d:80ms}
+.build-anim .brow:nth-child(3){--d:120ms}
+.build-anim .brow:nth-child(4){--d:160ms}
+.build-anim .brow:nth-child(5){--d:200ms}
+.build-anim .brow:nth-child(6){--d:240ms}
+@keyframes listIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes keptIn{from{opacity:0}to{opacity:.7}}
+@keyframes ruleIn{to{transform:scaleX(1)}}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
+.build-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.bm{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:14px 16px}
+.bm h5{margin:0 0 8px;font:var(--t-label);letter-spacing:var(--tr-label);
+  color:var(--ink3);text-transform:uppercase}
+.bm p{margin:0;font:500 13px/1.6 var(--font-ui);color:var(--ink2)}
+.build-anim .build-meta .bm{animation:listIn .24s var(--e-out) both;
+  animation-delay:calc(.62s + var(--i,0)*.06s)}
+.build-cta{margin-top:26px;display:flex;justify-content:flex-end}
+.build-anim .build-cta{animation:ctaPop .32s var(--e-spring) both;animation-delay:.78s}
+@keyframes ctaPop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+
+/* =============================================================================
+   WORKSPACE — steps ③ (sidebar + track views)
+   ========================================================================== */
+.ws{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 46px)}
+.ws-side{border-inline-end:1px solid var(--line);background:var(--surface);
+  display:flex;flex-direction:column;position:sticky;top:46px;height:calc(100vh - 46px)}
+.brand{display:flex;gap:10px;align-items:center;padding:16px 16px 14px;
+  border-bottom:1px solid var(--line)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:var(--accent);
+  color:var(--accent-ink);display:grid;place-items:center;font:800 14px/1 var(--font-display)}
+.brand-name{font:800 14px/1 var(--font-display);letter-spacing:.06em}
+.brand-tag{font:600 8.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--ink3);margin-top:4px}
+.nav{padding:10px 8px;overflow-y:auto;flex:1}
+.nav-sec{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;padding:14px 10px 6px}
+.nav-it{display:flex;align-items:center;gap:9px;height:var(--nav-h);padding:0 10px;
+  border-radius:9px;color:var(--nav-idle-fg);font:600 13px/1 var(--font-ui);
+  cursor:pointer;transition:background .12s,color .12s;user-select:none}
+.nav-it:hover{background:var(--surface2);color:var(--ink2)}
+.nav-it.on{background:var(--nav-active-bg);color:var(--nav-active-fg)}
+.nav-it .lb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none;
+  opacity:0;transition:opacity .15s}
+.nav-it.on .nav-dot{opacity:1}
+
+.ws-main{min-width:0;display:flex;flex-direction:column}
+.top{height:var(--topbar-h);display:flex;align-items:center;gap:10px;padding:0 20px;
+  border-bottom:1px solid var(--line);background:var(--topbar-bg);
+  backdrop-filter:var(--topbar-blur);position:sticky;top:46px;z-index:20}
+.top .ttl{font:700 15px/1.3 var(--font-ui);color:var(--ink)}
+.top .sub{font:var(--t-body-sm);color:var(--ink3)}
+.sp{flex:1}
+.bd{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  background:var(--surface2);color:var(--ink2);border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:6px 11px;display:inline-flex;gap:6px;align-items:center}
+
+.pad{padding:var(--panel-gap);display:flex;flex-direction:column;gap:var(--panel-gap)}
+.card{background:var(--panel-bg);border:var(--panel-border);border-radius:var(--r-md);
+  padding:var(--panel-pad)}
+.card-t{font:700 15px/1.3 var(--font-ui);letter-spacing:-.01em;color:var(--ink);margin:0}
+.card-h{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card-h .sp{flex:1}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--panel-gap)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--panel-gap)}
+.grid32{display:grid;grid-template-columns:1.35fr 1fr;gap:var(--panel-gap)}
+
+/* KPI — flat, hairline, value is the loudest thing */
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:16px 18px;min-height:var(--kpi-h);display:flex;flex-direction:column;
+  justify-content:space-between}
+.kpi .kl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase}
+.kpi .kv{font:var(--t-kpi);letter-spacing:var(--tr-display);color:var(--ink);margin-top:12px}
+.kpi .kv small{font:700 13px/1 var(--font-mono);color:var(--ink3);letter-spacing:0;
+  margin-inline-start:5px}
+.kpi .kd{font:700 12px/1 var(--font-mono);margin-top:7px;color:var(--ink3)}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{height:var(--tbl-head-h);background:var(--seg-bg,var(--surface2));
+  font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);text-align:start;
+  text-transform:uppercase;padding:0 14px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:1}
+.tbl td{height:var(--tbl-row-h);padding:0 14px;border-bottom:1px solid var(--line);
+  font:500 13px/1.4 var(--font-ui);color:var(--ink2);vertical-align:middle}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--tbl-row-hover)}
+.tbl td.num{font:var(--t-num);letter-spacing:var(--tr-num);color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.tbl td.nm{color:var(--ink);font-weight:600}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .sub2{display:block;font:400 11.5px/1.3 var(--font-ui);color:var(--ink3);margin-top:2px}
+
+/* Chips — rule (C): never a hue */
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.pill{height:var(--pill-h);display:inline-flex;align-items:center;gap:5px;
+  padding:0 9px;border-radius:var(--pill-radius);font:700 var(--pill-size)/1 var(--font-mono);
+  letter-spacing:.04em;background:var(--surface2);color:var(--ink2);
+  border:1px solid transparent}
+.pill.ok{background:var(--st-ok-bg);color:var(--st-ok)}
+.pill.warn{background:var(--st-warn-bg);color:var(--st-warn)}
+.pill.bad{background:var(--st-bad-bg);color:var(--st-bad)}
+.pill.accent{background:var(--accent-soft);color:var(--accent)}
+
+/* Lane grid — the identity */
+.lanes{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.lane-hd{display:grid;background:var(--surface2);border-bottom:1px solid var(--line)}
+.lane-hd div{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;padding:11px 14px}
+.lane{display:grid;border-bottom:1px solid var(--line);position:relative;
+  transition:background .12s}
+.lane:last-child{border-bottom:none}
+.lane:hover{background:var(--surface3)}
+.lane>div{padding:0 14px;display:flex;align-items:center;min-height:var(--lane-h)}
+.lane-n{background-image:var(--lane-stripe)}
+.grp-hd{display:flex;align-items:center;gap:10px;padding:11px 14px;
+  background:var(--surface2);border-bottom:1px solid var(--line);
+  font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink2);text-transform:uppercase}
+.grp-hd .ct{color:var(--ink3)}
+.grp-hd .ln{flex:1;height:1px;background:var(--lane-line)}
+
+/* ---- Timing board --------------------------------------------------------- */
+.tm-hero{background:linear-gradient(135deg,rgba(200,240,75,.10),rgba(200,240,75,.03) 42%,rgba(0,0,0,0) 100%),var(--surface);
+  border:1px solid var(--accent-line);border-radius:var(--r-md);overflow:hidden;
+  position:relative}
+.tm-hero::after{content:"";position:absolute;inset:0;background-image:var(--lane-stripe);
+  opacity:.6;pointer-events:none}
+.tm-hero>*{position:relative;z-index:1}
+.tm-big{font:var(--tm-num);font-variant-numeric:tabular-nums;color:var(--ink);
+  letter-spacing:-.02em;line-height:1}
+.tm-lab{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:9px}
+.tm-cell{font:var(--tm-cell);font-variant-numeric:tabular-nums;color:var(--ink)}
+.tm-sub{font:var(--tm-sub);font-variant-numeric:tabular-nums;color:var(--ink2)}
+.reps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rep{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:13px 14px;position:relative;overflow:hidden}
+.rep.fresh::before{content:"";position:absolute;inset:0;background:var(--accent-soft);
+  animation:splitRun .4s linear both}
+@keyframes splitRun{from{opacity:1}to{opacity:0}}
+.rep .rn{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:9px}
+.rep .rv{font:700 20px/1 var(--font-mono);color:var(--ink);
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.rep.fresh .rv{animation:splitIn .26s var(--e-out) both}
+@keyframes splitIn{from{opacity:0;transform:translateY(6px);letter-spacing:.06em}
+  to{opacity:1;transform:none;letter-spacing:-.01em}}
+.rep .rd{font:700 11.5px/1 var(--font-mono);margin-top:7px}
+.wind-ok{color:var(--w-ok)}
+.wind-no{color:var(--w-illegal)}
+.react-fs{color:var(--st-bad)}
+.react-ok{color:var(--st-ok)}
+
+/* ---- Testing -------------------------------------------------------------- */
+.chart{width:100%;height:170px;display:block}
+.chart .gl{stroke:var(--viz-grid);stroke-width:1}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.chart .ar{fill:url(#lg)}
+.chart .pt{fill:var(--bg);stroke:var(--accent);stroke-width:2.5}
+.chart text{font:700 10px var(--font-mono);fill:var(--ink3)}
+.pb{color:var(--mk-pb);font-weight:800}
+.up{color:var(--mk-delta-up)}
+.dn{color:var(--mk-delta-dn)}
+.flat{color:var(--ink3)}
+
+/* ---- Season --------------------------------------------------------------- */
+.tabs{display:flex;gap:4px;background:var(--seg-bg,var(--surface2));padding:4px;
+  border-radius:var(--r-sm);width:fit-content}
+.tab{font:700 12.5px/1 var(--font-ui);color:var(--ink3);padding:8px 14px;
+  border-radius:7px;cursor:pointer;transition:all .14s;white-space:nowrap}
+.tab:hover{color:var(--ink2)}
+.tab.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-raised)}
+.pane{display:none}
+.pane.on{display:block}
+
+.ph-row{display:grid;grid-template-columns:var(--ph-head-w) 1fr;gap:12px;
+  align-items:center;margin-bottom:7px}
+.ph-lab{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink2);
+  text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.ph-cells{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}
+.ph-c{height:var(--ph-bar-h);border-radius:3px;position:relative;
+  transform:scaleX(0);transform-origin:left}
+.build-anim .ph-c,.run-phase .ph-c{animation:phaseIn .32s var(--e-out) both}
+@keyframes phaseIn{to{transform:scaleX(1)}}
+.ph-c.now{background-image:linear-gradient(var(--ph-now-bg),var(--ph-now-bg));
+  box-shadow:inset 2px 0 0 var(--ph-now), inset 0 0 0 1px rgba(200,240,75,.16)}
+.ph-c.meet{display:grid;place-items:center;background:var(--accent-soft);
+  box-shadow:inset 0 0 0 1px var(--accent-line)}
+.ph-c.meet span{font:700 9px/1 var(--font-mono);letter-spacing:.06em;
+  color:var(--accent);text-transform:uppercase}
+/* NOW is a COLUMN marker, so it is declared once in the week header rather
+   than once per phase row — five stacked labels was the bug this replaced. */
+.ph-head{display:grid;grid-template-columns:var(--ph-head-w) 1fr;gap:12px;
+  margin-bottom:9px}
+.ph-head .cs{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}
+.ph-head .cs span{font:700 9.5px/1 var(--font-mono);color:var(--ink3);text-align:center}
+.ph-head .cs span.now{color:var(--accent)}
+.ph-head .cs span.now i{display:block;font-style:normal;font-size:8px;
+  letter-spacing:.1em;color:var(--accent);margin-bottom:4px}
+.ph-wk{display:grid;grid-template-columns:var(--ph-head-w) 1fr;gap:12px;margin-top:6px}
+.ph-wk .cs{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}
+.ph-wk .cs span{font:700 9.5px/1 var(--font-mono);color:var(--ink3);text-align:center}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .cd{font:700 9.5px/1 var(--font-mono);letter-spacing:.1em;color:var(--ink3);
+  text-align:center;padding-bottom:4px;text-transform:uppercase}
+.cal .cell{aspect-ratio:1.35;border:1px solid var(--line);border-radius:7px;
+  background:var(--surface2);padding:7px 8px;position:relative;
+  font:700 11px/1 var(--font-mono);color:var(--ink3)}
+.cal .cell.has{background:var(--surface);color:var(--ink2)}
+.cal .cell.mt{border-color:var(--accent-line);background:rgba(200,240,75,.06);color:var(--ink)}
+.cal .cell .f{position:absolute;top:6px;inset-inline-end:7px;color:var(--accent);font-size:11px}
+.cal .cell .nm{position:absolute;bottom:6px;inset-inline-start:8px;
+  font:700 8.5px/1 var(--font-mono);letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+.cal .cell.out{opacity:.32;background:transparent}
+
+/* ---- Drills --------------------------------------------------------------- */
+.drills{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:15px 16px;transition:border-color .15s,transform .15s var(--e-out)}
+.drill:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.drill .dt{font:700 13.5px/1.3 var(--font-ui);color:var(--ink);margin-bottom:4px}
+.drill .dv{font:var(--tm-sub);color:var(--ink);margin-bottom:10px}
+.drill .dm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:11px}
+.drill .dd{font:var(--t-body-sm);color:var(--ink3);line-height:1.45}
+.rpe{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;background:var(--surface3);color:var(--ink2);
+  font:800 11px/1 var(--font-mono)}
+
+/* ---- Roster groups -------------------------------------------------------- */
+.grp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:15px 16px}
+.grp .gh{display:flex;align-items:center;gap:8px;margin-bottom:13px}
+.grp .gn{width:20px;height:20px;border-radius:5px;background:var(--surface3);
+  color:var(--ink3);display:grid;place-items:center;font:800 10px/1 var(--font-display)}
+.grp .gt{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink2);
+  text-transform:uppercase;flex:1}
+.grp .gc{font:800 14px/1 var(--font-display);color:var(--ink)}
+.grp .ge{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:6px 0;border-top:1px solid var(--line);
+  font:600 12.5px/1.3 var(--font-ui);color:var(--ink2)}
+.grp .ge span:last-child{font:700 11.5px/1 var(--font-mono);color:var(--ink3)}
+
+/* ---- Responsive ----------------------------------------------------------- */
+@media (max-width:1080px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .grid32,.grid2,.build-cols,.build-meta{grid-template-columns:1fr}
+  .drills,.grp-grid{grid-template-columns:repeat(2,1fr)}
+  .sports{grid-template-columns:repeat(2,1fr)}
+  .reps{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .ws{grid-template-columns:1fr}
+  .ws-side{display:none}
+  .grid4{grid-template-columns:1fr}
+  .drills,.grp-grid{grid-template-columns:1fr}
+  .sports{grid-template-columns:1fr}
+  .tbl th:nth-child(n+5),.tbl td:nth-child(n+5){display:none}
+  .ph-row{grid-template-columns:1fr}
+  .ph-wk{grid-template-columns:1fr}
+  /* The card header carries a title AND a control group; at 430px they
+     exceed one line and the tab strip was forcing a horizontal scrollbar. */
+  .card-h{flex-wrap:wrap}
+  .card-h .tabs{width:100%;justify-content:flex-start}
+  /* Lane grid: 7 columns cannot survive a phone. Keep # / Athlete / Event /
+     Season best / PB — drop Wind and Attendance, which the detail view has. */
+  .lane-hd,.lane{grid-template-columns:30px 1.4fr 1fr 1fr .6fr !important}
+  .lane-hd>div:nth-child(5),.lane-hd>div:nth-child(6),
+  .lane>div:nth-child(5),.lane>div:nth-child(6){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;
+    animation-iteration-count:1!important;transition-duration:.01ms!important;
+    scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="mockbar">
+  <span class="mb-l">Mockup · track-coach_1</span>
+  <button class="mb on" data-go="onboard">① Onboarding</button>
+  <button class="mb" data-go="roster">② Roster</button>
+  <button class="mb" data-go="timing">③ Timing</button>
+  <button class="mb" data-go="testing">④ Testing</button>
+  <button class="mb" data-go="season">⑤ Season</button>
+  <button class="mb" data-go="drills">③· Drills</button>
+  <span class="mb-sp"></span>
+  <button class="mb mb-th" id="themeBtn">◐ theme</button>
+</div>
+
+<!-- ══════════════════════════ ① ONBOARDING ══════════════════════════ -->
+<section class="scr on" id="onboard">
+<div class="ob">
+
+  <div class="ob-prog" id="prog">
+    <div class="ob-dot" data-d="1"><div class="d">1</div><div class="bar"><i></i></div><span class="ob-lab">You</span></div>
+    <div class="ob-dot" data-d="2"><div class="d">2</div><div class="bar"><i></i></div><span class="ob-lab">Coach?</span></div>
+    <div class="ob-dot" data-d="3"><div class="d">3</div><div class="bar"><i></i></div><span class="ob-lab">Clients</span></div>
+    <div class="ob-dot" data-d="4"><div class="d">4</div><span class="ob-lab">Build</span></div>
+  </div>
+
+  <!-- ── step 1 · You ───────────────────────────────────────────────────── -->
+  <div class="obstep on" data-s="1">
+    <div class="ob-eyebrow">Step 1 · You</div>
+    <h1 class="ob-h">Who are we setting this up for?</h1>
+    <p class="ob-sub">Just the basics — this is what your athletes will see in their app.</p>
+    <div class="ob-f"><label>Your name</label><input value="Alex Morrow"></div>
+    <div class="ob-f"><label>Gym / brand</label><input value="Northline Athletics">
+      <div class="hint">Shown in your sidebar and on athlete invites.</div></div>
+    <div class="ob-f"><label>Email</label><input value="alex@northline.run"></div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-skip>Skip for now</button>
+      <button class="btn btn-primary btn-lg" data-next="2">Continue <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+  <!-- ── step 2 · Coach? — THE key question ─────────────────────────────── -->
+  <div class="obstep" data-s="2">
+    <div class="ob-eyebrow">Step 2 · Coach type</div>
+    <h1 class="ob-h">What do you coach?</h1>
+    <p class="ob-sub">This decides which screens, metrics and measurement forms you get. A strength coach does not get a timing board, and a track coach does not get a body-fat form.</p>
+    <div class="sports" id="sports">
+      <button class="sport" data-sp="strength"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="dumbbell" width="18"></i></div>
+        <b>Strength</b><span>Hypertrophy · powerlifting · body-comp</span></button>
+      <button class="sport sel" data-sp="track"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="timer" width="18"></i></div>
+        <b>Track &amp; Field</b><span>Sprints · jumps · throws · timing · tests</span></button>
+      <button class="sport" data-sp="team"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="users" width="18"></i></div>
+        <b>Team sports</b><span>Squads · match days · lineups</span></button>
+      <button class="sport" data-sp="endurance"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="footprints" width="18"></i></div>
+        <b>Endurance</b><span>Running · cycling · triathlon</span></button>
+      <button class="sport" data-sp="mobility"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="activity" width="18"></i></div>
+        <b>Mobility</b><span>Yoga · small groups · recovery</span></button>
+      <button class="sport" data-sp="rehab"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="heart-pulse" width="18"></i></div>
+        <b>Rehab</b><span>Clinical · return-to-play</span></button>
+      <button class="sport wide" data-sp="general"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <div class="si"><i data-lucide="grid-2x2" width="18"></i></div>
+        <div><b>Something else, or a mix</b><span>You get the full general workspace — everything on today's sidebar.</span></div></button>
+    </div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-prev="1"><i data-lucide="arrow-left" width="15"></i> Back</button>
+      <button class="btn btn-primary btn-lg" data-next="3">Continue <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+  <!-- ── step 3 · Clients ───────────────────────────────────────────────── -->
+  <div class="obstep" data-s="3">
+    <div class="ob-eyebrow">Step 3 · Roster</div>
+    <h1 class="ob-h">Who are you training?</h1>
+    <p class="ob-sub">Used to pick your default landing screen and your measurement units.</p>
+    <div class="ob-f"><label>How many athletes?</label><input id="obAth" value="14" inputmode="numeric"></div>
+    <div class="ob-f"><label>Where do they train?</label>
+      <select><option>Outdoor track</option><option>Indoor track</option><option>Both</option><option>Gym / indoors only</option></select></div>
+    <div class="ob-f"><label>Do you time your sessions?</label>
+      <select><option>Yes — splits, reaction, wind</option><option>Sometimes</option><option>No</option></select>
+      <div class="hint">Gates or hand timing. This decides whether the Timing board is enabled.</div></div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-prev="2"><i data-lucide="arrow-left" width="15"></i> Back</button>
+      <button class="btn btn-primary btn-lg" data-next="4">Build my workspace <i data-lucide="hammer" width="15"></i></button></div>
+  </div>
+
+  <!-- ── step 4 · BUILD — signature moment ──────────────────────────────── -->
+  <div class="obstep" data-s="4">
+    <div class="build-hd">
+      <div class="build-ok"><i data-lucide="circle-check" width="15"></i> Your workspace is ready</div>
+      <h1 class="ob-h" id="buildTitle">Track &amp; Field · 14 athletes</h1>
+      <p class="ob-sub">Here is exactly what the system configured from your answers.</p>
+    </div>
+
+    <div class="build-cols">
+      <div class="build-box">
+        <h4>Added to your sidebar</h4>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Roster by event<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Timing board<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Performance testing &amp; PR<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Season &amp; periodization<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Event drill library<span class="rule"></span></div>
+      </div>
+      <div class="build-box">
+        <h4>Replaced on your dashboard</h4>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Adherence <span style="color:var(--ink3)">→</span> Athletes in season<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Active clients <span style="color:var(--ink3)">→</span> Attendance<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Sessions today <span style="color:var(--ink3)">→</span> Tests this week<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Hours this week <span style="color:var(--ink3)">→</span> Next meet<span class="rule"></span></div>
+        <div class="brow kept"><span class="bt" style="color:var(--ink3)"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Attention · Quick actions · Activity<span class="rule"></span></div>
+      </div>
+    </div>
+
+    <div class="build-box" style="margin-bottom:14px">
+      <h4>Kept (base — same for every coach type)</h4>
+      <div class="brow kept"><span class="bt"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Dashboard · Clients · Workouts · Calendar · Messages<span class="rule"></span></div>
+      <div class="brow kept"><span class="bt"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Progress · Measurements · Nutrition · Challenges · Templates · Library · Notes<span class="rule"></span></div>
+    </div>
+
+    <div class="build-meta">
+      <div class="bm" style="--i:0"><h5>Measurement form</h5>
+        <p>Timing fields enabled — <b style="color:var(--ink)">split 10/20/30m · reaction · wind</b>.<br>Body-fat &amp; 12-site girth <b style="color:var(--ink3)">removed</b>.</p></div>
+      <div class="bm" style="--i:1"><h5>Units</h5>
+        <p><b style="color:var(--ink)">metres · seconds · centimetres</b><br>Kilograms kept for S&amp;C work.</p></div>
+    </div>
+
+    <div class="build-cta"><button class="btn btn-primary btn-lg" data-go="roster">Open my workspace <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════ WORKSPACE ══════════════════════════ -->
+<div class="ws" style="display:none" id="ws">
+  <aside class="ws-side">
+    <div class="brand"><div class="brand-mark">C</div>
+      <div><div class="brand-name">COACHMINT</div><div class="brand-tag">NORTHLINE ATHLETICS</div></div></div>
+    <nav class="nav">
+      <div class="nav-sec">Workspace</div>
+      <div class="nav-it"><i data-lucide="layout-grid" width="17"></i><span class="lb">Dashboard</span></div>
+      <div class="nav-it"><i data-lucide="users" width="17"></i><span class="lb">Clients</span></div>
+      <div class="nav-it"><i data-lucide="dumbbell" width="17"></i><span class="lb">Workouts</span></div>
+      <div class="nav-it"><i data-lucide="calendar" width="17"></i><span class="lb">Calendar</span></div>
+      <div class="nav-it"><i data-lucide="mail" width="17"></i><span class="lb">Messages</span></div>
+
+      <div class="nav-sec">Track &nbsp;<span style="color:var(--accent)">★</span></div>
+      <div class="nav-it" data-go="roster"><i data-lucide="users-round" width="17"></i><span class="lb">Roster</span><span class="nav-dot"></span></div>
+      <div class="nav-it" data-go="timing"><i data-lucide="timer" width="17"></i><span class="lb">Timing</span><span class="nav-dot"></span></div>
+      <div class="nav-it" data-go="testing"><i data-lucide="gauge" width="17"></i><span class="lb">Testing</span><span class="nav-dot"></span></div>
+      <div class="nav-it" data-go="season"><i data-lucide="flag" width="17"></i><span class="lb">Season</span><span class="nav-dot"></span></div>
+      <div class="nav-it" data-go="drills"><i data-lucide="library" width="17"></i><span class="lb">Drills</span><span class="nav-dot"></span></div>
+
+      <div class="nav-sec">Today</div>
+      <div class="nav-it"><i data-lucide="trending-up" width="17"></i><span class="lb">Progress</span></div>
+      <div class="nav-it"><i data-lucide="ruler" width="17"></i><span class="lb">Measurements</span></div>
+      <div class="nav-it"><i data-lucide="utensils" width="17"></i><span class="lb">Nutrition</span></div>
+
+      <div class="nav-sec">Manage</div>
+      <div class="nav-it"><i data-lucide="trophy" width="17"></i><span class="lb">Challenges</span></div>
+      <div class="nav-it"><i data-lucide="layers" width="17"></i><span class="lb">Templates</span></div>
+      <div class="nav-it"><i data-lucide="book-open" width="17"></i><span class="lb">Exercise Library</span></div>
+      <div class="nav-it"><i data-lucide="sticky-note" width="17"></i><span class="lb">Notes</span></div>
+    </nav>
+    <div style="padding:10px 8px;border-top:1px solid var(--line)">
+      <div class="nav-it"><i data-lucide="settings" width="17"></i><span class="lb">Settings</span></div>
+    </div>
+  </aside>
+
+  <div class="ws-main">
+    <div class="top">
+      <div><div class="ttl" id="ttl">Roster</div><div class="sub" id="tsub">14 athletes · 4 event groups</div></div>
+      <span class="sp"></span>
+      <span class="bd"><i data-lucide="timer" width="12"></i> Track &amp; Field</span>
+      <button class="btn btn-primary"><i data-lucide="plus" width="15"></i> Add athlete</button>
+    </div>
+    <div class="pad" id="views"></div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   Mockup logic. Deliberately tiny: screen switching, the onboarding step
+   machine, and the one signature build animation. No framework, no state
+   store — this file has to stay readable as a design artefact.
+   ========================================================================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* ---------------------------- data ---------------------------------- */
+const EV_GROUPS=[
+ {n:1,k:'Sprints',c:6,items:[['100m',3],['200m',2],['400m',1],['110H',0]]},
+ {n:2,k:'Jumps',c:4,items:[['Long Jump',2],['Triple Jump',1],['High Jump',1],['Pole Vault',0]]},
+ {n:3,k:'Throws',c:3,items:[['Shot Put',1],['Discus',1],['Javelin',1]]},
+ {n:4,k:'Mid / Long',c:1,items:[['1500m',1]]}
+];
+const ATH=[
+ ['J. Rivera','100m','Sprints','10.84','−0.2','96%',3],
+ ['T. Okafor','100m','Sprints','10.71','+0.1','99%',4],
+ ['L. Sørensen','200m','Sprints','21.47','−1.4','94%',2],
+ ['K. Adeyemi','400m','Sprints','48.12','—','88%',1],
+ ['D. Marsh','400m','Sprints','47.88','−0.6','85%',1],
+ ['M. Park','110H','Sprints','13.94','+1.1','91%',0],
+ ['A. Nilsson','Long Jump','Jumps','7.42','—','92%',2],
+ ['R. Costa','Triple Jump','Jumps','15.08','—','90%',1],
+ ['S. Haddad','High Jump','Jumps','2.05','—','97%',3],
+ ['P. Lindqvist','Pole Vault','Jumps','5.10','—','86%',0],
+ ['V. Petrov','Shot Put','Throws','18.62','—','93%',2],
+ ['E. Dubois','Discus','Throws','56.40','—','89%',1],
+ ['H. Tanaka','Javelin','Throws','71.25','—','95%',2],
+ ['C. Mwangi','1500m','Mid / Long','3:38.20','—','98%',2]
+];
+const LOG=[
+ [1,'J. Rivera','1.72','2.98','4.31','11.02','+0.4','0.142',1],
+ [2,'T. Okafor','1.68','2.91','4.24','10.86','+0.4','0.129',1],
+ [3,'M. Park','1.75','3.04','4.39','11.18','+0.4','0.097',0],
+ [4,'L. Sørensen','1.71','2.96','4.29','10.98','+1.8','0.151',1],
+ [5,'K. Adeyemi','1.70','2.95','4.28','11.05','+0.4','0.134',1],
+ [6,'D. Marsh','1.74','3.01','4.35','11.21','+3.2','0.161',1]
+];
+const TESTS=[
+ ['J. Rivera','4.24','▲ .06','11.02','▲ .18','58cm','▲ 2','2.41m','▲ .04',3],
+ ['T. Okafor','4.19','▲ .02','10.86','—','61cm','▲ 1','2.38m','—',1],
+ ['M. Park','4.39','▼ .04','11.18','▲ .11','55cm','—','2.35m','▲ .02',0],
+ ['A. Nilsson','4.31','▲ .03','11.24','▲ .07','60cm','▲ 2','2.52m','▲ .03',2]
+];
+const DRILLS=[
+ ['A-Skip','3 × 20 m',5,'Warm-up','Sprint','Posture and knee drive before any acceleration work.'],
+ ['Wall drive','4 × 5 reps',6,'Acceleration','Sprint','Lean on a wall, punch the knee to hip height. 0.5s holds.'],
+ ['Falling start','6 × 10 m',6,'Acceleration','Sprint','Fall until you must step, then drive. No false steps.'],
+ ['Wicket runs','4 × 40 m',8,'Max velocity','Sprint','Mini-hurdles set for 2.0–2.1m stride. Tall, fast feet.'],
+ ['Hurdle hops','5 × 3 hurdles',7,'Reactive','Plyometrics','Minimal ground contact. Stop when height drops.'],
+ ['Box drop-jump','4 × 4',8,'Reactive','Plyometrics','Step off, land and reverse in < 200 ms.'],
+ ['Bounding','4 × 30 m',7,'Power','Plyometrics','Long, not fast. Arm action drives every contact.'],
+ ['Ankle pogo','3 × 20 m',4,'Warm-up','Plyometrics','Stiff ankle, no heel. Preps the Achilles for maxV.'],
+ ['Leg swing (F/B)','2 × 10 each',3,'Mobility','Mobility','Controlled through full range. Never ballistic cold.'],
+ ['90/90 hip switch','3 × 8',3,'Mobility','Mobility','Tall spine. Essential for hurdlers and sprinters.'],
+ ['Copenhagen plank','3 × 20 s',6,'Prevention','Injury-prevention','Adductor strength — the highest-yield hamstring guard.'],
+ ['Nordic curl','3 × 5',9,'Prevention','Injury-prevention','Eccentric hamstrings. Build to 3 × 5 before season.'],
+ ['Sled push','6 × 20 m',8,'Strength','Acceleration','30–50% BW. Heavy and short — pure horizontal force.'],
+ ['Half-moon throws','5 × 4',6,'Power','Throws','Rotational shot-put drill for release angle.'],
+ ['Step-through javelin','4 × 3',7,'Technique','Throws','Full approach at 70%, free arm leading.'],
+ ['Run-through 80%','4 × 80 m',7,'Speed-endurance','Sprint','Smooth, tall, no tension. 3 min between reps.']
+];
+/* Periodization over 8 weeks (W8–W15). Each phase OWNS a contiguous slice —
+   phases that overlap in time are not a periodization, they are a mistake. */
+const WEEKS=[8,9,10,11,12,13,14,15];
+const NOW_I=4;                       /* W12 — the week we are standing in */
+const PHASES=[
+ ['General (GPP)',   [1,1,0,0,0,0,0,0],'Aerobic base · general strength'],
+ ['Preparation',     [0,0,3,3,0,0,0,0],'Max strength · sprint technique'],
+ ['Pre-competition', [0,0,0,0,4,4,0,0],'Specific power · race modelling'],
+ ['Taper',           [0,0,0,0,0,0,1,0],'Unload 40% · keep intensity'],
+ ['Competition',     [0,0,0,0,0,0,0,2],'Peaking · championship']
+];
+/* Two different date spaces — days for the month grid, weeks for the ramp.
+   They used to be conflated, which silently dropped the third meet. */
+const MEETS=[[8,'Regional Open'],[13,'League Meet'],[20,'Nat. Champs']];
+const MEET_W=[[5,'Regional'],[6,'League'],[7,'Nationals']];
+const STD=[
+ ['100m','10.60','10.71','−0.11','1.0%','ok','Likely'],
+ ['200m','21.30','21.47','−0.17','0.8%','warn','Close'],
+ ['400m','47.50','47.88','−0.38','1.3%','ok','Likely'],
+ ['Long Jump','7.60','7.42','−0.18','2.4%','warn','On the edge'],
+ ['Shot Put','19.00','18.62','−0.38','2.0%','bad','Needs work']
+];
+
+/* ---------------------------- views --------------------------------- */
+const kpi=(l,v,s,d)=>`<div class="kpi"><div class="kl">${l}</div>
+  <div><div class="kv">${v}${s?`<small>${s}</small>`:''}</div>
+  ${d?`<div class="kd">${d}</div>`:''}</div></div>`;
+
+function vRoster(){
+  const chips=['All','Sprints','Jumps','Throws','Mid / Long'];
+  return `
+  <div class="card">
+    <div class="card-h"><h3 class="card-t">Event groups</h3><span class="sp"></span>
+      <div class="chips">${chips.map((c,i)=>`<span class="ev-chip ${i===0?'on':''}">${c}</span>`).join('')}</div></div>
+    <div class="grp-grid">${EV_GROUPS.map(g=>`
+      <div class="grp"><div class="gh"><span class="gn">${g.n}</span>
+        <span class="gt">${g.k}</span><span class="gc">${g.c}</span></div>
+        ${g.items.map(([n,c])=>`<div class="ge"><span>${n}</span><span>${c}</span></div>`).join('')}
+      </div>`).join('')}</div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:18px 20px 4px"><h3 class="card-t">Roster</h3></div>
+    <div class="lanes" style="border:0;border-radius:0">
+      <div class="lane-hd" style="grid-template-columns:34px 1.5fr 1fr 1fr .8fr .9fr .6fr">
+        <div>#</div><div>Athlete</div><div>Event</div><div>Season best</div>
+        <div>Wind</div><div>Attendance</div><div>PB</div></div>
+      ${ATH.map((a,i)=>`
+      <div class="lane lane-n" style="grid-template-columns:34px 1.5fr 1fr 1fr .8fr .9fr .6fr">
+        <div><span style="font:700 10.5px/1 var(--font-mono);color:var(--ink3)">${String(i+1).padStart(2,'0')}</span></div>
+        <div><b style="font-weight:600;color:var(--ink)">${a[0]}</b></div>
+        <div><span class="ev-chip" style="height:20px;font-size:9.5px">${a[1]}</span></div>
+        <div><span class="tm-cell">${a[3]}</span></div>
+        <div><span style="font:700 12px/1 var(--font-mono);color:var(--ink3)">${a[4]}</span></div>
+        <div><span class="pill ${parseInt(a[5])>=90?'ok':'warn'}">${a[5]}</span></div>
+        <div>${a[6]?`<span class="pb">★${a[6]}</span>`:`<span style="color:var(--ink3)">·</span>`}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function vTiming(){
+  return `
+  <div class="grid32">
+    <div class="tm-hero" style="padding:22px">
+      <div style="display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap">
+        <div><div class="tm-lab">Current attempt</div>
+          <div class="tm-big">4.27</div>
+          <div style="font:700 12px/1 var(--font-mono);color:var(--ink3);margin-top:8px">30 m · J. RIVERA</div></div>
+        <div style="flex:1;min-width:200px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><div class="tm-lab">Wind</div>
+            <div class="tm-sub" style="font-size:17px;color:var(--w-ok)">+0.4 m/s</div>
+            <div style="font:700 10.5px/1 var(--font-mono);color:var(--w-ok);margin-top:5px">LEGAL ≤ +2.0</div></div>
+          <div><div class="tm-lab">Reaction</div>
+            <div class="tm-sub" style="font-size:17px;color:var(--st-ok)">0.142 s</div>
+            <div style="font:700 10.5px/1 var(--font-mono);color:var(--st-ok);margin-top:5px">≥ 0.100 OK</div></div>
+          <div><div class="tm-lab">vs Personal best</div>
+            <div class="tm-sub" style="font-size:17px">+0.03</div></div>
+          <div><div class="tm-lab">Status</div><span class="pill accent">VALID MARK</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;margin-top:20px">
+        <button class="btn btn-primary"><i data-lucide="play" width="15"></i> New attempt</button>
+        <button class="btn btn-outline">Set wind manually</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px 20px">
+      <div class="card-h"><h3 class="card-t">Splits · last 3 reps</h3><span class="sp"></span>
+        <span class="pill">100m</span></div>
+      <div class="reps" id="reps">
+        <div class="rep"><div class="rn">Rep 1</div><div class="rv">4.31</div>
+          <div class="rd" style="color:var(--ink3)">10m 1.72 · 20m 2.98</div></div>
+        <div class="rep"><div class="rn">Rep 2</div><div class="rv">4.29</div>
+          <div class="rd" style="color:var(--ink3)">10m 1.71 · 20m 2.96</div></div>
+        <div class="rep fresh"><div class="rn">Rep 3 · just now</div><div class="rv">4.27</div>
+          <div class="rd" style="color:var(--mk-delta-up)">10m 1.69 · 20m 2.94</div></div>
+      </div>
+      <div style="display:flex;gap:20px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+        <div><div class="tm-lab" style="margin-bottom:5px">Season best</div><span class="tm-sub">4.24</span></div>
+        <div><div class="tm-lab" style="margin-bottom:5px">Personal best</div><span class="tm-sub pb">★ 4.24</span></div>
+        <div><div class="tm-lab" style="margin-bottom:5px">Attempts today</div><span class="tm-sub">3 / 6</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:18px 20px 6px"><h3 class="card-t">Attempt log</h3></div>
+    <table class="tbl">
+      <thead><tr><th style="width:44px">#</th><th>Athlete</th><th>10m</th><th>20m</th>
+        <th>30m</th><th>100m</th><th>Wind</th><th>Reaction</th><th>Mark</th></tr></thead>
+      <tbody>${LOG.map(r=>{
+        const legal=r[6]!=='—'&&parseFloat(r[6])<=2.0;
+        const ok=r[7]==='—'||parseFloat(r[7])>=0.100;
+        return `<tr><td class="num">${r[0]}</td><td class="nm">${r[1]}</td>
+          <td class="num">${r[2]}</td><td class="num">${r[3]}</td><td class="num">${r[4]}</td>
+          <td class="num">${r[5]}</td>
+          <td class="num ${legal?'wind-ok':'wind-no'}">${r[6]}</td>
+          <td class="num ${ok?'react-ok':'react-fs'}">${r[7]}</td>
+          <td>${ok&&legal?`<span class="pill ok">VALID</span>`:`<span class="pill bad">${ok?'WIND-AIDED':'FALSE START'}</span>`}</td>
+        </tr>`}).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+function vTesting(){
+  const pts=[[0,64],[1,58],[2,52],[3,46],[4,34],[5,26],[6,18],[7,12]];
+  const W=640,H=170,px=i=>24+i*((W-48)/7),py=v=>H-30-(v/70)*(H-60);
+  const d=pts.map((p,i)=>`${i?'L':'M'}${px(p[0])},${py(p[1])}`).join(' ');
+  return `
+  <div class="grid4">
+    ${kpi('Tests logged','12','','last 30 days')}
+    ${kpi('Athletes tested','7','/ 14','50% of roster')}
+    ${kpi('PBs this month','5','','<span class="up">▲ 2</span> vs Aug')}
+    ${kpi('Next test','30m','','Wed · 6 athletes')}
+  </div>
+
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">60m — season trend</h3><span class="sp"></span>
+        <span class="pill accent">J. RIVERA</span></div>
+      <svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(200,240,75,.22)"/><stop offset="100%" stop-color="rgba(200,240,75,0)"/>
+        </linearGradient></defs>
+        ${[0,1,2,3].map(i=>`<line class="gl" x1="24" y1="${py(i*20)}" x2="${W-24}" y2="${py(i*20)}"/>`).join('')}
+        <path class="ar" d="${d} L${px(7)},${H-30} L${px(0)},${H-30} Z"/>
+        <path class="ln" d="${d}"/>
+        ${pts.map((p,i)=>`<circle class="pt" cx="${px(p[0])}" cy="${py(p[1])}" r="${i===7?5:3.5}"/>`).join('')}
+        ${['Apr','May','Jun','Jul','Aug','Sep','','SB'].map((m,i)=>m?`<text x="${px(i)}" y="${H-10}" text-anchor="middle">${m}</text>`:'').join('')}
+        <text x="${px(7)}" y="${py(12)-12}" text-anchor="end" fill="#C8F04B">11.02 ★</text>
+      </svg>
+      <div style="display:flex;gap:20px;margin-top:8px">
+        <div><div class="tm-lab" style="margin-bottom:5px">Season best</div><span class="tm-sub">11.02 s</span></div>
+        <div><div class="tm-lab" style="margin-bottom:5px">PB</div><span class="tm-sub pb">★ 11.02</span></div>
+        <div><div class="tm-lab" style="margin-bottom:5px">Improvement</div><span class="tm-sub up">▲ 0.38 s</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Test battery</h3></div>
+      ${[['30 m split','Acceleration','last tested 12 Sep'],
+         ['60 m','Max velocity','last tested 12 Sep'],
+         ['Countermovement jump','Power','last tested 05 Sep'],
+         ['Standing long jump','Explosive strength','last tested 05 Sep'],
+         ['Back squat','Max strength','last tested 29 Aug']]
+        .map(([n,s,w])=>`<div style="display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)">
+          <div style="flex:1"><div style="font:600 13px/1.3 var(--font-ui);color:var(--ink)">${n}</div>
+          <div style="font:400 11.5px/1.3 var(--font-ui);color:var(--ink3);margin-top:2px">${s} · ${w}</div></div>
+          <span class="pill">active</span></div>`).join('')}
+      <div style="margin-top:14px"><button class="btn btn-outline" style="width:100%">
+        <i data-lucide="calendar-plus" width="15"></i> Schedule next test</button></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div style="padding:18px 20px 6px"><h3 class="card-t">Latest results · 12 Sep</h3></div>
+    <table class="tbl">
+      <thead><tr><th>Athlete</th><th>30m</th><th>60m</th><th>CMJ</th>
+        <th>Standing long</th><th>Back squat</th><th>PBs</th></tr></thead>
+      <tbody>${TESTS.map(r=>`<tr>
+        <td class="nm">${r[0]}</td>
+        <td class="num">${r[1]} <span class="${r[2].startsWith('▲')?'up':r[2].startsWith('▼')?'dn':'flat'}">${r[2]}</span></td>
+        <td class="num">${r[3]} <span class="${r[4].startsWith('▲')?'up':r[4].startsWith('▼')?'dn':'flat'}">${r[4]}</span></td>
+        <td class="num">${r[5]} <span class="${r[6].startsWith('▲')?'up':r[6].startsWith('▼')?'dn':'flat'}">${r[6]}</span></td>
+        <td class="num">${r[7]} <span class="${r[8].startsWith('▲')?'up':r[8].startsWith('▼')?'dn':'flat'}">${r[8]}</span></td>
+        <td class="num">1.65×</td>
+        <td>${r[9]?`<span class="pb">★${r[9]}</span>`:`<span style="color:var(--ink3)">·</span>`}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+function vSeason(){
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const cells=[];
+  for(let i=1;i<=35;i++){const d=i-3;cells.push(d)}
+  return `
+  <div class="card">
+    <div class="card-h"><h3 class="card-t">Season</h3><span class="sp"></span>
+      <div class="tabs"><span class="tab on">Periodization</span>
+        <span class="tab">Calendar</span><span class="tab">Standards</span></div></div>
+
+    <!-- pane 1 · periodization -->
+    <div class="pane on run-phase" style="margin-top:6px">
+      <div class="ph-head">
+        <div></div>
+        <div class="cs">${WEEKS.map((w,i)=>`<span class="${i===NOW_I?'now':''}">${
+          i===NOW_I?'<i>NOW</i>':''}W${w}</span>`).join('')}</div>
+      </div>
+
+      ${PHASES.map(([nm,cells,focus],pi)=>`
+        <div class="ph-row">
+          <div class="ph-lab"><span style="width:18px;height:18px;border-radius:4px;background:var(--surface3);color:var(--ink3);display:grid;place-items:center;font:800 9px var(--font-display);flex:none">${pi+1}</span>${nm}</div>
+          <div class="ph-cells">${cells.map((c,i)=>{
+            const st=c?`background-color:var(--ph-load-${c})`:'background-color:transparent';
+            return `<div class="ph-c${i===NOW_I?' now':''}"
+              style="${st};animation-delay:${i*20+pi*40}ms"></div>`}).join('')}</div>
+        </div>`).join('')}
+
+      <!-- Meets get their own row: a flag is a point in time, a phase is a
+           span of time, and drawing them in one grid made them collide. -->
+      <div class="ph-row" style="margin-top:12px">
+        <div class="ph-lab"><span style="width:18px;height:18px;border-radius:4px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:10px;flex:none">⚑</span>Meets</div>
+        <div class="ph-cells">${WEEKS.map((w,i)=>{
+          const m=MEET_W.find(x=>x[0]===i);
+          return `<div class="ph-c${m?' meet':''}${i===NOW_I?' now':''}"
+            style="animation-delay:${i*20+200}ms">${m?`<span>${m[1]}</span>`:''}</div>`}).join('')}
+        </div>
+      </div>
+
+      <div style="display:flex;gap:22px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line);flex-wrap:wrap">
+        <div><div class="tm-lab" style="margin-bottom:6px">Workload tint</div>
+          <div style="display:flex;gap:4px;align-items:center">
+            ${[1,2,3,4].map(i=>`<div style="width:26px;height:14px;border-radius:3px;border:1px solid var(--line);background:var(--ph-load-${i})"></div>`).join('')}
+            <span style="font:700 10.5px/1 var(--font-mono);color:var(--ink3);margin-inline-start:6px">LIGHT → PEAK</span></div></div>
+        <div><div class="tm-lab" style="margin-bottom:6px">Now</div>
+          <div style="display:flex;gap:6px;align-items:center"><div style="width:26px;height:14px;border-radius:3px;background:var(--ph-now-bg);box-shadow:inset 2px 0 0 var(--ph-now)"></div>
+          <span style="font:700 10.5px/1 var(--font-mono);color:var(--accent)">W12 · PRE-COMP</span></div></div>
+        <div><div class="tm-lab" style="margin-bottom:6px">Meet</div>
+          <div style="display:flex;gap:6px;align-items:center"><div style="width:26px;height:14px;border-radius:3px;background:var(--surface2);display:grid;place-items:center;font-size:9px">⚑</div>
+          <span style="font:700 10.5px/1 var(--font-mono);color:var(--ink3)">COMPETITION</span></div></div>
+        <div><div class="tm-lab" style="margin-bottom:6px">Focus</div>
+          <span style="font:600 12.5px/1 var(--font-ui);color:var(--ink2)">Specific power · race modelling</span></div>
+      </div>
+    </div>
+
+    <!-- pane 2 · calendar -->
+    <div class="pane" style="margin-top:6px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <span style="font:700 15px/1 var(--font-display);letter-spacing:-.02em">October 2026</span>
+        <span class="sp"></span><span class="pill accent">3 meets</span></div>
+      <div class="cal">${days.map(d=>`<div class="cd">${d}</div>`).join('')}
+        ${cells.map(d=>{const out=d<1||d>31;
+          const mt=MEETS.find(m=>m[0]===d);
+          return `<div class="cell ${out?'out':''} ${mt?'mt':''}">
+            ${d>0&&d<32?d:''}${mt?`<span class="f">⚑</span><span class="nm">${mt[1]}</span>`:''}</div>`}).join('')}
+      </div>
+      <div style="display:flex;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap">
+        ${MEETS.map(([d,n])=>`<div style="display:flex;gap:8px;align-items:center">
+          <span style="color:var(--accent);font-size:12px">⚑</span>
+          <div><div style="font:600 13px/1.3 var(--font-ui);color:var(--ink)">${n}</div>
+          <div style="font:700 11px/1 var(--font-mono);color:var(--ink3);margin-top:3px">OCT ${d}</div></div></div>`).join('')}
+      </div>
+    </div>
+
+    <!-- pane 3 · standards -->
+    <div class="pane" style="margin-top:6px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <span style="font:700 15px/1 var(--font-ui);color:var(--ink)">National Champs — entry standards</span>
+        <span class="sp"></span><span class="pill warn">5 events</span></div>
+      <table class="tbl" style="border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden">
+        <thead><tr><th>Event</th><th>Standard</th><th>Current best</th>
+          <th>Gap</th><th>Needed</th><th>Status</th></tr></thead>
+        <tbody>${STD.map(r=>`<tr>
+          <td class="nm">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td>
+          <td class="num dn">${r[3]}</td><td class="num">${r[4]}</td>
+          <td><span class="pill ${r[5]}">${r[6].toUpperCase()}</span></td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function vDrills(){
+  const chipsEv=['All events','Sprint','Jumps','Throws'];
+  const chipsTy=['All types','Acceleration','Max velocity','Plyometrics','Mobility','Injury-prevention'];
+  return `
+  <div class="card">
+    <div class="card-h"><h3 class="card-t">Event drill library</h3><span class="sp"></span>
+      <button class="btn btn-outline btn-sm" style="height:30px"><i data-lucide="plus" width="14"></i> New drill</button></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="chips">${chipsEv.map((c,i)=>`<span class="ev-chip ${i===0?'on':''}">${c}</span>`).join('')}</div>
+      <div class="chips">${chipsTy.map((c,i)=>`<span class="ev-chip ${i===0?'on':''}">${c}</span>`).join('')}</div>
+    </div>
+    <div class="drills" style="margin-top:18px">
+      ${DRILLS.map(([n,v,rpe,tag,ty,dd])=>`
+      <div class="drill"><div class="dt">${n}</div><div class="dv">${v}</div>
+        <div class="dm"><span class="rpe">${rpe}</span><span class="ev-chip" style="height:22px;font-size:9.5px">${tag}</span>
+          <span class="ev-chip" style="height:22px;font-size:9.5px">${ty}</span></div>
+        <div class="dd">${dd}</div></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+const VIEWS={
+  roster:{t:'Roster',s:'14 athletes · 4 event groups',f:vRoster,btn:'Add athlete',bi:'users'},
+  timing:{t:'Timing',s:'100m · acceleration · Tue PM',f:vTiming,btn:'New attempt',bi:'play'},
+  testing:{t:'Testing',s:'Last battery 12 Sep · 7 of 14 athletes',f:vTesting,btn:'Schedule test',bi:'calendar-plus'},
+  season:{t:'Season',s:'Indoor → outdoor · peak 18 Jul',f:vSeason,btn:'Add meet',bi:'flag'},
+  drills:{t:'Drills',s:'16 drills · 5 categories',f:vDrills,btn:'New drill',bi:'plus'}
+};
+
+/* ---------------------------- router -------------------------------- */
+function go(name){
+  if(name==='onboard'){
+    $('#ws').style.display='none'; $('#onboard').classList.add('on');
+    $$('.mb').forEach(b=>b.classList.toggle('on',b.dataset.go==='onboard'));
+    window.scrollTo({top:0,behavior:'instant'}); return;
+  }
+  const v=VIEWS[name]; if(!v) return;
+  $('#onboard').classList.remove('on'); $('#ws').style.display='grid';
+  $('#ttl').textContent=v.t; $('#tsub').textContent=v.s;
+  $('#views').innerHTML=v.f();
+  $('#views').querySelector('.top')?.remove();
+  $$('.mb').forEach(b=>b.classList.toggle('on',b.dataset.go===name));
+  $$('.nav-it[data-go]').forEach(n=>n.classList.toggle('on',n.dataset.go===name));
+  const topBtn=$('.top .btn'); if(topBtn){
+    topBtn.innerHTML=`<i data-lucide="${v.bi}" width="15"></i> ${v.btn}`;}
+  if(name==='season'){const p=$('#views .pane.on');if(p){p.classList.remove('run-phase');
+    void p.offsetWidth; p.classList.add('run-phase');}}
+  window.scrollTo({top:0,behavior:'instant'});
+  window.lucide&&lucide.createIcons();
+}
+
+/* ------------------------- onboarding steps ------------------------- */
+let step=1;
+function setStep(n,back){
+  const from=$(`.obstep[data-s="${step}"]`), to=$(`.obstep[data-s="${n}"]`);
+  if(!to||n===step) return;
+  from.classList.remove('on','back');
+  to.classList.toggle('back',!!back);
+  void to.offsetWidth;
+  to.classList.add('on');
+  step=n;
+  $$('.ob-dot').forEach(d=>{const i=+d.dataset.d;
+    d.classList.toggle('done',i<n); d.classList.toggle('now',i===n);});
+  if(n===4){
+    const box=$('.obstep[data-s="4"]');
+    box.classList.remove('build-anim'); void box.offsetWidth; box.classList.add('build-anim');
+    $('#buildTitle').textContent=
+      `${$('#sports .sport.sel b').textContent} · ${($('#obAth')||{}).value||'—'} athletes`;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  window.lucide&&lucide.createIcons();
+}
+
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');       if(g){go(g.dataset.go);return}
+  const n=e.target.closest('[data-next]');     if(n){setStep(+n.dataset.next,false);return}
+  const p=e.target.closest('[data-prev]');     if(p){setStep(+p.dataset.prev,true);return}
+  const s=e.target.closest('.sport');
+  if(s){$$('.sport').forEach(x=>x.classList.remove('sel'));s.classList.add('sel');
+        s.closest('.sports').classList.add('has-sel');return}
+  const t=e.target.closest('.tab');
+  if(t){[...t.parentElement.children].forEach(x=>x.classList.remove('on'));
+        t.classList.add('on');
+        const panes=t.closest('.card').querySelectorAll('.pane');
+        panes.forEach((p,i)=>p.classList.toggle('on',i===[...t.parentElement.children].indexOf(t)));
+        return}
+  if(e.target.closest('#themeBtn')){
+    const h=document.documentElement;
+    h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';
+    document.body.style.background=h.dataset.theme==='dark'?'var(--bg)':'#F6F7F9';
+    return}
+  const sk=e.target.closest('[data-skip]');   if(sk){setStep(4,false);return}
+});
+
+/* boot */
+$$('.ob-dot').forEach(d=>{const i=+d.dataset.d;
+  d.classList.toggle('done',i<1); d.classList.toggle('now',i===1);});
+window.lucide&&lucide.createIcons();
+</script>
+</body>
+</html>

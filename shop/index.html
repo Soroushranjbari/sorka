@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CoachMint — The Operating System for Fitness Coaches & Gyms</title>
 <meta name="description" content="One coach. One workspace. Monitor clients, workouts, nutrition, measurements, progress and your calendar — without switching tools.">
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="%23050506"/><g transform="translate(10 0) skewX(-10)"><path fill="white" d="M99 16H47C24 16 10 31 10 52V68C10 89 24 104 47 104H99L85 88H52C43 88 38 82 38 73V47C38 38 43 32 52 32H85Z"/><path fill="white" d="M38 58L98 47L90 68H38Z"/></g></svg>'>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' rx='22' fill='%2312151B'/%3E%3Cpath d='M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z' fill='%23C8F04B'/%3E%3C/svg%3E">
 <script>window.__loadFontFallback=function(){if(window.__ff)return;window.__ff=1;
 var f=['https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/500.css','https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/600.css','https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5/700.css','https://cdn.jsdelivr.net/npm/@fontsource/inter@5/400.css','https://cdn.jsdelivr.net/npm/@fontsource/inter@5/500.css','https://cdn.jsdelivr.net/npm/@fontsource/inter@5/600.css','https://cdn.jsdelivr.net/npm/@fontsource/inter@5/700.css','https://cdn.jsdelivr.net/npm/@fontsource/michroma@5/400.css','https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5/400.css','https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5/500.css','https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5/600.css','https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5/700.css','https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@5/800.css'];
 for(var i=0;i<f.length;i++){var l=document.createElement('link');l.rel='stylesheet';l.href=f[i];document.head.appendChild(l);}};</script>
@@ -95,9 +95,8 @@ section[id]{scroll-margin-top:70px}
 .logo{display:flex;align-items:center;gap:10px}
 .logo .mark{width:21px;height:21px;color:#fff}
 .logo .wm{font-size:13px}
-.logo-image{display:inline-block;width:120px;height:28px;flex:none;background:url('assets/coach-os-mark-transparent.png') center/contain no-repeat}
-.logo>.wm,.app-logo>.wm{display:none}
-.app-logo .logo-image{width:90px;height:20px}
+/* v19.15 — the wordmark was hidden because .logo-image used to BE a full
+   wordmark PNG. That PNG is the retired Coach OS lockup, so the header showed   the old brand and no text. The mark is inline now (same glyph the app, the   app favicon and /shop/account.html use), so COACHMINT can show again. */
 .l-mark{width:min(520px,82vw);height:auto;object-fit:contain;filter:none}
 .l-word,.l-tag{display:none}
 .nav-links{display:flex;gap:30px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
@@ -724,7 +723,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <noscript><style>#loader{display:none!important}#spot{display:none!important}</style></noscript>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<symbol id="i-mark" viewBox="0 0 120 120"><g transform="translate(10 0) skewX(-10)"><path d="M99 16H47C24 16 10 31 10 52V68C10 89 24 104 47 104H99L85 88H52C43 88 38 82 38 73V47C38 38 43 32 52 32H85Z"/><path d="M38 58L98 47L90 68H38Z"/></g></symbol>
+<symbol id="i-mark" viewBox="0 0 120 100"><path fill="currentColor" d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z"/></symbol>
 <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></symbol>
 <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19.5c.7-3.1 2.9-4.7 5.5-4.7s4.8 1.6 5.5 4.7"/><path d="M15.5 5.2a3.4 3.4 0 0 1 0 5.6M17.5 15.2c1.6.7 2.7 2.1 3.1 4.3"/></symbol>
 <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h3.5"/></symbol>
@@ -891,7 +890,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 </div>
 
 <header id="nav">
-  <a class="logo" href="#top"><span class="logo-image" aria-hidden="true"></span><span class="wm">COACHMINT</span></a>
+  <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
   <nav class="nav-links"><a href="#product">Product</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/shop/account.html">Account</a></nav>
   <div class="nav-cta">
     <button id="langToggle" type="button" aria-label="Switch to Persian">FA</button>
@@ -969,7 +968,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
               <div class="curl"><svg class="ic"><use href="#i-search"/></svg>app.coachmint.io/dashboard</div><span style="width:44px"></span></div>
             <div class="app">
               <aside class="app-side">
-                <div class="app-logo"><span class="logo-image" aria-hidden="true"></span><span class="wm">COACHMINT</span></div>
+                <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></div>
                 <div class="side-label">Workspace</div>
                 <nav class="side-nav" id="sideMain">
                   <a class="active" data-nav="0"><svg class="ic"><use href="#i-grid"/></svg>Dashboard</a>
@@ -1119,7 +1118,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <div id="bStage">
           <div id="osFrame">
             <div class="of-side">
-              <div class="app-logo"><span class="logo-image" aria-hidden="true"></span><span class="wm">COACHMINT</span></div>
+              <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></div>
               <div class="of-it">Dashboard</div><div class="of-it">Clients</div><div class="of-it on">Workouts</div>
               <div class="of-it">Nutrition</div><div class="of-it">Progress</div><div class="of-it">Calendar</div>
             </div>
@@ -1750,7 +1749,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   <div class="wrap">
     <div class="f-grid">
       <div class="f-brand2">
-        <a class="logo" href="#top"><span class="logo-image" aria-hidden="true"></span><span class="wm">COACHMINT</span></a>
+        <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
         <p>The operating system for fitness coaches and gyms. One coach. One workspace.</p>
       </div>
       <div class="f-col"><b>Product</b><a href="#product">Dashboard</a><a href="#product">Workouts</a><a href="#product">Nutrition</a><a href="#product">Progress</a><a href="#pricing">Pricing</a></div>

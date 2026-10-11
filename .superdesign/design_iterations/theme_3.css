@@ -1,0 +1,312 @@
+/* =============================================================================
+   COACH OS — TRACK & FIELD COACH · THEME (step ② of the superdesign workflow)
+   File:  .superdesign/design_iterations/theme_3.css
+   Scope: the TRACK & FIELD coach-type workspace.
+
+   EXTENDS theme_2.css (the general coach desktop theme).
+   It is imported, not copied — so every token shared with the general coach
+   theme has ONE source of truth and this file can only ADD or OVERRIDE.
+
+   -----------------------------------------------------------------------------
+   DESIGN BRIEF
+   -----------------------------------------------------------------------------
+   We are adding a coach TYPE, not a new product. So the answer to "what does a
+   track & field section look like?" is NOT "give it a new colour palette" —
+   it is "give it the visual language of the track itself", on top of the
+   discipline theme_2 already established.
+
+   The track's own visual language, reduced to four facts:
+       1. LANES      — numbered, evenly spaced, separated by white hairlines
+       2. NUMBERS    — decimal times, aligned in columns, tabular
+       3. LEGALITY   — a mark only counts if the wind and the reaction allow it
+       4. PHASES     — a season is one long ramp of rising then falling load
+
+   -----------------------------------------------------------------------------
+   THE THREE RULES THIS THEME ENFORCES
+   -----------------------------------------------------------------------------
+   (A) LIME FIRES ON "present" AND "achieved" ONLY.
+       current-week column · personal best ★ · primary CTA · active nav item.
+       If lime appears anywhere else it stops meaning "look here".
+
+   (B) GREEN/RED FIRE ON "legality" AND "delta" ONLY.
+       wind > +2.0 m/s · reaction < 0.100s · a ▲/▼ against a previous mark.
+       They are a promise about state, never a decoration.
+
+   (C) EVERYTHING ELSE IS GREY.
+       Event groups (Sprints / Jumps / Throws / Distance), season phases and
+       drill types are encoded by POSITION and TINT — never by hue. Giving
+       four event groups four colours is the single fastest way to turn a
+       working dashboard into a fairground.
+
+   -----------------------------------------------------------------------------
+   WHAT WE ARE NOT CHANGING (identity preserved from theme_2)
+       · lime #C8F04B      · dark canvas #0F1114   · flat + hairline cards
+       · Oxanium display / Inter text / JetBrains Mono numbers
+       · sidebar + topbar architecture
+   ========================================================================== */
+
+@import url('theme_2.css');
+
+/* =============================================================================
+   1 · LANES — the identity of this section
+   Every list in the track module (roster groups, split rows, week cells) is
+   drawn on a lane grid. A 64px lane pitch with a 1px hairline at its right
+   edge is literally the marking of a running track — it costs nothing, it
+   never competes with content, and it makes the section unmistakable.
+   ========================================================================== */
+:root {
+  --lane-w:        64px;                          /* one lane's pitch        */
+  --lane-h:        30px;                          /* one roster/split row    */
+  --lane-line:     rgba(255, 255, 255, .10);      /* the white hairline      */
+  /* Was .05 — invisible, which made the entire lane identity a no-op.
+     .09 is the floor at which the marking survives #171A1F in a screenshot
+     without competing with the text it sits behind. */
+  --lane-line-2:   rgba(255, 255, 255, .09);      /* the softer inner line   */
+  --lane-num:      700 11px/1 var(--font-display);
+  --lane-ink:      var(--ink3);
+  --lane-stripe:   repeating-linear-gradient(90deg,
+                     transparent 0 63px, var(--lane-line-2) 63px 64px);
+}
+
+/* =============================================================================
+   2 · TIMING BOARD — the signature screen
+   This is the one screen no general-purpose SaaS has, so it gets its own
+   numeric ladder. The split cell is the loudest mono we ship: it is read at
+   arm's length on a phone held at a training session, not at a desk.
+   ========================================================================== */
+:root {
+  --tm-num:        800 34px/1 var(--font-mono);   /* the hero split          */
+  --tm-num-h:      38px;
+  --tm-cell:       700 15px/1 var(--font-mono);   /* a split inside the grid */
+  --tm-sub:        700 13px/1 var(--font-mono);   /* totals, PB/SB           */
+  --tm-head-h:     34px;
+  --tm-pad-x:      12px;
+
+  /* LEGALITY — rule (B). A reaction under the 0.100s reaction-time floor
+     is a false start by World Athletics rules; this is a hard state, not an
+     opinion, so it uses the destructive status tokens and nothing else. */
+  --tm-ok:         var(--st-ok);
+  --tm-ok-bg:      var(--st-ok-bg);
+  --tm-fs:         var(--st-bad);
+  --tm-fs-bg:      var(--st-bad-bg);
+}
+
+/* =============================================================================
+   3 · WIND — legality again, not decoration
+   A mark over +2.0 m/s of following wind is wind-aided and cannot be a
+   record. Recording it in red/green is the honest thing to do: the colour is
+   reporting a rule.
+   ========================================================================== */
+:root {
+  --w-ok:          var(--st-ok);                  /* ≤ +2.0 m/s → legal      */
+  --w-ok-bg:       var(--st-ok-bg);
+  --w-illegal:     var(--st-bad);                 /* > +2.0 m/s → wind-aided */
+  --w-illegal-bg:  var(--st-bad-bg);
+  --w-idle:        var(--ink3);                   /* not recorded / indoor   */
+  --w-num:         700 13px/1 var(--font-mono);
+}
+
+/* =============================================================================
+   4 · SEASON RAMP — a sequential encoding in ONE hue
+   The five phases (General / Prep / Pre-comp / Comp / Taper) are NOT given
+   five colours. They are given four steps of white at rising alpha, which is
+   a proper sequential ramp: the tint carries QUANTITY (workload), and the
+   mono label carries IDENTITY (which phase). Hue is therefore doing no work
+   here at all — which is exactly why this does not break rule (C).
+
+   A sequential ramp is the standard encoding for ordered magnitude and it
+   survives greyscale printing, colour-blindness and a phone at 40% brightness
+   — all of which a periodization chart will actually meet.
+   ========================================================================== */
+:root {
+  --ph-load-1:     rgba(255, 255, 255, .045);     /* light / GPP             */
+  --ph-load-2:     rgba(255, 255, 255, .075);
+  --ph-load-3:     rgba(255, 255, 255, .115);
+  --ph-load-4:     rgba(255, 255, 255, .165);     /* peak / competition      */
+  --ph-bar-h:      16px;                          /* one week cell           */
+  --ph-head-w:     132px;                         /* sticky phase label col  */
+
+  /* The two exceptions, both from rule (A): the column you are standing in,
+     and the meet happening in it. Lime marks PRESENCE — nothing else. */
+  --ph-now:        var(--accent);
+  --ph-now-bg:     rgba(200, 240, 75, .10);
+  --ph-meet:       var(--ink);                    /* ⚑ — white; lime only
+                                                     when it is THIS week    */
+}
+
+/* =============================================================================
+   5 · MARKS & PB — where lime is allowed to be loud
+   A personal best is the emotional centre of a track section. It is the one
+   place in this module where colour is allowed to celebrate, and it is
+   allowed because a PB is a genuine state change, not an ornament.
+   ========================================================================== */
+:root {
+  --mk-pb:         var(--accent);                 /* ★ the PB                */
+  --mk-pb-bg:      var(--accent-soft);
+  --mk-sb:         var(--ink2);                   /* season best — quieter   */
+  --mk-delta-up:   var(--st-ok);                  /* ▲ better than last      */
+  --mk-delta-dn:   var(--st-bad);                 /* ▼ worse than last       */
+  --mk-num:        700 15px/1 var(--font-mono);
+}
+
+/* =============================================================================
+   6 · EVENT GROUPS — chips, never hues
+   Sprints / Mid-Long / Jumps / Throws / Combined are distinguished by a
+   mono label on a neutral chip. The SELECTED group is the only one allowed
+   to turn lime, and only because "selected" is a present-tense state.
+   ========================================================================== */
+:root {
+  /* Matched to theme_2's --pill-h (22px): chips and pills must share one
+     height or two side-by-side card headers sit 2px apart. */
+  --ev-chip-h:      22px;
+  --ev-chip-pad:    0 10px;
+  --ev-chip-bg:     var(--surface2);
+  --ev-chip-fg:     var(--ink2);
+  --ev-chip-line:   1px solid var(--line);
+  --ev-chip-on-bg:  var(--accent-soft);
+  --ev-chip-on-fg:  var(--accent);
+  --ev-chip-on-line:1px solid var(--accent-line);
+}
+
+/* =============================================================================
+   7 · MOTION BUDGET — handed to step ③
+   A track coach taps this screen with wet hands between reps. Nothing may
+   delay a tap: every value below is a state-change cue, never a gate.
+   ========================================================================== */
+:root {
+  --d-split:       260ms;   /* a split rolls to its new value               */
+  --d-lane:        180ms;   /* a lane row re-orders after a rep             */
+  --d-flag:        420ms;   /* the ★ PB pop                                  */
+  --d-phase:       320ms;   /* the current-week column slides                */
+}
+
+/* =============================================================================
+   8 · OPTIONAL METRICS (spec §5)
+   "Do not assume every athlete/device provides every metric."
+   A missing metric must be VISIBLY absent, not silently zero — a `0` in a
+   cadence cell reads as "this athlete runs at 0 spm", which is a lie. The
+   idle token is the honest empty state and it is a status, so it may be tinted.
+   ========================================================================== */
+:root {
+  --opt-none:      var(--st-idle);                /* not recorded            */
+  --opt-none-bg:   var(--st-idle-bg);
+  --opt-label:     var(--t-label);                /* the metric's name       */
+  --opt-val:       700 17px/1 var(--font-mono);   /* the metric's value      */
+  --opt-unit:      700 11px/1 var(--font-mono);
+}
+
+/* =============================================================================
+   9 · WEARABLE PROVIDERS (spec §12)
+   The abstraction is `WearableProvider`, never `Garmin`. These tokens describe
+   a PROVIDER'S connection state, which is exactly what status colour is for.
+   No provider is implemented — the states exist so a future one drops in.
+   ========================================================================== */
+:root {
+  --dev-idle:      var(--st-idle);   /* not connected / not configured      */
+  --dev-idle-bg:   var(--st-idle-bg);
+  --dev-ok:        var(--st-ok);     /* connected and delivering data       */
+  --dev-ok-bg:     var(--st-ok-bg);
+  --dev-plan:      var(--st-warn);   /* planned — must never read as "on"   */
+  --dev-plan-bg:   var(--st-warn-bg);
+  --dev-row-h:     46px;
+}
+
+/* =============================================================================
+   10 · RUNNING VALUES (spec §4, §5)
+   Pace is the running world's primary number, so it gets display weight —
+   but it stays in JetBrains Mono with tabular figures, because `1:40` and
+   `1:45` must align digit-for-digit in a target range.
+   ========================================================================== */
+:root {
+  --pace-hero:     800 40px/1 var(--font-mono);
+  --pace-num:      700 15px/1 var(--font-mono);
+  --pace-range:    700 13px/1 var(--font-mono);
+  --dist-num:      700 15px/1 var(--font-mono);
+}
+
+/* -----------------------------------------------------------------------------
+   LIGHT THEME — twins for the alpha-based tokens authored above. Tokens that
+   REFERENCE theme_2 statuses (--st-ok, --w-ok, --tm-fs …) follow theme_2's
+   own light block automatically and must not be redeclared here.
+   -------------------------------------------------------------------------- */
+html[data-theme="light"] {
+  --lane-line:     rgba(20, 23, 28, .10);
+  --lane-line-2:   rgba(20, 23, 28, .09);
+  --lane-stripe:   repeating-linear-gradient(90deg,
+                     transparent 0 63px, rgba(20, 23, 28, .09) 63px 64px);
+
+  --ph-load-1:     rgba(20, 23, 28, .040);
+  --ph-load-2:     rgba(20, 23, 28, .070);
+  --ph-load-3:     rgba(20, 23, 28, .105);
+  --ph-load-4:     rgba(20, 23, 28, .155);
+  --ph-now-bg:     rgba(110, 143, 20, .14);
+
+  --ev-chip-bg:    var(--surface2);
+}
+
+/* =============================================================================
+   LIGHT — lime #C8F04B used as TEXT fails on white, and theme_2 says so itself
+   ("lime at #8FB515 fails AA on white") by shipping --accent-deep #6E8F14.
+
+   --accent is deliberately NOT redefined here: it also paints the primary
+   BUTTON, where lime-on-white with dark text is correct and must stay lime.
+   So the two roles are split — background keeps --accent, TEXT moves to
+   --accent-deep — and every rule that painted text with --accent is re-pointed.
+
+   The `html[data-theme] :is(...)` prefix is required twice over:
+   · specificity (0,3,2) beats the original (0,1,0)…(0,2,1) rules, which
+     matters because theme_3 is <link>ed BEFORE the inline <style>, so a tie
+     would let the dark-mode value win;
+   · inline `style="color:var(--accent)"` would beat any selector — an audit
+     confirmed there are none in this file.
+   ========================================================================== */
+html[data-theme="light"] {
+  --accent-text:    var(--accent-deep, #6E8F14);
+  --nav-active-fg:  var(--accent-deep, #6E8F14);
+  --mk-pb:          var(--accent-deep, #6E8F14);
+  --ev-chip-on-fg:  var(--accent-deep, #6E8F14);
+}
+
+html[data-theme="light"] :is(
+  .ob-dot.now .d, .ob-eyebrow, .opt.sel b, .build-ok, .nav-sec i,
+  .pill.accent, .ev-chip.on, .lnk, .kv.focus .kvv, .pg.on .pl,
+  .day.today .dh, .ph.now .pt, .fnode.key, .pv.actual .pv-l,
+  .ph-nav div.on, .today-card .th, .pb, .kvv.pb
+) { color: var(--accent-deep, #6E8F14); }
+
+/* =============================================================================
+   PRIMITIVES — only the tokens above rendered as classes. Kept here rather
+   than in the mockup because these are what step ④ will port into index.html.
+   ========================================================================== */
+.lane-stripe { background-image: var(--lane-stripe); }
+
+.tm-num  { font: var(--tm-num);   letter-spacing: -.02em;
+           font-variant-numeric: tabular-nums; color: var(--ink); }
+.tm-cell { font: var(--tm-cell);  letter-spacing: var(--tr-num);
+           font-variant-numeric: tabular-nums; color: var(--ink); }
+.tm-sub  { font: var(--tm-sub);   letter-spacing: var(--tr-num);
+           font-variant-numeric: tabular-nums; color: var(--ink2); }
+
+.w-ok      { color: var(--w-ok); }
+.w-illegal { color: var(--w-illegal); }
+.w-idle    { color: var(--w-idle); }
+
+.mk-pb { color: var(--mk-pb); }
+.mk-up { color: var(--mk-delta-up); }
+.mk-dn { color: var(--mk-delta-dn); }
+
+.ph-load-1 { background: var(--ph-load-1); }
+.ph-load-2 { background: var(--ph-load-2); }
+.ph-load-3 { background: var(--ph-load-3); }
+.ph-load-4 { background: var(--ph-load-4); }
+.ph-now    { background: var(--ph-now-bg);
+             box-shadow: inset 2px 0 0 var(--ph-now); }
+
+.ev-chip      { height: var(--ev-chip-h); padding: var(--ev-chip-pad);
+                display: inline-flex; align-items: center; gap: 6px;
+                background: var(--ev-chip-bg); color: var(--ev-chip-fg);
+                border: var(--ev-chip-line); border-radius: var(--r-pill);
+                font: var(--t-label); letter-spacing: var(--tr-label);
+                text-transform: uppercase; }
+.ev-chip.on   { background: var(--ev-chip-on-bg); color: var(--ev-chip-on-fg);
+                border: var(--ev-chip-on-line); }

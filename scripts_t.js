@@ -1,0 +1,10249 @@
+
+/* ================= ICONS ================= */
+const P={
+grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
+users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+dumbbell:'<path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>',
+calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+chart:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+ruler:'<path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0l-4.6-4.6a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/>',
+utensils:'<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+stack:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
+note:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>',
+help:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+plus:'<path d="M12 5v14"/><path d="M5 12h14"/>',
+bell:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+chevL:'<path d="m15 18-6-6 6-6"/>',chevR:'<path d="m9 18 6-6-6-6"/>',chevD:'<path d="m6 9 6 6 6-6"/>',
+x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+check:'<polyline points="20 6 9 17 4 12"/>',
+edit:'<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+copy:'<rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+arrowR:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+star:'<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+filter:'<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>',
+clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/>',
+/* v18.18 — camera flip: feather refresh-ccw (two arrows circling) */
+camflip:'<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 0 0 2.13 2.83 9 9 0 0 0 12.73 0 9 9 0 0 0 0-12.73A9 9 0 0 0 5.64 5.64L1 10"/>',
+grip:'<circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/>',
+zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
+cart:'<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+pin:'<path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16h14v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/>',
+archive:'<rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/>',
+activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+google:'<path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81Z" fill="currentColor" stroke="none"/>',
+target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+play:'<polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/>',
+// These three were referenced by the admin panel / file list but missing from
+// the map, so ic() silently emitted an empty <svg> (blank buttons).
+refresh:'<path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/>',
+pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m21 15-5-5L5 21"/>',
+qr:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M14 21h3"/><path d="M21 14v3"/><path d="M18 18h3v3h-3z"/>',
+/* v18.36 — toolbox FAB icons: robot (AI), toolbox (coach tools), stopwatch */
+robot:'<rect x="4" y="8" width="16" height="12" rx="3"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9 17.5h.01M15 17.5h.01"/><path d="M2 12v4M22 12v4"/>',
+toolbox:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/><path d="M10 13v2h4v-2"/>',
+stopwatch:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/><path d="m19 5 1.5 1.5"/>',
+/* v18.39 — challenges */
+trophy:'<circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/>',
+flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>'};
+/* v18.40 — LUCIDE ICON BANK bridge. Resolution order in ic(): the legacy P
+   map above first (zero visual regression for existing screens), then
+   LUCIDE_ALIAS, then ANY Lucide kebab name — new UI can simply write
+   ic('heart-pulse') / ic('medal') / ic('crown') / ic('dumbbell-…'). */
+const LUCIDE_ALIAS={grid:'layout-grid',stack:'layers',note:'file-text',gear:'settings',help:'circle-help',edit:'pencil',trash:'trash-2',more:'ellipsis',camflip:'refresh-ccw',grip:'grip-vertical',cart:'shopping-cart',refresh:'rotate-cw',qr:'qr-code',robot:'bot',stopwatch:'timer',chart:'chart-line',chevL:'chevron-left',chevR:'chevron-right',chevD:'chevron-down',arrowR:'arrow-right'};
+const lucideSvg=name=>{
+  const L=window.lucide||window.Lucide;if(!L||!name)return '';
+  const pk=String(name).split('-').filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join('');
+  const node=(L.icons&&L.icons[pk])||L[pk];
+  if(!Array.isArray(node))return '';
+  return node.map(nd=>{const t=nd[0],a=nd[1]||{};
+    const at=Object.keys(a).map(k=>`${k}="${a[k]}"`).join(' ');
+    return `<${t}${at?' '+at:''}/>`}).join('');
+};
+const ic=(n,s=16)=>{
+  const inner=P[n]||lucideSvg(LUCIDE_ALIAS[n])||lucideSvg(n);
+  return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`};
+const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg>`;
+
+/* ================= I18N ================= */
+let lang='en';
+/* Falls back to the shop's locale key (coach-os-locale, see shop/README.md) so
+   a buyer who browsed the shop in Persian gets the app in Persian on first
+   boot; after that co-lang (the app's own choice) wins. */
+try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){}
+const FA={
+'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
+'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
+'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
+'Your Workouts':'تمرین‌های تو','Preview exercises':'پیش‌نمایش حرکات',
+'Help center — docs & shortcuts':'مرکز راهنما — مستندات و میان‌برها','Sign out':'خروج','Signed out':'خارج شدی','Welcome back, Coach':'خوش برگشتی، مربی','Done':'انجام شد','Switch role':'تغییر نقش','Exit demo':'خروج از دمو','Reply':'پاسخ',
+'Add Client':'افزودن شاگرد','Create Workout':'ساخت تمرین','Schedule Session':'زمان‌بندی جلسه','Add Measurement':'ثبت اندازه‌گیری','Create Template':'ساخت قالب','Add Exercise':'افزودن حرکت','Create Note':'یادداشت جدید','Create Nutrition Plan':'ساخت برنامه تغذیه',
+'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
+'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
+'"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."':'«CoachMint چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
+'Welcome':'خوش آمدی','Enter your name':'نام‌ات را وارد کن','AI Draft':'پیش‌نویس هوشمند','AI Workout Assistant':'دستیار هوشمند تمرین','Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.':'از پروفایل شاگرد پیش‌نویس تمرین می‌سازد — بازبینی، ویرایش و انتشار با شماست. هیچ‌چیز خودکار نیست.','Focus / limitations':'تمرکز / محدودیت‌ها','e.g. knee pain on deep squats · dumbbells only':'مثلاً درد زانو در اسکوات عمیق · فقط دمبل','Generate draft':'ساخت پیش‌نویس','Generating…':'در حال ساخت…','AI credits this month':'اعتبار AI این ماه','AI monthly quota reached':'سهمیه ماهانه AI تمام شد','AI is not configured on the server':'AI روی سرور تنظیم نشده است','AI service unavailable — try again':'سرویس AI در دسترس نیست — دوباره تلاش کنید','AI draft loaded — review, edit, then publish':'پیش‌نویس AI بارگذاری شد — بازبینی و ویرایش کن، بعد منتشر کن','AI Assistant':'دستیار هوشمند','Knows your workspace':'ورک‌اسپیس شما را می‌شناسد','Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.':'سلام مربی! 👋 من کل ورک‌اسپیس شما را می‌بینم — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها و پیام‌ها. هر سوالی داری بپرس، یا برای گزارش این هفته روی 📊 بزن.','Clear chat':'پاک کردن گفتگو','Ask anything — clients, workouts, meals, measurements, messages, billing…':'هر چیزی بپرس — شاگردها، تمرین‌ها، وعده‌ها، اندازه‌گیری‌ها، پیام‌ها، صورت‌حساب…','Ask the AI assistant…':'از دستیار هوشمند بپرس…','AI daily quota reached':'سهمیه روزانه AI تمام شد','Weekly report':'گزارش هفتگی',
+'Apply':'اعمال','Let the AI apply changes':'دستیار خودش تغییرات را اعمال کند','Describe the change to apply…':'تغییری که باید اعمال شود را بنویس…','Done — changes applied':'انجام شد — تغییرات اعمال شد','Nothing was changed':'تغییری اعمال نشد','A client with this name exists':'شاگردی با این نام وجود دارد','Invalid values':'مقادیر نامعتبر','Change failed':'تغییر ناموفق بود',
+'Camera form check':'بررسی فرم با دوربین','Accuracy':'دقت تشخیص','Standard':'عادی','High':'بالا','High (slower)':'بالا (کندتر)','Standard (faster)':'عادی (سریع‌تر)','Body outline':'سایه بدن',
+'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
+'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
+'App Theme':'تم اپلیکیشن','FitFlow':'فیت‌فلو','Carbon':'کربن','Ocean':'اقیانوس','Sunset':'غروب','CoachMint':'کوچ‌مینت','Charcoal · lime':'زغالی · لیمویی','Black · white':'مشکی · سفید','Navy · cyan':'سرمه‌ای · فیروزه‌ای','Plum · amber':'بادمجانی · کهربایی','Applies to this device only':'فقط روی همین دستگاه اعمال می‌شود',
+'Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
+'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
+'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
+'Announce':'اعلامیه','New announcement':'اعلامیه جدید','Write the announcement…':'متن اعلامیه را بنویس…','Send to all clients':'ارسال به همه شاگردها','Announcement sent':'اعلامیه ارسال شد','Goes to every active client as a direct message':'برای همه شاگردهای فعال به‌صورت پیام مستقیم ارسال می‌شود','Schedule change next week':'تغییر برنامه هفته آینده','Message templates':'قالب پیام','New template':'قالب جدید','Template name':'نام قالب','Template text':'متن قالب','Template saved ✓':'قالب ذخیره شد ✓','A template with this name exists':'قالبی با این نام وجود دارد','Inserted into the composer':'در کادر نوشتن پیام قرار گرفت','Template name and text are required':'نام و متن قالب الزامی است','No templates yet':'هنوز قالبی نیست',
+'Session packages':'بسته‌های جلسه','Packages':'بسته‌ها','Sessions almost used':'جلسات در حال اتمام','Add pack':'افزودن بسته','Pack name':'نام بسته','Pack added ✓':'بسته اضافه شد ✓','Pack deleted':'بسته حذف شد','Used':'مصرف‌شده','left':'باقی‌مانده','Sessions remaining':'جلسات باقی‌مانده','No packages yet — sell sessions as a pack and CoachMint counts them down automatically':'هنوز بسته‌ای نیست — جلسات را به‌صورت بسته بفروش؛ CoachMint خودش می‌شمارد','remaining — offer a new pack':'باقی‌مانده — پیشنهاد بسته جدید بده',
+'Intake form':'فرم ورود اطلاعات','Fill intake form':'تکمیل فرم','Intake form missing':'فرم ورود اطلاعات تکمیل نشده','Review the health questionnaire before the first session':'قبل از اولین جلسه پرسشنامه سلامت را ببین','Submitted':'ثبت شده','Missing':'ناقص','The client has not submitted the intake form yet':'شاگرد هنوز فرم را تکمیل نکرده است','Intake form saved ✓':'فرم ذخیره شد ✓','Answer all questions':'به همه سوالات پاسخ بده','Your coach needs your health background before the first session':'مربی‌ات قبل از اولین جلسه به سوابق سلامتی‌ات نیاز دارد','Emergency contact (name & phone)':'تماس اضطراری (نام و شماره)','Injuries or medical conditions':'آسیب‌ها یا بیماری‌ها','Current medications':'داروهای فعلی','Chest pain or dizziness during exercise?':'درد قفسه سینه یا سرگیجه هنگام تمرین؟','Heart condition diagnosed by a doctor?':'بیماری قلبی که پزشک تشخیص داده؟','Bone or joint problem that could worsen?':'مشکل استخوان یا مفصلی که ممکن است بدتر شود؟','Currently doing other training?':'در حال حاضر تمرین دیگری هم انجام می‌دهی؟','Main goal & expectations':'هدف اصلی و انتظارات','Yes':'بله','No':'خیر','Submit':'ارسال',
+'Photo added ✓':'عکس اضافه شد ✓','Photo sent — waiting for coach approval':'عکس ارسال شد — در انتظار تأیید مربی','Photo limit reached — delete an older photo first':'سقف عکس‌ها پر شده — اول یک عکس قدیمی را حذف کن','Photo storage is full — delete some photos first':'فضای عکس‌ها پر شده — چند عکس را حذف کن','Photo deleted':'عکس حذف شد','Approved ✓':'تأیید شد ✓','Pending approval':'در انتظار تأیید','Approve':'تأیید','No photos yet — add the first one':'هنوز عکسی نیست — اولین عکس را اضافه کن','My Photos':'عکس‌های من','Add photo':'افزودن عکس','photos':'عکس','Your coach will see this photo. Upload?':'مربی‌ات این عکس را می‌بیند. بارگذاری شود؟',
+'Weight Target':'وزن هدف','Target Weight':'وزن هدف','Target Date':'تاریخ هدف','Goal progress':'پیشرفت هدف','My Goal':'هدف من',
+'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
+'Meat':'گوشت','Chicken':'مرغ','Fish':'ماهی','Eggs':'تخم‌مرغ','Dairy':'لبنیات','Rice & Grains':'برنج و غلات','Bread':'نان','Fruit':'میوه','Vegetables':'سبزیجات','Nuts':'آجیل','Oils':'روغن‌ها','Drinks':'نوشیدنی‌ها','Supplements':'مکمل‌ها','Other':'سایر',
+'Bodybuilding & Fitness':'بدنسازی و فیتنس','Powerlifting':'پاورلیفتینگ','Running & Endurance':'دویدن و استقامت','Team Sports':'ورزش‌های تیمی','General Fitness':'تناسب اندام عمومی',
+'Online coaching':'مربیگری آنلاین','In-person / gym':'حضوری / باشگاه','Hybrid':'ترکیبی',
+'Just starting':'تازه شروع کرده‌ام','Less than 5 clients':'کمتر از ۵ شاگرد','Growing':'در حال رشد','5 – 30 clients':'۵ تا ۳۰ شاگرد','Established':'جایگزیده','More than 30 clients':'بیش از ۳۰ شاگرد',
+'Program design':'برنامه‌نویسی تمرین','Nutrition planning':'برنامه‌ریزی تغذیه','Progress tracking':'پیگیری پیشرفت','Client management':'مدیریت شاگردان',
+'Set up your workspace':'فضای کاری‌ات را تنظیم کن','Which sport do you coach?':'کدام رشته را مربیگری می‌کنی؟','How do you coach?':'چطور مربیگری می‌کنی؟','How many clients do you have?':'چند شاگرد داری؟','What do you do most?':'بیشتر وقتت صرف چه کاری می‌شود؟','Skip for now':'فعلاً رد کن','Finish':'پایان',
+'More sports are coming — pick the closest one for now':'رشته‌های بیشتری اضافه می‌شود — فعلاً نزدیک‌ترین را انتخاب کن','This becomes your home screen — change it anytime in Settings':'این صفحه‌ی خانه‌ات می‌شود — هر وقت خواستی از تنظیمات عوضش کن',
+'Workspace tailored ✓ — change it later in Settings':'فضای کاری شخصی‌سازی شد ✓ — بعداً از تنظیمات قابل تغییر است','Setup wizard':'ویزارد راه‌اندازی','Sport, coaching style and home screen':'رشته، سبک مربیگری و صفحه‌ی خانه','Redo':'انجام دوباره','Suggested':'پیشنهادی',
+'No templates for this sport yet':'هنوز قالبی برای این رشته نیست','Build one in the builder and save it as a template':'در سازنده بساز و به‌عنوان قالب ذخیره کن','Show all templates':'نمایش همه قالب‌ها',
+'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
+'Could not load coaches':'بارگذاری مربی‌ها ناموفق بود','Admin error':'خطای ادمین','Retry':'تلاش دوباره','Search by name or email':'جستجو با نام یا ایمیل',
+'Sign in to CoachMint':'ورود به CoachMint','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
+"Here's what's happening with your clients today.":'خلاصه‌ی امروز شاگردانت این‌جاست.','Wed, Jul 8 2026':'چهارشنبه، ۱۷ تیر ۱۴۰۵',
+'Total Clients':'کل شاگردان','Active Clients':'شاگردان فعال','Sessions Today':'جلسات امروز','Upcoming Sessions':'جلسات پیش‌رو','This week':'این هفته',
+"Today's Schedule":'برنامه امروز','Open calendar →':'باز کردن تقویم ←','Completed':'تکمیل شد','Scheduled':'زمان‌بندی شده','Assessment':'ارزیابی','Session options':'گزینه‌های جلسه','Quick Actions':'اقدامات سریع',
+'Clients Needing Attention':'شاگردان نیازمند توجه','Program ending soon':'برنامه به پایان می‌رسد','Missed session':'جلسه از دست رفته','Open':'باز کردن',
+'Recent Activity':'فعالیت‌های اخیر','View all →':'مشاهده همه ←','Full activity log':'گزارش کامل فعالیت‌ها',
+'1 h ago':'۱ ساعت پیش','3 h ago':'۳ ساعت پیش','5 h ago':'۵ ساعت پیش','Yesterday':'دیروز','2 days ago':'۲ روز پیش','3 days ago':'۳ روز پیش','9 days ago':'۹ روز پیش','1 week ago':'۱ هفته پیش','2 weeks ago':'۲ هفته پیش','3 weeks ago':'۳ هفته پیش','1 month ago':'۱ ماه پیش','Just now':'همین حالا','days ago':'روز پیش',
+'active client':'شاگرد فعال','active clients':'شاگرد فعال','No clients yet — add your first client':'هنوز شاگردی نداری — اولین شاگردت را اضافه کن','Add your first client to start building programs, plans and progress tracking':'اولین شاگردت را اضافه کن تا ساخت برنامه‌ها، تغذیه و پیگیری پیشرفت شروع شود','QR code':'بارکد QR','QR':'بارکد','Show QR':'نمایش بارکد','Scan with the phone camera — the app opens and connects automatically':'با دوربین گوشی اسکن کن — اپ باز می‌شود و خودکار وصل می‌شود','Copy link':'کپی لینک','Search clients…':'جستجوی شاگردان…','Filter':'فیلتر','Sort':'مرتب‌سازی',
+'Client':'شاگرد','Goal':'هدف','Weight':'وزن','Program':'برنامه','Next Session':'جلسه بعدی','Streak':'زنجیره','Status':'وضعیت','wk':'هفته','Open Workspace':'فضای کاری','added to your clients':'به شاگردانت اضافه شد',
+'Active':'فعال','Inactive':'غیرفعال','On Hold':'موقتاً متوقف','Paused':'موقتاً متوقف','Archived':'آرشیو شده','Pending':'در انتظار',
+'Today · 09:00':'امروز · ۰۹:۰۰','Tomorrow · 17:00':'فردا · ۱۷:۰۰','Thu · 09:30':'پنجشنبه · ۰۹:۳۰','Fri · 18:00':'جمعه · ۱۸:۰۰',
+'Push A · Tomorrow 09:00':'Push A · فردا ۰۹:۰۰','Full Body B · Today 11:00':'Full Body B · امروز ۱۱:۰۰','Leg A · Today 14:30':'Leg A · امروز ۱۴:۳۰','Pull A · Tomorrow 17:00':'Pull A · فردا ۱۷:۰۰','Mobility B · Thu 09:30':'Mobility B · پنجشنبه ۰۹:۳۰','Push B · Fri 18:00':'Push B · جمعه ۱۸:۰۰','Unscheduled':'بدون زمان‌بندی',
+'4x / week':'۴ جلسه در هفته','3x / week':'۳ جلسه در هفته','5x / week':'۵ جلسه در هفته','2x / week':'۲ جلسه در هفته',
+'Personal Information':'اطلاعات شخصی','First Name':'نام','Last Name':'نام خانوادگی','Phone':'تلفن','Date of Birth':'تاریخ تولد','Gender':'جنسیت','Prefer not to say':'ترجیح می‌دهم نگویم','Male':'مرد','Female':'زن',
+'National ID':'کد ملی','For contract & insurance':'برای قرارداد و بیمه — نقشی در ورود ندارد',
+'Physical Information':'اطلاعات فیزیکی','Height (cm)':'قد (سانتی‌متر)','Weight (kg)':'وزن (کیلوگرم)','Body Fat (%)':'چربی بدن (٪)','Activity Level':'سطح فعالیت','Sedentary':'کم‌تحرک','Lightly active':'کمی فعال','Moderately active':'نیمه‌فعال','Very active':'خیلی فعال',
+'Training Information':'اطلاعات تمرینی','Experience Level':'سطح تجربه','Beginner':'مبتدی','Intermediate':'متوسط','Advanced':'پیشرفته','Primary Goal':'هدف اصلی','Training Frequency':'تعداد جلسات در هفته','Preferred Days':'روزهای دلخواه','Available Equipment':'تجهیزات موجود','Full gym · Dumbbells at home':'باشگاه کامل · دمبل در خانه',
+'Health / Limitations':'سلامت / محدودیت‌ها','Injuries':'آسیب‌ها','Movement Restrictions':'محدودیت‌های حرکتی','Important Notes':'نکات مهم','Cancel':'انصراف','Save Client':'ذخیره شاگرد','Save':'ذخیره','Client updated ✓':'شاگرد به‌روزرسانی شد ✓',
+'Edit Client':'ویرایش شاگرد','Schedule':'زمان‌بندی','Add Note':'یادداشت جدید','More actions':'اقدامات بیشتر','Archive client':'آرشیو شاگرد','Client archived':'شاگرد آرشیو شد','Export data':'خروجی داده‌ها','Data export started':'خروجی داده‌ها شروع شد','Invite to portal':'دعوت به پورتال','Client portal invite sent':'دعوت‌نامه پورتال ارسال شد',
+'Overview':'نمای کلی','Files':'فایل‌ها',
+'Client Summary':'خلاصه شاگرد','Current Weight':'وزن فعلی','Body Fat':'چربی بدن','Height':'قد','Program progress':'پیشرفت برنامه','Week':'هفته','of':'از',
+'Training Summary':'خلاصه تمرین','Workouts Completed':'تمرین‌های تکمیل‌شده','Workouts Missed':'تمرین‌های از دست رفته','Current Streak':'زنجیره فعلی','Last Workout':'آخرین تمرین','Next Workout':'تمرین بعدی','Avg RPE (4 weeks)':'میانگین RPE (۴ هفته)',
+'Progress Overview':'نمای کلی پیشرفت','Last 12 weeks':'۱۲ هفته اخیر','Workout Consistency':'ثبات تمرین','% completed':'٪ تکمیل','Recent Notes':'یادداشت‌های اخیر','All notes':'همه یادداشت‌ها',
+'Today · 08:20':'امروز · ۰۸:۲۰','Training':'تمرین','General':'عمومی','Injury / Restriction':'آسیب / محدودیت','General Note':'یادداشت عمومی','Training Note':'یادداشت تمرینی','Progress Note':'یادداشت پیشرفت','Injury / Restriction Note':'یادداشت آسیب / محدودیت','Nutrition Note':'یادداشت تغذیه',
+'New Note':'یادداشت جدید','Title':'عنوان','Write your note…':'یادداشتت را بنویس…','Add Note':'ثبت یادداشت','Untitled note':'یادداشت بدون عنوان','Note added':'یادداشت ثبت شد','Note archived':'یادداشت آرشیو شد','Open a client workspace to add a note':'برای ثبت یادداشت، فضای کاری یک شاگرد را باز کن','Visible to client':'قابل مشاهده توسط شاگرد','Private':'خصوصی',
+'Workout Name':'نام تمرین','Training Day':'روز تمرین','Rest Day':'روز استراحت','Duration':'مدت','Coach Notes':'یادداشت مربی','Coach cue':'نکته مربی','e.g. Elbows ~45°, full ROM':'مثلاً آرنج ~۴۵ درجه، دامنه کامل','Tap when done':'وقتی انجام شد بزن','Not yet':'هنوز نه','Sent':'ارسال شد',
+    'pts today':'امتیاز امروز','Level':'سطح','pt to Level':'امتیاز تا سطح','streak at risk':'استریک در خطر',
+    'Finish one habit today to keep it':'برای حفظش امروز یک عادت را تمام کن','Protect':'حفظ کن','Streak kept':'استریک حفظ شد',
+    /* v18.76 — mockup-exact strings (design/client-app-screens.html) */
+    'Action needed':'اقدام لازم','Demo video':'ویدیو آموزشی','Left today':'برای امروز مانده','today':'امروز',
+    'Sound':'صدا','Vibrate':'لرزش','Auto next':'بعدی خودکار',
+    'Start a session or send a check-in':'یک جلسه را شروع کن یا چک‌این بفرست','Workout · message · reminder':'تمرین · پیام · یادآور',
+    'Activity logged today':'امروز فعالیت ثبت شد',
+    'Upcoming sessions':'جلسات پیش‌رو','This month':'این ماه','Rest days':'روزهای استراحت','Tomorrow':'فردا',
+    'Every week repeats · your coach plans it':'هر هفته تکرار می‌شود — مربی برنامه‌اش را می‌ریزد','Add to phone calendar (.ics)':'افزودن به تقویم گوشی (.ics)',
+    'Remaining today':'باقی‌مانده امروز','kcal left':'کالری مانده','Food':'غذا','Amount':'مقدار','Kcal':'کالری','Eaten':'خورده‌شده','Due':'موعد',
+    'Hydration':'آبِ روزانه','to go':'مانده','L of':'لیتر از','Quick log':'ثبت سریع','Snap a photo':'عکس بگیر',
+    'AI estimates calories & macros instantly':'هوش مصنوعی فوری کالری و ماکرو را تخمین می‌زند','Type text':'تایپ متن','Barcode':'بارکد',
+    'Scan package':'اسکن بسته','Assistant':'دستیار','Chat to log':'با چت ثبت کن','One-tap favorites':'محبوب‌های یک‌لمسی','logged':'ثبت شد','Undo':'واگرد',
+    'Barcode number':'شماره بارکد','Searching…':'در حال جستجو…','Product not found in the food database.':'این محصول در پایگاه غذا پیدا نشد.',
+    'per100 g':'در هر ۱۰۰ گرم','Log100 g':'ثبت ۱۰۰ گرم','Lookup failed — check your connection.':'جستجو ناموفق بود — اتصال اینترنت را بررسی کن.',
+    'Scan the package barcode or type its number.':'بارکد بسته را اسکن کن یا شماره‌اش را بنویس.','Enter the barcode number':'شماره بارکد را وارد کن',
+    'Nothing to undo':'چیزی برای واگردانی نیست','Water entry removed':'ثبت آب حذف شد','Fuel Plan':'برنامه سوخت','Scanned product':'محصول اسکن‌شده',
+    'Health grade':'امتیاز سلامت','Strong week':'هفته قوی','Solid week':'هفته خوب','Keep building':'ادامه بده','protein hit':'پروتئین در هدف',
+    'Personal records':'رکوردهای شخصی','Progress photos':'عکس‌های پیشرفت','Drag to compare':'برای مقایسه بکش','Earlier':'قبلی','Latest':'جدیدترین',
+    'Session pack':'بسته جلسات','Used':'استفاده‌شده','My join code':'کد اتصال من','Since':'از تاریخ',
+    'Scan to connect this device · re-share anytime':'اسکن کن تا این دستگاه وصل شود — هر وقت خواستی دوباره بفرست','Show fullscreen':'نمایش تمام‌صفحه',
+    'Daily check-in sent':'چک‌این روزانه ارسال شد','Done for today':'امروز تموم شد','Send progress photo':'ارسال عکس پیشرفت','Ask a question':'سوالی دارم',
+    'Meal log':'ثبت وعده','Confirm':'تأیید','Swap whey':'جایگزینی وی','Log500ml water':'ثبت ۵۰۰ میلی آب','Today summary':'خلاصه امروز','Online · knows your plan':'آنلاین · برنامه‌ات را می‌شناسد',
+    'Exercise':'حرکت','before this set':'قبل از این ست','Next':'بعدی','Pause':'توقف','Rate this set':'به این ست امتیاز بده',
+    'What does RPE mean?':'RPE یعنی چه؟','Rate of Perceived Exertion — how hard the set felt':'شدت احساسی تلاش — این ست چقدر سخت بود',
+    'Easy':'آسان','4+ reps still in the tank':'۴+ تکرار در ذخیره','Warm-up':'گرم‌کردن','Comfortable':'راحت','3 reps left':'۳ تکرار مانده',
+    'Light load':'سبک','2 reps left — sweet spot for growth':'۲ تکرار مانده — بهترین نقطه برای رشد','Hard':'سخت','1 rep left':'۱ تکرار مانده',
+    'Heavy':'سنگین','Max effort':'حداکثر توان','to failure — no reps left':'تا ناتوانی — هیچ تکراری نمانده','All-out':'همه‌چیز',
+    'Tap a number right after your set — your coach reads it and adjusts next week\'s weight automatically.':'بلافاصله بعد از ست یک عدد بزن — مربی می‌بیند و وزن هفته بعد را خودکار تنظیم می‌کند.',
+    'Program name':'نام برنامه','Weeks':'هفته‌ها','Block 2 — Strength':'بلوک ۲ — قدرت',
+    'Auto':'خودکار','Count':'شمارشی','Tick':'تیکی','Hidden':'پنهان','Show':'نمایش','Hide':'پنهان کردن','Value':'مقدار',
+    'Move up':'برو بالا','Move down':'برو پایین','Habit name':'نام عادت','Add from catalogue':'افزودن از کاتالوگ','Custom habit':'عادت سفارشی',
+    'The student ticks this list on their Today tab.':'شاگرد این فهرست را در تب Today خودش تیک می‌زند.',
+    'calculated from the data the app already keeps':'از داده‌هایی که اپ از قبل دارد محاسبه می‌شود',
+    'No habits yet — add one below':'هنوز عادتی نیست — از پایین اضافه کن',
+    'All catalogue habits are already added':'همه عادت‌های کاتالوگ اضافه شده‌اند',
+    'Habit added':'عادت اضافه شد','Habit removed':'عادت حذف شد','Habit updated':'عادت به‌روزرسانی شد',
+    'Habit name is required':'نام عادت الزامی است','Only the coach can manage habits':'فقط مربی می‌تواند عادت‌ها را مدیریت کند',
+    'Hidden habits stay in the record':'عادت‌های پنهان در پرونده می‌مانند',
+    'See all challenges':'همه چالش‌ها','New personal challenge':'چالش شخصی جدید','Personal':'شخصی',
+    'Start one yourself — pick a target and chase it.':'خودت یکی شروع کن — هدف بگذار و برو جلو.',
+    'This one is yours — your coach will see it in the list.':'این یکی مال خودته — مربی در لیست می‌بیندش.',
+    '30-day consistency':'۳۰ روز ثابت','Start challenge':'شروع چالش','Challenge started':'چالش شروع شد',
+    'Challenge name is required':'نام چالش الزامی است','Only you can start this one':'فقط خودت می‌توانی این را شروع کنی',
+    'Saved · works offline':'ذخیره شد · آفلاین کار می‌کند','Add it once — it will be reused offline':'یک بار واردش کن — بعداً آفلاین هم استفاده می‌شود',
+    'Product name':'نام محصول','Save this product':'ذخیره این محصول','Product saved':'محصول ذخیره شد','Recently scanned':'اخیراً اسکن‌شده','Per 100 g':'در هر ۱۰۰ گرم',
+    'All exercises':'همه حرکت‌ها','One at a time':'یکی‌یکی','Prev':'قبلی',
+    'Voice message':'پیام صوتی','Voice message sent':'پیام صوتی ارسال شد','Play':'پخش',
+    'Recording… tap to stop':'در حال ضبط… برای توقف بزن','Hold a quick voice note':'یک یادداشت صوتی کوتاه بگیر',
+    'Voice messages are not supported in this browser':'این مرورگر پیام صوتی را پشتیبانی نمی‌کند',
+    'Microphone permission was denied':'دسترسی به میکروفون داده نشد','Could not start recording':'ضبط شروع نشد',
+    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
+'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی','Back to calendar':'بازگشت به تقویم','training days / week':'روز تمرین در هفته','Rest unplanned days':'استراحت روزهای بی‌برنامه','Unplanned days set to rest':'روزهای بی‌برنامه استراحت شدند','Quick week setup':'تنظیم سریع هفته','Unassigned':'بی‌برنامه','One workout per day':'هر تمرین فقط یک روز','Week updated':'هفته به‌روزرسانی شد','Pick a workout or rest for each day — repeats every week':'برای هر روز تمرین یا استراحت انتخاب کن — هر هفته تکرار می‌شود','Training days adherence':'پایبندی روزهای تمرین','last':'۸','weeks':'هفته اخیر','No data yet':'هنوز داده‌ای نیست','done / planned · from real logged sessions':'انجام‌شده / برنامه · از جلسات واقعی ثبت‌شده','Copy to':'کپی به','Day copied':'روز کپی شد','Monthly workout plan':'برنامه تمرینی ماهانه',
+'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
+'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
+'video & instructions on each card':'ویدیو و توضیحات برای هر حرکت','Create Custom Exercise':'ساخت حرکت سفارشی','Custom exercise form opened':'فرم حرکت سفارشی باز شد',
+'All':'همه','Chest':'سینه','Shoulders':'سرشانه','Biceps':'جلو بازو','Triceps':'پشت بازو','Quadriceps':'چهارسر','Hamstrings':'همسترینگ','Glutes':'باسن','Calves':'ساق','Core':'مرکزی','Full Body':'تمام بدن',
+'Barbell':'هالتر','Dumbbell':'دمبل','Cable':'کابل','Machine':'دستگاه','Bodyweight':'وزن بدن','Compound':'چندمفصلی','Isolation':'تک‌مفصلی','Video':'ویدیو','Add to Workout':'افزودن به تمرین','Edit':'ویرایش',
+'Barbell Bench Press':'پرس سینه هالتر','Incline Dumbbell Press':'پرس بالاسینه دمبل','Cable Fly':'کراس اور سینه','Push-Up':'شنا سوئدی','Barbell Row':'زیربغل هالتر خم','Lat Pulldown':'زیربغل سیم‌کش','Pull-Up':'بارفیکس','Seated Cable Row':'زیربغل سیم‌کش نشسته','Overhead Press':'پرس سرشانه هالتر','Lateral Raise':'نشر جانب','Face Pull':'فیس‌پول','Barbell Curl':'جلو بازو هالتر','Hammer Curl':'چکشی جلو بازو','Triceps Pushdown':'پشت بازو سیم‌کش','Skull Crusher':'پشت بازو خوابیده','Back Squat':'اسکوات هالتر','Leg Press':'پرس پا','Leg Extension':'جلو پا دستگاه','Romanian Deadlift':'ددلیفت رومانیایی','Leg Curl':'پشت پا دستگاه','Hip Thrust':'هیپ تراست','Standing Calf Raise':'ساق ایستاده','Plank':'پلانک','Dead Bug':'دد باگ',"Farmer's Carry":'حمل کشاورز',
+'Workout Templates':'قالب‌های تمرین','Reusable programs — build once, assign in seconds':'برنامه‌های قابل استفاده مجدد — یک‌بار بساز، در چند ثانیه اختصاص بده',
+'Legs':'پا','4-day split':'اسپلیت ۴ روزه','5-day split':'اسپلیت ۵ روزه','60 min':'۶۰ دقیقه','55 min':'۵۵ دقیقه','65 min':'۶۵ دقیقه','45 min':'۴۵ دقیقه','70 min':'۷۰ دقیقه','30 min':'۳۰ دقیقه','90 min':'۹۰ دقیقه','Use Template':'استفاده از قالب','Template duplicated':'قالب تکرار شد','Template archived':'قالب آرشیو شد','Edited':'ویرایش',
+'Day 1 — Push':'روز ۱ — پوش','Day 2 — Pull':'روز ۲ — پول','Day 3 — Legs':'روز ۳ — پا','Day 4 — Upper':'روز ۴ — بالاتنه','Day 5 — Lower':'روز ۵ — پایتنه','Day 1 — Squat':'روز ۱ — اسکوات','Day 2 — Bench':'روز ۲ — پرس سینه','Day 3 — Deadlift':'روز ۳ — ددلیفت',
+'Upper':'بالاتنه','Lower':'پایتنه','Conditioning':'آمادگی',
+'Template Name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','Template saved ✓':'قالب ذخیره شد ✓','Editing template':'ویرایش قالب','Update Template':'به‌روزرسانی قالب','This template has multiple days — pick one to load into the builder':'این قالب چند روز دارد — یکی را برای بارگذاری در سازنده انتخاب کن','Load':'بارگذاری','Current builder content will be saved into the template':'محتوای فعلی سازنده در قالب ذخیره می‌شود','This template has no exercises yet':'این قالب هنوز حرکتی ندارد','Add exercises first':'اول حرکت اضافه کن',
+'July 6 — 12, 2026':'۱۵ – ۲۱ تیر ۱۴۰۵','Month':'ماه','Day':'روز','Today':'امروز','💡 Drag events between days to reschedule':'💡 برای جابه‌جایی، رویدادها را بین روزها درگ کن',
+'Session':'جلسه','Appointment':'قرار',
+'Mon 6':'دوشنبه ۱۵','Tue 7':'سه‌شنبه ۱۶','Wed 8':'چهارشنبه ۱۷','Thu 9':'پنجشنبه ۱۸','Fri 10':'جمعه ۱۹','Sat 11':'شنبه ۲۰','Sun 12':'یکشنبه ۲۱',
+'Mon':'دوشنبه','Tue':'سه‌شنبه','Wed':'چهارشنبه','Thu':'پنجشنبه','Fri':'جمعه','Sat':'شنبه','Sun':'یکشنبه',
+'Upcoming':'پیش‌رو','Pull Workout':'تمرین پول','Mobility Prep':'آماده‌سازی تحرک','Push Workout':'تمرین پوش','Leg Day':'روز پا','Physio appointment':'نوبت فیزیوتراپی','Training Session':'جلسه تمرین','Rescheduled to':'جابه‌جا شد به','Tap an empty slot to add a session':'روی یک بازه خالی بزن تا جلسه ساخته شود',
+'Data across your clients':'داده‌های همه شاگردانت','7D':'۷ روز','30D':'۳۰ روز','3M':'۳ ماه','6M':'۶ ماه','1Y':'۱ سال',
+'Weight Progress':'روند وزن','Strength Progression':'روند قدرت','Bench':'پرس سینه','Squat':'اسکوات','Deadlift':'ددلیفت','Workout Completion':'تکمیل تمرین','weekly %':'٪ هفتگی','Training Volume':'حجم تمرین','tonnage (t / week)':'تناژ (تن / هفته)','t':'تن','Start':'شروع','Mid':'میانه','Now':'الان',
+'No workout history yet':'هنوز تاریخچه تمرینی نیست','Session history':'تاریخچه جلسات','Complete a workout — your progress charts will build themselves':'تمرین را تمام کن — نمودارهای پیشرفت خودشان ساخته می‌شوند','Log a Bench, Squat or Deadlift session to see your progression':'یک جلسه پرس سینه، اسکوات یا ددلیفت ثبت کن تا روندت را ببینی','Beat your first logged set to set a PR':'اولین ست ثبت‌شده‌ات را بزن تا رکورد بزنی','Complete a workout to fill this chart':'برای پر شدن این نمودار یک تمرین تمام کن','Weekly check-in':'چک‌این هفتگی','Log weight & measurements':'ثبت وزن و اندازه‌گیری‌ها','your coach sees it instantly':'مربی‌ات همان لحظه می‌بیند','Save check-in':'ذخیره چک‌این','Check-in saved — your coach was notified':'چک‌این ذخیره شد — به مربی‌ات اطلاع داده شد',
+'Body metrics & progress photos':'شاخص‌های بدنی و عکس‌های پیشرفت','Add Progress Photos':'افزودن عکس پیشرفت','Waist':'کمر','Hips':'باسن','Arm (R)':'بازو (راست)','Thigh':'ران','prev':'قبلی','Last':'آخرین',
+'Weight History':'تاریخچه وزن','Measurement history':'تاریخچه اندازه‌گیری‌ها','Entry deleted':'ردیف حذف شد','Last measurement':'آخرین اندازه‌گیری','No measurements yet':'هنوز اندازه‌گیری‌ای ثبت نشده','Weight is required':'وزن الزامی است','At least two measurements needed for the trend':'برای دیدن روند، حداقل دو اندازه‌گیری لازم است',
+'12 weeks':'۱۲ هفته','Progress Photos':'عکس‌های پیشرفت','Front':'روبه‌رو','Side':'نیم‌رخ','Drag the slider to compare':'اسلایدر را برای مقایسه بکش','Measurement saved — charts updated':'اندازه‌گیری ثبت شد — نمودارها به‌روز شد','Save Measurement':'ذخیره اندازه‌گیری','Chest (cm)':'سینه (سانتی‌متر)','Waist (cm)':'کمر (سانتی‌متر)','Hips (cm)':'باسن (سانتی‌متر)','Arm (cm)':'بازو (سانتی‌متر)','Thigh (cm)':'ران (سانتی‌متر)','Calf (cm)':'ساق (سانتی‌متر)','Date':'تاریخ',
+'Calories':'کالری','Protein':'پروتئین','Carbs':'کربوهیدرات','Fat':'چربی','% of kcal':'٪ کالری','Daily Meals':'وعده‌های روزانه','Water':'آب','L/day':'لیتر/روز',
+'Breakfast':'صبحانه','Snack':'میان‌وعده','Lunch':'ناهار','Dinner':'شام','Pre-Workout':'پیش از تمرین','Post-Workout':'پس از تمرین','Before Bed':'قبل از خواب',
+'+ Add meal':'+ افزودن وعده','Coach Notes — Nutrition':'یادداشت مربی — تغذیه','Save Note':'ذخیره یادداشت',
+'Documents & assessments for':'مدارک و ارزیابی‌های','Download all':'دانلود همه','Upload':'بارگذاری','Upload dialog opened':'پنجره بارگذاری باز شد',
+'Drop files here':'فایل‌ها را اینجا رها کن','or click to browse — PDF, images, documents':'یا کلیک کن — PDF، تصویر، سند','File':'فایل','Type':'نوع','Date':'تاریخ','Size':'حجم','Actions':'عملیات',
+'Document':'سند','Archive':'آرشیو','Image':'تصویر','Preview':'پیش‌نمایش','File deleted':'فایل حذف شد',
+'Manage your workspace':'مدیریت فضای کاری','Profile':'پروفایل','Account':'حساب','Notifications':'اعلان‌ها','Appearance':'ظاهر','Workout Settings':'تنظیمات تمرین','Units':'واحدها','Privacy':'حریم خصوصی','Security':'امنیت',
+'Soroush Karimi':'سروش کریمی','Certified Strength & Conditioning Coach':'مربی رسمی قدرت و آمادگی جسمانی','Bio':'بیوگرافی','Save Changes':'ذخیره تغییرات','Profile saved':'پروفایل ذخیره شد',
+'Plan':'طرح','CoachMint Pro · Unlimited clients':'CoachMint Pro · شاگرد نامحدود','Language':'زبان','Timezone':'منطقه زمانی','Response time':'زمان پاسخ','Shown to clients in chat':'در چت به شاگردها نمایش داده می‌شود',
+'Session reminders':'یادآوری جلسات','Push + email 24 h before each session':'پوش و ایمیل ۲۴ ساعت قبل از هر جلسه','Client completes workout':'تکمیل تمرین توسط شاگرد','Notify when a workout is logged':'وقتی تمرینی ثبت شد اطلاع بده','Missed sessions':'جلسات غایب','Alert when a client misses a session':'وقتی شاگردی غیبت کرد هشدار بده','New client message':'پیام جدید شاگرد','Push when a client sends a message':'وقتی شاگرد پیامی فرستاد پوش بگیر','Measurement reminders':'یادآوری اندازه‌گیری','Weekly digest of due measurements':'خلاصه هفتگی اندازه‌گیری‌های سررسید','New PR achieved':'رکورد جدید','Celebrate personal records instantly':'رکوردها را فوراً جشن بگیر','Weekly report':'گزارش هفتگی','Summary every Sunday evening':'خلاصه هر یکشنبه عصر','Setting saved':'تنظیمات ذخیره شد',
+'Theme':'پوسته','Light':'روشن','System':'سیستم','Dark':'تیره','Accent Color':'رنگ اکسنت','Accent color updated':'رنگ اکسنت به‌روز شد','Theme applied':'پوسته اعمال شد','Design Template':'تمپلت طراحی','Default':'پیش‌فرض','CoachMint':'کوچ‌مینت','Live Telemetry':'تله‌متری زنده','Squad Readiness':'آمادگی تیم','Priority Queue':'صف اولویت','Quick Prescribe':'تجویز سریع','Optimal':'بهینه','Attention':'نیاز به توجه','Roster':'فهرست شاگردها','Performance Analytics':'تحلیل عملکرد','Adherence':'پایبندی','Workouts Done':'تمرین‌های انجام‌شده','Scheduling':'زمان‌بندی','Movement Bank':'بانک حرکات','Dispatch':'ارتباطات','Encrypted':'رمزگذاری‌شده','Completed':'انجام‌شده','Coach Toolbox':'جعبه‌ابزار مربی','Stopwatch':'کرنومتر','Interval timer for sets and rest':'تایمر بازه‌ای برای ست‌ها و استراحت','Start':'شروع','Pause':'توقف',
+'Default rest timer':'تایمر استراحت پیش‌فرض','120 seconds between sets':'۱۲۰ ثانیه بین ست‌ها','Show RPE & RIR fields':'نمایش فیلدهای RPE و RIR','On all exercise blocks':'در همه بلوک‌های حرکت','Auto-advance program weeks':'پیشروی خودکار هفته‌های برنامه','When all sessions are completed':'وقتی همه جلسات تکمیل شد','Set display':'نمایش ست‌ها','Duplicate on save':'تکثیر هنگام ذخیره','Keep source workout intact':'تمرین اصلی دست‌نخورده بماند','60 sec':'۶۰ ثانیه','120 sec':'۱۲۰ ثانیه','180 sec':'۱۸۰ ثانیه',
+'Measurement Units':'واحد اندازه‌گیری','Metric (kg · cm)':'متریک (کیلوگرم · سانتی‌متر)','Imperial (lb · in)':'امپریال (پوند · اینچ)','Applies to weights, measurements and body metrics across the workspace.':'روی وزنه‌ها، اندازه‌گیری‌ها و شاخص‌های بدنی در کل فضای کاری اعمال می‌شود.','Units set to':'واحدها تنظیم شد روی',
+'Clients see their own data':'شاگردها داده‌های خودشان را ببینند','Clients see progress photos':'شاگردها عکس‌های پیشرفت را ببینند','Only photos the coach approves':'فقط عکس‌هایی که مربی تأیید کند','Clients see other clients':'شاگردها بقیه شاگردها را ببینند','Disabled by default':'به‌صورت پیش‌فرض غیرفعال','Require consent for photos':'اجازه برای عکس‌ها الزام باشد','Client must accept before upload':'شاگرد قبل از بارگذاری باید تأیید کند',
+'Current Password':'رمز عبور فعلی','New Password':'رمز عبور جدید','Confirm':'تأیید رمز','Update Password':'به‌روزرسانی رمز','Password updated':'رمز عبور به‌روز شد','Two-Factor Authentication':'ورود دو مرحله‌ای','Extra security for your coach account':'امنیت بیشتر برای حساب مربی','Active sessions':'نشست‌های فعال','MacBook Pro · Tehran · current':'MacBook Pro · تهران · فعلی','Sign out others':'خروج بقیه نشست‌ها','Signed out of all other devices':'از سایر دستگاه‌ها خارج شدی',
+'Pages':'صفحات','Go to page':'رفتن به صفحه','No results found.':'نتیجه‌ای پیدا نشد.','Search clients, workouts, templates, exercises, notes, files…':'جستجو در شاگردان، تمرین‌ها، قالب‌ها، حرکات، یادداشت‌ها، فایل‌ها…',
+'Sessions':'جلسات','Hi':'سلام','day streak':'روز پیاپی','Synced':'همگام',
+'Ready to crush your goals today?':'امروز آماده‌ای اهدافت رو بزنی؟','Daily Momentum':'مومنتوم روزانه','Action Needed':'اقدام لازم','All Tasks':'همه کارها','Habits':'عادت‌ها','Sleep readiness':'آمادگی خواب',
+"Today's Workout":'تمرین امروز','Start Workout':'شروع تمرین','No workout scheduled today':'امروز تمرینی ثبت نشده','Your coach publishes your plan here':'مربی برنامه‌ات را این‌جا منتشر می‌کند',
+'Shared with you':'همرسانی‌شده با تو','Quick check-in':'چک‌این سریع','How did training feel today?':'امروز تمرین چه‌حس داشت؟',
+'Energy':'انرژی','Soreness':'کوفتگی','Sleep':'خواب','Low':'کم','OK':'متوسط','High':'خوب','None':'هیچی','Some':'کمی','A lot':'زیاد','Poor':'بد','Fine':'خوب','Great':'عالی',
+'Send check-in':'ارسال چک‌این','Check-in sent to your coach':'چک‌این برای مربی ارسال شد','Answer all three first':'اول هر سه را انتخاب کن','Check-in':'چک‌این','Coach notes':'یادداشت‌های مربی','Next session':'جلسه بعدی',
+'Pending':'در انتظار','View summary':'مشاهده خلاصه','No workouts yet':'هنوز تمرینی نداری','sets':'ست','Set':'ست',
+'Finish Workout':'پایان تمرین','Rest':'استراحت','Skip':'رد کردن','Close':'بستن','Workout completed 💪':'تمرین تکمیل شد 💪',
+'My Progress':'پیشرفت من','Nutrition Plan':'برنامه تغذیه','Your coach has not published a nutrition plan yet':'مربی‌ات هنوز برنامه تغذیه‌ای منتشر نکرده',
+'My Profile':'پروفایل من','Body Metrics':'شاخص‌های بدنی','App language':'زبان اپلیکیشن',
+'Published to':'منتشر شد برای','Workout Builder':'سازنده تمرین','Publishing to':'انتشار برای','Builder cleared':'سازنده پاک شد','File attached':'فایل پیوست شد',
+'need your reply':'نیاز به پاسخ تو دارند','Needs your reply':'در انتظار پاسخ شما','Waiting on your reply':'در انتظار پاسخ تو','All conversations':'همه گفتگوها','Type a message…':'پیام بنویس…','Send':'ارسال',
+'Save as note':'تبدیل به یادداشت','Saved as note':'به یادداشت تبدیل شد','From chat':'از چت','Form check':'فرم‌چک','Replies within ~4h':'میانگین پاسخ ~۴ ساعت',
+'Message sent':'پیام ارسال شد','Form check sent':'فرم‌چک ارسال شد','Record form check':'ضبط فرم‌چک','Attach file':'پیوست فایل','File picker (demo)':'انتخاب فایل (دمو)','Video player (demo)':'پخش ویدیو (دمو)',
+'Async — no pressure':'غیرهمزمان — بدون فشار','Message templates (demo)':'قالب پیام (دمو)',
+'No sessions scheduled':'جلسه‌ای زمان‌بندی نشده','Quick Note':'یادداشت سریع',
+'New Session':'جلسه جدید','Session type':'نوع جلسه','Time':'ساعت','30 min':'۳۰ دقیقه','90 min':'۹۰ دقیقه','Session scheduled ✓':'جلسه زمان‌بندی شد ✓',
+'Create and manage nutrition plans for your clients.':'ساخت و مدیریت برنامه‌های تغذیه شاگردانت.',
+'Active Plans':'برنامه‌های فعال','Plans Created':'برنامه‌های ساخته‌شده','Clients With Nutrition Plans':'شاگردان دارای برنامه تغذیه','Plans Needing Review':'برنامه‌های نیازمند بازبینی','Average Daily Calories':'میانگین کالری روزانه',
+'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
+'Plan Name':'نام برنامه','Start Date':'تاریخ شروع','Plan Type':'نوع برنامه','Standard':'استاندارد','Training Day / Rest Day':'روز تمرین / روز استراحت','Target Macros':'ماکروهای هدف',
+'Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب وعده‌ها','Plan Templates':'قالب برنامه‌ها','History':'تاریخچه',
+'Search food…':'جستجوی غذا…','Per 100g':'هر ۱۰۰ گرم','Custom Food':'غذای سفارشی','Food name':'نام غذا','Custom food added':'غذای سفارشی اضافه شد','Add Food':'افزودن غذا','added to meal':'به وعده اضافه شد','Category':'دسته',
+'Alternatives':'جایگزین‌ها','Add Alternative':'افزودن جایگزین','Defined manually by the coach — no automation':'به‌صورت دستی توسط مربی تعریف می‌شود — بدون اتوماسیون',
+'Daily Target':'هدف روزانه','Planned':'برنامه‌ریزی‌شده','On target':'در حد هدف','Above target':'بالای هدف','Below target':'زیر هدف','Calculations only — the coach decides':'فقط محاسبه — تصمیم با مربی است',
+'Meal Total':'جمع وعده','Duplicate Meal':'تکثیر وعده','Meal duplicated':'وعده تکثیر شد','Meal deleted':'وعده حذف شد','Edit Meal':'ویرایش وعده','Meal time':'ساعت وعده','Meal name':'نام وعده','Meal updated ✓':'وعده به‌روزرسانی شد ✓','Add Meal':'افزودن وعده','New Meal':'وعده جدید','Meal added ✓':'وعده اضافه شد ✓','Meal Note':'یادداشت وعده','Meal note saved':'یادداشت وعده ذخیره شد',
+'Copy Day':'کپی روز','Paste Day':'چسباندن روز','Apply to Week':'اعمال به هفته','Day copied':'روز کپی شد','Pasted ✓':'چسبانده شد ✓','Applied to week ✓':'به کل هفته اعمال شد ✓','Meal moved':'وعده جابه‌جا شد',
+'Chicken & Rice Lunch':'ناهار مرغ و برنج','Meal template created ✓':'قالب وعده ساخته شد ✓',
+'Meals':'وعده‌ها',
+"Today's Meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
+'Data storage':'ذخیره داده‌ها','On this device (auto-save)':'روی همین دستگاه (ذخیره خودکار)','Reset demo data':'بازنشانی داده‌های دمو','Are you sure? Click again':'مطمئنی؟ دوباره کلیک کن','Feedback':'بازخورد',
+'Connect Client (Code)':'اتصال شاگرد (کد)','Connect':'اتصال','Connection code':'کد اتصال','Connection link':'لینک اتصال','Join with connection code':'اتصال با کد مربی','Connected with code':'اتصال با کد','Client connection codes':'کدهای اتصال شاگردها','Each client has a personal code — share only theirs':'هر شاگرد کد اختصاصی خودش را دارد — فقط کد خودش را برایش بفرست','Personal connection code':'کد اتصال اختصاصی','Personal code':'کد اختصاصی','The client enters this code on the login screen — their profile opens with everything you registered':'شاگرد این کد را در صفحه ورود وارد می‌کند — پروفایلش با همه‌ی مشخصاتی که ثبت کرده‌ای باز می‌شود','Client added ✓':'شاگرد اضافه شد ✓','added to your clients':'به شاگردانت اضافه شد','Code regenerated ✓':'کد جدید صادر شد ✓','Regenerate':'بازتولید کد','Enter the personal code your coach gave you':'کد اختصاصی‌ای که مربی‌ات به تو داده را وارد کن','Connected as':'وصل شدی به‌عنوان','Copy connection code':'کپی کد اتصال','Link':'لینک','Code':'کد','One code for your whole workspace — every client joins with it':'یک کد برای کل فضای کاری‌ات — همه‌ی شاگردها با همین کد وصل می‌شوند','Your clients join your workspace with this code — only your data, only your clients':'شاگردانت با این کد به فضای کاری تو وصل می‌شوند — فقط داده‌های تو، فقط شاگردهای تو','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','Copy':'کپی','Copied ✓':'کپی شد ✓','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
+'List':'لیست','No events this day':'این روز رویدادی نیست','Session updated ✓':'جلسه به‌روزرسانی شد ✓','Event deleted':'رویداد حذف شد','Duplicated ✓':'تکثیر شد ✓','Delete':'حذف','Edit Session':'ویرایش جلسه','Calendar exported (.ics)':'تقویم خروجی گرفته شد (.ics)','Sessions This Week':'جلسات این هفته','Total Hours':'مجموع ساعت‌ها','Busiest Day':'شلوغ‌ترین روز','⚠️ This client already has an event at this time':'⚠️ این شاگرد در این ساعت رویداد دیگری دارد','⚠️ You already have another event at this time':'⚠️ خودت در این ساعت رویداد دیگری داری','✓ No conflicts':'✓ تداخلی نیست','Export (.ics)':'خروجی (.ics)','All Clients':'همه شاگردان',
+'Working Hours':'ساعات کاری','Work starts':'شروع کار','Work ends':'پایان کار','Set the hours you coach — the calendar grid and session time pickers use this range':'ساعات کاری‌ات را تعیین کن — شبکه تقویم و ساعت‌های انتخاب جلسه از این بازه استفاده می‌کنند','Sessions outside this range are still shown — the grid stretches to fit them.':'جلسات بیرون از این بازه هم نمایش داده می‌شوند — شبکه تقویم خودش را بزرگ می‌کند تا جا شوند.','Quick presets':'پیش‌فرض‌های سریع','Current range':'بازه فعلی','Calendar shows sessions from {a} to {b}':'تقویم جلسات را از {a} تا {b} نشان می‌دهد','h / day':'ساعت / روز','Working hours updated':'ساعات کاری به‌روزرسانی شد',
+'Calendar Type':'نوع تقویم','Auto (follow language)':'خودکار (هماهنگ با زبان)','Gregorian (Miladi)':'میلادی','Jalali (Shamsi)':'شمسی (جلالی)','Calendar type updated':'نوع تقویم به‌روزرسانی شد',
+'Hours This Week':'ساعت‌های این هفته','All clients on track ✓':'همه شاگردها سر جایشان هستند ✓','Workout awaiting client':'تمرین در انتظار شاگرد','No nutrition plan':'بدون برنامه تغذیه','Check-in with a note':'با یک یادداشت پیگیری کن','Re-engage with a message':'با یک پیام دوباره درگیرش کن',
+'Attendance':'حضور و غیبت','Attended':'حاضر','Missed':'غایب','Not marked':'ثبت نشده','Attendance Rate':'نرخ حضور','Marked attended ✓':'حضور ثبت شد ✓','Marked missed — client flagged':'غیبت ثبت شد — شاگرد علامت خورد','Attendance cleared':'ثبت حضور پاک شد','Delete client':'حذف شاگرد','Client deleted':'شاگرد حذف شد','At least one client required':'حداقل یک شاگرد لازم است','Attendance history':'تاریخچه حضور و غیبت',
+'Current Program':'برنامه فعلی','Measurement':'اندازه‌گیری','Sets × Reps × Weight':'ست × تکرار × وزن','New message':'پیام جدید','You':'شما','Create Plan':'ساخت برنامه','Add Phase':'افزودن فاز','Create Meal Template':'ساخت قالب وعده','Use':'استفاده','Apply to client':'اعمال روی شاگرد','then customize':'و سپس سفارشی کن','View':'مشاهده','Phase name':'نام فاز','Weeks':'هفته‌ها','120 min':'۱۲۰ دقیقه','sent you a message':'برایت پیام فرستاد','New Template':'قالب جدید','Please check my form on this set':'لطفاً فرم این ست را بررسی کن','12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.':'۱۲ سال تجربه در برنامه‌نویسی هایپرتروفی و قدرت برای ورزشکاران حرفه‌ای و علاقه‌مند.','No clients yet':'هنوز شاگردی نیست','Clients join with this code — data syncs live across devices':'شاگرد با همین کد وصل می‌شود — داده‌ها زنده بین دستگاه‌ها همگام می‌شوند','Live sync active — data is shared across devices':'همگام‌سازی زنده فعال است — داده‌ها بین دستگاه‌ها مشترک‌اند',
+'Sync blocked: ':'همگام‌سازی مسدود شد: ','Subscription expired — renew to keep editing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه ویرایش تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Subscription expired — renew to keep syncing (data is safe, read-only)':'اشتراک منقضی شده — برای ادامه همگام‌سازی تمدید کن (داده‌ها امن‌اند، فقط‌خواندنی)','Client limit reached — upgrade your plan or archive a client':'سقف شاگردان پر شده — پلن را ارتقا ده یا یک شاگرد را بایگانی کن','Enter a coupon or payment code':'کد تخفیف یا کد پیگیری پرداخت را وارد کن','Checking code…':'در حال بررسی کد…','Plan activated ✓ — welcome to ':'پلن فعال شد ✓ — خوش آمدی به ','Request registered — pay, then enter your tracking coupon':'درخواست ثبت شد — پرداخت کن و بعد کد پیگیری را وارد کن','Code not found — check and retry':'کدی یافت نشد — بررسی و دوباره تلاش کن','This code was already used':'این کد قبلاً استفاده شده','This code has expired':'این کد منقضی شده','Plans':'پلن‌ها','Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200':'آزمایشی: ۵ شاگرد · پایه: ۵ · حرفه‌ای: ۳۰ · باشگاه: ۲۰۰','seats used':'جایگاه مصرف‌شده','Basic':'پایه','Professional':'حرفه‌ای','Club':'باشگاه','IRT / month':'تومان / ماه','IRT':'تومان','Request':'درخواست','Pending request':'درخواست در انتظار','pay to the merchant, then enter your tracking coupon below':'به فروشنده پرداخت کن و سپس کد پیگیری را در پایین وارد کن','Coupon / payment code':'کد تخفیف / کد پرداخت','Redeem a coupon from support or your payment tracking code':'کد تخفیف از پشتیبانی یا کد پیگیری پرداخت‌ات را فعال کن','Activate':'فعال‌سازی','Valid until':'اعتبار تا','Activation code':'کد فعال‌سازی','optional — from your purchase':'اختیاری — از خرید شما','optional — renewal code':'اختیاری — کد تمدید','Expired — renew to keep syncing':'منقضی — برای ادامه همگام‌سازی تمدید کن','Trial · ':'آزمایشی · ','Active · ':'فعال · ','Platform admin':'مدیریت پلتفرم','All coaches on this platform — plans, remaining days & access control':'همه‌ی مربیان این پلتفرم — پلن‌ها، روزهای باقی‌مانده و کنترل دسترسی','Remaining':'باقی‌مانده','Seats':'شاگردان','Actions':'عملیات','days':'روز','Extend':'تمدید','Extend subscription':'تمدید اشتراک','Grant':'اعطا','Days':'روزها','Days stack on top of any remaining time — granting also restores suspended access':'روزها روی زمان باقی‌مانده اضافه می‌شوند — اعطا، دسترسی معلق را هم برمی‌گرداند','Subscription granted ✓':'اشتراک اعطا شد ✓','Suspend access':'قطع دسترسی','Restore access':'بازگرداندن دسترسی','Suspended':'معلق','Access suspended — coach is read-only':'دسترسی قطع شد — مربی فقط‌خواندنی است','Access restored ✓':'دسترسی برقرار شد ✓','Create coupon':'ساخت کوپن','Max uses':'حداکثر استفاده','Code (optional)':'کد (اختیاری)','Auto-generated':'تولید خودکار','Coupon created — share the code':'کوپن ساخته شد — کد را بفرست','Coach not found':'مربی پیدا نشد','Cannot suspend an admin':'نمی‌توان ادمین را معلق کرد','Code already exists':'این کد قبلاً ساخته شده','Coach':'مربی','Status':'وضعیت','Registered':'ثبت‌نام','Trial':'آزمایشی','Expired':'منقضی','Refresh':'به‌روزرسانی','Admin':'مدیر','Loading…':'در حال بارگذاری…',
+'Incline Barbell Press':'پرس بالاسینه هالتر','Decline Barbell Press':'پرس پایین‌سینه هالتر','Wide-Grip Barbell Press':'پرس سینه هالتر دست‌باز','Dumbbell Bench Press':'پرس سینه دمبل','Decline Dumbbell Press':'پرس پایین‌سینه دمبل','Dumbbell Fly':'قفسه سینه دمبل','Incline Dumbbell Fly':'قفسه بالاسینه دمبل','Decline Dumbbell Fly':'قفسه پایین‌سینه دمبل','Dumbbell Pullover':'پول‌اور دمبل','Cable Crossover':'کراس‌اور سیم‌کش','Incline Cable Fly':'قفسه بالاسینه سیم‌کش','Cable Chest Press':'پرس سینه سیم‌کش','Pec Deck Fly':'قفسه سینه دستگاه','Smith Machine Bench Press':'پرس سینه دستگاه اسمیت','Wide Push-Up':'شنا سوئدی دست‌باز','Incline Push-Up':'شنا سوئدی شیب مثبت','Decline Push-Up':'شنا سوئدی شیب منفی',
+'Chin-Up':'بارفیکس دست‌جمعی','Close-Grip Lat Pulldown':'زیربغل سیم‌کش دست‌جمعی','Wide-Grip Lat Pulldown':'زیربغل سیم‌کش دست‌باز','One-Arm Lat Pulldown':'زیربغل سیم‌کش تک‌دست','Underhand Lat Pulldown':'زیربغل سیم‌کش ساپاین','Straight-Arm Pulldown':'پول‌داور دست‌صاف','Reverse-Grip Barbell Row':'زیربغل هالتر ساپاین','T-Bar Row':'زیربغل تی‌بار','Bent-Over Dumbbell Row':'زیربغل دمبل خم','One-Arm Dumbbell Row':'زیربغل دمبل تک‌دست','Iso Row Machine':'زیربغل دستگاه ایزو','Renegade Row':'رنیگید رو','Deadlift':'ددلیفت هالتر','Good Morning':'گودمورنینگ هالتر','Back Extension':'هایپراکستنشن (آب‌کش پشت)',
+'Seated Military Press':'پرس سرشانه هالتر نشسته','Arnold Press':'پرس آرنولد','Dumbbell Shoulder Press':'پرس سرشانه دمبل','Cable Lateral Raise':'نشر جانب سیم‌کش','Front Raise':'نشر از جلو دمبل','Cable Front Raise':'نشر از جلو سیم‌کش','Reverse Fly':'نشر خم دمبل','Cable Rear Delt Fly':'نشر خم سیم‌کش','Reverse Pec Deck':'نشر خم دستگاه','Rear Delt Row':'زیربغل دلت پشتی هالتر','Upright Row':'زیربغل هالتر ایستاده','Cable Upright Row':'زیربغل سیم‌کش ایستاده','Barbell Shrug':'شراگ هالتر','Dumbbell Shrug':'شراگ دمبل','Cable Shrug':'شراگ سیم‌کش','Machine Shoulder Press':'پرس سرشانه دستگاه','Band Pull-Apart':'پول‌آپارت با کش','Band Lateral Raise':'نشر جانب با کش','Cable External Rotation':'چرخش خارجی شانه با سیم‌کش','Kettlebell Press':'پرس کتل‌بل','Kettlebell Halo':'هالو کتل‌بل',
+'EZ-Bar Curl':'جلوبازو هالتر خمیده (EZ)','Preacher Curl':'جلوبازو لاری','Reverse Curl':'جلوبازو معکوس هالتر','Drag Curl':'درگ کورل','Spider Curl':'اسپایدر کورل','Dumbbell Curl':'جلوبازو دمبل','Seated Dumbbell Curl':'جلوبازو دمبل نشسته','Incline Dumbbell Curl':'جلوبازو دمبل روی میل شیب‌دار','Incline Hammer Curl':'هامر کورل روی میل شیب‌دار','Concentration Curl':'جلوبازو تمرکزی','Zottman Curl':'زاتمن کورل','Cable Curl':'جلوبازو سیم‌کش','Rope Hammer Curl':'هامر کورل با طناب سیم‌کش','Cable Preacher Curl':'جلوبازو لاری سیم‌کش','Machine Bicep Curl':'جلوبازو دستگاه','Machine Preacher Curl':'جلوبازو لاری دستگاه',
+'Close-Grip Bench Press':'پرس سینه دست‌جمعی','Overhead Barbell Extension':'پشت‌بازو هالتر از بالا','Rope Pushdown':'پشت‌بازو سیم‌کش با طناب','Reverse-Grip Pushdown':'پشت‌بازو سیم‌کش معکوس','One-Arm Cable Pushdown':'پشت‌بازو سیم‌کش تک‌دست','Overhead Rope Extension':'پشت‌بازو طناب از بالا','Triceps Kickback':'کیک‌بک دمبل','Triceps Dip':'پارالل (پشت‌بازو)','Bench Dip':'شنا پشت‌بازو روی نیمکت','Machine Triceps Extension':'پشت‌بازو دستگاه','Assisted Dip Machine':'پارالل دستگاه کمکی',
+'Front Squat':'اسکوات از جلو','Sumo Squat':'اسکوات سومو','Barbell Hack Squat':'هک اسکوات با هالتر','Walking Lunge':'لانج راه‌رونده','Step-Up':'استپ‌آپ با هالتر','Sissy Squat':'سیسی اسکوات','Dumbbell Squat':'اسکوات دمبل','Dumbbell Lunge':'لانج دمبل','Dumbbell Split Squat':'اسپلیت اسکوات دمبل','Plie Squat':'پلیه اسکوات دمبل','Goblet Squat':'گابلت اسکوات','Hack Squat Machine':'هک اسکوات دستگاه','Bodyweight Squat':'اسکوات بدون وزنه','Adductor Machine':'دستگاه جمع‌کننده ران',
+'Stiff-Leg Deadlift':'ددلیفت پای صاف','Seated Leg Curl':'پشت پا نشسته','Standing Leg Curl':'پشت پا ایستاده','Glute Ham Raise':'گلت هم ریز','Reverse Hyperextension':'هایپراکستنشن معکوس','Kettlebell Swing':'سوئینگ کتل‌بل',
+'Abductor Machine':'دستگاه بازکننده ران','Glute Bridge':'پل باسن','Single-Leg Glute Bridge':'پل باسن تک‌پا','Glute Kickback':'کیک‌بک باسن','Cable Kickback':'کیک‌بک سیم‌کش','Cable Pull-Through':'پول‌ترو سیم‌کش','Band Monster Walk':'مانستر واک با کش',
+'Seated Calf Raise':'ساق پا نشسته','Barbell Calf Raise':'ساق پا ایستاده با هالتر','Barbell Seated Calf Raise':'ساق پا نشسته با هالتر','Calf Press':'ساق پا پرس',
+'Crunch':'کرانچ','Reverse Crunch':'کرانچ معکوس','Oblique Crunch':'کرانچ مورب','Russian Twist':'راشن تویست','Hanging Leg Raise':'بالا آوردن پا آویزان','Lying Leg Raise':'بالا آوردن پا خوابیده','Side Plank':'پلانک پهلو','Cable Crunch':'کرانچ سیم‌کش','Cable Reverse Crunch':'کرانچ معکوس سیم‌کش','Cable Russian Twist':'راشن تویست سیم‌کش','Pallof Press':'پالوف پرس','Ab Crunch Machine':'شکم دستگاه','Ab Rollout':'اب‌رول (غلتک شکم)',
+'Wrist Curl':'مچ دست هالتر','Reverse Wrist Curl':'مچ دست هالتر معکوس','Dumbbell Wrist Curl':'مچ دست دمبل','Cable Wrist Curl':'مچ دست سیم‌کش','Finger Curl':'فینگر کورل',
+'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Cannot reach the server':'اتصال به سرور برقرار نشد','Check your internet connection and try again':'اتصال اینترنت را بررسی کن و دوباره امتحان کن','Try again':'دوباره امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
+'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
+/* v18.38 — gamification */
+'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
+'First Workout':'اولین تمرین','10 Workouts':'۱۰ تمرین','25 Workouts':'۲۵ تمرین','50 Workouts':'۵۰ تمرین','100 Workouts':'۱۰۰ تمرین',
+'3-Day Streak':'۳ روز پیاپی','7-Day Streak':'۷ روز پیاپی','14-Day Streak':'۱۴ روز پیاپی','30-Day Streak':'۳۰ روز پیاپی','100-Day Streak':'۱۰۰ روز پیاپی',
+'10 Check-ins':'۱۰ چک‌این','Form Master':'استاد فرم','5 Measurements':'۵ اندازه‌گیری','Fuel Plan':'برنامه تغذیه',
+'Earn points: workout +10 · check-in +3 · form check +5 · each badge +20':'امتیاز بگیر: تمرین +۱۰ · چک‌این +۳ · بررسی فرم +۵ · هر نشان +۲۰',
+/* v18.38 — smart reminders */
+'Auto workout reminders':'یادآور خودکار تمرین','Message clients who skip 3+ days':'پیام خودکار به شاگردانی که ۳+ روز تمرین نکرده‌اند','Reminder sent':'یادآور ارسال شد','days':'روز','Coach reminder':'یادآور مربی','Auto reminder':'یادآور خودکار','Reminder from your coach':'یادآور از مربی‌ات',
+/* v18.38 — PDF export */
+'Export PDF':'خروجی PDF','Week PDF':'PDF هفته','Nutrition PDF':'PDF تغذیه','Export the full week as a printable PDF':'برنامه کامل هفته به‌صورت PDF قابل چاپ','Allow pop-ups to export':'برای خروجی گرفتن، پاپ‌آپ‌ها را مجاز کن',
+'Scan to connect':'برای اتصال اسکن کن','Open the CoachMint app — your plan syncs live':'اپ CoachMint را باز کن — برنامه‌ات زنده همگام می‌شود','Week Plan':'برنامه هفته',
+'Muscle Gain':'افزایش عضله','Fat Loss':'چربی‌سوزی','Strength':'قدرت','Endurance':'استقامت','Mobility':'تحرک','General Fitness':'تناسب اندام عمومی',
+'Printed from CoachMint on':'چاپ‌شده از CoachMint در',
+/* v18.39 — challenges */
+'Challenges':'چالش‌ها','New Challenge':'چالش جدید','Edit Challenge':'ویرایش چالش','Challenge name':'نام چالش','Challenge type':'نوع چالش','Challenge saved ✓':'چالش ذخیره شد ✓','Challenge ended':'چالش پایان یافت','Challenge deleted':'چالش حذف شد','Only the coach can manage challenges':'فقط مربی می‌تواند چالش مدیریت کند','End':'پایان','Ended':'پایان‌یافته','No active challenges':'چالش فعالی نیست','Design journeys, set targets, celebrate every win':'مسیر طراحی کن، هدف بگذار، هر موفقیت را جشن بگیر','Create a challenge and design the path your clients follow':'یک چالش بساز و مسیری که شاگردها طی می‌کنند را طراحی کن',
+'Target':'هدف','Streak goal':'هدف استریک','Habit':'عادت روزانه','Metric':'سنجه','Target value':'مقدار هدف','Unit':'واحد','workouts':'تمرین','check-ins':'چک‌این','Check-ins':'چک‌این‌ها','Manual log':'ثبت دستی','Form checks':'بررسی‌های فرم',
+'Start Date':'تاریخ شروع','Duration (days)':'مدت (روز)','Days left':'روز باقی‌مانده','Participants':'شرکت‌کننده‌ها','All active clients':'همه شاگردان فعال','No participants yet':'هنوز شرکت‌کننده‌ای نیست',
+'Reward':'جایزه','Badge emoji':'ایموجی نشان','Badge name':'نام نشان','Challenge Champion':'قهرمان چالش','Champion':'قهرمان','September Streak':'استریک سپتامبر','Keep your streak alive all month':'استریک‌ات را تمام ماه زنده نگه دار',
+'Path stages':'مراحل مسیر','the journey the client walks':'مسیری که شاگرد طی می‌کند','Add stage':'افزودن مرحله','Stage name':'نام مرحله','Journey preview':'پیش‌نمایش مسیر','Next stage':'مرحله بعدی','You are here':'اینجا هستی','Log progress':'ثبت پیشرفت',
+'Leaderboard':'جدول امتیازات','Average progress':'میانگین پیشرفت','On track':'در مسیر','Behind':'عقب‌تر از برنامه','Nudge':'یادآوری','Nudge sent ✓':'یادآوری ارسال شد ✓','You rank':'رتبه تو','completed the challenge':'چالش را به پایان رساند',
+'Video link':'لینک ویدیو','Watch video':'تماشای ویدیو','Paste a YouTube or GIF link — the client sees it on their workout':'لینک یوتیوب یا گیف را بچسبان — شاگرد آن را در تمرینش می‌بیند','GIF links play right inside the workout — other links open in a new tab.':'لینک گیف همان‌جا داخل تمرین پخش می‌شود — بقیه لینک‌ها در تب جدید باز می‌شوند.','Link must start with http':'لینک باید با http شروع شود','Video saved ✓':'ویدیو ذخیره شد ✓','Video removed':'ویدیو حذف شد','Search on YouTube':'جستجو در یوتیوب','Set a link once — it attaches to this exercise in every workout':'یک‌بار لینک را ذخیره کن — به این حرکت در همه‌ی تمرین‌ها می‌چسبد','Saved to video bank ✓':'در بانک ویدیو ذخیره شد ✓','Video bank':'بانک ویدیو','links':'لینک','with video':'با ویدیو','Import':'درون‌ریزی','Export':'برون‌بری','Import video links':'درون‌ریزی لینک‌های ویدیو','Export video links':'برون‌بری لینک‌های ویدیو','Paste lines like:':'خط‌هایی مثل این بچسبان:','Name | URL':'نام | لینک','One link per line: exercise name, then the URL — tab or | separated.':'هر خط یک لینک: اول نام حرکت، بعد لینک — با تب یا | جدا می‌شود.','links imported':'لینک وارد شد','not matched':'پیدا نشد','No links imported':'هیچ لینکی وارد نشد','Select and copy manually':'دستی انتخاب و کپی کن','Change photo':'تغییر عکس','Add photo':'افزودن عکس','Remove photo':'حذف عکس','Photo saved ✓':'عکس ذخیره شد ✓','Photo removed':'عکس حذف شد','Picture is too large':'عکس بیش از حد بزرگ است','Could not read the picture':'عکس خوانده نشد','Tap the photo to change it':'برای تغییر، روی عکس بزن',
+'Offline mode':'حالت آفلاین',/* P1 FIX */'Sync paused — this workspace is full. Your saved data is safe; ask your coach to check the plan.':'همگام‌سازی متوقف شد — این ورک‌اسپیس پر است. داده‌های ذخیره‌شده‌ات سالم است؛ از مربی‌ات بخواه وضعیت پلن را بررسی کند.','Your coach':'مربی تو','Replies within':'پاسخ در حدود','Swaps':'جایگزین‌ها','Custom':'سفارشی','Favorite':'علاقه‌مندی','Exercise name':'نام حرکت','Custom exercise saved ✓':'حرکت سفارشی ذخیره شد ✓','Exercise deleted':'حرکت حذف شد','Custom exercises sync with your workspace and appear in the builder, templates and the client app':'حرکات سفارشی با فضای کاری‌ات همگام می‌شوند و در سازنده، قالب‌ها و اپ شاگرد ظاهر می‌شوند','Edit Meal Template':'ویرایش قالب وعده','Edit Plan Template':'ویرایش قالب برنامه','Template name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','No foods — macro-only template':'بدون غذا — قالب فقط ماکرو','Edit Note':'ویرایش یادداشت','Note updated ✓':'یادداشت به‌روزرسانی شد ✓','No snapshot stored for this entry (older record)':'برای این رکورد اسنپ‌شاتی ذخیره نشده (رکورد قدیمی)','File too large — max 300 KB per file':'فایل بزرگ است — حداکثر ۳۰۰ کیلوبایت','File storage is full — delete some files first':'حافظه فایل‌ها پر است — اول چند فایل حذف کن','File uploaded ✓':'فایل بارگذاری شد ✓','This file has no stored content (legacy entry)':'این فایل محتوای ذخیره‌شده ندارد (رکورد قدیمی)','Downloading':'در حال دانلود','No downloadable files yet':'فایل قابل دانلودی نیست','files':'فایل','Preview':'پیش‌نمایش','No inline preview for this type — download it instead':'پیش‌نمایش این نوع نیست — دانلودش کن','No files yet — upload the first document':'هنوز فایلی نیست — اولین سند را بارگذاری کن','Stored in your workspace and synced to every device — max 300 KB per file':'در فضای کاری‌ات ذخیره و بین همه دستگاه‌ها همگام می‌شود — حداکثر ۳۰۰ کیلوبایت','Photo attached':'عکس پیوست شد','Workspace exported ✓':'فضای کاری خروجی گرفته شد ✓','Current password is incorrect':'رمز فعلی اشتباه است','Password updated — other devices signed out':'رمز به‌روزرسانی شد — دستگاه‌های دیگر خارج شدند','Signed out of all other devices':'از همه دستگاه‌های دیگر خارج شدی','Enter your current password':'رمز فعلی را وارد کن','Changing your password signs out every other device':'با تغییر رمز، از همه دستگاه‌های دیگر خارج می‌شوی','this device':'این دستگاه','Name':'نام','Status':'وضعیت','Streak':'زنجیره','Done':'تمام','Connect a client':'اتصال شاگرد','Every client gets a personal code (Clients → copy icon). They enter it on the login screen and their device binds to your workspace instantly.':'هر شاگرد یک کد اختصاصی می‌گیرد (شاگردها → آیکن کپی). کد را در صفحه ورود وارد می‌کند و دستگاهش فوراً به فضای کاری تو وصل می‌شود.','Publish a workout':'انتشار تمرین','Build it in the Workout Builder, save it to the client — it appears on their phone the moment you save.':'در سازنده تمرین بساز و برای شاگرد ذخیره کن — همان لحظه روی گوشی‌اش ظاهر می‌شود.',"Nutrition plans":'برنامه‌های تغذیه',"The client sees today's meals, targets and your food swaps in their Nutrition tab.":'شاگرد وعده‌های امروز، اهداف و جایگزین‌های غذا را در تب تغذیه می‌بیند.','Log measurements and approve progress photos — charts update for both of you.':'اندازه‌گیری‌ها را ثبت کن و عکس‌های پیشرفت را تأیید کن — نمودارها برای هر دو به‌روز می‌شوند.','Drafts workouts, analyzes clients and writes your weekly report — you always decide before anything is sent.':'تمرین پیش‌نویس می‌کند، شاگردها را تحلیل می‌کند و گزارش هفتگی می‌نویسد — همیشه قبل از ارسال، تصمیم با توست.','Data syncs live across every signed-in device — offline edits merge automatically':'داده‌ها بین همه دستگاه‌های واردشده زنده همگام می‌شوند — ویرایش‌های آفلاین خودکار ادغام می‌شوند',
+/* v18.48 — Nutrition Assistant (student hub + coach monitoring) */
+'Nutrition':'تغذیه','Your nutrition companion':'همراه تغذیه تو','Log what you eat, ask for meal ideas and let your coach follow your progress.':'چیزی که می‌خوری را ثبت کن، ایده‌ی غذا بگیر و مربی‌ات پیشرفتت را ببیند.','Set up nutrition profile':'تنظیم پروفایل تغذیه','From your profile':'از پروفایل تو','Set targets':'تعیین هدف‌ها','Left':'باقی‌مانده','meals':'وعده','What should you eat now?':'الان چی بخوری؟','Based on what is left of your day':'بر اساس باقی‌مانده‌ی امروز تو','Log this':'ثبت این','Log this meal':'ثبت این وعده','Logged':'ثبت شد','Food log':'دفتر غذای تو','Entry removed':'ردیف حذف شد','Meal logged ✓':'وعده ثبت شد ✓','Water logged 💧':'آب ثبت شد 💧','Nutrition Assistant':'دستیار تغذیه','AI · not medical advice':'هوش مصنوعی · توصیه پزشکی نیست','Hi! Tell me what you ate, or ask what to eat next.':'سلام! بگو چی خوردی، یا بپرس بعدش چی بخورم.','Thinking…':'در حال فکر کردن…','What should I eat now?':'الان چی بخورم؟','Food for before my workout':'غذای قبل تمرین','Pre-workout':'قبل تمرین','Photo':'عکس','attached':'پیوست شد','Log a meal or ask anything…':'وعده ثبت کن یا هر چیزی بپرس…','Confirm & log':'تأیید و ثبت','I found these foods — confirm and I will log them:':'این غذاها را پیدا کردم — تأیید کن تا ثبتشان کنم:','I could not find':'پیدا نکردم','Pick it from the food library or tell me the amount in grams.':'از کتاب غذاهای مربی انتخابش کن یا مقدارش را به گرم بگو.','You have':'داری','left today':'برای امروز مانده','Try':'امتحان کن','Instead of':'به‌جای','Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.':'بگو چی خوردی (مثل «۲۰۰ گرم مرغ و ۳۰۰ گرم برنج») تا ثبتش کنم.','Nutrition profile':'پروفایل تغذیه','Daily targets':'هدف‌های روزانه','Water':'آب','Meals':'وعده‌ها','Leave empty to follow your coach plan.':'خالی بگذار تا از برنامه‌ی مربی‌ات پیروی شود.','Preferences':'ترجیحات','Allergies / intolerances':'حساسیت‌ها / عدم تحمل‌ها','Foods you dislike':'غذاهایی که دوست نداری','Favorite foods':'غذاهای مورد علاقه','Cooking time available':'وقت پخت‌وپز','Wake up':'بیدار شدن','Bed time':'خواب','Profile saved ✓':'پروفایل ذخیره شد ✓','Edit profile':'ویرایش پروفایل','Allergies':'حساسیت‌ها','Dislikes':'دوست نداردها','Favorites':'علاقه‌مندی‌ها','Cooking time':'وقت پخت','No foods to log':'غذایی برای ثبت نیست','Photo attached — describe your meal':'عکس پیوست شد — غذایت را توصیف کن','Quick meal':'وعده سریع','High-protein':'پروتئین بالا','Budget meal':'وعده اقتصادی','Light meal':'وعده سبک','No cooking':'بدون پخت','No food logs for 3 days':'۳ روز دفتر غذا خالی است','Protein below target the last 3 days':'پروتئین ۳ روز اخیر زیر هدف است','Calories off target the last 3 days':'کالری ۳ روز اخیر خارج از هدف است','Hydration well below target today':'آب امروز خیلی کمتر از هدف است','Nutrition Health':'سلامت تغذیه','Rules':'قوانین','Weekly report':'گزارش هفتگی','On Track':'در مسیر','Needs Attention':'نیاز به توجه','Action Required':'نیاز به اقدام','All clients with nutrition plans are on track.':'همه شاگردهای دارای برنامه تغذیه در مسیر هستند.','Recent insights':'بینش‌های اخیر','Nutrition monitoring rules':'قوانین پایش تغذیه','Get notified only when a pattern is real — thresholds, duration and severity are yours to set.':'فقط وقتی الگو واقعی باشد خبر می‌شوی — آستانه، مدت و شدت را خودت تعیین می‌کنی.','Protein % of target':'درصد پروتئین از هدف','Calories % of target':'درصد کالری از هدف','Logging':'ثبت غذا','Water % of target':'درصد آب از هدف','Weight trend vs goal':'روند وزن نسبت به هدف','Threshold %':'آستانه ٪','Days':'روز','Observe':'مشاهده','Warning':'هشدار','Alert':'هشدار جدی','Example: protein below 85% for 3 days → warning.':'مثال: پروتئین زیر ۸۵٪ برای ۳ روز → هشدار.','Rules saved ✓':'قوانین ذخیره شد ✓','Weekly nutrition report':'گزارش هفتگی تغذیه','Protein on target':'پروتئین در هدف','Below calorie target':'زیر هدف کالری','Below protein target':'زیر هدف پروتئین','No logs this week':'بدون ثبت این هفته','Days logged':'روزهای ثبت‌شده','Avg calories':'میانگین کالری','Avg protein':'میانگین پروتئین','Consistency':'ثبات','No food logs this week yet — students log from their Nutrition tab.':'این هفته هنوز غذایی ثبت نشده — شاگردها از تب تغذیه ثبت می‌کنند.','AI narrative':'روایت هوش مصنوعی','AI is not configured on this server — the table above is fully computed locally.':'هوش مصنوعی روی این سرور تنظیم نشده — جدول بالا کاملاً محلی محاسبه شده است.','AI report unavailable right now.':'گزارش هوش مصنوعی الان در دسترس نیست.','days without logs':'روز بدون ثبت','vs goal':'نسبت به هدف','avg':'میانگین','days':'روز','Protein below target':'پروتئین زیر هدف','Calories off target':'کالری خارج از هدف','Not logging food':'ثبت نمی‌کند','Hydration low':'آب کم','Weight trend off goal':'روند وزن دور از هدف','last 7 days':'۷ روز اخیر','No food logged yet — the student logs from their Nutrition tab.':'هنوز غذایی ثبت نشده — شاگرد از تب تغذیه ثبت می‌کند.','Assistant insights':'بینش‌های دستیار','No insights yet.':'هنوز بینشی نیست.','Assistant thread':'گفتگو با دستیار','last messages':'آخرین پیام‌ها','No assistant conversation yet.':'هنوز گفتگویی با دستیار نیست.','Meal':'وعده'
+};
+const t=s=>lang==='fa'?(FA[s]??s):s;
+/* muscle labels get their own lookup so the nav 'Back' and the muscle 'Back' never collide */
+const tmus=m=>lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m;
+const nf=v=>{v=String(v);return lang==='fa'?v.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):v};
+const pct=n=>nf(n)+(lang==='fa'?'٪':'%');
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='fa'?'rtl':'ltr';
+  document.title=lang==='fa'?'CoachMint — فضای کاری مربی و شاگرد':'CoachMint — Coach & Client Workspace';
+  try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang)}catch(e){}
+}
+
+/* ================= PREFERENCES (v15.7 — persisted) ================= */
+const PREFS_KEY='co-prefs';
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',remind:true,
+  notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
+  /* v18.90 — rest-timer alerts. loadPrefs() merges `wk` so saved prefs from
+     before this line pick snd/vib up automatically (they default to ON; the
+     stored value is undefined until the user toggles it). */
+  wk:{rpe:true,adv:true,dup:true,rest:'120',snd:true,vib:true,autoNext:true},
+  priv:{own:true,photos:true,others:false,consent:true},
+  sec:{tfa:true},
+  cal:{start:7,end:21,type:'auto'}});
+let PREFS=defPrefs();
+function loadPrefs(){
+  try{
+    const d=JSON.parse(localStorage.getItem(PREFS_KEY)||'null');
+    if(d&&typeof d==='object')PREFS={...defPrefs(),...d,
+      favs:Array.isArray(d.favs)?d.favs:[],
+      notifs:{...defPrefs().notifs,...(d.notifs||{})},
+      wk:{...defPrefs().wk,...(d.wk||{})},
+      priv:{...defPrefs().priv,...(d.priv||{})},
+      sec:{...defPrefs().sec,...(d.sec||{})},
+      cal:{...defPrefs().cal,...(d.cal||{})}};
+  }catch(e){}
+}
+function savePrefs(){try{localStorage.setItem(PREFS_KEY,JSON.stringify(PREFS))}catch(e){}}
+/* Coach-configurable calendar working hours (e.g. 08:00 → 24:00).
+   Sanitizes stored values: start 0–23.5, end start+1…24, always on the half hour. */
+function calHours(){
+  const q=v=>{const n=Math.round((+v)*2)/2;return Number.isFinite(n)?n:null};
+  let s=q(PREFS.cal&&PREFS.cal.start);if(s==null)s=7;
+  let e=q(PREFS.cal&&PREFS.cal.end);if(e==null)e=21;
+  s=Math.max(0,Math.min(23.5,s));
+  e=Math.max(s+1,Math.min(24,e));
+  return {start:s,end:e};
+}
+/* <option> list of half-hour times; end=24 renders as 24:00 (midnight) */
+const hourOpts=(sel,min,max)=>Array.from({length:Math.round((max-min)*2)},(_,i)=>{
+  const v=Math.round((min+i*0.5)*2)/2,l=v===24?'24:00':fmtT(v);
+  return `<option value="${v}" ${+sel===v?'selected':''}>${nf(l)}</option>`}).join('');
+const setP=(o,k,v)=>{const p=k.split('.');let c=o;for(let i=0;i<p.length-1;i++)c=c[p[i]];c[p[p.length-1]]=v};
+const getP=(o,k)=>k.split('.').reduce((a,x)=>a&&a[x],o);
+/* units — storage stays metric; display converts */
+const KGI=2.20462;
+const uw=v=>v==null?null:(PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v);
+const uc=v=>v==null?null:(PREFS.units==='Imperial'?+(v/2.54).toFixed(1):v);
+const uwS=v=>v==null?'—':nf(uw(v))+(PREFS.units==='Imperial'?' lb':' kg');
+const ucS=v=>v==null?'—':nf(uc(v))+(PREFS.units==='Imperial'?' in':' cm');
+const wToKg=v=>PREFS.units==='Imperial'?+(v/KGI).toFixed(1):v;
+const lToCm=v=>PREFS.units==='Imperial'?+(v*2.54).toFixed(1):v;
+/* accent palettes — 10 derived values each (v15.7) */
+const ACCENTS=[
+{a:'#C8F04B',d:'#8FB51E',s:'#F4FAE0',i:'#1A2205',l:'#CDE694',l2:'#CFE49B',m:'#A6D437',m2:'#9CC53E',st:'#B4D95B',c:'#D8E9AF'},
+{a:'#6366F1',d:'#4F46E5',s:'#EEF0FE',i:'#1E1B4B',l:'#C7CBFA',l2:'#CDD2F9',m:'#818CF8',m2:'#7C86F5',st:'#A5AFFA',c:'#D4D9FC'},
+{a:'#34D399',d:'#059669',s:'#E7F8F1',i:'#064E3B',l:'#B3E8D2',l2:'#BCEBDA',m:'#5CE0AE',m2:'#3DD6A0',st:'#8CEAC8',c:'#CDF2E4'},
+{a:'#FB923C',d:'#EA580C',s:'#FEF1E7',i:'#7C2D12',l:'#F8CBA4',l2:'#F9D2B0',m:'#FDA060',m2:'#FD9853',st:'#FEB57E',c:'#FDE0C9'}];
+function applyAccent(ix){
+  /* v18.28 — CoachMint template: the default accent slot renders the Stitch mint palette */
+  const A=(PREFS.uiTpl==='coachmint'&&ix===0)?{a:'#00FF9D',d:'#00E38B',s:'rgba(0,255,157,.12)',i:'#00391F',l:'rgba(0,255,157,.42)',l2:'rgba(0,255,157,.28)',m:'#00E38B',m2:'#00C97B',st:'#56FFA8',c:'rgba(0,255,157,.16)'}:(ACCENTS[ix]||ACCENTS[0]);
+  const r=document.documentElement.style;
+  r.setProperty('--accent',A.a);r.setProperty('--accent-deep',A.d);r.setProperty('--accent-soft',A.s);r.setProperty('--accent-ink',A.i);
+  r.setProperty('--acc-line',A.l);r.setProperty('--acc-line2',A.l2);r.setProperty('--acc-mid',A.m);r.setProperty('--acc-mid2',A.m2);r.setProperty('--acc-stat',A.st);r.setProperty('--acc-chip',A.c);
+}
+function applyTheme(){
+  const th=PREFS.theme||'Dark';
+  const dark=th==='Dark'||(th==='System'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme=dark?'dark':'light';
+  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.setAttribute('content',dark?(PREFS.uiTpl==='coachmint'?'#0C0E10':'#0F1114'):'#12151B');
+}
+/* v18.28 — design template switch (default | coachmint). Only flips the
+   data-tpl attribute; all template styling lives in scoped CSS blocks. */
+function applyTpl(){
+  if(PREFS.uiTpl==='coachmint')document.documentElement.dataset.tpl='coachmint';
+  else delete document.documentElement.dataset.tpl;
+}
+
+/* ================= DATA ================= */
+/* v18.38 — __iso(n) = LOCAL date (YYYY-MM-DD) n days from now; the demo
+   clients' lastDone uses it so the day-streak engine stays consistent in any
+   timezone (toISOString would be UTC and reset streaks ahead of UTC). */
+const __iso=(off)=>new Date(Date.now()+off*864e5).toLocaleDateString('en-CA');
+const CLIENTS=[
+{id:1,name:'Ali Rezaei',goal:'Muscle Gain',weight:76.4,prog:'Hypertrophy — Week 6',week:6,next:'Today · 09:00',status:'Active',freq:'4x / week',streak:9,done:41,missed:3,last:'Yesterday',nextW:'Push A · Tomorrow 09:00',h:176,bf:14.2,email:'ali.rezaei@mail.com',dayStreak:12,lastDone:__iso(-1),pts:480,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'s3'},{id:'s7'},{id:'nut'}]},
+{id:2,name:'Sara Ahmadi',goal:'Fat Loss',weight:64.1,prog:'Cutting — Week 3',week:3,next:'Today · 11:00',status:'Active',freq:'3x / week',streak:4,done:11,missed:1,last:'2 days ago',nextW:'Full Body B · Today 11:00',h:165,bf:24.6,email:'sara.a@mail.com',dayStreak:4,lastDone:__iso(-1),pts:185,badges:[{id:'first'},{id:'w10'},{id:'s3'}]},
+{id:3,name:'Mohammad Karimi',goal:'Strength',weight:91.2,prog:'Strength 5×5 — Week 8',week:8,next:'Today · 14:30',status:'Active',freq:'5x / week',streak:15,done:63,missed:2,last:'Yesterday',nextW:'Leg A · Today 14:30',h:184,bf:17.9,email:'m.karimi@mail.com',dayStreak:23,lastDone:__iso(-1),pts:760,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'},{id:'s14'}]},
+{id:4,name:'Neda Hosseini',goal:'Muscle Gain',weight:58.9,prog:'Hypertrophy — Week 2',week:2,next:'Tomorrow · 17:00',status:'Active',freq:'4x / week',streak:3,done:7,missed:0,last:'3 days ago',nextW:'Pull A · Tomorrow 17:00',h:168,bf:21.3,email:'neda.h@mail.com',dayStreak:3,lastDone:__iso(-3),pts:95,badges:[{id:'first'},{id:'s3'}]},
+{id:5,name:'Reza Moradi',goal:'Fat Loss',weight:98.3,prog:'Cutting — Week 10',week:10,next:'—',status:'On Hold',freq:'3x / week',streak:0,done:28,missed:6,last:'9 days ago',nextW:'Unscheduled',h:181,bf:29.8,email:'reza.m@mail.com',dayStreak:0,pts:310,badges:[{id:'first'},{id:'w10'},{id:'w25'}]},
+{id:6,name:'Amir Jafari',goal:'Endurance',weight:70.2,prog:'Conditioning — Week 5',week:5,next:'—',status:'Inactive',freq:'2x / week',streak:0,done:14,missed:4,last:'3 weeks ago',nextW:'Unscheduled',h:174,bf:16.4,email:'amir.j@mail.com',dayStreak:0,pts:150,badges:[{id:'first'},{id:'w10'}]},
+{id:7,name:'Maryam Sadeghi',goal:'Mobility',weight:62.5,prog:'Recovery — Week 4',week:4,next:'Thu · 09:30',status:'Active',freq:'3x / week',streak:5,done:19,missed:1,last:'2 days ago',nextW:'Mobility B · Thu 09:30',h:162,bf:23.1,email:'maryam.s@mail.com',dayStreak:6,lastDone:__iso(-2),pts:250,badges:[{id:'first'},{id:'w10'},{id:'s3'},{id:'meas5'}]},
+{id:8,name:'Hamed Naderi',goal:'Muscle Gain',weight:84.6,prog:'Hypertrophy — Week 11',week:11,next:'Fri · 18:00',status:'Active',freq:'4x / week',streak:7,done:52,missed:1,last:'Yesterday',nextW:'Push B · Fri 18:00',h:179,bf:15.7,email:'hamed.n@mail.com',dayStreak:9,lastDone:__iso(-1),pts:600,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'}]}];
+let ACTIVITY=[
+{w:'1 h ago',i:'check',h:'<b>Sara Ahmadi</b> completed <b>Full Body A — all sets logged</b>'},
+{w:'3 h ago',i:'zap',h:'<b>Mohammad Karimi</b> hit a new PR — <b>Deadlift · 145 kg</b>'},
+{w:'5 h ago',i:'note',h:'<b>You</b> added a note for <b>Reza Moradi</b>'},
+{w:'Yesterday',i:'camera',h:'<b>Ali Rezaei</b> uploaded <b>2 progress photos</b>'},
+{w:'Yesterday',i:'stack',h:'<b>You</b> created template <b>Hypertrophy 4 Day</b>'},
+{w:'2 days ago',i:'check',h:'<b>Neda Hosseini</b> completed <b>Pull A — RPE avg 7.5</b>'}];
+const EXERCISES=[
+{n:'Barbell Bench Press',m:'Chest',e:'Barbell',t:'Compound'},{n:'Incline Dumbbell Press',m:'Chest',e:'Dumbbell',t:'Compound'},{n:'Cable Fly',m:'Chest',e:'Cable',t:'Isolation'},{n:'Push-Up',m:'Chest',e:'Bodyweight',t:'Compound'},
+{n:'Barbell Row',m:'Back',e:'Barbell',t:'Compound'},{n:'Lat Pulldown',m:'Back',e:'Cable',t:'Compound'},{n:'Pull-Up',m:'Back',e:'Bodyweight',t:'Compound'},{n:'Seated Cable Row',m:'Back',e:'Cable',t:'Compound'},
+{n:'Overhead Press',m:'Shoulders',e:'Barbell',t:'Compound'},{n:'Lateral Raise',m:'Shoulders',e:'Dumbbell',t:'Isolation'},{n:'Face Pull',m:'Shoulders',e:'Cable',t:'Isolation'},
+{n:'Barbell Curl',m:'Biceps',e:'Barbell',t:'Isolation'},{n:'Hammer Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Triceps Pushdown',m:'Triceps',e:'Cable',t:'Isolation'},{n:'Skull Crusher',m:'Triceps',e:'Barbell',t:'Isolation'},
+{n:'Back Squat',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Leg Press',m:'Quadriceps',e:'Machine',t:'Compound'},{n:'Leg Extension',m:'Quadriceps',e:'Machine',t:'Isolation'},
+{n:'Romanian Deadlift',m:'Hamstrings',e:'Barbell',t:'Compound'},{n:'Leg Curl',m:'Hamstrings',e:'Machine',t:'Isolation'},{n:'Hip Thrust',m:'Glutes',e:'Barbell',t:'Compound'},{n:'Standing Calf Raise',m:'Calves',e:'Machine',t:'Isolation'},
+{n:'Plank',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Dead Bug',m:'Core',e:'Bodyweight',t:'Isolation'},{n:"Farmer's Carry",m:'Full Body',e:'Dumbbell',t:'Compound'},
+{n:'Incline Barbell Press',m:'Chest',e:'Barbell',t:'Compound'},{n:'Decline Barbell Press',m:'Chest',e:'Barbell',t:'Compound'},{n:'Wide-Grip Barbell Press',m:'Chest',e:'Barbell',t:'Compound'},{n:'Dumbbell Bench Press',m:'Chest',e:'Dumbbell',t:'Compound'},{n:'Decline Dumbbell Press',m:'Chest',e:'Dumbbell',t:'Compound'},{n:'Dumbbell Fly',m:'Chest',e:'Dumbbell',t:'Isolation'},{n:'Incline Dumbbell Fly',m:'Chest',e:'Dumbbell',t:'Isolation'},{n:'Decline Dumbbell Fly',m:'Chest',e:'Dumbbell',t:'Isolation'},{n:'Dumbbell Pullover',m:'Chest',e:'Dumbbell',t:'Compound'},{n:'Cable Crossover',m:'Chest',e:'Cable',t:'Isolation'},{n:'Incline Cable Fly',m:'Chest',e:'Cable',t:'Isolation'},{n:'Cable Chest Press',m:'Chest',e:'Cable',t:'Compound'},{n:'Pec Deck Fly',m:'Chest',e:'Machine',t:'Isolation'},{n:'Smith Machine Bench Press',m:'Chest',e:'Machine',t:'Compound'},{n:'Wide Push-Up',m:'Chest',e:'Bodyweight',t:'Compound'},{n:'Incline Push-Up',m:'Chest',e:'Bodyweight',t:'Compound'},{n:'Decline Push-Up',m:'Chest',e:'Bodyweight',t:'Compound'},
+{n:'Chin-Up',m:'Back',e:'Bodyweight',t:'Compound'},{n:'Close-Grip Lat Pulldown',m:'Back',e:'Cable',t:'Compound'},{n:'Wide-Grip Lat Pulldown',m:'Back',e:'Cable',t:'Compound'},{n:'One-Arm Lat Pulldown',m:'Back',e:'Cable',t:'Compound'},{n:'Underhand Lat Pulldown',m:'Back',e:'Cable',t:'Compound'},{n:'Straight-Arm Pulldown',m:'Back',e:'Cable',t:'Isolation'},{n:'Reverse-Grip Barbell Row',m:'Back',e:'Barbell',t:'Compound'},{n:'T-Bar Row',m:'Back',e:'Barbell',t:'Compound'},{n:'Bent-Over Dumbbell Row',m:'Back',e:'Dumbbell',t:'Compound'},{n:'One-Arm Dumbbell Row',m:'Back',e:'Dumbbell',t:'Compound'},{n:'Iso Row Machine',m:'Back',e:'Machine',t:'Compound'},{n:'Renegade Row',m:'Back',e:'Kettlebell',t:'Compound'},{n:'Deadlift',m:'Back',e:'Barbell',t:'Compound'},{n:'Good Morning',m:'Back',e:'Barbell',t:'Compound'},{n:'Back Extension',m:'Back',e:'Bodyweight',t:'Compound'},
+{n:'Seated Military Press',m:'Shoulders',e:'Barbell',t:'Compound'},{n:'Arnold Press',m:'Shoulders',e:'Dumbbell',t:'Compound'},{n:'Dumbbell Shoulder Press',m:'Shoulders',e:'Dumbbell',t:'Compound'},{n:'Cable Lateral Raise',m:'Shoulders',e:'Cable',t:'Isolation'},{n:'Front Raise',m:'Shoulders',e:'Dumbbell',t:'Isolation'},{n:'Cable Front Raise',m:'Shoulders',e:'Cable',t:'Isolation'},{n:'Reverse Fly',m:'Shoulders',e:'Dumbbell',t:'Isolation'},{n:'Cable Rear Delt Fly',m:'Shoulders',e:'Cable',t:'Isolation'},{n:'Reverse Pec Deck',m:'Shoulders',e:'Machine',t:'Isolation'},{n:'Rear Delt Row',m:'Shoulders',e:'Barbell',t:'Compound'},{n:'Upright Row',m:'Shoulders',e:'Barbell',t:'Compound'},{n:'Cable Upright Row',m:'Shoulders',e:'Cable',t:'Compound'},{n:'Barbell Shrug',m:'Shoulders',e:'Barbell',t:'Isolation'},{n:'Dumbbell Shrug',m:'Shoulders',e:'Dumbbell',t:'Isolation'},{n:'Cable Shrug',m:'Shoulders',e:'Cable',t:'Isolation'},{n:'Machine Shoulder Press',m:'Shoulders',e:'Machine',t:'Compound'},{n:'Band Pull-Apart',m:'Shoulders',e:'Band',t:'Isolation'},{n:'Band Lateral Raise',m:'Shoulders',e:'Band',t:'Isolation'},{n:'Cable External Rotation',m:'Shoulders',e:'Cable',t:'Isolation'},{n:'Kettlebell Press',m:'Shoulders',e:'Kettlebell',t:'Compound'},{n:'Kettlebell Halo',m:'Shoulders',e:'Kettlebell',t:'Compound'},
+{n:'EZ-Bar Curl',m:'Biceps',e:'Barbell',t:'Isolation'},{n:'Preacher Curl',m:'Biceps',e:'Barbell',t:'Isolation'},{n:'Reverse Curl',m:'Biceps',e:'Barbell',t:'Isolation'},{n:'Drag Curl',m:'Biceps',e:'Barbell',t:'Compound'},{n:'Spider Curl',m:'Biceps',e:'Barbell',t:'Isolation'},{n:'Dumbbell Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Seated Dumbbell Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Incline Dumbbell Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Incline Hammer Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Concentration Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Zottman Curl',m:'Biceps',e:'Dumbbell',t:'Isolation'},{n:'Cable Curl',m:'Biceps',e:'Cable',t:'Isolation'},{n:'Rope Hammer Curl',m:'Biceps',e:'Cable',t:'Isolation'},{n:'Cable Preacher Curl',m:'Biceps',e:'Cable',t:'Isolation'},{n:'Machine Bicep Curl',m:'Biceps',e:'Machine',t:'Isolation'},{n:'Machine Preacher Curl',m:'Biceps',e:'Machine',t:'Isolation'},
+{n:'Close-Grip Bench Press',m:'Triceps',e:'Barbell',t:'Compound'},{n:'Overhead Barbell Extension',m:'Triceps',e:'Barbell',t:'Isolation'},{n:'Rope Pushdown',m:'Triceps',e:'Cable',t:'Isolation'},{n:'Reverse-Grip Pushdown',m:'Triceps',e:'Cable',t:'Isolation'},{n:'One-Arm Cable Pushdown',m:'Triceps',e:'Cable',t:'Isolation'},{n:'Overhead Rope Extension',m:'Triceps',e:'Cable',t:'Isolation'},{n:'Triceps Kickback',m:'Triceps',e:'Dumbbell',t:'Isolation'},{n:'Triceps Dip',m:'Triceps',e:'Bodyweight',t:'Compound'},{n:'Bench Dip',m:'Triceps',e:'Bodyweight',t:'Compound'},{n:'Machine Triceps Extension',m:'Triceps',e:'Machine',t:'Isolation'},{n:'Assisted Dip Machine',m:'Triceps',e:'Machine',t:'Compound'},
+{n:'Front Squat',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Sumo Squat',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Barbell Hack Squat',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Walking Lunge',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Step-Up',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Sissy Squat',m:'Quadriceps',e:'Barbell',t:'Compound'},{n:'Dumbbell Squat',m:'Quadriceps',e:'Dumbbell',t:'Compound'},{n:'Dumbbell Lunge',m:'Quadriceps',e:'Dumbbell',t:'Compound'},{n:'Dumbbell Split Squat',m:'Quadriceps',e:'Dumbbell',t:'Compound'},{n:'Plie Squat',m:'Quadriceps',e:'Dumbbell',t:'Compound'},{n:'Goblet Squat',m:'Quadriceps',e:'Kettlebell',t:'Compound'},{n:'Hack Squat Machine',m:'Quadriceps',e:'Machine',t:'Compound'},{n:'Bodyweight Squat',m:'Quadriceps',e:'Bodyweight',t:'Compound'},{n:'Adductor Machine',m:'Quadriceps',e:'Machine',t:'Isolation'},
+{n:'Stiff-Leg Deadlift',m:'Hamstrings',e:'Barbell',t:'Compound'},{n:'Seated Leg Curl',m:'Hamstrings',e:'Machine',t:'Isolation'},{n:'Standing Leg Curl',m:'Hamstrings',e:'Machine',t:'Isolation'},{n:'Glute Ham Raise',m:'Hamstrings',e:'Bodyweight',t:'Compound'},{n:'Reverse Hyperextension',m:'Hamstrings',e:'Machine',t:'Compound'},{n:'Kettlebell Swing',m:'Hamstrings',e:'Kettlebell',t:'Compound'},
+{n:'Abductor Machine',m:'Glutes',e:'Machine',t:'Isolation'},{n:'Glute Bridge',m:'Glutes',e:'Bodyweight',t:'Isolation'},{n:'Single-Leg Glute Bridge',m:'Glutes',e:'Bodyweight',t:'Isolation'},{n:'Glute Kickback',m:'Glutes',e:'Bodyweight',t:'Compound'},{n:'Cable Kickback',m:'Glutes',e:'Cable',t:'Isolation'},{n:'Cable Pull-Through',m:'Glutes',e:'Cable',t:'Compound'},{n:'Band Monster Walk',m:'Glutes',e:'Band',t:'Compound'},
+{n:'Seated Calf Raise',m:'Calves',e:'Machine',t:'Isolation'},{n:'Barbell Calf Raise',m:'Calves',e:'Barbell',t:'Isolation'},{n:'Barbell Seated Calf Raise',m:'Calves',e:'Barbell',t:'Isolation'},{n:'Calf Press',m:'Calves',e:'Machine',t:'Isolation'},
+{n:'Crunch',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Reverse Crunch',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Oblique Crunch',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Russian Twist',m:'Core',e:'Bodyweight',t:'Compound'},{n:'Hanging Leg Raise',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Lying Leg Raise',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Side Plank',m:'Core',e:'Bodyweight',t:'Isolation'},{n:'Cable Crunch',m:'Core',e:'Cable',t:'Isolation'},{n:'Cable Reverse Crunch',m:'Core',e:'Cable',t:'Isolation'},{n:'Cable Russian Twist',m:'Core',e:'Cable',t:'Compound'},{n:'Pallof Press',m:'Core',e:'Cable',t:'Isolation'},{n:'Ab Crunch Machine',m:'Core',e:'Machine',t:'Isolation'},{n:'Ab Rollout',m:'Core',e:'Barbell',t:'Compound'},
+{n:'Wrist Curl',m:'Forearms',e:'Barbell',t:'Isolation'},{n:'Reverse Wrist Curl',m:'Forearms',e:'Barbell',t:'Isolation'},{n:'Dumbbell Wrist Curl',m:'Forearms',e:'Dumbbell',t:'Isolation'},{n:'Cable Wrist Curl',m:'Forearms',e:'Cable',t:'Isolation'},{n:'Finger Curl',m:'Forearms',e:'Barbell',t:'Isolation'},
+];
+const MUSCLES=['All','Chest','Back','Shoulders','Biceps','Triceps','Quadriceps','Hamstrings','Glutes','Calves','Core','Forearms','Full Body'];
+let EXM='All';
+const TX=(ex,sets,reps,kg,rest,note='')=>({ex,sets,reps,kg,rest,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note});
+function defaultTemplates(){return [
+{n:'Push A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Prioritize chest before shoulders. Warm up: 8 min bike + band work.',exs:[TX(0,4,8,80,120,'Elbows ~45°, full ROM'),TX(1,3,10,26,90,'Pause at bottom'),TX(8,3,8,45,120,'Brace before each rep'),TX(9,3,12,10,60,'Lead with elbow'),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
+{n:'Push B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Incline first today — vary the pressing angle.',exs:[TX(1,4,8,28,120),TX(0,3,10,70,120),TX(9,4,12,10,60),TX(8,3,10,40,90),TX(13,3,15,25,45),TX(3,3,15,0,60,'Bodyweight'),TX(2,3,15,15,45)]},
+{n:'Pull A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',note:'Keep the hinge neutral — quality over load.',exs:[TX(4,4,8,70,120,'Neutral spine'),TX(5,3,10,60,90),TX(6,3,8,0,90,'Bodyweight'),TX(7,3,10,55,90),TX(11,3,10,30,60),TX(12,3,12,12,60),TX(10,3,15,15,45)]},
+{n:'Pull B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',exs:[TX(5,4,10,55,120),TX(6,3,10,0,90),TX(7,4,10,60,90),TX(12,3,12,12,60),TX(11,3,10,25,60),TX(10,3,15,15,45)]},
+{n:'Leg A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'65 min',mod:'1 week ago',note:'Depth below parallel. Belt only on top sets.',exs:[TX(15,4,6,100,150,'Depth below parallel'),TX(16,3,10,120,120),TX(18,3,10,60,120,'Neutral spine'),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45),TX(22,3,40,0,60,'Seconds hold')]},
+{n:'Leg B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'60 min',mod:'1 week ago',exs:[TX(20,4,10,80,120,'Pause 1s at top'),TX(16,4,12,110,120),TX(18,3,10,55,90),TX(19,3,12,40,60),TX(17,3,15,40,45),TX(21,4,15,45,45)]},
+{n:'Full Body Beginner',sp:['General Fitness','Bodybuilding & Fitness','Running & Endurance','Team Sports'],days:'Full Body',dur:'45 min',mod:'2 weeks ago',note:'Technique focus. Leave 2 reps in reserve everywhere.',exs:[TX(3,3,10,0,60),TX(1,3,10,10,90),TX(5,3,10,35,90),TX(16,3,10,60,90),TX(9,2,12,6,45),TX(13,2,12,15,45),TX(23,3,10,0,45),TX(24,3,30,12,60,'30 m per set')]},
+{n:'Hypertrophy 4 Day',sp:['Bodybuilding & Fitness'],days:'4-day split',dur:'60 min',mod:'3 weeks ago',note:'Load each day separately. Rest 2–3 min on compounds.',parts:[
+ {n:'Day 1 — Push',exs:[TX(0,4,8,80,120),TX(1,3,10,26,90),TX(8,3,8,45,120),TX(9,4,12,10,60),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
+ {n:'Day 2 — Pull',exs:[TX(4,4,8,70,120),TX(5,3,10,60,90),TX(6,3,8,0,90),TX(7,3,10,55,90),TX(10,3,15,15,45),TX(11,3,10,30,60),TX(12,3,12,12,60)]},
+ {n:'Day 3 — Legs',exs:[TX(15,4,6,100,150),TX(16,3,10,120,120),TX(18,3,10,60,120),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45)]},
+ {n:'Day 4 — Upper',exs:[TX(0,3,10,70,90),TX(4,3,10,60,90),TX(8,3,10,40,90),TX(5,3,12,50,90),TX(11,3,12,25,45),TX(13,3,12,22,45),TX(9,3,15,8,45)]}]},
+{n:'Strength 5 Day',sp:['Powerlifting','Bodybuilding & Fitness'],days:'5-day split',dur:'70 min',mod:'1 month ago',note:'5×5 main lifts — add 2.5 kg when all sets hit.',parts:[
+ {n:'Day 1 — Squat',exs:[TX(15,5,5,105,180,'5×5 — add 2.5 kg weekly'),TX(16,3,8,120,120),TX(18,3,8,70,120),TX(21,3,12,60,60),TX(22,3,40,0,60,'Seconds hold')]},
+ {n:'Day 2 — Bench',exs:[TX(0,5,5,82,180),TX(1,3,8,30,120),TX(8,3,8,47,120),TX(10,3,15,20,60),TX(13,3,10,27,60)]},
+ {n:'Day 3 — Deadlift',exs:[TX(18,5,3,130,180,'Focus: bar path'),TX(4,4,8,75,120),TX(7,3,10,60,90),TX(19,3,10,45,60),TX(24,3,30,20,75)]},
+ {n:'Day 4 — Upper',exs:[TX(6,4,6,0,150,'Weighted if possible'),TX(1,3,10,28,90),TX(5,3,10,62,90),TX(12,3,10,14,60),TX(14,3,10,32,60)]},
+ {n:'Day 5 — Lower',exs:[TX(20,4,8,90,120),TX(16,3,10,115,120),TX(17,3,12,50,60),TX(19,3,12,42,60),TX(23,3,10,0,45)]}]}];}
+let TEMPLATES=defaultTemplates();
+/* v18.4 — coach-level video bank: exercise EN name → URL. Set once in the
+   library (or imported in bulk) and it auto-attaches to that exercise in
+   every workout built afterwards. Travels with saveData/cloudPack. */
+let EXVID={};
+const bankN=()=>Object.keys(EXVID).length;
+const fillVids=()=>BUILDER.forEach(b=>{const v=EXVID[(EXERCISES[b.ex]||{}).n];if(v&&!b.vid)b.vid=v});
+let NOTES=[
+{id:1,client:'Ali Rezaei',from:'coach',shared:true,type:'Training',title:'Bench pause work helping',date:'Today · 08:20',body:'Added 2-sec pause on last set — bar speed improved. Keep RPE 8 for 2 more weeks, then deload.',pin:true,arch:false},
+{id:2,client:'Reza Moradi',from:'coach',shared:false,type:'General',title:'Check-in call scheduled',date:'Yesterday',body:'Missed 2 sessions. Call Thursday evening, discuss schedule barriers and possibly move to morning slots.',pin:false,arch:false},
+{id:3,client:'Sara Ahmadi',from:'coach',shared:true,type:'Nutrition',title:'Protein target adjustment',date:'Yesterday',body:'Struggling with 140 g protein. Agreed to add one shake + Greek yogurt snack to reach ~120 g first.',pin:false,arch:false},
+{id:4,client:'Mohammad Karimi',from:'coach',shared:true,type:'Progress',title:'Deadlift PR — 145 kg',date:'2 days ago',body:'Clean single at 145, bar speed still good. Next block: attack weakness off the floor → pause deadlifts.',pin:true,arch:false},
+{id:5,client:'Maryam Sadeghi',from:'coach',shared:false,type:'Injury / Restriction',title:'Left knee — avoid deep flexion',date:'3 days ago',body:'Physio confirmed patellar tracking issue. Replace lunges with box split squats, no jump variations.',pin:false,arch:false},
+{id:7,client:'Ali Rezaei',from:'coach',shared:true,type:'Nutrition',title:'Carbs on training days',date:'Aug 28',body:'Increase carbohydrate intake on training days. Use the pre-workout meal 90 minutes before training.',pin:false,arch:false},
+{id:6,client:'Neda Hosseini',from:'coach',shared:true,type:'Training',title:'Technique focus: hinging',date:'5 days ago',body:'Hinge pattern improving with dowel drills. Keep RDL light — prioritize neutral spine over load for 3 weeks.',pin:false,arch:false}];
+let FILES=[
+{n:'Initial Assessment Form.pdf',t:'PDF',d:'Mar 02, 2026',s:'1.2 MB'},
+{n:'PAR-Q+ Questionnaire.pdf',t:'PDF',d:'Mar 02, 2026',s:'640 KB'},
+{n:'Body Composition Report.pdf',t:'PDF',d:'Apr 18, 2026',s:'2.4 MB'},
+{n:'Knee Physio Notes.docx',t:'Document',d:'May 30, 2026',s:'88 KB'},
+{n:'Progress Photos — June.zip',t:'Archive',d:'Jun 21, 2026',s:'18.7 MB'}];
+let BUILDER=[
+{ex:0,sets:4,reps:8,kg:80,rest:120,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:'Elbows ~45°, full ROM'},
+{ex:1,sets:3,reps:10,kg:26,rest:90,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:'Pause at bottom'},
+{ex:8,sets:3,reps:8,kg:45,rest:120,rpe:'RPE 7',rir:'RIR 3',tempo:'1-0-1-0',note:'Brace before each rep'},
+{ex:7,sets:4,reps:10,kg:60,rest:90,rpe:'RPE 7',rir:'RIR 3',tempo:'2-0-1-0',note:'Squeeze at contraction'},
+{ex:9,sets:3,reps:12,kg:10,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:'Lead with elbow'},
+{ex:13,sets:3,reps:12,kg:25,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:''}];
+/* v18.61 — REMOVED the hardcoded demo chart arrays (STRENGTH/CONSIST/VOLUME/PRS).
+   Every progress chart is now COMPUTED from DB[cid].log — the real per-set
+   session history written by the player on Finish Workout (see lseeds /
+   consistWeeks / volumeWeeks / strengthSeries / prList below). */
+/* v15.6 — REAL measurements: per-client history (d = 'YYYY-MM-DD', oldest first) */
+/* v18.9 — REAL clock: TDATE used to be frozen at Jul 8 2026, so "today's
+   meals", the calendar highlight, session states and measurement recency
+   never moved. It is now the actual current date. */
+const TDATE=new Date();
+const MSEED={
+1:[{d:'2026-04-13',w:82.4,bf:17.8,ch:99.0,wa:84.5,hi:98.2,ar:35.0,th:57.0,ca:37.2},{d:'2026-04-27',w:81.0,bf:17.1,ch:99.4,wa:83.6,hi:97.9,ar:35.3,th:57.3,ca:37.4},{d:'2026-05-11',w:79.8,bf:16.4,ch:99.9,wa:82.5,hi:97.5,ar:35.6,th:57.6,ca:37.6},{d:'2026-05-25',w:78.5,bf:15.8,ch:100.2,wa:81.6,hi:97.2,ar:35.9,th:57.9,ca:37.8},{d:'2026-06-08',w:77.4,bf:15.2,ch:100.6,wa:80.7,hi:96.9,ar:36.2,th:58.2,ca:37.9},{d:'2026-06-22',w:76.9,bf:14.8,ch:101.0,wa:80.1,hi:96.7,ar:36.4,th:58.4,ca:38.0},{d:'2026-07-05',w:76.4,bf:14.2,ch:101.5,wa:79.2,hi:96.4,ar:36.8,th:58.9,ca:38.2}],
+2:[{d:'2026-06-01',w:65.8,bf:26.2,ch:92.0,wa:76.0,hi:99.0,ar:29.5,th:56.5,ca:35.0},{d:'2026-06-15',w:64.9,bf:25.4,ch:92.2,wa:75.2,hi:98.4,ar:29.7,th:56.2,ca:35.1},{d:'2026-06-29',w:64.1,bf:24.6,ch:92.4,wa:74.5,hi:98.0,ar:29.9,th:56.0,ca:35.2}],
+3:[{d:'2026-06-05',w:92.0,bf:18.6,ch:106.0,wa:88.0,hi:100.0,ar:38.0,th:60.5,ca:39.0},{d:'2026-06-20',w:91.6,bf:18.2,ch:106.4,wa:87.4,hi:100.1,ar:38.2,th:60.8,ca:39.1},{d:'2026-07-01',w:91.2,bf:17.9,ch:106.8,wa:87.0,hi:100.2,ar:38.4,th:61.0,ca:39.2}],
+4:[{d:'2026-06-15',w:59.4,bf:21.9,ch:88.5,wa:69.0,hi:92.0,ar:27.5,th:53.5,ca:34.0},{d:'2026-06-30',w:58.9,bf:21.3,ch:89.0,wa:68.5,hi:92.2,ar:27.8,th:53.8,ca:34.1}],
+5:[{d:'2026-05-10',w:99.5,bf:30.6,ch:108.0,wa:104.0,hi:110.0,ar:37.0,th:64.0,ca:40.0},{d:'2026-05-24',w:98.9,bf:30.2,ch:108.2,wa:103.2,hi:109.6,ar:37.1,th:63.8,ca:40.0},{d:'2026-06-07',w:98.3,bf:29.8,ch:108.4,wa:102.5,hi:109.2,ar:37.2,th:63.6,ca:40.1}],
+6:[{d:'2026-05-20',w:70.8,bf:16.8,ch:96.0,wa:78.0,hi:94.0,ar:32.0,th:55.0,ca:36.5},{d:'2026-06-10',w:70.2,bf:16.4,ch:96.2,wa:77.5,hi:94.1,ar:32.1,th:55.1,ca:36.6}],
+7:[{d:'2026-05-12',w:63.1,bf:23.9,ch:90.0,wa:74.5,hi:96.5,ar:28.5,th:55.5,ca:35.0},{d:'2026-05-26',w:62.8,bf:23.5,ch:90.2,wa:74.0,hi:96.3,ar:28.6,th:55.6,ca:35.1},{d:'2026-06-09',w:62.5,bf:23.1,ch:90.4,wa:73.6,hi:96.2,ar:28.7,th:55.7,ca:35.2}],
+8:[{d:'2026-06-10',w:85.2,bf:16.2,ch:102.0,wa:82.0,hi:97.5,ar:36.0,th:58.5,ca:38.0},{d:'2026-06-25',w:84.6,bf:15.7,ch:102.4,wa:81.4,hi:97.4,ar:36.2,th:58.7,ca:38.1}]};
+/* The seed history is anchored to the old build date (Jul 8 2026) — shift
+   every seed date by the anchor's real age so "last entry ≈ 3 days ago"
+   stays true on ANY date instead of drifting months into the past. */
+const __MSEED_SHIFT=Math.max(0,Math.round((TDATE-new Date(2026,6,8))/864e5));
+const shiftSeed=d=>{const p=String(d).split('-');const x=new Date(+p[0],+p[1]-1,+p[2]);x.setDate(x.getDate()+__MSEED_SHIFT);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`};
+const mseeds=cid=>(MSEED[cid]||[]).map(x=>({...x,d:shiftSeed(x.d)}));
+/* att: 'done' | 'miss' | undefined (not marked) */
+let EVENTS=[
+{id:1,day:0,start:11,dur:1,client:'Neda Hosseini',label:'Pull Workout',type:'session',att:'done'},
+{id:2,day:1,start:9,dur:1.25,client:'Ali Rezaei',label:'Mobility Prep',type:'session',att:'miss'},
+{id:3,day:2,start:9,dur:1.25,client:'Ali Rezaei',label:'Push Workout',type:'session',att:'done'},
+{id:4,day:2,start:11,dur:1.5,client:'Sara Ahmadi',label:'Assessment',type:'assess'},
+{id:5,day:2,start:14.5,dur:1.25,client:'Mohammad Karimi',label:'Leg Day',type:'session'},
+{id:6,day:3,start:9.5,dur:.75,client:'Maryam Sadeghi',label:'Measurement',type:'meas'},
+{id:7,day:4,start:16,dur:1,client:'You',label:'Physio appointment',type:'appt'},
+{id:8,day:4,start:18,dur:1.25,client:'Hamed Naderi',label:'Push B',type:'session'},
+{id:9,day:5,start:10,dur:1.5,client:'Sara Ahmadi',label:'Training Session',type:'session',att:'miss'}];
+const WDN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+/* v18.9 — the demo week was frozen at Jul 6–12 2026 (TODAY=2, NOW=10.5), so
+   "today's meals", the calendar highlight and session states never moved.
+   DAYS is now weekday names only (FA keys 'Mon'…'Sun' already exist) and the
+   dates come from dayDate() — the ACTUAL current week. */
+const DAYS=[...WDN];
+const TODAY=(TDATE.getDay()+6)%7;
+const NOW=TDATE.getHours()+TDATE.getMinutes()/60;
+const __MON=new Date(TDATE);__MON.setHours(0,0,0,0);__MON.setDate(__MON.getDate()-TODAY);
+const dayDate=(i,off=S.weekOff)=>{const d=new Date(__MON);d.setDate(__MON.getDate()+off*7+i);return d};
+/* Local ISO date (YYYY-MM-DD) for <input type=date> defaults */
+const isoToday=()=>`${TDATE.getFullYear()}-${String(TDATE.getMonth()+1).padStart(2,'0')}-${String(TDATE.getDate()).padStart(2,'0')}`;
+/* ================= v18.61 — REAL WORKOUT HISTORY =================
+   Every finished session in the client player writes a log entry into
+   DB[cid].log: {id,wid,n,d,at,sets:[{x,s,kg,reps,rpe}],done,total,vol,rpe}.
+   vol = Σ kg×reps (tonnage), rpe = avg of the per-set RPEs the client
+   actually picked. All analytics below are COMPUTED from these logs — no
+   more fake arrays. Demo personas (MSEED ids 1-3) get seeded history
+   anchored to the REAL current week so the demo charts show computed data;
+   real clients start empty and fill in as they train. */
+const wlogOf=cid=>((DB[cid]||{}).log)||[];
+/* Demo session history: 8 weeks × the client's weekly frequency, progressive
+   overload, 1 skipped session every 3rd week (so consistency isn't a flat
+   100), future dates skipped, deterministic ids (merge-stable across devices). */
+const lseeds=cid=>{
+  if(!MSEED[cid]||![1,2,3].includes(+cid))return [];
+  const c=CLIENTS.find(x=>x.id===+cid);if(!c)return [];
+  const W=8,tgt=Math.max(3,Math.min(5,parseInt(c.freq)||3));
+  const sc=(+c.weight||75)/75,r25=v=>Math.round(v/2.5)*2.5;
+  const rot=[
+    {n:'Push A',x:[['Barbell Bench Press',62.5,2,4,8],['Back Squat',85,2.5,4,5],['Dumbbell Curl',12,.5,3,12]]},
+    {n:'Push B',x:[['Barbell Bench Press',62.5,2,4,8],['Barbell Row',55,1.5,3,8],['Lat Pulldown',50,1,3,10]]},
+    {n:'Leg A',x:[['Back Squat',85,2.5,5,5],['Deadlift',110,3,3,5],['Leg Press',120,3,3,10]]},
+    {n:'Pull A',x:[['Deadlift',110,3,3,5],['Lat Pulldown',50,1,3,10],['Dumbbell Curl',12,.5,3,12]]},
+    {n:'Leg B',x:[['Leg Press',120,3,3,10],['Barbell Row',55,1.5,3,8],['Back Squat',85,2.5,4,8]]}];
+  const days=[0,2,4,1,5].slice(0,tgt); // Mon Wed Fri (Tue Sat)
+  const out=[];
+  for(let wi=0;wi<W;wi++){
+    const ago=W-1-wi; // 7 = oldest … 0 = this week
+    days.forEach((dow,di)=>{
+      if(wi%3===1&&di===days.length-1)return; // dip week → real <100% consistency
+      const d=new Date(__MON);d.setDate(__MON.getDate()-ago*7+dow);d.setHours(17,0,0,0);
+      if(d>Date.now())return; // never seed the future
+      const sets=[];
+      rot[di%rot.length].x.forEach(([x,base,step,ns,reps])=>{
+        const kg=r25((base+((W-1)-ago)*step)*sc);
+        for(let s=1;s<=ns;s++)sets.push({x,s,kg,reps,rpe:7+((wi+di+s)%3)});
+      });
+      const vol=sets.reduce((a,s)=>a+s.kg*s.reps,0);
+      const rpes=sets.map(s=>s.rpe);
+      const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      out.push({id:'ls'+cid+'-'+wi+'-'+di,n:rot[di%rot.length].n,d:iso,at:d.getTime(),
+        sets,done:sets.length,total:sets.length,vol,
+        rpe:Math.round(rpes.reduce((a,b)=>a+b,0)/rpes.length*10)/10});
+    });
+  }
+  out.sort((a,b)=>b.at-a.at); // newest first — same order unshift() produces on finish
+  return out;
+};
+/* Weekly consistency %: sessions that week ÷ the client's target frequency. */
+function consistWeeks(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const c=CLIENTS.find(x=>x.id===cid)||{};
+  const tgt=Math.max(1,parseInt(c.freq)||3);
+  const out=[];
+  for(let i=n-1;i>=0;i--){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-i*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const k=L.filter(l=>{const x=pd(l.d);return x>=w0&&x<w1}).length;
+    out.push(Math.min(100,Math.round(k/tgt*100)));
+  }
+  return out;
+}
+/* Weekly tonnage in tonnes (t/week). */
+function volumeWeeks(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const out=[];
+  for(let i=n-1;i>=0;i--){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-i*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const v=L.filter(l=>{const x=pd(l.d);return x>=w0&&x<w1}).reduce((a,l)=>a+(l.vol||0),0);
+    out.push(Math.round(v/100)/10);
+  }
+  return out;
+}
+/* Last n days: 100 if a session was logged that day, else 0 (+ weekday labels). */
+function dailyTrain(cid,n=7){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const out=[],labs=[];
+  for(let i=n-1;i>=0;i--){
+    const d=new Date(TDATE);d.setHours(0,0,0,0);d.setDate(d.getDate()-i);
+    const d2=new Date(d);d2.setDate(d.getDate()+1);
+    out.push(L.some(l=>{const x=pd(l.d);return x>=d&&x<d2})?100:0);
+    labs.push(t(DAYS[(d.getDay()+6)%7]));
+  }
+  return {d:out,labs};
+}
+/* Strength progression: weekly TOP set (kg) for the big-3, from real logs.
+   Timeline starts at the LATEST first-occurrence so every live line has data;
+   gaps carry the last known value. Returns null when history is too thin. */
+function strengthSeries(cid,n=12){
+  const L=wlogOf(cid);if(!L.length)return null;
+  const pats={bench:/^(barbell )?bench press$/i,squat:/^(back |barbell |box )?squat$/i,dead:/^(barbell )?deadlift$/i};
+  const keys=['bench','squat','dead'];
+  const wkMax=[];
+  for(let i=0;i<n;i++){
+    const w0=new Date(__MON);w0.setDate(w0.getDate()-(n-1-i)*7);
+    const w1=new Date(w0);w1.setDate(w0.getDate()+7);
+    const m={bench:null,squat:null,dead:null};
+    L.forEach(l=>{const x=pd(l.d);if(x<w0||x>=w1)return;
+      (l.sets||[]).forEach(s=>{const kg=+s.kg||0;if(!kg)return;
+        keys.forEach(k=>{if(pats[k].test(s.x||'')&&(m[k]==null||kg>m[k]))m[k]=kg})})});
+    wkMax.push(m);
+  }
+  const first={};keys.forEach(k=>{for(let i=0;i<n;i++){if(wkMax[i][k]!=null){first[k]=i;break}}});
+  const live=keys.filter(k=>first[k]!=null);
+  if(!live.length)return null;
+  const start=Math.max(...live.map(k=>first[k]));
+  if(n-start<2)return null; // a single point cannot draw a line
+  const res={};
+  live.forEach(k=>{const arr=[];let last=null;
+    for(let i=start;i<n;i++){const v=wkMax[i][k];if(v!=null)last=v;arr.push(last!=null?last:wkMax[first[k]][k])}
+    res[k]=arr});
+  return res;
+}
+/* PRs: for each lift, first-ever top set vs best-ever top set (only where the
+   client actually got stronger), best gain first. */
+function prList(cid,limit=3){
+  const L=wlogOf(cid).slice().sort((a,b)=>(a.at||0)-(b.at||0));
+  const first={},best={};
+  L.forEach(l=>{const per={};
+    (l.sets||[]).forEach(s=>{const kg=+s.kg||0;if(!kg||!s.x)return;if(per[s.x]==null||kg>per[s.x])per[s.x]=kg});
+    Object.keys(per).forEach(x=>{
+      if(first[x]==null)first[x]={kg:per[x],d:l.d};
+      if(best[x]==null||per[x]>best[x].kg)best[x]={kg:per[x],d:l.d};});});
+  const out=[];
+  Object.keys(best).forEach(x=>{const f=first[x],b=best[x];
+    if(b.kg<=f.kg)return; // never improved on the first session → not a PR
+    out.push({n:x,f:f.kg+' kg',t:b.kg+' kg',g:'+'+Math.round((b.kg/f.kg-1)*1000)/10+'%',d:fmtShortDate(pd(b.d))});});
+  out.sort((a,b)=>parseFloat(b.g)-parseFloat(a.g));
+  return out.slice(0,limit);
+}
+/* Average RPE over the last N days (real per-set RPEs the client tapped). */
+function avgRpe(cid,days=28){
+  const cut=Date.now()-days*864e5;let s=0,n=0;
+  wlogOf(cid).forEach(l=>{if((l.at||0)<cut)return;
+    (l.sets||[]).forEach(x=>{const r=+x.rpe;if(r){s+=r;n++}})});
+  return n?Math.round(s/n*10)/10:null;
+}
+/* Honest empty state instead of fake chart data. */
+const chartEmpty=msg=>`<div class="empty">${ic('chart',22)}<b>${t('No workout history yet')}</b><span class="muted">${msg||t('Complete a workout — your progress charts will build themselves')}</span></div>`;
+/* ================= v18.62 — WEEK SPLIT (برنامه هفتگی به تفکیک روزها) =================
+   DB[cid].split = 7 slots, index = weekday 0=Mon … 6=Sun (same indexing as
+   TODAY / dayDate / WDN, so "today" is always split[TODAY]).
+   Slot = {t:'w', w:<workout id>} — training day bound to a saved workout
+        | {t:'rest'}            — explicit rest day
+        | null                  — day not set yet.
+   The split is the scheduling TRUTH: the client Today card, the week strip
+   markers and the coach's Week Split panel all read it. w.day mirrors the
+   slot (kept in sync on every assignment) so older displays stay correct.
+   Rides the DB bucket → no payload/backend change; cloudMerge adopts it. */
+const FULLDAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const splitBlank=()=>[null,null,null,null,null,null,null];
+/* Backfill: build a split from the workouts' own day field (legacy data and
+   any workspace saved before the split existed) — same order every device. */
+const splitFromWorkouts=db=>{
+  const sp=splitBlank();
+  ((db&&db.workouts)||[]).forEach(w=>{const i=FULLDAYS.indexOf(w&&w.day);if(i>=0&&!sp[i])sp[i]={t:'w',w:String(w.id)}});
+  return sp;
+};
+const splitOf=cid=>{const db=DB[cid]||{};return Array.isArray(db.split)?db.split:splitFromWorkouts(db)};
+const splitW=(cid,s)=>s&&s.t==='w'?((DB[cid]||{}).workouts||[]).find(x=>String(x.id)===String(s.w))||null:null;
+/* v18.62 — "completed" is scoped to the CURRENT week: the split is a
+   repeating weekly template, so last week's completion must not block this
+   week's round. wDone(w) = finished within Mon…Sun of this week (or a legacy
+   completion that predates doneAt — kept as done to preserve old data).
+   Status stays untouched (stats/challenges keep their cumulative meaning);
+   only display and the player consult wDone, which also lets a stale-completed
+   workout start a FRESH session instead of a read-only summary. */
+const wDone=w=>!!(w&&w.status==='completed'&&(!w.doneAt||(Date.parse(w.doneAt)>=+__MON&&Date.parse(w.doneAt)<+__MON+7*864e5)));
+/* Session-dot colors shared by the client calendar week rows / month grid / legend. */
+const SESS_DOT={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
+/* What the client should see TODAY: day plan first (train = that workout even
+   if already completed → summary; rest = rest card), legacy fallback (first
+   pending workout) only when today's slot carries no decision. */
+function todaysPlan(cid){
+  const db=DB[cid]||{};
+  const sp=splitOf(cid);
+  const s=sp[TODAY];
+  if(s&&s.t==='rest')return{w:null,rest:true,sp};
+  if(s&&s.t==='w'){const w=splitW(cid,s);if(w)return{w,rest:false,sp}}
+  /* v18.62 — day-aware: an unset slot means no workout today (the old
+     "first pending workout" fallback showed Monday's plan every weekday).
+     Narrow exception: a workspace whose split is ENTIRELY unset (never
+     derived / no day assigned anywhere) still falls back, so nobody's
+     pending workout becomes invisible mid-transition. */
+  if(!sp.some(Boolean)){const w=(db.workouts||[]).find(x=>x.status==='assigned');if(w)return{w,rest:false,sp}}
+  return{w:null,rest:false,sp};
+}
+/* Shared 7-row list. o.edit → coach: every row opens the assign modal;
+   client: tapping a training row opens that workout's player. */
+function splitRows(cid,o){
+  const opt=o||{};const db=DB[cid]||{};const sp=splitOf(cid);
+  const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6]; // FA week: ش ی د س چ پ ج
+  return order.map(i=>{
+    const s=sp[i];const w=splitW(cid,s);const isT=i===TODAY;
+    let right;
+    if(s&&s.t==='rest')right=`<span class="bdg bdg-gray">${ic('moon',11)} ${t('Rest day')}</span>`;
+    else if(w)right=`<b style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(w.name)||t('New workout'))}</b>${wDone(w)?`<span class="bdg bdg-lime" style="font-size:9.5px;flex:none">${ic('check',10)}</span>`:''}`;
+    else right=`<span class="muted" style="opacity:.7">—</span>`;
+    const act=opt.edit?`data-act="split-day" data-i="${i}"`:(w?`data-act="open-player" data-wid="${esc(String(w.id))}"`:'');
+    const d=dayDate(i,0);
+    const st=(isT?'background:var(--accent-soft);color:var(--accent-ink);':'')+(act?';cursor:pointer':'');
+    const cls=opt.cls||'set-row';
+    const dim=isT?'color:inherit;opacity:.8;':'';
+    return `<div class="${cls}" ${act} style="${st}justify-content:space-between;gap:8px">
+      <span class="row" style="gap:9px;min-width:0"><b style="flex:none;width:36px">${t(WDN[i])}</b><span class="muted" style="font-size:11px;${dim}">${fmtNum(d)}</span></span>
+      <span class="row" style="gap:6px;min-width:0;justify-content:flex-end;flex:1">${right}${opt.edit?ic('chevR',13):''}</span>
+    </div>`}).join('');
+}
+/* v18.67 — set the WHOLE week in one screen: per day pick a saved workout,
+   rest, or leave unassigned. Replaces 7 separate day-modal opens — the
+   3/4/7-day split takes one save. */
+function splitQuickModal(){
+  const cid=S.cid;const sp=splitOf(cid);const ws=(DB[cid].workouts||[]);
+  const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6]; // FA week: ش ی د س چ پ ج
+  const sel=i=>{const s=sp[i];const cur=s&&s.t==='rest'?'__rest':s&&s.t==='w'?String(s.w):'';
+    return `<select class="sel" style="flex:1;min-width:0" data-quick="${i}">
+      <option value="" ${cur===''?'selected':''}>— ${t('Unassigned')} —</option>
+      <option value="__rest" ${cur==='__rest'?'selected':''}>🌙 ${t('Rest day')}</option>
+      ${ws.map(w=>`<option value="${esc(String(w.id))}" ${cur===String(w.id)?'selected':''}>${esc(t(w.name)||t('New workout'))}</option>`).join('')}
+    </select>`};
+  openModal(`
+  <div class="modal-h"><h3>${t('Quick week setup')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:10px">${t('Pick a workout or rest for each day — repeats every week')}</div>
+    ${order.map(i=>`<div class="set-row" style="gap:10px">
+      <b style="flex:none;width:64px">${t(WDN[i])}</b>${sel(i)}
+    </div>`).join('')}
+  </div>
+  <div class="modal-f"><span class="muted" style="font-size:11.5px">${t('One workout per day')}</span><span class="sp"></span>
+    <button class="btn btn-primary" data-act="quick-save">${ic('check',14)} ${t('Save')}</button></div>`);
+}
+/* Assign modal for one day of the split: pick a saved workout, mark rest,
+   or clear the day. */
+/* v18.63 — dISO = the specific clicked date (month cell); without it the
+   date of THIS week's occurrence. The badge makes the recurring model
+   explicit: assigning here repeats every week on that weekday. */
+function splitDayModal(i,dISO){
+  const cid=S.cid;const c=client(cid);const db=DB[cid]||{};
+  const sp=splitOf(cid);const s=sp[i];const curW=splitW(cid,s);
+  const ws=(db.workouts||[]);
+  const now=curW?(esc(t(curW.name))||t('New workout')):(s&&s.t==='rest'?t('Rest day'):t('No workout assigned'));
+  openModal(`
+  <div class="modal-h"><h3>${t('Choose a workout for')} ${t(FULLDAYS[i])}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:8px;margin-bottom:10px;flex-wrap:wrap"><span class="muted" style="font-size:12px">${fmtFullDate(dISO?pd(dISO):dayDate(i,0))}</span><span class="bdg bdg-gray" style="font-size:10px">${t('Every week')}</span></div>
+    <div class="row" style="gap:8px;margin-bottom:12px;padding:9px 12px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--acc-line)">${ic('calendar',14)}<b style="font-size:12.5px;color:var(--accent-ink)">${now}</b></div>
+    <div class="row" style="gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+      <span class="muted" style="font-size:11.5px">${t('Copy to')}</span>
+      ${[0,1,2,3,4,5,6].filter(j=>j!==i).map(j=>`<button class="fchip" style="padding:3px 9px;font-size:11px" data-act="copy-day" data-i="${i}" data-j="${j}">${t(WDN[j])}</button>`).join('')}
+    </div>
+    <div class="fs-t">${t('Saved workouts')}</div>
+    ${ws.length?ws.map(w=>{const on=curW&&String(curW.id)===String(w.id);
+      return `<div class="set-row" data-act="split-assign" data-i="${i}" data-w="${esc(String(w.id))}" style="cursor:pointer;${on?'background:var(--accent-soft);':''}${on?'padding:12px 10px;border-radius:10px':''}">
+        <span class="row" style="gap:10px;min-width:0">${ic('dumbbell',15)}<span style="min-width:0"><b style="font-size:13px">${esc(t(w.name)||t('New workout'))}</b><span class="muted" style="display:block;font-size:11px">${t(w.day)} · ${t(wDone(w)?'Completed':w.status==='assigned'?'Pending':'planned')}</span></span></span>
+        ${on?`<span style="color:var(--accent-deep);flex:none">${ic('check',16)}</span>`:`<span style="flex:none;color:var(--ink3)">${ic('chevR',14)}</span>`}
+      </div>`}).join('')
+     :`<div class="muted" style="padding:16px;text-align:center;font-size:12.5px">${t('No workouts yet — build one first')}</div>`}
+    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:14px" data-act="cal-new" data-i="${i}">${ic('plus',14)} ${t('New workout for this day')}</button>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost btn-icon" data-act="print-month" title="${t('Print / PDF')}">${ic('download',15)}</button>
+    <button class="btn btn-ghost" data-act="split-clear" data-i="${i}" style="color:var(--red)">${t('Clear day')}</button>
+    <span class="sp"></span>
+    <button class="btn btn-outline" data-act="split-rest" data-i="${i}">${ic('moon',14)} ${t('Rest day')}</button>
+    <button class="btn btn-primary" data-act="modal-x">${t('Done')}</button>
+  </div>`);
+}
+/* v18.63 — "Add workout" day picker: 7 rows (real dates of THIS week) with
+   the current plan; tap a row → splitDayModal for that day. Used by the
+   desktop calendar header AND the coach-mobile client view. */
+function weekPlanModal(kind){
+  const cid=S.cid;const sp=splitOf(cid);const db=DB[cid]||{};
+  openModal(`
+  <div class="modal-h"><h3>${kind==='add'?t('Add workout to which day?'):t('This week plan')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${[0,1,2,3,4,5,6].map(i=>{const s=sp[i],w=splitW(cid,s);const d=dayDate(i,0);
+      const sd=(db.sessions||[]).filter(x=>x.day===i);
+      return `<div class="wprow ${i===TODAY?'today':''}" data-act="split-day" data-i="${i}">
+        <span class="wp-d"><b>${t(WDN[i])}</b><small>${fmtNum(d)}</small></span>
+        ${s&&s.t==='rest'?`<span class="wp-r">${ic('moon',13)} ${t('Rest day')}</span>`
+          :w?`<span class="wp-w">${ic('dumbbell',13)} ${esc(t(w.name)||t('New workout'))}${wDone(w)?`<i>${ic('check',12)}</i>`:''}</span>`
+          :`<span class="wp-a">${ic('plus',13)} ${t('Add workout')}</span>`}
+        <span class="wp-s">${sd.slice(0,4).map(x=>`<span class="mdot" style="background:${SESS_DOT[x.type]||SESS_DOT.session}"></span>`).join('')}</span>
+        <span class="wp-c">${ic('chevR',15)}</span>
+      </div>`;}).join('')}
+    <div class="muted" style="font-size:11.5px;text-align:center;margin-top:8px">${t('Tap a day to assign a workout or rest')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ================= JALALI (SHAMSI) CALENDAR =================
+   Standard 33-year cycle algorithm (jalaali-js, MIT) — accurate 1178–1633 AP. */
+const JMONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const JMONTHS_EN=['Farvardin','Ordibehesht','Khordad','Tir','Mordad','Shahrivar','Mehr','Aban','Azar','Dey','Bahman','Esfand'];
+const jDiv=(a,b)=>~~(a/b),jMod=(a,b)=>a-jDiv(a,b)*b;
+function jalCal(jy){
+  const breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+  let leapJ=-14,jp=breaks[0],jump=0,n;
+  for(let i=1;i<breaks.length;i++){const jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ+=jDiv(jump,33)*8+jDiv(jMod(jump,33),4);jp=jm}
+  n=jy-jp;
+  leapJ+=jDiv(n,33)*8+jDiv(jMod(n,33)+3,4);
+  if(jMod(jump,33)===4&&jump-n===4)leapJ++;
+  const gy=jy+621,leapG=jDiv(gy,4)-jDiv((jDiv(gy,100)+1)*3,4)-150;
+  if(jump-n<6)n=n-jump+jDiv(jump+4,33)*33;
+  let leap=jMod(jMod(n+1,33)-1,4);if(leap===-1)leap=4;
+  return{leap,gy,march:20+leapJ-leapG};
+}
+function g2d(gy,gm,gd){
+  let d=jDiv((gy+jDiv(gm-8,6)+100100)*1461,4)+jDiv(153*jMod(gm+9,12)+2,5)+gd-34840408;
+  return d-jDiv(jDiv(gy+100100+jDiv(gm-8,6),100)*3,4)+752;
+}
+function d2g(jdn){
+  let j=4*jdn+139361631;
+  j=j+jDiv(jDiv(4*jdn+183187720,146097)*3,4)*4-3908;
+  const i=jDiv(jMod(j,1461),4)*5+308;
+  const gd=jDiv(jMod(i,153),5)+1,gm=jMod(jDiv(i,153),12)+1;
+  return{gy:jDiv(j,1461)-100100+jDiv(8-gm,6),gm,gd};
+}
+function j2d(jy,jm,jd){const r=jalCal(jy);return g2d(r.gy,3,r.march)+(jm-1)*31-jDiv(jm,7)*(jm-7)+jd-1}
+const toJalaali=(gy,gm,gd)=>{
+  const jdn=g2d(gy,gm,gd),g=d2g(jdn);
+  let jy=g.gy-621;const r=jalCal(jy);let k=jdn-g2d(g.gy,3,r.march);
+  let jm,jd;
+  if(k>=0){if(k<=185){jm=1+jDiv(k,31);jd=jMod(k,31)+1;return{jy,jm,jd}}k-=186}
+  else{jy--;k+=179;if(r.leap===1)k++}
+  jm=7+jDiv(k,30);jd=jMod(k,30)+1;return{jy,jm,jd};
+};
+const toGregorian=(jy,jm,jd)=>d2g(j2d(jy,jm,jd));
+const jIsLeap=jy=>jalCal(jy).leap===0;
+const jMonthLen=(jy,jm)=>jm<=6?31:jm<=11?30:(jIsLeap(jy)?30:29);
+/* Calendar type pref: 'auto' follows UI language (fa → Jalali), or forced 'greg'/'jal' */
+const isJal=()=>{const ty=PREFS.cal&&PREFS.cal.type;return ty==='jal'||((!ty||ty==='auto')&&lang==='fa')};
+const jOf=d=>toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());
+const jMonthName=jm=>lang==='fa'?JMONTHS_FA[jm-1]:JMONTHS_EN[jm-1];
+const fmtNum=d=>nf(String(isJal()?jOf(d).jd:d.getDate()));
+const dayLbl=i=>`${t(WDN[i])} ${fmtNum(dayDate(i))}`;
+/* Locale for Intl date formatting. fa-IR defaults to the Persian calendar,
+   so an explicit Gregorian choice must force -u-ca-gregory. */
+const dLoc=()=>lang==='fa'?(isJal()?'fa-IR':'fa-IR-u-ca-gregory'):'en-US';
+function weekRange(){
+  const a=dayDate(0),b=dayDate(6);
+  if(isJal()){
+    const ja=jOf(a),jb=jOf(b),yr=lang==='fa'?' '+nf(jb.jy):', '+jb.jy;
+    if(ja.jm===jb.jm)return lang==='fa'
+      ?`${nf(ja.jd)} – ${nf(jb.jd)} ${jMonthName(jb.jm)}${yr}`
+      :`${jMonthName(ja.jm)} ${ja.jd} – ${jb.jd}${yr}`;
+    return lang==='fa'
+      ?`${nf(ja.jd)} ${jMonthName(ja.jm)} — ${nf(jb.jd)} ${jMonthName(jb.jm)}${yr}`
+      :`${jMonthName(ja.jm)} ${ja.jd} — ${jMonthName(jb.jm)} ${jb.jd}${yr}`;
+  }
+  const f=d=>d.toLocaleDateString(dLoc(),{month:'short',day:'numeric'});
+  return `${f(a)} — ${f(b)}${lang==='fa'?'':', '+b.getFullYear()}`;
+}
+/* Full date line, e.g. «چهارشنبه، ۱۷ تیر ۱۴۰۵» / "Wednesday, Tir 17, 1405" */
+function fmtFullDate(d){
+  if(isJal()){
+    const j=jOf(d),wd=d.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{weekday:'long'});
+    return lang==='fa'?`${wd}، ${nf(j.jd)} ${jMonthName(j.jm)} ${nf(j.jy)}`:`${wd}, ${jMonthName(j.jm)} ${j.jd}, ${j.jy}`;
+  }
+  return d.toLocaleDateString(dLoc(),{weekday:'long',month:'long',day:'numeric'});
+}
+/* Short date for tables/charts, e.g. «۱۷ تیر ۱۴۰۵» / "Tir 17, 1405" */
+function fmtShortDate(d){
+  if(isJal()){const j=jOf(d);return lang==='fa'?`${nf(j.jd)} ${jMonthName(j.jm)} ${nf(j.jy)}`:`${jMonthName(j.jm)} ${j.jd}, ${j.jy}`}
+  return d.toLocaleDateString(dLoc());
+}
+/* Real month grid (35 or 42 cells) for the month containing the displayed week */
+function monthCells(base0){
+  const base=base0||dayDate(0);let first,len,pm;
+  if(isJal()){
+    const j=jOf(base);len=jMonthLen(j.jy,j.jm);
+    const g=toGregorian(j.jy,j.jm,1);first=new Date(g.gy,g.gm-1,g.gd);
+    const p=j.jm===1?{y:j.jy-1,m:12}:{y:j.jy,m:j.jm-1};pm=jMonthLen(p.y,p.m);
+  }else{
+    const y=base.getFullYear(),m=base.getMonth();
+    first=new Date(y,m,1);len=new Date(y,m+1,0).getDate();pm=new Date(y,m,0).getDate();
+  }
+  const lead=(first.getDay()+6)%7,cells=[];
+  const add=(n,cur,off)=>{const d2=new Date(first);d2.setDate(first.getDate()+off);cells.push({n,cur,date:d2})};
+  for(let i=0;i<lead;i++)add(pm-lead+1+i,false,i-lead);
+  for(let d=1;d<=len;d++)add(d,true,d-1);
+  const trail=Math.ceil((lead+len)/7)*7-(lead+len);
+  for(let d=1;d<=trail;d++)add(d,false,len+d-1);
+  return cells;
+}
+/* v18.66 — base date for the client calendar's month navigation: day 1 of
+   (current month + off), computed in the ACTIVE calendar (Jalali or
+   Gregorian) so the grid and its label always describe the same month. */
+function calMonthBase(off){
+  if(isJal()){const j=jOf(TDATE);let m=j.jm+off,y=j.jy;
+    while(m>12){m-=12;y++}while(m<1){m+=12;y--}
+    const g=toGregorian(y,m,1);return new Date(g.gy,g.gm-1,g.gd)}
+  return new Date(TDATE.getFullYear(),TDATE.getMonth()+off,1);
+}
+function layoutDay(evs){
+  const list=[...evs].sort((a,b)=>a.start-b.start);
+  const out=[];let cluster=[],cEnd=-1;
+  const flush=()=>{if(!cluster.length)return;const ends=[];
+    cluster.forEach(ev=>{let lane=ends.findIndex(e=>ev.start>=e-1e-9);if(lane===-1){lane=ends.length;ends.push(0)}ends[lane]=ev.start+ev.dur;out.push({ev,lane,total:ends.length})});
+    cluster=[];cEnd=-1};
+  list.forEach(ev=>{if(cluster.length&&ev.start>=cEnd-1e-9)flush();cluster.push(ev);cEnd=Math.max(cEnd,ev.start+ev.dur)});
+  flush();return out;
+}
+function evState(ev){
+  const end=ev.start+ev.dur;
+  if(end<=NOW)return{k:'past',b:'bdg-gray',l:'Completed'};
+  if(ev.start<=NOW)return{k:'now',b:'bdg-lime',l:'Now'};
+  return{k:'future',b:'bdg-blue',l:'Scheduled'};
+}
+const sparkBars=(arr,c='var(--accent-deep)')=>{const mx=Math.max(...arr,1);
+/* v18.11 — Strava-style gradient bars + native per-bar tooltips (day: value) */
+const gid='sg'+Math.random().toString(36).slice(2,7);
+return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"><title>${t(DAYS[i]||'')} · ${nf(v)}</title></rect>`}).join('')}</svg>`};
+const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
+const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
+const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
+const fmtD=dstr=>fmtShortDate(pd(dstr));
+const daysSince=dstr=>Math.round((TDATE-pd(dstr))/864e5);
+const lastM=cid=>{const ms=(DB[cid]||{}).measures||[];return ms[ms.length-1]||null};
+const prevM=cid=>{const ms=(DB[cid]||{}).measures||[];return ms[ms.length-2]||null};
+const mDelta=(cid,k)=>{const a=lastM(cid),b=prevM(cid);if(!a||!b||a[k]==null||b[k]==null)return null;return +(a[k]-b[k]).toFixed(1)};
+const wtBadge=cid=>{const d=mDelta(cid,'w');if(d==null)return '';
+  const dd=PREFS.units==='Imperial'?+(d*KGI).toFixed(1):d;const good=dd<0;
+  return `<span class="bdg ${good?'bdg-green':'bdg-red'}">${dd>0?'▲':'▼'} ${nf(Math.abs(dd))}${PREFS.units==='Imperial'?' lb':' kg'}</span>`};
+function wChart(cid,h,range){
+  let ms=((DB[cid]||{}).measures||[]).filter(m=>m&&m.w!=null);
+  if(range){const lim={'7D':7,'30D':30,'3M':90,'6M':180,'1Y':365}[range];
+    if(lim){const f=ms.filter(m=>daysSince(m.d)<=lim);if(f.length>=2)ms=f}}
+  if(ms.length<2)return `<div style="min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
+  const conv=v=>PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v;
+  const labs=[fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)];
+  return lineChart(ms.map(m=>conv(m.w)),{h,labels:labs});
+}
+function attentionList(){
+  const items=[];
+  const ACT=CLIENTS.filter(c=>c.status!=='Archived');
+  threads().filter(x=>x.prio).forEach(x=>items.push({name:x.name,why:'Form check',d:t('Waiting on your reply'),icon:'camera',bt:'bdg-lime',act:'msg'}));
+  threads().filter(x=>x.needs&&!x.prio).forEach(x=>{const pv=t(x.last.body);items.push({name:x.name,why:'Waiting on your reply',d:pv.length>60?pv.slice(0,60)+'…':pv,icon:'mail',bt:'bdg-blue',act:'msg'})});
+  ACT.forEach(c=>{ /* v18.62 — "awaiting" = today's planned workout is still pending */
+    const w=todaysPlan(c.id).w;
+    if(w&&!wDone(w))items.push({name:c.name,why:'Workout awaiting client',d:`${esc(w.name)} · ${t(w.day)}`,icon:'dumbbell',bt:'bdg-lime',act:'client',cid:c.id})});
+  ACT.filter(c=>c.week>=11&&c.status==='Active').forEach(c=>items.push({name:c.name,why:'Program ending soon',d:`${t(c.prog)} — ${t('Week')} ${nf(c.week)} ${t('of')} 12`,icon:'chart',bt:'bdg-amber',act:'client',cid:c.id}));
+  ACT.filter(c=>attCnt(c.name).m>=1).forEach(c=>{const m=attCnt(c.name).m;
+    items.push({name:c.name,why:'Missed session',d:`${nf(m)} ${t('Missed session')} · ${t('Last Workout')}: ${t(c.last)}`,icon:'x',bt:'bdg-red',act:'client',cid:c.id})});
+  ACT.filter(c=>{if(c.status!=='Active')return false;const l=lastM(c.id);return !l||daysSince(l.d)>=28}).forEach(c=>{const l=lastM(c.id);
+    items.push({name:c.name,why:'Measurement due',d:l?`${nf(daysSince(l.d))} ${t('days ago')} · ${t('Last Workout')}: ${t(c.last)}`:t('No measurements yet'),icon:'ruler',bt:'bdg-amber',act:'client',cid:c.id,tab:'measurements'})});
+  ACT.filter(c=>c.status==='On Hold').forEach(c=>items.push({name:c.name,why:'On Hold',d:t('Check-in with a note'),icon:'clock',bt:'bdg-amber',act:'client',cid:c.id}));
+  ACT.filter(c=>c.status==='Inactive').forEach(c=>items.push({name:c.name,why:'Inactive',d:t('Re-engage with a message'),icon:'mail',bt:'bdg-gray',act:'msg'}));
+  ACT.filter(c=>c.status==='Active'&&!nPlanOf(c.name)).forEach(c=>items.push({name:c.name,why:'No nutrition plan',d:t('Create Nutrition Plan'),icon:'utensils',bt:'bdg-blue',act:'client',cid:c.id,tab:'nutrition'}));
+  /* v17.5 — onboarding & package nudges (Trainerize/CoachAccountable parity) */
+  ACT.filter(c=>c.status==='Active'&&!c.intake).forEach(c=>items.push({name:c.name,why:'Intake form missing',d:t('Review the health questionnaire before the first session'),icon:'note',bt:'bdg-blue',act:'client',cid:c.id}));
+  PACKS.filter(p=>{const cc=ACT.find(x=>x.name===p.client);return cc&&cc.status==='Active'&&(p.total-p.used)<=1}).forEach(p=>{const cc=ACT.find(x=>x.name===p.client);items.push({name:p.client,why:'Sessions almost used',d:`${nf(Math.max(0,p.total-p.used))} ${t('of')} ${nf(p.total)} ${t('remaining — offer a new pack')}`,icon:'calendar',bt:'bdg-amber',act:'client',cid:cc.id})});
+  return items;
+}
+const NOTIFS=[{t:'Measurement due — Maryam Sadeghi',d:'2 h ago',un:true},{t:'Reza Moradi missed his session',d:'5 h ago',un:true},{t:'Weekly report is ready',d:'Yesterday',un:false}];
+const HUES=['#64748B','#0E9488','#7C5CFC','#D9508C','#E08A1E','#2E9E5B','#3B82F6','#D9543F'];
+const EVLBL={session:'Session',assess:'Assessment',meas:'Measurement',appt:'Appointment'};
+let MSGS=[
+{id:1,client:'Maryam Sadeghi',from:'client',type:'text',body:'Knee feels better this week — can we try box split squats?',time:'4 days ago',read:true},
+{id:2,client:'Maryam Sadeghi',from:'coach',type:'text',body:'Yes — replace lunges with box split squats at 3×10, keep them pain-free.',time:'3 days ago',read:true},
+{id:3,client:'Sara Ahmadi',from:'coach',type:'text',body:'Protein target updated to ~120 g — see the plan.',time:'2 days ago',read:true},
+{id:4,client:'Ali Rezaei',from:'coach',type:'text',body:'Great session today — bench pause work is paying off. Keep RPE 8.',time:'Yesterday',read:true},
+{id:5,client:'Reza Moradi',from:'client',type:'checkin',body:'Check-in · Energy: Low · Soreness: Some · Sleep: Poor',time:'Yesterday',read:true},
+{id:6,client:'Ali Rezaei',from:'client',type:'text',body:'Can I swap Thursday Pull A to Friday? I have a work trip.',time:'2 h ago',read:false},
+{id:7,client:'Sara Ahmadi',from:'client',type:'form',body:'Is my back neutral enough on the last reps?',ctx:'Hip Thrust · Set 2',time:'25 min ago',read:false,dur:'0:14'}];
+/* v17.5 — competitor parity (Trainerize/Everfit/Practice Better): session
+   packages (auto-deducted when a session is marked attended) and reusable
+   message templates. Progress photos live in DB[cid].photos and the intake
+   form on the client record (c.intake) — both ride the existing payload. */
+let PACKS=[
+{id:1,client:'Ali Rezaei',name:'12-Session Pack',total:12,used:5,createdAt:Date.now()-30*86400000},
+{id:2,client:'Sara Ahmadi',name:'8-Session Pack',total:8,used:7,createdAt:Date.now()-20*86400000}];
+let MSGTPL=[
+{n:'Welcome message',body:'Welcome aboard! Your first program is ready — open Workouts to see it. Reply here any time.'},
+{n:'Session reminder',body:'Quick reminder: we train tomorrow at the usual time. Come rested and hydrated.'},
+{n:'Measurement due',body:'Time for your weekly check-in — please log your weight and measurements when you can.'}];
+/* v18.17 — CAMERA FORM CHECK reports (MediaPipe Pose, on-device). One entry per
+   completed set: reps counted, form score, range of motion, rule flags and up
+   to 3 keyframe snapshots. Rides the workspace payload like PACKS. */
+let FORMS=[
+{id:1,client:'Ali Rezaei',pattern:'squat',ex:'Squat',reps:8,score:85,rom:96,flags:['Shallow depth'],kf:[],d:'2026-09-18'}];
+/* v18.39 — CHALLENGES: the coach designs a challenge (target / streak / habit)
+   with a GRAPHICAL journey path (serpentine stages). Progress is computed from
+   real workspace data or logged manually; completion auto-awards the reward
+   badge + points. Rides the workspace payload like PACKS/FORMS. */
+let CHALLENGES=[
+{id:'ch1',name:'September Streak',emoji:'🔥',desc:'Keep your day streak alive all month — every day counts.',type:'streak',metric:'streak',target:14,unit:'days',start:__iso(-6),days:30,parts:['*'],reward:{pts:150,be:'🏅',bn:'Streak Master'},stages:[{e:'🌱',n:'Start'},{e:'🔥',n:'3 days'},{e:'💪',n:'7 days'},{e:'⚡',n:'10 days'},{e:'🏆',n:'14 days'}],prog:{},done:[],status:'active',createdAt:Date.now()},
+{id:'ch2',name:'Autumn Shred',emoji:'🏃',desc:'12 workouts in 4 weeks — consistency beats intensity.',type:'target',metric:'workouts',target:12,unit:'workouts',start:__iso(-10),days:28,parts:['Ali Rezaei','Sara Ahmadi','Mohammad Karimi'],reward:{pts:200,be:'🏆',bn:'Shred Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'4 done'},{e:'🔥',n:'8 done'},{e:'🏆',n:'12 done'}],prog:{},done:[],status:'active',createdAt:Date.now()}];
+/* v18.48 — NUTRITION ASSISTANT data layer. Four new payload arrays that ride
+   the workspace exactly like MSGS/PACKS/FORMS:
+   NLOGS  — what was actually EATEN: {id,client,d:'YYYY-MM-DD',meal,items:[{n,g,kcal,p,c,f}],kcal,p,c,f,water?,type?,src,at}
+            (type:'water' entries carry ml instead of items — one array, one merge path)
+   NCHAT  — the student ↔ Nutrition-Assistant conversation {id,client,role:'student'|'assistant',body,d,at,src?,card?}
+            card = a structured ACTION attached to an assistant message (log confirmation) so
+            every chat can end in data, not just words.
+   NINS   — Insight Engine output {id,client,kind:'observation'|'pattern'|'concern'|'suggestion',title,detail,sev,d,at}
+   NRULES — coach-configurable monitoring rules {id,metric,op,thr,days,sev,on}
+   The nutrition PROFILE lives on the client record (c.nprof) so it follows the
+   client through the existing CLIENTS id-merge. */
+let NLOGS=[];
+let NCHAT=[];
+let NINS=[];
+const NRULE_SEED=[
+ {id:'nr-protein',metric:'protein',op:'below',thr:85,days:3,sev:'warn',on:true},
+ {id:'nr-logging',metric:'logging',op:'missing',thr:0,days:3,sev:'alert',on:true},
+ {id:'nr-kcal',metric:'kcal',op:'below',thr:80,days:5,sev:'warn',on:true},
+ {id:'nr-water',metric:'water',op:'below',thr:60,days:5,sev:'info',on:true},
+ {id:'nr-weight',metric:'weight',op:'away',thr:0,days:14,sev:'alert',on:true}];
+let NRULES=NRULE_SEED.map(r=>({...r}));
+const defaultNrules=()=>NRULE_SEED.map(r=>({...r}));
+function threads(){
+  const map={};
+  MSGS.forEach(m=>{(map[m.client]=map[m.client]||[]).push(m)});
+  return Object.entries(map).map(([name,ms])=>{
+    const last=ms[ms.length-1];
+    const lastCoachIdx=ms.reduce((a,m,i)=>m.from==='coach'?i:a,-1);
+    const prio=ms.some((m,i)=>m.from==='client'&&m.type==='form'&&i>lastCoachIdx);
+    return {name,ms,last,lastIdx:MSGS.indexOf(last),unread:ms.filter(m=>m.from==='client'&&!m.read).length,needs:last.from==='client',prio};
+  }).sort((a,b)=>b.lastIdx-a.lastIdx);
+}
+
+/* ============ NUTRITION DATA ============ */
+/* v18.9.1 — the starter library lives in *_SEED so freshWorkspace() can seed
+   NEW accounts with it. freshWorkspace used to leave FOODS empty, so "Create
+   Nutrition Plan" built meals referencing FOODS[fi] entries that did not
+   exist — the planner crashed and the food picker was blank. */
+const FOOD_SEED=[
+{n:'Chicken Breast',cat:'Chicken',kcal:165,p:31,c:0,f:3.6,alt:['Turkey Breast','White Fish','Lean Beef','Egg Whites']},
+{n:'Turkey Breast',cat:'Meat',kcal:135,p:30,c:0,f:1,alt:['Chicken Breast']},
+{n:'White Fish',cat:'Fish',kcal:110,p:24,c:0,f:1.5,alt:['Chicken Breast','Salmon']},
+{n:'Lean Beef',cat:'Meat',kcal:180,p:26,c:0,f:8,alt:['Turkey Breast']},
+{n:'Egg Whites',cat:'Eggs',kcal:52,p:11,c:0.7,f:0.2,alt:['Whole Eggs']},
+{n:'Whole Eggs',cat:'Eggs',kcal:140,p:12,c:1,f:9.5,alt:['Egg Whites']},
+{n:'Greek Yogurt',cat:'Dairy',kcal:70,p:10,c:4,f:0.4,alt:['Cottage Cheese']},
+{n:'Cottage Cheese',cat:'Dairy',kcal:98,p:11,c:3.4,f:4.3,alt:['Greek Yogurt']},
+{n:'Whole Wheat Bread',cat:'Bread',kcal:250,p:10,c:45,f:3,alt:[]},
+{n:'Oats',cat:'Rice & Grains',kcal:380,p:13,c:67,f:7,alt:[]},
+{n:'White Rice (cooked)',cat:'Rice & Grains',kcal:130,p:2.7,c:28,f:0.3,alt:['Sweet Potato']},
+{n:'Banana',cat:'Fruit',kcal:89,p:1.1,c:23,f:0.3,alt:['Apple']},
+{n:'Apple',cat:'Fruit',kcal:52,p:0.3,c:14,f:0.2,alt:['Banana']},
+{n:'Broccoli',cat:'Vegetables',kcal:34,p:2.8,c:7,f:0.4,alt:[]},
+{n:'Sweet Potato',cat:'Vegetables',kcal:86,p:1.6,c:20,f:0.1,alt:['White Rice (cooked)']},
+{n:'Almonds',cat:'Nuts',kcal:579,p:21,c:22,f:50,alt:['Cottage Cheese']},
+{n:'Olive Oil',cat:'Oils',kcal:884,p:0,c:0,f:100,alt:[]},
+{n:'Whey Protein',cat:'Supplements',kcal:375,p:80,c:8,f:5,alt:[]},
+{n:'Orange Juice',cat:'Drinks',kcal:45,p:0.7,c:10,f:0.2,alt:[]},
+{n:'Salmon',cat:'Fish',kcal:208,p:20,c:0,f:13,alt:['White Fish','Chicken Breast']}];
+const FOODS=FOOD_SEED.map(f=>({...f,alt:[...(f.alt||[])]}));
+const defaultFoods=()=>FOOD_SEED.map(f=>({...f,alt:[...(f.alt||[])]}));
+/* v17.9 — Persian food names. Food records are stored with ENGLISH names
+   (they are data keys: alternatives reference them by name, and custom foods
+   created on any device must merge), so display goes through foodName()
+   instead of t(). Custom foods added by the coach have no entry here and
+   simply show as typed. */
+const FA_FOOD={
+'Chicken Breast':'سینه مرغ','Turkey Breast':'سینه بوقلمون','White Fish':'ماهی سفید','Lean Beef':'گوشت گاو کم‌چرب',
+'Egg Whites':'سفیده تخم‌مرغ','Whole Eggs':'تخم‌مرغ کامل','Greek Yogurt':'ماست یونانی','Cottage Cheese':'پنیر کوتاژ',
+'Whole Wheat Bread':'نان گندم کامل','Oats':'جو دوسر','White Rice (cooked)':'برنج سفید (پخته)','Banana':'موز',
+'Apple':'سیب','Broccoli':'بروکلی','Sweet Potato':'سیب‌زمینی شیرین','Almonds':'بادام',
+'Olive Oil':'روغن زیتون','Whey Protein':'پروتئین وی','Orange Juice':'آب پرتقال','Salmon':'ماهی سالمون'};
+const foodName=n=>lang==='fa'?(FA_FOOD[n]||n):n;
+/* v17.11 — coach onboarding wizard. Four questions whose answers SHAPE the
+   workspace: sport filters the template library, coaching style reorders the
+   dashboard quick actions, client scale highlights the suggested plan, and
+   the main focus becomes the home screen after login. ONB_SPORTS is a plain
+   list — new disciplines only need an entry here (plus optional template
+   tags) and the wizard/library pick them up automatically. ONBOARD rides the
+   workspace payload so the answers follow the coach across devices. */
+let ONBOARD={done:false};
+const ONB_SPORTS=['Bodybuilding & Fitness','Powerlifting','Running & Endurance','Team Sports','General Fitness'];
+const ONB_CONTEXT=['Online coaching','In-person / gym','Hybrid'];
+const ONB_SCALE=[['starting','Just starting','Less than 5 clients','basic'],['growing','Growing','5 – 30 clients','professional'],['established','Established','More than 30 clients','club']];
+const ONB_FOCUS=[['programs','Program design','builder'],['nutrition','Nutrition planning','nutrition'],['progress','Progress tracking','progress'],['clients','Client management','clients']];
+const landingView=()=>({programs:'builder',nutrition:'nutrition',progress:'progress',clients:'clients'}[ONBOARD.focus]||'dash');
+const suggestedPlan=()=>({starting:'basic',growing:'professional',established:'club'}[ONBOARD.scale]||null);
+const NCATS=['Meat','Chicken','Fish','Eggs','Dairy','Rice & Grains','Bread','Fruit','Vegetables','Nuts','Oils','Drinks','Supplements','Other'];
+const D01=[1,1,0,1,1,1,0];
+const TRAIN_T=[
+{time:'07:30',name:'Breakfast',note:'',foods:[{fi:5,g:100,q:'2 whole eggs'},{fi:8,g:120},{fi:6,g:200}]},
+{time:'10:30',name:'Snack',note:'',foods:[{fi:12,g:150},{fi:15,g:30}]},
+{time:'13:30',name:'Lunch',note:'',foods:[{fi:0,g:150},{fi:10,g:350},{fi:16,g:12},{fi:13,g:150}]},
+{time:'17:00',name:'Pre-Workout',note:'',foods:[{fi:11,g:150},{fi:17,g:25}]},
+{time:'20:30',name:'Dinner',note:'',foods:[{fi:19,g:150},{fi:14,g:300},{fi:13,g:150}]},
+{time:'23:00',name:'Before Bed',note:'',foods:[{fi:6,g:200},{fi:15,g:30}]}];
+const REST_T=[
+{time:'07:30',name:'Breakfast',note:'',foods:[{fi:5,g:100,q:'2 whole eggs'},{fi:8,g:120},{fi:6,g:200}]},
+{time:'10:30',name:'Snack',note:'',foods:[{fi:12,g:150},{fi:15,g:30}]},
+{time:'13:30',name:'Lunch',note:'',foods:[{fi:0,g:150},{fi:10,g:250},{fi:16,g:12},{fi:13,g:150}]},
+{time:'20:30',name:'Dinner',note:'',foods:[{fi:19,g:150},{fi:14,g:250},{fi:13,g:150}]},
+{time:'23:00',name:'Before Bed',note:'',foods:[{fi:6,g:200},{fi:15,g:30}]}];
+const scM=(ms,f)=>ms.map(m=>({...m,foods:m.foods.map(x=>({...x,g:Math.max(5,Math.round(x.g*f))}))}));
+const mkDays=(t,r)=>D01.map((tr,i)=>({type:tr?'train':'rest',meals:JSON.parse(JSON.stringify(tr?t:r))}));
+const mkPh=(f,start)=>[
+{n:'Phase 1',weeks:'Weeks 1–4',kcal:Math.round(2800*f),p:Math.round(180*f),c:Math.round(300*f),fl:Math.round(85*f),start:start||fmtShortDate(new Date()),status:'Current'},
+{n:'Phase 2',weeks:'Weeks 5–8',kcal:Math.round(3000*f),p:Math.round(185*f),c:Math.round(330*f),fl:Math.round(85*f),start:'—',status:'Upcoming'},
+{n:'Phase 3',weeks:'Weeks 9–12',kcal:Math.round(3200*f),p:Math.round(190*f),c:Math.round(360*f),fl:Math.round(88*f),start:'—',status:'Upcoming'}];
+let NPLANS=[
+{id:1,client:'Ali Rezaei',name:'Hypertrophy Phase 1',goal:'Muscle Gain',phase:'Phase 1',week:'Week 3',updated:'Sep 8',status:'Active',train:{kcal:2850,p:180,c:320,f:85},rest:{kcal:2550,p:180,c:260,f:85},days:mkDays(TRAIN_T,REST_T),phases:mkPh(1,'Jun 15')},
+{id:2,client:'Sara Ahmadi',name:'Cutting Phase 2',goal:'Fat Loss',phase:'Phase 2',week:'Week 5',updated:'Sep 7',status:'Active',train:{kcal:2200,p:170,c:220,f:65},rest:{kcal:2000,p:170,c:180,f:65},days:mkDays(scM(TRAIN_T,.79),scM(REST_T,.79)),phases:mkPh(.77,'Jun 1')},
+{id:3,client:'Mohammad Karimi',name:'Strength Fuel',goal:'Strength',phase:'—',week:'Week 2',updated:'Sep 6',status:'Active',train:{kcal:3100,p:200,c:350,f:90},rest:{kcal:2800,p:200,c:280,f:90},days:mkDays(scM(TRAIN_T,1.12),scM(REST_T,1.12)),phases:mkPh(1.09,'Jun 20')},
+{id:4,client:'Neda Hosseini',name:'Lean Bulk Start',goal:'Muscle Gain',phase:'Phase 1',week:'Week 1',updated:'Sep 5',status:'Active',train:{kcal:2400,p:150,c:280,f:70},rest:{kcal:2200,p:150,c:230,f:70},days:mkDays(scM(TRAIN_T,.87),scM(REST_T,.87)),phases:mkPh(.84,'Jul 1')},
+{id:5,client:'Hamed Naderi',name:'Mass Phase 2',goal:'Muscle Gain',phase:'Phase 2',week:'Week 4',updated:'Sep 4',status:'Active',train:{kcal:3200,p:190,c:360,f:88},rest:{kcal:2900,p:190,c:300,f:88},days:mkDays(scM(TRAIN_T,1.15),scM(REST_T,1.15)),phases:mkPh(1.12,'May 25')},
+{id:6,client:'Maryam Sadeghi',name:'Recovery Plan',goal:'Mobility',phase:'—',week:'Week 2',updated:'Sep 3',status:'Paused',train:{kcal:2100,p:130,c:240,f:65},rest:{kcal:1950,p:130,c:210,f:65},days:mkDays(scM(TRAIN_T,.76),scM(REST_T,.76)),phases:mkPh(.74,'Jun 10')}];
+const MTPL_SEED=[
+{n:'High Protein Breakfast',cat:'Breakfast',foods:[{fi:5,g:100},{fi:8,g:120},{fi:6,g:200}]},
+{n:'Chicken & Rice Lunch',cat:'Lunch',foods:[{fi:0,g:180},{fi:10,g:300},{fi:13,g:150}]},
+{n:'Weight Gain Breakfast',cat:'Breakfast',foods:[{fi:9,g:100},{fi:11,g:150},{fi:17,g:40},{fi:15,g:25}]},
+{n:'Fat Loss Dinner',cat:'Dinner',foods:[{fi:2,g:200},{fi:13,g:200},{fi:16,g:8}]},
+{n:'Pre-Workout Fuel',cat:'Pre-Workout',foods:[{fi:11,g:120},{fi:17,g:25}]},
+{n:'Cottage Cheese Night Snack',cat:'Snack',foods:[{fi:7,g:200},{fi:15,g:15}]}];
+let MTPL=MTPL_SEED.map(x=>({...x,foods:x.foods.map(y=>({...y}))}));
+const defaultMtpl=()=>MTPL_SEED.map(x=>({...x,foods:x.foods.map(y=>({...y}))}));
+const PTPL_SEED=[
+{n:'Hypertrophy — 3000 kcal',meals:4,kcal:3000,p:180,c:350,f:80},
+{n:'Fat Loss — 2200 kcal',meals:5,kcal:2200,p:170,c:220,f:65},
+{n:'Maintenance — 2500 kcal',meals:4,kcal:2500,p:160,c:280,f:75}];
+let PTPL=PTPL_SEED.map(x=>({...x}));
+const defaultPtpl=()=>PTPL_SEED.map(x=>({...x}));
+let NHIST=[
+{d:'Sep 8',i:'edit',t:'Nutrition Plan Updated',d2:'2850 → 3000 kcal'},
+{d:'Sep 5',i:'ruler',t:'Weight Updated',d2:'76.4 → 76.9 kg'},
+{d:'Sep 1',i:'plus',t:'New Nutrition Plan',d2:'Hypertrophy Phase 1'},
+{d:'Aug 28',i:'note',t:'Coach Note Added',d2:'"Increase carbohydrate intake."'}];
+
+/* ============ SHARED DB (coach ↔ client sync) ============ */
+/* v18.9 — CUSTOM EXERCISES ride the workspace. EXERCISES is the static bank
+   (templates/AI reference entries by INDEX, so it must never be reordered);
+   customs are APPENDED after it, sorted by id (uid() is time-based → the same
+   order on every device), keeping every index deterministic. */
+let CEXS=[];
+let CEXBASE=0;
+function syncCustomEx(){
+  if(!CEXBASE)CEXBASE=EXERCISES.length;
+  EXERCISES.length=CEXBASE;
+  CEXS.slice().sort((a,b)=>(a.id<b.id?-1:a.id>b.id?1:0)).forEach(x=>EXERCISES.push(x));
+}
+const DB={};
+CLIENTS.forEach(c=>{
+  DB[c.id]={workouts:[],sessions:[],stats:{done:c.done,missed:c.missed},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id),split:splitFromWorkouts({workouts:[]})};
+  EVENTS.forEach(e=>{if(e.client===c.name)DB[c.id].sessions.push({start:e.start,dur:e.dur,label:e.label,type:e.type,day:e.day,att:e.att})});
+});
+DB[1].workouts=[
+ {id:'w-seed2',name:'Pull A',day:'Thursday',dur:'55 min',exercises:BUILDER.slice(3,6).map(b=>({...b})),status:'completed',week:6,
+  // v18.62 — completion stamped INSIDE the current week so wDone() treats it
+  // as "finished this week" (and next Thursday it re-opens as a fresh session)
+  doneAt:new Date(Math.min(+__MON+4*864e5,Date.now())).toISOString()},
+ {id:'w-seed1',name:'Push A',day:'Monday',dur:'60 min',exercises:BUILDER.map(b=>({...b})),status:'assigned',week:6}];
+/* v18.62 — demo week split: Mon = Push A, Thu = Pull A, Sat = Leg day,
+   Tue/Wed/Fri rest, Sun unset — exactly the "تفکیک روزها" flow a coach uses. */
+DB[1].split=[{t:'w',w:'w-seed1'},{t:'rest'},{t:'rest'},{t:'w',w:'w-seed2'},{t:'rest'},{t:'w',w:'w-seed3'},{t:'rest'}];
+DB[1].workouts.push({id:'w-seed3',name:'Leg A',day:'Saturday',dur:'65 min',status:'assigned',week:6,
+  exercises:[{ex:15,sets:5,reps:5,kg:100,rest:180,rpe:'RPE 8',rir:'RIR 2',tempo:'3-1-1-0',note:'Full depth, drive through midfoot'},
+             {ex:16,sets:3,reps:10,kg:140,rest:120,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''},
+             {ex:18,sets:3,reps:8,kg:90,rest:120,rpe:'RPE 9',rir:'RIR 1',tempo:'2-0-1-0',note:'Squeeze at lockout'},
+             {ex:19,sets:3,reps:12,kg:40,rest:60,rpe:'RPE 9',rir:'RIR 1',tempo:'1-0-2-0',note:''}]});
+function syncClientSessions(name){
+  const cc=CLIENTS.find(c=>c.name===name);if(!cc)return;
+  DB[cc.id].sessions=EVENTS.filter(x=>x.client===name).map(x=>({start:x.start,dur:x.dur,label:x.label,type:x.type,day:x.day,att:x.att}));
+}
+
+/* ============ PERSISTENCE (auto-save on this device) ============ */
+const STORE_KEY='co-os-data';
+/* Put your email here to show a Feedback button for beta coaches, e.g. 'you@gmail.com' — leave '' to hide */
+const FEEDBACK_MAIL='';
+/* Unique local ids: Date.now() can repeat inside one millisecond AND two devices
+   can create the same value, so every locally created record carries a counter. */
+let __uid=0;
+const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
+/* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
+let __lastPack='';
+/* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
+   coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
+   held A's clients, and the first sync "seeded" B's empty workspace with them
+   — so A's clients appeared under B too. Every saved payload now carries the
+   coach id it belongs to; on login/signup as a DIFFERENT coach the local
+   workspace is wiped (and the previous account's parked codes dropped) before
+   any sync can run. Same coach returning to the device keeps offline edits. */
+let DATA_OWNER=null;
+function adoptAccount(acct){
+  const id=(acct&&acct.id)||'';
+  if(!id)return;
+  if(!DATA_OWNER||DATA_OWNER!==id){
+    // No owner stamp (fresh device / demo seed) or a DIFFERENT coach was last:
+    // the local bytes must never reach the new coach's workspace.
+    freshWorkspace();
+    try{localStorage.removeItem('co-legacy-ws')}catch(e){}
+    if(DATA_OWNER&&DATA_OWNER!==id){try{localStorage.removeItem('co-ws')}catch(e){}}
+  }
+  DATA_OWNER=id;
+  /* v18.57 — seed the display name from the ACCOUNT the moment it is adopted
+     (signup / login / reload): saveData() below then writes the CORRECT
+     ownerName into the local payload, and the next push repairs the shared
+     one (heals workspaces poisoned by the old fallback). */
+  if(acct&&acct.name)WS_OWNER=acct.name;
+  saveData();
+}
+function saveData(){
+  let payload='';
+  try{
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    localStorage.setItem(STORE_KEY,payload);
+  }catch(e){}
+  // render() runs on EVERY interaction, so without this comparison even a pure
+  // view switch marked the workspace dirty and scheduled a full-payload PUT.
+  // Only actual data changes should reach the network.
+  if(payload&&payload!==__lastPack){
+    __lastPack=payload;
+    if(CLOUD.on)cloudSchedule();
+  }
+}
+function loadData(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(!raw)return false;
+    const d=JSON.parse(raw);
+    if(!d||d.v!==13){
+      // Don't silently throw away a payload we can't read. Park it under a
+      // backup key so it can be recovered/migrated instead of vanishing.
+      try{if(!localStorage.getItem(STORE_KEY+'-backup'))localStorage.setItem(STORE_KEY+'-backup',raw)}catch(e){}
+      return false;
+    }
+    DATA_OWNER=d.owner||null; // whose tenant these local bytes belong to
+    WS_OWNER=d.ownerName||''; // coach display name (shown on client devices)
+    const repl=(arr,val)=>{arr.length=0;(val||[]).forEach(x=>arr.push(x))};
+    repl(CLIENTS,d.CLIENTS);repl(EVENTS,d.EVENTS);repl(NOTES,d.NOTES);repl(MSGS,d.MSGS);
+    repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
+    repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
+    repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
+    if(Array.isArray(d.NRULES)&&d.NRULES.length){NRULES.length=0;d.NRULES.forEach(r=>NRULES.push(r))}
+    repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
+    // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
+    // (freshWorkspace used to leave it empty). There is no food-delete UI, so
+    // an empty library is always a broken state, never intentional: backfill.
+    if(!FOODS.length)defaultFoods().forEach(f=>FOODS.push(f));
+    if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
+    if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
+    if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
+    /* v18.35 — design template rides the workspace payload: switching it on any
+       device applies it everywhere after the next sync. */
+    if(d.UI&&typeof d.UI==='object'&&typeof d.UI.tpl==='string')PREFS.uiTpl=d.UI.tpl==='coachmint'?'coachmint':'default';
+    Object.keys(d.DB||{}).forEach(k=>{DB[k]=d.DB[k]});
+    Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
+    /* NOTE: this used to run `if(!EVENTS.some(e=>e.att)) EVENTS.forEach(e=>e.day<TODAY&&(e.att='done'))`
+       — i.e. EVERY past session was silently marked "Attended" the first time a
+       workspace had no recorded attendance. That fabricated history fed the
+       attendance-rate KPI, the "Missed session" list and what clients see, and
+       was unrecoverable once pushed. Attendance must only be set explicitly. */
+    if(TEMPLATES.some(tp=>!tp.exs&&!tp.parts)){
+      const seeds=defaultTemplates();
+      TEMPLATES.forEach((tp,i)=>{if(!tp.exs&&!tp.parts){const sd=seeds.find(s=>s.n===tp.n);if(sd)TEMPLATES[i]=JSON.parse(JSON.stringify(sd))}});
+    }
+    CLIENTS.forEach(c=>{if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:c.done||0,missed:c.missed||0},nutrition:null,measures:mseeds(c.id),log:lseeds(c.id)}});
+    Object.keys(DB).forEach(k=>{if(!DB[k].measures){DB[k].measures=mseeds(k)}
+      // v18.61 — workspaces saved before the session log existed: backfill
+      // (demo personas get their seeded history, real clients start empty).
+      if(!Array.isArray(DB[k].log))DB[k].log=lseeds(+k);
+      DB[k].log.sort((a,b)=>(b.at||0)-(a.at||0)); // newest first, everywhere
+      // v18.62 — week split backfill from the workouts' day field (legacy).
+      if(!Array.isArray(DB[k].split))DB[k].split=splitFromWorkouts(DB[k]);});
+    scrubNames(); // stored payload may predate the escaping fix — strip markup from names
+    return true;
+  }catch(e){return false}
+}
+
+/* ============ PHASE-1 AUTH (coach accounts + tenant sessions) ============ */
+/* Session token in localStorage; every sync request carries it as a Bearer
+   header when present. Students keep syncing by code alone (no login). */
+const AUTH={token:'',coach:null,ws:null,access:null};
+try{AUTH.token=localStorage.getItem('co-auth')||''}catch(e){}
+const authHeaders=()=>AUTH.token?{'authorization':'Bearer '+AUTH.token}:{};
+const authSet=t=>{AUTH.token=t||'';try{t?localStorage.setItem('co-auth',t):localStorage.removeItem('co-auth')}catch(e){}};
+/* v16.5 — the signed-in coach's REAL identity. The UI used to hardcode the
+   demo persona "Soroush Karimi / soroush@coachos.app" in the sidebar, topbar
+   and profile, so the name chosen at signup never appeared anywhere (it WAS
+   saved server-side — only the display was wrong). Falls back to the persona
+   in demo mode. */
+const coachName=()=>(AUTH.coach&&AUTH.coach.name)||'Coach Soroush';
+const coachFirst=()=>coachName().trim().split(/\s+/)[0]||'Coach';
+const coachEmail=()=>(AUTH.coach&&AUTH.coach.email)||'soroush@coachos.app';
+let WS_OWNER=''; // coach display name carried inside the workspace payload
+/* v18.57 — WHO is the source of truth for the coach name?
+   - A signed-in COACH: THEIR account name, always (never the payload — a
+     polluted payload must not stick to the coach's own UI or next push).
+   - A STUDENT (no auth): ONLY the payload's ownerName — NEVER the demo
+     persona. The old `WS_OWNER||coachName()` fallback made every student see
+     "Coach Soroush" when the payload name was empty, and cloudPack() then
+     WROTE that fallback into the shared payload (one dirty device poisoned
+     every student of every workspace — self-sustaining via cloudMerge). */
+const wsOwnerName=()=>AUTH.coach?coachName():(WS_OWNER||'');
+/* Full cloud-state reset — MUST run whenever the active account changes,
+   otherwise the next coach's sync keeps targeting the previous coach's
+   workspace (403 foreign) and pulls foreign data over local rows. */
+function cloudReset(){
+  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;
+  CLOUD.rej402=0;CLOUD.adopting402=false;
+  clearTimeout(CLOUD.pushT);
+  // The 7s poll used to be started with a bare setInterval() and never cleared,
+  // so every sign-out/sign-in left another live interval behind — N accounts
+  // meant N × /api/data GETs every 7 seconds, forever, in a long-lived PWA.
+  clearInterval(CLOUD.pollT);CLOUD.pollT=null;
+  clearInterval(CLOUD.remT);CLOUD.remT=null;
+  // Preserve the pre-account workspace code before dropping it: the one-time
+  // /api/auth/claim import in the bootstrap reads it, and this reset used to
+  // delete it, making that import permanently unreachable.
+  try{
+    const legacy=localStorage.getItem('co-ws');
+    if(legacy&&!localStorage.getItem('co-legacy-ws'))localStorage.setItem('co-legacy-ws',legacy);
+    localStorage.removeItem('co-ws');
+  }catch(e){}
+}
+/* Empty in-memory workspace — used when a NEW account is created so coaches
+   start clean instead of inheriting the demo seed (which also instantly
+   exceeds the trial quota and silently blocks adding clients). */
+function freshWorkspace(){
+  CLIENTS.length=0;EVENTS.length=0;NOTES.length=0;MSGS.length=0;TEMPLATES.length=0;
+  FILES.length=0;BUILDER.length=0;NPLANS.length=0;MTPL.length=0;PTPL.length=0;
+  NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
+  NLOGS.length=0;NCHAT.length=0;NINS.length=0;NRULES.length=0;
+  defaultNrules().forEach(r=>NRULES.push(r));
+  FORMS.length=0;CHALLENGES.length=0;
+  CEXS.length=0;syncCustomEx();
+  // v18.9.1 — a new coach still needs a usable nutrition library: the 20
+  // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
+  // "Create Nutrition Plan" seeded meals referencing FOODS[fi] entries that
+  // did not exist — the planner crashed and the food picker was blank.
+  FOODS.length=0;
+  defaultFoods().forEach(f=>FOODS.push(f));
+  defaultMtpl().forEach(x=>MTPL.push(x));
+  defaultPtpl().forEach(x=>PTPL.push(x));
+  ONBOARD={done:false};
+  Object.keys(DB).forEach(k=>delete DB[k]);
+  Object.keys(DEAD).forEach(k=>DEAD[k].length=0);
+  S.cid=1;S.pickCid=1;S.msgThread=null;S.nplan=0;
+}
+async function authApi(path,opts){
+  const o=opts||{};
+  o.headers=Object.assign({'content-type':'application/json'},authHeaders(),o.headers||{});
+  const r=await fetch(path,o);
+  let d=null;try{d=await r.json()}catch(e){}
+  return {status:r.status,ok:r.ok,d};
+}
+async function authSignup(){
+  const name=($('su-name')?.value||'').trim();
+  const email=($('su-email')?.value||'').trim();
+  const pw=$('su-pass')?.value||'';
+  const coupon=($('su-coupon')?.value||'').trim();
+  if(!name||!email||pw.length<8){toast(t('Enter name, valid email, password 8+ chars'));return}
+  toast(t('Creating your account…'));
+  try{
+    const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify({name,email,password:pw,coupon:coupon||undefined})});
+    if(!ok){toast(t(authErrMsg(d,status)));return}
+    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
+    // The optional activation code (prefilled from the shop) is redeemed
+    // server-side in the SAME call — the plan is active on first landing.
+    if(d.redeemed&&d.access){
+      AUTH.access=d.access;BILL.info=d.billing||BILL.info;
+      try{localStorage.removeItem('coach-os-coupon')}catch(e){}
+    } else AUTH.access=d.access;
+    // New account: drop the local demo seed and any previous tenant's cloud
+    // state, so the coach starts with an empty, correctly-owned workspace.
+    cloudReset();adoptAccount(d.coach);
+    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
+    toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
+      :d.redeemError?t(billErr({error:d.redeemError}))
+      :t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
+    cloudEnsure();maybeOnboard();
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function authLogin(){
+  const email=($('li-email')?.value||'').trim();
+  const pw=$('li-pass')?.value||'';
+  if(!email||!pw){toast(t('Enter email and password'));return}
+  toast(t('Signing in…'));
+  try{
+    // Login is email + password ONLY — activation codes are redeemed at
+    // signup (post-purchase) or manually in Settings → Account, never here.
+    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
+    if(!ok){toast(t(authErrMsg(d,status)));return}
+    authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
+    AUTH.access=d.access;
+    // Account switched in this tab: reset the sync target AND wipe local data
+    // that belongs to the previous coach — otherwise the first sync pushes the
+    // previous coach's clients into this coach's (empty) workspace.
+    cloudReset();adoptAccount(d.coach);
+    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
+    toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
+    cloudEnsure();maybeOnboard();
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function authLogout(){
+  // Flush pending local edits BEFORE tearing down the sync target — a quick
+  // add-client → sign-out otherwise loses them (cloudReset drops the dirty
+  // flag and the next account's adoptAccount wipes the local bytes).
+  if(CLOUD.on&&CLOUD.dirty){try{await cloudPush()}catch(e){}}
+  try{if(AUTH.token)await authApi('/api/auth/logout',{method:'POST'})}catch(e){}
+  authSet('');AUTH.coach=null;AUTH.ws=null;AUTH.access=null;
+  cloudReset(); // never let the next session reuse this tenant's sync target
+  // Admin/billing state belongs to the signed-out account — clear it so a
+  // different account on this device never sees stale rows.
+  BILL.info=null;BILL.quota=null;BILL.adminCoaches=null;BILL.adminLoaded=false;BILL.adminError=null;BILL.redeemCode='';
+}
+function forgotModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Forgot password?')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" id="fp-email" type="email" placeholder="coach@studio.com"></div>
+    <div class="muted" style="font-size:12px">${t('We will send a reset link to this address if it exists')}</div>
+    <div id="fp-out"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="forgot-send">${ic('check',15)} ${t('Send reset link')}</button></div>`);
+}
+async function authForgotSend(){
+  const email=($('fp-email')?.value||'').trim();
+  if(!email){toast(t('Enter email and password'));return}
+  const out=$('fp-out');if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px">${t('Checking…')}</div>`;
+  try{
+    const {status,ok,d}=await authApi('/api/auth/forgot',{method:'POST',body:JSON.stringify({email})});
+    if(!ok){if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px;color:var(--red)">${t(authErrMsg(d,status))}</div>`;return}
+    let html=`<div class="muted" style="font-size:12px;margin-top:10px;color:var(--green)">${t('Reset link sent to your email')}</div>`;
+    if(d&&d.resetLink)html+=`<div class="card" style="padding:10px;margin-top:10px;background:var(--bg2)"><div class="muted" style="font-size:11px;margin-bottom:6px">${t('Self-hosted mode — reset link')}</div><div class="row" style="gap:6px"><input class="inp" readonly value="${esc(d.resetLink)}" style="font-size:11px"><button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(d.resetLink)}">${ic('copy',13)}</button></div></div>`;
+    if(out)out.innerHTML=html;
+  }catch(e){if(out)out.innerHTML=`<div class="muted" style="font-size:12px;margin-top:10px">${t('Could not reach server')}</div>`}
+}
+async function authResetDo(){
+  const p1=$('rs-pass')?.value||'',p2=$('rs-pass2')?.value||'';
+  if(p1.length<8){toast(t('Password must be 8+ characters'));return}
+  if(p1!==p2){toast(t('Confirm'));return}
+  try{
+    const {status,ok,d}=await authApi('/api/auth/reset',{method:'POST',body:JSON.stringify({token:S.resetToken,password:p1})});
+    if(!ok){toast(t(d&&d.error==='bad-token'?'Invalid or expired reset link':authErrMsg(d,status)));return}
+    S.resetToken=null;S.authMode='login';
+    try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+    render();toast(t('Password updated — sign in with your new password'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function authMe(){
+  if(!AUTH.token)return false;
+  try{
+    const {ok,d}=await authApi('/api/auth/me');
+    if(!ok||!d||!d.ok){if(d&&d.error==='unauthorized')authSet('');return false}
+    AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    return true;
+  }catch(e){return false}
+}
+/* v16.5 — rename the signed-in coach. The profile form used to be dead
+   (Save just toasted) and every screen showed the hardcoded demo persona,
+   which is why the signup name seemed "not registered". */
+async function authProfile(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const fn=($('pf-fn')?.value||'').trim(),ln=($('pf-ln')?.value||'').trim();
+  const name=(fn+' '+ln).trim().slice(0,80);
+  if(name.length<2){toast(t('Enter your name'));return}
+  try{
+    const {ok,d}=await authApi('/api/auth/profile',{method:'POST',body:JSON.stringify({name})});
+    if(!ok||!d||!d.ok){toast(t(authErrMsg(d,0)));return}
+    if(AUTH.coach)AUTH.coach.name=d.coach.name;
+    render();toast(t('Profile saved'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+/* v18.9 — Settings → Security was display-only: "Update Password" and "Sign
+   out others" were dead toasts and the ONLY way to change a password was the
+   forgot/reset email round-trip. Both now hit the real endpoints. */
+async function authPassword(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const cur=$('pw-cur')?.value||'',p1=$('pw-new')?.value||'',p2=$('pw-new2')?.value||'';
+  if(!cur){toast(t('Enter your current password'));return}
+  if(p1.length<8){toast(t('Password must be 8+ characters'));return}
+  if(p1!==p2){toast(t('Confirm'));return}
+  try{
+    const {status,ok,d}=await authApi('/api/auth/password',{method:'POST',body:JSON.stringify({current:cur,password:p1})});
+    if(!ok){toast(t(d&&d.error==='wrong-password'?'Current password is incorrect':d&&d.error==='weak-password'?'Password must be 8+ characters':authErrMsg(d,status)));return}
+    ['pw-cur','pw-new','pw-new2'].forEach(k=>{const el2=$(k);if(el2)el2.value=''});
+    toast(t('Password updated — other devices signed out'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function authLogoutOthers(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  try{
+    const {ok}=await authApi('/api/auth/logout-others',{method:'POST'});
+    toast(ok?t('Signed out of all other devices'):t('Could not reach server'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+const authPlanLabel=()=>{
+  const a=AUTH.access||{};
+  if(a.status==='trial')return t('Trial · ')+planLbl(a.plan||'trial');
+  if(a.status==='active')return t('Active · ')+planLbl(a.plan||'trial');
+  return t('Expired — renew to keep syncing');
+};
+/* Badge label for the same row — the raw status id ('ACTIVE') leaked English
+   into the Persian UI. Persian has no case, so toUpperCase() is a no-op there. */
+const authStatusLbl=()=>{
+  const s=(AUTH.access&&AUTH.access.status)||'trial';
+  return t(s==='trial'?'Trial':s==='active'?'Active':s==='suspended'?'Suspended':'Expired').toUpperCase();
+};
+const authErrMsg=(d,st)=>{
+  const e=d&&d.error;
+  if(e==='email-taken')return 'This email is already registered — sign in instead';
+  if(e==='bad-email')return 'Enter a valid email';
+  if(e==='weak-password')return 'Password must be 8+ characters';
+  if(e==='bad-name')return 'Enter your name';
+  if(e==='bad-credentials')return st===401?'Wrong email or password':'Enter email and password';
+  return 'Could not reach server';
+};
+
+/* ============ PHASE-2 BILLING (client: plans, quota, redeem, read-only) ============ */
+/* Where the in-app plan buttons send buyers. Same-domain deployment: the shop
+   lives under /shop on this very domain, so a relative path works. For a
+   separate shop domain put the full URL (https://shop.example.com).
+   Leave '' to use the legacy manual flow (in-app request + tracking code). */
+const SHOP_URL='/shop/checkout.html';
+const BILL={info:null,quota:null,redeemCode:'',adminCoaches:null,adminLoaded:false,adminError:null};
+/* Shop hand-off (contract in shop/README.md): the checkout page stores the
+   buyer's email (coach-os-email) and the issued activation code
+   (coach-os-coupon) so the app can prefill signup and the coupon box — after
+   paying, the coach should never have to retype either value. */
+const shopEmail=()=>{try{return String(localStorage.getItem('coach-os-email')||'').trim()}catch(e){return ''}};
+const shopCoupon=()=>{try{return String(localStorage.getItem('coach-os-coupon')||'').trim()}catch(e){return ''}};
+/* Plan ids arrive raw from the API ('professional') — always show the label. */
+const PLAN_LABEL={trial:'Trial',basic:'Basic',professional:'Professional',club:'Club'};
+const planLbl=p=>t(PLAN_LABEL[p]||p||'Trial');
+const billExpiryLbl=()=>{
+  const b=BILL.info||{};
+  const end=b.subEndsAt||b.trialEndsAt;
+  if(!end)return '—';
+  const days=Math.max(0,Math.ceil((end-Date.now())/86400000));
+  return new Date(end).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')+' · '+nf(days)+' '+t('days');
+};
+async function billAdminLoad(){
+  if(!AUTH.token||!AUTH.coach||AUTH.coach.role!=='admin')return;
+  try{
+    const {ok,d}=await authApi('/api/billing/admin-overview');
+    if(ok&&d&&d.ok){BILL.adminCoaches=d.coaches;BILL.adminLoaded=true;BILL.adminError=null;render()}
+    else{BILL.adminLoaded=true;BILL.adminError=(d&&d.error)||'forbidden';render()}
+  }catch(e){BILL.adminLoaded=true;BILL.adminError='network';render()}
+}
+function admGrantModal(email,plan){
+  openModal(`
+  <div class="modal-h"><h3>${t('Extend subscription')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:12px">${esc(email)}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Plan')}</label><select class="sel" id="ag-plan">${['basic','professional','club'].map(p=>`<option value="${p}" ${p===plan?'selected':''}>${t(p==='basic'?'Basic':p==='professional'?'Professional':'Club')}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Days')}</label><select class="sel" id="ag-days">${[7,14,30,60,90,180,365].map(d=>`<option value="${d}" ${d===30?'selected':''}>${nf(d)}</option>`).join('')}</select></div>
+    </div>
+    <div class="muted" style="font-size:11.5px">${t('Days stack on top of any remaining time — granting also restores suspended access')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="adm-grant-do" data-email="${esc(email)}">${ic('check',15)} ${t('Grant')}</button></div>`);
+}
+async function admGrantDo(email){
+  const planId=$('ag-plan')?.value||'professional';
+  const days=+($('ag-days')?.value||30);
+  try{
+    const {ok,d}=await authApi('/api/billing/admin-grant',{method:'POST',body:JSON.stringify({email,planId,days})});
+    if(!ok||!d||!d.ok){toast(t(billErr(d)));return}
+    closeModal();billAdminLoad();toast(t('Subscription granted ✓')+' · '+nf(d.daysLeft)+' '+t('days'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function admSuspendToggle(email,suspended){
+  try{
+    const {ok,d}=await authApi('/api/billing/admin-suspend',{method:'POST',body:JSON.stringify({email,suspended:!suspended})});
+    if(!ok||!d||!d.ok){toast(t(billErr(d)));return}
+    billAdminLoad();toast(suspended?t('Access restored ✓'):t('Access suspended — coach is read-only'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+function admCouponModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Create coupon')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Plan')}</label><select class="sel" id="ac-plan">${['basic','professional','club'].map(p=>`<option value="${p}">${t(p==='basic'?'Basic':p==='professional'?'Professional':'Club')}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Days')}</label><select class="sel" id="ac-days">${[30,60,90,180,365].map(d=>`<option value="${d}">${nf(d)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Max uses')}</label><input class="inp" id="ac-uses" type="number" value="1" min="1" max="1000"></div>
+      <div class="field"><label class="lbl">${t('Code (optional)')}</label><input class="inp" id="ac-code" placeholder="${t('Auto-generated')}" style="text-transform:uppercase"></div>
+    </div>
+    <div id="ac-out"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="adm-coupon-do">${ic('check',15)} ${t('Create')}</button></div>`);
+}
+async function admCouponDo(){
+  const body={planId:$('ac-plan')?.value,durationDays:+($('ac-days')?.value||30),maxUses:+($('ac-uses')?.value||1)};
+  const code=($('ac-code')?.value||'').trim().toUpperCase();
+  if(code)body.code=code;
+  try{
+    const {ok,d}=await authApi('/api/billing/coupon',{method:'POST',body:JSON.stringify(body)});
+    if(!ok||!d||!d.ok){toast(t(billErr(d)));return}
+    const out=$('ac-out');
+    if(out)out.innerHTML=`<div class="card" style="padding:12px;margin-top:12px;background:var(--accent-soft);border-color:var(--acc-line)"><div class="muted" style="font-size:11px;margin-bottom:4px">${t('Coupon created — share the code')}</div><div class="row" style="gap:8px"><b style="letter-spacing:.12em;font-size:16px">${esc(d.coupon.code)}</b><button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(d.coupon.code)}">${ic('copy',13)} ${t('Copy')}</button></div></div>`;
+    toast(t('Coupon created — share the code'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function billRefresh(){
+  if(!AUTH.token)return;
+  try{
+    const {ok,d}=await authApi('/api/billing/me');
+    if(ok&&d&&d.ok){
+      BILL.info=d.billing;
+      // Prefer the server's seat count (it's authoritative and counts the
+      // STORED workspace payload). The local re-computation is only a fallback
+      // for the very first render before /api/billing/me has answered.
+      BILL.quota=d.quota||{used:billSeats(),max:planMaxClients()};
+      AUTH.access=Object.assign({},AUTH.access,{status:d.billing.status,plan:d.billing.plan});
+    }
+  }catch(e){}
+}
+const billSeats=()=>CLIENTS.filter(c=>c&&c.status!=='Archived').length;
+const planMaxClients=()=>({trial:5,basic:5,professional:30,club:200}[(AUTH.access&&AUTH.access.plan)||'trial']||5);
+/* 'suspended' is a distinct access status (admin freeze) that the server also
+   enforces with 402 sub-suspended — it must count as read-only here too, or the
+   coach gets no warning before editing and then a misleading quota toast. */
+const billExpired=()=>!!(AUTH.token&&AUTH.access&&(AUTH.access.status==='expired'||AUTH.access.status==='suspended'));
+const billOverQuota=()=>billSeats()>=planMaxClients();
+function billGuard(kind){
+  if(billExpired()){toast(t('Subscription expired — renew to keep editing (data is safe, read-only)'));return true}
+  if(kind==='client'&&billOverQuota()){toast(t('Client limit reached — upgrade your plan or archive a client'));return true}
+  return false;
+}
+async function billRedeem(){
+  const code=($('coupon-inp')?.value||'').trim();
+  if(!code){toast(t('Enter a coupon or payment code'));return}
+  toast(t('Checking code…'));
+  try{
+    const {ok,d}=await authApi('/api/billing/redeem',{method:'POST',body:JSON.stringify({code})});
+    if(!ok||!d||!d.ok){toast(t(billErr(d)));billRefresh();return}
+    AUTH.access=Object.assign({},AUTH.access,{status:d.billing.status,plan:d.billing.plan});
+    BILL.info=d.billing;BILL.quota=d.quota||{used:billSeats(),max:planMaxClients()};
+    // The prefilled shop code is now spent — drop it so a later visit never
+    // shows a stale (already-redeemed) code in the box.
+    try{localStorage.removeItem('coach-os-coupon')}catch(e){}
+    const inp=$('coupon-inp');if(inp)inp.value='';
+    render();toast(t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan));
+  }catch(e){toast(t('Could not reach server'))}
+}
+async function billRequest(planId){
+  /* Sales live on the separate shop site: hand the customer over with the
+     selected plan preselected. The shop's backend calls issue-coupon after
+     payment; the customer returns here and redeems the code. */
+  if(SHOP_URL){
+    try{window.open(SHOP_URL+'?plan='+encodeURIComponent(planId)+'&utm_source=app&utm_medium=upgrade','_blank','noopener')}
+    catch(e){location.href=SHOP_URL+'?plan='+encodeURIComponent(planId)}
+    toast(t('Opening the shop website…'));
+    return;
+  }
+  try{
+    const {ok,d}=await authApi('/api/billing/request',{method:'POST',body:JSON.stringify({planId})});
+    if(ok&&d&&d.ok){
+      S.payPending=d.payment;
+      toast(t('Request registered — pay, then enter your tracking coupon'));
+      S.view='settings';S.stab='account';render();
+    } else toast(t('Could not reach server'));
+  }catch(e){toast(t('Could not reach server'))}
+}
+const billErr=d=>{
+  const e=d&&d.error;
+  if(e==='unknown-code')return 'Code not found — check and retry';
+  if(e==='code-used-up')return 'This code was already used';
+  if(e==='code-expired')return 'This code has expired';
+  if(e==='bad-code')return 'Enter a coupon or payment code';
+  if(e==='bad-plan')return 'That plan is not available — pick a plan and retry';
+  if(e==='forbidden')return 'Your account is not allowed to do that';
+  if(e==='code-exists'||e==='duplicate-code')return 'That code already exists — choose another';
+  if(e==='coach-not-found')return 'No coach found with that email or ID';
+  if(e==='cannot-suspend-admin')return 'Admin accounts cannot be suspended';
+  if(e==='rate-limited')return 'Too many attempts — wait a minute and retry';
+  if(e==='sub-suspended')return 'Access suspended — contact support';
+  if(e==='sub-expired')return 'Subscription expired — renew to keep editing';
+  if(e==='quota-exceeded')return 'Client limit reached — upgrade your plan or archive a client';
+  // Fall back to the raw server code instead of a generic network message,
+  // which used to be shown for every unmapped error (including 429s).
+  return e||'Could not reach server';
+};
+/* P1 FIX — one honest line for the student whose device stopped syncing. */
+const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data is safe; ask your coach to check the plan.';
+
+/* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
+/* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
+const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false};
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
+const cloudFetch=async (code,rev)=>{
+  try{
+    const r=await fetch('/api/data?code='+encodeURIComponent(code)+(rev?'&rev='+encodeURIComponent(rev):''),{headers:authHeaders()});
+    if(!r.ok)return null;return await r.json()
+  }
+  catch(e){return null}
+};
+const cloudPut=async data=>{
+  try{
+    const r=await fetch('/api/data?code='+encodeURIComponent(CLOUD.code),{method:'PUT',headers:Object.assign({'content-type':'application/json'},authHeaders()),body:JSON.stringify({rev:CLOUD.rev,data})});
+    const o=await r.json();
+    if(r.ok&&o.ok){CLOUD.rev=o.rev;return true}
+    if(r.status===409){CLOUD.rev=o.rev||0;CLOUD.dirty=true}
+    /* P1 FIX — a rejected push must not retry forever. The server is
+       AUTHORITATIVE on quota/subscription: when a workspace exceeds its
+       plan's seat cap, the device was pushing stale rows (typically the demo
+       seed merged into a joined student's payload). After 2 consecutive 402s
+       the device adopts the server payload wholesale (dropping the phantom
+       rows — nothing the user typed is lost, the server copy IS the latest
+       synced state) and stops the loop; the visible state flips to
+       "Offline mode" with an explanatory toast instead of a silent
+       every-1.5s 402 storm. The coach keeps the specific upgrade/suspend
+       messages the trial already shows. */
+    if(r.status===402){
+      CLOUD.dirty=false;
+      CLOUD.rej402=(CLOUD.rej402||0)+1;
+      if(CLOUD.rej402>=2&&!CLOUD.adopting402){
+        CLOUD.adopting402=true;
+        try{
+          const cur=await cloudFetch(CLOUD.code);
+          if(cur&&cur.ok&&cur.data){
+            CLOUD.rev=cur.rev||0;
+            adoptRemoteWorkspace(cur.data);
+            __lastPack='';
+            cloudResync();
+            if(S.role==='client')render();
+          }
+        }catch(e){}
+        CLOUD.adopting402=false;
+        if(S.role==='client'){
+          CLOUD.on=false;
+          toast(t(syncPausedMsg()));
+          try{const gb=document.querySelector('.gbadge, .pf-pill-off');if(gb)gb.textContent='⚠ '+t('Sync paused — workspace full')}catch(e){}
+        }
+      }else if(AUTH.token){
+        billRefresh();
+        // Branch on the actual server code: 'sub-suspended' and 'quota-exceeded'
+        // both fell into the quota message before, telling a suspended coach to
+        // "upgrade your plan or archive a client".
+        toast(t(o.error==='sub-expired'
+          ?'Subscription expired — renew to keep syncing (data is safe, read-only)'
+          :o.error==='sub-suspended'
+            ?'Access suspended — contact support (data is safe, read-only)'
+            :'Client limit reached — upgrade your plan or archive a client'));
+      }
+      return false;
+    }
+    // Phase-1 tenant guard: never loop on a rejected write. Anonymous devices
+    // stay silent (a student tablet must not nag); the coach sees the reason.
+    if(r.status===403){CLOUD.dirty=false;if(AUTH.token)toast(t('Sync blocked: '+(o.error||'forbidden')))}
+    return false;
+  }catch(e){CLOUD.dirty=true;return false}
+};
+function cloudMerge(d,adopt){
+  if(!d||typeof d!=='object')return false;
+  let ch=false;const take=!!adopt&&!CLOUD.dirty;let __cexChanged=false;
+  // The coach's display name rides the payload so CLIENT devices can greet
+  // the right coach (they have no account of their own).
+  /* v18.57 — WS_OWNER MIRRORS the remote payload exactly (including clearing):
+     a device whose LOCAL copy still carries the old fallback "Coach Soroush"
+     must drop it the moment the remote payload says otherwise (empty = no
+     name yet). The old non-empty-only adopt let the poisoned local copy win
+     forever, so every student kept showing a wrong coach. Convergence: the
+     coach device always pushes its ACCOUNT name, students mirror it. */
+  if(typeof d.ownerName==='string'){const rn=d.ownerName.trim();if(rn!==WS_OWNER){WS_OWNER=rn;ch=true}}
+  Object.keys(DEAD).forEach(k=>{const set=new Set(DEAD[k].map(String));((d.DEAD||{})[k]||[]).forEach(x=>{const s=String(x);if(!set.has(s)){set.add(s);DEAD[k].push(s);ch=true}})});
+  const deadSets={};Object.keys(DEAD).forEach(k=>deadSets[k]=new Set(DEAD[k].map(String)));
+  ['CLIENTS','EVENTS','MSGS','NOTES','NPLANS','TEMPLATES','MTPL','PTPL','FOODS','FILES','PACKS','MSGTPL','FORMS'].forEach(k=>{if(!deadSets[k])deadSets[k]=new Set()});
+  // CLIENTS — union by id; on pull adopt server profile fields, progress = max
+  {for(let i=CLIENTS.length-1;i>=0;i--){const c=CLIENTS[i];if(c&&c.id!=null&&deadSets.CLIENTS.has(String(c.id))){if(DB[c.id])delete DB[c.id];CLIENTS.splice(i,1);ch=true}}
+   const idx={};CLIENTS.forEach((c,i)=>{if(c&&c.id!=null)idx[String(c.id)]=i});
+   (d.CLIENTS||[]).forEach(rc=>{
+     if(rc.id==null||deadSets.CLIENTS.has(String(rc.id)))return;
+     const i=idx[String(rc.id)];
+     if(i===undefined){CLIENTS.push(rc);idx[String(rc.id)]=CLIENTS.length-1;ch=true}
+     else if(take){const loc=CLIENTS[i];
+       ['name','goal','prog','status','freq','next','nextW','last','email','weight','bf','h','targetW','targetDate','startW','lastDone','lastRemind','since','noRemind'].forEach(f=>{if(rc[f]!==undefined&&rc[f]!==loc[f]){loc[f]=rc[f];ch=true}});
+       // Intake answers are an OBJECT — compared by content, never by identity,
+       // or every pull would see a fresh parse and loop the sync dirty flag.
+       if(rc.intake&&JSON.stringify(rc.intake)!==JSON.stringify(loc.intake||null)){loc.intake=rc.intake;ch=true}
+       // v18.38 — earned badges ride the client record the same way.
+       if(rc.badges&&JSON.stringify(rc.badges)!==JSON.stringify(loc.badges||[])){loc.badges=rc.badges;ch=true}
+       // v18.48 — nutrition profile is an OBJECT on the client record: compare
+       // by content (same rule as intake) or every pull would loop the sync flag.
+       if(rc.nprof&&JSON.stringify(rc.nprof)!==JSON.stringify(loc.nprof||null)){loc.nprof=rc.nprof;ch=true}
+       /* v18.71 — habits: definitions (coach) + daily log (student). habits is
+          compared whole (coach wins); hlog merges PER-DAY so a student's tick
+          on one device never wipes another device's view of a different day. */
+       if(rc.habits&&JSON.stringify(rc.habits)!==JSON.stringify(loc.habits||null)){loc.habits=rc.habits;ch=true}
+       /* v18.75 — plan 1ج: the current program is an OBJECT → content compare
+          (same rule as intake/nprof/badges) or every pull loops the dirty flag. */
+       if(rc.prog2&&JSON.stringify(rc.prog2)!==JSON.stringify(loc.prog2||null)){loc.prog2=rc.prog2;ch=true}
+       if(rc.hlog){const rl=rc.hlog;if(!loc.hlog)loc.hlog={};
+         Object.keys(rl).forEach(dk=>{if(JSON.stringify(rl[dk])!==JSON.stringify(loc.hlog[dk]||null)){loc.hlog[dk]=rl[dk];ch=true}})}
+       /* ptsDay = momentum hero's "+pts today": merge per-date (same day → max,
+          date rolled over → replace) so two devices never double-count. */
+       if(rc.ptsDate){
+         if(rc.ptsDate!==loc.ptsDate){loc.ptsDate=rc.ptsDate;loc.ptsDay=rc.ptsDay||0;ch=true}
+         else if((rc.ptsDay||0)>(loc.ptsDay||0)){loc.ptsDay=rc.ptsDay;ch=true}
+       }
+       ['done','missed','streak','week','pts','dayStreak'].forEach(f=>{if(typeof rc[f]==='number'&&rc[f]>(loc[f]||0)){loc[f]=rc[f];ch=true}});
+     }})}
+   if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
+  // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
+  // v18.48 — NLOGS/NCHAT/NINS/NRULES join the same id-union path.
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
+    for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
+    const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
+    (d[k]||[]).forEach(rc=>{
+      if(rc.id==null||deadSets[k].has(String(rc.id)))return;
+      const i=idx[String(rc.id)];
+      if(i===undefined){arr.push(rc);idx[String(rc.id)]=arr.length-1;ch=true;
+        /* v18.38 — a fresh coach→client reminder just arrived: nudge the
+           student (toast in the foreground, OS notification when the tab is
+           in the background — the page can call showNotification itself). */
+        if(k==='MSGS'&&rc.type==='reminder'&&rc.from==='coach'&&S.role==='client'&&Date.now()-(rc.at||0)<120000){
+          toast('⏰ '+t('Reminder from your coach'));
+          try{if(document.hidden&&window.Notification&&Notification.permission==='granted'&&navigator.serviceWorker)
+            navigator.serviceWorker.ready.then(r=>r.showNotification('CoachMint ⏰',{body:String(rc.body||'').slice(0,120),icon:'./icons/icon-192.png',tag:'reminder'})).catch(()=>{})}catch(e){}
+        }
+      }
+      else if(take&&k==='EVENTS'){const loc=arr[i];if(rc.att&&!loc.att){loc.att=rc.att;ch=true}}
+    });
+    if(k==='NOTES'||k==='NPLANS')arr.sort((a,b)=>(b.id||0)-(a.id||0));
+  });
+  /* v18.39 — challenges: id-union PLUS live progress merge (prog = max per
+     client, done = union, ended wins) so a client device logging progress is
+     seen by the coach's device on the next pull. */
+  if(Array.isArray(d.CHALLENGES)){
+    const cidx={};CHALLENGES.forEach((x,i)=>{if(x&&x.id!=null)cidx[String(x.id)]=i});
+    d.CHALLENGES.forEach(rc=>{
+      if(!rc||rc.id==null||deadSets.CHALLENGES.has(String(rc.id)))return;
+      const i=cidx[String(rc.id)];
+      if(i===undefined){CHALLENGES.push(rc);cidx[String(rc.id)]=CHALLENGES.length-1;ch=true}
+      else{const loc=CHALLENGES[i];
+        if(rc.prog)Object.keys(rc.prog).forEach(k=>{if((rc.prog[k]||0)>((loc.prog||{})[k]||0)){(loc.prog=loc.prog||{})[k]=rc.prog[k];ch=true}});
+        (rc.done||[]).forEach(cid=>{if(!(loc.done||[]).includes(cid)){(loc.done=loc.done||[]).push(cid);ch=true}});
+        if(rc.status==='ended'&&loc.status!=='ended'){loc.status='ended';ch=true}
+      }
+    });
+  }
+  // name-keyed stores
+  [['TEMPLATES',TEMPLATES],['MTPL',MTPL],['PTPL',PTPL],['FOODS',FOODS],['FILES',FILES],['MSGTPL',MSGTPL]].forEach(([k,arr])=>{
+    for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.n!=null&&deadSets[k].has(String(x.n))){arr.splice(i,1);ch=true}}
+    const set=new Set(arr.map(x=>x&&x.n));
+    (d[k]||[]).forEach(rc=>{
+      if(!rc||rc.n==null||deadSets[k].has(String(rc.n)))return;
+      if(!set.has(rc.n)){arr.push(rc);set.add(rc.n);ch=true}
+    });
+  });
+  // append-only logs — dedupe by JSON
+  [['NHIST',NHIST],['ACTIVITY',ACTIVITY],['NOTIFS',NOTIFS]].forEach(([k,arr])=>{
+    const set=new Set(arr.map(x=>JSON.stringify(x)));
+    (d[k]||[]).forEach(x=>{const s=JSON.stringify(x);if(!set.has(s)){arr.push(x);set.add(s);ch=true}});
+  });
+  /* v18.9 — these fields used to be PUSH-ONLY (cloudMerge never read them),
+     so a second device never saw the video bank, the coach photo, the builder
+     draft or new progress photos. All merge now: */
+  if(d.EXVID&&typeof d.EXVID==='object'&&!Array.isArray(d.EXVID)){
+    Object.keys(d.EXVID).forEach(k=>{if(EXVID[k]===undefined){EXVID[k]=d.EXVID[k];ch=true}});
+  }
+  if(!COACH_PIC&&typeof d.COACH_PIC==='string'&&d.COACH_PIC){COACH_PIC=d.COACH_PIC;ch=true}
+  if(Array.isArray(d.BUILDER)&&d.BUILDER.length&&!BUILDER.length){d.BUILDER.forEach(x=>BUILDER.push(x));ch=true}
+  // custom exercises — id-union; ids are time-based so id-order is identical
+  // on every device (EXERCISES indexes must stay deterministic)
+  if(Array.isArray(d.CEXS)){
+    const xidx={};CEXS.forEach((x,i)=>{if(x&&x.id!=null)xidx[x.id]=i});
+    d.CEXS.forEach(x=>{
+      if(!x||x.id==null||deadSets.CEXS.has(String(x.id)))return;
+      if(xidx[x.id]===undefined){CEXS.push(x);xidx[x.id]=CEXS.length-1;ch=true;__cexChanged=true}
+    });
+  }
+  // onboarding answers — the coach's own device wins only while local is
+  // unfinished; once done:true anywhere, it propagates everywhere.
+  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&(d.ONBOARD.done||!ONBOARD.done)&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){ONBOARD=d.ONBOARD;ch=true}
+  /* v18.35 — design template: last-writer-wins. The remote value always wins
+     on pull (the device that just switched it pushed it); local changes push
+     immediately via saveData→cloudSchedule. */
+  if(d.UI&&typeof d.UI==='object'&&typeof d.UI.tpl==='string'){
+    const rt=d.UI.tpl==='coachmint'?'coachmint':'default';
+    if(rt!==(PREFS.uiTpl||'default')){PREFS.uiTpl=rt;savePrefs();applyTpl();applyAccent(PREFS.accent);applyTheme();ch=true}
+  }
+  // DB — per client
+  Object.keys(d.DB||{}).forEach(cid=>{
+    const L=DB[cid],R=d.DB[cid];if(!R)return;
+    if(!L){DB[cid]=R;ch=true;return}
+    const widx={};(L.workouts||[]).forEach((w,i)=>{if(w&&w.id!=null)widx[w.id]=i});
+    (R.workouts||[]).forEach(w=>{
+      if(!w||w.id==null)return;
+      const i=widx[w.id];
+      if(i===undefined){L.workouts.push(w);widx[w.id]=L.workouts.length-1;ch=true}
+      else if(take&&JSON.stringify(w)!==JSON.stringify(L.workouts[i])){L.workouts[i]=w;ch=true}
+    });
+    const dmap={};(L.measures||[]).forEach((m,i)=>{if(m&&m.d!=null)dmap[m.d]=i});
+    (R.measures||[]).forEach(x=>{
+      if(!x||x.d==null)return;
+      if(deadSets.MEAS&&deadSets.MEAS.has(cid+':'+x.d))return;
+      const i=dmap[x.d];
+      if(i===undefined){(L.measures=L.measures||[]).push(x);dmap[x.d]=L.measures.length-1;ch=true}
+      else if(take&&JSON.stringify(x)!==JSON.stringify(L.measures[i])){L.measures[i]=x;ch=true}
+    });
+    if(L.measures&&L.measures.length)L.measures.sort((a,b)=>a.d<b.d?-1:1);
+    if(R.stats){if(!L.stats)L.stats={done:0,missed:0};['done','missed'].forEach(f=>{if((R.stats[f]||0)>(L.stats[f]||0)){L.stats[f]=R.stats[f];ch=true}})}
+    // v18.62 — week split: content compare (the plan is small), remote wins on pull
+    if(Array.isArray(R.split)&&JSON.stringify(R.split)!==JSON.stringify(L.split||null)){
+      if(take||!Array.isArray(L.split)){L.split=R.split;ch=true}
+    }
+    if(!L.nutrition&&R.nutrition){L.nutrition=R.nutrition;ch=true}
+    // progress photos — union by id (an existing bucket used to NEVER merge
+    // remote photos, making them effectively single-device)
+    if(Array.isArray(R.photos)&&R.photos.length){
+      if(!Array.isArray(L.photos))L.photos=[];
+      const pidx={};L.photos.forEach((p,i)=>{if(p&&p.id!=null)pidx[p.id]=i});
+      R.photos.forEach(p=>{
+        if(!p||p.id==null)return;
+        const i=pidx[p.id];
+        if(i===undefined){L.photos.push(p);pidx[p.id]=L.photos.length-1;ch=true}
+        else if(take&&p.ok&&!L.photos[i].ok){L.photos[i].ok=true;ch=true}
+      });
+    }
+    // v18.61 — session logs: append-only id-union (newest first) so a log
+    // written on the client's phone reaches the coach's device on the next pull.
+    if(Array.isArray(R.log)){
+      if(!Array.isArray(L.log))L.log=[];
+      const lidx={};L.log.forEach((l,i)=>{if(l&&l.id!=null)lidx[l.id]=i});
+      R.log.forEach(l=>{if(!l||l.id==null)return;
+        if(lidx[l.id]===undefined){L.log.push(l);lidx[l.id]=L.log.length-1;ch=true}});
+      L.log.sort((a,b)=>(b.at||0)-(a.at||0));
+    }
+  });
+  if(__cexChanged){syncCustomEx();__cexChanged=false}
+  if(ch)scrubNames(); // remote data is untrusted too (another device wrote it)
+  return ch;
+}
+/* P1 FIX — the join path is server-authoritative. After a join fetch the
+   local arrays hold ONLY what the merge brought in (freshWorkspace + cloudMerge
+   add nothing on their own), so replacing them with the remote rows makes the
+   device byte-identical to the server — no demo residue, no phantom clients
+   that would push the workspace past the owner's seat quota. Never call this
+   on a coach device or when this device has unsent offline edits. */
+function adoptRemoteWorkspace(d){
+  if(!d||typeof d!=='object')return;
+  const repl=(arr,val)=>{arr.length=0;(Array.isArray(val)?val:[]).forEach(x=>arr.push(x))};
+  repl(CLIENTS,d.CLIENTS);repl(EVENTS,d.EVENTS);repl(NOTES,d.NOTES);repl(MSGS,d.MSGS);
+  repl(TEMPLATES,d.TEMPLATES);repl(FILES,d.FILES);repl(BUILDER,d.BUILDER);
+  repl(NPLANS,d.NPLANS);repl(MTPL,d.MTPL);repl(PTPL,d.PTPL);repl(NHIST,d.NHIST);
+  repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
+  NRULES.length=0;(Array.isArray(d.NRULES)&&d.NRULES.length?d.NRULES:defaultNrules()).forEach(r=>NRULES.push(r));
+  repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);
+  repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
+  if(Array.isArray(d.FOODS)&&d.FOODS.length){repl(FOODS,d.FOODS)} // else keep the seed — empty = broken
+  if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
+  if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
+  if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
+  if(typeof d.UI==='object'&&d.UI&&d.UI.tpl&&d.UI.tpl!==PREFS.uiTpl){PREFS.uiTpl=d.UI.tpl;applyTpl()}
+  Object.keys(DB).forEach(k=>delete DB[k]);const src=d.DB||{};
+  Object.keys(src).forEach(cid=>{const b=src[cid];if(b&&typeof b==='object')DB[cid]={workouts:[],sessions:[],stats:{done:0,missed:0},measures:[],photos:[],log:[],split:splitBlank(),nutrition:null,...b}});
+  /* Every adopted client needs a DB bucket even when the server payload had
+     none for it (a workspace seeded before that client ever trained): the
+     per-client views read DB[c.id].workouts unconditionally. Same defaults as
+     save-client / the empty-roster placeholder. */
+  CLIENTS.forEach(c=>{if(c&&c.id!=null&&!DB[String(c.id)]&&!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:0,missed:0},measures:[],photos:[],log:[],split:splitBlank(),nutrition:null}});
+  if(Array.isArray(d.DEAD))Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
+}
+const cloudResync=()=>CLIENTS.forEach(c=>syncClientSessions(c.name));
+async function cloudPull(){
+  if(!CLOUD.on)return;
+  const out=await cloudFetch(CLOUD.code,CLOUD.rev); // rev check: server skips the payload when unchanged
+  if(!out||!out.ok)return;
+  if(out.unchanged)return;
+  CLOUD.rev=out.rev||0;
+  if(out.data&&cloudMerge(out.data,true)){cloudResync();render()}
+}
+function cloudSchedule(ms){
+  if(!CLOUD.on)return;
+  CLOUD.dirty=true;
+  clearTimeout(CLOUD.pushT);CLOUD.pushT=setTimeout(cloudPush,ms||900);
+}
+async function cloudPush(){
+  if(!CLOUD.on||!CLOUD.dirty)return;
+  CLOUD.dirty=false;
+  try{
+    const cur=await cloudFetch(CLOUD.code);
+    if(cur&&cur.ok){CLOUD.rev=cur.rev||0;cloudMerge(cur.data,false)}
+    if(!await cloudPut(cloudPack()))cloudSchedule(1500);
+  }catch(e){CLOUD.dirty=true}
+}
+function cloudStart(){
+  if(CLOUD.started||!CLOUD.on)return;
+  CLOUD.started=true;
+  // Handle stored on CLOUD so cloudReset() can stop it (see cloudReset).
+  CLOUD.pollT=setInterval(()=>{if(!document.hidden)cloudPull()},7000);
+  /* v18.21 — daily smart-report sweep: shortly after boot, then every 6h. */
+  setTimeout(rptAutoRun,4000);
+  CLOUD.rptT=setInterval(()=>{if(!document.hidden)rptAutoRun()},6*3600*1000);
+  /* v18.48 — nutrition monitoring sweep (rules → insights → alerts). */
+  setTimeout(nSweepAuto,5000);
+  CLOUD.nsT=setInterval(()=>{if(!document.hidden)nSweepAuto()},6*3600*1000);
+  /* v18.38 — smart workout reminder sweep (coach devices only, see remSweep). */
+  setTimeout(remSweep,6000);
+  CLOUD.remT=setInterval(()=>{if(!document.hidden)remSweep()},6*3600*1000);
+}
+async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legacy code
+  if(CLOUD.on){cloudStart();return}
+  if(!/^https?:$/.test(location.protocol))return;
+  try{
+    // Phase-1: a signed-in coach owns exactly one workspace — adopt it.
+    if(AUTH.token&&!AUTH.coach){await authMe()}
+    if(AUTH.coach&&AUTH.ws&&AUTH.ws.code){
+      CLOUD.code=AUTH.ws.code;
+      const out=await cloudFetch(CLOUD.code);
+      if(out&&out.ok){
+        CLOUD.rev=out.rev||0;
+        if(out.data&&cloudMerge(out.data,true)){cloudResync();render()}
+        // Server holds no bytes yet (fresh account): push local demo/state up
+        // so this device is the seed. Authenticated PUT binds tenant ownership.
+        if(!out.data){CLOUD.dirty=true;await cloudPush()}
+        try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
+        CLOUD.on=true;cloudStart();
+        toast(t('Cloud sync on — workspace ')+CLOUD.code);
+        return;
+      }
+    }
+    // Fallback: legacy anonymous code (pre-account, or student-shared device)
+    let code='';try{code=(localStorage.getItem('co-ws')||'').toUpperCase().trim()}catch(e){}
+    if(!code){code=genCode();try{localStorage.setItem('co-ws',code)}catch(e){}}
+    CLOUD.code=code;
+    const out=await cloudFetch(code);
+    if(!out||!out.ok)return;
+    if(out.data){CLOUD.rev=out.rev||0;if(cloudMerge(out.data,true)){cloudResync();render()}}
+    else if(!await cloudPut(cloudPack()))return;
+    CLOUD.on=true;cloudStart();
+    toast('Cloud sync on — workspace '+code);
+  }catch(e){}
+}
+/* Fetch + merge a PERSONAL join code ("<workspace>-<client>") WITHOUT entering
+   the portal — shared by cloudJoinCode (enter on connect) and the unlock
+   screen (bind on unlock). Returns the matched client or null. */
+async function joinPersonal(v){
+  const parts=parseJoinCode(v);if(!parts)return null;
+  const out=await cloudFetch(parts.ws);
+  /* v18.53 — distinguish "server unreachable" from "code not found": a dead
+     server (or offline phone) must NOT show the misleading "Code not found" —
+     the code may be perfectly valid. Returns 'offline' so the unlock screen
+     shows a retry-with-connection message instead. */
+  if(!out){S.unOffline=true;return null}
+  if(!out.ok||out.exists===false)return null;
+  S.unOffline=false;
+  /* Joining must start from a CLEAN slate (see the legacy path below). */
+  cloudReset();
+  freshWorkspace();
+  CLOUD.code=parts.ws;
+  CLOUD.rev=out.rev||0;
+  /* P1 FIX — server-authoritative: adopt the payload wholesale so demo rows
+     can never survive the join (the union merge below is replaced by this). */
+  if(out.data)adoptRemoteWorkspace(out.data);
+  else cloudMerge(out.data,true);
+  const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+  if(!me)return null;
+  CLOUD.on=true;cloudStart();
+  S.wsConnected=true;
+  S.joinCid=me.id; // v18.52 — remember the bound profile for silent re-bind
+  try{localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:me.id,pcode:v}))}catch(e){}
+  try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
+  cloudResync();
+  return me;
+}
+async function cloudJoinCode(forced){ // client: connect with a connection code
+  /* v18.50 — a NEW attempt restarts the invalid/timeout state. */
+  S.unInvalid=false;S.unT0=0;
+  const v=(forced||($('join-code')?.value||'')).toUpperCase().trim();
+  if(!v){toast('Invalid code');return}
+  /* v16.3 — personal code "<workspace>-<client>": resolves the tenant AND the
+     exact profile, then binds this device straight to it. A bare 6-char code
+     keeps the legacy workspace-wide behaviour for old invites. */
+  const parts=parseJoinCode(v);
+  if(parts){
+    const me=await joinPersonal(v);
+    if(!me){toast(t('Invalid code'));return}
+    S.pickCid=me.id;S.joinCid=me.id;S.joinCode=v;
+    /* On the unlock stage the slider completes the entry (the whole point of
+       the welcome lock); from the legacy demo picker we enter directly. */
+    if(S.role==='client'){S.cid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' ✓')}
+    else render();
+    return;
+  }
+  if(CLOUD.on&&CLOUD.code===v){
+    S.role='client';S.cid=S.pickCid||(CLIENTS[0]&&CLIENTS[0].id)||1;S.ptab='today';S.player=null;S.joinCode=null;
+    render();toast('Connected to your coach ✓');return;
+  }
+  const out=await cloudFetch(v);
+  if(!out||!out.ok){toast('Invalid code');return}
+  if(out.exists===false){toast(t('Invalid code'));return}
+  /* Joining a workspace must start from a CLEAN slate. Previously the local
+     arrays were kept, so a device already synced to coach A that entered coach
+     B's code merged A's clients/notes/messages into B's workspace and then
+     pushed the union — the unauthenticated "student device" PUT path happily
+     accepts it. Wiping first is what cloudReset()'s own contract requires. */
+  cloudReset();
+  freshWorkspace();
+  CLOUD.code=v;
+  CLOUD.rev=out.rev||0;
+  /* P1 FIX — server-authoritative here too (same contract as joinPersonal). */
+  if(out.data)adoptRemoteWorkspace(out.data);
+  /* If the workspace exists but holds no bytes yet, do NOT push this device's
+     local/demo data into someone else's workspace — just wait for the coach's
+     first push (cloudPull picks it up). */
+  CLOUD.on=true;cloudStart();
+  S.wsConnected=true;
+  try{localStorage.setItem('co-ws',v)}catch(e){}
+  cloudResync();render();
+  toast('Workspace connected ✓ — pick your profile below');
+}
+
+/* ================= STATE & HELPERS ================= */
+const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,calOff:0,
+unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
+mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
+cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
+wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
+nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null};
+const $=id=>document.getElementById(id);
+/* HTML escaper. This previously escaped ONLY "<", which was unsafe in two ways:
+   (a) any value placed in a quoted attribute (data-c="${esc(c.name)}", …) could
+       break out with a double quote and inject an event handler;
+   (b) "&", ">" and "'" rendered incorrectly. Everything rendered from user data
+       goes through this, so it must escape all five HTML-significant chars. */
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Defence-in-depth for stored data written before the escaping above existed
+   (or arriving from another device via cloud sync): client names are pure
+   display text, so strip the markup characters instead of rendering them. */
+const scrubName=s=>String(s==null?'':s).replace(/[<>]/g,'').slice(0,80);
+function scrubNames(){
+  const fix=v=>{if(v&&typeof v==='object'&&typeof v.name==='string')v.name=scrubName(v.name)};
+  CLIENTS.forEach(fix);TEMPLATES.forEach(fix);FOODS.forEach(fix);
+  [NOTES,MSGS,EVENTS,FILES,ACTIVITY,NOTIFS].forEach(arr=>arr.forEach(x=>{if(x&&typeof x.client==='string')x.client=scrubName(x.client)}));
+}
+/* v18.5 — avatar photos: tiny square JPEG data-URLs (128px, q .72 ≈ 3–8 KB) so
+   they stay light in localStorage and in the sync payload. */
+let COACH_PIC='';
+const picOf=name=>{
+  if(name&&((name===coachName()||name===wsOwnerName())&&COACH_PIC))return COACH_PIC;
+  const c=CLIENTS.find(x=>x.name===name||t(x.name)===name);
+  return (c&&c.pic)||'';
+};
+const av=(name,s=36,hi)=>{const p=picOf(name);
+  if(p)return `<div class="av" style="width:${s}px;height:${s}px;overflow:hidden;padding:0"><img src="${p}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
+  const i=(hi??[...name].reduce((a,c)=>a+c.charCodeAt(0),0))%HUES.length;const init=name.split(' ').map(w=>w[0]).slice(0,2).join('');return `<div class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:${HUES[i%HUES.length]}">${init}</div>`};
+/* Square-crop + downscale any picked image to a 128px JPEG data-URL. */
+function pickPic(cb){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+    const rd=new FileReader();
+    rd.onload=()=>{const img=new Image();
+      img.onload=()=>{try{
+        const N=128,cv=document.createElement('canvas');cv.width=N;cv.height=N;
+        const ctx=cv.getContext('2d');if(!ctx){toast(t('Could not read the picture'));return}
+        const sc=Math.max(N/img.width,N/img.height),w=img.width*sc,h=img.height*sc;
+        ctx.drawImage(img,(N-w)/2,(N-h)/2,w,h);
+        const url=cv.toDataURL('image/jpeg',.72);
+        if(url.length>80000){toast(t('Picture is too large'));return}
+        cb(url);
+      }catch(err){toast(t('Could not read the picture'))}};
+      img.onerror=()=>toast(t('Could not read the picture'));
+      img.src=rd.result};
+    rd.readAsDataURL(f)};
+  inp.click();
+}
+const avC=(raw,s=36)=>{const f=CLIENTS.find(c=>c.name===raw||t(c.name)===raw);return av(t(f?f.name:raw),s,f?f.id-1:9)};
+/* v18.6 — clickable avatars show a small "+" badge while there is no photo yet,
+   so users understand the circle is tappable to add a picture. Once a photo
+   exists the badge disappears (the picture itself is the affordance). */
+const avPlus=(name,s,hi,has)=>`<span style="position:relative;display:inline-block;line-height:0">${av(name,s,hi)}${has?'':`<span style="position:absolute;bottom:-2px;right:-2px;width:${Math.max(16,Math.round(s*.3))}px;height:${Math.max(16,Math.round(s*.3))}px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-size:${Math.max(11,Math.round(s*.22))}px;font-weight:800;line-height:1;border:2px solid var(--surface);pointer-events:none">+</span>`}</span>`;
+const stBdg=s=>({Active:`<span class="bdg bdg-green">● ${t('Active')}</span>`,Inactive:`<span class="bdg bdg-gray">● ${t('Inactive')}</span>`,'On Hold':`<span class="bdg bdg-amber">● ${t('On Hold')}</span>`,Paused:`<span class="bdg bdg-amber">● ${t('Paused')}</span>`,Archived:`<span class="bdg bdg-gray">📦 ${t('Archived')}</span>`,Pending:`<span class="bdg bdg-lime">⏳ ${t('Pending')}</span>`})[s];
+const fmtT=s=>String(Math.floor(s)).padStart(2,'0')+':'+(s%1?'30':'00');
+const fmtMS=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+const toast=m=>{const d=document.createElement('div');d.className='toast';d.innerHTML=`${ic('check',16)}${esc(t(m))}`;$('toasts').appendChild(d);setTimeout(()=>{d.classList.add('out');setTimeout(()=>d.remove(),150)},2600)};
+/* Safe stand-in for "there is no client yet" (brand-new coach account).
+   client() used to return CLIENTS[0] — i.e. undefined on an empty roster — and
+   views like vBuilder/vMeasure/measModal immediately did `c.name` and
+   `DB[c.id].workouts`. The throw happened inside render(), inside the delegated
+   click listener, so the view was never replaced and every later render threw
+   too: the app was bricked until a reload. */
+const NO_CLIENT={id:0,name:'—',goal:'—',prog:'—',status:'Active',freq:'—',next:'—',nextW:'—',last:'—',streak:0,done:0,missed:0,week:0,weight:0,bf:0,h:0,email:''};
+const client=id=>{
+  const c=CLIENTS.find(x=>x.id===id)||CLIENTS[0];
+  if(c)return c;
+  // Empty roster: hand back the placeholder and make sure its DB bucket exists
+  // so the `DB[c.id].x` accesses in the per-client views cannot throw.
+  if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
+  return NO_CLIENT;
+};
+/* DB buckets are keyed by client id. The placeholder bucket (id 0) and any
+   bucket whose client was deleted are memory-only — never serialized. */
+const packDB=()=>{
+  const ids=new Set(CLIENTS.map(c=>String(c.id)));
+  const out={};Object.keys(DB).forEach(k=>{if(ids.has(k))out[k]=DB[k]});
+  return out;
+};
+/* Client ids. A plain max+1 sequence collides across devices: two offline
+   devices each adding a client to the same 8-client roster both produce id 9,
+   cloudMerge unions CLIENTS by id, and the second one is treated as an
+   existing row — so one client SILENTLY disappears (and DB[9] is overwritten).
+   Client ids are only used as object keys / for lookup / for the avatar hue
+   (which is taken modulo), so a time+counter id is safe — and it keeps
+   "newest first" ordering (CLIENTS.sort by id desc) working. */
+let __nextIdSeq=0;
+const nextId=()=>{
+  const seq=CLIENTS.reduce((m,c)=>Math.max(m,+c.id||0),0)+1;
+  const uniq=Date.now()*1000+(__nextIdSeq=(__nextIdSeq+1)%1000);
+  return Math.max(seq,uniq);
+};
+const isNarrow=()=>window.innerWidth<760;
+
+/* ================= v17.5 — COMPETITOR-PARITY FEATURES =================
+   Gap-closers vs Trainerize / Everfit / TrueCoach / Practice Better:
+   session packages, intake (PAR-Q) form, real progress-photo upload,
+   announcements, message templates, print/PDF, goal targets. */
+const packRemain=name=>{const ps=PACKS.filter(p=>p.client===name);return ps.length?ps.reduce((a,p)=>a+Math.max(0,p.total-p.used),0):null};
+const goalPct=c=>{if(!c||!c.targetW||!c.weight)return 0;const s=c.startW||c.weight;const span=c.targetW-s;if(!span)return 100;return Math.max(0,Math.min(100,Math.round((c.weight-s)/span*100)))};
+const INTAKE_Q=['Emergency contact (name & phone)','Injuries or medical conditions','Current medications','Chest pain or dizziness during exercise?','Heart condition diagnosed by a doctor?','Bone or joint problem that could worsen?','Currently doing other training?','Main goal & expectations'];
+const INTAKE_YN=[3,4,5,6]; // indexes of the yes/no (PAR-Q) questions
+function photoTotalBytes(){let n=0;Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=(p.src||'').length}));return n}
+/* Downscale to ≤640px JPEG (~40-60 KB) — the workspace payload has a 5 MB cap,
+   so raw phone photos (3-8 MB) would break sync after the first upload. */
+function resizeImage(file,cb){
+  const rd=new FileReader();
+  rd.onload=()=>{const img=new Image();
+    img.onload=()=>{
+      const MAX=640;let w=img.width,h=img.height;
+      if(Math.max(w,h)>MAX){const r=MAX/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r)}
+      const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      cb(cv.toDataURL('image/jpeg',0.7));
+    };
+    img.src=rd.result};
+  rd.readAsDataURL(file);
+}
+function pickPhoto(by){
+  const c=client(S.cid);
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{
+    const f=inp.files&&inp.files[0];if(!f)return;
+    if(by==='client'&&PREFS.priv.consent&&!confirm(t('Your coach will see this photo. Upload?')))return;
+    const photos=DB[c.id].photos=DB[c.id].photos||[];
+    if(photos.length>=8){toast(t('Photo limit reached — delete an older photo first'));return}
+    if(photoTotalBytes()>3500000){toast(t('Photo storage is full — delete some photos first'));return}
+    resizeImage(f,src=>{
+      photos.push({id:uid(),d:Date.now(),tag:({Front:'front',Back:'back',Side:'side'})[S.pose]||'front',src,by,ok:by==='coach'});
+      saveData();render();
+      toast(by==='coach'?t('Photo added ✓'):t('Photo sent — waiting for coach approval'));
+    });
+  };
+  inp.click();
+}
+function intakeModal(){
+  const c=client(S.cid);
+  const a=(c.intake&&c.intake.a)||[];
+  openModal(`
+  <div class="modal-h"><h3>${t('Intake form')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:12px">${t('Your coach needs your health background before the first session')}</div>
+    ${INTAKE_Q.map((q,i)=>`<div class="field"><label class="lbl">${t(q)}</label>${
+      INTAKE_YN.includes(i)
+        ?`<select class="sel" id="iq-${i}">${['No','Yes'].map(v=>`<option value="${v}" ${a[i]===v?'selected':''}>${t(v)}</option>`).join('')}</select>`
+        :`<input class="inp" id="iq-${i}" value="${esc(a[i]||'')}">`
+    }</div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="intake-save">${ic('check',15)} ${t('Submit')}</button></div>`);
+}
+function intakeViewModal(name){
+  const c=CLIENTS.find(x=>x.name===name);if(!c)return;
+  const a=(c.intake&&c.intake.a)||[];
+  openModal(`
+  <div class="modal-h"><h3>${t('Intake form')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${c.intake?`<div class="muted" style="font-size:12px;margin-bottom:10px">${t('Submitted')}: ${new Date(c.intake.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')}</div>`
+      :`<div class="row" style="padding:10px 12px;border-radius:10px;background:var(--amber-soft,rgba(199,116,20,.12));color:var(--amber,#C77414);font-size:12.5px;font-weight:600">${ic('bell',14)} ${t('The client has not submitted the intake form yet')}</div>`}
+    ${INTAKE_Q.map((q,i)=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+      <div class="muted" style="font-size:11px;font-weight:700">${t(q)}</div>
+      <b style="font-size:13px">${esc(a[i]||'—')}</b></div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function packsModal(name){
+  const list=PACKS.filter(p=>p.client===name);
+  openModal(`
+  <div class="modal-h"><h3>${t('Session packages')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${list.length?list.map(p=>`<div class="tl-row">
+      <div style="flex:1;min-width:0"><b style="font-size:13px">${esc(t(p.name))}</b>
+        <div class="muted" style="font-size:11.5px">${t('Used')}: ${nf(p.used)} / ${nf(p.total)}</div></div>
+      <span class="bdg ${(p.total-p.used)<=1?'bdg-amber':'bdg-lime'}">${nf(Math.max(0,p.total-p.used))} ${t('left')}</span>
+      <button class="btn btn-ghost btn-icon" data-act="pack-del" data-id="${p.id}" data-c="${esc(name)}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12.5px;padding:8px 0">${t('No packages yet — sell sessions as a pack and CoachMint counts them down automatically')}</div>`}
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:8px">${t('Add pack')}</div>
+      <div class="fgrid">
+        <div class="field"><label class="lbl">${t('Pack name')}</label><input class="inp" id="pk-name" placeholder="${t('10-Session Pack')}"></div>
+        <div class="field"><label class="lbl">${t('Sessions')}</label><input class="inp" id="pk-total" type="number" min="1" max="200" value="10"></div>
+      </div>
+      <button class="btn btn-primary btn-sm" data-act="pack-add" data-c="${esc(name)}">${ic('plus',13)} ${t('Add pack')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function announceModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('New announcement')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Title')}</label><input class="inp" id="an-title" placeholder="${t('Schedule change next week')}"></div>
+    <div class="field"><label class="lbl">${t('Message')}</label><textarea class="ta" id="an-body" style="min-height:110px" placeholder="${t('Write the announcement…')}"></textarea></div>
+    <div class="muted" style="font-size:12px">${t('Goes to every active client as a direct message')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="announce-send">${ic('check',15)} ${t('Send to all clients')}</button></div>`);
+}
+function msgtplModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Message templates')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${MSGTPL.length?MSGTPL.map(tp=>`<div class="tl-row">
+      <div style="flex:1;min-width:0"><b style="font-size:13px">${esc(t(tp.n))}</b>
+        <div class="muted" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t(tp.body))}</div></div>
+      <button class="btn btn-outline btn-sm" data-act="msgtpl-use" data-n="${esc(tp.n)}">${t('Use')}</button>
+      <button class="btn btn-ghost btn-icon" data-act="msgtpl-del" data-n="${esc(tp.n)}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12.5px;padding:8px 0">${t('No templates yet')}</div>`}
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:8px">${t('New template')}</div>
+      <div class="field"><label class="lbl">${t('Template name')}</label><input class="inp" id="mt-name" placeholder="${t('Session reminder')}"></div>
+      <div class="field"><label class="lbl">${t('Template text')}</label><textarea class="ta" id="mt-body" style="min-height:80px"></textarea></div>
+      <button class="btn btn-primary btn-sm" data-act="msgtpl-add">${ic('check',13)} ${t('Save')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* v18.68 (idea 5) — printable monthly plan: the recurring week rendered as a
+   table + the next 4 months of the same pattern, with the client QR footer. */
+function printMonthPlan(){
+  const c=client(S.cid);const sp=splitOf(c.id);
+  const rows=[0,1,2,3,4,5,6].map(i=>{const s=sp[i];const w=splitW(c.id,s);
+    return `<tr><td style="width:90px"><b>${t(WDN[i])}</b></td><td>${s&&s.t==='rest'?`<span style="color:#999">${t('Rest day')}</span>`:w?`<b>${esc(t(w.name)||t('New workout'))}</b> <span style="color:#666">— ${esc(t(w.dur||'60 min'))}</span>`:`<span style="color:#bbb">${t('Unassigned')}</span>`}</td></tr>`}).join('');
+  const base=calMonthBase(S.calOff||0);
+  const months=[0,1,2,3].map(k=>{const b=calMonthBase((S.calOff||0)+k);
+    return `<div class="mm"><h2>${b.toLocaleDateString(dLoc(),{month:'long',year:'numeric'})}</h2>
+    <table>${rows}</table></div>`}).join('');
+  printDoc(t('Monthly workout plan')+' — '+t(c.name),
+    `<h1>${t('Monthly workout plan')} — ${esc(t(c.name))}</h1>
+     <div class="meta">${t('Every week')} · ${esc(t(c.freq))}</div>${months}`,
+    c.name);
+}
+/* v18.68 — WEEKDAY ADHERENCE (idea 3): from the REAL per-set log, per weekday:
+   planned weeks = split slot is a workout; done = a log entry on a date whose
+   weekday matches. Shows the coach WHEN the client actually trains. */
+function weekdayAdherence(cid,n=8){
+  const db=DB[cid]||{};const sp=Array.isArray(db.split)?db.split:[];
+  const L=wlogOf(cid);
+  const byWd={},planned={};
+  for(let i=0;i<7;i++){byWd[i]=0;planned[i]=0}
+  for(let i=0;i<7;i++)if(sp[i]&&sp[i].t==='w')planned[i]=n;
+  const cut=Date.now()-n*7*864e5;
+  L.forEach(e=>{const d=new Date(e.at||((e.d||'')+'T12:00:00'));
+    if(isNaN(d)||d.getTime()<cut)return;const wd=(d.getDay()+6)%7;byWd[wd]++});
+  return [0,1,2,3,4,5,6].map(i=>({wd:i,p:planned[i],d:byWd[i],
+    pct:planned[i]?Math.min(100,Math.round(byWd[i]/planned[i]*100)):null}));
+}
+/* v18.68 — adherence mini-bar row for the coach calendar sidebar */
+function adherenceCard(){
+  const rows=weekdayAdherence(S.cid);
+  const anyP=rows.some(r=>r.p>0),anyD=rows.some(r=>r.d>0);
+  return `<div class="card"><div class="card-h"><span class="card-t">${ic('chart',14)} ${t('Training days adherence')}</span><span class="muted" style="font-size:11px">${t('last')} ${nf(8)} ${t('weeks')}</span></div>
+  ${(anyP||anyD)?rows.map(r=>`
+    <div class="set-row" style="gap:10px;padding:7px 10px">
+      <b style="flex:none;width:34px">${t(WDN[r.wd])}</b>
+      <div style="flex:1;height:7px;border-radius:6px;background:var(--line2);overflow:hidden;min-width:0">
+        <div style="width:${r.pct!=null?Math.min(100,r.pct):0}%;height:100%;background:${r.pct==null?'var(--line2)':r.pct>=75?'var(--green)':r.pct>=40?'var(--amber)':'var(--red)'};border-radius:6px;transition:width .3s"></div>
+      </div>
+      <span class="muted" style="flex:none;font-size:11px;width:52px;text-align:end">${r.d}/${r.p||'—'}</span>
+    </div>`).join('')
+  :`<div style="padding:18px;text-align:center;color:var(--ink3);font-size:12px">${t('No data yet')}</div>`}
+  <div class="muted" style="font-size:10.5px;padding:4px 12px 8px;text-align:center">${t('done / planned · from real logged sessions')}</div></div>`;
+}
+/* Print/PDF export (TrueCoach parity): a clean light-themed print window —
+   no shell, no dark background, just the plan. v18.38: CoachMint-branded
+   header + a connection-QR footer so every printed page carries the brand
+   and a scannable join code (clientName picks whose code is printed). */
+function printDoc(title,inner,clientName){
+  const c=clientName?CLIENTS.find(x=>x.name===clientName):(S.cid!=null?client(S.cid):null);
+  const code=c?joinCodeOf(c):'';
+  const link=code?inviteLink(code):'';
+  const qr=link?`<div class="qrbox"><div>${qrSvg(link,96)}</div><div><b>${t('Scan to connect')}</b><div class="meta">${t('Open the CoachMint app — your plan syncs live')}</div><div class="qrcode">${esc(code)}</div></div></div>`:'';
+  const w=window.open('','_blank','width=840,height=940');
+  if(!w){toast(t('Allow pop-ups to print'));return}
+  w.document.write(`<!DOCTYPE html><html ${lang==='fa'?'dir="rtl" lang="fa"':''}><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+  body{font-family:Vazirmatn,'Segoe UI',Tahoma,sans-serif;color:#12151B;margin:32px;max-width:760px;font-size:13px}
+  .brand{display:flex;align-items:center;gap:10px;border-bottom:3px solid #C8F04B;padding-bottom:12px;margin-bottom:6px}
+  .brand svg{width:34px;color:#8FB51E;flex:none}
+  .wm{font-weight:800;font-size:18px;letter-spacing:.04em}.wm b{color:#8FB51E}
+  .brand .dt{margin-inline-start:auto;color:#6B7280;font-size:11.5px}
+  h1{font-size:20px;margin:14px 0 4px}h2{font-size:13px;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:#8FB51E}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{border-bottom:1px solid #E7E9DD;padding:7px 9px;text-align:start}th{background:#F7FAEC;color:#4A6210;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .meta{color:#666;font-size:12px;margin-bottom:6px}.brand2{font-weight:800;letter-spacing:.05em}
+  .qrbox{display:flex;gap:16px;align-items:center;margin-top:26px;padding:14px 16px;border:1.5px dashed #C9D6A0;border-radius:12px;background:#FBFDF3;page-break-inside:avoid}
+  .qrcode{font-weight:800;letter-spacing:.12em;font-size:14px;margin-top:5px;color:#4A6210}
+  .foot{margin-top:24px;color:#999;font-size:11px;border-top:1px solid #eee;padding-top:8px;display:flex;justify-content:space-between}
+  @media print{h2{page-break-after:avoid}table,.qrbox{page-break-inside:avoid}}
+  </style></head><body>
+  <div class="brand"><svg viewBox="0 0 120 100" fill="none"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg><span class="wm">COACH<b>MINT</b></span><span class="dt">${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{year:'numeric',month:'long',day:'numeric'})}</span></div>
+  ${inner}${qr}
+  <div class="foot"><span class="brand2">CoachMint</span> — ${esc(t('Coach'))}: ${esc(wsOwnerName()||'—')}</div></body></html>`);
+  w.document.close();w.focus();setTimeout(()=>w.print(),250);
+}
+function printWorkout(){
+  if(!BUILDER.length){toast(t('Nothing to print — the builder is empty'));return}
+  const name=($('w-name')&&$('w-name').value)||S.wname||'Workout';
+  const day=($('w-day')&&$('w-day').value)||S.wday||'';
+  const dur=($('w-dur')&&$('w-dur').value)||S.wdur||'';
+  const note=($('w-note')&&$('w-note').value)||S.wnote||'';
+  const c=client(S.cid);
+  const rows=BUILDER.map((b,i)=>{const ex=EXERCISES[b.ex]||{};
+    return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td><td>${esc(t(b.note||''))}</td></tr>`}).join('');
+  printDoc(name,`<h1>${esc(t(name))}</h1>
+    <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
+    ${note?`<div class="meta">✎ ${esc(t(note))}</div>`:''}
+    <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`,c.name);
+}
+function printNutrition(){
+  const p=NPLANS[S.nplan];if(!p){toast(t('Create a nutrition plan first'));return}
+  const days=p.days.map((d,i)=>{
+    const tg=d.type==='train'?p.train:p.rest;
+    const mealRows=(d.meals||[]).map(m=>`<tr><td>${esc(t(m.time))}</td><td>${esc(t(m.name))}</td><td>${(m.foods||[]).map(x=>{const f=FOODS[x.fi];return f?esc(foodName(f.n))+' '+nf(x.g)+'g':''}).filter(Boolean).join(', ')||'—'}</td><td>${nf(Math.round(mealKcal(m)))} kcal</td></tr>`).join('');
+    return `<h2>${esc(t(DAYS[i]))} — ${esc(t(d.type==='train'?'Training Day':'Rest Day'))} (${nf(tg.kcal)} kcal)</h2>
+    <table><thead><tr><th>${esc(t('Meal time'))}</th><th>${esc(t('Meal'))}</th><th>${esc(t('Foods'))}</th><th>${esc(t('Calories'))}</th></tr></thead><tbody>${mealRows}</tbody></table>`;
+  }).join('');
+  printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`,p.client);
+}
+/* v18.38 — full week-plan print: every workout grouped by day + a nutrition
+   summary. This is the OFFLINE/demo fallback for /api/export/pdf — same
+   layout, rendered from local data with the full in-app FA dictionary. */
+const DOW=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const dayIx=d=>{const i=DOW.indexOf(d);return i<0?99:i};
+function printWeek(){
+  const c=client(S.cid),db=DB[c.id]||{};
+  const list=[...(db.workouts||[])].sort((a,b)=>dayIx(a.day)-dayIx(b.day)).slice(0,14);
+  const wk=list.map(w=>{
+    const rows=(w.exercises||[]).map((b,i)=>{const ex=EXERCISES[b.ex]||{};
+      return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}${b.note?`<div class="meta">${esc(t(b.note))}</div>`:''}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td></tr>`}).join('');
+    const sets=(w.exercises||[]).reduce((a,b)=>a+(b.sets||0),0);
+    return `<div style="display:flex;gap:10px;align-items:baseline;margin:16px 0 2px;flex-wrap:wrap"><span style="background:#12151B;color:#fff;font-weight:800;font-size:10.5px;padding:4px 10px;border-radius:6px">${esc(t(w.day||''))}</span><b style="font-size:14.5px">${esc(w.name)}</b><span class="meta">${esc(t(w.dur||''))} · ${nf(sets)} ${t('sets')}</span></div>
+    <table><thead><tr><th style="width:26px">#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }).join('')||`<div class="meta">${t('No workouts yet')}</div>`;
+  const p=nPlanOf(c.name);
+  const nut=p?`<h2>${esc(t('Nutrition Plan'))} — ${esc(t(p.name))}</h2><div class="meta">${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal · ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>`:'';
+  printDoc(t('Week Plan')+' — '+t(c.name),`<h1>${esc(t('Week Plan'))} — ${esc(t(c.name))}</h1><div class="meta">${esc(t(c.goal))} · ${esc(t(c.prog))}${c.freq?' · '+esc(t(c.freq)):''}</div>${wk}${nut}`,c.name);
+}
+/* v18.38 — /api/export/pdf client bridge: opens the server-rendered printable
+   page (works from any device that knows the workspace code, QR included).
+   Offline or demo → the local branded print (printWeek / printNutrition). */
+function exportPdf(kind,clientName){
+  const c=clientName?CLIENTS.find(x=>x.name===clientName):client(S.cid);
+  if(!c){toast(t('Create a nutrition plan first'));return}
+  if(CLOUD.on&&navigator.onLine&&wsCode()){
+    const u='/api/export/pdf?code='+encodeURIComponent(wsCode())+'&client='+encodeURIComponent(c.id)+'&kind='+(kind||'week')+'&lang='+lang;
+    let w=null;try{w=window.open(u,'_blank')}catch(e){}
+    if(w)return;
+    toast(t('Allow pop-ups to export'));return;
+  }
+  if(kind==='nutrition')printNutrition();else printWeek();
+}
+/* ===== v17.11 — onboarding wizard (4 steps, answers shape the workspace) ===== */
+function onbWizard(){
+  S.onb=S.onb||{step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};
+  const st=S.onb.step;
+  const dots=[0,1,2,3].map(i=>`<span class="onb-dot ${i<=st?'on':''}"></span>`).join('');
+  let title='',body='';
+  if(st===0){title='Which sport do you coach?';
+    body=`<div class="onb-grid">${ONB_SPORTS.map(s=>`<button class="onb-opt ${S.onb.sport===s?'on':''}" data-act="onb-pick" data-k="sport" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:10px">${t('More sports are coming — pick the closest one for now')}</div>`;}
+  if(st===1){title='How do you coach?';
+    body=`<div class="onb-grid">${ONB_CONTEXT.map(s=>`<button class="onb-opt ${S.onb.context===s?'on':''}" data-act="onb-pick" data-k="context" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>`;}
+  if(st===2){title='How many clients do you have?';
+    body=`<div class="onb-grid">${ONB_SCALE.map(([id,l,d])=>`<button class="onb-opt ${S.onb.scale===id?'on':''}" data-act="onb-pick" data-k="scale" data-v="${id}"><b>${t(l)}</b><span class="muted" style="font-size:12px">${t(d)}</span></button>`).join('')}</div>`;}
+  if(st===3){title='What do you do most?';
+    body=`<div class="onb-grid">${ONB_FOCUS.map(([id,l])=>`<button class="onb-opt ${S.onb.focus===id?'on':''}" data-act="onb-pick" data-k="focus" data-v="${id}">${t(l)}</button>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:10px">${t('This becomes your home screen — change it anytime in Settings')}</div>`;}
+  const canNext=st===0?!!S.onb.sport:st===1?!!S.onb.context:st===2?!!S.onb.scale:!!S.onb.focus;
+  openModal(`
+  <div class="modal-h"><h3>${t('Set up your workspace')}</h3><button class="btn btn-ghost btn-icon" data-act="onb-skip" title="${t('Skip for now')}">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:6px;margin-bottom:16px">${dots}<span class="sp"></span><span class="muted" style="font-size:12px">${nf(st+1)} / ${nf(4)}</span></div>
+    <b style="font-size:16px;display:block;margin-bottom:14px">${t(title)}</b>
+    ${body}
+  </div>
+  <div class="modal-f">
+    ${st>0?`<button class="btn btn-outline" data-act="onb-back">${t('Back')}</button>`:''}
+    <span class="sp"></span>
+    <button class="btn btn-primary" data-act="onb-next" ${canNext?'':'disabled style="opacity:.5;cursor:not-allowed"'}>${st===3?t('Finish'):t('Continue')} ${ic('arrowR',15)}</button>
+  </div>`);
+}
+/* Auto-pop ONCE for signed-in coaches that never finished it. The check runs
+   again inside the timeout so a cloud merge that arrives first (done:true)
+   cancels the popup. Demo coaches (no token) are never interrupted. */
+function maybeOnboard(){
+  if(!AUTH.token||ONBOARD.done)return;
+  setTimeout(()=>{
+    if(ONBOARD.done||S.role!=='coach')return;
+    S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};
+    onbWizard();
+  },600);
+}
+/* Session packs: attending a session consumes one from the client's oldest
+   pack with remaining sessions; un-marking refunds it (tracked via ev.packId
+   so a re-mark never double-charges). */
+function packCharge(ev,was){
+  if(ev.type!=='session')return;
+  if(ev.att==='done'&&!ev.packId){
+    const p=PACKS.filter(x=>x.client===ev.client&&x.total-x.used>0).sort((a,b)=>a.createdAt-b.createdAt)[0];
+    if(p){p.used++;ev.packId=p.id}
+  }else if(was==='done'&&ev.att!=='done'&&ev.packId){
+    const p=PACKS.find(x=>x.id===ev.packId);
+    if(p&&p.used>0)p.used--;
+    ev.packId=undefined;
+  }
+}
+const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
+/* v18.12 — one-tap theme switch: shows the theme you'll GET (sun in dark mode,
+   moon in light mode), like GitHub/Linear. System pref stays available in
+   Settings → Appearance; this button flips Light↔Dark directly. */
+const themeBtn=cls=>{const dark=(PREFS.theme||'Dark')!=='Light';
+  return `<button class="btn ${cls}" data-act="theme-toggle" title="${dark?t('Switch to light theme'):t('Switch to dark theme')}">${ic(dark?'sun':'moon',16)}</button>`};
+const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
+const genCode=(n=6)=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<n;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
+const inviteLink=code=>location.origin+location.pathname+'#join='+code;
+/* ---- Per-student connection codes (v16.3) ----
+   Every client owns a PERSONAL 8-char code (c.code) the coach issues. The
+   string a student enters is "<workspaceCode>-<personalCode>" so ONE code
+   resolves both the tenant and the exact profile — it rides the existing
+   /api/data sync, no server-side index needed. The coach shares only that
+   student's code, and joining binds the device straight to that profile
+   (no client picker, no access to other students' views). */
+const clientCode=c=>{
+  if(c.code)return String(c.code).toUpperCase();
+  c.code=genCode(8);
+  if(CLOUD.on)cloudSchedule(); // persist the freshly minted code
+  return c.code;
+};
+const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
+const joinCodeOf=c=>{const ws=wsCode();return ws?ws+'-'+clientCode(c):clientCode(c)};
+/* v18.38 — day-streak display: the real dayStreak once the gamification engine
+   has run for a client, the legacy weekly streak as fallback for old data. */
+const streakLbl=c=>c.dayStreak!=null?`${nf(c.dayStreak)} ${t('day streak')}`:c.streak?`${nf(c.streak)} ${t('wk')}`:'—';
+const parseJoinCode=v=>{const i=String(v||'').indexOf('-');return i>0?{ws:String(v).slice(0,i),pc:String(v).slice(i+1)}:null};
+const itK=it=>{const f=FOODS[it.fi];return f?Math.round(f.kcal*it.g/100):0};
+const itM=(it,k)=>{const f=FOODS[it.fi];return f?Math.round((f[k]||0)*it.g/100):0};
+/* v18.9.1 — a missing food entry (old payload, pruned library) must never
+   crash the planner: unknown foods simply contribute 0 to the totals. */
+const mealKcal=m=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];return a+(f?f.kcal*x.g/100:0)},0):(m.mk?m.mk.kcal:0);
+const mealM=(m,k)=>m.foods.length?m.foods.reduce((a,x)=>{const f=FOODS[x.fi];return a+(f?(f[k]||0)*x.g/100:0)},0):(m.mk&&k==='p'?m.mk.p:0);
+const daySum=ms=>({kcal:Math.round(ms.reduce((a,m)=>a+mealKcal(m),0)),p:Math.round(ms.reduce((a,m)=>a+mealM(m,'p'),0)),c:Math.round(ms.reduce((a,m)=>a+mealM(m,'c'),0)),f:Math.round(ms.reduce((a,m)=>a+mealM(m,'f'),0))});
+const nPlanOf=cl=>NPLANS.find(x=>x.client===cl&&x.status!=='Archived');
+
+/* ================= v18.48 — NUTRITION ASSISTANT ENGINE =================
+   DETERMINISTIC layer of the assistant (the LLM never computes numbers).
+   Everything the student sees and everything the server model is told comes
+   from these pure functions over FOODS + NPLANS + NLOGS + c.nprof:
+     targets()   → daily calorie/macro/water targets (plan day-type → nprof → null)
+     consumed()  → what was actually eaten (NLOGS)
+     remaining() → targets − consumed
+     adherence() → per-day hit/miss over a window (kcal ±15%, protein ≥90%)
+     status()    → 🟢 ok / 🟡 warn / 🔴 alert + human-readable reasons
+     parseText() → "200g chicken and 300g rice" → structured items (food DB match)
+     suggestNow()→ contextual "what should I eat now?" options ranked against
+                   remaining macros, time of day and preferences
+     swapsFor()  → nutritionally comparable alternatives (alt[] + macro similarity) */
+const NMEALS=['Breakfast','Snack','Lunch','Pre-Workout','Dinner','Before Bed'];
+const N_NO_COOK=['Greek Yogurt','Cottage Cheese','Whey Protein','Banana','Apple','Almonds','Whole Wheat Bread','Orange Juice'];
+const N_BUDGET=['Whole Eggs','Egg Whites','Oats','White Rice (cooked)','Whole Wheat Bread','Cottage Cheese','Banana','Broccoli','Lentils'];
+const NEng={
+  dow:iso=>{const d=new Date(iso+'T12:00:00');return (d.getDay()+6)%7},
+  /* Targets: the coach's ACTIVE plan wins (train/rest day type); the student's
+     own profile targets are the fallback; no targets → null (assistant still
+     logs, but frames everything as "no targets set"). */
+  targets(c,iso){
+    const p=nPlanOf(c.name);
+    if(p&&Array.isArray(p.days)){const day=p.days[this.dow(iso||isoToday())];if(day)return day.type==='train'?p.train:p.rest}
+    const np=c.nprof;
+    if(np&&np.kcal>0)return {kcal:Math.round(np.kcal),p:Math.round(np.p||0),c:Math.round(np.c||0),f:Math.round(np.f||0)};
+    return null;
+  },
+  waterT(c){const np=c.nprof;return np&&np.waterL>0?np.waterL:(nPlanOf(c.name)?3:2.5)},
+  logs(c,iso){return NLOGS.filter(l=>l&&l.client===c.name&&l.d===iso)},
+  consumed(c,iso){
+    const ls=this.logs(c,iso).filter(l=>l.type!=='water');
+    return {kcal:Math.round(ls.reduce((a,l)=>a+(l.kcal||0),0)),p:Math.round(ls.reduce((a,l)=>a+(l.p||0),0)),c:Math.round(ls.reduce((a,l)=>a+(l.c||0),0)),f:Math.round(ls.reduce((a,l)=>a+(l.f||0),0))};
+  },
+  waterOf(c,iso){return Math.round(this.logs(c,iso).reduce((a,l)=>a+(l.ml||0),0)/100)/10},
+  mealsLogged(c,iso){return new Set(this.logs(c,iso).filter(l=>l.type!=='water'&&l.meal).map(l=>l.meal)).size},
+  remaining(c,iso){
+    const tg=this.targets(c,iso),co=this.consumed(c,iso);
+    if(!tg)return null;
+    return {kcal:Math.max(0,tg.kcal-co.kcal),p:Math.max(0,tg.p-co.p),c:Math.max(0,tg.c-co.c),f:Math.max(0,tg.f-co.f)};
+  },
+  /* One day's scorecard: null when there is nothing to compare (no targets). */
+  dayHit(c,iso){
+    const tg=this.targets(c,iso);if(!tg||!tg.kcal)return null;
+    const co=this.consumed(c,iso);
+    const logged=co.kcal>0||this.waterOf(c,iso)>0;
+    return {logged,kcal:co.kcal>0&&co.kcal>=tg.kcal*0.85&&co.kcal<=tg.kcal*1.15,prot:co.p>=tg.p*0.9,kcalPct:Math.round(co.kcal/tg.kcal*100),protPct:tg.p?Math.round(co.p/tg.p*100):100};
+  },
+  adherence(c,days){
+    const n=days||7;let logged=0,kcalHits=0,protHits=0,withTg=0,kcalPctSum=0,protPctSum=0;
+    for(let i=0;i<n;i++){
+      const iso=__iso(-i);
+      const h=this.dayHit(c,iso);if(!h)continue;withTg++;
+      if(h.logged)logged++;
+      if(h.kcal){kcalHits++;kcalPctSum+=h.kcalPct}
+      if(h.prot){protHits++;protPctSum+=h.protPct}
+    }
+    return {days:n,withTg,logged,kcalHits,protHits,kcalPct:withTg?Math.round(kcalPctSum/Math.max(1,kcalHits)):0,protPct:withTg?Math.round(protPctSum/Math.max(1,protHits)):0,consistency:withTg?Math.round(logged/withTg*100):0};
+  },
+  /* Status for the coach dashboard: worst reason wins. Deliberately CONSERVATIVE —
+     a missing plan is 'ok' (nothing to monitor yet), only real logged behavior
+     raises flags. */
+  status(c){
+    const hasPlan=!!(nPlanOf(c.name)||(c.nprof&&c.nprof.kcal>0));
+    if(!hasPlan)return {level:'ok',reasons:[]};
+    const reasons=[];
+    const ad=this.adherence(c,3);
+    if(ad.withTg&&ad.logged===0)reasons.push({sev:'alert',k:'logging',d:t('No food logs for 3 days')});
+    else if(ad.withTg>=2&&ad.protHits===0)reasons.push({sev:'warn',k:'protein',d:t('Protein below target the last 3 days')});
+    if(ad.withTg>=2&&ad.kcalHits===0&&ad.logged>0)reasons.push({sev:'warn',k:'kcal',d:t('Calories off target the last 3 days')});
+    const w=this.waterOf(c,isoToday()),wt=this.waterT(c);
+    if(w>0&&w<wt*0.4)reasons.push({sev:'info',k:'water',d:t('Hydration well below target today')});
+    const level=reasons.some(r=>r.sev==='alert')?'alert':reasons.some(r=>r.sev==='warn')?'warn':'ok';
+    return {level,reasons};
+  },
+  /* Food lookup by ANY name: exact EN, FA display name, or substring. */
+  foodLookup(name){
+    const q=String(name||'').trim().toLowerCase();if(!q)return null;
+    let f=FOODS.find(x=>x.n.toLowerCase()===q);
+    if(!f)f=FOODS.find(x=>foodName(x.n).toLowerCase()===q);
+    if(!f)f=FOODS.find(x=>x.n.toLowerCase().includes(q)||foodName(x.n).toLowerCase().includes(q));
+    return f||null;
+  },
+  itemM(n,g){const f=this.foodLookup(n);if(!f)return null;return {n:f.n,g:Math.round(g),kcal:Math.round(f.kcal*g/100),p:Math.round(f.p*g/100),c:Math.round(f.c*g/100),f:Math.round(f.f*g/100)}},
+  /* Natural-language log parsing: "200g chicken and 300g rice" / "۲۰۰ گرم مرغ".
+     Numbers BEFORE the food name (200g chicken) or Persian digits both work.
+     Returns {items, unknown:[names]} — unknown foods are ASKED about, never guessed. */
+  parseText(txt){
+    const fa=lang==='fa';
+    let s=String(txt||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/،/g,',');
+    const chunks=s.split(/\s+(?:and|و|\+|,|؛|;)\s+/i).map(x=>x.trim()).filter(Boolean);
+    const items=[],unknown=[];
+    chunks.forEach(ch=>{
+      const m=ch.match(/(\d+(?:[.,]\d+)?)\s*(?:g|gr|gram|گرم)?\s*(?:of\s+)?(.+)/i)||ch.match(/(.+?)\s*(\d+(?:[.,]\d+)?)\s*(?:g|گرم)/i);
+      if(!m){const f=this.foodLookup(ch.replace(/\d+[gگرم]*\s*/i,'').trim());if(f)items.push(this.itemM(f.n,100));else if(ch.length>1)unknown.push(ch);return}
+      const g=parseFloat(String(m[1]).replace(',','.'));
+      const name=m[2]||m[1];
+      const f=this.foodLookup(name);
+      if(f&&g>0)items.push(this.itemM(f.n,Math.min(2000,g)));
+      else unknown.push(name.trim());
+    });
+    return {items:items.filter(Boolean),unknown,fa};
+  },
+  /* "What should I eat now?" — deterministic, contextual. Buckets map to the
+     product spec: quick / high-protein / budget / light / no-cook. Each option
+     is 1-3 REAL foods from the library scored against the REMAINING macros. */
+  suggestNow(c,iso){
+    const rem=this.remaining(c,iso)||{kcal:600,p:40,c:60,f:20};
+    const hour=TDATE.getHours();
+    const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<18?'Snack':hour<22?'Dinner':'Before Bed';
+    const pool=FOODS.filter(f=>f.kcal>0);
+    const dislikes=String((c.nprof||{}).dislikes||'').toLowerCase().split(/[,،]/).map(x=>x.trim()).filter(Boolean);
+    const allergies=String((c.nprof||{}).allergies||'').toLowerCase().split(/[,،]/).map(x=>x.trim()).filter(Boolean);
+    const okF=f=>!allergies.some(a=>a&&(f.n.toLowerCase().includes(a)||foodName(f.n).toLowerCase().includes(a)))&&!dislikes.some(a=>a&&(f.n.toLowerCase().includes(a)||foodName(f.n).toLowerCase().includes(a)));
+    const score=f=>{
+      const g=Math.max(30,Math.min(300,Math.round(rem.p>0?Math.min(rem.p*1.4/f.p*100||150,300):150)));
+      const it=this.itemM(f.n,g);if(!it)return 0;
+      const pFill=rem.p>0?Math.min(1.25,it.p/Math.max(10,rem.p)):0.5;
+      const kFill=rem.kcal>0?Math.min(1.25,it.kcal/Math.max(80,rem.kcal)):0.5;
+      return pFill*0.6+kFill*0.4;
+    };
+    const mk=(key,label,filter,sort)=>{
+      const capK=Math.min(Math.max(rem.kcal*0.45,250),900); // one MEAL, not the whole day
+      const picks=pool.filter(okF).filter(filter).sort(sort).slice(0,2).map(f=>{
+        const g=Math.max(30,Math.min(300,Math.round(rem.p>0&&f.p>5?Math.min(rem.p*1.3/f.p*100,300):150)));
+        return this.itemM(f.n,g)||{n:f.n,g,kcal:0,p:0,c:0,f:0}});
+      if(!picks.length)return null;
+      let sum=picks.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      if(sum.kcal>capK){ // scale the portion down to a sane single-meal size
+        const k=capK/sum.kcal;
+        picks.forEach(x=>{const it=this.itemM(x.n,Math.max(20,Math.round(x.g*k)));if(it)Object.assign(x,it)});
+        sum=picks.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      }
+      return {key,label,meal,items:picks,...sum};
+    };
+    const byScore=(a,b)=>score(b)-score(a);
+    const options=[
+      mk('quick',t('Quick meal'),f=>f.p>=10,byScore),
+      mk('protein',t('High-protein'),f=>f.p/f.kcal>0.15,byScore),
+      mk('budget',t('Budget meal'),f=>N_BUDGET.includes(f.n),byScore),
+      mk('light',t('Light meal'),f=>f.kcal<150&&f.p>=3,byScore),
+      mk('nocook',t('No cooking'),f=>N_NO_COOK.includes(f.n),byScore)
+    ].filter(Boolean);
+    return {rem,meal,options};
+  },
+  /* Meal replacement: the food's own alt[] chain first, then macro-similar
+     foods (same category, protein density within ±35%). */
+  swapsFor(name){
+    const f=this.foodLookup(name);if(!f)return [];
+    const out=new Set((f.alt||[]).map(a=>this.foodLookup(a)).filter(Boolean).map(x=>x.n));
+    FOODS.forEach(x=>{
+      if(x.n===f.n||out.has(x.n))return;
+      const sameCat=x.cat===f.cat;
+      const pd=f.p>0&&x.p>0?Math.abs(x.p-f.p)/Math.max(f.p,1):1;
+      if(sameCat&&pd<=0.35)out.add(x.n);
+    });
+    return [...out].slice(0,6).map(n=>FOODS.find(x=>x.n===n)).filter(Boolean);
+  },
+  /* Weekly roll-up for the coach report. */
+  weekStats(c){
+    const ad=this.adherence(c,7);
+    const co={kcal:0,p:0};let n=0;
+    for(let i=0;i<7;i++){const x=this.consumed(c,__iso(-i));if(x.kcal>0){co.kcal+=x.kcal;co.p+=x.p;n++}}
+    return {...ad,avgKcal:n?Math.round(co.kcal/n):0,avgP:n?Math.round(co.p/n):0,loggedDays:n};
+  }
+};
+/* ============ v18.71 — HABITS: coach-defined daily checklist ============
+   Three tracking types:
+     auto  — computed from data we already keep (water/protein/check-in)
+     count — student enters a number vs a target (steps/mins)
+     tick  — plain yes/no (no sugar, meditation)
+   Definitions ride on the CLIENT record (c.habits) with a seed fallback;
+   daily manual entries live in c.hlog[iso] = {habitId: value}.
+   Both are plain data on CLIENTS → payload + cloudPack need no changes. */
+const HAB_SEED=[
+  {id:'water',  name:'Drink 2L water',   type:'auto',  metric:'water',  target:2,   unit:'L',    on:true, order:1},
+  {id:'protein',name:'Protein target',   type:'auto',  metric:'protein',target:165, unit:'g',    on:true, order:2},
+  {id:'checkin',name:'Morning check-in', type:'auto',  metric:'checkin',target:1,   unit:'',     on:true, order:3},
+  {id:'steps',  name:'Steps 8,000',      type:'count', target:8000,     unit:'steps',on:true,   order:4},
+  {id:'stretch',name:'Stretch 10 min',   type:'count', target:10,       unit:'min', on:true,   order:5},
+  {id:'sleep',  name:'Sleep by 23:00',   type:'tick',  target:1,        unit:'',     on:true,   order:6}
+];
+/* Catalogue the coach picks from when assigning habits. */
+const HAB_CATALOG=HAB_SEED.concat([
+  {id:'nosugar', name:'No sugary drinks', type:'tick',  target:1,      unit:'',   on:true, order:7},
+  {id:'walk',    name:'Walk 20 min',      type:'count', target:20,     unit:'min',on:true, order:8},
+  {id:'meditate',name:'Meditate 5 min',   type:'count', target:5,      unit:'min',on:true, order:9},
+  {id:'veggies', name:'5+ veg servings',  type:'tick',  target:1,      unit:'',   on:true, order:10}
+]);
+const habitsOf=c=>(c&&Array.isArray(c.habits)&&c.habits.length)?c.habits:HAB_SEED;
+const hlogOf=c=>{if(c&&!c.hlog)c.hlog={};return (c&&c.hlog)||{}};
+/* ms → LOCAL yyyy-mm-dd (never toISOString — that shifts on UTC offsets). */
+const habIso=ms=>{const d=new Date(ms);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+/* One habit's state for one day → {done, val, sub}. */
+function habitState(c,h,iso){
+  const log=hlogOf(c)[iso]||{};
+  if(h.type==='count'){const v=+log[h.id]||0,tg=+(h.target||1);
+    return{done:v>=tg,val:v?nf(v):'—',sub:nf(v)+' / '+nf(tg)+' '+(h.unit||'')}}
+  if(h.type==='tick'){const v=log[h.id]===true||log[h.id]===1;
+    return{done:v,val:v?'✓':'',sub:v?t('Done'):t('Tap when done')}}
+  const tg=NEng.targets(c,iso),co=NEng.consumed(c,iso);
+  let st;
+  if(h.metric==='water'){const w=NEng.waterOf(c,iso),wt=NEng.waterT(c)||2;
+    st={done:w>=wt-.05,val:nf(w)+'L',sub:nf(w)+' / '+nf(wt)+' L'}}
+  else if(h.metric==='protein'){const p=co.p,tp=(tg&&tg.p)||0;
+    st={done:tp>0&&p>=tp*.9,val:nf(p)+'g',sub:tp?nf(p)+' / '+nf(tp)+' g':'—'}}
+  else if(h.metric==='checkin'){
+    const m=MSGS.find(x=>x&&x.type==='checkin'&&x.client===c.name&&(!x.at||habIso(x.at)===iso));
+    st={done:!!m,val:m?'✓':'',sub:m?t('Sent'):t('Not yet')}}
+  else st={done:false,val:'',sub:''};
+  /* v18.80 — every habit row is tickable (mockup). A manual tick on an AUTO
+     habit is an OVERRIDE written to hlog and wins over the computed metric;
+     the sub-line keeps showing the real measured value underneath. */
+  if(log[h.id]===true||log[h.id]===1)st={...st,done:true,val:st.val||'✓'};
+  return st;
+}
+function habitsSummary(c,iso){
+  const hs=habitsOf(c).filter(h=>h&&h.on!==false);
+  let done=0;const rows=hs.map(h=>{const s=habitState(c,h,iso);if(s.done)done++;return{h,s}});
+  return{rows,done,all:hs.length,pct:hs.length?Math.round(done/hs.length*100):0};
+}
+/* Count-habit entry — bound from the shared `change` listener via data-change.
+   The reward fires only when the value CROSSES the target, never on retype. */
+function habNum(el){
+  const hc=client(S.cid);if(!hc||!el)return;
+  const hh=habitsOf(hc).find(x=>x&&x.id===el.dataset.k);
+  if(!hh||hh.type!=='count')return;
+  const v=Math.max(0,parseInt(el.value,10)||0);
+  const hi=isoToday(),hl=hlogOf(hc),hd=hl[hi]||(hl[hi]={});
+  const was=+hd[hh.id]||0,tgt=+(hh.target||1);
+  hd[hh.id]=v;
+  if(v>=tgt&&was<tgt)gamAward(hc,'habit');
+  else if(v<tgt&&was>=tgt)gamRevoke(hc,'habit');
+  saveData();render();
+  /* coach editing the SAME field from the habits modal → refresh it too. */
+  if(S.role==='coach'&&document.getElementById('modal-root').firstChild)habCoachModal();
+}
+/* v18.75 — plan 1د (part 2): the COACH's habit builder.\   `c.habits` is materialised from the seed on first open so the coach edits
+   a real array (never the shared constant). Definitions sync as one JSON
+   compare in cloudMerge; today's values ride the existing hlog merge. */
+function habCoachModal(){
+  const c=client(S.cid);if(!c)return;
+  if(!Array.isArray(c.habits)||!c.habits.length)c.habits=HAB_SEED.map(h=>({...h}));
+  const hs=c.habits, iso=isoToday(), HL=hlogOf(c), log=HL[iso]||(HL[iso]={});
+  const tyL={auto:t('Auto'),count:t('Count'),tick:t('Tick')};
+  const tyB={auto:'bdg-blue',count:'bdg-purple',tick:'bdg-gray'};
+  const extra=HAB_CATALOG.filter(x=>x&&!hs.some(h=>h&&h.id===x.id));
+  const row=(h,i)=>{const s=habitState(c,h,iso);
+    const editing=S.habEdit===i;
+    return `<div class="set-row" style="align-items:flex-start;gap:9px">
+      <span style="width:15px;text-align:center;color:var(--ink3);font-size:11.5px;padding-top:2px">${nf(i+1)}</span>
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:7px;flex-wrap:wrap">
+          <b style="font-size:13px">${esc(t(h.name))}</b>
+          <span class="bdg ${tyB[h.type]||'bdg-gray'}" style="font-size:9.5px">${tyL[h.type]||t('Tick')}</span>
+          ${h.type==='count'?`<span class="bdg bdg-gray" style="font-size:9.5px">${nf(h.target||1)} ${esc(h.unit||'')}</span>`:''}
+          ${h.type==='auto'?`<span class="bdg bdg-gray" style="font-size:9.5px">${t('Auto')}</span>`:''}
+          ${h.on===false?`<span class="bdg bdg-red" style="font-size:9.5px">${t('Hidden')}</span>`:''}
+        </div>
+        <div class="muted" style="font-size:11.5px;margin-top:3px">${t('Today')}: <b style="color:var(--ink)">${esc(s.sub||'—')}</b></div>
+        ${h.type==='tick'?`<button class="btn ${s.done?'btn-outline':'btn-dark'} btn-sm" style="margin-top:6px;padding:4px 11px;font-size:11.5px" data-act="hab-ctick" data-k="${esc(h.id)}">${s.done?'✓ '+t('Done'):t('Mark done')}</button>`:''}
+        ${h.type==='count'?`<input class="inp" data-change="hab-num" data-k="${esc(h.id)}" type="number" min="0" value="${+(log[h.id]||0)}" placeholder="${t('Value')}" style="width:118px;margin-top:6px;padding:6px 9px;font-size:12.5px">`:''}
+        ${editing?`
+        <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">
+          <input class="inp" id="hb-n-${i}" value="${esc(h.name)}" style="flex:1;min-width:132px" placeholder="${t('Habit name')}">
+          <input class="inp" id="hb-t-${i}" type="number" min="0" value="${+(h.target||0)}" style="width:78px" ${h.type==='auto'?'disabled':''}>
+          <input class="inp" id="hb-u-${i}" value="${esc(h.unit||'')}" style="width:74px" placeholder="${t('Unit')}">
+          <button class="btn btn-primary btn-sm" data-act="hab-save" data-i="${i}">${ic('check',13)} ${t('Save')}</button>
+          <button class="btn btn-ghost btn-sm" data-act="hab-edit" data-i="${i}">${t('Cancel')}</button>
+        </div>
+        <div class="row" style="gap:5px;margin-top:7px;flex-wrap:wrap">
+          ${['auto','count','tick'].map(k=>`<button class="fchip ${h.type===k?'on':''}" data-act="hab-etype" data-i="${i}" data-v="${k}">${tyL[k]}</button>`).join('')}
+        </div>`:''}
+      </div>
+      <div class="row" style="gap:2px;flex:none">
+        <button class="btn btn-ghost btn-icon" data-act="hab-move" data-i="${i}" data-d="-1" title="${t('Move up')}">${ic('chevron-up',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="hab-move" data-i="${i}" data-d="1" title="${t('Move down')}">${ic('chevron-down',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="hab-edit" data-i="${i}" title="${t('Edit')}">${ic('edit',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="hab-on" data-i="${i}" title="${h.on===false?t('Show'):t('Hide')}" style="color:${h.on===false?'var(--ink3)':'var(--accent-deep)'}">${ic(h.on===false?'eye-off':'eye',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="hab-del" data-i="${i}" title="${t('Delete')}" style="color:var(--red)">${ic('trash',14)}</button>
+      </div>
+    </div>`};
+  openModal(`
+  <div class="modal-h"><h3>${ic('list-checks',16)} ${t('Habits')} — ${esc(t(c.name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:10px">${t('The student ticks this list on their Today tab.')} ${t('Auto')} = ${t('calculated from the data the app already keeps')}.</div>
+    ${hs.length?hs.map(row).join(''):`<div class="muted" style="font-size:12.5px;padding:8px 0">${t('No habits yet — add one below')}</div>`}
+    <div class="lbl" style="margin:16px 0 7px">${t('Add from catalogue')}</div>
+    ${extra.length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-bottom:10px">
+      ${extra.map(x=>`<button class="fchip" data-act="hab-add" data-id="${esc(x.id)}">${ic('plus',11)} ${esc(t(x.name))}</button>`).join('')}
+    </div>`:`<div class="muted" style="font-size:11.5px;margin-bottom:10px">${t('All catalogue habits are already added')}</div>`}
+    <div class="lbl" style="margin-bottom:7px">${t('Custom habit')}</div>
+    <div class="row" style="gap:6px;flex-wrap:wrap">
+      <input class="inp" id="hb-cn" placeholder="${t('Habit name')}" style="flex:1;min-width:140px">
+      <input class="inp" id="hb-ct" type="number" min="1" value="1" style="width:70px" title="${t('Target value')}">
+      <input class="inp" id="hb-cu" placeholder="${t('Unit')}" style="width:72px">
+      <select class="sel" id="hb-ctype" style="width:92px">
+        <option value="tick">${t('Tick')}</option><option value="count">${t('Count')}</option></select>
+      <button class="btn btn-primary btn-sm" data-act="hab-custom">${ic('plus',13)} ${t('Add')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><span class="muted" style="font-size:11.5px">${t('Hidden habits stay in the record')}</span><span class="sp"></span><button class="btn btn-primary" data-act="modal-x">${ic('check',15)} ${t('Done')}</button></div>`);
+}
+const tplExN=tp=>tp.parts?tp.parts.reduce((a,p)=>a+(p.exs||[]).length,0):(tp.exs||[]).length;
+const tplSetN=tp=>tp.parts?tp.parts.reduce((a,p)=>a+(p.exs||[]).reduce((b,e)=>b+e.sets,0),0):(tp.exs||[]).reduce((a,e)=>a+e.sets,0);
+function lineChart(d,o={}){
+  const w=o.w||640,h=o.h||220,p=o.pad??26;
+  const mn=Math.min(...d)*.996,mx=Math.max(...d)*1.004;
+  const X=i=>p+i*(w-2*p)/(d.length-1),Y=v=>h-p-(v-mn)*(h-2*p)/(mx-mn);
+  const pts=d.map((v,i)=>`${X(i).toFixed(1)},${Y(v).toFixed(1)}`);
+  let g='';for(let i=1;i<=3;i++){const y=(p+(h-2*p)*i/4).toFixed(1);g+=`<line x1="${p}" x2="${w-p}" y1="${y}" y2="${y}" stroke="var(--line2)"/>`}
+  const gid='g'+Math.random().toString(36).slice(2,8);const last=d.length-1;
+  const area=`M${X(0).toFixed(1)},${h-p} L`+pts.join(' L ')+` L${X(last).toFixed(1)},${h-p} Z`;
+  const labs=(o.labels||[]).map((l,i)=>`<text x="${X(i*(d.length-1)/(o.labels.length-1)).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10.5" fill="var(--ink3)">${l}</text>`).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" style="color:var(--accent-deep);width:100%;height:auto;display:block"><defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".2"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>${g}<path d="${area}" fill="url(#${gid})"/><path d="M${pts.join(' L ')}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="${X(last).toFixed(1)}" cy="${Y(d[last]).toFixed(1)}" r="4" fill="currentColor" stroke="var(--surface)" stroke-width="2"/>${labs}</svg>`;
+}
+function multiChart(series){
+  const w=640,h=200,p=26;const all=series.flatMap(s=>s.d);const mn=Math.min(...all)*.97,mx=Math.max(...all)*1.02;
+  const X=i=>p+i*(w-2*p)/(series[0].d.length-1),Y=v=>h-p-(v-mn)*(h-2*p)/(mx-mn);
+  let g='';for(let i=1;i<=3;i++){const y=(p+(h-2*p)*i/4).toFixed(1);g+=`<line x1="${p}" x2="${w-p}" y1="${y}" y2="${y}" stroke="var(--line2)"/>`}
+  const paths=series.map(s=>`<path d="M${s.d.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1)).join(' L ')}" fill="none" stroke="${s.c}" stroke-width="2.4" stroke-linecap="round"/><circle cx="${X(s.d.length-1)}" cy="${Y(s.d[s.d.length-1])}" r="3.5" fill="${s.c}"/>`).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">${g}${paths}</svg>`;
+}
+function barChart(d,o={}){
+  const w=640,h=200,p=26,mx=Math.max(1,Math.max(...d)*1.15);const bw=Math.min(28,(w-2*p)/d.length*.5); // v18.61 — guard: an all-zero (or single-day) series must not divide by 0
+  let g='';for(let i=1;i<=3;i++){const y=(p+(h-2*p)*i/4).toFixed(1);g+=`<line x1="${p}" x2="${w-p}" y1="${y}" y2="${y}" stroke="var(--line2)"/>`}
+  const bars=d.map((v,i)=>{const bh=v/mx*(h-2*p);const x=p+(i+.5)*(w-2*p)/d.length-bw/2;return `<rect x="${x.toFixed(1)}" y="${(h-p-bh).toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="4" fill="${o.c||'var(--accent-deep)'}" opacity="${i===d.length-1?1:.45}"/>`}).join('');
+  const labs=(o.labels||[]).map((l,i)=>`<text x="${(p+(i+.5)*(w-2*p)/d.length).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10" fill="var(--ink3)">${l}</text>`).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">${g}${bars}${labs}</svg>`;
+}
+const ring=(p,s=76)=>{const r=(s-10)/2,c=2*Math.PI*r;const gid='rg'+Math.random().toString(36).slice(2,7);
+/* v18.11 — Apple-Fitness-style gradient ring */
+return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"><title>${p}%</title></circle></svg>`};
+
+/* ================= LOGIN ================= */
+function vLogin(){
+  /* v18.43 — the role chooser is GONE. Coaches land straight on the login/
+     signup screen; students arrive via QR / invite link (or the "I have a
+     connection code" link) and get the cinematic unlock stage. Returning
+     sessions never see any login screen (bootstrap resume). */
+  if(S.demoPick)return clientPicker();
+  if(S.joinCode||S.loginRole==='client')return vUnlock();
+  return coachLogin();
+}
+/* v18.43 — roleSelect() removed: the coach login IS the landing page now. */
+function coachLogin(){return `
+<div class="login">
+  <div class="login-left">
+    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div></div>
+    <div style="position:relative;max-width:430px">
+      <div class="eyebrow">${t('PROFESSIONAL COACH WORKSPACE')}</div>
+      <h2 style="font-size:34px;line-height:1.16;margin:14px 0 24px">${t('Run your coaching business like a pro.')}</h2>
+      <div class="lfeat">${['One workspace for every client','Plan workouts in minutes — not hours','Progress, measurements & notes together','Your decisions. Zero automation.'].map(f=>`<div>${ic('check',15)}<span>${t(f)}</span></div>`).join('')}</div>
+    </div>
+    <div class="lquote"><div>${t('"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."')}</div><div class="lq-a">${t('— Arman T. · Online Coach, 63 clients')}</div></div>
+  </div>
+  <div class="login-right"><form class="login-card" onsubmit="return false">
+    <a class="lnk" style="font-size:12.5px" data-act="client-entry">${ic('qr',13)} ${t('I have a connection code')}</a>
+    <h1 style="font-size:24px;margin-top:10px">${S.authMode==='signup'?t('Create coach account'):t('Coach sign in')}</h1>
+    <p class="muted" style="font-size:12px;margin:4px 0 20px">${S.authMode==='signup'?t('14-day free trial · no card required'):t('Welcome back to your workspace')}</p>
+    ${S.authMode==='signup'?`<label class="lbl">${t('Full name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:14px">`:''}
+    ${S.resetToken?`
+    <div class="card" style="padding:12px 14px;margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft)"><b style="font-size:13px">${t('Set a new password')}</b></div>
+    <label class="lbl">${t('New Password')}</label><input class="inp" id="rs-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:14px">
+    <label class="lbl">${t('Confirm')}</label><input class="inp" id="rs-pass2" type="password" autocomplete="new-password" style="margin-bottom:12px">
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="reset-do">${t('Update Password')} ${ic('arrowR',15)}</button>`
+    :S.authMode==='signup'
+      ?`<label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
+    <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
+    <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — from your purchase')}</span></label><input class="inp" id="su-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
+        <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>
+        <div class="row" style="justify-content:center;margin-top:10px"><span class="muted" style="font-size:12.5px">${t('Prefer to buy a plan first?')}</span>&nbsp;<a class="lnk" data-act="goto-shop">${t('See plans')}</a></div>`
+      :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
+    <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
+    <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${t('Sign In')} ${ic('arrowR',15)}</button>
+        <div class="divider"><span>${t('or')}</span></div>
+        <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
+        <div class="row" style="justify-content:center;margin-top:20px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${t('Create account')}</a></div>`}
+    <div class="row" style="justify-content:center;margin-top:20px">${langBtn('btn-outline btn-sm')}</div>
+  </form></div>
+</div>`}
+function clientPicker(){
+  /* Personal-code device: only the bound profile is offered — the student can
+     never land in another student's view. */
+  const bound=(S.joinCode&&parseJoinCode(S.joinCode)&&S.pickCid)?CLIENTS.filter(c=>c.id===S.pickCid):CLIENTS;
+  return `
+<div class="login-right" style="min-height:100vh">
+  <div class="login-card" style="max-width:520px">
+    <div class="row" style="justify-content:space-between"><a class="lnk" style="font-size:12.5px" data-act="back-role">← ${t('Back')}</a>${langBtn('btn-outline btn-sm')}</div>
+    <h1 style="font-size:24px;margin-top:18px">${t('Choose your account (demo)')}</h1>
+    <p class="sub" style="margin-top:6px">${t('Demo client account')}</p>
+    <div class="card" style="padding:14px;margin-top:16px;border-color:var(--acc-line)">
+      <div class="card-t">${ic('users',14)} ${t('Join with connection code')}</div>
+      <div class="row" style="margin-top:10px">
+        <input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${S.joinCode||''}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700">
+        <button class="btn btn-primary" data-act="join-code">${t('Connect')}</button>
+      </div>
+      <div class="muted" style="font-size:11.5px;margin-top:8px">${t('Enter the personal code your coach gave you')}</div>
+      ${S.joinCode?`<div class="muted" style="font-size:11.5px;margin-top:8px">${t('Connected with code')} <b>${S.joinCode}</b></div>`:''}
+    </div>
+    <div class="pickgrid">${bound.map(c=>`
+      <button class="pickc ${S.pickCid===c.id?'on':''}" data-act="pick-client" data-cid="${c.id}">${avC(c.name,44)}<span>${t(c.name)}</span></button>`).join('')}
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="continue-client">${t('Continue')} ${ic('arrowR',15)}</button>
+  </div>
+</div>`}
+
+/* ================= v18.41 — CINEMATIC 3D WELCOME / UNLOCK =================
+   After scanning the connection QR or opening an invite link, the student
+   lands on a full-screen 3D stage: a glowing padlock inside orbiting rings,
+   drifting particles and a perspective grid. The portal opens by DRAGGING
+   THE HANDLE TO THE RIGHT — the drag physically opens the shackle, spins the
+   rings, intensifies the glow and tilts the scene; past the threshold the
+   lock bursts open (shockwave + zoom) and the device binds to the profile. */
+function unlockStage(){
+  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+  if(parts){ // PERSONAL code: only the bound profile counts — never the demo seed
+    const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
+    if(me)return 'ready';
+    /* v18.50 — NO infinite "Checking code…": once the workspace payload has
+       arrived (S.wsConnected), the fetch failed on its own (S.unInvalid) or
+       the 8s timeout passed, the code simply is not valid — show an explicit
+       error with a retry instead of loading forever. */
+    if(S.unInvalid||S.unOffline||(S.wsConnected&&CLOUD.code===parts.ws)||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
+    /* Start the clock ONCE per attempt + schedule the re-render that flips
+       the state when the timeout fires (nothing else renders the login view
+       while the code is being checked). */
+    if(!S.unT0){S.unT0=Date.now();setTimeout(()=>{const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},8400)}
+    return 'loading';
+  }
+  /* Bare/legacy code: v18.51 — the profile PICKER IS GONE. A student must
+     always land on THEIR OWN name (the one the coach registered). A bare
+     workspace code can only auto-bind when exactly ONE active student exists;
+     with several, the student is sent to their PERSONAL invite code instead
+     of ever choosing an identity. */
+  if(!S.joinCode||!S.wsConnected)return 'code';
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  /* v18.52 — a device previously bound to a profile (co-join cid, saved by
+     older flows WITHOUT the personal pcode) re-binds SILENTLY: the student
+     always lands on THEIR OWN name — never the picker, never a dead end. */
+  if(S.joinCid&&act.some(c=>c.id===S.joinCid))return 'ready1';
+  return act.length===1?'ready1':'multi';
+}
+function vUnlock(){
+  const st=unlockStage();
+  const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+  const me=st==='ready'?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const known=me||(st==='ready1'?((S.joinCid&&act.find(c=>c.id===S.joinCid))||act[0]):null);
+  const coach=wsOwnerName();
+  const dots=[...Array(16)].map((_,i)=>`<span class="un-dot" style="left:${(i*61)%96+2}%;top:${(i*37)%88+4}%;--z:${((i%5)*34-50).toFixed(0)}px;animation-delay:${(i*.7).toFixed(1)}s;opacity:${(.22+(i%4)*.13).toFixed(2)}"></span>`).join('');
+  let center='';
+  if(known){
+    const first=t(known.name).split(' ')[0];
+    center=`<div class="un-avwrap">
+        <svg class="un-avring" width="118" height="118" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="bg" cx="50" cy="50" r="47" fill="none" stroke-width="3"/>
+          <circle class="fg" id="un-prog" cx="50" cy="50" r="47" fill="none" stroke-width="3" stroke-dasharray="295.3" stroke-dashoffset="295.3"/>
+        </svg>
+        ${avC(known.name,86,known.id-1)}
+      </div>
+      <div class="un-hi">${t('Hello')} ${esc(first)} 👋</div>
+      <b class="un-name">${esc(t(known.name))}</b>
+      ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
+  }else if(st==='multi'){
+    /* v18.51 — several active students share this (legacy) workspace code:
+       never ask "who are you?" — point the student at their PERSONAL code. */
+    center=`<div class="un-sub">${t('Personal code needed')}</div>
+      <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for your personal invite code')}</div>
+      <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
+  }else if(st==='loading'){
+    center=`<div class="un-sub">${t('Checking code…')}</div>
+      <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>`;
+  }else if(st==='invalid'){
+    /* v18.53 — two DIFFERENT failure reasons, two different messages: a dead
+       server is "check your connection / try again", a truly unknown code is
+       "ask your coach". Showing "Code not found" for an offline phone sent
+       users hunting for a new code that was never wrong. */
+    center=S.unOffline
+      ?`<div class="un-sub">${t('Cannot reach the server')}</div>
+        <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Check your internet connection and try again')}</div>
+        <div class="row" style="gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" data-act="un-retry">${ic('refresh',13)} ${t('Try again')}</button>
+          <button class="btn btn-outline btn-sm" data-act="un-newcode">${t('Try another code')}</button></div>`
+      :`<div class="un-sub">${t('Code not found')}</div>
+        <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for a new invite code')}</div>
+        <div class="row" style="gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" data-act="un-retry">${ic('refresh',13)} ${t('Try again')}</button>
+          <button class="btn btn-outline btn-sm" data-act="un-newcode">${t('Try another code')}</button></div>`;
+  }else{
+    center=`<div class="un-sub">${t('Your coach invited you')}</div>
+      <div class="un-codebox"><input class="inp" id="join-code" placeholder="K7F39Q-4T8XN2" value="${esc(S.joinCode||'')}" style="text-transform:uppercase;letter-spacing:.15em;font-weight:700"><button class="btn btn-primary" data-act="join-code">${t('Connect')}</button></div>
+      <div class="un-meta">${t('Enter the code your coach gave you')}</div>`;
+  }
+  const armed=!!known;
+  /* v18.49 — the footer hint must match the CURRENT state. It used to show
+     "Connect with your code first" even while the code was already connected
+     (pick + loading states) — a contradictory, jumbled instruction. */
+  const hint=!armed
+    ?(st==='loading'?t('Checking code…'):st==='invalid'?(S.unOffline?t('Cannot reach the server'):t('Code not found')):st==='multi'?t('Personal code needed'):t('Connect with your code first'))
+    :t('Hold the dumbbell to lift');
+  return `<div class="unlock" id="un-scene">
+    <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">COACHMINT</div><div class="brand-tag" style="color:#7A8291">ONE COACH. ONE WORKSPACE.</div></div></div>
+    <div style="position:absolute;top:18px;inset-inline-end:18px;z-index:2">${langBtn('btn-outline btn-sm')}</div>
+    <div class="un-stage">
+      <div class="un-glow"></div><div class="un-grid"></div>${dots}
+      <div class="un-rings"><span class="un-ring r1"></span><span class="un-ring r2"></span><span class="un-ring r3"></span></div>
+      <div class="un-hold ${armed?'':'dis'}" id="un-hold" data-armed="${armed?1:0}" role="button" tabindex="0" aria-label="${t('Hold the dumbbell to lift')}">
+      <div class="un-lock"><svg width="210" height="130" viewBox="0 0 210 130" role="img" aria-label="dumbbell">
+        <defs>
+          <linearGradient id="unbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3140"/><stop offset=".5" stop-color="#171C26"/><stop offset="1" stop-color="#0D1016"/></linearGradient>
+          <linearGradient id="unplate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#242B39"/><stop offset="1" stop-color="#10141C"/></linearGradient>
+        </defs>
+        <rect x="25" y="57" width="160" height="14" rx="7" fill="url(#unbar)" stroke="rgba(200,240,75,.4)" stroke-width="1.5"/>
+        <g class="un-plate li"><rect x="42" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="48" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
+        <g class="un-plate ri"><rect x="144" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="150" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
+        <g class="un-plate lo"><rect x="8" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="13" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
+        <g class="un-plate ro"><rect x="182" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="187" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
+        <g transform="translate(97.2 57.5) scale(.13)"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="var(--accent)"/></g>
+      </svg></div>
+      </div>
+      <div class="un-shock"></div>
+      <div class="un-card">${center}</div>
+    </div>
+    <div class="un-foot"><span id="un-status"><span class="un-hintline">${ic('hand',16)} ${hint}</span></span><span class="un-fsep" aria-hidden="true">·</span><a class="lnk" data-act="demo-client">${t('Explore the demo')}</a></div>
+  </div>`;
+}
+/* Pointer wiring for the unlock stage — v18.44 HOLD-TO-LIFT: press and HOLD
+   the dumbbell (isometric hold, like a plank). The hold fills the progress
+   ring, lifts the bar and accelerates the rings/particles; at 100% it bursts
+   into the portal. Release early → spring back. Pointer tilt adds a subtle
+   3D parallax on hover/move. */
+function unlockWire(){
+  const sc=$('un-scene'),lk=$('un-hold'),prog=$('un-prog');
+  if(!sc||!lk)return;
+  /* v18.54 — the personal-code fetch runs on EVERY unlock render until it
+     binds (or fails definitively): the old one-shot `wired` guard let a SINGLE
+     transient failure (Render cold-start, a 429, a flaky signal) stick for the
+     whole session as "Code not found". */
+  const jp=S.joinCode?parseJoinCode(S.joinCode):null;
+  const jpBound=jp&&CLIENTS.some(c=>String(c.code||'').toUpperCase()===jp.pc);
+  if(jp&&!jpBound&&!S.unFetching&&!S.unInvalid&&!S.unOffline){
+    S.unFetching=true;
+    const jc=S.joinCode; // a result from an abandoned/replaced code must not poison the new state
+    joinPersonal(jc).then(me=>{S.unFetching=false;
+      if(S.joinCode!==jc)return; // stale attempt (user changed the code meanwhile)
+      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.unInvalid=true}
+      render();
+    }).catch(()=>{S.unFetching=false});
+  }
+  if(lk.dataset.wired)return;
+  lk.dataset.wired='1';
+  S.unlock={ux:0,hold:false,fetching:false,raf:0,t0:0};
+  const CIRC=295.3;
+  const armed=()=>lk.dataset.armed==='1';
+  const set=v=>{S.unlock.ux=v;sc.style.setProperty('--ux',v.toFixed(3));
+    if(prog)prog.setAttribute('stroke-dashoffset',(CIRC*(1-v)).toFixed(1));
+    sc.classList.toggle('holding',v>0.02&&S.unlock.hold)};
+  const tick=()=>{
+    if(!S.unlock.hold)return;
+    const v=Math.min(1,(performance.now()-S.unlock.t0)/1100);
+    set(v);
+    if(v>=1){S.unlock.hold=false;sc.classList.remove('holding');complete();return}
+    S.unlock.raf=requestAnimationFrame(tick);
+  };
+  const start=e=>{if(!armed()||S.unlock.hold)return;S.unlock.hold=true;S.unlock.t0=performance.now();
+    try{lk.setPointerCapture(e.pointerId)}catch(err){}e.preventDefault();S.unlock.raf=requestAnimationFrame(tick)};
+  const cancel=()=>{
+    if(!S.unlock.hold)return;S.unlock.hold=false;cancelAnimationFrame(S.unlock.raf);sc.classList.remove('holding');
+    const from=S.unlock.ux,t0=performance.now();
+    const back=()=>{if(S.unlock.hold)return;const k=Math.min(1,(performance.now()-t0)/240);set(from*(1-k)*(1-k));if(k<1)requestAnimationFrame(back)};
+    requestAnimationFrame(back);
+  };
+  lk.addEventListener('pointerdown',start);
+  lk.addEventListener('pointerup',cancel);
+  lk.addEventListener('pointercancel',cancel);
+  lk.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!S.unlock.hold){start(e)}});
+  lk.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')cancel()});
+  sc.addEventListener('pointermove',e=>{if(S.unlock.hold)return;const r=sc.getBoundingClientRect();
+    sc.style.setProperty('--py',(((e.clientX-r.left)/r.width-.5)*8).toFixed(2)+'deg');
+    sc.style.setProperty('--rx',((-.5+(e.clientY-r.top)/r.height)*6).toFixed(2)+'deg')});
+  const reset=()=>{sc.classList.remove('unlocked');set(0);const st=$('un-status');if(st)st.textContent=t('Keep holding until it lifts')};
+  const complete=async()=>{
+    sc.classList.add('unlocked'); // plates slam + rings burst + shockwave + zoom
+    const st=unlockStage();
+    const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+    let known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+    /* v18.50 — archived profiles never auto-bind (ready1 = exactly one ACTIVE).
+       v18.52 — a persisted profile bind (joinCid) wins over "first active". */
+    if(!known&&st==='ready1')known=(S.joinCid&&CLIENTS.find(c=>c.id===S.joinCid&&c.status!=='Archived'))||CLIENTS.find(c=>c.status!=='Archived');
+    const stat=$('un-status');if(stat)stat.textContent=t('Unlocking…');
+    await new Promise(r=>setTimeout(r,820)); // let the burst play
+    if(known){ // data already on this device (returning student / bare code)
+      S.role='client';S.cid=known.id;S.pickCid=known.id;S.joinCid=known.id;S.ptab='today';S.player=null;S.joinCode=null;
+      render();toast(t('Welcome')+', '+t(known.name).split(' ')[0]+' 🔓');return;
+    }
+    if(parts){const me=await joinPersonal(S.joinCode);
+      if(me){S.role='client';S.cid=me.id;S.pickCid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' 🔓');return}}
+    reset();toast(t('Invalid code'));
+  };
+}
+
+/* ================= COACH VIEWS ================= */
+/* v18.31 — CoachMint template page layouts (Stitch cockpit arrangement).
+   Same data + same data-act hooks as the default views; only the arrangement
+   changes. Rendered instead of vDash/vClients when PREFS.uiTpl==='coachmint'. */
+/* v18.32 — cmRing: progress ring with the number PERFECTLY centered (the SVG
+   size always matches the wrapper, so place-items:center lands dead-center). */
+const cmRing=(p,s,fs)=>`<div style="position:relative;width:${s}px;height:${s}px;flex:none">${ring(p,s)}<div style="position:absolute;inset:0;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:${fs}px;line-height:1">${p}%</div></div>`;
+function cmStatusChip(st){
+  const map={'Active':['OPTIMAL','bdg-green'],'On Hold':['HOLD','bdg-amber'],'Inactive':['OFFLINE','bdg-gray'],'Archived':['ARCHIVED','bdg-gray']};
+  const [l,c]=map[st]||['UNKNOWN','bdg-gray'];return `<span class="bdg ${c}">${l}</span>`;
+}
+function vDashCm(){
+  const active=CLIENTS.filter(c=>c.status==='Active').length;
+  const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+  const missT=today.filter(e=>e.att==='miss').length;
+  const hrsW=EVENTS.reduce((a,e)=>a+e.dur,0);
+  const needN=threads().filter(x=>x.needs).length;
+  const att=attentionList();
+  const totDone=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.done||0),0);
+  const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
+  const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  const kpi=(k,v,s)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b><span class="s">${s}</span></div>`;
+  const attRow=it=>`<div class="cm-alert">
+    <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,12)}</span>
+    <div style="flex:1;min-width:0"><b style="font-size:13px">${t(it.name)}</b><span class="muted" style="font-size:12px"> · ${t(it.why)}</span><div class="muted" style="font-size:11.5px;margin-top:2px">${it.d}</div></div>
+    ${it.act==='msg'?`<button class="btn btn-outline btn-sm" data-act="open-thread" data-c="${esc(it.name)}">${t('Reply')}</button>`
+     :it.act==='copy'?`<button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(it.code)}">${t('Copy')}</button>`
+     :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')}</button>`}
+  </div>`;
+  return `
+  <div class="hero">
+    <div class="row" style="justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div>
+        <div class="eyebrow">${t('Live Telemetry')} // ${fmtFullDate(TDATE)}</div>
+        <h1 style="margin-top:8px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</h1>
+        <div class="sub">${t("Here's what's happening with your clients today.")}</div>
+      </div>
+      <div class="row" style="gap:16px">
+        ${cmRing(pctW,86,16)}
+        <div><div class="eyebrow" style="font-size:9.5px">${t('Squad Readiness')}</div>
+        <div class="row" style="gap:6px;margin-top:8px"><span class="bdg ${pctW>=75?'bdg-green':pctW>=50?'bdg-amber':'bdg-red'}">${pctW>=75?t('Optimal'):t('Attention')}</span></div>
+        <div class="muted" style="font-size:11.5px;margin-top:8px">${nf(totDone)} / ${nf(totDone+totMiss)} ${t('Workouts Completed')}</div></div>
+      </div>
+    </div>
+    <div class="cm-kpis">
+      ${kpi('Total Clients',nf(CLIENTS.length),`${t('Active')}: ${nf(active)}`)}
+      ${kpi('Sessions Today',nf(today.length),`${nf(doneT)} ✓ · ${nf(today.length-doneT)} ${t('Upcoming')}`)}
+      ${kpi('Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Missed')}: ${nf(missT)}`)}
+      ${kpi('Needs Attention',nf(att.length),`${t('Messages')}: ${nf(needN)}`)}
+    </div>
+  </div>
+  <div class="grid2" style="grid-template-columns:1.15fr .85fr;margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('calendar',14)} ${t("Today's Schedule")}</span><a class="lnk" style="font-size:12px" data-act="nav" data-view="calendar">${t('Open calendar →')}</a></div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="cm-row click" data-act="ev-open" data-eid="${ev.id}">
+        <span class="cm-time">${nf(fmtT(ev.start))}</span>
+        ${cc?avC(cc.name,34):av(t('Coach'),34,3)}
+        <div style="flex:1;min-width:0"><b style="font-size:13px">${t(ev.label)}</b><div class="muted" style="font-size:11.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${st.k!=='future'?`<button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="done" title="${t('Attended')}" style="color:${ev.att==='done'?'var(--green)':'var(--ink3)'}">${ic('check',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="miss" title="${t('Missed')}" style="color:${ev.att==='miss'?'var(--red)':'var(--ink3)'}">${ic('x',15)}</button>`:''}
+        ${attBadge(ev)||`<span class="bdg ${st.b}">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div class="empty" style="margin:14px 20px 18px"><div>${ic('calendar',24)}</div><b>${t('No events this day')}</b><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="card"><div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Priority Queue')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
+      ${att.length?att.slice(0,5).map(attRow).join('')+(att.length>5?`<div class="cm-row"><span class="muted" style="font-size:12px">+${nf(att.length-5)} ${t('More')} …</span></div>`:'')
+      :`<div class="cm-row"><span class="bdg bdg-green" style="flex:none">${ic('check',12)}</span><b>${t('All clients on track ✓')}</b></div>`}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Prescribe')}</span>
+    <div class="row"><button class="btn btn-outline btn-sm" data-act="nav" data-view="messages">${ic('mail',13)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
+    <button class="btn btn-primary btn-sm" data-act="nav" data-view="builder">${ic('plus',13)} ${t('Create Workout')}</button></div></div>
+    <div style="padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap">
+      ${qa.map(([l,i])=>`<button class="btn btn-outline btn-sm" data-act="qa-item" data-item="${l}">${ic(i,13)} ${t(l)}</button>`).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:12px" data-act="act-all">${t('View all →')}</a></div>
+    <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px">
+      ${ACTIVITY.slice(0,6).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0;font-size:13px">${t(a.h)}<div style="font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace">${t(a.w)}</div></div></div>`).join('')}
+    </div>
+  </div>`;
+}
+function vClientsCm(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
+  const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  const cnt=v=>CLIENTS.filter(c=>v==='All'?c.status!=='Archived':c.status===v).length;
+  const chip=(v,l)=>`<button class="cm-fchip ${(S.cfilter||'All')===v?'on':''}" data-act="cm-filter" data-v="${v}">${t(l)} <b>${nf(cnt(v))}</b></button>`;
+  return `
+  <div class="page-h"><div>
+    <div class="eyebrow">${t('Live Telemetry')} // ${t('Roster')}</div>
+    <h1>${t('Clients')}</h1><div class="sub">${nf(act)} ${t(act===1?'active client':'active clients')} · ${t('Sort')}: ${t(({name:'Name',status:'Status',streak:'Streak',next:'Next Session'})[S.csort]||'Name')}</div></div>
+  <div class="row">
+    <button class="btn btn-outline" data-act="cl-sort">${ic('chevD',14)} ${t('Sort')}</button>
+    <button class="btn btn-outline" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',14)} ${t('Connect')}</button>
+    <button class="btn btn-primary" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button>
+  </div></div>
+  <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    ${chip('All','All')}${chip('Active','Active')}${chip('On Hold','On Hold')}${chip('Inactive','Inactive')}
+  </div>
+  ${!CLIENTS.length?`
+  <div class="card"><div class="empty" style="margin:14px"><div>${ic('users',24)}</div><b>${t('No clients yet')}</b><span class="muted">${t('Add your first client to start building programs, plans and progress tracking')}</span><button class="btn btn-primary btn-sm" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button></div></div>`
+  :`<div class="cm-roster">${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
+    return `<div class="card cm-ath" data-act="open-client" data-cid="${c.id}">
+      ${avC(c.name,46)}
+      <div style="flex:1;min-width:180px">
+        <div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(c.name)}</b>${cmStatusChip(c.status)}${pend?`<span class="bdg bdg-lime">${t('Pending')}</span>`:''}</div>
+        <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
+        <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
+          <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
+          ${c.streak?`<span class="cm-meta">🔥 ${esc(streakLbl(c))}</span>`:''}
+          <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
+        </div>
+      </div>
+      ${cmRing(p,52,11)}
+      <div class="row" style="flex:none;gap:2px">
+        <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
+      </div>
+    </div>`}).join('')}</div>`}`;
+}
+function vDash(){
+  if(PREFS.uiTpl==='coachmint')return vDashCm();
+  const roster=CLIENTS;
+  const active=CLIENTS.filter(c=>c.status==='Active').length;
+  const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+  const missT=today.filter(e=>e.att==='miss').length;
+  const perDayCnt=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).length);
+  const perDayHrs=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).reduce((a,e)=>a+e.dur,0));
+  let busiest='—',bm=0;perDayCnt.forEach((c,i)=>{if(c>bm){bm=c;busiest=dayLbl(i)}});
+  const hrsW=EVENTS.reduce((a,e)=>a+e.dur,0);
+  const needN=threads().filter(x=>x.needs).length;
+  const att=attentionList();
+  const totDone=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.done||0),0);
+  const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
+  const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
+  const avStack=CLIENTS.slice(0,4).map((c,i)=>`<span style="margin-inline-start:${i?-8:0}px;display:inline-block;border-radius:50%;border:2px solid var(--surface);line-height:0">${avC(c.name,22)}</span>`).join('');
+  /* v17.11 — onboarding effects: greeting shows sport + coaching style, and
+     the quick-action order follows the coaching style (online → connect code
+     first, in-person → schedule first). */
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
+  const stats=[
+    ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users','accent'],
+    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check','green'],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(today.length-doneT)} ${t('Upcoming')}${missT?` · ✗ ${nf(missT)}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
+    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple']];
+  const attRow=it=>`<div class="tl-row">
+    <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,13)}</span>
+    <div style="flex:1;min-width:0"><div style="font-weight:600">${t(it.name)} <span class="muted" style="font-weight:500">· ${t(it.why)}</span></div><div class="muted" style="font-size:12.5px">${it.d}</div></div>
+    ${it.act==='msg'?`<button class="btn btn-outline btn-sm" data-act="open-thread" data-c="${esc(it.name)}">${ic('mail',13)} ${t('Reply')}</button>`
+     :it.act==='copy'?`<button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(it.code)}">${ic('copy',13)} ${t('Copy')}</button>`
+     :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
+  </div>`;
+  return `
+  <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')} 👋</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
+    <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
+    <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
+  </div></div>
+  <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
+    <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
+    <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
+    <span class="muted" style="font-size:11.5px;font-weight:600">${sub}</span>${vis}</div></div>`).join('')}
+  </div>
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('clock',14)} ${t("Today's Schedule")}</span><a class="lnk" style="font-size:13px" data-act="nav" data-view="calendar">${t('Open calendar →')}</a></div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="tl-row click" data-act="ev-open" data-eid="${ev.id}">
+        <div class="tl-time">${nf(fmtT(ev.start))}</div>${cc?avC(cc.name,38):av(t('Coach'),38,3)}
+        <div style="flex:1;min-width:0"><div style="font-weight:600">${t(ev.label)}</div><div class="muted" style="font-size:12.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${st.k!=='future'?`<div class="row" style="gap:2px">
+          <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="done" title="${t('Attended')}" style="color:${ev.att==='done'?'var(--green)':'var(--ink3)'}">${ic('check',15)}</button>
+          <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${ev.id}" data-v="miss" title="${t('Missed')}" style="color:${ev.att==='miss'?'var(--red)':'var(--ink3)'}">${ic('x',15)}</button>
+        </div>`:''}
+        ${attBadge(ev)||`<span class="bdg ${st.b}">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div class="empty" style="margin:14px 20px 18px"><div>${ic('calendar',24)}</div><b>${t('No events this day')}</b><span class="muted">${t('Tap an empty slot to add a session')}</span><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="stack">
+      <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
+        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+        ${qa.map(([l,i])=>`
+          <button class="btn btn-ghost" style="justify-content:flex-start" data-act="qa-item" data-item="${l}">${ic('plus',15)} ${t(l)}</button>`).join('')}
+        </div>
+      </div>
+      <div class="card" style="padding:18px"><div class="card-t">${ic('target',14)} ${t('Workout Completion')}</div>
+        <div class="row" style="margin-top:12px;gap:14px"><div style="position:relative;width:76px;height:76px">${ring(pctW)}<div style="position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:15px">${pct(pctW)}</div></div>
+        <div style="font-size:12.5px;color:var(--ink2)">${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)}<br>${t('Workouts Completed')}<br><b style="color:var(--ink)">${t('This week')}: ${nf(EVENTS.length)} ${t('Sessions')}</b></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid2" style="grid-template-columns:1.15fr .85fr">
+    <div class="card">
+      <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
+      ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
+      :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
+    </div>
+    <div class="stack">
+      <div class="card" style="padding:16px 18px;cursor:pointer" data-act="rpt-all">
+        <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Smart Reports')}</span><span class="bdg bdg-lime">${t('Auto daily')}</span></div>
+        <div class="muted" style="font-size:12px;margin-top:6px">${t('Every client analyzed — score, trends and what needs your attention')}</div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="act-all">${t('View all →')}</a></div>
+        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+          ${ACTIVITY.slice(0,7).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function vClients(){
+  if(PREFS.uiTpl==='coachmint')return vClientsCm();
+  const grid=S.cv==='grid';
+  /* Real counts — the subtitle used to be a HARDCODED demo string ("42 Active
+     Clients · 8 shown in this workspace") that every fresh signup saw over an
+     EMPTY workspace. Same seat rule as billing: archived clients don't count. */
+  const act=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const sub=!CLIENTS.length?t('No clients yet — add your first client')
+    :`${nf(act)} ${t(act===1?'active client':'active clients')}`;
+  /* v18.9 — Filter/Sort buttons used to be toast stubs. Real status filter +
+     sort (name / status / streak / next session) applied to BOTH views. */
+  const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
+  const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  return `
+  <div class="page-h"><div><h1>${t('Clients')}</h1><div class="sub">${sub}</div></div>
+  <div class="row">
+    <div class="searchbox" style="flex:none;width:220px">${ic('search',15)} <span>${t('Search clients…')}</span></div>
+    <button class="btn btn-outline" data-act="cl-filter">${ic('filter',15)} ${S.cfilter&&S.cfilter!=='All'?t(S.cfilter):t('Filter')}</button>
+    <button class="btn btn-outline" data-act="cl-sort">${ic('chevD',15)} ${t('Sort')}: ${t(({name:'Name',status:'Status',streak:'Streak',next:'Next Session'})[S.csort]||'Name')}</button>
+    <div class="seg"><button class="${!grid?'on':''}" data-act="cv" data-cv="list" title="${t('List')}">${ic('list',14)}</button><button class="${grid?'on':''}" data-act="cv" data-cv="grid" title="${t('Grid')}">${ic('grid',14)}</button></div>
+    <button class="btn btn-outline" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',15)} ${t('Connect')}</button>
+    <button class="btn btn-primary" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
+  </div></div>
+  ${!CLIENTS.length?`
+  <div class="card"><div class="empty" style="margin:14px"><div>${ic('users',24)}</div><b>${t('No clients yet')}</b><span class="muted">${t('Add your first client to start building programs, plans and progress tracking')}</span><button class="btn btn-primary btn-sm" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button></div></div>`
+  :grid?`
+  <div class="cgrid">${list.map(c=>`
+    <div class="card" data-act="open-client" data-cid="${c.id}">
+      <div class="row" style="align-items:flex-start">
+        ${avC(c.name,44)}
+        <div style="flex:1;min-width:0"><div style="font-weight:700">${t(c.name)}</div><div class="muted" style="font-size:12px">${esc(c.email||'')}</div></div>
+        ${stBdg(c.status)}
+      </div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <span class="chip">${t(c.goal)}</span>
+        ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
+        ${c.streak?`<span class="chip">🔥 ${esc(streakLbl(c))}</span>`:''}
+      </div>
+      <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
+        <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
+        <span class="lnk" style="font-size:12.5px;flex:none">${t('Open')} ${ic('arrowR',13)}</span>
+      </div>
+    </div>`).join('')}
+  </div>`
+  :`
+  <div class="card" style="overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('Client')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
+    <tbody>${list.map(c=>`
+    <tr data-act="open-client" data-cid="${c.id}">
+      <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
+      <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
+      <td class="hide-md">${c.streak||c.dayStreak?`🔥 ${esc(streakLbl(c))}`:'—'}</td>
+      <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
+      <td style="text-align:end;white-space:nowrap">
+        <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
+        <button class="btn btn-ghost btn-sm" data-act="open-client" data-cid="${c.id}">${t('Open Workspace')} ${ic('arrowR',13)}</button>
+      </td>
+    </tr>`).join('')}</tbody></table></div>`}`;
+}
+function vWorkspace(){
+  const c=client(S.cid);
+  const np=nPlanOf(c.name);
+  const tabs=[['overview','Overview'],['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
+  const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
+  return `
+  ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
+    <div class="row">${ic('dumbbell',16)}<div><b>${esc(w.name)}</b><div class="muted" style="font-size:12px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div></div>
+    <span class="bdg bdg-lime">${ic('users',11)} ${t('Pending')} — ${t('Visible to client')}</span>
+  </div>`).join('')}
+  <div class="card" style="padding:20px;margin-bottom:2px">
+    <div class="row" style="flex-wrap:wrap;gap:16px">
+      ${avC(c.name,56)}
+      <div style="flex:1;min-width:240px">
+        <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
+        <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
+          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))],['Points',`⭐ ${nf(c.pts||0)}`]].map(([k,v])=>`
+          <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
+          ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
+        </div>
+      </div>
+      <div class="row" style="flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+        <button class="btn btn-outline btn-sm" data-act="hab-open">${ic('list-checks',14)} ${t('Habits')}</button>
+        <button class="btn btn-outline btn-sm" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',14)} ${t('Intake form')}</button>
+        <button class="btn btn-outline btn-sm" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',14)} ${t('Packages')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+        <button class="btn btn-outline btn-sm" data-act="nav" data-view="messages">${ic('mail',14)} ${t('Messages')}</button>
+        <button class="btn btn-dark btn-sm" data-act="tab" data-tab="notes">${ic('note',14)} ${t('Add Note')}</button>
+        <div class="mwrap" data-mw><button class="btn btn-ghost btn-icon" data-act="mw">${ic('more',16)}</button>
+          <div class="menu"><div class="menu-hd">${t('More actions')}</div>
+            <div class="menu-it" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',15)} ${t('AI Analysis')}</div>
+            <div class="menu-it" data-act="hab-open">${ic('list-checks',15)} ${t('Habits')}</div>
+            <div class="menu-it" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',15)} ${t('Form reports')}</div>
+            <div class="menu-it" data-act="client-arch" data-c="${esc(c.name)}">${ic('archive',15)} ${t('Archive client')}</div>
+            <div class="menu-it" data-act="export-pdf" data-kind="week">${ic('download',15)} ${t('Export PDF')}</div>
+            <div class="menu-it" data-act="ws-export">${ic('download',15)} ${t('Export data')}</div>
+            <div class="menu-it" data-act="invite-open">${ic('mail',15)} ${t('Invite to portal')}</div>
+            <div class="menu-it" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)} ${t('Delete client')}</div>
+          </div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${t(l)}</button>`).join('')}</div>
+  ${({overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles})[S.tab]()}
+  `;
+}
+function vCOverview(){
+  const c=client(S.cid);
+  const ac=attCnt(c.name);
+  const L=(k,v)=>`<div class="set-row"><span style="color:var(--ink2);font-size:13px">${k}</span><b>${v}</b></div>`;
+  return `
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card" style="padding:18px"><div class="card-t" style="margin-bottom:12px">${t('Client Summary')}</div>
+      ${L(t('Current Weight'),uwS(c.weight||null))}${L(t('Goal'),t(c.goal))}${L(t('Training Frequency'),t(c.freq))}
+      ${L(t('Current Program'),t(c.prog))}${L(t('Body Fat'),c.bf?`${nf(c.bf)} %`:'—')}${L(t('Height'),ucS(c.h||null))}
+      ${L(t('Weight Target'),c.targetW?`${uwS(c.weight||null)} → <b>${uwS(c.targetW)}</b>${c.targetDate?` · ${esc(c.targetDate)}`:''}`:'—')}
+      ${L(t('Intake form'),c.intake?`✓ ${t('Submitted')}`:`<span style="color:var(--amber,#C77414)">${t('Missing')}</span>`)}
+      ${L(t('Sessions remaining'),packRemain(c.name)!=null?nf(packRemain(c.name)):'—')}
+      ${c.targetW?`<div style="margin-top:12px"><div class="row" style="justify-content:space-between;font-size:12px;color:var(--ink2)"><span>${t('Goal progress')}</span><b>${pct(goalPct(c))}</b></div>
+      <div class="pbar" style="margin-top:6px"><i style="width:${goalPct(c)}%"></i></div></div>`:''}
+      <div style="margin-top:12px"><div class="row" style="justify-content:space-between;font-size:12px;color:var(--ink2)"><span>${t('Program progress')} — ${t('Week')} ${nf(progMeta(c).wk)} ${t('of')} ${nf(progMeta(c).weeks)}</span><b>${pct(progMeta(c).pct)}</b></div>
+      <div class="pbar" style="margin-top:6px"><i style="width:${progMeta(c).pct}%"></i></div></div>
+    </div>
+    <div class="card" style="padding:18px"><div class="card-t" style="margin-bottom:12px">${t('Training Summary')}</div>
+      ${L(t('Workouts Completed'),nf(DB[c.id].stats.done))}${L(t('Workouts Missed'),nf(DB[c.id].stats.missed))}
+      ${L(t('Attendance'),`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`)}
+      ${L(t('Current Streak'),`${nf(c.streak)} ${t('wk')}`)}
+      ${L(t('Last Workout'),t(c.last))}${L(t('Next Workout'),t(c.nextW))}${L(t('Avg RPE (4 weeks)'),(()=>{const r=avgRpe(c.id);return r!=null?nf(r):'—'})())}
+      ${(()=>{ /* v18.61 — REAL recent sessions (from the per-set log). */
+        const hist=wlogOf(c.id);if(!hist.length)return '';
+        return `<div style="margin-top:12px"><div class="muted" style="font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">${t('Session history')}</div>
+        ${hist.slice(0,4).map(l=>`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${esc(t(l.n||''))} · ${fmtD(l.d)}</span><b style="font-size:12.5px">${nf(l.done||0)}/${nf(l.total||0)} ${t('sets')}${l.rpe!=null?` · RPE ${nf(l.rpe)}`:''}</b></div>`).join('')}</div>`})()}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-h"><span class="card-t">${ic('chart',14)} ${t('Progress Overview')}</span><span class="muted" style="font-size:12px">${t('Last 12 weeks')}</span></div>
+    <div class="grid2b" style="padding:18px;gap:24px">
+      <div><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight')}</b>${wtBadge(c.id)}</div>${wChart(c.id,190)}</div>
+      <div><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Workout Consistency')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${(()=>{const s=consistWeeks(c.id);return s?barChart(s,{h:190,labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()})()}</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><span class="card-t">${ic('note',14)} ${t('Recent Notes')}</span><button class="btn btn-ghost btn-sm" data-act="tab" data-tab="notes">${t('All notes')} ${ic('arrowR',13)}</button></div>
+    ${NOTES.filter(n=>n.client===c.name||n.pin).slice(0,3).map(n=>`
+    <div class="tl-row" style="align-items:flex-start"><div style="flex:1"><div class="row" style="gap:8px;flex-wrap:wrap"><b>${esc(t(n.title))}</b><span class="bdg bdg-gray">${esc(t(n.type))}</span>${n.from==='client'?`<span class="bdg bdg-blue">${ic('users',11)} ${t('Client')}</span>`:''}${n.shared===false?`<span class="bdg bdg-gray">${ic('lock',11)} ${t('Private')}</span>`:''}${n.pin?`<span class="ic" style="color:var(--accent-deep)">${ic('pin',13)}</span>`:''}</div>
+    <div class="muted" style="font-size:12.5px;margin-top:3px">${esc(t(n.body))}</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(t(n.client))} · ${esc(t(n.date))}</div></div></div>`).join('')}
+  </div>`;
+}
+function vCAttend(){
+  const c=client(S.cid);
+  const list=[...EVENTS.filter(e=>e.client===c.name)].sort((a,b)=>a.day-b.day||a.start-b.start);
+  const done=list.filter(e=>e.att==='done').length;
+  const miss=list.filter(e=>e.att==='miss').length;
+  const pend=list.length-done-miss;
+  const rate=(done+miss)?Math.round(done/(done+miss)*100):0;
+  const kpi=(k,v,cl)=>`<div class="card stat" style="padding:14px 16px"><span class="k">${t(k)}</span><div class="v" style="font-size:22px;color:${cl||'var(--ink)'}">${v}</div></div>`;
+  return `
+  <div class="stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+    ${kpi('Attended',nf(done),'var(--green)')}${kpi('Missed',nf(miss),miss?'var(--red)':'var(--ink)')}${kpi('Attendance Rate',pct(rate))}${kpi('Not marked',nf(pend),'var(--ink3)')}
+  </div>
+  <div class="card">
+    <div class="card-h"><span class="card-t">${ic('check',14)} ${t('Attendance history')}</span><span class="muted" style="font-size:12px">${t(c.freq)}</span></div>
+    ${list.length?list.map(e=>`
+    <div class="tl-row">
+      <div class="tl-time">${nf(fmtT(e.start))}</div>
+      <div style="flex:1;min-width:0"><div style="font-weight:600">${t(e.label)}</div><div class="muted" style="font-size:12px">${dayLbl(e.day)} · ${nf(e.dur)} h</div></div>
+      ${attBadge(e)||`<span class="bdg bdg-gray">${t('Not marked')}</span>`}
+      <div class="row" style="gap:2px">
+        <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${e.id}" data-v="done" title="${t('Attended')}" style="color:${e.att==='done'?'var(--green)':'var(--ink3)'}">${ic('check',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="att-mark" data-id="${e.id}" data-v="miss" title="${t('Missed')}" style="color:${e.att==='miss'?'var(--red)':'var(--ink3)'}">${ic('x',15)}</button>
+      </div>
+    </div>`).join('')
+    :`<div style="padding:30px;text-align:center;color:var(--ink3)">${t('No sessions scheduled')}</div>`}
+  </div>`;
+}
+/* The workout builder is ALWAYS scoped to the selected client: switching
+   clients loads THAT client's current program (or an empty builder), so one
+   client's program can never leak into another's. */
+function loadClientProgram(cid){
+  const c=CLIENTS.find(x=>x.id===cid);if(!c)return;
+  const ws=(DB[cid]&&DB[cid].workouts)||[];
+  S.wEdit=null; // v18.64 — the auto-prefill is a starting point, NOT an edit
+  const cur=ws[0]; // newest first (b-save unshifts)
+  if(cur&&cur.exercises&&cur.exercises.length){
+    BUILDER.length=0;cur.exercises.forEach(x=>BUILDER.push({...x}));
+    S.wname=cur.name+' — '+c.name;
+    S.wday=cur.day||'Monday';S.wdur=cur.dur||'60 min';S.wnote=cur.note||'';
+  }else{
+    BUILDER.length=0;
+    S.wname='New Workout — '+c.name;
+    S.wday='Monday';S.wdur='60 min';S.wnote='';
+  }
+}
+function vBuilder(){
+  const c=client(S.cid);
+  const wval=()=>`${S.wname.split(' — ')[0]} — ${t(c.name)}`;
+  /* Standalone page (nav → Workouts) gets a header with a client picker —
+     previously the ONLY way to target a client was to open their workspace
+     first. Inside a client workspace the header is redundant (the client is
+     fixed by the context) so it is skipped there. */
+  const standalone=S.view==='builder';
+  return `
+  ${standalone?`<div class="page-h"><div><h1>${t('Workout Builder')}</h1><div class="sub">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</div></div>
+  <div class="row"><span class="muted" style="font-size:12.5px;font-weight:600">${t('Publishing to')}</span><select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div></div>`:''}
+  ${S.tplEdit!=null&&TEMPLATES[S.tplEdit]?`<div class="card" style="padding:12px 16px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+    ${ic('edit',15)}<div style="flex:1;min-width:0"><b style="font-size:13px">${t('Editing template')}: ${esc(TEMPLATES[S.tplEdit].n)}</b><div class="muted" style="font-size:11.5px">${t('Update Template')} → ${nf(BUILDER.length)} ${t('exercises')}</div></div>
+    <button class="btn btn-primary btn-sm" data-act="b-tpl">${ic('check',13)} ${t('Update Template')}</button>
+    <button class="btn btn-outline btn-sm" data-act="tpl-edit-x">${t('Cancel')}</button>
+  </div>`:''}
+  <div class="bgrid">
+    <div class="stack">
+      <div class="card" style="padding:14px 18px">
+        <div class="card-h" style="padding:0 0 10px"><span class="card-t">${ic('dumbbell',14)} ${t('Saved workouts')} — ${t(c.name)}</span><button class="btn btn-outline btn-sm" data-act="w-new">${ic('plus',13)} ${t('New workout')}</button></div>
+        ${(DB[c.id].workouts||[]).length?DB[c.id].workouts.map((w,wi)=>`
+        <div class="tl-row">
+          <span class="bdg ${w.status==='assigned'?'bdg-lime':'bdg-gray'}" style="flex:none;font-size:10px">${t(w.status==='assigned'?'Pending':w.status==='completed'?'completed':'planned')}</span>
+          <div style="flex:1;min-width:0"><div style="font-weight:600">${esc(w.name||t('New workout'))}</div><div class="muted" style="font-size:11.5px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div>
+          <button class="btn btn-ghost btn-icon" data-act="w-load" data-wi="${wi}" title="${t('Load into the builder')}" style="color:var(--ink3)">${ic('edit',14)}</button>
+          <button class="btn btn-ghost btn-icon" data-act="w-del" data-wi="${wi}" title="${t('Delete')}" style="color:var(--red)">${ic('trash',14)}</button>
+        </div>`).join('')
+        :`<div class="muted" style="font-size:12.5px;padding:6px 0">${t('No saved workouts yet — build one below')}</div>`}
+      </div>
+      <div class="card" style="padding:18px">
+        <div class="fgrid">
+          <div class="field"><label class="lbl">${t('Workout Name')}</label><input class="inp" id="w-name" value="${esc(wval())}"></div>
+          <div class="field"><label class="lbl">${t('Training Day')}</label><select class="sel" id="w-day" data-change="wday">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(d=>`<option value="${d}" ${d===S.wday?'selected':''}>${t(d)}</option>`).join('')}</select></div>
+          <div class="field"><label class="lbl">${t('Duration')}</label><input class="inp" id="w-dur" value="${esc(t(S.wdur))}"></div>
+          <div class="field"><label class="lbl">${t('Coach Notes')}</label><input class="inp" id="w-note" value="${esc(t(S.wnote))}"></div>
+        </div>
+        <div class="row" style="background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--accent-ink);flex-wrap:wrap;gap:6px">${ic('users',14)} ${t('Save Workout')} → ${t('Published to')} <b>${t(c.name)}</b> (${t('Visible to client')}) <span style="opacity:.5">·</span> ${ic('calendar',13)} ${t('Training Day')}: <b>${t(S.wday)}</b>${S.calReturn?` <span class="bdg bdg-gray" style="font-size:10px">${t('Back to calendar')}</span>`:''}</div>
+      </div>
+      <div id="exList">${BUILDER.map((b,i)=>exBlock(b,i)).join('')}
+        <button class="btn btn-outline" style="width:100%;justify-content:center;border-style:dashed;padding:13px" data-act="pk">${ic('plus',15)} ${t('Add Exercise')}</button>
+      </div>
+      <div class="card" style="padding:14px 18px">
+        <div class="row" style="flex-wrap:wrap"><span class="muted" style="font-size:12.5px">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</span><span class="sp"></span>
+        <button class="btn btn-ghost" data-act="b-cancel">${t('Cancel')}</button>
+        <button class="btn btn-outline" data-act="ai-draft" title="${t('AI Workout Assistant')}">${ic('zap',15)} ${t('AI Draft')}</button>
+        <button class="btn btn-outline" data-act="print-workout" title="${t('Print / PDF')}">${ic('download',15)} ${t('Print / PDF')}</button>
+        <button class="btn btn-outline" data-act="export-pdf" data-kind="week" title="${t('Export the full week as a printable PDF')}">${ic('download',15)} ${t('Week PDF')}</button>
+        <button class="btn btn-outline" data-act="b-tpl">${S.tplEdit!=null?t('Update Template'):t('Save as Template')}</button>
+        <button class="btn btn-primary" data-act="b-save">${ic('check',15)} ${t('Save Workout')}</button></div>
+      </div>
+    </div>
+    <div class="card" style="position:sticky;top:76px">
+      <!-- v18.69 — the Week Split sidebar was removed (redundant): the client
+           calendar is THE place to plan the week (v18.65) and Quick week setup
+           lives in its header (v18.67); the builder's own Training Day select
+           still assigns the day on save. -->
+      <div class="card-h"><span class="card-t">${ic('dumbbell',14)} ${t('Program')} — ${t('Week')} ${nf(progMeta(c).wk)}/${nf(progMeta(c).weeks)}</span></div>
+      <div style="padding:10px">
+        ${(()=>{const pmB=progMeta(c);return Array.from({length:pmB.weeks},(_,i)=>{const w=i+1;const st=w<pmB.wk?'done':w===pmB.wk?'cur':'';
+        return `<div class="wk-it ${st}" data-act="toast" data-msg="${t('Week')} ${nf(w)} — ${t(st==='done'?'completed':st==='cur'?'current':'planned')}">
+        ${st==='done'?ic('check',14):`<span style="width:14px;text-align:center;font-size:12px">${st==='cur'?'▶':nf(w)}</span>`}
+        <span>${t('Week')} ${nf(w)}</span>${st==='cur'?`<span class="sp"></span><span class="bdg bdg-lime">${t('Current')}</span>`:''}</div>`}).join('')})()}
+      </div>
+    </div>
+  </div>`;
+}
+function exBlock(b,i){
+  const ex=EXERCISES[b.ex];
+  return `<div class="exb" draggable="true" data-bi="${i}">
+    <span class="grip">${ic('grip',16)}</span><div class="ex-num">${nf(i+1)}</div>
+    <div class="ex-main">
+      <div class="row" style="flex-wrap:wrap;gap:8px"><b style="font-size:14px">${t(ex.n)}</b><span class="chip">${tmus(ex.m)}</span></div>
+      <div class="ex-grid" style="margin-top:9px">
+        <div class="mi"><span>${t('Sets')}</span><input type="number" value="${b.sets}" min="1" data-bf="sets"></div>
+        <div class="mi"><span>${t('Reps')}</span><input type="number" value="${b.reps}" min="1" data-bf="reps"></div>
+        <div class="mi"><span>${t('Weight (kg)')}</span><input type="number" value="${b.kg}" min="0" data-bf="kg"></div>
+        <div class="mi"><span>${t('Rest (sec)')}</span><input type="number" value="${b.rest}" step="15" min="0" data-bf="rest"></div>
+      </div>
+      <div class="mi" style="margin-top:9px"><span>${t('Coach cue')}</span><input type="text" value="${esc(t(b.note||''))}" data-bf="note" maxlength="140" placeholder="${t('e.g. Elbows ~45°, full ROM')}"></div>
+      <div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="chip">${b.rpe}</span><span class="chip">${b.rir}</span><span class="chip">${t('Tempo')} ${b.tempo}</span>
+        ${b.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(b.note))}</span>`:''}
+        ${b.vid?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">▶ ${t('Video')} ✓</span>`:''}
+      </div>
+    </div>
+    <div class="row" style="gap:2px;align-items:flex-start">
+      <button class="btn btn-ghost btn-icon" data-act="b-vid" data-bi="${i}" title="${t('Video link')}" style="${b.vid?'color:var(--accent-deep)':'color:var(--ink3)'}">${ic('play',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="b-up" data-bi="${i}">${ic('chevL',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="b-dn" data-bi="${i}">${ic('chevR',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="b-dup" data-bi="${i}">${ic('copy',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="b-del" data-bi="${i}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>
+  </div>`;
+}
+function vCCal(){
+  const c=client(S.cid);
+  const list=[...(DB[c.id].sessions||[])].sort((a,b)=>a.day-b.day||a.start-b.start);
+  const dots={};list.forEach(s=>{(dots[s.day]=dots[s.day]||[]).push(SESS_DOT[s.type]||SESS_DOT.session)});
+  const up=list.filter(s=>s.day>=TODAY);
+  const past=list.filter(s=>s.day<TODAY).reverse();
+  const sp=splitOf(c.id);
+  /* v18.65 — ONE surface: the month grid IS the add-workout UI. The v18.63
+     week strip above it duplicated the same 7 slots (removed per design
+     review) and the header "Add workout" picker is gone with it — tapping
+     any day cell opens the day modal (assign / new / rest / clear). */
+  /* v18.63 — REAL MONTH GRID (the old one was hardcoded: fake dates 29,30…1,2
+     and a frozen "today=8"; its session dots were keyed by weekday but looked
+     up by day-of-month — wrong cells). Now: the month of today (Jalali-aware),
+     every cell maps to its weekday split slot (💪 name / 🌙 rest / ＋ empty),
+     correct session dots, real today; tap a cell → day modal with that date. */
+  /* v18.66 — MULTI-MONTH: ‹ › navigates months (Jalali-correct base). The
+     weekly split repeats, so every month — this one or six months out —
+     shows the same weekday plan; any day cell in any month is clickable
+     and opens the day modal with that exact date. */
+  const off=S.calOff||0;
+  const base=calMonthBase(off);
+  const cells=monthCells(base);
+  const mName=base.toLocaleDateString(dLoc(),{month:'long',year:'numeric'});
+  /* weekly frequency at a glance — the coach plans 3, 4 or 7 days a week */
+  const trN=sp.filter(s=>s&&s.t==='w').length,rsN=sp.filter(s=>s&&s.t==='rest').length,emN=7-trN-rsN;
+  return `
+  <div class="row" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div class="row">${avC(c.name,40)}<div><b>${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.freq)}</div></div></div>
+    <div class="row" style="flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button>
+      <button class="btn btn-outline btn-sm" data-act="nav" data-view="calendar">${ic('calendar',14)} ${t('Open calendar →')}</button>
+    </div>
+  </div>
+  <div class="grid2" style="grid-template-columns:1fr 320px;align-items:start">
+    <div>
+      <div class="row" style="justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+        <div class="row" style="gap:2px">
+          <button class="btn btn-ghost btn-icon" data-act="cal-m" data-d="-1">${ic('chevL',15)}</button>
+          <b style="font-size:13px;min-width:118px;text-align:center">${mName}</b>
+          <button class="btn btn-ghost btn-icon" data-act="cal-m" data-d="1">${ic('chevR',15)}</button>
+          ${off?`<button class="btn btn-outline btn-sm" data-act="cal-m" data-d="0">${t('Today')}</button>`:''}
+        </div>
+        <span class="row" style="gap:8px;flex-wrap:wrap">
+          <span class="muted" style="font-size:11.5px">${t('Tap a day to assign a workout or rest')} · ${t('Every week')}</span>
+          <button class="btn btn-outline btn-sm" data-act="cal-quick">${ic('zap',13)} ${t('Quick week setup')}</button>
+          <span class="bdg bdg-gray" style="font-size:10.5px">${ic('dumbbell',11)} ${nf(trN)} ${t('training days / week')}</span>
+          ${emN?`<button class="btn btn-outline btn-sm" style="font-size:11px;padding:3px 9px" data-act="cal-rest-empty">${ic('moon',11)} ${t('Rest unplanned days')}</button>`:''}
+        </span>
+      </div>
+      <div class="mcal compact">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="mh">${t(d)}</div>`).join('')}
+        ${cells.map(cl=>{const wd=(cl.date.getDay()+6)%7;
+        const isT=cl.date.toDateString()===TDATE.toDateString();
+        const s=sp[wd],w=splitW(c.id,s);
+        const dd=cl.cur?(dots[wd]||[]):[];
+        const mk=cl.cur?(s&&s.t==='rest'?`<div class="md-r">${ic('moon',9)} ${t('Rest')}</div>`:w?`<div class="md-w">${ic('dumbbell',9)} <span>${esc(t(w.name)||t('New workout'))}</span></div>`:`<div class="md-a" data-l="${t('Add workout')}">${ic('plus',9)}</div>`):'';
+        return `<div class="mday ${cl.cur?'click':'off'} ${isT?'today':''}" ${cl.cur?`data-act="split-day" data-i="${wd}" data-d="${ymdOf(cl.date)}"`:''}>${cl.cur?nf(cl.n):`<span style="opacity:.35">${nf(cl.n)}</span>`}${mk}${dd.length?`<div class="mdots">${dd.slice(0,3).map(col=>`<span class="mdot" style="background:${col}"></span>`).join('')}</div>`:''}</div>`;}).join('')}
+      </div>
+    </div>
+    <div class="stack">
+      ${adherenceCard()}
+      <div class="card"><div class="card-h"><span class="card-t">${ic('calendar',14)} ${t('Upcoming')}</span><span class="bdg bdg-gray">${nf(up.length)}</span></div>
+        ${up.length?up.map(s=>`
+        <div class="tl-row"><div class="tl-time">${nf(fmtT(s.start))}</div>
+        <div style="flex:1;min-width:0"><b style="font-size:13px">${t(s.label)}</b><div class="muted" style="font-size:12px">${t(DAYS[s.day])} · ${nf(s.dur)} h</div></div>
+        ${attBadge(s)||`<span class="bdg ${s.type==='session'?'bdg-lime':s.type==='assess'?'bdg-blue':s.type==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[s.type])}</span>`}</div>`).join('')
+        :`<div style="padding:22px;text-align:center;color:var(--ink3);font-size:12.5px">${t('No sessions scheduled')}</div>`}
+      </div>
+      <div class="card"><div class="card-h"><span class="card-t">${ic('check',14)} ${t('Completed')}</span><span class="bdg bdg-gray">${nf(past.length)}</span></div>
+        ${past.length?past.slice(0,4).map(s=>`
+        <div class="tl-row"><div class="tl-time">${nf(fmtT(s.start))}</div>
+        <div style="flex:1;min-width:0"><b style="font-size:13px">${t(s.label)}</b><div class="muted" style="font-size:12px">${t(DAYS[s.day])}</div></div>
+        ${attBadge(s)||`<span class="bdg bdg-gray">${t(EVLBL[s.type])}</span>`}</div>`).join('')
+        :`<div style="padding:22px;text-align:center;color:var(--ink3);font-size:12.5px">${t('No sessions scheduled')}</div>`}
+      </div>
+      <div class="card" style="padding:14px 16px">
+        <div class="row" style="gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--ink2)">
+          <span class="row" style="gap:5px"><span class="mdot" style="background:var(--accent-deep)"></span>${t('Session')}</span>
+          <span class="row" style="gap:5px"><span class="mdot" style="background:var(--blue)"></span>${t('Assessment')}</span>
+          <span class="row" style="gap:5px"><span class="mdot" style="background:var(--purple)"></span>${t('Measurement')}</span>
+          <span class="row" style="gap:5px"><span class="mdot" style="background:var(--amber)"></span>${t('Appointment')}</span>
+          <span class="row" style="gap:5px">${ic('dumbbell',11)} ${t('Workout')}</span>
+          <span class="row" style="gap:5px">${ic('moon',11)} ${t('Rest')}</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function vCProgress(){
+  /* v18.61 — every chart below is computed from the client's REAL session
+     log (DB[cid].log) or shows an honest empty state. */
+  const cid=S.cid;
+  const cons=consistWeeks(cid);
+  const vol=volumeWeeks(cid);
+  const str=strengthSeries(cid);
+  const prs=prList(cid);
+  const strSeries=str?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
+    .filter(([k])=>str[k]).map(([k,c,l])=>({d:str[k],c,l})):[];
+  return `
+  <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${['7D','30D','3M','6M','1Y'].map(r=>`<button class="fchip ${S.range===r?'on':''}" data-act="range" data-r="${r}">${t(r)}</button>`).join('')}</div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,210,S.range)}</div>
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Strength Progression')}</b>
+      <span class="row" style="gap:10px;font-size:11.5px;font-weight:600;flex-wrap:wrap">${strSeries.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</span></div>
+      ${strSeries.length?multiChart(strSeries.map(({d,c})=>({d,c}))):chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'))}</div>
+  </div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Workout Completion')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${cons?barChart(cons,{h:190,labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()}</div>
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Training Volume')}</b><span class="muted" style="font-size:12px">${t('tonnage (t / week)')}</span></div>${vol?barChart(vol,{h:190,c:'var(--blue)',labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()}</div>
+  </div>
+  ${prs.length?`<div class="excards">${prs.map(p=>`
+    <div class="card" style="padding:18px"><div class="card-t">${ic('zap',14)} ${t(p.n)}</div>
+    <div class="row" style="gap:12px;margin-top:10px;flex-wrap:wrap"><span style="font-size:22px;font-weight:800;color:var(--ink3)">${nf(p.f)}</span><span style="color:var(--accent-deep)">${ic('arrowR',18)}</span><span style="font-size:26px;font-weight:800">${nf(p.t)}</span></div>
+    <div class="row" style="margin-top:8px"><span class="bdg bdg-lime">${nf(p.g)}</span><span class="muted" style="font-size:12px">PR · ${t(p.d)}</span></div></div>`).join('')}</div>`
+   :`<div class="card" style="padding:18px">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}`;
+}
+function vMeasure(){
+  const c=client(S.cid);
+  const m=lastM(c.id),p=prevM(c.id);
+  const rows=[['Weight','w'],['Body Fat','bf'],['Chest','ch'],['Waist','wa'],['Hips','hi'],['Arm (R)','ar'],['Thigh','th'],['Calf','ca']];
+  const photos=DB[c.id].photos||[];
+  const unitOf=k=>k==='w'?(PREFS.units==='Imperial'?' lb':' kg'):k==='bf'?' %':(PREFS.units==='Imperial'?' in':' cm');
+  const convV=(k,v)=>v==null?null:(k==='w'?uw(v):(k==='bf'?v:uc(v)));
+  const betterDown=k=>['w','bf','wa','hi'].includes(k);
+  const ms=DB[c.id].measures||[];
+  const md=(e,k)=>k==='w'?uwS(e[k]):k==='bf'?nf(e[k])+' %':ucS(e[k]);
+  return `
+  <div class="row" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap">
+    <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select>
+    <div class="row">
+      <button class="btn btn-outline" data-act="photo-add">${ic('camera',15)} ${t('Add Progress Photos')}</button>
+      <button class="btn btn-primary" data-act="m-add">${ic('plus',15)} ${t('Add Measurement')}</button>
+    </div>
+  </div>
+  <div class="excards" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+    ${rows.map(([l,k])=>{const v=m?m[k]:null;const pv=p?p[k]:null;
+    const disp=convV(k,v),dDisp=convV(k,pv);
+    const d=(disp!=null&&dDisp!=null)?+(disp-dDisp).toFixed(1):null;
+    const good=d==null?null:(betterDown(k)?d<0:d>0);
+    return `<div class="card" style="padding:16px"><div class="muted" style="font-size:12px;font-weight:600">${t(l)}</div>
+    <div style="font-size:21px;font-weight:800;margin:4px 0 2px">${disp!=null?nf(disp)+unitOf(k):'—'}</div>
+    <div class="row" style="gap:8px"><span class="muted" style="font-size:11.5px">${dDisp!=null?t('prev')+' '+nf(dDisp)+unitOf(k):''}</span>
+    ${d!=null?`<span class="delta ${good?'up':'down'}">${d>0?'▲':'▼'} ${nf(Math.abs(d))}</span>`:''}</div></div>`}).join('')}
+  </div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Weight History')}</b>${wtBadge(c.id)}</div>${wChart(c.id,220,S.range)}</div>
+    <div class="card">
+      <div class="card-h"><span class="card-t">${ic('camera',14)} ${t('Progress Photos')}</span><span class="bdg bdg-gray">${ic('lock',12)} ${t('Private')}</span></div>
+      <div style="padding:16px">
+        <div class="row" style="margin-bottom:12px">${['Front','Back','Side'].map(p2=>`<button class="fchip ${S.pose===p2?'on':''}" data-act="pose" data-p="${p2}">${t(p2)}</button>`).join('')}<span class="sp"></span><span class="muted" style="font-size:12px">${nf(photos.length)} ${t('photos')}</span></div>
+        ${(()=>{const tag=({Front:'front',Back:'back',Side:'side'})[S.pose]||'front';
+          const inPose=photos.filter(p=>p.tag===tag).sort((a,b)=>a.id-b.id);
+          const A=inPose[0],B=inPose[inPose.length-1];
+          const img=(p,cls)=>p?`<img src="${p.src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${cls}>`:`<div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>`;
+          return `<figure class="photo" style="--cut:${S.cut}%">
+          <span class="tag" style="left:10px">${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${A?'':nf(1)}</span><span class="tag" style="right:10px">${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${B?'':nf(12)}</span>
+          ${img(A)}
+          <div class="photo after" style="--cut:${S.cut}%">${img(B,1)}</div>
+          <div class="handle" style="--cut:${S.cut}%"></div>
+          <figcaption>${inPose.length>=2?t('Drag the slider to compare'):t('No photos yet — add the first one')}</figcaption>
+        </figure>`})()}
+        <input type="range" min="0" max="100" value="${S.cut}" data-range-cut style="width:100%;margin-top:12px;accent-color:var(--accent-deep)">
+        <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">${photos.length?[...photos].sort((a,b)=>b.id-a.id).map(p=>`
+          <div class="card" style="padding:6px;flex:1;min-width:86px;max-width:120px;text-align:center;position:relative">
+            <div style="height:64px;border-radius:8px;overflow:hidden;background:linear-gradient(150deg,#E9E9E4,#D8D8D2)"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+            <div style="font-size:10px;font-weight:600;margin-top:4px;color:var(--ink2)">${esc(new Date(p.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'))} · ${t(({front:'Front',back:'Back',side:'Side'})[p.tag]||'Front')}</div>
+            <div class="row" style="justify-content:center;gap:2px;margin-top:2px">
+              ${p.by==='client'&&!p.ok?`<button class="btn btn-ghost btn-icon" style="padding:2px;color:var(--accent-deep)" title="${t('Approve')}" data-act="photo-ok" data-cid="${c.id}" data-id="${p.id}">${ic('check',13)}</button><span class="bdg bdg-amber" style="font-size:9px;padding:1px 5px">${t('Pending approval')}</span>`:''}
+              <button class="btn btn-ghost btn-icon" style="padding:2px;color:var(--red)" data-act="photo-del" data-cid="${c.id}" data-id="${p.id}">${ic('trash',13)}</button>
+            </div>
+          </div>`).join('')
+        :`<div class="muted" style="font-size:12px;width:100%;text-align:center;padding:4px 0">${t('No photos yet — add the first one')}</div>`}</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-h"><span class="card-t">${ic('ruler',14)} ${t('Measurement history')}</span><span class="bdg bdg-gray">${nf(ms.length)}</span></div>
+    ${ms.length?[...ms].map((e,i)=>({e,i})).reverse().map(({e,i})=>`
+    <div class="tl-row">
+      <div style="width:86px;flex:none"><b style="font-size:12.5px">${fmtD(e.d)}</b></div>
+      <div style="flex:1;display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px">
+        ${[['w','Weight'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].map(([k,l])=>e[k]!=null?`<span><span class="muted">${t(l)}:</span> <b>${md(e,k)}</b></span>`:'').join('')}
+      </div>
+      <button class="btn btn-ghost btn-icon" data-act="meas-del" data-cid="${c.id}" data-i="${i}" style="color:var(--red)">${ic('trash',15)}</button>
+    </div>`).join('')
+    :`<div style="padding:30px;text-align:center;color:var(--ink3)">${t('No measurements yet')}</div>`}
+  </div>`;
+}
+function noteRow(n,global){
+  return `<div class="tl-row" style="align-items:flex-start;${n.arch?'opacity:.5':''}">
+    <div style="flex:1;min-width:0">
+      <div class="row" style="gap:8px;flex-wrap:wrap"><b>${esc(t(n.title))}</b><span class="bdg ${n.type==='Injury / Restriction'?'bdg-red':n.type==='Nutrition'?'bdg-blue':n.type==='Progress'?'bdg-purple':'bdg-gray'}">${esc(t(n.type))}</span>
+      ${n.from==='client'?`<span class="bdg bdg-blue">${ic('users',11)} ${t('Client')}</span>`:''}
+      ${global?`<span class="chip">${esc(t(n.client))}</span>`:''}
+      ${n.from==='coach'&&n.shared===false?`<span class="bdg bdg-gray">${ic('lock',11)} ${t('Private')}</span>`:''}
+      ${n.from==='coach'&&n.shared?`<span class="bdg bdg-lime">${ic('users',11)} ${t('Visible to client')}</span>`:''}
+      ${n.pin?`<span class="ic" style="color:var(--accent-deep)">${ic('pin',13)}</span>`:''}</div>
+      <div class="sub" style="margin-top:4px">${esc(t(n.body))}</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:5px">${esc(t(n.date))}</div>
+    </div>
+    <div class="row" style="gap:2px">
+      <button class="btn btn-ghost btn-icon" data-act="note-pin" data-id="${n.id}" style="${n.pin?'color:var(--accent-deep)':''}">${ic('pin',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="note-edit" data-id="${n.id}">${ic('edit',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="note-arch" data-id="${n.id}">${ic('archive',15)}</button>
+    </div>
+  </div>`;
+}
+function vCNotes(){
+  const c=client(S.cid);
+  const list=NOTES.filter(n=>n.client===c.name&&!n.arch);
+  return `
+  <div class="grid2" style="grid-template-columns:340px 1fr;align-items:start">
+    <div class="card" style="padding:18px;position:sticky;top:76px">
+      <div class="card-t" style="margin-bottom:10px">${ic('plus',14)} ${t('New Note')}</div>
+      <select class="sel" id="nt-type" style="margin-bottom:10px">${['General Note','Training Note','Progress Note','Injury / Restriction Note','Nutrition Note'].map(x=>`<option value="${x}">${t(x)}</option>`).join('')}</select>
+      <input class="inp" id="nt-title" placeholder="${t('Title')}" style="margin-bottom:10px">
+      <textarea class="ta" id="nt-body" placeholder="${t('Write your note…')}" style="min-height:110px"></textarea>
+      <label class="chk" style="margin-top:10px"><input type="checkbox" id="nt-share" checked>${t('Visible to client')}</label>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:10px" data-act="note-add" data-c="${esc(c.name)}">${ic('check',15)} ${t('Add Note')}</button>
+    </div>
+    <div class="card">${list.length?list.map(n=>noteRow(n,false)).join(''):`<div class="empty" style="margin:14px"><div>${ic('note',24)}</div><b>${t('No notes yet')}</b><span class="muted">${t('Write your first note for this client')}</span></div>`}</div>
+  </div>`;
+}
+function vNotes(){
+  const types=['All','General','Training','Progress','Injury / Restriction','Nutrition'];
+  const list=NOTES.filter(n=>!n.arch&&(S.nfilter==='All'||n.type===S.nfilter));
+  return `
+  <div class="page-h"><div><h1>${t('Notes')}</h1><div class="sub">${t('Open a client workspace to add a note')}</div></div>
+  <button class="btn btn-primary" data-act="qn-open">${ic('plus',15)} ${t('Create Note')}</button></div>
+  <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${types.map(x=>`<button class="fchip ${S.nfilter===x?'on':''}" data-act="nfilter" data-t="${x}">${t(x)}</button>`).join('')}</div>
+  <div class="card">${list.length?list.map(n=>noteRow(n,true)).join(''):`<div class="empty" style="margin:14px"><div>${ic('note',24)}</div><b>${t('No results found.')}</b><span class="muted">${t('Try a different filter')}</span></div>`}</div>`;
+}
+function vFiles(){
+  const fIco=x=>({PDF:'note',Document:'note',Archive:'folder',Image:'image'})[x]||'folder';
+  return `
+  <div class="page-h"><div><h1>${t('Files')}</h1><div class="sub">${t('Documents & assessments for')} ${t(client(S.cid).name)}</div></div>
+  <div class="row"><button class="btn btn-outline" data-act="files-dl-all">${ic('download',15)} ${t('Download all')}</button>
+  <button class="btn btn-primary" data-act="file-up">${ic('upload',15)} ${t('Upload')}</button></div></div>
+  <div class="card" style="padding:26px;text-align:center;border-style:dashed;margin-bottom:14px;cursor:pointer" data-act="file-up" ondragover="event.preventDefault()" ondrop="fileDrop(event)">
+    <div class="row" style="justify-content:center;color:var(--ink3)">${ic('upload',22)}<b style="color:var(--ink2)">${t('Drop files here')}</b>&nbsp;${t('or click to browse — PDF, images, documents')}</div>
+    <div class="muted" style="font-size:11px;margin-top:6px">${t('Stored in your workspace and synced to every device — max 300 KB per file')}</div>
+  </div>
+  <div class="card" style="overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('File')}</th><th>${t('Type')}</th><th>${t('Date')}</th><th>${t('Size')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
+    <tbody>${FILES.map((f,i)=>`
+    <tr><td><div class="row"><span class="ic" style="color:var(--ink3)">${ic(fIco(f.t),17)}</span><b>${t(f.n)}</b></div></td>
+    <td><span class="bdg bdg-gray">${t(f.t)}</span></td><td>${t(f.d)}</td><td>${f.s}</td>
+    <td style="text-align:end;white-space:nowrap">
+      <button class="btn btn-ghost btn-icon" title="${t('Preview')}" data-act="file-view" data-i="${i}">${ic('search',15)}</button>
+      <button class="btn btn-ghost btn-icon" title="${t('Download')}" data-act="file-dl" data-i="${i}">${ic('download',15)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="file-del" data-i="${i}" style="color:var(--red)">${ic('trash',15)}</button>
+    </td></tr>`).join('')||`<tr><td colspan="5" style="text-align:center;padding:26px;color:var(--ink3)">${t('No files yet — upload the first document')}</td></tr>`}</tbody></table></div>`;
+}
+function vLibrary(){
+  const cm=PREFS.uiTpl==='coachmint';
+  return `
+  <div class="page-h"><div>${cm?`<div class="eyebrow">${t('Movement Bank')} // ${nf(EXERCISES.length)}</div>`:''}<h1>${t('Exercise Library')}</h1><div class="sub">${nf(EXERCISES.length)} ${t('exercises')} · ${t('video & instructions on each card')} · <b>${nf(bankN())}</b> ${t('with video')}</div></div>
+  <div class="row" style="gap:8px;flex-wrap:wrap">
+  <button class="btn btn-outline" data-act="ex-vid-imp" title="${t('Import video links')}">${ic('upload',15)} ${t('Import')}</button>
+  <button class="btn btn-outline" data-act="ex-vid-exp" title="${t('Export video links')}">${ic('download',15)} ${t('Export')}</button>
+  <button class="btn btn-outline" data-act="cex-new" title="${t('Create Custom Exercise')}">${ic('edit',15)} ${t('Create Custom Exercise')}</button></div></div>
+  <div class="card" style="padding:14px;margin-bottom:14px">
+    <div class="row" style="flex-wrap:wrap;gap:10px">
+      <div class="searchbox" style="flex:1;min-width:200px">${ic('search',15)} <input id="ex-q" placeholder="${t('Search exercises…')}" style="border:none;outline:none;flex:1;background:none;font-size:13.5px" oninput="exFilter()"></div>
+      <select class="sel" id="ex-e" style="width:160px" onchange="exFilter()"><option value="All">${t('All Equipment')}</option>${['Barbell','Dumbbell','Cable','Machine','Kettlebell','Band','Bodyweight'].map(e=>`<option value="${e}">${t(e)}</option>`).join('')}</select>
+      <select class="sel" id="ex-t" style="width:140px" onchange="exFilter()"><option value="All">${t('All Types')}</option><option value="Compound">${t('Compound')}</option><option value="Isolation">${t('Isolation')}</option></select>
+    </div>
+    <div class="row" id="ex-mus" style="flex-wrap:wrap;gap:8px;margin-top:12px">${MUSCLES.map(m=>`<button class="fchip ${m===(EXM||'All')?'on':''}" data-act="ex-muscle" data-m="${m}">${tmus(m)}</button>`).join('')}</div>
+  </div>
+  <div class="excards" id="ex-grid">${EXERCISES.map((e,i)=>exCard({...e,i})).join('')}</div>`;
+}
+const exCard=e=>{
+  const cex=e.i>=CEXBASE&&CEXS[e.i-CEXBASE];
+  const fav=PREFS.favs&&PREFS.favs.includes(e.n);
+  return `
+    <div class="card exc">
+      <div class="row"><div style="width:52px;height:40px;border-radius:9px;background:linear-gradient(150deg,var(--line2),var(--line));display:grid;place-items:center;color:var(--ink3)">${ic('dumbbell',18)}</div>
+      <div><div class="nm">${t(e.n)}${cex?` <span class="bdg bdg-blue" style="font-size:9.5px">${t('Custom')}</span>`:''}</div><div class="meta">${tmus(e.m)} · ${t(e.e)}</div></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${t(e.t)}</span><span class="chip">${t(e.e)}</span><span class="chip" data-act="ex-video" data-i="${e.i}" style="cursor:pointer;${EXVID[e.n]?'background:var(--accent-soft);color:var(--accent-ink)':''}" title="${t('Video link')}">▶ ${t('Video')}${EXVID[e.n]?' ✓':''}</span></div>
+      <div class="row" style="margin-top:auto;gap:6px">
+        <button class="btn btn-dark btn-sm" data-act="ex-add" data-i="${e.i}">${ic('plus',13)} ${t('Add to Workout')}</button><span class="sp"></span>
+        <button class="btn btn-ghost btn-icon" data-act="fav" data-n="${esc(e.n)}" title="${t('Favorite')}" style="color:${fav?'#E1B014':'var(--ink3)'}">${ic('star',15)}</button>
+        ${cex?`<button class="btn btn-ghost btn-icon" data-act="cex-edit" data-id="${cex.id}">${ic('edit',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="cex-del" data-id="${cex.id}" style="color:var(--red)">${ic('trash',15)}</button>`:''}
+      </div>
+    </div>`};
+/* v18.9 — custom exercise create/edit. Stored in CEXS (workspace payload);
+   appended after the static EXERCISES bank in id order so builder/template
+   indexes stay identical on every device. */
+function exEditModal(id){
+  const x=id!=null?CEXS.find(y=>y.id===id):null;
+  openModal(`
+  <div class="modal-h"><h3>${t(x?'Edit Exercise':'Create Custom Exercise')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Exercise name')}</label><input class="inp" id="cex-n" value="${esc(x?x.n:'')}" placeholder="${t('Exercise name')}"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Muscle')}</label><select class="sel" id="cex-m">${MUSCLES.filter(m=>m!=='All').map(m=>`<option ${x&&x.m===m?'selected':''}>${t(m)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Equipment')}</label><select class="sel" id="cex-e">${['Barbell','Dumbbell','Cable','Machine','Kettlebell','Band','Bodyweight'].map(e=>`<option ${x&&x.e===e?'selected':''}>${t(e)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Type')}</label><select class="sel" id="cex-t">${['Compound','Isolation'].map(tp=>`<option ${x&&x.t===tp?'selected':''}>${t(tp)}</option>`).join('')}</select></div>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:8px">${t('Custom exercises sync with your workspace and appear in the builder, templates and the client app')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="cex-save" data-id="${id!=null?id:''}">${ic('check',15)} ${t('Save')}</button></div>`)}
+/* v18.3 — exercise video/GIF links: image URLs render inline in the client player, other links open in a new tab */
+const isImgUrl=u=>/\.(gif|png|jpe?g|webp|avif)(\?|#|$)/i.test(u);
+/* v18.4 — vidModal(bi) edits the link on one builder item (pre-filled from the
+   bank); vidModal(null,exi) edits the coach's bank entry for the exercise. */
+function vidModal(bi,exi){
+  const b=bi!=null?BUILDER[bi]:null;if(bi!=null&&!b)return;
+  const xi=b?b.ex:exi,ex=EXERCISES[xi];if(!ex)return;
+  const cur=b?(b.vid||EXVID[ex.n]||''):(EXVID[ex.n]||'');
+  const tgt=b?`data-bi="${bi}"`:`data-exi="${exi}"`;
+  openModal(`
+  <div class="modal-h"><h3>${t('Video link')} — ${esc(t(ex.n))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t(b?'Paste a YouTube or GIF link — the client sees it on their workout':'Set a link once — it attaches to this exercise in every workout')}</label><input class="inp" id="vid-url" dir="ltr" placeholder="https://youtube.com/… · https://…/move.gif" value="${esc(cur)}"></div>
+    <div class="row" style="gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px"><button class="btn btn-outline btn-sm" data-act="vid-yt" data-i="${xi}">${ic('play',13)} ${t('Search on YouTube')}</button><span class="muted" style="font-size:12px">${t('GIF links play right inside the workout — other links open in a new tab.')}</span></div>
+  </div>
+  <div class="modal-f">${cur?`<button class="btn btn-ghost" data-act="vid-del" ${tgt} style="color:var(--red)">${ic('trash',15)} ${t('Delete')}</button>`:''}<span class="sp"></span><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="vid-save" ${tgt}>${ic('check',15)} ${t('Save')}</button></div>`);
+}
+function vidExportModal(){
+  const lines=Object.keys(EXVID).map(n=>`${n}\t${EXVID[n]}`).join('\n');
+  openModal(`
+  <div class="modal-h"><h3>${t('Video bank')} — ${nf(Object.keys(EXVID).length)} ${t('links')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('One link per line: exercise name, then the URL — tab or | separated.')}</div><textarea class="inp" id="vid-exp" dir="ltr" rows="9" readonly style="font-family:monospace;font-size:12px">${esc(lines)}</textarea></div>
+  <div class="modal-f"><span class="sp"></span><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="vid-exp-copy">${ic('copy',15)} ${t('Copy')}</button></div>`);
+}
+function vidImportModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Import video links')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('Paste lines like:')}<code dir="ltr" style="display:block;margin-top:6px;font-size:11.5px;color:var(--ink2)">Barbell Bench Press | https://youtube.com/watch?v=…</code></div><textarea class="inp" id="vid-imp" dir="ltr" rows="9" style="font-family:monospace;font-size:12px" placeholder="${t('Name | URL')}"></textarea></div>
+  <div class="modal-f"><span class="sp"></span><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="vid-imp-save">${ic('check',15)} ${t('Import')}</button></div>`);
+}
+function exFilter(){
+  const q=($('ex-q')?.value||'').toLowerCase(),e=$('ex-e')?.value||'All',tp=$('ex-t')?.value||'All';
+  const list=EXERCISES.map((x,i)=>({...x,i})).filter(x=>(EXM==='All'||x.m===EXM)&&(e==='All'||x.e===e)&&(tp==='All'||x.t===tp)&&(x.n.toLowerCase().includes(q)||t(x.n).toLowerCase().includes(q)));
+  const g=$('ex-grid');if(!g)return;
+  g.innerHTML=list.length?list.map(exCard).join(''):`<div class="empty" style="grid-column:1/-1">${ic('dumbbell',22)}<b>${t('No exercises match your search.')}</b></div>`;
+}
+function vTemplates(){
+  const snippet=tp=>tp.parts?tp.parts.map(p=>t(p.n)).join(' · '):(tp.exs||[]).slice(0,4).map(e=>t(EXERCISES[e.ex].n)).join(' · ')+((tp.exs||[]).length>4?` · +${nf(tp.exs.length-4)}`:'');
+  /* v17.11 — sport filter, defaulted to the coach's onboarding answer */
+  const sports=['All',...Array.from(new Set(TEMPLATES.flatMap(tp=>tp.sp||[])))];
+  if(ONBOARD.sport&&!sports.includes(ONBOARD.sport))sports.push(ONBOARD.sport);
+  if(!S.tsp||!sports.includes(S.tsp))S.tsp=ONBOARD.done&&ONBOARD.sport&&sports.includes(ONBOARD.sport)?ONBOARD.sport:'All';
+  const list=TEMPLATES.filter(tp=>S.tsp==='All'||(tp.sp||[]).includes(S.tsp));
+  return `
+  <div class="page-h"><div><h1>${t('Workout Templates')}</h1><div class="sub">${t('Reusable programs — build once, assign in seconds')}</div></div>
+  <button class="btn btn-primary" data-act="tpl-new">${ic('plus',15)} ${t('Create Template')}</button></div>
+  <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${sports.map(s=>`<button class="fchip ${S.tsp===s?'on':''}" data-act="tsp" data-v="${esc(s)}">${t(s)}</button>`).join('')}</div>
+  <div class="excards">${list.length?list.map((tp,i)=>`
+    <div class="card tcard">
+      <div class="row">${av(tp.n,38)}<div><b>${tp.n}</b><div class="muted" style="font-size:12px">${t(tp.days)}</div></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(tplExN(tp))} ${t('exercises')}</span><span class="chip">${nf(tplSetN(tp))} ${t('sets')}</span><span class="chip">${t(tp.dur)}</span></div>
+      <div class="muted" style="font-size:11.5px">${snippet(tp)}</div>
+      <div class="row" style="margin-top:auto;gap:6px">
+        <button class="btn btn-primary btn-sm" data-act="tpl-use" data-i="${i}">${t('Use Template')}</button><span class="sp"></span>
+        <button class="btn btn-ghost btn-icon" title="${t('Preview')}" data-act="tpl-preview" data-i="${i}">${ic('search',15)}</button>
+        ${tp.parts?'':`<button class="btn btn-ghost btn-icon" title="${t('Edit')}" data-act="tpl-edit" data-i="${i}">${ic('edit',15)}</button>`}
+        <button class="btn btn-ghost btn-icon" data-act="tpl-dup" data-i="${i}">${ic('copy',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="tpl-arch" data-i="${i}" style="color:var(--red)">${ic('archive',15)}</button>
+      </div>
+    </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><div>${ic('stack',24)}</div><b>${t('No templates for this sport yet')}</b><span class="muted">${t('Build one in the builder and save it as a template')}</span><button class="btn btn-outline btn-sm" data-act="tsp" data-v="All">${t('Show all templates')}</button></div>`}</div>`;
+}
+function evBadge(tp){return `<span class="bdg ${tp==='session'?'bdg-lime':tp==='assess'?'bdg-blue':tp==='meas'?'bdg-purple':'bdg-amber'}">${t(EVLBL[tp])}</span>`}
+function icsExport(){
+  const pad=n=>String(n).padStart(2,'0');
+  const dstr=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+  // Minutes were clamped to 45 and snapped to 15-minute steps, so a 09:50 or
+  // 09:05 session exported as 09:45. Keep the hour and round the real minutes.
+  const tstr=t2=>{const h=Math.min(23,Math.floor(t2)),m=(t2-h)*60;return `${pad(h)}${pad(Math.min(59,Math.round(m)))}00`};
+  let out=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//CoachMint//Calendar//EN','CALSCALE:GREGORIAN'];
+  EVENTS.forEach(ev=>{
+    const d=dayDate(ev.day,0);
+    const endH=Math.min(23.98,ev.start+ev.dur);
+    out.push('BEGIN:VEVENT',`UID:co-os-${ev.id}@coachos`,
+      `DTSTART:${dstr(d)}T${tstr(ev.start)}`,
+      `DTEND:${dstr(d)}T${tstr(endH)}`,
+      `SUMMARY:${ev.label} — ${ev.client}`,'END:VEVENT');
+  });
+  out.push('END:VCALENDAR');
+  const blob=new Blob([out.join('\r\n')],{type:'text/calendar'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='coachmint-calendar.ics';a.click();
+  toast('Calendar exported (.ics)');
+}
+function vCalendar(){
+  const FE=EVENTS.filter(e=>(S.calfType==='All'||e.type===S.calfType)&&(S.calfClient==='All'||e.client===S.calfClient));
+  const byDay=d=>FE.filter(e=>e.day===d).sort((a,b)=>a.start-b.start);
+  let busiest='—',bc=0;for(let i=0;i<7;i++){const c=byDay(i).length;if(c>bc){bc=c;busiest=dayLbl(i)}}
+  /* Working hours from Settings → Calendar. The grid always stretches to
+     include any session scheduled outside the configured range. */
+  const CH=calHours();let calS=CH.start,calE=CH.end;
+  FE.forEach(e=>{if(e.start<calS)calS=Math.floor(e.start);if(e.start+e.dur>calE)calE=Math.ceil(e.start+e.dur)});
+  calE=Math.max(calS+1,Math.min(24,calE));
+  const hours=Array.from({length:Math.round(calE-calS)},(_,i)=>calS+i);
+  const cm=PREFS.uiTpl==='coachmint';
+  const head=`<div class="page-h"><div>${cm?`<div class="eyebrow">${t('Scheduling')} // ${weekRange()}</div>`:''}<h1>${t('Calendar')}</h1><div class="sub">${weekRange()}</div></div>
+  <div class="row" style="flex-wrap:wrap">
+    <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="-1">${ic('chevL',15)}</button>
+    <button class="btn btn-outline btn-sm" data-act="cal-today">${t('Today')}</button>
+    <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="1">${ic('chevR',15)}</button>
+    <div class="seg">${['Month','Week','Day','List'].map(v=>`<button class="${S.calV===v?'on':''}" data-act="cal-v" data-v="${v}">${t(v)}</button>`).join('')}</div>
+    <button class="btn btn-outline" data-act="ics">${ic('download',15)} ${t('Export (.ics)')}</button>
+    <button class="btn btn-primary" data-act="ns-new">${ic('plus',15)} ${t('New Session')}</button>
+  </div></div>
+  <div class="row" style="gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <button class="fchip ${S.calfType==='All'?'on':''}" data-act="calf-type" data-t="All">${t('All Types')}</button>
+    ${['session','assess','meas','appt'].map(k=>`<button class="fchip ${S.calfType===k?'on':''}" data-act="calf-type" data-t="${k}">${t(EVLBL[k])}</button>`).join('')}
+    <select class="sel" style="width:auto" data-change="calclient"><option value="All">${t('All Clients')}</option>${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${S.calfClient===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
+    <span class="sp"></span><span class="muted" style="font-size:12px">${t('💡 Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
+  </div>
+  <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
+    <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>
+  ${cm?`<div class="cm-kpis" style="margin:-6px 0 14px">${[['Sessions This Week',nf(FE.length)],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`],['Active Clients',nf(new Set(FE.map(e=>e.client)).size)],['Busiest Day',busiest]].map(([k,v])=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`).join('')}</div>`:''}`;
+  if(S.calV==='Week'){
+    return head+`
+    <div class="cal-grid">
+      <div class="cal-hd"></div>
+      ${[0,1,2,3,4,5,6].map(i=>{const c=byDay(i).length;
+      return `<div class="cal-hd click ${i===TODAY&&S.weekOff===0?'today':''}" data-act="cal-day" data-day="${i}"><b>${t(WDN[i])}</b><span>${fmtNum(dayDate(i))}</span>${c?`<span class="bdg bdg-lime" style="margin:3px auto 0;padding:1px 7px;font-size:10px">${nf(c)}</span>`:''}</div>`}).join('')}
+      <div>${hours.map((h,i)=>`<div class="cal-time" style="${i%2?'':'background:var(--cal-alt)'}">${nf(fmtT(h))}</div>`).join('')}</div>
+      ${[0,1,2,3,4,5,6].map(i=>`<div class="cal-col" data-day="${i}" data-act="slot-new" style="background:${i===TODAY&&S.weekOff===0?'var(--accent-soft)':i>4?'var(--cal-alt)':''}">
+        ${hours.map((h,ix)=>`<div style="height:48px;border-top:1px solid var(--line2)"></div>`).join('')}
+        ${layoutDay(byDay(i)).map(({ev,lane,total})=>{
+          const top=Math.max(0,ev.start-calS)*48+1;
+          const vis=Math.min(calE,ev.start+ev.dur)-Math.max(calS,ev.start);
+          const h=Math.max(20,vis*48-5);
+          return `<div class="ev ev-${ev.type}" draggable="true" data-eid="${ev.id}" data-act="ev-open" style="top:${top.toFixed(0)}px;height:${h.toFixed(0)}px;left:calc(${lane} * (100% / ${total}) + 4px);width:calc(${100/total}% - 8px)">
+          <b>${t(ev.label)}${ev.att==='done'?' ✓':ev.att==='miss'?' ✗':''}</b><small>${nf(fmtT(ev.start))} · ${t(ev.client)}</small>
+        </div>`}).join('')}
+        ${i===TODAY&&S.weekOff===0&&NOW>=calS&&NOW<calE?`<div class="nowline" style="top:${((NOW-calS)*48).toFixed(0)}px"></div>`:''}
+      </div>`).join('')}
+    </div>`;
+  }
+  if(S.calV==='Month'){
+    const cells=monthCells(),wk=[0,1,2,3,4,5,6].map(i=>+dayDate(i));
+    const dotC={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
+    return head+`
+    <div class="mcal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="mh">${t(d)}</div>`).join('')}
+      ${cells.map(c=>{const ts=+c.date,wi=wk.indexOf(ts);
+      const dots=wi>=0?byDay(wi).slice(0,3).map(e=>dotC[e.type]):[];
+      const today=c.cur&&ts===+dayDate(TODAY)&&S.weekOff===0;
+      return `<div class="mday ${wi>=0?'click':''} ${today?'today':''}" ${wi>=0?`data-act="cal-day" data-day="${wi}"`:''}>${c.cur?nf(c.n):`<span style="opacity:.3">${nf(c.n)}</span>`}${dots.length?`<div class="mdots">${dots.map(cl=>`<span class="mdot" style="background:${cl}"></span>`).join('')}</div>`:''}</div>`}).join('')}
+    </div>`;
+  }
+  if(S.calV==='Day'){
+    const i=S.selDay??2;const list=byDay(i);
+    return head+`
+    <div class="card">
+      <div class="card-h">
+        <div class="row">
+          <button class="btn btn-ghost btn-icon back-ic" data-act="day-nav" data-d="-1" ${i<=0?'disabled style="opacity:.4"':''}>${ic('chevL',16)}</button>
+          <div style="text-align:center;min-width:170px"><b>${dayLbl(i)}</b><div class="muted" style="font-size:12px">${fmtFullDate(dayDate(i))}</div></div>
+          <button class="btn btn-ghost btn-icon" data-act="day-nav" data-d="1" ${i>=6?'disabled style="opacity:.4"':''}>${ic('chevR',16)}</button>
+        </div>
+        <span class="bdg bdg-gray">${nf(list.length)} ${t('Sessions')}</span>
+      </div>
+      ${list.length?list.map(ev=>`
+      <div class="tl-row click" data-act="ev-open" data-eid="${ev.id}">
+        <div class="tl-time">${nf(fmtT(ev.start))}</div>${avC(ev.client,38)}
+        <div style="flex:1;min-width:0"><div style="font-weight:600">${t(ev.label)}</div><div class="muted" style="font-size:12px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${attBadge(ev)||evBadge(ev.type)}${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
+      </div>`).join('')
+      :`<div style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink2);text-align:center">${ic('calendar',26)}<b>${t('No events this day')}</b><span class="muted" style="font-size:12.5px">${t('Tap an empty slot to add a session')}</span></div>`}
+    </div>`;
+  }
+  let groups='';[0,1,2,3,4,5,6].forEach(i=>{const list=byDay(i);if(!list.length)return;
+    groups+=`<div class="card"><div class="card-h"><span class="card-t">${ic('calendar',14)} ${dayLbl(i)}</span><span class="bdg bdg-gray">${nf(list.length)}</span></div>
+    ${list.map(ev=>`<div class="tl-row click" data-act="ev-open" data-eid="${ev.id}">
+      <div class="tl-time">${nf(fmtT(ev.start))}</div>${avC(ev.client,38)}
+      <div style="flex:1;min-width:0"><div style="font-weight:600">${t(ev.label)}</div><div class="muted" style="font-size:12px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+      ${attBadge(ev)||evBadge(ev.type)}${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
+    </div>`).join('')}</div>`});
+  return head+`<div class="stack">${groups||`<div class="card" style="padding:40px;text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}</div>`;
+}
+function evBanner(k,bg,c){return `<div class="row" style="gap:8px;padding:10px 12px;border-radius:10px;background:${bg};color:${c};font-size:12.5px;font-weight:600">${ic('bell',14)}<span>${t(k)}</span></div>`}
+function conflictInfo(exId){
+  const day=+$(exId?'ev-day':'ns-day').value,st=parseFloat($(exId?'ev-time':'ns-time').value),du=parseFloat($(exId?'ev-dur':'ns-dur').value),cl=$(exId?'ev-client':'ns-client').value;
+  const others=EVENTS.filter(x=>(!exId||x.id!==exId)&&x.day===day&&x.start<st+du-1e-9&&st<x.start+x.dur-1e-9);
+  const own=others.find(x=>x.client===cl);
+  return own?{msg:'⚠️ This client already has an event at this time',bad:true}
+    :others.length?{msg:'⚠️ You already have another event at this time',bad:true}:{msg:'✓ No conflicts',bad:false};
+}
+window.nsConflict=function(){const el=$('ns-conflict');if(!el||!$('ns-day'))return;
+  const c=conflictInfo(null);
+  el.innerHTML=evBanner(c.msg,c.bad?'var(--red-soft)':'var(--green-soft)',c.bad?'var(--red)':'var(--green)')};
+window.evConflict=function(exId){const el=$('ev-conflict');if(!el||!$('ev-day'))return;
+  const c=conflictInfo(exId);
+  el.innerHTML=evBanner(c.msg,c.bad?'var(--red-soft)':'var(--green-soft)',c.bad?'var(--red)':'var(--green)')};
+function eventModal(id){
+  const ev=EVENTS.find(x=>x.id===id);if(!ev)return;
+  const CH=calHours();
+  const times=Array.from({length:Math.round((CH.end-CH.start)*2)},(_,i)=>CH.start+i*0.5);
+  if(!times.some(v=>Math.abs(v-ev.start)<1e-9))times.push(Math.round(ev.start*2)/2);
+  times.sort((a,b)=>a-b);
+  const cc=CLIENTS.find(c=>c.name===ev.client);
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Session')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:14px;flex-wrap:wrap">${avC(ev.client,44)}<div><b style="font-size:15px">${t(ev.label)}</b><div class="muted" style="font-size:12px">${t(EVLBL[ev.type])} · ${t(ev.client)}</div></div>
+    ${cc?`<span class="sp"></span><button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${cc.id}">${t('Open Workspace')} ${ic('arrowR',13)}</button>`:''}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Title')}</label><input class="inp" id="ev-label" value="${esc(ev.label)}"></div>
+      <div class="field"><label class="lbl">${t('Client')}</label><select class="sel" id="ev-client" onchange="evConflict(${id})">${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${c.name===ev.client?'selected':''}>${t(c.name)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Session type')}</label><select class="sel" id="ev-type" onchange="evConflict(${id})">${['session','assess','meas','appt'].map(k=>`<option value="${k}" ${ev.type===k?'selected':''}>${t(EVLBL[k])}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Training Day')}</label><select class="sel" id="ev-day" onchange="evConflict(${id})">${[0,1,2,3,4,5,6].map(i=>`<option value="${i}" ${i===ev.day?'selected':''}>${dayLbl(i)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Time')}</label><select class="sel" id="ev-time" onchange="evConflict(${id})">${times.map(v=>`<option value="${v}" ${v===ev.start?'selected':''}>${nf(fmtT(v))}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><select class="sel" id="ev-dur" onchange="evConflict(${id})">${[['0.5','30 min'],['1','60 min'],['1.5','90 min'],['2','120 min']].map(([v,l])=>`<option value="${v}" ${ev.dur===+v?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+    </div>
+    <div id="ev-conflict"></div>
+    <div class="field" style="margin-bottom:0"><label class="lbl">${t('Attendance')}</label>
+      <div class="seg" style="width:100%;display:flex">
+        <button style="flex:1" class="${!ev.att?'on':''}" data-act="att-mark-modal" data-id="${id}" data-v="">${t('Not marked')}</button>
+        <button style="flex:1" class="${ev.att==='done'?'on':''}" data-act="att-mark-modal" data-id="${id}" data-v="done">${ic('check',13)} ${t('Attended')}</button>
+        <button style="flex:1" class="${ev.att==='miss'?'on':''}" data-act="att-mark-modal" data-id="${id}" data-v="miss">${ic('x',13)} ${t('Missed')}</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" style="color:var(--red)" data-act="ev-del" data-id="${id}">${ic('trash',15)} ${t('Delete')}</button>
+    <span class="sp"></span>
+    <button class="btn btn-outline" data-act="ev-dup" data-id="${id}">${ic('copy',14)} ${t('Duplicate')}</button>
+    <button class="btn btn-primary" data-act="ev-save" data-id="${id}">${ic('check',15)} ${t('Save')}</button>
+  </div>`);
+  evConflict(id);
+}
+/* v18.32 — cockpit Progress: KPI strip (real client stats) + the existing
+   charts below, untouched. */
+function vProgressCm(){
+  const c=client(S.cid);
+  const ws=DB[c.id]||{};
+  const done=ws.stats?.done||0,miss=ws.stats?.missed||0;
+  const adh=Math.round(done/((done+miss)||1)*100);
+  const kpi=(k,v,s)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b><span class="s">${s}</span></div>`;
+  return `
+  <div class="page-h"><div>
+    <div class="eyebrow">${t('Performance Analytics')} // ${esc(t(c.name))}</div>
+    <h1>${t('Progress')}</h1><div class="sub">${t('Data across your clients')}</div></div>
+  <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
+  <div class="cm-kpis" style="margin-bottom:14px">
+    ${kpi('Workouts Done',nf(done),`${t('Missed')}: ${nf(miss)}`)}
+    ${kpi('Adherence',adh+'%',adh>=75?t('Optimal'):t('Attention'))}
+    ${kpi('Streak',`${nf(c.streak||0)} ${t('wk')}`,t(c.goal))}
+    ${kpi('Weight',uwS(c.weight||null),t(c.prog))}
+  </div>
+  ${vCProgress()}`;
+}
+function vProgress(){
+  if(PREFS.uiTpl==='coachmint')return vProgressCm();
+  return `
+  <div class="page-h"><div><h1>${t('Progress')}</h1><div class="sub">${t('Data across your clients')}</div></div>
+  <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
+  ${vCProgress()}`;
+}
+function vMeasureGlobal(){
+  return `
+  <div class="page-h"><div><h1>${t('Measurements')}</h1><div class="sub">${t('Body metrics & progress photos')}</div></div>
+  <select class="sel" style="width:auto" data-change="client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===S.cid?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
+  ${vMeasure()}`;
+}
+/* v15.7 — every switch/select here is bound to PREFS and persisted */
+function vSettings(){
+  const tabs=[['profile','Profile'],['account','Account'],['notifications','Notifications'],['appearance','Appearance'],['calendar','Calendar'],['workout','Workout Settings'],['units','Units'],['privacy','Privacy'],['security','Security'],...(AUTH.coach&&AUTH.coach.role==='admin'?[['admin','Admin']]:[])];
+  const sw=(path,on)=>`<label class="sw"><input type="checkbox" ${on?'checked':''} data-act="pref-sw" data-k="${path}"><i></i></label>`;
+  const sug=suggestedPlan();
+  const panels={
+  profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px"><button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="pf-pic" title="${t(COACH_PIC?'Change photo':'Add photo')}">${avPlus(coachName(),56,3,!!COACH_PIC)}</button><div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div>${COACH_PIC?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11.5px" data-act="pf-pic-del">${t('Remove photo')}</button>`:''}</div></div>
+    <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
+    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
+    <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
+    <div class="set-row" style="margin:6px 0 14px"><div><span class="t">${t('Setup wizard')}</span><div class="d">${t('Sport, coaching style and home screen')}</div></div><button class="btn btn-outline btn-sm" data-act="onb-open">${t('Redo')}</button></div>
+    <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
+  account:`<div class="card" style="padding:22px">
+    <div class="fs-t" style="margin-bottom:4px">${t('Subscription')}</div>
+    <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line2)"><div><b>${t('Plan')}</b><div class="sub">${AUTH.access?esc(authPlanLabel()):t('CoachMint Pro · Unlimited clients')}</div></div><span class="bdg bdg-lime">${AUTH.access?esc(authStatusLbl()):'PRO'}</span></div>
+    ${AUTH.token&&BILL.info&&(BILL.info.subEndsAt||BILL.info.trialEndsAt)?`<div class="set-row"><div><span class="t">${t('Valid until')}</span><div class="d">${billExpiryLbl()}</div></div></div>`:''}
+    ${AUTH.token&&BILL.info&&BILL.info.lastCode?`<div class="set-row"><div><span class="t">${t('Activation code')}</span><div class="d" style="letter-spacing:.1em;font-weight:700">${esc(BILL.info.lastCode)}</div></div></div>`:''}
+    ${AUTH.token?`
+    <div class="set-row"><div><span class="t">${t('Clients')}</span><div class="d">${nf(billSeats())} / ${nf(planMaxClients())} ${t('seats used')}</div></div><div class="seg" style="min-width:150px"><div style="height:8px;border-radius:99px;background:var(--line2);overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(billSeats()/Math.max(1,planMaxClients())*100))}%;background:${billOverQuota()?'var(--red)':'var(--accent)'}"></div></div></div></div>`:''}
+    ${AUTH.token?`<div class="fs-t" style="margin-top:18px">${t('Plans & billing')}</div>
+    <div class="card" style="padding:16px;margin:6px 0 4px;background:var(--bg2)">
+      <b style="font-size:13.5px">${t('Plans')}</b>
+      <div class="sub" style="margin:2px 0 10px">${t('Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200')}</div>
+      ${['basic','professional','club'].map(p=>`<div class="set-row" style="padding:8px 0"><div><span class="t">${p==='basic'?t('Basic'):p==='professional'?t('Professional'):t('Club')}</span>${sug===p?` <span class="bdg bdg-lime" style="font-size:10px">${t('Suggested')}</span>`:''}<div class="d">${p==='basic'?'290,000':p==='professional'?'790,000':'2,490,000'} ${t('IRT / month')}</div></div><button class="btn ${SHOP_URL?'btn-primary':'btn-outline'} btn-sm" data-act="bill-request" data-p="${p}">${SHOP_URL?ic('cart',13)+' '+t('Buy'):t('Request')}</button></div>`).join('')}
+      ${S.payPending?`<div class="sub" style="margin-top:6px">${t('Pending request')}: ${esc(S.payPending.planId)} · ${nf(S.payPending.amount)} ${t('IRT')} · ${t('pay to the merchant, then enter your tracking coupon below')}</div>`:''}
+    </div>
+    <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
+    <div class="fs-t" style="margin-top:18px">${t('Preferences')}</div>
+    <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
+    <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
+      ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
+    <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
+    <div class="set-row"><div><span class="t">${t('Response time')}</span><div class="d">${t('Shown to clients in chat')}</div></div><select class="sel" style="width:160px" data-change="pref" data-k="resp">${['~1 h','~4 h','~24 h'].map(r=>`<option value="${r}" ${PREFS.resp===r?'selected':''}>${r}</option>`).join('')}</select></div>
+    <div class="set-row"><div><span class="t">${t('Auto workout reminders')}</span><div class="d">${t('Message clients who skip 3+ days')}</div></div>${sw('remind',PREFS.remind!==false)}</div>
+    <div class="set-row"><div><span class="t">${t('Data storage')}</span><div class="d">${t('On this device (auto-save)')}</div></div><button class="btn btn-outline btn-sm" data-act="reset-demo">${ic('trash',14)} ${t('Reset demo data')}</button></div></div>`,
+  notifications:`<div class="card" style="padding:8px 22px">
+    ${[['sr','Session reminders','Push + email 24 h before each session'],['cw','Client completes workout','Notify when a workout is logged'],['ms','Missed sessions','Alert when a client misses a session'],['ncm','New client message','Push when a client sends a message'],['mr','Measurement reminders','Weekly digest of due measurements'],['pr','New PR achieved','Celebrate personal records instantly'],['wr','Weekly report','Summary every Sunday evening']].map(([k,a,b])=>`
+    <div class="set-row"><div><span class="t">${t(a)}</span><div class="d">${t(b)}</div></div>${sw('notifs.'+k,PREFS.notifs[k])}</div>`).join('')}</div>`,
+  appearance:`<div class="card" style="padding:22px">
+    <div class="card-t" style="margin-bottom:12px">${t('Theme')}</div>
+    <div class="row" style="gap:12px;flex-wrap:wrap">
+      ${[['Light','linear-gradient(135deg,#DDDDD0 55%,#12151B 55%)'],['System','linear-gradient(135deg,#DDDDD0 30%,#12151B 30% 70%,#DDDDD0 70%)'],['Dark','linear-gradient(135deg,#12151B 60%,#2A2F38 60%)']].map(([x,g])=>`
+      <div class="card" style="width:130px;padding:10px;cursor:pointer;${PREFS.theme===x?'border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)':''}" data-act="theme" data-v="${x}">
+        <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
+        <b style="font-size:12.5px">${t(x)}${PREFS.theme===x?' ✓':''}</b></div>`).join('')}
+    </div>
+    <div class="card-t" style="margin:20px 0 12px">${t('Design Template')}</div>
+    <div class="row" style="gap:12px;flex-wrap:wrap">
+      ${[['default','Default','linear-gradient(135deg,#12151B 55%,#C8F04B 55%)'],['coachmint','CoachMint','linear-gradient(135deg,#0C0E10 55%,#00FF9D 55%)']].map(([k,n,g])=>`
+      <div class="card" style="width:130px;padding:10px;cursor:pointer;${(PREFS.uiTpl||'default')===k?'border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)':''}" data-act="tpl" data-v="${k}">
+        <div style="height:52px;border-radius:8px;background:${g};border:1px solid var(--line);margin-bottom:8px"></div>
+        <b style="font-size:12.5px">${t(n)}${(PREFS.uiTpl||'default')===k?' ✓':''}</b></div>`).join('')}
+    </div>
+    <div class="sub" style="margin-top:10px">${t('Applies to this device only')}</div>
+    <div class="card-t" style="margin:20px 0 12px">${t('Accent Color')}</div>
+    <div class="row" style="gap:10px">
+      ${ACCENTS.map((A,ix)=>`<button data-act="accent" data-ix="${ix}" style="width:38px;height:38px;border-radius:50%;background:${A.a};border:2px solid ${PREFS.accent===ix?'var(--ink)':'var(--line)'};box-shadow:inset 0 -8px 12px rgba(0,0,0,.12)"></button>`).join('')}
+    </div></div>`,
+  calendar:(()=>{const CH=calHours();
+    const presets=[['07:00 – 21:00',7,21],['08:00 – 24:00',8,24],['09:00 – 18:00',9,18],['10:00 – 22:00',10,22],['06:00 – 23:00',6,23]];
+    return `<div class="card" style="padding:22px">
+    <div class="card-t" style="margin-bottom:2px">${t('Working Hours')}</div>
+    <div class="sub" style="margin:0 0 16px">${t('Set the hours you coach — the calendar grid and session time pickers use this range')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Work starts')}</label><select class="sel" data-change="calhour" data-k="cal.start">${hourOpts(PREFS.cal.start,0,23.5)}</select></div>
+      <div class="field"><label class="lbl">${t('Work ends')}</label><select class="sel" data-change="calhour" data-k="cal.end">${hourOpts(PREFS.cal.end,0.5,24)}</select></div>
+    </div>
+    <div class="field" style="margin-top:4px"><label class="lbl">${t('Calendar Type')}</label><select class="sel" data-change="caltype">
+      <option value="auto" ${(PREFS.cal.type||'auto')==='auto'?'selected':''}>${t('Auto (follow language)')}</option>
+      <option value="greg" ${PREFS.cal.type==='greg'?'selected':''}>${t('Gregorian (Miladi)')}</option>
+      <option value="jal" ${PREFS.cal.type==='jal'?'selected':''}>${t('Jalali (Shamsi)')}</option>
+    </select></div>
+    <div class="sub" style="margin:2px 0 14px">${t('Sessions outside this range are still shown — the grid stretches to fit them.')}</div>
+    <div class="card-t" style="margin-bottom:10px">${t('Quick presets')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      ${presets.map(([l,s,e])=>`<button class="fchip ${CH.start===s&&CH.end===e?'on':''}" data-act="cal-preset" data-s="${s}" data-e="${e}">${nf(l)}</button>`).join('')}
+    </div>
+    <div class="set-row" style="margin-top:18px;border-top:1px solid var(--line2);padding-top:14px"><div><span class="t">${t('Current range')}</span><div class="d">${t('Calendar shows sessions from {a} to {b}').replace('{a}',nf(fmtT(CH.start))).replace('{b}',nf(CH.end===24?'24:00':fmtT(CH.end)))}</div></div><span class="bdg bdg-lime">${nf(Math.round((CH.end-CH.start)*10)/10)} ${t('h / day')}</span></div>
+  </div>`})(),
+  workout:`<div class="card" style="padding:8px 22px">
+    <div class="set-row"><div><span class="t">${t('Default rest timer')}</span><div class="d">${t('120 seconds between sets')}</div></div><select class="sel" style="width:140px" data-change="pref" data-k="wk.rest">${['60','120','180'].map(s=>`<option value="${s}" ${PREFS.wk.rest===s?'selected':''}>${t(s+' sec')}</option>`).join('')}</select></div>
+    <div class="set-row"><div><span class="t">${t('Show RPE & RIR fields')}</span><div class="d">${t('On all exercise blocks')}</div></div>${sw('wk.rpe',PREFS.wk.rpe)}</div>
+    <div class="set-row"><div><span class="t">${t('Auto-advance program weeks')}</span><div class="d">${t('When all sessions are completed')}</div></div>${sw('wk.adv',PREFS.wk.adv)}</div>
+    <div class="set-row"><div><span class="t">${t('Set display')}</span><div class="d">${t('Sets × Reps × Weight')}</div></div><select class="sel" style="width:180px"><option>${t('Sets × Reps × Weight')}</option></select></div>
+    <div class="set-row"><div><span class="t">${t('Duplicate on save')}</span><div class="d">${t('Keep source workout intact')}</div></div>${sw('wk.dup',PREFS.wk.dup)}</div></div>`,
+  units:`<div class="card" style="padding:22px"><div class="card-t" style="margin-bottom:12px">${t('Measurement Units')}</div>
+    <div class="seg"><button class="${PREFS.units!=='Imperial'?'on':''}" data-act="unit" data-u="Metric">${t('Metric (kg · cm)')}</button><button class="${PREFS.units==='Imperial'?'on':''}" data-act="unit" data-u="Imperial">${t('Imperial (lb · in)')}</button></div>
+    <div class="sub" style="margin-top:14px">${t('Applies to weights, measurements and body metrics across the workspace.')}</div></div>`,
+  privacy:`<div class="card" style="padding:8px 22px">
+    ${[['own','Clients see their own data',''],['photos','Clients see progress photos','Only photos the coach approves'],['others','Clients see other clients','Disabled by default'],['consent','Require consent for photos','Client must accept before upload']].map(([k,a,b])=>`
+    <div class="set-row"><div><span class="t">${t(a)}</span>${b?`<div class="d">${t(b)}</div>`:''}</div>${sw('priv.'+k,PREFS.priv[k])}</div>`).join('')}
+    <div class="set-row"><div><span class="t">${t('Account')}</span><div class="d">${AUTH.coach?esc(AUTH.coach.email):t('Demo — not signed in')}</div></div>${AUTH.coach?`<button class="btn btn-outline btn-sm" data-act="signout">${t('Sign out')}</button>`:`<button class="btn btn-primary btn-sm" data-act="auth-goto-signup">${t('Create account')}</button>`}</div></div>`,
+  security:`<div class="card" style="padding:22px">
+    <div class="field"><label class="lbl">${t('Current Password')}</label><input class="inp" type="password" id="pw-cur" autocomplete="current-password"></div>
+    <div class="fgrid"><div class="field"><label class="lbl">${t('New Password')}</label><input class="inp" type="password" id="pw-new" autocomplete="new-password"></div><div class="field"><label class="lbl">${t('Confirm')}</label><input class="inp" type="password" id="pw-new2" autocomplete="new-password"></div></div>
+    <button class="btn btn-dark btn-sm" data-act="pw-save">${t('Update Password')}</button>
+    <div class="muted" style="font-size:11.5px;margin-top:8px">${t('Changing your password signs out every other device')}</div>
+    <div class="set-row" style="margin-top:10px"><div><span class="t">${t('Two-Factor Authentication')}</span><div class="d">${t('Extra security for your coach account')}</div></div>${sw('sec.tfa',PREFS.sec.tfa)}</div>
+    <div class="set-row"><div><span class="t">${t('Active sessions')}</span><div class="d">${AUTH.coach?esc(AUTH.coach.email):t('Demo — not signed in')} · ${t('this device')}</div></div><button class="btn btn-outline btn-sm" data-act="pw-others" ${AUTH.coach?'':'disabled style="opacity:.5"'}>${t('Sign out others')}</button></div></div>`,
+  admin:(()=>{const q=(S.admQ||'').toLowerCase();
+    const list=(BILL.adminCoaches||[]).filter(c=>!q||(c.email||'').toLowerCase().includes(q)||(c.name||'').toLowerCase().includes(q));
+    return `<div class="card" style="padding:16px 22px">
+    <div class="card-t" style="margin-bottom:2px">${t('Platform admin')}</div>
+    <div class="sub" style="margin:0 0 12px">${t('All coaches on this platform — plans, remaining days & access control')}</div>
+    ${
+      !BILL.adminLoaded
+        ? `<div class="muted">${t('Loading…')}</div>`
+        : BILL.adminError
+          ? `<div class="card" style="padding:16px;background:var(--red-soft);border-color:var(--red);margin-bottom:12px"><b style="font-size:13px;color:var(--red)">${t('Could not load coaches')}</b><div class="muted" style="font-size:12px;margin-top:4px">${t('Admin error')}: ${esc(BILL.adminError)}</div></div><button class="btn btn-outline btn-sm" data-act="admin-refresh">${ic('refresh',13)} ${t('Retry')}</button>`
+          : (list.length
+          ? `<div class="row" style="margin-bottom:10px;gap:8px"><div class="searchbox sm" style="flex:1;max-width:320px;cursor:text">${ic('search',14)} <input id="adm-q" value="${esc(S.admQ||'')}" placeholder="${t('Search by name or email')}" style="border:none;outline:none;flex:1;background:none;font-size:12.5px;color:var(--ink)" oninput="admFilter(this.value)"></div><span class="bdg bdg-gray" style="font-size:11px">${nf(list.length)} / ${nf(BILL.adminCoaches.length)}</span></div>`
+          + `<div class="tbl" style="margin-top:2px;overflow-x:auto"><table style="font-size:12.5px;min-width:760px"><thead><tr><th>${t('Coach')}</th><th>${t('Plan')}</th><th>${t('Remaining')}</th><th>${t('Seats')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead><tbody>`
+            + list.map(c=>{
+                const st=c.access&&c.access.status||'trial';
+                const badge=c.suspended?'bdg-red':st==='active'?'bdg-green':(st==='trial'?'bdg-lime':'bdg-amber');
+                const dl=c.daysLeft;
+                const rem=dl==null?'—':dl>0?nf(dl)+' '+t('days'):'0';
+                const remCol=dl==null?`<span class="muted">—</span>`
+                  :`<div style="min-width:110px"><b style="font-size:12.5px">${rem}</b><div style="height:5px;border-radius:99px;background:var(--line2);margin-top:4px;overflow:hidden"><div style="height:100%;width:${Math.min(100,Math.round(dl/30*100))}%;background:${dl<=3?'var(--red)':dl<=7?'var(--amber)':'var(--accent-deep)'}"></div></div></div>`;
+                const seatCol=c.seats==null?'<span class="muted">—</span>':`${nf(c.seats)} / ${nf(c.maxSeats)}`;
+                return `<tr>
+                  <td>${av(c.name||c.email,30)}<b style="font-size:13px">${esc(c.name||'—')}</b><div class="muted" style="font-size:11.5px">${esc(c.email)}${c.role==='admin'?' · '+t('Admin'):''}</div></td>
+                  <td><span class="chip" style="font-size:11px">${esc(c.plan||'trial')}</span></td>
+                  <td>${remCol}</td>
+                  <td>${seatCol}</td>
+                  <td><span class="bdg ${badge}" style="font-size:11px">${t(c.suspended?'Suspended':st==='active'?'Active':(st==='trial'?'Trial':'Expired'))}</span></td>
+                  <td style="text-align:end;white-space:nowrap">
+                    <button class="btn btn-outline btn-sm" data-act="adm-grant" data-email="${esc(c.email)}" data-plan="${esc(c.plan||'trial')}">${ic('plus',12)} ${t('Extend')}</button>
+                    ${c.role==='admin'?'':`<button class="btn btn-ghost btn-icon" title="${t(c.suspended?'Restore access':'Suspend access')}" data-act="adm-suspend" data-email="${esc(c.email)}" data-s="${c.suspended?'1':''}" style="color:${c.suspended?'var(--green)':'var(--red)'}">${ic(c.suspended?'check':'pause',14)}</button>`}
+                  </td></tr>`
+              }).join('')+`</tbody></table></div>`
+          : `<div class="muted">${t(BILL.adminCoaches.length?'No results found.':'No coaches yet')}</div>`)
+    }
+    <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" data-act="admin-refresh">${ic('refresh',13)} ${t('Refresh')}</button>
+      <button class="btn btn-outline btn-sm" data-act="adm-coupon">${ic('copy',13)} ${t('Create coupon')}</button>
+    </div>
+  </div>`})()};
+window.admFilter=v=>{S.admQ=v;const p=$('adm-q');if(!p)return;
+  const pos=p.selectionStart;render();
+  const np=$('adm-q');if(np){np.focus();try{np.setSelectionRange(pos,pos)}catch(e){}}
+};
+  return `
+  <div class="page-h"><div><h1>${t('Settings')}</h1><div class="sub">${t('Manage your workspace')}</div></div></div>
+  <div class="sgrid">
+    <div class="card" style="padding:10px;position:sticky;top:76px">
+      ${tabs.map(([k,l])=>`<div class="wk-it ${S.stab===k?'cur':''}" data-act="stab" data-k="${k}">${t(l)}</div>`).join('')}
+    </div>
+    <div>${panels[S.stab]}</div>
+  </div>`;
+}
+
+/* ================= MESSAGES (coach) ================= */
+function bubble(m){
+  const me=m.from==='coach';
+  /* v18.75 — voice note: a player, not a text line. */
+  if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};display:flex;flex-direction:column;align-items:${me?'flex-end':'flex-start'};max-width:82%">
+    ${msgVoice(m)}
+    <span style="font-size:10px;opacity:.65;margin-top:4px">${t(m.time)}</span></div>`;
+  return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
+    ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
+    ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
+    ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',30)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
+    <div>${esc(t(m.body))}</div>
+    <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?'<span>✓✓</span>':''}</div>
+    ${!me&&m.type!=='checkin'&&!m.noted?`<div style="margin-top:5px"><button class="lnk" style="font-size:11px" data-act="msg-note" data-id="${m.id}">${ic('note',11)} ${t('Save as note')}</button></div>`:''}
+    ${m.noted?`<div style="margin-top:5px"><span class="bdg bdg-lime" style="font-size:10px">📝 ${t('Saved as note')}</span></div>`:''}
+  </div>`;
+}
+function msgThread(name){
+  const c=CLIENTS.find(x=>x.name===name);
+  const ms=MSGS.filter(m=>m.client===name);
+  const prio=ms.some((m,i,arr)=>m.from==='client'&&m.type==='form'&&i>arr.reduce((a,x,j)=>x.from==='coach'?j:a,-1));
+  return `<div class="card" style="max-width:780px;margin:0 auto;height:calc(100vh - 200px);min-height:440px;display:flex;flex-direction:column">
+    <div class="card-h">
+      <div class="row" style="min-width:0"><button class="btn btn-ghost btn-icon back-ic" data-act="back-inbox">${ic('chevL',18)}</button>${avC(name,38)}
+      <div style="min-width:0"><b>${t(name)}</b><div class="muted" style="font-size:11.5px">${c?t(c.goal):''}${prio?` · <span style="color:var(--accent-deep);font-weight:700">🎥 ${t('Form check')}</span>`:''}</div></div></div>
+      <span class="bdg bdg-gray">${t('Replies within ~4h')}</span>
+    </div>
+    <div id="thrbody" style="flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px;background:var(--bg)">
+      ${ms.map(m=>bubble(m)).join('')}
+    </div>
+    <div class="composer">
+      <input class="inp" id="msg-inp" data-c="${esc(name)}" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendCoachMsg(this.dataset.c)">
+      <button class="btn btn-outline btn-icon" title="${t('AI draft reply')}" data-act="ai-reply" data-c="${esc(name)}">${ic('zap',15)}</button>
+      <button class="btn btn-primary" data-act="send-coach" data-c="${esc(name)}">${t('Send')} ${ic('arrowR',15)}</button>
+    </div>
+  </div>`;
+}
+function vMessages(){
+  if(S.msgThread)return msgThread(S.msgThread);
+  const th=threads();
+  const need=th.filter(x=>x.needs).sort((a,b)=>((b.prio?1:0)-(a.prio?1:0))||(b.lastIdx-a.lastIdx));
+  const rest=th.filter(x=>!x.needs);
+  const row=x=>{const pv=t(x.last.body);const cut=pv.length>52?pv.slice(0,52)+'…':pv;
+    return `<div class="tl-row click" data-act="open-thread" data-c="${esc(x.name)}">
+      ${avC(x.name,40)}
+      <div style="flex:1;min-width:0"><div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(x.name)}</b>
+      ${x.prio?`<span class="bdg bdg-lime">${ic('camera',11)} ${t('Form check')}</span>`:''}
+      ${x.unread?`<span class="bdg bdg-blue">${nf(x.unread)} ${t('New message')}</span>`:''}</div>
+      <div class="muted" style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.last.from==='coach'?t('You')+': ':''}${cut}</div></div>
+      <div style="text-align:end;font-size:11px;color:var(--ink3);flex:none">${t(x.last.time)}</div>
+    </div>`};
+  return `
+  <div class="page-h"><div>${PREFS.uiTpl==='coachmint'?`<div class="eyebrow">${t('Dispatch')} // ${t('Encrypted')}</div>`:''}<h1>${t('Messages')}</h1><div class="sub">${nf(need.length)} ${t('need your reply')} · ${t('Async — no pressure')}</div></div>
+  <div class="row">
+    <button class="btn btn-outline" data-act="announce-open">${ic('bell',15)} ${t('Announce')}</button>
+    <button class="btn btn-outline" data-act="msgtpl-open">${ic('edit',15)} ${t('Templates')}</button>
+  </div></div>
+  ${need.length?`<div class="card" style="margin-bottom:14px"><div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Needs your reply')}</span><span class="bdg bdg-amber">${nf(need.length)}</span></div>${need.map(row).join('')}</div>`:''}
+  ${rest.length?`<div class="card"><div class="card-h"><span class="card-t">${ic('mail',14)} ${t('All conversations')}</span></div>${rest.map(row).join('')}</div>`:''}`;
+}
+
+/* ================= NUTRITION WORKSPACE ================= */
+function nNutrition(){
+  const tabs=[['overview','Overview'],['planner','Meal Planner'],['weekly','Weekly'],['phases','Phases'],['mealtpl','Meal Templates'],['plantpl','Plan Templates'],['history','History']];
+  const body={overview:nOverview,planner:nPlanner,weekly:nWeekly,phases:nPhases,mealtpl:nMealTpl,plantpl:nPlanTpl,history:nHistory}[S.nview]();
+  return `
+  <div class="page-h"><div><h1>${t('Nutrition')}</h1><div class="sub">${t('Create and manage nutrition plans for your clients.')}</div></div>
+  <div class="row">
+    <button class="btn btn-outline" data-act="nn-plantpl">${ic('stack',15)} ${t('Templates')}</button>
+    <button class="btn btn-primary" data-act="np-new">${ic('plus',15)} ${t('Create Nutrition Plan')}</button>
+  </div></div>
+  <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.nview===k?'on':''}" data-act="ntab" data-v="${k}">${t(l)}</button>`).join('')}</div>
+  ${body}`;
+}
+function nOverview(){
+  const rows=NPLANS.filter(p=>(S.nstat==='All'||p.status===S.nstat)&&(!S.nq||t(p.client).toLowerCase().includes(S.nq.toLowerCase())||p.name.toLowerCase().includes(S.nq.toLowerCase())));
+  /* v18.9 — the 5 KPI cards were HARDCODED demo numbers ('42','128','38'…)
+     shown over every workspace incl. fresh empty signups. All computed now. */
+  const act=NPLANS.filter(p=>p.status!=='Archived');
+  const withPlan=new Set(act.map(p=>p.client));
+  const actClients=CLIENTS.filter(c=>c.status!=='Archived');
+  const avg=act.length?Math.round(act.reduce((a,p)=>a+((p.train&&p.train.kcal)||0),0)/act.length):0;
+  const review=act.filter(p=>p.status==='Paused'||!(actClients.find(c=>c.name===p.client)||{}).status||!actClients.find(c=>c.name===p.client&&c.status==='Active')).length;
+  const kpis=[
+    ['Active Plans',act.filter(p=>p.status==='Active').length,'users'],
+    ['Plans Created',NPLANS.length,'stack'],
+    ['Clients With Nutrition Plans',`${nf(withPlan.size)} / ${nf(actClients.length)}`,'check'],
+    ['Plans Needing Review',review,'bell'],
+    ['Average Daily Calories',`${nf(avg)} kcal`,'utensils']];
+  return `
+  ${nHealth()}
+  <div class="stats n5" style="grid-template-columns:repeat(5,1fr)">${kpis.map(([k,v,i])=>`
+    <div class="card stat"><div class="row"><span class="k">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,16)}</span></div><div class="v" style="font-size:21px">${nf(v)}</div></div>`).join('')}
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <div class="card-h" style="flex-wrap:wrap">
+      <span class="card-t">${ic('utensils',14)} ${t('Clients')}</span>
+      <div class="row" style="flex-wrap:wrap">
+        <input class="inp" id="nq" placeholder="${t('Search clients…')}" style="width:180px" oninput="nqUpd(this.value)">
+        ${['All','Active','Paused','Archived'].map(s=>`<button class="fchip ${S.nstat===s?'on':''}" data-act="nstat" data-s="${s}">${t(s)}</button>`).join('')}
+      </div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>${t('Client')}</th><th>${t('Goal')}</th><th>${t('Calories')}</th><th>${t('Protein')}</th><th>${t('Current Plan')}</th><th class="hide-md">${t('Phase')}</th><th class="hide-md">${t('Last Updated')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
+      <tbody id="ntab-body">${nTabRows(rows)}</tbody>
+    </table>
+  </div>`;
+}
+function nTabRows(rows){
+  if(!rows.length)return `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--ink3)">${t('No results found.')}</td></tr>`;
+  return rows.map(p=>{const i=NPLANS.indexOf(p);
+  return `<tr>
+    <td><div class="row">${avC(p.client,34)}<b style="font-size:13px">${t(p.client)}</b></div></td>
+    <td>${t(p.goal)}</td><td>${nf(p.train.kcal)} kcal</td><td>${nf(p.train.p)}g</td>
+    <td><b style="font-size:12.5px">${t(p.name)}</b></td><td>${t(p.phase)}</td><td class="hide-md">${t(p.updated)}</td><td>${stBdg(p.status)}</td>
+    <td style="text-align:end;white-space:nowrap">
+      <button class="btn btn-outline btn-sm" data-act="nopen" data-i="${i}">${t('Open Plan')}</button>
+      <button class="btn btn-ghost btn-icon" title="${t('Duplicate')}" data-act="ndup" data-i="${i}">${ic('copy',15)}</button>
+      <button class="btn btn-ghost btn-icon" title="${t('Archive')}" data-act="narch" data-i="${i}" style="color:var(--red)">${ic('archive',15)}</button>
+    </td>
+  </tr>`}).join('');
+}
+window.nqUpd=v=>{S.nq=v;const el=$('ntab-body');if(el)el.innerHTML=nTabRows(NPLANS.filter(p=>(S.nstat==='All'||p.status===S.nstat)&&(!S.nq||t(p.client).toLowerCase().includes(S.nq.toLowerCase())||p.name.toLowerCase().includes(S.nq.toLowerCase()))))};
+/* ================= v18.48 — COACH NUTRITION MONITORING =================
+   The coach never reads food logs by hand: the Insight Engine classifies every
+   active client (🟢/🟡/🔴), surfaces the ones that need attention first and
+   turns coach-configurable rules into insights + alerts. */
+function nHealth(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const rows=act.map(c=>({c,...NEng.status(c)}));
+  const okN=rows.filter(r=>r.level==='ok').length;
+  const warnN=rows.filter(r=>r.level==='warn').length;
+  const alertN=rows.filter(r=>r.level==='alert').length;
+  const attention=rows.filter(r=>r.level!=='ok').sort((a,b)=>(b.level==='alert'?1:0)-(a.level==='alert'?1:0)).slice(0,5);
+  return `<div class="card" style="margin-bottom:14px">
+    <div class="card-h" style="flex-wrap:wrap">
+      <span class="card-t">${ic('zap',14)} ${t('Nutrition Health')}</span>
+      <div class="row" style="flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="nrules-open">${ic('bell',13)} ${t('Rules')}</button>
+        <button class="btn btn-outline btn-sm" data-act="nweekly-open">${ic('chart',13)} ${t('Weekly report')}</button>
+      </div>
+    </div>
+    <div class="row" style="gap:10px;flex-wrap:wrap;margin:4px 0 10px">
+      <span class="bdg bdg-green">🟢 ${t('On Track')} — ${nf(okN)}</span>
+      <span class="bdg bdg-amber">🟡 ${t('Needs Attention')} — ${nf(warnN)}</span>
+      <span class="bdg bdg-red">🔴 ${t('Action Required')} — ${nf(alertN)}</span>
+    </div>
+    ${attention.length?attention.map(r=>`
+    <div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line2)">
+      <div class="row" style="min-width:0">${avC(r.c.name,30)}<div style="min-width:0"><b style="font-size:12.5px">${t(r.c.name)}</b><div class="muted" style="font-size:11px">${r.reasons.map(x=>t(x.d)).join(' · ')||'—'}</div></div></div>
+      <div class="row" style="gap:6px;flex:none">
+        <span class="bdg ${r.level==='alert'?'bdg-red':'bdg-amber'}">${r.level==='alert'?t('Action Required'):t('Needs Attention')}</span>
+        <button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${r.c.id}" data-tab="nutrition">${t('Open')}</button>
+      </div>
+    </div>`).join('')
+    :`<div class="muted" style="font-size:12px;padding:6px 0">${t('All clients with nutrition plans are on track.')}</div>`}
+    ${NINS.slice(0,3).length?`<div style="margin-top:10px"><div class="fs-t">${t('Recent insights')}</div>${NINS.slice(0,3).map(x=>`
+      <div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><b>${t(x.client)}</b> — ${esc(t(x.title))} <span class="muted">· ${t(x.d)}</span></div>`).join('')}</div>`:''}
+  </div>`;
+}
+/* ---- rules modal: threshold / duration / severity / on-off per rule ---- */
+function nrulesModal(){
+  const MLBL={protein:t('Protein % of target'),kcal:t('Calories % of target'),logging:t('Logging'),water:t('Water % of target'),weight:t('Weight trend vs goal')};
+  openModal(`
+  <div class="modal-h"><h3>${t('Nutrition monitoring rules')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:10px">${t('Get notified only when a pattern is real — thresholds, duration and severity are yours to set.')}</div>
+    ${NRULES.map((r,i)=>`
+    <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;padding:9px 0;border-bottom:1px solid var(--line2)">
+      <label class="row" style="gap:6px;flex:1;min-width:170px;cursor:pointer"><input type="checkbox" id="nrl-on${i}" ${r.on?'checked':''}> <b style="font-size:12.5px">${MLBL[r.metric]||r.metric}</b></label>
+      ${r.metric!=='logging'&&r.metric!=='weight'?`<input class="inp" id="nrl-thr${i}" type="number" min="10" max="200" value="${r.thr}" style="width:76px" title="${t('Threshold %')}">`:''}
+      <input class="inp" id="nrl-days${i}" type="number" min="1" max="30" value="${r.days}" style="width:64px" title="${t('Days')}">
+      <select class="inp" id="nrl-sev${i}" style="width:110px">
+        ${['info','warn','alert'].map(s=>`<option value="${s}" ${r.sev===s?'selected':''}>${s==='info'?t('Observe'):s==='warn'?t('Warning'):t('Alert')}</option>`).join('')}
+      </select>
+    </div>`).join('')}
+    <div class="muted" style="font-size:11px;margin-top:8px">${t('Example: protein below 85% for 3 days → warning.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="nrules-save">${ic('check',14)} ${t('Save')}</button></div>`);
+}
+/* ---- weekly nutrition report: deterministic table + optional AI narrative ---- */
+function nweeklyModal(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const rows=act.map(c=>({c,s:NEng.weekStats(c)}));
+  const withData=rows.filter(r=>r.s.loggedDays>0);
+  const improved=withData.filter(r=>r.s.protHits>=Math.ceil(r.s.withTg/2)).length;
+  const lowK=withData.filter(r=>r.s.kcalPct&&r.s.kcalPct<80).length;
+  const lowP=withData.filter(r=>r.s.protPct&&r.s.protPct<85).length;
+  const silent=rows.filter(r=>r.s.loggedDays===0).length;
+  openModal(`
+  <div class="modal-h"><h3>${t('Weekly nutrition report')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="bdg bdg-green">${t('Protein on target')}: ${nf(improved)}</span>
+      <span class="bdg bdg-amber">${t('Below calorie target')}: ${nf(lowK)}</span>
+      <span class="bdg bdg-amber">${t('Below protein target')}: ${nf(lowP)}</span>
+      <span class="bdg bdg-gray">${t('No logs this week')}: ${nf(silent)}</span>
+    </div>
+    ${withData.length?`<table class="tbl"><thead><tr><th>${t('Client')}</th><th>${t('Days logged')}</th><th>${t('Avg calories')}</th><th>${t('Avg protein')}</th><th>${t('Consistency')}</th></tr></thead><tbody>
+      ${withData.sort((a,b)=>b.s.consistency-a.s.consistency).map(r=>`<tr>
+        <td><div class="row">${avC(r.c.name,28)}<b style="font-size:12.5px">${t(r.c.name)}</b></div></td>
+        <td>${nf(r.s.loggedDays)}/${nf(r.s.withTg||7)}</td><td>${nf(r.s.avgKcal)} kcal</td><td>${nf(r.s.avgP)}g</td>
+        <td><span class="bdg ${r.s.consistency>=70?'bdg-green':r.s.consistency>=40?'bdg-amber':'bdg-red'}">${nf(r.s.consistency)}%</span></td>
+      </tr>`).join('')}</tbody></table>`
+    :`<div class="muted" style="font-size:12.5px;padding:10px 0">${t('No food logs this week yet — students log from their Nutrition tab.')}</div>`}
+    <div id="nweekly-ai" style="margin-top:12px"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-outline" data-act="nweekly-ai">${ic('zap',14)} ${t('AI narrative')}</button><span class="sp"></span><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ---- rule evaluation (deterministic) ---- */
+/* AI narrative for the weekly report — the deterministic table above is the
+   source of truth; the model only narrates it. */
+async function nweeklyAI(){
+  const box=$('nweekly-ai');if(!box)return;
+  box.innerHTML=`<div class="muted" style="font-size:12px">${t('Thinking…')}</div>`;
+  try{
+    const {ok,d}=await authApi('/api/ai/insight',{method:'POST',body:JSON.stringify({kind:'nutrition',lang})});
+    box.innerHTML=ok&&d&&d.ok?`<div class="ccard" style="white-space:pre-wrap;font-size:12.5px;line-height:1.7">${esc(d.text)}</div>`
+      :`<div class="muted" style="font-size:12px">${d&&d.error==='ai-not-configured'?t('AI is not configured on this server — the table above is fully computed locally.'):t('AI report unavailable right now.')}</div>`;
+  }catch(e){box.innerHTML=`<div class="muted" style="font-size:12px">${t('AI report unavailable right now.')}</div>`}
+}
+function nRuleHit(c,r){
+  const days=r.days||3;
+  if(r.metric==='logging'){const ad=NEng.adherence(c,days);return ad.withTg>0&&ad.logged===0?`${nf(days)} ${t('days without logs')}`:null}
+  if(r.metric==='weight'){
+    const tr=RPT.trend(c);if(!tr||tr.dir==='flat'||!tr.delta)return null;
+    const bad=(/fat loss/i.test(c.goal||'')&&tr.dir==='up')||(/muscle gain/i.test(c.goal||'')&&tr.dir==='down');
+    return bad?`${tr.dir==='up'?'+':''}${tr.delta}kg ${t('vs goal')} ${c.goal||''}`:null;
+  }
+  let sum=0,logged=0;
+  for(let i=0;i<days;i++){
+    const iso=__iso(-i);const tg=NEng.targets(c,iso);if(!tg||!tg.kcal)continue;
+    const co=NEng.consumed(c,iso);
+    if(co.kcal<=0)continue;logged++;
+    if(r.metric==='protein')sum+=tg.p?co.p/tg.p*100:100;
+    else if(r.metric==='kcal')sum+=co.kcal/tg.kcal*100;
+    else if(r.metric==='water')sum+=NEng.waterT(c)>0?(NEng.waterOf(c,iso)/NEng.waterT(c))*100:100;
+  }
+  if(!logged||r.op!=='below')return null;
+  const avg=sum/logged;
+  return avg<r.thr?`${t('avg')} ${nf(Math.round(avg))}% · ${nf(logged)}/${nf(days)} ${t('days')}`:null;
+}
+const N_RULE_TITLE={protein:'Protein below target',kcal:'Calories off target',logging:'Not logging food',water:'Hydration low',weight:'Weight trend off goal'};
+/* Daily sweep: rules → insights (NINS) + alerts (NOTIFS). Coach devices only;
+   deduped per client+metric+day so nobody gets spammed. */
+function nSweepAuto(){
+  if(S.role==='client'||!CLIENTS.length)return;
+  try{
+    const key='co-nsweep-day';
+    if(localStorage.getItem(key)===rptDailyKey())return;
+    localStorage.setItem(key,rptDailyKey());
+    let fired=0;
+    CLIENTS.filter(c=>c.status!=='Archived').forEach(c=>{
+      NRULES.filter(r=>r.on).forEach(r=>{
+        const hit=nRuleHit(c,r);if(!hit)return;
+        if(NINS.some(x=>x.client===c.name&&x.metric===r.metric&&x.d===isoToday()))return;
+        const title=t(N_RULE_TITLE[r.metric]||r.metric);
+        NINS.unshift({id:uid(),client:c.name,metric:r.metric,kind:r.sev==='alert'?'concern':r.sev==='warn'?'pattern':'observation',title,detail:hit,sev:r.sev,d:isoToday(),at:Date.now()});
+        if(r.sev!=='info'){NOTIFS.unshift({t:`⚠️ ${t(c.name)} — ${title}`,d:'Just now',un:true});fired++}
+      });
+    });
+    if(NINS.length>80)NINS.length=80;
+    if(fired){
+      ACTIVITY.unshift({w:'Just now',i:'zap',h:lang==='fa'?`<b>دستیار تغذیه</b> ${nf(fired)} هشدار صادر کرد`:`<b>Nutrition assistant</b> raised ${nf(fired)} alert${fired>1?'s':''}`});
+      saveData();
+    }
+  }catch(e){}
+}
+function distBar(pk,ck,fk){
+  return `<div class="dist"><i style="width:${pk}%;background:var(--blue)"></i><i style="width:${ck}%;background:var(--accent-deep)"></i><i style="width:${fk}%;background:var(--ink3)"></i></div>
+  <div class="row" style="gap:12px;font-size:11px;font-weight:600;margin-top:6px;flex-wrap:wrap"><span style="color:var(--blue)">● ${t('Protein')} ${pct(pk)}</span><span style="color:var(--accent-deep)">● ${t('Carbs')} ${pct(ck)}</span><span style="color:var(--ink3)">● ${t('Fat')} ${pct(fk)}</span></div>`;
+}
+function newPlanModal(pre){
+  openModal(`
+  <div class="modal-h"><h3>${t('Create Nutrition Plan')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Plan Name')}</label><input class="inp" id="np-name" placeholder="${t('New Nutrition Plan')}"></div>
+      <div class="field"><label class="lbl">${t('Client')}</label><select class="sel" id="np-client">${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${pre===c.name||client(S.cid).name===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Goal')}</label><select class="sel" id="np-goal">${['Muscle Gain','Fat Loss','Maintenance','Performance'].map(g=>`<option>${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" type="date" id="np-date" value="${isoToday()}"></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><select class="sel" id="np-dur"><option value="4">4 ${t('wk')}</option><option value="8">8 ${t('wk')}</option><option value="12" selected>12 ${t('wk')}</option></select></div>
+      <div class="field"><label class="lbl">${t('Plan Type')}</label><select class="sel" id="np-type"><option value="std">${t('Standard')}</option><option value="tr">${t('Training Day / Rest Day')}</option></select></div>
+    </div>
+    <div class="fs-t">${t('Target Macros')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="np-kcal" value="2600" oninput="npMacro()"></div>
+      <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="np-p" value="170" oninput="npMacro()"></div>
+      <div class="field"><label class="lbl">${t('Carbs')} (g)</label><input class="inp" type="number" id="np-c" value="300" oninput="npMacro()"></div>
+      <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="np-f" value="80" oninput="npMacro()"></div>
+    </div>
+    <div id="np-dist"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="np-save">${ic('check',15)} ${t('Create Plan')}</button></div>`);
+  npMacro();
+}
+window.npMacro=()=>{
+  const k=+$('np-kcal')?.value||1,p=+$('np-p')?.value||0,c=+$('np-c')?.value||0,f=+$('np-f')?.value||0;
+  const pk=Math.min(100,Math.round(p*4/k*100)),ck=Math.min(100-pk,Math.round(c*4/k*100)),fk=Math.max(0,100-pk-ck);
+  const el=$('np-dist');if(el)el.innerHTML=distBar(pk,ck,fk);
+};
+function nPlanner(){
+  const p=NPLANS[S.nplan];if(!p)return `<div class="ccard cempty">${ic('utensils',26)}<b>${t('Create Nutrition Plan')}</b><button class="btn btn-primary btn-sm" data-act="np-new" style="margin-top:8px">${t('Create Nutrition Plan')}</button></div>`;
+  const day=p.days[S.nday];
+  const tg=day.type==='train'?p.train:p.rest;
+  const s=daySum(day.meals);
+  return `
+  <div class="grid2" style="grid-template-columns:1fr 300px;align-items:start">
+    <div class="stack">
+      <div class="card" style="padding:16px 18px">
+        <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div><b style="font-size:15.5px">${t(p.name)} — Week 1</b><div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip">${t(p.goal)}</span><span class="chip">${t(p.client)}</span><span class="bdg ${day.type==='train'?'bdg-lime':'bdg-purple'}" style="font-size:10px">${day.type==='train'?t('Training Day'):t('Rest Day')}</span></div></div>
+          <div class="seg"><button class="${day.type==='train'?'on':''}" data-act="ntype" data-v="train">${t('Training Day')}</button><button class="${day.type==='rest'?'on':''}" data-act="ntype" data-v="rest">${t('Rest Day')}</button></div>
+        </div>
+        <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">
+          <span class="chip">${nf(tg.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(tg.p)}g</span><span class="chip">${t('Carbs')} ${nf(tg.c)}g</span><span class="chip">${t('Fat')} ${nf(tg.f)}g</span>
+          <span class="sp"></span><button class="btn btn-outline btn-sm" data-act="tg-open">${ic('edit',13)} ${t('Target Macros')}</button>
+          <button class="btn btn-outline btn-sm" data-act="print-nutrition">${ic('download',13)} ${t('Print / PDF')}</button>
+          <button class="btn btn-outline btn-sm" data-act="export-pdf" data-kind="nutrition" data-c="${esc(p.client)}">${ic('download',13)} ${t('Nutrition PDF')}</button>
+        </div>
+        <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:12px">
+          ${DAYS.map((d,i)=>`<button class="fchip ${S.nday===i?'on':''}" data-act="nday" data-i="${i}" style="display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${p.days[i].type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span>${t(d)}</button>`).join('')}
+        </div>
+      </div>
+      ${day.meals.map((m,mi)=>nMealCard(p,day,m,mi)).join('')}
+      <button class="btn btn-outline" style="width:100%;justify-content:center;border-style:dashed;padding:13px" data-act="madd">${ic('plus',15)} ${t('Add Meal')}</button>
+      <div class="card" style="padding:16px 18px">
+        <div class="card-t" style="margin-bottom:8px">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</div>
+        ${NOTES.filter(n=>n.client===p.client&&n.type==='Nutrition'&&!n.arch).map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b><div class="muted" style="font-size:12px">${esc(t(n.body))}</div></div>`).join('')||`<div class="muted" style="font-size:12.5px;padding:4px 0">${t('No results found.')}</div>`}
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" data-act="qn-open" data-c="${esc(p.client)}" data-nt="Nutrition Note">${ic('plus',13)} ${t('Add Note')}</button>
+      </div>
+    </div>
+    <div style="position:sticky;top:76px">${nSummary(p,tg,s)}</div>
+  </div>`;
+}
+function nMealCard(p,day,m,mi){
+  const tot=daySum([m]);
+  /* v18.11 tier-3 — meal-type color coding (amber/green/blue/purple, lime fallback) */
+  const MC={Breakfast:['var(--amber-soft)','var(--amber)'],Lunch:['var(--green-soft)','var(--green)'],Dinner:['var(--blue-soft)','var(--blue)'],Snack:['var(--purple-soft)','var(--purple)']}[m.name]||['var(--accent-soft)','var(--accent-deep)'];
+  return `<div class="card" style="padding:14px 16px;border-top:3px solid ${MC[1]}">
+    <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">
+      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(m.note))}</span>`:''}</div>
+      <div class="row" style="gap:2px">
+        <button class="btn btn-ghost btn-icon" data-act="mealup" data-mi="${mi}">${ic('chevL',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="mealdn" data-mi="${mi}">${ic('chevR',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="mdup" data-mi="${mi}">${ic('copy',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="medit" data-mi="${mi}">${ic('edit',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="mnote" data-mi="${mi}">${ic('note',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="mdel" data-mi="${mi}" style="color:var(--red)">${ic('trash',14)}</button>
+      </div>
+    </div>
+    <div style="margin-top:8px">
+      ${m.foods.map((x,xi)=>{const f=FOODS[x.fi];if(!f)return '';
+      return `<div class="frow">
+        <div style="min-width:0"><div class="fk">${foodName(f.n)}</div><div class="muted" style="font-size:11px">${x.q?esc(t(x.q)):nf(x.g)+(lang==='fa'?' گرم':' g')}</div></div>
+        <span>${nf(itK(x))} kcal</span><span>${nf(Math.round(itM(x,'p')))}g P</span>
+        <button class="btn btn-ghost btn-icon" style="padding:4px" title="${t('Alternatives')}" data-act="falt" data-fi="${x.fi}">${ic('copy',13)}</button>
+        <button class="btn btn-ghost btn-icon" style="padding:4px;color:var(--red)" data-act="fdel" data-mi="${mi}" data-xi="${xi}">${ic('trash',13)}</button>
+      </div>`}).join('')||`<div class="muted" style="font-size:12px;padding:6px 0">${m.mk?`⚡ ${nf(m.mk.kcal)} kcal · ${nf(m.mk.p)}g ${t('Protein')}`:t('No results found.')}</div>`}
+    </div>
+    <div class="row" style="justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--line2);flex-wrap:wrap;gap:8px">
+      <button class="btn btn-dark btn-sm" data-act="fp-open" data-mi="${mi}">${ic('plus',13)} ${t('Add Food')}</button>
+      <b style="font-size:12.5px">${t('Meal Total')}: ${nf(tot.kcal)} kcal · ${nf(tot.p)}g P</b>
+    </div>
+  </div>`;
+}
+function nSummary(p,tg,s){
+  const st=(a,b)=>{const r=b?a/b:0;return r>=.92&&r<=1.08?`<span class="bdg bdg-green" style="font-size:10px">✓ ${t('On target')}</span>`:r>1.08?`<span class="bdg bdg-amber" style="font-size:10px">▲ ${t('Above target')}</span>`:`<span class="bdg bdg-blue" style="font-size:10px">▼ ${t('Below target')}</span>`};
+  const bar=(a,b)=>`<div class="pbar" style="margin-top:4px"><i style="width:${Math.min(100,Math.round(b?a/b*100:0))}%"></i></div>`;
+  return `<div class="card" style="padding:16px 18px">
+    <div class="card-t">${ic('target',14)} ${t('Daily Target')}</div>
+    <div class="row" style="justify-content:space-between;margin-top:8px"><span class="muted" style="font-size:12px">${t('Planned')} / ${t('Daily Target')}</span><b style="font-size:12px">${nf(s.kcal)} / ${nf(tg.kcal)} kcal</b></div>
+    ${[['Calories',s.kcal,tg.kcal],['Protein',s.p,tg.p],['Carbs',s.c,tg.c],['Fat',s.f,tg.f]].map(([k,a,b])=>`
+    <div style="margin-top:10px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b>${nf(a)} / ${nf(b)}</b></div>${bar(a,b)}<div style="margin-top:4px">${st(a,b)}</div></div>`).join('')}
+    <div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--line2)">
+      <span class="bdg bdg-gray" style="font-size:10.5px">${ic('lock',11)} ${t('Calculations only — the coach decides')}</span>
+    </div>
+  </div>`;
+}
+function nWeekly(){
+  const p=NPLANS[S.nplan];if(!p)return '';
+  return `
+  <div class="row" style="margin-bottom:12px;flex-wrap:wrap">
+    <button class="btn btn-outline btn-sm" data-act="wcopy">${ic('copy',14)} ${t('Copy Day')}</button>
+    <button class="btn btn-outline btn-sm" data-act="wpaste" ${S.nclip?'':'disabled style="opacity:.5"'}>${ic('upload',14)} ${t('Paste Day')}</button>
+    <button class="btn btn-outline btn-sm" data-act="wapply">${ic('stack',14)} ${t('Apply to Week')}</button>
+    <span class="muted" style="font-size:12px">💡 ${t('💡 Drag events between days to reschedule').replace('events','meals').replace('جلسات','وعده‌ها')}</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px">
+    ${DAYS.map((d,di)=>{const day=p.days[di];const s=daySum(day.meals);
+    return `<div class="wcol" data-day="${di}">
+      <div class="row" style="justify-content:space-between"><b style="font-size:12px">${t(d)}</b><span style="width:7px;height:7px;border-radius:50%;background:${day.type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span></div>
+      <div class="muted" style="font-size:10.5px;margin-top:2px">${nf(s.kcal)} kcal</div>
+      ${day.meals.map((m,mi)=>`<div class="wmealc" draggable="true" data-d="${di}" data-m="${mi}" data-act="nday" data-i="${di}"><b>${t(m.name)}</b><div class="muted" style="font-size:10.5px">${t(m.time)} · ${nf(Math.round(mealKcal(m)))} kcal</div></div>`).join('')||`<div class="muted" style="font-size:11px;margin-top:8px">—</div>`}
+    </div>`}).join('')}
+  </div>`;
+}
+function nPhases(){
+  const p=NPLANS[S.nplan];if(!p)return '';
+  return `<div class="mstack" style="gap:12px;max-width:720px">
+    <div class="row" style="justify-content:space-between"><b>${t(p.name)}</b><button class="btn btn-primary btn-sm" data-act="ph-add">${ic('plus',14)} ${t('Add Phase')}</button></div>
+    ${p.phases.map((ph,i)=>`
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div class="row"><div style="width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:13px">${nf(i+1)}</div>
+        <div><b style="font-size:14px">${ph.n}</b><div class="muted" style="font-size:11.5px">${ph.weeks} · ${t('Start')}: ${ph.start}</div></div></div>
+        <span class="bdg ${ph.status==='Current'?'bdg-lime':'bdg-gray'}">${t(ph.status)}</span>
+      </div>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">
+        <span class="chip">${nf(ph.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(ph.p)}g</span><span class="chip">${t('Carbs')} ${nf(ph.c)}g</span><span class="chip">${t('Fat')} ${nf(ph.fl)}g</span>
+      </div>
+      <div class="row" style="margin-top:10px;gap:6px">${i<p.phases.length-1?`<span class="muted" style="font-size:13px">↓</span>`:''}<button class="btn btn-outline btn-sm" data-act="ph-edit" data-i="${i}">${ic('edit',13)} ${t('Edit')}</button></div>
+    </div>`).join('')}
+  </div>`;
+}
+function nMealTpl(){
+  const cats=['All','Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'];
+  const list=MTPL.filter(x=>S.mtcat==='All'||x.cat===S.mtcat);
+  return `
+  <div class="row" style="margin-bottom:14px;justify-content:space-between;flex-wrap:wrap">
+    <div class="row" style="flex-wrap:wrap;gap:6px">${cats.map(c=>`<button class="fchip ${S.mtcat===c?'on':''}" data-act="mtcat" data-c="${c}">${t(c)}</button>`).join('')}</div>
+    <button class="btn btn-primary btn-sm" data-act="mt-add">${ic('plus',14)} ${t('Create Meal Template')}</button>
+  </div>
+  <div class="excards">${list.map((x)=>{const idx=MTPL.indexOf(x);const kcal=Math.round(x.foods.reduce((a,y)=>a+((FOODS[y.fi]||{}).kcal||0)*y.g/100,0));const pr=Math.round(x.foods.reduce((a,y)=>a+((FOODS[y.fi]||{}).p||0)*y.g/100,0));
+  return `<div class="card exc">
+    <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${t(x.n)}</b><span class="bdg bdg-gray" style="font-size:10px">${t(x.cat)}</span></div>
+    <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(kcal)} kcal</span><span class="chip">${nf(pr)}g ${t('Protein')}</span></div>
+    <div class="muted" style="font-size:11.5px">${x.foods.map(y=>FOODS[y.fi]?foodName(FOODS[y.fi].n):'').filter(Boolean).join(' · ')}</div>
+    <div class="row" style="margin-top:auto;gap:6px">
+      <button class="btn btn-primary btn-sm" data-act="mt-use" data-i="${idx}">${t('Use')}</button><span class="sp"></span>
+      <button class="btn btn-ghost btn-icon" data-act="mt-edit" data-i="${idx}">${ic('edit',14)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="mt-dup" data-i="${idx}">${ic('copy',14)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="mt-arch" data-i="${idx}" style="color:var(--red)">${ic('archive',14)}</button>
+    </div>
+  </div>`}).join('')}</div>`;
+}
+function nPlanTpl(){
+  return `<div class="excards">${PTPL.map((tp,i)=>`
+    <div class="card tcard">
+      <div class="row">${av(tp.n,38)}<div><b style="font-size:13.5px">${t(tp.n)}</b></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${nf(tp.meals)} ${t('Meals')}</span><span class="chip">${nf(tp.p)}g P</span><span class="chip">${nf(tp.c)}g C</span><span class="chip">${nf(tp.f)}g F</span></div>
+      <div class="muted" style="font-size:11.5px">${t('Apply to client')} — ${t('then customize')}</div>
+      <div class="row" style="margin-top:auto;gap:6px">
+        <button class="btn btn-primary btn-sm" data-act="pt-use" data-i="${i}">${t('Use Template')}</button><span class="sp"></span>
+        <button class="btn btn-ghost btn-icon" data-act="pt-edit" data-i="${i}">${ic('edit',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="pt-dup" data-i="${i}">${ic('copy',14)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="pt-arch" data-i="${i}" style="color:var(--red)">${ic('archive',14)}</button>
+      </div>
+    </div>`).join('')}</div>`;
+}
+function nHistory(){
+  return `<div class="card" style="max-width:720px">
+    <div class="card-h"><span class="card-t">${ic('clock',14)} ${t('History')}</span><span class="bdg bdg-gray">${t('Nutrition')}</span></div>
+    <div style="padding:16px 20px;display:flex;flex-direction:column;gap:16px">
+      ${NHIST.map((h,i)=>`<div class="row" style="gap:12px;align-items:flex-start">
+        <span class="bdg bdg-gray" style="flex:none">${ic(h.i,13)}</span>
+        <div style="flex:1;min-width:0"><div class="row" style="gap:8px;flex-wrap:wrap"><b style="font-size:13px">${t(h.t)}</b></div><div class="muted" style="font-size:12.5px">${t(h.d2)}</div></div>
+        <div style="font-size:11px;color:var(--ink3);flex:none">${t(h.d)}</div>
+        <button class="btn btn-ghost btn-sm" data-act="hist-view" data-i="${i}">${t('View')}</button>
+      </div>`).join('')||`<div class="muted" style="font-size:12.5px">${t('No results found.')}</div>`}
+    </div>
+  </div>`;
+}
+/* v18.9 — "View" used to be a toast stub. Entries created from now on carry a
+   snap (full plan JSON at that moment), so the modal renders the REAL plan as
+   it was; older entries show their recorded details. */
+function histViewModal(i){
+  const h=NHIST[i];if(!h)return;
+  const p=h.snap;
+  const days=p&&Array.isArray(p.days)?p.days.map((d,di)=>{
+    const tg=d.type==='train'?p.train:p.rest;
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--line2)">
+      <div class="row" style="justify-content:space-between"><b style="font-size:12.5px">${t(DAYS[di]||('Day '+(di+1)))} · ${d.type==='train'?t('Training Day'):t('Rest Day')}</b><span class="chip">${nf(tg.kcal)} kcal</span></div>
+      ${(d.meals||[]).map(m=>`<div class="muted" style="font-size:11.5px;margin-top:5px"><b style="color:var(--ink2)">${t(m.time)} ${t(m.name)}</b> — ${(m.foods||[]).map(x=>{const f=FOODS[x.fi];return f?foodName(f.n)+' '+nf(x.g)+'g':''}).filter(Boolean).join(' · ')||'—'}</div>`).join('')}
+    </div>`}).join('')
+    :`<div class="muted" style="font-size:12.5px">${t('No snapshot stored for this entry (older record)')}</div>`;
+  openModal(`
+  <div class="modal-h"><h3>${t(h.t)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px"><span class="bdg bdg-gray">${ic(h.i,12)} ${t(h.d)}</span><b style="font-size:13px">${t(h.d2)}</b></div>
+    ${p?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="chip">${t(p.name||'')}</span><span class="chip">${t(p.client||'')}</span><span class="chip">${t('Protein')} ${nf(p.train&&p.train.p||0)}g</span></div>`:''}
+    ${days}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function wNutrition(){
+  const c=client(S.cid);
+  const p=nPlanOf(c.name);
+  if(!p)return `<div class="ccard cempty" style="border-style:dashed"><b>${t('Nutrition Plan')}</b><span class="muted" style="font-size:12.5px">${t('No results found.')}</span><button class="btn btn-primary btn-sm" data-act="np-new" data-c="${esc(c.name)}" style="margin-top:6px">${ic('plus',14)} ${t('Create Nutrition Plan')}</button></div>`;
+  const day=p.days[TODAY];const tg=day.type==='train'?p.train:p.rest;const s=daySum(day.meals);
+  return `
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card" style="padding:18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div><b style="font-size:15px">${t(p.name)}</b><div class="muted" style="font-size:12px;margin-top:2px">${t(p.phase)} · ${t(p.week)} · ${t(p.updated)}</div></div>
+        <span class="bdg ${day.type==='train'?'bdg-lime':'bdg-purple'}">${day.type==='train'?t('Training Day'):t('Rest Day')}</span>
+      </div>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:12px">
+        <span class="chip">${nf(tg.kcal)} kcal</span><span class="chip">${t('Protein')} ${nf(tg.p)}g</span><span class="chip">${t('Carbs')} ${nf(tg.c)}g</span><span class="chip">${t('Fat')} ${nf(tg.f)}g</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:12px" data-act="nopen" data-i="${NPLANS.indexOf(p)}">${ic('arrowR',13)} ${t('Open Nutrition Workspace')}</button>
+    </div>
+    <div class="card" style="padding:18px"><div class="card-t" style="margin-bottom:8px">${t('Daily Target')} — ${t('Today')}</div>
+      ${[['Calories',s.kcal,tg.kcal,'kcal'],['Protein',s.p,tg.p,'g'],['Carbs',s.c,tg.c,'g'],['Fat',s.f,tg.f,'g']].map(([k,a,b,u])=>`
+      <div style="margin-bottom:10px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b>${nf(a)} / ${nf(b)} ${u}</b></div><div class="pbar" style="margin-top:4px"><i style="width:${Math.min(100,Math.round(b?a/b*100:0))}%"></i></div></div>`).join('')}
+    </div>
+  </div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('check',14)} ${t('Food log')} — ${t('last 7 days')}</span><span class="bdg ${NEng.status(c).level==='ok'?'bdg-green':NEng.status(c).level==='warn'?'bdg-amber':'bdg-red'}">${NEng.status(c).level==='ok'?t('On Track'):NEng.status(c).level==='warn'?t('Needs Attention'):t('Action Required')}</span></div>
+      ${(()=>{const ls=NLOGS.filter(l=>l.client===c.name&&l.type!=='water').slice(0,6);
+      return ls.length?ls.map(l=>`<div class="tl-row"><span class="mtime">${t(l.d===isoToday()?t('Today'):String(l.d).slice(5))}</span><div style="flex:1"><b style="font-size:13px">${t(l.meal||'Meal')}</b><div class="muted" style="font-size:11.5px">${(l.items||[]).map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' · ')}</div></div><span class="chip">${nf(l.kcal)} kcal · P${nf(l.p)}</span></div>`).join('')
+      :`<div class="muted" style="font-size:12px;padding:10px 0">${t('No food logged yet — the student logs from their Nutrition tab.')}</div>`})()}
+    </div>
+    <div class="stack">
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('zap',14)} ${t('Assistant insights')}</div>
+        ${NINS.filter(x=>x.client===c.name).slice(0,3).map(x=>`<div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><span class="bdg ${x.sev==='alert'?'bdg-red':x.sev==='warn'?'bdg-amber':'bdg-gray'}" style="font-size:9.5px">${x.kind}</span> <b>${esc(t(x.title))}</b><div class="muted" style="font-size:11px">${esc(t(x.detail))} · ${t(x.d)}</div></div>`).join('')||`<div class="muted" style="font-size:12px">${t('No insights yet.')}</div>`}
+      </div>
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('mail',14)} ${t('Assistant thread')} — ${t('last messages')}</div>
+        ${NCHAT.filter(m=>m.client===c.name).slice(-3).map(m=>`<div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><b>${m.role==='student'?t(c.name):t('Assistant')}</b> <span class="muted">· ${t(m.d)}</span><div class="muted" style="font-size:11.5px">${esc(t(m.body)).slice(0,120)}</div></div>`).join('')||`<div class="muted" style="font-size:12px">${t('No assistant conversation yet.')}</div>`}
+      </div>
+    </div>
+  </div>
+  <div class="grid2b" style="margin-bottom:14px">
+    <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's Meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
+      ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>FOODS[x.fi]?foodName(FOODS[x.fi].n)+' '+nf(x.g)+'g':'').filter(Boolean).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
+    </div>
+    <div class="stack">
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:6px">${ic('chart',14)} ${t('Nutrition × Progress')}</div>
+        ${wChart(c.id,130)}
+        <div class="muted" style="font-size:11px;margin-top:4px">${t('Calculations only — the coach decides')}</div>
+      </div>
+      <div class="card" style="padding:16px 18px"><div class="card-t" style="margin-bottom:4px">${ic('clock',14)} ${t('History')}</div>
+        ${NHIST.slice(0,3).map(h=>`<div style="padding:6px 0;border-bottom:1px solid var(--line2);font-size:12px"><b>${t(h.t)}</b> <span class="muted">· ${t(h.d2)}</span><div style="color:var(--ink3);font-size:10.5px">${t(h.d)}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+  <div class="card"><div class="card-h"><span class="card-t">${ic('note',14)} ${t('Coach Notes')} — ${t('Nutrition')}</span></div>
+    ${NOTES.filter(n=>n.client===c.name&&n.type==='Nutrition'&&!n.arch).map(n=>`<div class="tl-row" style="align-items:flex-start"><div style="flex:1"><b style="font-size:13px">${esc(t(n.title))}</b><div class="muted" style="font-size:12.5px;margin-top:2px">${esc(t(n.body))}</div><div style="font-size:10.5px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}</div></div></div>`).join('')||`<div style="padding:16px 20px;color:var(--ink3);font-size:12.5px">${t('No results found.')}</div>`}
+  </div>`;
+}
+function fpOpen(mi){
+  S.fp={q:'',cat:'All',fi:null,g:150,custom:false,mi};
+  openModal(`
+  <div class="modal-h"><h3>${t('Add Food')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <input class="inp" id="fp-q" placeholder="${t('Search food…')}" style="margin-bottom:10px" oninput="fpRender()">
+    <div id="fp-cats" class="row" style="flex-wrap:wrap;gap:6px;margin-bottom:10px"></div>
+    <div id="fp-list" style="max-height:230px;overflow-y:auto;display:flex;flex-direction:column;gap:8px"></div>
+    <div id="fp-sel" style="margin-top:12px"></div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-outline" data-act="fpcustom">${ic('plus',13)} ${t('Custom Food')}</button>
+    <span class="sp"></span>
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+  </div>`);
+  fpRender();
+}
+window.fpRender=()=>{
+  if(!S.fp)return;
+  const q=($('fp-q')?.value||'').toLowerCase();
+  $('fp-cats').innerHTML=['All',...NCATS].map(c=>`<button class="fchip ${S.fp.cat===c?'on':''}" data-act="fpcat" data-c="${c}">${t(c)}</button>`).join('');
+  const list=FOODS.map((f,i)=>({...f,i})).filter(f=>(S.fp.cat==='All'||f.cat===S.fp.cat)&&(f.n.toLowerCase().includes(q)||foodName(f.n).includes(q)));
+  $('fp-list').innerHTML=list.length?list.map(f=>`
+  <div class="card" style="padding:10px 12px;cursor:pointer;${S.fp.fi===f.i?'border-color:var(--accent-deep);background:var(--accent-soft)':''}" data-act="fpsel" data-i="${f.i}">
+    <div class="row" style="justify-content:space-between"><b style="font-size:13px">${foodName(f.n)}</b><span class="chip">${t(f.cat)}</span></div>
+    <div class="muted" style="font-size:11.5px;margin-top:2px">${t('Per 100g')}: ${nf(f.kcal)} kcal · ${nf(f.p)}g P · ${nf(f.c)}g C · ${nf(f.f)}g F</div>
+  </div>`).join(''):`<div style="padding:20px;text-align:center;color:var(--ink3);font-size:12.5px">${t('No results found.')}</div>`;
+  $('fp-sel').innerHTML=fpSel();
+};
+function fpSel(){
+  if(S.fp.custom){const f=S.fp.fi!=null?FOODS[S.fp.fi]:null;
+  return `<div class="card" style="padding:14px;background:var(--accent-soft);border-color:var(--acc-line)">
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Food name')}</label><input class="inp" id="fc-n" value="${f?esc(f.n):''}"></div>
+      <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="fc-cat">${NCATS.map(c=>`<option ${f&&f.cat===c?'selected':''}>${t(c)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Calories')} / 100g</label><input class="inp" type="number" id="fc-k" value="${f?f.kcal:''}"></div>
+      <div class="field"><label class="lbl">${t('Protein')} / 100g</label><input class="inp" type="number" id="fc-p" value="${f?f.p:''}"></div>
+      <div class="field"><label class="lbl">${t('Carbs')} / 100g</label><input class="inp" type="number" id="fc-c" value="${f?f.c:''}"></div>
+      <div class="field"><label class="lbl">${t('Fat')} / 100g</label><input class="inp" type="number" id="fc-f" value="${f?f.f:''}"></div>
+    </div>
+    <button class="btn btn-dark btn-sm" data-act="fpcadd">${ic('check',13)} ${t('Add Food')}</button>
+  </div>`}
+  if(S.fp.fi==null)return '';
+  const f=FOODS[S.fp.fi];const g=S.fp.g;
+  return `<div class="card" style="padding:14px;background:var(--accent-soft);border-color:var(--acc-line)">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <b style="font-size:13.5px">${foodName(f.n)}</b>
+      <div class="row" style="gap:4px;flex-wrap:wrap">${[100,150,200,250,300].map(q=>`<button class="fchip ${S.fp.g===q?'on':''}" data-act="fpqty" data-g="${q}" style="padding:3px 9px;font-size:11px">${nf(q)}g</button>`).join('')}</div>
+    </div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">
+      <span class="chip" style="background:var(--surface)">${nf(Math.round(f.kcal*g/100))} kcal</span>
+      <span class="chip" style="background:var(--surface)">${t('Protein')} ${nf(Math.round(f.p*g/10)/10)}g</span>
+      <span class="chip" style="background:var(--surface)">${t('Carbs')} ${nf(Math.round(f.c*g/10)/10)}g</span>
+      <span class="chip" style="background:var(--surface)">${t('Fat')} ${nf(Math.round(f.f*g/10)/10)}g</span>
+    </div>
+    <button class="btn btn-primary btn-sm" style="margin-top:10px" data-act="fpadd">${ic('plus',13)} ${t('Add Food')}</button>
+  </div>`;
+}
+function altModal(fi){
+  const f=FOODS[fi];
+  openModal(`
+  <div class="modal-h"><h3>${t('Alternatives')} — ${foodName(f.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+      <span class="chip">${nf(f.kcal)} kcal · ${nf(f.p)}g P · ${nf(f.c)}g C · ${nf(f.f)}g F / 100g</span>
+      <span class="bdg bdg-lime" style="font-size:10px">${ic('users',10)} ${t('Defined manually by the coach — no automation')}</span>
+    </div>
+    <div id="alt-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+    <div class="row">
+      <select class="sel" id="alt-sel" style="flex:1">${FOODS.filter(x=>x.n!==f.n&&!(f.alt||[]).includes(x.n)).map(x=>`<option value="${esc(x.n)}">${foodName(x.n)}</option>`).join('')}</select>
+      <button class="btn btn-primary" data-act="altadd" data-n="${esc(f.n)}">${ic('plus',14)} ${t('Add Alternative')}</button>
+    </div>
+  </div>`);
+  altRender(fi);
+}
+window.altRender=fi=>{
+  const f=FOODS[fi];const el=$('alt-list');if(!el)return;
+  el.innerHTML=(f.alt||[]).map(an=>{const a=FOODS.find(x=>x.n===an);if(!a)return '';
+  return `<div class="card" style="padding:10px 12px"><div class="row" style="justify-content:space-between">
+    <div><b style="font-size:13px">${foodName(a.n)}</b><div class="muted" style="font-size:11px">${t('Per 100g')}: ${nf(a.kcal)} kcal · ${nf(a.p)}g P · ${nf(a.c)}g C · ${nf(a.f)}g F</div></div>
+    <button class="btn btn-ghost btn-icon" style="color:var(--red)" data-act="altdel" data-fi="${fi}" data-n="${esc(an)}">${ic('x',14)}</button>
+  </div></div>`}).join('')||`<div class="muted" style="font-size:12.5px">${t('No results found.')}</div>`;
+};
+function mealEditModal(mi){
+  const m=NPLANS[S.nplan].days[S.nday].meals[mi];
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Meal')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="fgrid">
+    <div class="field"><label class="lbl">${t('Meal time')}</label><input class="inp" id="me-time" value="${esc(m.time)}"></div>
+    <div class="field"><label class="lbl">${t('Meal name')}</label><input class="inp" id="me-name" value="${esc(m.name)}"></div>
+  </div></div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="medit-save" data-mi="${mi}">${ic('check',15)} ${t('Save')}</button></div>`)}
+function mealNoteModal(mi){
+  const m=NPLANS[S.nplan].days[S.nday].meals[mi];
+  openModal(`
+  <div class="modal-h"><h3>${t('Meal Note')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><textarea class="ta" id="mn-note" placeholder="${t('Write your note…')}">${esc(t(m.note||''))}</textarea></div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="mnote-save" data-mi="${mi}">${ic('check',15)} ${t('Save Note')}</button></div>`)}
+function phaseModal(i){
+  const p=NPLANS[S.nplan];const ph=i!=null?p.phases[i]:{n:'Phase '+(p.phases.length+1),weeks:'Weeks '+(p.phases.length*4+1)+'–'+((p.phases.length+1)*4),kcal:Math.round(3000*(p.train.kcal/2850)),p:Math.round(185*(p.train.kcal/2850)),c:Math.round(330*(p.train.kcal/2850)),fl:Math.round(85*(p.train.kcal/2850)),start:'',status:'Upcoming'};
+  openModal(`
+  <div class="modal-h"><h3>${i!=null?t('Edit'):t('Add Phase')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="fgrid">
+    <div class="field"><label class="lbl">${t('Phase name')}</label><input class="inp" id="ph-n" value="${esc(ph.n)}"></div>
+    <div class="field"><label class="lbl">${t('Weeks')}</label><input class="inp" id="ph-w" value="${esc(ph.weeks)}"></div>
+    <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="ph-k" value="${ph.kcal}"></div>
+    <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="ph-p" value="${ph.p}"></div>
+    <div class="field"><label class="lbl">${t('Carbs')} (g)</label><input class="inp" type="number" id="ph-c" value="${ph.c}"></div>
+    <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="ph-f" value="${ph.fl}"></div>
+    <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" id="ph-s" value="${esc(ph.start)}"></div>
+  </div></div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="ph-save" data-i="${i==null?-1:i}">${ic('check',15)} ${t('Save')}</button></div>`)}
+/* v18.9 — meal/plan template EDIT (the pencil buttons used to be toast stubs).
+   Meal templates edit in place with a working food list (grams + remove);
+   renaming tombstones the old name so other devices drop the stale key. */
+function mtEditModal(i){
+  const x=MTPL[i];if(!x)return;
+  S.mtEdit={i,foods:JSON.parse(JSON.stringify(x.foods||[]))};
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Meal Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Meal name')}</label><input class="inp" id="mt-en" value="${esc(x.n)}"></div>
+      <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-ec">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option ${x.cat===c?'selected':''}>${t(c)}</option>`).join('')}</select></div>
+    </div>
+    <div class="fs-t">${t('Foods')}</div>
+    <div id="mt-foods" style="display:flex;flex-direction:column;gap:6px"></div>
+    ${(!x.foods||!x.foods.length)?`<div class="fgrid" style="margin-top:10px">
+      <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="mt-ek" value="${(x.mk&&x.mk.kcal)||500}"></div>
+      <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="mt-ep" value="${(x.mk&&x.mk.p)||35}"></div>
+    </div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="mt-edit-save" data-i="${i}">${ic('check',15)} ${t('Save')}</button></div>`);
+  mtFoods();
+}
+window.mtFoods=()=>{const el=$('mt-foods');if(!el||!S.mtEdit)return;
+  el.innerHTML=S.mtEdit.foods.map((y,xi)=>{const f=FOODS[y.fi];if(!f)return '';
+    return `<div class="frow"><div style="min-width:0"><div class="fk">${foodName(f.n)}</div><div class="muted" style="font-size:11px">${nf(Math.round(f.kcal*y.g/100))} kcal · ${nf(Math.round(f.p*y.g/100))}g P</div></div>
+    <input class="inp" style="width:86px;padding:4px 8px" type="number" min="1" value="${y.g}" oninput="mtG(${xi},this.value)">
+    <button class="btn btn-ghost btn-icon" style="padding:4px;color:var(--red)" data-act="mtf-del" data-xi="${xi}">${ic('trash',13)}</button></div>`}).join('')
+  ||`<div class="muted" style="font-size:12px;padding:6px 0">${t('No foods — macro-only template')}</div>`};
+window.mtG=(xi,v)=>{if(S.mtEdit&&S.mtEdit.foods[xi])S.mtEdit.foods[xi].g=Math.max(1,+v||1)};
+function ptEditModal(i){
+  const tp=PTPL[i];if(!tp)return;
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Plan Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="fgrid">
+    <div class="field"><label class="lbl">${t('Template name')}</label><input class="inp" id="pt-en" value="${esc(tp.n)}"></div>
+    <div class="field"><label class="lbl">${t('Meals')}</label><input class="inp" type="number" id="pt-em" value="${tp.meals}" min="1" max="8"></div>
+    <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="pt-ek" value="${tp.kcal}"></div>
+    <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="pt-epp" value="${tp.p}"></div>
+    <div class="field"><label class="lbl">${t('Carbs')} (g)</label><input class="inp" type="number" id="pt-ec" value="${tp.c}"></div>
+    <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="pt-ef" value="${tp.f}"></div>
+  </div></div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="pt-edit-save" data-i="${i}">${ic('check',15)} ${t('Save')}</button></div>`)}
+/* v18.9 — note EDIT (the pencil on every note row used to be a dead toast). */
+function noteEditModal(id){
+  const n=NOTES.find(x=>x.id===id);if(!n)return;
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Note')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <select class="sel" id="ne-type" style="margin-bottom:10px">${['General Note','Training Note','Progress Note','Injury / Restriction Note','Nutrition Note'].map(x=>`<option value="${x}" ${n.type+' Note'===x?'selected':''}>${t(x)}</option>`).join('')}</select>
+    <input class="inp" id="ne-title" value="${esc(t(n.title))}" placeholder="${t('Title')}" style="margin-bottom:10px">
+    <textarea class="ta" id="ne-body" placeholder="${t('Write your note…')}" style="min-height:110px">${esc(t(n.body))}</textarea>
+    <label class="chk" style="margin-top:10px"><input type="checkbox" id="ne-share" ${n.from==='coach'&&n.shared?'checked':''}>${t('Visible to client')}</label>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="note-edit-save" data-id="${n.id}">${ic('check',15)} ${t('Save')}</button></div>`)}
+/* ===== QR code — fully self-contained =====
+   Compact byte-mode QR encoder adapted from Project Nayuki's qrcodegen (MIT).
+   Only what this app needs: byte mode, ECC level M, versions 1..10 (join links
+   are ~50 chars → version 4). No external CDN: the app CSP allows 'self' +
+   inline scripts only, so the encoder lives here. Rendered as inline SVG
+   (crisp at any size, works in print, no canvas taint). */
+const QR=(()=>{
+  /* ECC M tables, versions 1..10: codewords per block / block count */
+  const ECC=[0,10,16,26,18,24,16,18,22,22,26],NB=[0,1,1,1,2,2,4,4,4,5,5];
+  /* GF(256) exp/log tables, polynomial 0x11D */
+  const EXP=new Uint8Array(512),LOG=new Uint8Array(256);
+  for(let i=0,x=1;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&0x100)x^=0x11D}
+  for(let i=255;i<512;i++)EXP[i]=EXP[i-255];
+  const mul=(a,b)=>a&&b?EXP[LOG[a]+LOG[b]]:0;
+  const rsDiv=deg=>{const r=Array(deg).fill(0);r[deg-1]=1;let root=1;
+    for(let i=0;i<deg;i++){for(let j=0;j<deg;j++){r[j]=mul(r[j],root);if(j+1<deg)r[j]^=r[j+1]}root=mul(root,2)}
+    return r};
+  const rsRem=(data,div)=>{const res=div.map(()=>0);
+    for(const b of data){const f=b^res.shift();res.push(0);div.forEach((c,i)=>res[i]^=mul(c,f))}
+    return res};
+  const rawModules=v=>{let r=(16*v+128)*v+64;
+    if(v>=2){const n=Math.floor(v/7)+2;r-=(25*n-10)*n-55;if(v>=7)r-=36}return r};
+  const dataCW=v=>Math.floor(rawModules(v)/8)-ECC[v]*NB[v];
+  const interleave=(v,data)=>{const nb=NB[v],el=ECC[v];
+    const raw=Math.floor(rawModules(v)/8),short=Math.floor(raw/nb),nShort=nb-raw%nb;
+    const div=rsDiv(el),blocks=[];
+    for(let i=0,k=0;i<nb;i++){const len=short-el+(i<nShort?0:1);
+      const dat=data.slice(k,k+len);k+=len;
+      const ecc=rsRem(dat,div),blk=dat.concat(ecc);
+      if(i<nShort)blk.splice(dat.length,0,0); /* pad byte sits before ecc */
+      blocks.push(blk)}
+    const out=[];
+    for(let i=0;i<blocks[0].length;i++)blocks.forEach((b,j)=>{if(i!=short-el||j>=nShort)out.push(b[i])});
+    return out};
+  const make=text=>{
+    const bytes=[...new TextEncoder().encode(String(text))];
+    let ver=0;
+    for(let v=1;v<=10;v++){if(4+(v<10?8:16)+8*bytes.length<=dataCW(v)*8){ver=v;break}}
+    if(!ver)throw new Error('qr-too-long');
+    const bits=[],put=(val,len)=>{for(let i=len-1;i>=0;i--)bits.push((val>>>i)&1)};
+    put(4,4);put(bytes.length,ver<10?8:16); /* byte mode + count */
+    bytes.forEach(b=>put(b,8));
+    const cap=dataCW(ver)*8;
+    put(0,Math.min(4,cap-bits.length)); /* terminator */
+    while(bits.length%8)bits.push(0);
+    const dcw=dataCW(ver),data=[];
+    for(let i=0;i<bits.length;i+=8){let b=0;for(let j=0;j<8;j++)b=(b<<1)|bits[i+j];data.push(b)}
+    for(let p=0xEC;data.length<dcw;p^=0xEC^0x11)data.push(p);
+    const all=interleave(ver,data);
+    const size=ver*4+17;
+    const mod=Array.from({length:size},()=>Array(size).fill(false));
+    const fn=Array.from({length:size},()=>Array(size).fill(false));
+    const set=(x,y,c)=>{mod[y][x]=c;fn[y][x]=true};
+    const finder=(x,y)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){
+      const d=Math.max(Math.abs(dx),Math.abs(dy)),xx=x+dx,yy=y+dy;
+      if(xx>=0&&xx<size&&yy>=0&&yy<size)set(xx,yy,d!=2&&d!=4)}};
+    const align=(x,y)=>{for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)
+      set(x+dx,y+dy,Math.max(Math.abs(dx),Math.abs(dy))!=1)};
+    const drawFmt=mask=>{const d=mask;let rem=d; /* ECL M format bits = 0 */
+      for(let i=0;i<10;i++)rem=(rem<<1)^((rem>>>9)*0x537);
+      const b=(d<<10|rem)^0x5412;
+      for(let i=0;i<=5;i++)set(8,i,(b>>>i)&1);
+      set(8,7,(b>>>6)&1);set(8,8,(b>>>7)&1);set(7,8,(b>>>8)&1);
+      for(let i=9;i<15;i++)set(14-i,8,(b>>>i)&1);
+      for(let i=0;i<8;i++)set(size-1-i,8,(b>>>i)&1);
+      for(let i=8;i<15;i++)set(8,size-15+i,(b>>>i)&1);
+      set(8,size-8,true)};
+    const drawVer=()=>{if(ver<7)return;let rem=ver;
+      for(let i=0;i<12;i++)rem=(rem<<1)^((rem>>>11)*0x1F25);
+      const b=ver<<12|rem;
+      for(let i=0;i<18;i++){const c=(b>>>i)&1,a=size-11+i%3,q=Math.floor(i/3);
+        set(a,q,c);set(q,a,c)}};
+    for(let i=0;i<size;i++){set(6,i,i%2==0);set(i,6,i%2==0)} /* timing */
+    finder(3,3);finder(size-4,3);finder(3,size-4);
+    const ap=[6];
+    if(ver>=2){const n=Math.floor(ver/7)+2,st=Math.ceil((ver*4+4)/(n*2-2))*2;
+      for(let pos=size-7;ap.length<n;pos-=st)ap.splice(1,0,pos)}
+    for(let i=0;i<ap.length;i++)for(let j=0;j<ap.length;j++)
+      if(!(i==0&&j==0||i==0&&j==ap.length-1||i==ap.length-1&&j==0))align(ap[i],ap[j]);
+    drawFmt(0);drawVer();
+    let bi=0; /* zigzag codeword placement */
+    for(let right=size-1;right>=1;right-=2){
+      if(right==6)right=5;
+      for(let vt=0;vt<size;vt++)for(let j=0;j<2;j++){
+        const x=right-j,up=((right+1)&2)==0,y=up?size-1-vt:vt;
+        if(!fn[y][x]&&bi<all.length*8){mod[y][x]=((all[bi>>>3]>>>(7-(bi&7)))&1)==1;bi++}}}
+    const inv=(m,x,y)=>m==0?(x+y)%2==0:m==1?y%2==0:m==2?x%3==0:m==3?(x+y)%3==0
+      :m==4?(Math.floor(x/3)+Math.floor(y/2))%2==0:m==5?(x*y%2+x*y%3)==0
+      :m==6?(x*y%2+x*y%3)%2==0:((x+y)%2+x*y%3)%2==0;
+    const applyMask=m=>{for(let y=0;y<size;y++)for(let x=0;x<size;x++)
+      if(!fn[y][x]&&inv(m,x,y))mod[y][x]=!mod[y][x]};
+    const addHist=(run,h)=>{if(h[0]==0)run+=size;h.pop();h.unshift(run)};
+    const countPat=h=>{const n=h[1],core=n>0&&h[2]==n&&h[3]==n*3&&h[4]==n&&h[5]==n;
+      return (core&&h[0]>=n*4&&h[6]>=n?1:0)+(core&&h[6]>=n*4&&h[0]>=n?1:0)};
+    const term=(color,run,h)=>{if(color){addHist(run,h);run=0}run+=size;addHist(run,h);return countPat(h)};
+    const penalty=()=>{let res=0;
+      for(let y=0;y<size;y++){let rc=false,rx=0;const h=[0];
+        for(let x=0;x<size;x++){if(mod[y][x]==rc){rx++;if(rx==5)res+=3;else if(rx>5)res++}
+          else{addHist(rx,h);if(!rc)res+=countPat(h)*40;rc=mod[y][x];rx=1}}
+        res+=term(rc,rx,h)*40}
+      for(let x=0;x<size;x++){let rc=false,ry=0;const h=[0];
+        for(let y=0;y<size;y++){if(mod[y][x]==rc){ry++;if(ry==5)res+=3;else if(ry>5)res++}
+          else{addHist(ry,h);if(!rc)res+=countPat(h)*40;rc=mod[y][x];ry=1}}
+        res+=term(rc,ry,h)*40}
+      for(let y=0;y<size-1;y++)for(let x=0;x<size-1;x++){const c=mod[y][x];
+        if(c==mod[y][x+1]&&c==mod[y+1][x]&&c==mod[y+1][x+1])res+=3}
+      let dark=0;for(const row of mod)for(const c of row)if(c)dark++;
+      const k=Math.ceil(Math.abs(dark*20-size*size*10)/(size*size))-1;
+      return res+k*10};
+    let best=0,bestScore=Infinity;
+    for(let m=0;m<8;m++){applyMask(m);drawFmt(m);const s=penalty();
+      if(s<bestScore){bestScore=s;best=m}applyMask(m)} /* second apply undoes */
+    applyMask(best);drawFmt(best);
+    return mod};
+  return {make};
+})();
+const qrSvg=(text,px)=>{
+  let m;try{m=QR.make(text)}catch(e){return ''}
+  const n=m.length;let path='';
+  m.forEach((row,y)=>row.forEach((v,x)=>{if(v)path+=`M${x} ${y}h1v1h-1z`}));
+  /* 4-module quiet zone (spec) baked into the viewBox — always dark-on-white
+     so phone cameras scan it in both app themes. */
+  return `<svg viewBox="-4 -4 ${n+8} ${n+8}" width="${px}" height="${px}" shape-rendering="crispEdges" role="img" aria-label="QR code"><rect x="-4" y="-4" width="${n+8}" height="${n+8}" fill="#fff"/><path d="${path}" fill="#161c04"/></svg>`;
+};
+/* Big scannable QR for one client's join link — opened from the invite list,
+   the add-client success modal and the edit-client modal. */
+function qrModal(name,code){
+  const link=inviteLink(code);
+  openModal(`
+  <div class="modal-h"><h3>${t('QR code')}${name?' — '+esc(name):''}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b" style="text-align:center">
+    <div style="display:inline-block;padding:12px;background:#fff;border-radius:14px;box-shadow:0 1px 6px rgba(0,0,0,.1)">${qrSvg(link,230)}</div>
+    <div class="muted" style="font-size:12px;margin-top:12px">${t('Scan with the phone camera — the app opens and connects automatically')}</div>
+    <div style="font-weight:800;letter-spacing:.12em;font-size:17px;margin-top:8px;color:var(--accent-ink)">${esc(code)}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="copy-code" data-code="${esc(link)}">${ic('copy',14)} ${t('Copy link')}</button></div>`);
+}
+/* v18.9 — dashboard "View all →" used to be a toast stub; the full activity
+   log now opens in a modal. */
+function activityModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Recent Activity')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b" style="max-height:60vh;overflow-y:auto">
+    ${ACTIVITY.length?ACTIVITY.map(a=>`<div class="row" style="gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line2)"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')
+    :`<div class="muted" style="font-size:12.5px">${t('No results found.')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ================= v18.21 — SMART CLIENT REPORTS =================
+   A deterministic (no-AI-needed) engine that analyzes EVERY active client
+   from the live workspace data — weight trend vs goal, workout adherence,
+   engagement, form-check quality, nutrition coverage — scores each client
+   0-100, and surfaces the result three ways: a per-client report modal, a
+   dashboard "Smart Reports" card (worst first), and an automatic daily
+   notification for clients whose score dropped or who need attention.
+   The AI assistant can then be asked to elaborate on any of it. */
+const RPT={
+  trend(c){ // weight trend over the last 28 days → {dir, delta}
+    const ms=(DB[c.id]?.measures||[]).filter(m=>m.w!=null).slice(-6);
+    if(ms.length<2)return {dir:'none',delta:0};
+    const a=ms[0].w,b=ms[ms.length-1].w,d=+(b-a).toFixed(1);
+    return {dir:d>0.3?'up':d<-0.3?'down':'flat',delta:d};
+  },
+  adherence(c){ // completed vs missed over the recorded stats
+    const s=DB[c.id]?.stats||{done:0,missed:0};
+    const t=s.done+s.missed;
+    return {done:s.done||0,missed:s.missed||0,pct:t?Math.round(s.done/t*100):null};
+  },
+  engagement(c){ // days since the client's last message/check-in
+    const last=MSGS.filter(m=>m.client===c.name&&m.from==='client').slice(-1)[0];
+    const note=NOTES.filter(n=>n.client===c.name&&n.from==='client').slice(-1)[0];
+    const dref=(last&&last.time)||(note&&note.date)||null;
+    const days=dref&&/day/i.test(String(dref))?parseInt(String(dref),10)||1:0;
+    return {days,dref};
+  },
+  form(c){ // average form-check score + worst flag
+    const fs=FORMS.filter(f=>f.client===c.name);
+    if(!fs.length)return null;
+    const avg=Math.round(fs.reduce((a,f)=>a+(f.score||0),0)/fs.length);
+    const worst={};fs.forEach(f=>(f.flags||[]).forEach(fl=>worst[fl]=(worst[fl]||0)+1));
+    const top=Object.entries(worst).sort((a,b)=>b[1]-a[1])[0];
+    return {n:fs.length,avg,flag:top?top[0]:null};
+  },
+  nutrition(c){return !!nPlanOf(c.name)},
+  score(c){ // 0-100 composite: adherence 40, trend-vs-goal 25, engagement 20, nutrition 15
+    let s=0;const issues=[];
+    const ad=this.adherence(c);
+    s+=ad.pct==null?20:Math.round(ad.pct*0.4);
+    if(ad.pct!=null&&ad.pct<60)issues.push(['Low workout completion',`${nf(ad.done)} ✓ / ${nf(ad.missed)} ✗`,'bdg-red']);
+    const tr=this.trend(c);
+    const goal=String(c.goal||'');
+    const badTrend=(/fat loss/i.test(goal)&&tr.dir==='up')||(/muscle gain/i.test(goal)&&tr.dir==='down');
+    const goodTrend=(/fat loss/i.test(goal)&&tr.dir==='down')||(/muscle gain/i.test(goal)&&tr.dir==='up');
+    s+=tr.dir==='none'?15:(badTrend?5:goodTrend?25:18);
+    if(badTrend)issues.push(['Weight moving away from goal',`${tr.delta>0?'+':''}${nf(tr.delta)} kg vs ${t(goal)}`,'bdg-red']);
+    const en=this.engagement(c);
+    s+=en.days>=14?5:en.days>=7?12:20;
+    if(en.days>=14)issues.push(['Silent for 2+ weeks',en.dref?t('Last contact')+': '+t(en.dref):t('No client messages yet'),'bdg-amber']);
+    else if(en.days>=7)issues.push(['Quiet this week',en.dref?t('Last contact')+': '+t(en.dref):t('No client messages yet'),'bdg-amber']);
+    if(!this.nutrition(c)){s-=8;issues.push(['No nutrition plan',t('Create Nutrition Plan'),'bdg-blue'])}
+    const fm=this.form(c);
+    if(fm&&fm.avg<70)issues.push(['Form needs work',`${t('Form score')} ${nf(fm.avg)} · ${t(fm.flag||'')}`,'bdg-amber']);
+    return {score:Math.max(5,Math.min(100,s)),issues};
+  }
+};
+function rptBadge(sc){return `<span class="bdg ${sc>=80?'bdg-green':sc>=60?'bdg-amber':'bdg-red'}">${nf(sc)}</span>`}
+function smartReportsModal(){
+  const act=CLIENTS.filter(c=>c.status!=='Archived');
+  const rows=act.map(c=>({c,...RPT.score(c)})).sort((a,b)=>a.score-b.score);
+  const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.score,0)/rows.length):0;
+  openModal(`
+  <div class="modal-h"><h3>${ic('chart',16)} ${t('Smart Reports')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:14px;margin-bottom:14px">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Workspace health')}</span><b style="font-size:22px;color:${avg>=80?'var(--green)':avg>=60?'var(--accent-deep)':'var(--red)'}">${nf(avg)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Clients analyzed')}</span><b style="font-size:22px">${nf(rows.length)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Need attention')}</span><b style="font-size:22px;color:var(--red)">${nf(rows.filter(r=>r.score<60).length)}</b></div>
+    </div>
+    ${rows.length?rows.map(r=>`
+    <div class="card" style="padding:12px;margin-bottom:8px">
+      <div class="row" style="justify-content:space-between">
+        <div class="row" style="gap:10px">${avC(r.c.name,34)}<b style="font-size:13.5px">${t(r.c.name)}</b></div>
+        ${rptBadge(r.score)}
+      </div>
+      ${(r.issues||[]).length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:8px">${r.issues.map(([k,d,b])=>`<span class="bdg ${b}" style="font-size:10px" title="${esc(d)}">${t(k)}</span>`).join('')}</div>`:`<div class="muted" style="font-size:11.5px;margin-top:6px">${t('All good — keep the plan running')}</div>`}
+      <div class="row" style="gap:6px;margin-top:10px">
+        <button class="btn btn-outline btn-sm" data-act="rpt-open" data-c="${esc(r.c.name)}">${ic('chart',13)} ${t('Full report')}</button>
+        <button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${r.c.id}">${t('Open')} ${ic('arrowR',13)}</button>
+      </div>
+    </div>`).join('')
+    :`<div class="empty">${ic('users',22)}<b>${t('No clients yet — add your first client')}</b></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function clientReportModal(name){
+  const c=CLIENTS.find(x=>x.name===name);if(!c)return;
+  const {score,issues}=RPT.score(c);
+  const tr=RPT.trend(c),ad=RPT.adherence(c),en=RPT.engagement(c),fm=RPT.form(c);
+  const L=(k,v)=>`<div class="set-row"><span style="color:var(--ink2);font-size:13px">${k}</span><b>${v}</b></div>`;
+  openModal(`
+  <div class="modal-h"><h3>${ic('chart',16)} ${t('Smart report')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:14px;margin-bottom:14px">${avC(name,44)}
+      <div style="flex:1"><b style="font-size:15px">${t(name)}</b><div class="muted" style="font-size:12px">${t(c.goal||'—')} · ${t(c.freq||'—')}</div></div>
+      <div style="text-align:center"><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Score')}</span><b style="font-size:24px;color:${score>=80?'var(--green)':score>=60?'var(--accent-deep)':'var(--red)'}">${nf(score)}</b></div>
+    </div>
+    <div class="card" style="padding:12px;margin-bottom:10px">
+      <div class="card-t" style="margin-bottom:6px">${ic('chart',13)} ${t('Progress')}</div>
+      ${L(t('Weight trend'),tr.dir==='none'?t('Not enough data'):`${tr.delta>0?'+':''}${nf(tr.delta)} kg — ${tr.dir==='up'?t('Gaining'):tr.dir==='down'?t('Losing'):t('Stable')}`)}
+      ${L(t('Workout completion'),ad.pct==null?t('No workouts yet'):`${nf(ad.done)} ✓ / ${nf(ad.missed)} ✗ (${nf(ad.pct)}%)`)}
+      ${L(t('Streak'),esc(streakLbl(c)))}
+      ${L(t('Last contact'),en.dref?t(en.dref):t('No client messages yet'))}
+      ${fm?L(t('Form checks'),`${nf(fm.n)} · ${t('avg')} ${nf(fm.avg)}${fm.flag?` · ${t(fm.flag)}`:''}`):''}
+      ${L(t('Nutrition plan'),RPT.nutrition(c)?t('Active'):t('Missing'))}
+    </div>
+    ${issues.length?`<div class="field"><label class="lbl">${t('Needs attention')}</label>
+      ${issues.map(([k,d,b])=>`<div class="row" style="gap:8px;padding:7px 0;border-bottom:1px solid var(--line2)"><span class="bdg ${b}" style="flex:none">${t(k)}</span><span class="muted" style="font-size:12px">${esc(d)}</span></div>`).join('')}</div>`
+    :`<div class="row" style="gap:8px"><span class="bdg bdg-green">${ic('check',13)}</span><b>${t('All good — keep the plan running')}</b></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="rpt-ai" data-c="${esc(name)}">${ic('zap',14)} ${t('Ask the AI assistant')}</button></div>`);
+}
+/* Daily auto-report: once per day per device, analyze the roster and raise a
+   notification for every client that needs attention (score < 60 or a NEW
+   red issue). Runs shortly after boot, then every 6h while open. */
+function rptDailyKey(){const d=TDATE;return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`}
+function rptAutoRun(){
+  if(!CLIENTS.length)return;
+  try{
+    const key='co-rpt-day';
+    if(localStorage.getItem(key)===rptDailyKey())return;
+    localStorage.setItem(key,rptDailyKey());
+    const rows=CLIENTS.filter(c=>c.status!=='Archived').map(c=>({c,...RPT.score(c)}));
+    const weak=rows.filter(r=>r.score<60);
+    if(weak.length){
+      NOTIFS.unshift({t:`📊 ${t('Smart report')}: ${nf(weak.length)} ${t('clients need attention')}`,d:'Just now',un:true});
+      weak.slice(0,3).forEach(r=>NOTIFS.unshift({t:`⚠️ ${t(r.c.name)} — ${t('score')} ${nf(r.score)}`,d:'Just now',un:true}));
+      ACTIVITY.unshift({w:'Just now',i:'chart',h:lang==='fa'?`<b>گزارش هوشمند</b> برای ${nf(rows.length)} شاگرد ساخته شد — ${nf(weak.length)} نیاز به توجه دارند`:`<b>Smart report</b> generated for ${nf(rows.length)} clients — ${nf(weak.length)} need attention`});
+      saveData();
+    }
+  }catch(e){}
+}
+/* ================= v18.38 — GAMIFICATION (day streak · points · badges) =================
+   c.streak (weeks) was demo-only and never updated by real activity. The real
+   engine lives on the client record: dayStreak (consecutive DAYS with a
+   completed workout), lastDone (local YYYY-MM-DD of the last completion),
+   pts (points) and badges [{id,at}]. All four ride the workspace payload —
+   cloudMerge merges them like the other client fields. */
+const GAM={
+  PTS:{workout:10,checkin:3,form:5,badge:20,habit:2},
+  BADGES:[
+    {id:'first',e:'🎯',n:'First Workout',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
+    {id:'w10',e:'💪',n:'10 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
+    {id:'w25',e:'🏋️',n:'25 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
+    {id:'w50',e:'🏆',n:'50 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
+    {id:'w100',e:'👑',n:'100 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
+    {id:'s3',e:'🔥',n:'3-Day Streak',t:c=>(c.dayStreak||0)>=3},
+    {id:'s7',e:'🔥',n:'7-Day Streak',t:c=>(c.dayStreak||0)>=7},
+    {id:'s14',e:'⚡',n:'14-Day Streak',t:c=>(c.dayStreak||0)>=14},
+    {id:'s30',e:'🌟',n:'30-Day Streak',t:c=>(c.dayStreak||0)>=30},
+    {id:'s100',e:'💎',n:'100-Day Streak',t:c=>(c.dayStreak||0)>=100},
+    {id:'chk10',e:'📋',n:'10 Check-ins',t:c=>MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length>=10},
+    {id:'form85',e:'🎯',n:'Form Master',t:c=>{const f=FORMS.filter(x=>x.client===c.name);return f.length>0&&f.reduce((a,x)=>a+(x.score||0),0)/f.length>=85}},
+    {id:'meas5',e:'📏',n:'5 Measurements',t:c=>((DB[c.id]||{}).measures||[]).length>=5},
+    {id:'nut',e:'🥗',n:'Fuel Plan',t:c=>!!nPlanOf(c.name)}
+  ],
+  earned:c=>GAM.BADGES.filter(b=>(c.badges||[]).some(x=>x&&x.id===b.id)),
+  /* First un-earned badge + progress toward it (drives the Today card bar). */
+  next(c){
+    const done=((DB[c.id]||{}).stats||{}).done||0;
+    const chk=MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length;
+    const meas=((DB[c.id]||{}).measures||[]).length;
+    const fs=FORMS.filter(x=>x.client===c.name);
+    const fmAvg=fs.length?Math.round(fs.reduce((a,x)=>a+(x.score||0),0)/fs.length):0;
+    const prog={first:[done,1],w10:[done,10],w25:[done,25],w50:[done,50],w100:[done,100],
+      s3:[c.dayStreak||0,3],s7:[c.dayStreak||0,7],s14:[c.dayStreak||0,14],s30:[c.dayStreak||0,30],s100:[c.dayStreak||0,100],
+      chk10:[chk,10],meas5:[meas,5],form85:[fmAvg,85],nut:[nPlanOf(c.name)?1:0,1]};
+    const b=GAM.BADGES.find(x=>!(c.badges||[]).some(y=>y&&y.id===x.id));
+    if(!b)return null;
+    const [v,mx]=prog[b.id]||[0,1];
+    return {b,pct:Math.min(100,Math.round(v/mx*100))};
+  }
+};
+/* Local YYYY-MM-DD — streaks are day-granular in the device's timezone. */
+const ymdOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+/* Award points for an action, evaluate every badge test AND every active
+   challenge. Returns {nb, doneCh}; the celebration modal + coach notification
+   are centralized here so callers stay one-liners. */
+function gamAward(c,kind){
+  if(!c)return {nb:[],doneCh:[]};
+  const _pre=c.pts||0;
+  c.pts=(c.pts||0)+(GAM.PTS[kind]||0);
+  const nb=[];
+  GAM.BADGES.forEach(b=>{
+    if((c.badges||[]).some(x=>x&&x.id===b.id))return;
+    let ok=false;try{ok=b.t(c)}catch(e){}
+    if(ok)nb.push(b);
+  });
+  if(nb.length){
+    c.badges=(c.badges||[]).concat(nb.map(b=>({id:b.id,at:Date.now()})));
+    c.pts+=nb.length*GAM.PTS.badge;
+  }
+  const doneCh=chalEvalClient(c);
+  /* ptsToday for the momentum hero — reset whenever the local date rolls over */
+  const _iso=isoToday(); if(c.ptsDate!==_iso){c.ptsDate=_iso;c.ptsDay=0;} c.ptsDay=(c.ptsDay||0)+((c.pts||0)-_pre);
+  const celeb=[...nb,...doneCh.map(ch=>({e:(ch.reward&&ch.reward.be)||ch.emoji||'🏆',n:(ch.reward&&ch.reward.bn)||ch.name}))];
+  if(celeb.length){
+    NOTIFS.unshift({t:`🏅 ${t(c.name)} — ${celeb.map(b=>b.e+' '+t(b.n)).join(' · ')}`,d:'Just now',un:true});
+    if(S.role==='client')badgeModal(celeb,GAM.PTS.badge*nb.length+doneCh.reduce((a,ch)=>a+((ch.reward&&ch.reward.pts)||50),0));
+  }
+  return {nb,doneCh};
+}
+/* v18.84 — symmetric UNDO for gamAward. The three revoke paths (count habit drops
+   below target, habit untick, coach habit untick) only decremented `pts`, so the
+   momentum hero's "+pts today" on Today stayed INFLATED while the total fell —
+   the two counters drifted apart. Same shape as gamAward's tail. */
+function gamRevoke(c,kind){
+  if(!c)return;
+  const d=GAM.PTS[kind]||0;
+  if(!d)return;
+  const before=c.pts||0;
+  c.pts=Math.max(0,before-d);
+  /* Only touch ptsDay when it still represents TODAY — otherwise the hero
+     already resets it on a date mismatch and a stale value is irrelevant. */
+  if(c.ptsDate===isoToday())c.ptsDay=Math.max(0,(c.ptsDay||0)+(c.pts-before));
+}
+/* Badge celebration — shown on the client device right after a workout. */
+function badgeModal(list,pts){
+  openModal(`
+  <div class="modal-b" style="text-align:center;padding:30px 22px 22px">
+    <div style="font-size:52px;line-height:1">${list.map(b=>b.e).join(' ')}</div>
+    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Badge unlocked!')}</b>
+    <div class="muted" style="font-size:13px;margin-top:6px">${list.map(b=>esc(t(b.n))).join(' · ')}</div>
+    <div style="margin-top:12px"><span class="bdg bdg-lime" style="font-size:12px;padding:5px 14px">⭐ +${nf(pts)} ${t('Points')}</span></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Awesome!')} 🔥</button></div>`);
+}
+/* Full achievements grid — earned badges colored + dated, locked ones dimmed. */
+function gamModal(){
+  const c=client(S.cid);
+  const has=id=>(c.badges||[]).some(x=>x&&x.id===id);
+  const at=id=>{const x=(c.badges||[]).find(y=>y&&y.id===id);return x&&x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—'};
+  openModal(`
+  <div class="modal-h"><h3>${ic('crown',16)} ${t('Achievements')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:16px;margin-bottom:14px">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Points')}</span><b style="font-size:22px">⭐ ${nf(c.pts||0)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('day streak')}</span><b style="font-size:22px">🔥 ${nf(c.dayStreak||0)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Badges')}</span><b style="font-size:22px">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</b></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px">
+      ${GAM.BADGES.map(b=>{const on=has(b.id);return `
+      <div class="ccard" style="padding:12px 8px;text-align:center;${on?'':'opacity:.45;filter:grayscale(1)'}">
+        <div style="font-size:26px">${b.e}</div>
+        <b style="font-size:10.5px;display:block;margin-top:5px">${t(b.n)}</b>
+        <div class="muted" style="font-size:9.5px;margin-top:2px">${on?esc(at(b.id)):'🔒'}</div>
+      </div>`}).join('')}
+      ${(c.badges||[]).filter(x=>x&&String(x.id).startsWith('chal-')).map(x=>{const ch=CHALLENGES.find(y=>String(y.id)===String(String(x.id).slice(5)));
+        if(!ch)return '';
+        return `<div class="ccard" style="padding:12px 8px;text-align:center;border-color:var(--acc-line)">
+        <div style="font-size:26px">${(ch.reward||{}).be||ch.emoji||'🏆'}</div>
+        <b style="font-size:10.5px;display:block;margin-top:5px">${esc(t((ch.reward||{}).bn||ch.name))}</b>
+        <div class="muted" style="font-size:9.5px;margin-top:2px">${esc(x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—')}</div>
+      </div>`}).join('')}
+    </div>
+    <div class="muted" style="font-size:11.5px;margin-top:12px">${t('Earn points: workout +10 · check-in +3 · form check +5 · each badge +20')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* ================= v18.39 — CHALLENGE BUILDER + JOURNEY PATHS =================
+   The coach designs challenges (Target / Streak / Habit) with a GRAPHICAL
+   journey path: a serpentine trail of stages the client walks node by node.
+   Progress is computed from REAL workspace data (workouts completed since the
+   start date, check-ins, form checks, points, day streak) or logged manually;
+   hitting 100% auto-awards the reward badge + points through the gamification
+   engine. Everything rides the workspace payload. */
+const CHAL={
+  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',points:'Points',custom:'Manual log'},
+  EMOJIS:['🏆','🔥','💪','⚡','🌟','🥇','🎯','🚀','🏃','🥗','💎','👑'],
+  parts(ch){const ps=ch.parts||['*'];return CLIENTS.filter(c=>c.status!=='Archived'&&(ps.includes('*')||ps.includes(c.name)))},
+  val(ch,c){
+    const st=ch.start?Date.parse(ch.start+'T00:00:00'):0;
+    const m=ch.type==='streak'?'streak':ch.type==='habit'?'checkins':(ch.metric||'workouts');
+    if(m==='streak')return c.dayStreak||0;
+    if(m==='points')return c.pts||0;
+    if(m==='forms')return FORMS.filter(f=>f.client===c.name&&(!st||Date.parse(f.d)>=st)).length;
+    if(m==='checkins')return MSGS.filter(x=>x.client===c.name&&x.type==='checkin'&&(!x.at||x.at>=st)).length;
+    if(m==='workouts'){const db=DB[c.id]||{};return (db.workouts||[]).filter(w=>w.status==='completed'&&(!w.doneAt||Date.parse(w.doneAt)>=st)).length}
+    return ((ch.prog||{})[c.id])||0;
+  },
+  end(ch){return Date.parse(ch.start||isoToday())+(ch.days||30)*864e5},
+  left(ch){return Math.max(0,Math.ceil((CHAL.end(ch)-Date.now())/864e5))},
+  pace(ch){const el=(Date.now()-Date.parse(ch.start||isoToday()))/864e5;return Math.max(0,Math.min(100,Math.round(el/Math.max(1,ch.days||30)*100)))},
+  pct(ch,c){return Math.min(100,Math.round(CHAL.val(ch,c)/Math.max(1,ch.target||1)*100))},
+  rows(ch){return CHAL.parts(ch).map(c=>({c,val:CHAL.val(ch,c),pct:CHAL.pct(ch,c)})).sort((a,b)=>b.pct-a.pct||b.val-a.val)},
+  node(ch,pct){const n=(ch.stages||[]).length;return n?Math.min(n,Math.floor(pct/100*n)):0}
+};
+/* Evaluate ONE client against every active challenge — called from gamAward
+   (workout / check-in / form check) and after manual logs. Returns the
+   challenges completed in THIS call (reward already granted). */
+function chalEvalClient(c){
+  const out=[];
+  CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id)).forEach(ch=>{
+    if(CHAL.pct(ch,c)<100||(ch.done||[]).includes(c.id))return;
+    (ch.done=ch.done||[]).push(c.id);
+    c.pts=(c.pts||0)+((ch.reward&&ch.reward.pts)||50);
+    c.badges=(c.badges||[]).concat([{id:'chal-'+ch.id,at:Date.now()}]);
+    ACTIVITY.unshift({w:'Just now',i:'trophy',h:lang==='fa'?`<b>${t(c.name)}</b> چالش <b>${esc(ch.name)}</b> را به پایان رساند ${ch.emoji||'🏆'}`:`<b>${t(c.name)}</b> completed the challenge <b>${esc(ch.name)}</b> ${ch.emoji||'🏆'}`});
+    out.push(ch);
+  });
+  return out;
+}
+/* The GRAPHICAL journey path — a serpentine trail (board-game style) with one
+   node per stage. doneN = how many stages are complete; the current node
+   pulses. Used by the coach designer (live preview), the detail modal and the
+   client's Today card. */
+function chalPath(stages,doneN,opt){
+  opt=opt||{};const list=stages||[];const n=list.length;if(!n)return '';
+  const perRow=n<=2?n:4;
+  const rows=Math.ceil(n/perRow);
+  const w=opt.w||340,padX=30,padY=26,rowH=opt.rowH||62;
+  const colW=perRow>1?(w-2*padX)/(perRow-1):0;
+  const h=padY*2+(rows-1)*rowH+(opt.labels===false?0:16);
+  const pts=list.map((s,i)=>{const r=Math.floor(i/perRow);let c=i%perRow;if(r%2===1)c=perRow-1-c;
+    return {x:padX+c*colW,y:padY+r*rowH}});
+  let d=`M ${pts[0].x} ${pts[0].y}`;
+  for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i];const my=(a.y+b.y)/2;
+    d+=` C ${a.x} ${my}, ${b.x} ${my}, ${b.x} ${b.y}`}
+  const done=doneN==null?0:doneN;
+  const nodes=pts.map((p,i)=>{const st=i<done?'done':i===done?'cur':'lock';
+    const fill=st==='done'?'var(--accent)':st==='cur'?'var(--surface)':'var(--line2)';
+    const op=st==='lock'?.55:1;
+    return `${st==='cur'?`<circle cx="${p.x}" cy="${p.y}" r="21" fill="none" stroke="var(--accent)" stroke-width="1.5" class="ch-pulse"/>`:''}
+    <circle cx="${p.x}" cy="${p.y}" r="15" fill="${fill}" stroke="${st==='cur'?'var(--accent)':'none'}" stroke-width="${st==='cur'?2.5:0}" opacity="${op}" class="${st==='done'?'ch-glow':''}"/>
+    <text x="${p.x}" y="${p.y}" dy=".34em" text-anchor="middle" font-size="13" opacity="${st==='lock'?.5:1}">${esc(list[i].e||'⭐')}</text>
+    ${opt.labels===false?'':`<text x="${p.x}" y="${p.y+27}" text-anchor="middle" font-size="8.5" font-weight="700" fill="var(--ink2)" opacity="${st==='lock'?.6:1}">${esc(String(list[i].n||'').slice(0,12))}</text>`}`;
+  }).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px;display:block;margin:0 auto" role="img" aria-label="challenge path">
+    <path d="${d}" fill="none" stroke="var(--acc-line2)" stroke-width="2.5" stroke-dasharray="1 7" stroke-linecap="round"/>
+    ${nodes}</svg>`;
+}
+/* ---------- coach: Challenges view ---------- */
+/* v18.55 — shared challenge visuals: gradient icon tile (emoji stays the
+   coach's own choice) + gold/silver/bronze rank medals for leaderboards. */
+const chalIco=(ch,s)=>{s=s||44;const fs=Math.round(s*(s<=34?.5:.48));
+  return `<span class="chal-ico" style="width:${s}px;height:${s}px;border-radius:${s<=34?11:14}px;font-size:${fs}px"><span>${ch.emoji||'🏆'}</span></span>`};
+const chalMedal=i=>`<span class="chal-medal ${i<3?'g'+(i+1):'gx'}">${nf(i+1)}</span>`;
+function chalCard(ch){
+  const rows=CHAL.rows(ch);
+  const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
+  return `<div class="card" style="padding:18px;margin-bottom:12px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div class="row" style="gap:12px">
+        ${chalIco(ch,44)}
+        <div><b style="font-size:15.5px">${esc(ch.name)}</b>
+          <div class="row" style="gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span class="bdg bdg-lime" style="font-size:10px">${t(ch.type==='streak'?'Streak goal':ch.type==='habit'?'Habit':'Target')}</span>
+            <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+            ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+            <span class="chip">${ic('users',11)} ${nf(rows.length)}</span>
+          </div></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="chal-open" data-id="${esc(ch.id)}">${ic('chart',13)} ${t('Open')}</button>
+        <button class="btn btn-outline btn-sm" data-act="chal-edit" data-id="${esc(ch.id)}">${ic('edit',13)} ${t('Edit')}</button>
+        ${ch.status!=='ended'?`<button class="btn btn-ghost btn-sm" data-act="chal-end" data-id="${esc(ch.id)}">${t('End')}</button>`:''}
+        <button class="btn btn-ghost btn-icon" data-act="chal-del" data-id="${esc(ch.id)}" style="color:var(--red)">${ic('trash',14)}</button>
+      </div></div>
+    <div class="row" style="gap:14px;margin-top:14px;flex-wrap:wrap;align-items:center">
+      <div class="row" style="gap:4px">${rows.slice(0,5).map(r=>avC(r.c.name,28)).join('')}${rows.length>5?`<span class="muted" style="font-size:11px">+${nf(rows.length-5)}</span>`:''}</div>
+      <div style="flex:1;min-width:180px">
+        <div class="row" style="justify-content:space-between;font-size:11px;font-weight:700"><span>${t('Average progress')}</span><span>${nf(avg)}%</span></div>
+        <div class="pbar" style="margin-top:4px"><i style="width:${avg}%"></i></div></div>
+      <div class="row" style="gap:12px;font-size:12px;flex-wrap:wrap">${rows.slice(0,3).map((r,i)=>`<span class="row" style="gap:6px">${chalMedal(i)} ${esc(t(r.c.name).split(' ')[0])} <b>${nf(r.pct)}%</b></span>`).join('')}</div>
+    </div></div>`;
+}
+function vChallenges(){
+  const act=CHALLENGES.filter(ch=>ch.status!=='ended');
+  const ended=CHALLENGES.filter(ch=>ch.status==='ended');
+  return `<div class="page-h"><div><h1>${t('Challenges')}</h1><div class="sub">${t('Design journeys, set targets, celebrate every win')}</div></div>
+  <button class="btn btn-primary" data-act="chal-new">${ic('plus',15)} ${t('New Challenge')}</button></div>
+  ${act.length?act.map(chalCard).join(''):`<div class="empty">${ic('trophy',24)}<b>${t('No active challenges')}</b><span class="muted" style="font-size:12.5px">${t('Create a challenge and design the path your clients follow')}</span><button class="btn btn-primary btn-sm" data-act="chal-new" style="margin-top:4px">${ic('plus',14)} ${t('New Challenge')}</button></div>`}
+  ${ended.length?`<div class="sec-t" style="margin:20px 0 10px">${t('Ended')}</div>${ended.map(chalCard).join('')}`:''}`;
+}
+/* ---------- coach: challenge detail (leaderboard + big path) ---------- */
+function chalDetail(id){
+  const ch=CHALLENGES.find(x=>String(x.id)===String(id));if(!ch)return;
+  const rows=CHAL.rows(ch);
+  const pace=CHAL.pace(ch);
+  openModal(`
+  <div class="modal-h"><h3 class="row" style="gap:11px">${chalIco(ch,30)}<span>${esc(ch.name)}</span></h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">${ic('calendar',11)} ${t('Start Date')}: ${fmtD(ch.start)}</span>
+      ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
+      <span class="chip">${ic('gift',12)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)} ${t('Points')}</span>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-bottom:14px">
+      ${chalPath(ch.stages,rows.length?CHAL.node(ch,rows[0].pct):0,{w:520})}
+    </div>
+    <div class="lbl" style="margin-bottom:6px">${t('Leaderboard')}</div>
+    ${rows.length?rows.map((r,i)=>`
+    <div class="card" style="padding:11px 13px;margin-bottom:7px">
+      <div class="row" style="gap:10px">
+        ${chalMedal(i)}
+        ${avC(r.c.name,32)}
+        <div style="flex:1;min-width:120px">
+          <div class="row" style="justify-content:space-between;font-size:12.5px"><b>${t(r.c.name)}</b><span>${nf(r.val)}/${nf(ch.target)} · ${nf(r.pct)}%</span></div>
+          <div class="pbar" style="margin-top:4px"><i style="width:${r.pct}%"></i></div></div>
+        ${ch.status==='active'?`<span class="bdg ${r.pct>=pace?'bdg-green':'bdg-amber'}" style="font-size:10px">${r.pct>=pace?t('On track'):t('Behind')}</span>`:''}
+      </div>
+      ${ch.status==='active'?`<div class="row" style="gap:6px;margin-top:8px;justify-content:flex-end">
+        ${ch.metric==='custom'?`<button class="btn btn-outline btn-sm" data-act="chal-bump" data-id="${esc(ch.id)}" data-c="${r.c.id}" data-v="-1">−1</button><button class="btn btn-outline btn-sm" data-act="chal-bump" data-id="${esc(ch.id)}" data-c="${r.c.id}" data-v="1">+1</button>`:''}
+        ${r.pct<pace?`<button class="btn btn-outline btn-sm" data-act="chal-nudge" data-id="${esc(ch.id)}" data-c="${esc(r.c.name)}">${ic('bell',12)} ${t('Nudge')}</button>`:''}
+      </div>`:''}
+    </div>`).join(''):`<div class="muted" style="font-size:12.5px">${t('No participants yet')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="chal-edit" data-id="${esc(ch.id)}">${ic('edit',14)} ${t('Edit Challenge')}</button></div>`);
+}
+/* ---------- coach: challenge editor with the live path designer ---------- */
+function chalEditor(id){
+  const ch=id!=null?CHALLENGES.find(x=>String(x.id)===String(id)):null;
+  S.chalDraft=ch?JSON.parse(JSON.stringify(ch)):{id:'ch'+Date.now(),name:'',emoji:'🏆',desc:'',type:'target',metric:'workouts',target:12,unit:'workouts',start:isoToday(),days:30,parts:['*'],reward:{pts:100,be:'🏅',bn:'Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'Halfway'},{e:'🔥',n:'Almost'},{e:'🏆',n:'Finish'}],prog:{},done:[],status:'active',createdAt:Date.now()};
+  renderChalEditor();
+}
+function chalReadStages(){
+  const d=S.chalDraft;if(!d)return;
+  (d.stages||[]).forEach((s,i)=>{const e=$('ce-st-e-'+i),n2=$('ce-st-n-'+i);if(e)s.e=e.value.trim()||'⭐';if(n2)s.n=n2.value.trim()||''});
+}
+function renderChalEditor(){
+  const d=S.chalDraft;if(!d)return;
+  const emojiRow=CHAL.EMOJIS.map(e=>`<button class="fchip ${d.emoji===e?'on':''}" data-act="chal-draft" data-k="emoji" data-v="${e}" style="font-size:15px;padding:4px 9px">${e}</button>`).join('');
+  const stageRows=(d.stages||[]).map((s,i)=>`
+    <div class="row" style="gap:6px;margin-bottom:6px">
+      <input class="inp" style="width:52px;text-align:center" id="ce-st-e-${i}" value="${esc(s.e||'⭐')}" maxlength="2">
+      <input class="inp" style="flex:1" id="ce-st-n-${i}" value="${esc(s.n||'')}" placeholder="${t('Stage name')}">
+      <button class="btn btn-ghost btn-icon" data-act="chal-stage-del" data-i="${i}" style="color:var(--red)">${ic('trash',13)}</button>
+    </div>`).join('');
+  const partChip=(n,label)=>`<button class="fchip ${(d.parts||[]).includes(n)?'on':''}" data-act="chal-part" data-n="${esc(n)}">${esc(label)}</button>`;
+  openModal(`
+  <div class="modal-h"><h3>${ic('trophy',16)} ${CHALLENGES.some(x=>String(x.id)===String(d.id))?t('Edit Challenge'):t('New Challenge')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Challenge name')}</label><input class="inp" id="ce-name" value="${esc(d.name)}" placeholder="${t('September Streak')}"></div>
+    <div class="field"><label class="lbl">${t('Emoji')}</label><div class="row" style="gap:5px;flex-wrap:wrap">${emojiRow}</div></div>
+    <div class="field"><label class="lbl">${t('Description')}</label><input class="inp" id="ce-desc" value="${esc(d.desc||'')}" placeholder="${t('Keep your streak alive all month')}"></div>
+    <div class="field"><label class="lbl">${t('Challenge type')}</label>
+      <div class="seg" style="width:100%;display:flex">
+        ${[['target','Target'],['streak','Streak goal'],['habit','Habit']].map(([k,l])=>`<button style="flex:1" class="${d.type===k?'on':''}" data-act="chal-draft" data-k="type" data-v="${k}">${t(l)}</button>`).join('')}</div></div>
+    ${d.type==='target'?`<div class="fgrid">
+      <div class="field"><label class="lbl">${t('Metric')}</label><select class="sel" data-change="chal-draft" data-k="metric">${Object.entries(CHAL.METRICS).map(([k,l])=>`<option value="${k}" ${d.metric===k?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Target value')}</label><input class="inp" type="number" id="ce-target" value="${d.target||1}" min="1"></div>
+      <div class="field"><label class="lbl">${t('Unit')}</label><input class="inp" id="ce-unit" value="${esc(d.unit||'')}" placeholder="${t('workouts')}"></div>
+    </div>`:''}
+    ${d.type==='streak'?`<div class="field"><label class="lbl">${t('Target value')} (${t('days')})</label><input class="inp" type="number" id="ce-target" value="${d.target||7}" min="1"></div>`:''}
+    ${d.type==='habit'?`<div class="field"><label class="lbl">${t('Target value')} (${t('Check-ins')})</label><input class="inp" type="number" id="ce-target" value="${d.target||d.days||30}" min="1"></div>`:''}
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" type="date" id="ce-start" value="${esc(d.start||isoToday())}"></div>
+      <div class="field"><label class="lbl">${t('Duration (days)')}</label><input class="inp" type="number" id="ce-days" value="${d.days||30}" min="1"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Participants')}</label>
+      <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*',ic('users',12)+' '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Reward')} (${t('Points')})</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
+      <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
+      <div class="field"><label class="lbl">${t('Badge name')}</label><input class="inp" id="ce-bn" value="${esc((d.reward||{}).bn||'')}" placeholder="${t('Challenge Champion')}"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Path stages')} — ${t('the journey the client walks')}</label>
+      ${stageRows}
+      <button class="btn btn-outline btn-sm" data-act="chal-stage-add">${ic('plus',13)} ${t('Add stage')}</button></div>
+    <div class="field"><label class="lbl">${t('Journey preview')}</label>
+      <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px">${chalPath(d.stages,0,{w:520})}</div></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="chal-save">${ic('check',15)} ${t('Save')}</button></div>`);
+}
+/* ---------- client: challenge card modal + mobile list ---------- */
+function chalClientModal(id){
+  const ch=CHALLENGES.find(x=>String(x.id)===String(id));if(!ch)return;
+  const c=client(S.cid);
+  const val=CHAL.val(ch,c),pct=CHAL.pct(ch,c),node=CHAL.node(ch,pct);
+  const rows=CHAL.rows(ch);const rank=rows.findIndex(r=>r.c.id===c.id)+1;
+  openModal(`
+  <div class="modal-h"><h3 class="row" style="gap:11px">${chalIco(ch,30)}<span>${esc(ch.name)}</span></h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${ch.desc?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(ch.desc)}</div>`:''}
+    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 8px">${chalPath(ch.stages,node,{w:320})}</div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin:12px 0">
+      <span class="chip">${ic('target',11)} ${nf(val)}/${nf(ch.target)} ${esc(ch.unit||'')}</span>
+      <span class="chip">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span>
+      ${rank>0?`<span class="chip">${ic('trophy',11)} ${t('You rank')}: #${nf(rank)}</span>`:''}
+      <span class="chip">${ic('star',11)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)}</span></div>
+    ${(ch.stages||[]).length?`<div class="lbl" style="margin-bottom:6px">${t('Path stages')}</div>
+    ${ch.stages.map((s,i)=>`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${s.e||'⭐'} ${esc(t(s.n||''))}</span>${i<node?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Done')}</span>`:i===node?`<span class="bdg bdg-lime" style="font-size:10px">${t('You are here')}</span>`:`<span class="bdg bdg-gray" style="font-size:10px">${ic('lock',11)}</span>`}</div>`).join('')}`:''}
+    ${ch.metric==='custom'?`<button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:12px" data-act="chal-log" data-id="${esc(ch.id)}">${ic('check',14)} ${t('Log progress')}</button>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+function chalListModal(){
+  /* v18.75 — plan 1وB: a STUDENT only ever sees the challenges they are in,
+     and gets a personal-challenge button instead of the coach's New button. */
+  const me=S.role==='client'?client(S.cid):null;
+  const act=CHALLENGES.filter(ch=>ch.status!=='ended'&&(!me||CHAL.parts(ch).some(x=>x.id===me.id)));
+  const own=ch=>ch.owner==='client';
+  openModal(`
+  <div class="modal-h"><h3>${ic('trophy',16)} ${t('Challenges')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${act.length?act.map(ch=>{const rows=CHAL.rows(ch);const avg=rows.length?Math.round(rows.reduce((a,r)=>a+r.pct,0)/rows.length):0;
+      const mine=me&&rows.some(r=>r.c.id===me.id);
+      const v=mine?CHAL.val(ch,me):avg;
+      return `<div class="card" style="padding:13px;margin-bottom:8px;cursor:pointer" data-act="chal-open" data-id="${esc(ch.id)}">
+      <div class="row" style="justify-content:space-between;gap:10px"><span class="row" style="gap:10px;min-width:0">${chalIco(ch,34)}<b style="font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(ch.name)}</b>${own(ch)?`<span class="bdg bdg-blue" style="font-size:9.5px">${t('Personal')}</span>`:''}</span><span class="chip" style="color:var(--accent-ink);background:var(--accent-soft);font-weight:800">${nf(mine?Math.round(CHAL.pct(ch,me)):avg)}%</span></div>
+      <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap"><span class="chip">${ic('users',11)} ${nf(rows.length)}</span><span class="chip">${ic('clock',11)} ${nf(CHAL.left(ch))} ${t('days')}</span>${mine?`<span class="chip">${ic('target',11)} ${nf(v)}/${nf(ch.target)} ${esc(ch.unit||'')}</span>`:''}</div></div>`}).join('')
+    :`<div class="empty">${ic('trophy',22)}<b>${t('No active challenges')}</b>${me?`<span class="muted" style="font-size:12.5px">${t('Start one yourself — pick a target and chase it.')}</span>`:''}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button>${S.role==='coach'?`<button class="btn btn-primary" data-act="chal-new">${ic('plus',14)} ${t('New Challenge')}</button>`:`<button class="btn btn-primary" data-act="chal-own">${ic('flag',14)} ${t('New personal challenge')}</button>`}</div>`);
+}
+/* v18.75 — plan 1وC: a challenge the STUDENT authors for themself (Trainerize
+   parity). No path stages, no cross-client reward — points land on their own
+   score, and the coach still sees + can edit/end it from the coach list. */
+function chalOwnModal(){
+  const c=client(S.cid);if(!c)return;
+  const d=S.ownDraft||(S.ownDraft={name:'',emoji:'🏆',type:'target',metric:'workouts',target:8,unit:'workouts',days:28,start:isoToday()});
+  openModal(`
+  <div class="modal-h"><h3>${ic('flag',16)} ${t('New personal challenge')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:10px">${t('This one is yours — your coach will see it in the list.')}</div>
+    <div class="field"><label class="lbl">${t('Challenge name')}</label><input class="inp" id="co-name" value="${esc(d.name)}" placeholder="${t('30-day consistency')}"></div>
+    <div class="field"><label class="lbl">${t('Emoji')}</label><div class="row" style="gap:5px;flex-wrap:wrap">
+      ${CHAL.EMOJIS.map(e=>`<button class="fchip ${d.emoji===e?'on':''}" data-act="own-set" data-k="emoji" data-v="${e}" style="font-size:15px;padding:4px 9px">${e}</button>`).join('')}</div></div>
+    <div class="field"><label class="lbl">${t('Challenge type')}</label>
+      <div class="seg" style="width:100%;display:flex">
+        ${[['target','Target'],['streak','Streak goal'],['habit','Habit']].map(([k,l])=>`<button style="flex:1" class="${d.type===k?'on':''}" data-act="own-set" data-k="type" data-v="${k}">${t(l)}</button>`).join('')}</div></div>
+    ${d.type==='target'?`<div class="fgrid">
+      <div class="field"><label class="lbl">${t('Metric')}</label><select class="sel" id="co-metric">${Object.entries(CHAL.METRICS).map(([k,l])=>`<option value="${k}" ${d.metric===k?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Unit')}</label><input class="inp" id="co-unit" value="${esc(d.unit||'')}"></div>
+    </div>`:''}
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Target value')}</label><input class="inp" type="number" id="co-target" value="${d.target||8}" min="1"></div>
+      <div class="field"><label class="lbl">${t('Duration (days)')}</label><input class="inp" type="number" id="co-days" value="${d.days||28}" min="1"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" type="date" id="co-start" value="${esc(d.start||isoToday())}"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="chal-own-save">${ic('check',15)} ${t('Start challenge')}</button></div>`);
+}
+/* ================= v18.38 — SMART WORKOUT REMINDERS =================
+   If a client hasn't completed a workout for REM.DAYS days, the COACH's device
+   (this sweep ONLY runs there — a student device must never author coach
+   messages) drops an encouraging coach→client message into MSGS. It reaches
+   the student's phone within one 7s poll and shows as a banner on their Today
+   tab. Coach consent: the global toggle in Settings → Preferences
+   (PREFS.remind) plus a per-client opt-out (c.noRemind in Edit Client).
+   Re-reminds every REM.EVERY days until they train again. The deterministic
+   message id (rem-<cid>-<date>) makes the id-union cloud merge dedupe when
+   two coach devices are open at once. */
+const REM={DAYS:3,EVERY:2};
+const REM_TXT=[
+  c=>lang==='fa'?`سلام ${t(c.name)} 👋 چند روز تمرین انجام ندادی — برنامه امروز منتظرته!`:`Hi ${t(c.name)} 👋 it's been a few days since your last workout — today's plan is waiting for you!`,
+  c=>lang==='fa'?`🔥 زنجیره‌ات را نشکن! یه تمرین کوتاه هم بهتر از هیچی است — امروز را جا ننداز.`:`Don't break the streak 🔥 — even a short session beats skipping. See you in the app!`,
+  c=>lang==='fa'?`💪 برنامه امروزت آماده‌ست. شروع کن و نتیجه را برایم بفرست!`:`Your workout for today is ready 💪 start it and send me the result!`
+];
+const lastDoneDate=c=>{
+  let t=0;((DB[c.id]||{}).workouts||[]).forEach(w=>{if(w&&w.status==='completed'&&w.doneAt){const x=Date.parse(w.doneAt);if(x>t)t=x}});
+  return t?new Date(t):null;
+};
+function remSweep(){
+  if(S.role!=='coach'||!CLOUD.on)return;
+  if(PREFS.remind===false)return;
+  try{
+    const now=Date.now();
+    const last=+(localStorage.getItem('co-rem-at')||0);
+    if(now-last<12*3600*1000)return; // at most every 12 h per device
+    localStorage.setItem('co-rem-at',String(now));
+    let sent=0;
+    CLIENTS.filter(c=>c.status==='Active'&&!c.noRemind).forEach(c=>{
+      const ld=lastDoneDate(c);
+      const base=ld?ld.getTime():(c.since?Date.parse(c.since):0);
+      if(!base)return; // never trained AND no join date → nothing to measure yet
+      const days=Math.floor((now-base)/864e5);
+      if(days<REM.DAYS)return;
+      const lr=c.lastRemind?Date.parse(c.lastRemind):0;
+      if(lr&&(now-lr)/864e5<REM.EVERY)return;
+      const id='rem-'+c.id+'-'+ymdOf(new Date());
+      if(MSGS.some(m=>String(m.id)===id))return; // another device already sent today
+      MSGS.push({id,type:'reminder',from:'coach',client:c.name,body:REM_TXT[sent%REM_TXT.length](c),time:'Just now',read:false,at:now});
+      c.lastRemind=ymdOf(new Date());
+      NOTIFS.unshift({t:`⏰ ${t('Reminder sent')} — ${t(c.name)} (${nf(days)} ${t('days')})`,d:'Just now',un:true});
+      ACTIVITY.unshift({w:'Just now',i:'clock',h:lang==='fa'?`<b>یادآور خودکار</b> برای <b>${t(c.name)}</b> ارسال شد — ${nf(days)} روز بدون تمرین`:`<b>Auto reminder</b> sent to <b>${t(c.name)}</b> — ${nf(days)} days without a workout`});
+      sent++;
+    });
+    if(sent)saveData();
+  }catch(e){}
+}
+/* v18.9 — sidebar Help was a dead toast; a real quick-start modal now. */
+function helpModal(){
+  const rows=[
+    ['users','Connect a client','Every client gets a personal code (Clients → copy icon). They enter it on the login screen and their device binds to your workspace instantly.'],
+    ['dumbbell','Publish a workout','Build it in the Workout Builder, save it to the client — it appears on their phone the moment you save.'],
+    ['utensils','Nutrition plans','Create a plan in Nutrition → Meal Planner. The client sees today\'s meals, targets and your food swaps in their Nutrition tab.'],
+    ['ruler','Progress','Log measurements and approve progress photos — charts update for both of you.'],
+    ['zap','AI assistant','Drafts workouts, analyzes clients and writes your weekly report — you always decide before anything is sent.']];
+  openModal(`
+  <div class="modal-h"><h3>${t('Help')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${rows.map(([i2,k2,d2])=>`<div class="row" style="gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line2)">
+      <span class="icw" style="flex:none">${ic(i2,16)}</span>
+      <div><b style="font-size:13px">${t(k2)}</b><div class="muted" style="font-size:12px;margin-top:2px">${t(d2)}</div></div></div>`).join('')}
+    <div class="muted" style="font-size:11.5px;margin-top:10px">${t('Data syncs live across every signed-in device — offline edits merge automatically')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* v18.9 — chat photo attachments render full-size in a modal (both sides). */
+function imgModal(src,cap){
+  openModal(`
+  <div class="modal-h"><h3>${esc(t(cap||'Photo'))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b" style="text-align:center"><img src="${src}" alt="" style="max-width:100%;border-radius:12px"></div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* v18.9 — REAL file storage: small documents ride the workspace payload as
+   data URLs (≤300 KB/file, ≤1 MB total — the server payload cap is 5 MB and
+   progress photos share it). Preview for images, download for everything. */
+const FILE_MAX=300*1024,FILES_TOTAL=1024*1024;
+const fileTotalBytes=()=>FILES.reduce((a,f)=>a+(f.src?f.src.length:0),0);
+const fileTypeOf=n=>/\.pdf$/i.test(n)?'PDF':/\.(png|jpe?g|gif|webp|avif)$/i.test(n)?'Image':/\.(zip|rar|7z|tar|gz)$/i.test(n)?'Archive':'Document';
+const fileSizeLbl=b=>b<1024?nf(b)+' B':b<1048576?nf(Math.round(b/1024))+' KB':nf(Math.round(b/1048576*10)/10)+' MB';
+function filesAdd(list){
+  list.forEach(f=>{
+    if(f.size>FILE_MAX){toast(t('File too large — max 300 KB per file')+' ('+f.name+')');return}
+    if(fileTotalBytes()+Math.ceil(f.size*4/3)>FILES_TOTAL){toast(t('File storage is full — delete some files first'));return}
+    const rd=new FileReader();
+    rd.onload=()=>{
+      FILES.push({n:f.name,t:fileTypeOf(f.name),d:fmtShortDate(new Date()),s:fileSizeLbl(f.size),src:rd.result,mime:f.type||''});
+      saveData();render();toast(t('File uploaded ✓'));
+    };
+    rd.readAsDataURL(f);
+  });
+}
+window.fileDrop=ev=>{ev.preventDefault();const fs=ev.dataTransfer&&ev.dataTransfer.files;if(fs&&fs.length)filesAdd([...fs])};
+function fileViewModal(f){
+  const img=f.src&&/^image\//.test(f.mime||'')||f.src&&/\.(png|jpe?g|gif|webp|avif)$/i.test(f.n);
+  openModal(`
+  <div class="modal-h"><h3>${esc(f.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b" style="text-align:center">
+    ${img?`<img src="${f.src}" alt="" style="max-width:100%;border-radius:12px">`
+      :f.src?`<div class="muted" style="font-size:12.5px;margin-bottom:10px">${t('No inline preview for this type — download it instead')}</div><a class="btn btn-primary" style="justify-content:center" href="${f.src}" download="${esc(f.n)}">${ic('download',14)} ${t('Download')}</a>`
+      :`<div class="muted" style="font-size:12.5px">${t('This file has no stored content (legacy entry)')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* v18.9 — Clients Filter/Sort were toast stubs; real status filter + sort. */
+function clFilterModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Filter')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="row" style="gap:8px;flex-wrap:wrap">
+    ${['All','Active','On Hold','Inactive','Archived'].map(s=>`<button class="fchip ${(S.cfilter||'All')===s?'on':''}" data-act="cl-filter-set" data-s="${s}">${t(s)}</button>`).join('')}
+  </div></div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Done')}</button></div>`);
+}
+function clSortModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Sort')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="row" style="gap:8px;flex-wrap:wrap">
+    ${[['name','Name'],['status','Status'],['streak','Streak'],['next','Next Session']].map(([k,l])=>`<button class="fchip ${(S.csort||'name')===k?'on':''}" data-act="cl-sort-set" data-k="${k}">${t(l)}</button>`).join('')}
+  </div></div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Done')}</button></div>`);
+}
+function inviteModal(){
+  /* v16.3 — one PERSONAL code per client. The coach hands each student their
+     own "<workspace>-<personal>" string; joining binds that device to exactly
+     that profile (no shared workspace code, no client picker). */
+  const ws=wsCode();
+  if(!ws){
+    openModal(`
+  <div class="modal-h"><h3>${t('Client connection codes')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b"><div class="card" style="padding:22px;text-align:center;background:var(--bg2)">
+    <div class="muted" style="font-size:12.5px">${t('Simulated in demo — works across devices once backend is live')}</div></div></div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+    return;
+  }
+  const row=c=>{const code=joinCodeOf(c),link=inviteLink(code);
+    return `<div class="card" style="padding:12px 14px;margin-bottom:10px">
+      <div class="row" style="gap:10px">
+        ${avC(c.name,38)}
+        <div style="flex:1;min-width:0"><b style="font-size:13.5px">${t(c.name)}</b>
+          <div style="font-weight:800;letter-spacing:.12em;font-size:15px;color:var(--accent-ink);margin-top:2px">${esc(code)}</div></div>
+        <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Copy')}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Show QR')}" data-act="qr-open" data-code="${esc(code)}" data-name="${esc(c.name)}">${ic('qr',14)}</button>
+        <button class="btn btn-ghost btn-icon" title="${t('Connection link')}" data-act="copy-code" data-code="${esc(link)}">${ic('copy',14)}</button>
+      </div></div>`};
+  openModal(`
+  <div class="modal-h"><h3>${t('Client connection codes')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Each client has a personal code — share only theirs')}</div>
+    ${CLIENTS.length?CLIENTS.map(row).join(''):`<div class="card" style="padding:22px;text-align:center;background:var(--bg2)"><div class="muted" style="font-size:12.5px">${t('No clients yet')}</div></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+}
+/* Success modal right after adding a client — surfaces the personal join code
+   immediately so the coach can copy/share it without hunting for it. */
+function clientCodeModal(c){
+  const code=joinCodeOf(c),link=inviteLink(code);
+  openModal(`
+  <div class="modal-h"><h3>${t('Client added ✓')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:14px">${avC(c.name,46)}<div><b style="font-size:15px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t('added to your clients')}</div></div></div>
+    <div class="card" style="padding:18px;text-align:center;background:var(--accent-soft);border-color:var(--acc-line)">
+      <div class="muted" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${t('Personal connection code')}</div>
+      <div style="font-size:30px;font-weight:800;letter-spacing:.12em;margin:6px 0;color:var(--accent-ink)">${esc(code)}</div>
+      <div style="display:inline-block;padding:8px;background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer" data-act="qr-open" data-code="${esc(code)}" data-name="${esc(c.name)}" title="${t('Show QR')}">${qrSvg(link,140)}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:8px">${t('Scan with the phone camera — the app opens and connects automatically')}</div>
+      <div class="muted" style="font-size:11.5px">${t('The client enters this code on the login screen — their profile opens with everything you registered')}</div>
+    </div>
+    <div class="field" style="margin-top:14px"><label class="lbl">${t('Connection link')}</label>
+      <div class="row"><input class="inp" readonly value="${esc(link)}" style="font-size:12px">
+      <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Code')}</button>
+      <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(link)}">${ic('copy',13)} ${t('Link')}</button></div></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="copy-code" data-code="${esc(code)}">${ic('copy',14)} ${t('Copy')}</button></div>`);
+}
+/* v16.6 — AI drafting assistant (Phase 1: workout drafts via /api/ai/*).
+   Draft-only by design: the app's promise is "the coach decides" — the model's
+   output lands in the builder as an EDITABLE draft and nothing publishes
+   without the coach. The API key stays server-side; the request carries only a
+   privacy-safe profile (goal/level/limitations — no names or contacts). */
+async function aiModal(){
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const c=client(S.cid);
+  openModal(`
+  <div class="modal-h"><h3>${t('AI Workout Assistant')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.')}</div>
+    <div class="row" style="margin-bottom:12px">${avC(c.name,38)}<div><b style="font-size:13.5px">${t(c.name)}</b><div class="muted" style="font-size:11.5px">${t(c.goal||'—')} · ${t(c.freq||'—')}</div></div></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="ai-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option ${g===(c.goal||'Muscle Gain')?'selected':''}>${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel" id="ai-level">${['Beginner','Intermediate','Advanced'].map(l=>`<option ${l==='Intermediate'?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><select class="sel" id="ai-dur">${[30,45,60,75,90].map(m=>`<option value="${m}" ${m===60?'selected':''}>${nf(m)} min</option>`).join('')}</select></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Focus / limitations')}</label><textarea class="ta" id="ai-focus" placeholder="${t('e.g. knee pain on deep squats · dumbbells only')}"></textarea></div>
+    <div class="muted" id="ai-quota" style="font-size:11.5px">${t('AI credits this month')}: …</div>
+    <div class="muted" id="ai-err" style="font-size:12px;color:var(--red);margin-top:6px;display:none"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" id="ai-go" data-act="ai-generate">${ic('zap',15)} ${t('Generate draft')}</button></div>`);
+  try{
+    const {ok,d}=await authApi('/api/ai/quota');
+    const el=$('ai-quota');
+    if(el)el.textContent=(ok&&d&&d.ok&&d.enabled)?`${t('AI credits this month')}: ${nf(d.used)} / ${nf(d.max)}`:t('AI is not configured on the server');
+  }catch(e){}
+}
+async function aiGenerate(){
+  const btn=$('ai-go'),err=$('ai-err');
+  const fail=m=>{if(err){err.textContent=m;err.style.display='block'}if(btn){btn.disabled=false;btn.innerHTML=`${ic('zap',15)} ${t('Generate draft')}`}};
+  if(btn){btn.disabled=true;btn.innerHTML=`${ic('zap',15)} ${t('Generating…')}`}
+  if(err)err.style.display='none';
+  const cat=EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}));
+  const ctx={goal:$('ai-goal')?.value||'Muscle Gain',level:$('ai-level')?.value||'Intermediate',freq:client(S.cid).freq||'3x / week',durMin:+($('ai-dur')?.value)||60,focus:($('ai-focus')?.value||'').slice(0,300),lang};
+  try{
+    const {status,ok,d}=await authApi('/api/ai/draft',{method:'POST',body:JSON.stringify({catalog:cat,ctx})});
+    if(!ok||!d||!d.ok){
+      const e=d&&d.error;
+      fail(e==='ai-quota'?t('AI monthly quota reached'):e==='ai-not-configured'?t('AI is not configured on the server'):t('AI service unavailable — try again'));
+      return;
+    }
+    const c=client(S.cid);
+    BUILDER.length=0;
+    (d.draft.exercises||[]).forEach(x=>BUILDER.push({ex:x.i,sets:x.sets,reps:x.reps,kg:x.kg,rest:x.rest,rpe:'RPE '+x.rpe,rir:'RIR 2',tempo:'2-0-1-0',note:x.note||''}));
+    S.wname=(d.draft.name||'AI Draft')+' — '+c.name;
+    S.wday=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].includes(d.draft.day)?d.draft.day:'Monday';
+    S.wdur=d.draft.dur||(ctx.durMin+' min');
+    S.wnote=d.draft.note||'';
+    closeModal();render();
+    toast(t('AI draft loaded — review, edit, then publish'));
+  }catch(e){fail(t('Could not reach server'))}
+}
+/* v16.8 — AI chat assistant: the coach asks ANYTHING about their workspace
+   (client details, workout loads, meals, measurements, messages, billing…).
+   The SERVER builds the context from the live KV data, so answers cite real
+   numbers. History is kept locally per device. */
+const AI_CHAT_KEY='co-ai-chat';
+let AI_CHAT=[];try{AI_CHAT=JSON.parse(localStorage.getItem(AI_CHAT_KEY)||'[]')}catch(e){AI_CHAT=[]}
+let AI_WAITING=false;
+const aiChatSave=()=>{try{localStorage.setItem(AI_CHAT_KEY,JSON.stringify(AI_CHAT.slice(-80)))}catch(e){}};
+const aiFab=()=>`<button class="ai-fab" data-act="ai-chat-fab" title="${t('AI Assistant')}">${ic('zap',20)}<span>${t('AI Assistant')}</span></button>`;
+/* v18.36 — mobile FABs: the AI assistant becomes a circular robot button and a
+   new coach TOOLBOX FAB sits in the opposite corner (form check + stopwatch). */
+const aiFabRound=()=>`<button class="ai-fab-round" data-act="ai-chat-fab" title="${t('AI Assistant')}" aria-label="${t('AI Assistant')}">${ic('robot',24)}</button>`;
+/* v18.37 — toolbox FAB: tapping it makes the tool icons (form check, stopwatch)
+   ORBIT out of the box and float around it (animated, staggered). Tapping the
+   box again (or anywhere else) pulls them back in. */
+const toolboxFab=()=>`<div class="tbx-wrap" id="tbxWrap">
+  <button class="tbx-orb" data-act="fc-open" data-orb="1" title="${t('Form check')}" aria-label="${t('Form check')}">${ic('camera',20)}</button>
+  <button class="tbx-orb" data-act="tbx-stopwatch" data-orb="2" title="${t('Stopwatch')}" aria-label="${t('Stopwatch')}">${ic('stopwatch',20)}</button>
+  <button class="tbx-fab" data-act="tbx-toggle" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}</button>
+</div>`;
+function toolboxSheet(){
+  const c=(client(S.cid)||CLIENTS[0]||{}).name;
+  const rest=S.player&&S.player.rest>0?nf(fmtMS(S.player.rest)):null;
+  openSheet(`
+  <div class="sh-h"><b>${t('Coach Toolbox')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x">${ic('x',18)}</button></div>
+  <div class="sh-b">
+    <button class="tbx-it" data-act="fc-open">${ic('camera',20)}<div style="flex:1;text-align:start"><b>${t('Form check')}</b><div class="muted" style="font-size:11.5px">${t('Camera form check')} — ${esc(t(c||'—'))}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+    <button class="tbx-it" data-act="tbx-stopwatch">${ic('stopwatch',20)}<div style="flex:1;text-align:start"><b>${t('Stopwatch')}</b><div class="muted" style="font-size:11.5px">${rest?`${t('Rest')}: ${rest}`:t('Interval timer for sets and rest')}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+  </div>`);
+}
+let swIv=null,swT0=0,swRuns=false,swElapsed=0;
+function stopwatchSheet(){
+  openSheet(`
+  <div class="sh-h"><b>${t('Stopwatch')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x" onclick="swStop()">${ic('x',18)}</button></div>
+  <div class="sh-b" style="align-items:center;text-align:center">
+    <div id="swDisp" style="font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:700;letter-spacing:.02em;padding:18px 0">00:00.0</div>
+    <div class="row" style="gap:10px;justify-content:center">
+      <button class="btn btn-primary" id="swGo" data-act="sw-toggle">${swRuns?t('Pause'):t('Start')}</button>
+      <button class="btn btn-outline" data-act="sw-reset">${t('Reset')}</button>
+    </div>
+    <div class="muted" style="font-size:11.5px;margin-top:10px">${t('Interval timer for sets and rest')}</div>
+  </div>`);
+  swPaint();
+}
+function swPaint(){
+  const el=$('swDisp');if(!el)return;
+  const ms=swElapsed+(swRuns?Date.now()-swT0:0);
+  const s=Math.floor(ms/1000),d=Math.floor((ms%1000)/100);
+  el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+d;
+}
+/* v18.37 — setInterval instead of rAF: rAF is throttled/paused in hidden tabs
+   and background windows, which froze the display while the timer "ran". */
+function swTick(){if(swRuns){swPaint()}}
+function swToggle(){
+  if(swRuns){swElapsed+=Date.now()-swT0;swRuns=false;clearInterval(swIv)}
+  else{swT0=Date.now();swRuns=true;swIv=setInterval(swTick,100)}
+  const b=$('swGo');if(b)b.textContent=swRuns?t('Pause'):t('Start');
+}
+function swReset(){swRuns=false;clearInterval(swIv);swElapsed=0;swPaint();const b=$('swGo');if(b)b.textContent=t('Start')}
+function swStop(){swRuns=false;clearInterval(swIv)}
+window.swStop=swStop;
+function aiChatOpen(){S.aiOpen=true;renderAiChat()}
+function aiChatClose(){S.aiOpen=false;const r=$('ai-chat-root');if(r)r.innerHTML=''}
+/* v18.16 — Apply mode: when ON, messages go to /api/ai/action and the model's
+   changes are APPLIED to the workspace server-side (the panel lists exactly
+   what changed). Default stays advisory chat — the coach opts in per session. */
+const AI_FAIL={'client-not-found':'Client not found in synced data','quota-exceeded':'Client limit reached — upgrade your plan or archive a client','name-exists':'A client with this name exists','bad-fields':'Invalid values','no-workspace':'No synced workspace data','failed':'Change failed'};
+function renderAiChat(){
+  const root=$('ai-chat-root');if(!root)return;
+  if(!S.aiOpen){root.innerHTML='';return}
+  const bubble=m=>{
+    const ok=(m.applied&&m.applied.length)?`<div class="ai-applied">${m.applied.map(a=>`<div>${ic('check',12)}<span>${esc(a.detail||a.action)}</span></div>`).join('')}</div>`:'';
+    const bad=(m.failed&&m.failed.length)?`<div class="ai-applied fail">${m.failed.map(a=>`<div>${ic('x',12)}<span>${esc(a.target?a.target+' — ':'')}${t(AI_FAIL[a.reason]||a.reason||'Change failed')}</span></div>`).join('')}</div>`:'';
+    return `<div class="ai-m ${m.role==='user'?'u':'a'}">${esc(m.content)}${ok}${bad}</div>`;
+  };
+  const msgs=AI_CHAT.map(bubble).join('')
+    +(AI_WAITING?`<div class="ai-m a ai-typing"><span></span><span></span><span></span></div>`:'');
+  root.innerHTML=`<div class="ai-ovl" data-act="ai-chat-close"></div>
+  <div class="ai-panel">
+    <div class="ai-hd"><div class="row" style="gap:8px">${ic('zap',16)}<b>${t('AI Assistant')}</b><span class="muted" style="font-size:11px">${t('Knows your workspace')}</span></div>
+      <div class="row" style="gap:2px"><button class="btn btn-ghost btn-icon" title="${t('Weekly report')}" data-act="ai-weekly">${ic('chart',15)}</button><button class="btn btn-ghost btn-icon" title="${t('Clear chat')}" data-act="ai-chat-clear">${ic('trash',15)}</button><button class="btn btn-ghost btn-icon" data-act="ai-chat-close">${ic('x',17)}</button></div></div>
+    <div class="ai-msgs" id="ai-msgs">${msgs||`<div class="ai-m a" style="max-width:100%">${t('Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week\'s report.')}</div>`}</div>
+    <div class="ai-in">
+      <button class="ai-apply ${S.aiApply?'on':''}" data-act="ai-apply-toggle" title="${t('Let the AI apply changes')}">${ic('edit',13)}<span>${t('Apply')}</span></button>
+      <input class="inp" id="ai-chat-inp" placeholder="${S.aiApply?t('Describe the change to apply…'):t('Ask the AI assistant…')}" onkeydown="if(event.key==='Enter')window.aiSend()">
+      <button class="btn btn-primary btn-icon" data-act="ai-chat-send">${ic('arrowR',17)}</button>
+    </div>
+  </div>`;
+  const box=$('ai-msgs');if(box)box.scrollTop=box.scrollHeight;
+  const inp=$('ai-chat-inp');if(inp&&!AI_WAITING)inp.focus();
+}
+window.aiSend=async function(){
+  const inp=$('ai-chat-inp');const q=(inp&&inp.value||'').trim();if(!q||AI_WAITING)return;
+  AI_CHAT.push({role:'user',content:q});aiChatSave();
+  AI_WAITING=true;renderAiChat();
+  const cat=EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}));
+  const failMsg=d=>d&&d.error==='ai-quota'?t('AI daily quota reached'):d&&d.error==='ai-not-configured'?t('AI is not configured on the server'):d&&d.error==='no-workspace'?t('No synced workspace data'):t('AI service unavailable — try again');
+  try{
+    if(S.aiApply){
+      /* Phase 5 — the server validates + applies the model's actions to the
+         workspace KV, then this device pulls the new revision so every view
+         (clients, messages, calendar…) reflects the change immediately. */
+      const {ok,d}=await authApi('/api/ai/action',{method:'POST',body:JSON.stringify({request:q,lang,catalog:cat})});
+      if(ok&&d&&d.ok){
+        const applied=d.applied||[],failed=d.failed||[];
+        AI_CHAT.push({role:'assistant',content:d.reply||(applied.length?t('Done — changes applied'):t('Nothing was changed')),applied,failed});
+        aiChatSave();
+        /* Coach rename lives on the ACCOUNT — update this device's session
+           identity too, then push so client devices get the new ownerName. */
+        if(d.coachName&&AUTH.coach){AUTH.coach.name=d.coachName;WS_OWNER=d.coachName;try{localStorage.setItem('co-auth',JSON.stringify(AUTH))}catch(e){}}
+        /* The SERVER mutated the workspace — pull the fresh state into this
+           device (push local edits first so they are not clobbered). */
+        try{if(CLOUD.dirty)await cloudPush();if(CLOUD.on)await cloudPull()}catch(e){}
+      }
+      else AI_CHAT.push({role:'assistant',content:failMsg(d)});
+    }else{
+      const {ok,d}=await authApi('/api/ai/chat',{method:'POST',body:JSON.stringify({
+        question:q,
+        history:AI_CHAT.slice(-9,-1).map(m=>({role:m.role,content:m.content})),
+        catalog:cat
+      })});
+      AI_CHAT.push({role:'assistant',content:(ok&&d&&d.ok&&d.answer)?d.answer:failMsg(d)});
+    }
+  }catch(e){AI_CHAT.push({role:'assistant',content:t('Could not reach server')})}
+  AI_WAITING=false;aiChatSave();renderAiChat();
+};
+/* v16.9 — Phase 3: weekly report (into the chat) + reply drafts (into the
+   message composer). Both share the daily AI quota; the coach always reviews
+   before anything is sent. */
+async function aiInsight(kind){
+  if(AI_WAITING)return;
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  if(!S.aiOpen)aiChatOpen();
+  AI_CHAT.push({role:'user',content:kind==='weekly'?t('Weekly report, please'):t('Draft a reply, please')});
+  AI_WAITING=true;renderAiChat();
+  try{
+    const {ok,d}=await authApi('/api/ai/insight',{method:'POST',body:JSON.stringify({kind,lang,catalog:EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}))})});
+    AI_CHAT.push({role:'assistant',content:(ok&&d&&d.ok&&d.text)?d.text:(d&&d.error==='ai-quota'?t('AI daily quota reached'):t('AI service unavailable — try again'))});
+  }catch(e){AI_CHAT.push({role:'assistant',content:t('Could not reach server')})}
+  AI_WAITING=false;aiChatSave();renderAiChat();
+}
+async function aiReplyDraft(name,btn){
+  if(AI_WAITING)return;
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  const old=btn.innerHTML;btn.disabled=true;btn.innerHTML=ic('zap',15);
+  try{
+    const {ok,d}=await authApi('/api/ai/insight',{method:'POST',body:JSON.stringify({kind:'reply',client:name,lang,catalog:EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}))})});
+    if(ok&&d&&d.ok&&d.text){const inp=$('msg-inp');if(inp){inp.value=d.text;inp.focus()}toast(t('AI draft ready — edit and send'))}
+    else toast(t(d&&d.error==='ai-quota'?'AI daily quota reached':'AI service unavailable — try again'));
+  }catch(e){toast(t('Could not reach server'))}
+  btn.disabled=false;btn.innerHTML=old;
+}
+/* v17.1 — Phase 4: per-client AI diagnostic. Detects weight trend vs goal,
+   adherence, nutrition gaps and engagement from the live data; prescribes
+   calories/macros (server-computed Mifflin-St Jeor baseline) plus nutrition &
+   workout changes. Advisory only — one tap saves it as a client note. */
+let AI_LAST=null;
+async function aiAnalyze(c){
+  if(AI_WAITING)return;
+  if(!AUTH.token){toast(t('Demo mode — sign up to save online'));return}
+  AI_WAITING=true;
+  openModal(`
+  <div class="modal-h"><h3>${t('AI Analysis')} — ${esc(c.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b" style="text-align:center;padding:36px 20px">
+    <div class="ai-typing" style="justify-content:center"><span></span><span></span><span></span></div>
+    <div class="muted" style="margin-top:12px;font-size:12.5px">${t('Analyzing client data…')}</div>
+  </div>`);
+  try{
+    const {ok,d}=await authApi('/api/ai/analyze',{method:'POST',body:JSON.stringify({client:c.name,lang,catalog:EXERCISES.map((e,i)=>({i,n:e.n,m:e.m,e:e.e}))})});
+    if(ok&&d&&d.ok&&d.analysis){AI_LAST=d.analysis;renderAnalysisModal(c,d.analysis)}
+    else{
+      const msg=d&&d.error==='ai-quota'?t('AI daily quota reached'):d&&d.error==='client-not-found'?t('Client not found in synced data'):t('AI service unavailable — try again');
+      openModal(`<div class="modal-h"><h3>${t('AI Analysis')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div><div class="modal-b"><div class="card" style="padding:18px;text-align:center;background:var(--bg2)"><div class="muted" style="font-size:12.5px">${msg}</div></div></div><div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
+    }
+  }catch(e){toast(t('Could not reach server'))}
+  AI_WAITING=false;
+}
+function renderAnalysisModal(c,a){
+  const sev=s=>`<span class="bdg ${s==='high'?'bdg-red':s==='medium'?'bdg-amber':'bdg-gray'}" style="flex:none">${t(s)}</span>`;
+  const cal=a.calories;
+  const sec=(lbl,x)=>x&&x.summary?`<div class="field" style="margin-top:12px"><label class="lbl">${t(lbl)}</label><div style="font-size:12.5px">${esc(x.summary)}</div>${(x.changes||[]).length?`<ul style="margin:6px 0 0;padding-inline-start:18px;font-size:12.5px">${x.changes.map(ch=>`<li>${esc(ch)}</li>`).join('')}</ul>`:''}</div>`:'';
+  openModal(`
+  <div class="modal-h"><h3>${t('AI Analysis')} — ${esc(c.name)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:12px">${avC(c.name,40)}<div style="flex:1"><b>${t(c.name)}</b><div class="muted" style="font-size:11.5px">${t(c.goal||'—')} · ${t(c.freq||'—')}</div></div><span class="bdg ${a.status==='critical'?'bdg-red':a.status==='warning'?'bdg-amber':'bdg-lime'}">${t(a.status)}</span></div>
+    ${(a.findings||[]).map(f=>`<div class="card" style="padding:10px 12px;margin-bottom:8px"><div class="row" style="gap:8px">${sev(f.severity)}<b style="font-size:13px">${esc(f.title)}</b></div><div class="muted" style="font-size:12px;margin-top:4px">${esc(f.detail)}</div></div>`).join('')}
+    ${cal?`<div class="card" style="padding:14px;margin:10px 0;background:var(--accent-soft);border-color:var(--acc-line)">
+      <div class="card-t">${ic('utensils',14)} ${t('Suggested calorie & macros')}</div>
+      <div class="row" style="gap:16px;flex-wrap:wrap;margin-top:8px">
+        ${[['Calories',cal.target],['Protein',cal.protein+'g'],['Carbs',cal.carbs+'g'],['Fat',cal.fat+'g']].map(([k,v])=>`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b style="font-size:16px">${nf(v)}</b></div>`).join('')}
+      </div>
+      ${cal.rationale?`<div class="muted" style="font-size:11.5px;margin-top:8px">${esc(cal.rationale)}</div>`:''}
+    </div>`:''}
+    ${sec('Nutrition',a.nutrition)}
+    ${sec('Workout',a.workout)}
+    ${(a.actions||[]).length?`<div class="field" style="margin-top:12px"><label class="lbl">${t('Suggested actions')}</label><ul style="margin:6px 0 0;padding-inline-start:18px;font-size:12.5px">${a.actions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="ai-an-save" data-c="${esc(c.name)}">${ic('note',14)} ${t('Save as client note')}</button></div>`);
+}
+/* v18.17 — CAMERA FORM CHECK (MediaPipe Pose Landmarker, fully on-device).
+   ADDITIVE feature: nothing existing changes — a new modal, a new FORMS array
+   in the payload and new entry buttons. The camera stream NEVER leaves the
+   device: MediaPipe runs in WASM on the phone, only the computed report
+   (reps, score, flags, ≤3 tiny keyframes) syncs to the workspace.
+   Files are self-hosted in /vendor/mediapipe/ (CSP has no CDN allowance). */
+const FC_VENDOR='/vendor/mediapipe/';
+/* Landmark indexes (MediaPipe Pose, 33 points). */
+const FCLM={shL:11,shR:12,elL:13,elR:14,wrL:15,wrR:16,hipL:23,hipR:24,knL:25,knR:26,anL:27,anR:28};
+const fcAngle=(a,b,c)=>{const v1=[a.x-b.x,a.y-b.y],v2=[c.x-b.x,c.y-b.y];const m=Math.hypot(v1[0],v1[1])*Math.hypot(v2[0],v2[1]);if(!m)return 180;const d=(v1[0]*v2[0]+v1[1]*v2[1])/m;return Math.acos(Math.min(1,Math.max(-1,d)))*180/Math.PI};
+/* v18.20 — TRUE 3D angles from WORLD landmarks (meters, hip-center origin):
+   rotation-independent, so depth/asymmetry no longer depend on the camera
+   being perfectly side-on. Falls back to 2D image angles when absent. */
+const fcAngle3=(a,b,c)=>{const v1=[a.x-b.x,a.y-b.y,a.z-b.z],v2=[c.x-b.x,c.y-b.y,c.z-b.z];const m=Math.hypot(v1[0],v1[1],v1[2])*Math.hypot(v2[0],v2[1],v2[2]);if(!m)return 180;const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/m;return Math.acos(Math.min(1,Math.max(-1,d)))*180/Math.PI};
+/* Joint-angle sets: side 0 = left, 1 = right. */
+const FC_ANG={
+  knee:(l,s)=>fcAngle(l[23+s],l[25+s],l[27+s]),
+  elbow:(l,s)=>fcAngle(l[11+s],l[13+s],l[15+s]),
+  hip:(l,s)=>fcAngle(l[11+s],l[23+s],l[25+s]),
+  line:(l,s)=>fcAngle(l[11+s],l[23+s],l[27+s])
+};
+const FC_ANG3={
+  knee:(l,s)=>fcAngle3(l[23+s],l[25+s],l[27+s]),
+  elbow:(l,s)=>fcAngle3(l[11+s],l[13+s],l[15+s]),
+  hip:(l,s)=>fcAngle3(l[11+s],l[23+s],l[25+s]),
+  line:(l,s)=>fcAngle3(l[11+s],l[23+s],l[27+s])
+};
+/* Angle by name using WORLD landmarks when available (3D), else image 2D. */
+const fcA=(name,lm,wl,s)=>wl?FC_ANG3[name](wl,s):FC_ANG[name](lm,s);
+const fcAvgA=(name,lm,wl)=>(fcA(name,lm,wl,0)+fcA(name,lm,wl,1))/2;
+/* Movement patterns — rules are DATA (evaluated by fcEval), so a new pattern
+   is one entry here. down/up are the tracked-angle thresholds for the rep
+   state machine; checks run per frame or at the rep bottom. */
+const FPATTERNS=[
+ {id:'squat',n:'Squat',sub:'Knees · depth · torso',ang:'knee',down:115,up:160,checks:[
+   {at:'bottom',type:'depth',thr:100,flag:'Shallow depth'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+   {at:'always',type:'lean',thr:55,flag:'Torso collapses'}]},
+ {id:'hinge',n:'Hinge / Deadlift',sub:'Hips · back line',ang:'hip',down:75,up:150,checks:[
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+   {at:'always',type:'lean',thr:70,flag:'Back rounds'}]},
+ {id:'pushup',n:'Push-up',sub:'Elbows · body line',ang:'elbow',down:100,up:155,checks:[
+   {at:'bottom',type:'depth',thr:105,flag:'Shallow depth'},
+   {at:'always',type:'line',thr:145,flag:'Hips sag'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'press',n:'Shoulder Press',sub:'Elbows · path',ang:'elbow',down:105,up:160,checks:[
+   {at:'bottom',type:'depth',thr:110,flag:'Partial range'},
+   {at:'always',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'curl',n:'Bicep Curl',sub:'Elbow · no swing',ang:'elbow',down:150,up:65,checks:[
+   {at:'bottom',type:'swing',thr:0.06,flag:'Body swing'},
+   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+ {id:'plank',n:'Plank',sub:'Hold · body line',hold:true,ang:'line',checks:[
+   {at:'always',type:'line',thr:150,flag:'Hips sag'},
+   {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'}]}
+];
+/* Rule evaluator — returns true when the rule FIRES (a problem). Uses the
+   live FC session for the tracked angle and the swing baseline. Angles come
+   from WORLD landmarks (3D) when the model provides them. */
+function fcEvalCheck(ch,lm,wl,bottom){
+  if(ch.at==='bottom'&&!bottom)return false;
+  switch(ch.type){
+    case 'depth':return fcAvgA(FC.pat.ang,lm,wl)>ch.thr;
+    case 'asym':return Math.abs(fcA(FC.pat.ang,lm,wl,0)-fcA(FC.pat.ang,lm,wl,1))>ch.thr;
+    case 'lean':{
+      if(wl){const S3=wl[11].y<wl[12].y?wl[11]:wl[12],H3=wl[23].y<wl[24].y?wl[23]:wl[24];const dx=S3.x-H3.x,dz=S3.z-H3.z,dy=Math.abs(S3.y-H3.y);return Math.atan2(Math.hypot(dx,dz),dy)*180/Math.PI>ch.thr}
+      const s=lm[11].y<lm[12].y?lm[11]:lm[12],h=lm[23].y<lm[24].y?lm[23]:lm[24];return Math.atan2(Math.abs(s.x-h.x),Math.abs(s.y-h.y))*180/Math.PI>ch.thr}
+    case 'line':return fcAvgA('line',lm,wl)<ch.thr;
+    case 'lineHi':return fcAvgA('line',lm,wl)>ch.thr;
+    case 'swing':{const hx=(lm[23].x+lm[24].x)/2;if(FC.hipX==null)FC.hipX=hx;return Math.abs(hx-FC.hipX)>ch.thr}
+  }
+  return false;
+}
+/* Skeleton connections for the overlay. */
+const FC_BONES=[[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32]];
+let FC={on:false};
+let FC_POSE=null,FC_VISION=null,FC_ACC=null;
+/* v18.20 — LIVE_STREAM mode: frames are dropped (never queued) when the model
+   is busy, results arrive via the listener, and BOTH world landmarks (3D) and
+   segmentation masks are requested. numPoses=2 covers coach+client in frame;
+   rules always run on the PRIMARY pose (largest bounding box = closest). */
+async function fcEngine(){
+  const acc=S.fcAcc=S.fcAcc||(function(){try{return localStorage.getItem('co-fc-acc')||'lite'}catch(e){return 'lite'}})();
+  if(FC_POSE&&FC_ACC===acc)return FC_POSE;
+  if(FC_POSE){try{await FC_POSE.close()}catch(e){}FC_POSE=null}
+  FC_VISION=FC_VISION||await import(FC_VENDOR+'vision_bundle.mjs');
+  const files=await FC_VISION.FilesetResolver.forVisionTasks(FC_VENDOR+'wasm');
+  const model=acc==='full'?'pose_landmarker_full.task':'pose_landmarker_lite.task';
+  const opts=d=>({baseOptions:{modelAssetPath:FC_VENDOR+model,delegate:d},runningMode:'LIVE_STREAM',numPoses:2,
+    outputWorldLandmarks:true,outputSegmentationMasks:!!FC.maskOn,
+    minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,
+    resultListener:(res)=>fcOnResult(res)});
+  try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('GPU'))}
+  catch(e){FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('CPU'))}
+  FC_ACC=acc;
+  return FC_POSE;
+}
+function formCheckModal(name){
+  if(!name){name=S.role==='client'?client(S.cid).name:(client(S.cid)||CLIENTS[0]||{}).name}
+  if(!name){toast(t('Add a client first'));return}
+  S.fcName=name;S.fcPat=null;
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Camera form check')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Runs on your device — the video never leaves it. Stand so your whole body is visible.')}</div>
+    <div class="fc-pat">${FPATTERNS.map(p=>`<button data-act="fc-pattern" data-p="${p.id}"><b>${t(p.n)}</b><small>${t(p.sub)}</small></button>`).join('')}</div>
+    <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
+      <span class="muted" style="font-size:12px">${t('Accuracy')} — ${t(S.fcAcc==='full'?'High (slower)':'Standard (faster)')}</span>
+      <div class="seg">${[['lite','Standard'],['full','High']].map(([a,l])=>`<button class="${(S.fcAcc||'lite')===a?'on':''}" data-act="fc-acc" data-a="${a}">${t(l)}</button>`).join('')}</div>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button></div>`);
+}
+async function fcStart(pid){
+  const p=FPATTERNS.find(x=>x.id===pid);if(!p)return;
+  S.fcPat=pid;
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t(p.n)} — ${esc(t(S.fcName))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fc-stage" id="fc-stage"><video id="fc-video" playsinline muted></video><canvas id="fc-canvas"></canvas>
+      <div class="fc-hud">
+        <div class="fc-big"><small>${t('Reps')}</small><span id="fc-reps">0</span></div>
+        ${p.hold?`<div class="fc-big"><small>${t('Hold')}</small><span id="fc-hold">0s</span></div>`:''}
+        <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
+      </div>
+      <div class="fc-tools"><button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button><button title="${t('Body outline')}" data-act="fc-mask" class="${FC.maskOn?'on':''}">${ic('user',16)}</button></div>
+      <div class="fc-feed" id="fc-feed"></div>
+    </div>
+    <div class="muted" id="fc-msg" style="font-size:12px;text-align:center;margin-top:10px">${t('Loading the pose engine…')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
+  /* v18.19 — fullscreen camera on phones (CSS scopes it to ≤760px). */
+  document.querySelector('#modal-root .modal')?.classList.add('fc-full');
+  FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0};
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
+    FC.stream=stream;
+    const v=$('fc-video');v.srcObject=stream;v.style.transform='scaleX(-1)';FC.flip=true;FC.video=v;
+    await v.play();
+    const msg=$('fc-msg');if(msg)msg.textContent=t('Loading the pose engine…');
+    await fcEngine();
+    if(msg)msg.textContent=t('Stand so your whole body is visible');
+    FC.holdT0=performance.now();
+    FC.raf=requestAnimationFrame(fcLoop);
+  }catch(e){
+    const msg=$('fc-msg');if(msg)msg.textContent=e&&e.name==='NotAllowedError'?t('Camera permission is required for form check'):t('Camera is not available on this device');
+  }
+}
+function fcStop(){
+  FC.on=false;
+  if(FC.raf)cancelAnimationFrame(FC.raf);
+  if(FC.stream){FC.stream.getTracks().forEach(tr=>tr.stop());FC.stream=null}
+}
+async function fcFlip(){
+  if(!FC.on)return;
+  FC.flip=!FC.flip;
+  if(FC.stream)FC.stream.getTracks().forEach(tr=>tr.stop());
+  try{
+    FC.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:FC.flip?'user':'environment',width:{ideal:720},height:{ideal:960}},audio:false});
+    const v=$('fc-video');if(v){v.srcObject=FC.stream;v.style.transform=FC.flip?'scaleX(-1)':'none';await v.play()}
+  }catch(e){}
+}
+/* v18.20 — body-outline (segmentation mask) toggle. Masks are an output
+   option: flip it on the live landmarker without recreating the engine. */
+async function fcToggleMask(btn){
+  FC.maskOn=!FC.maskOn;
+  if(btn)btn.classList.toggle('on',FC.maskOn);
+  if(FC_POSE){try{await FC_POSE.setOptions({outputSegmentationMasks:FC.maskOn})}catch(e){}}
+}
+function fcFeed(flag,ok){
+  const feed=$('fc-feed');if(!feed)return;
+  const el=document.createElement('div');el.className='fc-flag'+(ok?' fc-ok':'');el.textContent=t(flag);
+  feed.innerHTML='';feed.appendChild(el);
+  clearTimeout(FC.feedT);FC.feedT=setTimeout(()=>{if(feed)feed.innerHTML=''},1800);
+}
+function fcSnapshot(){
+  const v=$('fc-video'),c=document.createElement('canvas');
+  const w=240,h=Math.round(w*v.videoHeight/v.videoWidth)||320;
+  c.width=w;c.height=h;
+  const ctx=c.getContext('2d');if(!ctx)return '';
+  if(FC.flip){ctx.translate(w,0);ctx.scale(-1,1)}
+  ctx.drawImage(v,0,0,w,h);
+  return c.toDataURL('image/jpeg',.5);
+}
+function fcLoop(){
+  if(!FC.on)return;
+  FC.raf=requestAnimationFrame(fcLoop);
+  const v=FC.video||$('fc-video');if(!v||!FC_POSE||v.readyState<2)return;
+  /* LIVE_STREAM: non-blocking — the task drops frames while busy and the
+     result arrives in fcOnResult. Timestamps must be monotonic. */
+  try{FC_POSE.detectForVideo(v,performance.now())}catch(e){}
+}
+function fcDrawSkeleton(ctx,cv,lm,primary){
+  ctx.save();if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle=primary?'rgba(200,240,75,.95)':'rgba(200,240,75,.35)';
+  FC_BONES.forEach(([a,b])=>{const p1=lm[a],p2=lm[b];if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke()}});
+  ctx.fillStyle=primary?'#fff':'rgba(255,255,255,.4)';const r=Math.max(2.5,cv.width/220);
+  lm.forEach((pt,i)=>{if(i<11&&i!==0)return;if(pt.v!=null&&pt.v<.4)return;ctx.beginPath();ctx.arc(pt.x*cv.width,pt.y*cv.height,r,0,7);ctx.fill()});
+  ctx.restore();
+}
+/* v18.20 — segmentation mask: lime silhouette over the body. Read back at
+   HALF resolution (the per-pixel loop is the only CPU part) and scaled up. */
+function fcDrawMask(mask,cv,ctx){
+  try{
+    const w=mask.width,h=mask.height;if(!w||!h)return;
+    let src=null;try{src=mask.getAsUint8Array()}catch(e){}
+    if(!src){try{const f=mask.getAsFloat32Array();src={length:f.length};for(let i=0;i<f.length;i++)src[i]=f[i]>.5?255:0}catch(e){return}}
+    const sw=Math.ceil(w/2),sh=Math.ceil(h/2);
+    const off=FC.maskCv=FC.maskCv||document.createElement('canvas');
+    if(off.width!==sw||off.height!==sh){off.width=sw;off.height=sh}
+    const octx=FC.maskCtx=FC.maskCtx||off.getContext('2d');
+    const img=octx.createImageData(sw,sh);
+    for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){const si=(y*2)*w+(x*2),di=(y*sw+x)*4;const on=src[si]>128;
+      img.data[di]=200;img.data[di+1]=240;img.data[di+2]=75;img.data[di+3]=on?72:0}
+    octx.putImageData(img,0,0);
+    ctx.save();ctx.drawImage(off,0,0,cv.width,cv.height);ctx.restore();
+  }catch(e){}
+  finally{try{mask.close()}catch(e){}}
+}
+function fcOnResult(res){
+  if(!FC.on)return;
+  const masks=(res&&res.segmentationMasks)||[];
+  try{
+    const v=FC.video,cv=$('fc-canvas');if(!v||!cv)return;
+    cv.width=v.videoWidth||720;cv.height=v.videoHeight||960;
+    const ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,cv.width,cv.height);
+    const list=(res&&res.landmarks)||[];
+    if(!list.length)return;
+    /* primary pose = largest bounding box (closest to the camera) */
+    let pi=0,best=-1;
+    list.forEach((L,i)=>{let x0=9,x1=-9,y0=9,y1=-9;L.forEach(p=>{if(p.x<x0)x0=p.x;if(p.x>x1)x1=p.x;if(p.y<y0)y0=p.y;if(p.y>y1)y1=p.y});const a=(x1-x0)*(y1-y0);if(a>best){best=a;pi=i}});
+    const lm=list[pi];
+    const wl=(res.worldLandmarks&&res.worldLandmarks[pi])||null;
+    if(FC.maskOn&&masks[0])fcDrawMask(masks[0],cv,ctx);
+    list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,L,i===pi));
+    /* rep state machine + rules (3D angles when world landmarks exist) */
+    const p=FC.pat;
+    const a=fcAvgA(p.ang,lm,wl);
+    if(a<FC.minA)FC.minA=a;if(a>FC.maxA)FC.maxA=a;
+    const down=p.hold?false:(p.up>p.down?(a<p.down):(a>p.down));
+    const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
+    if(p.hold){FC.hold0=(performance.now()-FC.holdT0)/1000;const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s'}
+    else if(FC.state==='up'&&down){FC.state='down';FC.bottomA=a;FC.bottomLm=lm}
+    else if(FC.state==='down'&&up){FC.state='up';FC.reps++;const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot())}
+    const bottom=FC.state==='down';
+    p.checks.forEach(ch=>{if(fcEvalCheck(ch,lm,wl,bottom)){FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;if(Date.now()-(FC.lastFlagT||0)>1500){FC.lastFlagT=Date.now();fcFeed(ch.flag,false)}}});
+    const sc=$('fc-score');if(sc)sc.textContent=nf(fcScore());
+  }
+  finally{masks.forEach(m=>{if(m)try{m.close()}catch(e){}})}
+}
+const fcScore=()=>Math.max(45,Math.min(100,100-12*Math.min(5,Object.values(FC.flags).reduce((a,b)=>a+Math.min(3,b),0))));
+function fcFinish(){
+  if(!FC.pat||!FC.stream){toast(t('Camera is not available on this device'));return}
+  const p=FC.pat,reps=p.hold?Math.floor(FC.hold0):FC.reps;
+  const flags=Object.keys(FC.flags).filter(k=>FC.flags[k]>=2);
+  const score=fcScore(),rom=(p.hold||!reps)?null:Math.round(FC.maxA-FC.minA);
+  const kfs=FC.kf.slice(0,3);
+  KF_STASH.length=0;kfs.forEach(k=>KF_STASH.push(k));
+  fcStop();
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form check')} — ${t(p.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:14px;margin-bottom:12px">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Reps')}</span><b style="font-size:22px">${nf(reps)}</b></div>
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Form score')}</span><b style="font-size:22px;color:${score>=85?'var(--green)':score>=65?'var(--accent-deep)':'var(--red)'}">${nf(score)}</b></div>
+      ${rom!=null?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Range of motion')}</span><b style="font-size:22px">${nf(rom)}°</b></div>`:''}
+    </div>
+    ${flags.length?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px">${flags.map(f=>`<span class="bdg bdg-red">${t(f)}</span>`).join('')}</div>`:`<div class="row" style="margin-bottom:10px"><span class="bdg bdg-lime">${t('Good form')}</span></div>`}
+    ${kfs.length?`<div class="fc-kfs">${kfs.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Retake')}</button><button class="btn btn-primary" data-act="fc-save" data-reps="${reps}" data-score="${score}" data-rom="${rom==null?'':rom}" data-flags="${esc(flags.join('|'))}" data-kf="${kfs.length}">${ic('check',15)} ${t('Save report')}</button></div>`);
+}
+function fcSave(el){
+  const p=FC.pat||FPATTERNS.find(x=>x.id===S.fcPat);const name=S.fcName;
+  const reps=+el.dataset.reps||0,score=+el.dataset.score||0,rom=el.dataset.rom?+el.dataset.rom:null;
+  const flags=(el.dataset.flags||'').split('|').filter(Boolean);
+  const kfN=+el.dataset.kf||0;
+  const kf=KF_STASH.splice(0,kfN);
+  FORMS.unshift({id:uid(),client:name,pattern:p?p.id:'?',ex:p?t(p.n):'?',reps,score,rom,flags,kf,d:isoToday()});
+  const from=S.role==='client'?'client':'coach';
+  MSGS.push({id:uid(),client:name,from,type:'text',body:`${t('Form check')} · ${p?t(p.n):''} — ${t('Reps')} ${nf(reps)} · ${t('Form score')} ${nf(score)}${flags.length?' · '+flags.map(f=>t(f)).join(', '):''}`,time:'Just now',read:from==='coach'});
+  if(from==='client'){const cc=CLIENTS.find(x=>x.name===name);if(cc)gamAward(cc,'form')} // v18.38 — +5 pts
+  fcStop();FC={on:false};
+  closeModal();saveData();render();
+  toast(S.role==='client'?t('Report saved — your coach can see it'):t('Report saved'));
+}
+/* Keyframes survive the summary modal via this tiny stash (data-URLs are too
+   big for element attributes). */
+const KF_STASH=[];
+function formReportsModal(name){
+  const list=FORMS.filter(f=>f.client===name);
+  openModal(`
+  <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form reports')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${list.length?list.map(f=>`
+    <div class="card" style="padding:12px;margin-bottom:8px">
+      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${esc(f.ex)}</b><span class="bdg ${f.score>=85?'bdg-lime':f.score>=65?'bdg-amber':'bdg-red'}">${t('Form score')} ${nf(f.score)}</span></div>
+      <div class="muted" style="font-size:11.5px;margin-top:4px">${t('Reps')} ${nf(f.reps)}${f.rom!=null?` · ${t('Range of motion')} ${nf(f.rom)}°`:''} · ${esc(f.d)}</div>
+      ${(f.flags||[]).length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:6px">${f.flags.map(fl=>`<span class="bdg bdg-red" style="font-size:10px">${t(fl)}</span>`).join('')}</div>`:''}
+      ${(f.kf||[]).length?`<div class="fc-kfs">${f.kf.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
+    </div>`).join('')
+    :`<div class="empty">${ic('ruler',22)}<b>${t('No report yet — run a form check')}</b></div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button><button class="btn btn-primary" data-act="fc-new" data-c="${esc(name)}">${ic('ruler',15)} ${t('New check')}</button></div>`);
+}
+/* ================= v18.22 — WEB PUSH + INSTALL BANNER =================
+   Push: one permission prompt → subscription stored per-account server-side
+   → the backend fires real OS notifications (new message, smart report…).
+   Install: Chrome/Android fire beforeinstallprompt → a one-tap banner; iOS
+   gets the Share→Add-to-Home-Screen guide instead. Both are additive and
+   degrade silently when unsupported. */
+let PWA={deferred:null,enabled:false};
+async function pwaInit(){
+  try{
+    // Install banner (Chromium)
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA.deferred=e;showInstallBanner()});
+    // Push availability
+    if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window))return;
+    const {ok,d}=await fetch('/api/push/vapid').then(r=>r.json()).catch(()=>({ok:false}));
+    if(!ok||!d||!d.enabled||!d.publicKey)return;
+    PWA.enabled=true;PWA.key=d.publicKey;
+    const reg=await navigator.serviceWorker.ready;
+    const cur=await reg.pushManager.getSubscription();
+    if(cur&&Notification.permission==='granted')await pushSubscribe(cur); // re-sync (keys may have rotated)
+    else if(Notification.permission==='default')setTimeout(showPushNudge,15000); // gentle, once
+  }catch(e){}
+}
+function urlB64ToUint8(b64){const pad='='.repeat((4-b64.length%4)%4);const raw=atob((b64+pad).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)))}
+async function pushSubscribe(sub){
+  try{
+    const {ok}=await authApi('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),ua:navigator.userAgent.slice(0,120)})});
+    if(ok){PWA.subscribed=true;try{localStorage.setItem('co-push','1')}catch(e){}}
+  }catch(e){}
+}
+async function pushEnable(){
+  if(!PWA.enabled){toast(t('Push is not configured on the server'));return}
+  try{
+    const perm=await Notification.requestPermission();
+    if(perm!=='granted'){toast(t('Notifications blocked — enable them in browser settings'));return}
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64ToUint8(PWA.key)});
+    await pushSubscribe(sub);
+    toast(t('Notifications on 🔔'));
+    const b=$('push-nudge');if(b)b.remove();
+  }catch(e){toast(t('Could not enable notifications'))}
+}
+/* Soft nudge — a small dismissible chip, never a hard prompt. */
+function showPushNudge(){
+  if(!AUTH.token||PWA.subscribed||$('push-nudge'))return;
+  try{if(localStorage.getItem('co-push-dismiss'))return}catch(e){}
+  const el=document.createElement('button');el.id='push-nudge';el.className='pwa-chip';el.dataset.act='push-enable';
+  el.innerHTML=`${ic('bell',14)}<span>${t('Turn on notifications')}</span><i data-act="push-dismiss">${ic('x',12)}</i>`;
+  document.body.appendChild(el);
+}
+function showInstallBanner(){
+  if($('pwa-banner')||window.matchMedia('(display-mode: standalone)').matches)return;
+  try{if(localStorage.getItem('co-pwa-hide'))return}catch(e){}
+  const el=document.createElement('div');el.id='pwa-banner';el.className='pwa-banner';
+  el.innerHTML=`<span class="pwa-ic">📱</span><div><b>${t('Install CoachMint')}</b><span>${t('Full screen, offline-ready, like an app')}</span></div><button class="btn btn-primary btn-sm" data-act="pwa-install">${t('Install')}</button><button class="btn btn-ghost btn-icon" data-act="pwa-hide">${ic('x',14)}</button>`;
+  document.body.appendChild(el);
+}
+function showIosInstall(){
+  openModal(`
+  <div class="modal-h"><h3>${ic('download',16)} ${t('Install CoachMint')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:10px">${t('Add it to your home screen — full screen and offline-ready, like an app:')}</div>
+    ${[['1. Tap the Share button','⬆️'],['2. Choose "Add to Home Screen"','➕'],['3. Open CoachMint from your home screen','📱']].map(([s,e])=>`
+    <div class="row" style="gap:10px;padding:8px 0;border-bottom:1px solid var(--line2)"><span style="font-size:20px">${e}</span><b style="font-size:13px">${t(s)}</b></div>`).join('')}
+  </div>
+  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Got it')}</button></div>`);
+}
+function tplPreview(i){
+  const tp=TEMPLATES[i];if(!tp)return;
+  const exRow=e=>{const ex=EXERCISES[e.ex];
+    return `<div class="frow" style="grid-template-columns:1fr 130px 56px"><div class="fk">${t(ex.n)}</div><span>${nf(e.sets)} × ${nf(e.reps)} × ${nf(e.kg)} kg</span><span>${nf(e.rest)}s</span></div>`};
+  const secs=tp.parts?tp.parts.map((p,pi)=>`
+    <div class="card" style="padding:12px 14px;margin-bottom:10px">
+      <div class="row" style="margin-bottom:6px;flex-wrap:wrap"><b style="font-size:13px">${t(p.n)}</b><span class="chip">${nf((p.exs||[]).length)} ${t('exercises')}</span><span class="sp"></span>
+      <button class="btn btn-primary btn-sm" data-act="tpl-load-day" data-i="${i}" data-p="${pi}">${t('Load')}</button></div>
+      ${(p.exs||[]).map(exRow).join('')}
+    </div>`).join('')
+  :`<div class="card" style="padding:12px 14px">${(tp.exs||[]).map(exRow).join('')}</div>`;
+  openModal(`
+  <div class="modal-h"><h3>${esc(tp.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:12px"><span class="chip">${t(tp.days)}</span><span class="chip">${nf(tplExN(tp))} ${t('exercises')}</span><span class="chip">${nf(tplSetN(tp))} ${t('sets')}</span><span class="chip">${t(tp.dur)}</span></div>
+    ${tp.note?`<div class="muted" style="font-size:12px;margin-bottom:12px">✎ ${esc(t(tp.note))}</div>`:''}
+    ${secs}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button>${tp.parts?'':`<button class="btn btn-primary" data-act="tpl-use" data-i="${i}">${t('Use Template')} ${ic('arrowR',14)}</button>`}</div>`);
+}
+function tplDayModal(i){
+  const tp=TEMPLATES[i];if(!tp)return;
+  openModal(`
+  <div class="modal-h"><h3>${esc(tp.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:12px">${t('This template has multiple days — pick one to load into the builder')}</div>
+    ${(tp.parts||[]).map((p,pi)=>`
+    <div class="card" style="padding:12px 14px;margin-bottom:8px"><div class="row">
+      <div style="width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:13px;flex:none">${nf(pi+1)}</div>
+      <div style="flex:1;min-width:0"><b style="font-size:13.5px">${t(p.n)}</b><div class="muted" style="font-size:11.5px">${nf((p.exs||[]).length)} ${t('exercises')} · ${nf((p.exs||[]).reduce((a,e)=>a+e.sets,0))} ${t('sets')}</div></div>
+      <button class="btn btn-primary btn-sm" data-act="tpl-load-day" data-i="${i}" data-p="${pi}">${t('Load')}</button>
+    </div></div>`).join('')}
+  </div>`);
+}
+function tplSaveModal(){
+  const tp=S.tplEdit!=null?TEMPLATES[S.tplEdit]:null;
+  const curName=($('w-name')?.value||S.wname||'').split(' — ')[0];
+  openModal(`
+  <div class="modal-h"><h3>${tp?t('Update Template'):t('Create Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Template Name')}</label><input class="inp" id="tp-n" value="${esc(tp?tp.n:curName)}"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Day')}</label><select class="sel" id="tp-days">${['Push','Pull','Legs','Full Body','Upper','Lower','Core','Conditioning'].map(d=>`<option value="${d}" ${tp&&tp.days===d?'selected':''}>${t(d)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><input class="inp" id="tp-dur" value="${esc(t(S.wdur||'60 min'))}"></div>
+    </div>
+    <div class="muted" style="font-size:12px">${nf(BUILDER.length)} ${t('exercises')} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('sets')} — ${t('Current builder content will be saved into the template')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="tpl-save" data-i="${S.tplEdit==null?-1:S.tplEdit}">${ic('check',15)} ${t('Save')}</button></div>`)
+}
+function loadTpl(tp){
+  if(!tp)return;
+  if(!tp.parts&&!(tp.exs||[]).length){toast('This template has no exercises yet');return}
+  closeModal();
+  if(isNarrow()){S.mview='builder'}else S.view='builder';
+  S.tplEdit=null;
+  BUILDER.length=0;(tp.exs||[]).forEach(x=>BUILDER.push({...x}));fillVids();
+  S.wname=tp.n+' — '+client(S.cid).name;
+  if(tp.dur)S.wdur=tp.dur;
+  if(tp.note)S.wnote=tp.note;
+  render();
+  toast(tp.n+' — '+nf((tp.exs||[]).length)+' '+t('exercises')+' '+t('loaded into the builder'));
+}
+
+/* ================= COACH MOBILE ================= */
+function renderMobile(){
+  const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
+  let body='';
+  if(S.mview==='client')body=mClientView();
+  else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
+  else if(S.mview==='settings')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vSettings();
+  else if(S.mview==='nutrition')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+nNutrition();
+  else if(S.mview==='templates')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vTemplates();
+  else if(S.mview==='calendar')body=mCalView();
+  else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
+  return `<div class="mshell">
+    ${aiFabRound()}
+    ${toolboxFab()}
+    <div class="mhead">
+      <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
+      <div class="row" style="gap:4px">
+        ${themeBtn('btn-ghost btn-icon')}
+        <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
+        <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
+      </div>
+    </div>
+    <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
+    <div class="cnav">
+      ${[['today','Today','zap'],['clients','Clients','users'],['messages','Messages','mail'],['more','More','more']].map(([k,l,i])=>`
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='messages'&&unreadN?'<span class="cdot"></span>':''}</button>`).join('')}
+    </div>
+  </div>`;
+}
+function mCalView(){
+  const i=S.selDay??2;
+  const list=EVENTS.filter(e=>e.day===i).sort((a,b)=>a.start-b.start);
+  const dotC={session:'var(--accent-deep)',assess:'var(--blue)',meas:'var(--purple)',appt:'var(--amber)'};
+  return `<div class="mstack">
+    <div class="ccard" style="display:flex;align-items:center;gap:8px">
+      <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="-1">${ic('chevL',15)}</button>
+      <b style="flex:1;text-align:center;font-size:13.5px">${weekRange()}</b>
+      <button class="btn btn-outline btn-icon" data-act="cal-nav" data-d="1">${ic('chevR',15)}</button>
+    </div>
+    <div class="row" style="gap:6px;overflow-x:auto;padding-bottom:2px">
+      ${[0,1,2,3,4,5,6].map(d=>{const dots=EVENTS.filter(e=>e.day===d).slice(0,3).map(e=>dotC[e.type]);
+      return `<button class="fchip ${d===i?'on':''}" data-act="cal-day" data-day="${d}" style="flex:none;display:inline-flex;align-items:center;gap:6px">${t(WDN[d])} ${fmtNum(dayDate(d))}${dots.length?`<span class="row" style="gap:2px">${dots.map(c=>`<span style="width:5px;height:5px;border-radius:50%;background:${c};display:inline-block"></span>`).join('')}</span>`:''}</button>`}).join('')}
+    </div>
+    <button class="btn btn-primary" style="justify-content:center" data-act="ns-new">${ic('plus',15)} ${t('New Session')}</button>
+    ${list.length?list.map(ev=>`
+    <div class="ccard" data-act="ev-open" data-eid="${ev.id}" style="cursor:pointer">
+      <div class="row"><div class="tl-time" style="width:46px">${nf(fmtT(ev.start))}</div>${avC(ev.client,34)}
+      <div style="flex:1;min-width:0"><b style="font-size:13px">${t(ev.label)}</b><div class="muted" style="font-size:11.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+      ${attBadge(ev)||evBadge(ev.type)}</div>
+    </div>`).join('')
+    :`<div class="ccard cempty">${ic('calendar',24)}<b>${t('No events this day')}</b><span class="muted" style="font-size:12px">${t('Tap an empty slot to add a session')}</span></div>`}
+  </div>`;
+}
+function mToday(){
+  const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const att=attentionList();
+  /* v18.35 — CoachMint template: cockpit Today (telemetry header + KPI strip
+     + manifest rows). Same data + same data-act hooks as the default view. */
+  if(PREFS.uiTpl==='coachmint'){
+    const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+    const kpi=(k,v)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`;
+    return `<div class="mstack">
+    <div class="ccard" style="padding:16px 14px">
+      <div class="eyebrow" style="font-size:10px">${t('Live Telemetry')} // ${fmtFullDate(dayDate(TODAY))}</div>
+      <b style="font-size:17px;display:block;margin-top:6px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b>
+      <div class="cm-kpis" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+        ${kpi('Sessions Today',nf(today.length))}${kpi('Completed',nf(doneT))}${kpi('Attention',nf(att.length))}
+      </div>
+    </div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="cm-row click" style="padding:11px 2px" data-act="ev-open" data-eid="${ev.id}">
+        <span class="cm-time" style="min-width:52px">${nf(fmtT(ev.start))}</span>${cc?avC(cc.name,32):av(t('Coach'),32,3)}
+        <div style="flex:1;min-width:0"><b style="font-size:12.5px">${t(ev.label)}</b><div class="muted" style="font-size:11px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${attBadge(ev)||`<span class="bdg ${st.b}" style="font-size:9.5px">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Priority Queue')} · ${nf(att.length)}</div>
+      ${att.length?att.slice(0,3).map(it=>`<div class="cm-alert click" style="padding:11px 2px" data-act="${it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client'}"
+        ${it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code)}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`}>
+        <span class="bdg ${it.bt}" style="flex:none;font-size:9.5px">${ic(it.icon,11)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:12.5px">${t(it.name)}</b><div class="muted" style="font-size:11px">${t(it.why)}</div></div>
+        ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')
+      :`<div class="cm-row" style="padding:11px 2px"><span class="bdg bdg-green" style="flex:none;font-size:9.5px">${ic('check',11)}</span><b style="font-size:12.5px">${t('All clients on track ✓')}</b></div>`}
+    </div>
+    <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
+  </div>`;
+  }
+  return `<div class="mstack">
+    <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
+    <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
+      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="tl-row click" style="padding:11px 2px" data-act="ev-open" data-eid="${ev.id}">
+        <div class="tl-time" style="width:44px;font-size:12px">${nf(fmtT(ev.start))}</div>${cc?avC(cc.name,34):av(t('Coach'),34,3)}
+        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${t(ev.label)}</div><div class="muted" style="font-size:11.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
+        ${attBadge(ev)||`<span class="bdg ${st.b}" style="font-size:10px">${t(st.l)}</span>`}
+      </div>`}).join('')
+      :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
+    </div>
+    <div class="ccard" style="padding:6px 14px">
+      <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Clients Needing Attention')} · ${nf(att.length)}</div>
+      ${att.length?att.slice(0,3).map(it=>`<div class="tl-row click" style="padding:11px 2px" data-act="${it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client'}"
+        ${it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code)}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`}>
+        <span class="bdg ${it.bt}" style="flex:none;font-size:10px">${ic(it.icon,11)}</span>
+        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${t(it.name)}</div><div class="muted" style="font-size:11px">${t(it.why)}</div></div>
+        ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')
+      :`<div class="tl-row" style="padding:11px 2px"><span class="bdg bdg-green" style="flex:none;font-size:10px">${ic('check',11)}</span><b style="font-size:13px">${t('All clients on track ✓')}</b></div>`}
+    </div>
+    <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
+    <button class="btn btn-dark" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
+  </div>`;
+}
+function mClients(){
+  const q=(S.mcq||'').toLowerCase();
+  const list=CLIENTS.filter(c=>!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q));
+  /* v18.35 — CoachMint template: roster rows with readiness rings. */
+  if(PREFS.uiTpl==='coachmint'){
+    return `<div class="mstack">
+    <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
+    return `<div class="ccard cm-ath" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
+      ${avC(c.name,42)}
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:6px;flex-wrap:wrap"><b style="font-size:13.5px">${t(c.name)}</b>${cmStatusChip(c.status)}${pend?`<span class="bdg bdg-lime" style="font-size:9.5px">${t('Pending')}</span>`:''}</div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${t(c.goal)} · ${t(c.prog)}</div>
+        <div class="cm-meta" style="margin-top:5px">${ic('calendar',11)} ${t(c.next)}</div>
+      </div>
+      ${cmRing(p,44,10)}
+    </div>`}).join('')||`<div class="ccard" style="text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}
+  </div>`;
+  }
+  return `<div class="mstack">
+    <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${list.map(c=>{const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
+    return `<div class="ccard" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
+      <div class="row" style="gap:10px">${avC(c.name,44)}
+        <div style="flex:1;min-width:0"><b>${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.goal)} · ${t(c.prog)}</div></div>
+        ${stBdg(c.status)}
+      </div>
+      <div class="row" style="margin-top:10px;gap:6px;flex-wrap:wrap">
+        <span class="chip">${t('Next Session')}: ${t(c.next)}</span>
+        ${pend?`<span class="bdg bdg-lime" style="font-size:10px">${t('Pending')}</span>`:''}
+        <span class="sp"></span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
+      </div>
+    </div>`}).join('')||`<div class="ccard" style="text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}
+  </div>`;
+}
+window.mcSearch=v=>{S.mcq=v;const el=$('mc-q');if(!el)return;const pos=el.selectionStart;render();const np=$('mc-q');if(np){np.focus();try{np.setSelectionRange(pos,pos)}catch(e){}}};
+function mMessages(){
+  if(S.msgThread)return mThread(S.msgThread);
+  const th=threads();
+  const need=th.filter(x=>x.needs).sort((a,b)=>((b.prio?1:0)-(a.prio?1:0))||(b.lastIdx-a.lastIdx));
+  const rest=th.filter(x=>!x.needs);
+  const row=x=>{const pv=t(x.last.body);const cut=pv.length>40?pv.slice(0,40)+'…':pv;
+    return `<div class="tl-row click" style="padding:11px 4px" data-act="open-thread" data-c="${esc(x.name)}">
+      ${avC(x.name,38)}
+      <div style="flex:1;min-width:0"><div class="row" style="gap:6px;flex-wrap:wrap"><b style="font-size:13px">${t(x.name)}</b>
+      ${x.prio?`<span class="bdg bdg-lime" style="font-size:9.5px;padding:1px 6px">${ic('camera',10)}</span>`:''}
+      ${x.unread?`<span class="bdg bdg-blue" style="font-size:9.5px;padding:1px 6px">${nf(x.unread)}</span>`:''}</div>
+      <div class="muted" style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.last.from==='coach'?t('You')+': ':''}${cut}</div></div>
+      <div style="font-size:10px;color:var(--ink3);flex:none">${t(x.last.time)}</div>
+    </div>`};
+  return `<div class="mstack">
+    ${need.length?`<div class="ccard" style="padding:6px 14px"><div class="card-t" style="padding:10px 0 4px">${ic('bell',13)} ${t('Needs your reply')} · ${nf(need.length)}</div>${need.map(row).join('')}</div>`:''}
+    ${rest.length?`<div class="ccard" style="padding:6px 14px"><div class="card-t" style="padding:10px 0 4px">${ic('mail',13)} ${t('All conversations')}</div>${rest.map(row).join('')}</div>`:''}
+  </div>`;
+}
+function mThread(name){
+  const c=CLIENTS.find(x=>x.name===name);
+  const ms=MSGS.filter(m=>m.client===name);
+  return `<div class="mchat">
+    <div class="mchat-h">
+      <button class="btn btn-ghost btn-icon back-ic" data-act="back-inbox">${ic('chevL',18)}</button>
+      ${avC(name,36)}<div style="flex:1;min-width:0"><b style="font-size:13.5px">${t(name)}</b><div class="muted" style="font-size:10.5px">${c?t(c.goal):''}</div></div>
+      <span class="bdg bdg-gray" style="font-size:9.5px">${t('Replies within ~4h')}</span>
+    </div>
+    <div id="mthrbody" class="mchat-b">${ms.map(m=>bubble(m)).join('')}</div>
+    <div class="composer" style="border:1px solid var(--line);border-radius:14px;margin:8px 12px 78px">
+      <input class="inp" id="msg-inp" data-c="${esc(name)}" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendCoachMsg(this.dataset.c)" style="border:none;box-shadow:none">
+      <button class="btn btn-outline btn-icon" title="${t('AI draft reply')}" data-act="ai-reply" data-c="${esc(name)}" style="border:none">${ic('zap',15)}</button>
+      <button class="btn btn-primary btn-icon" data-act="send-coach" data-c="${esc(name)}">${ic('arrowR',16)}</button>
+    </div>
+  </div>`;
+}
+function mMore(){
+  const rows=[
+    ['Add Client','users','add-client'],
+    ['Add Measurement','ruler','m-add'],
+    ['Create Note','note','qn-open'],
+    ['Schedule Session','calendar','ns-new'],
+    ['Calendar','calendar','mcal'],
+    ['Create Workout','dumbbell','mworkout'],
+    ['Templates','stack','mtemplates'],
+    ['Nutrition','utensils','mnut'],
+    ['Challenges','trophy','mchal']];
+  return `<div class="mstack">
+    <div class="ccard" style="display:flex;align-items:center;gap:12px">
+      ${av(coachName(),46,3)}
+      <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div>
+      ${langBtn('btn-outline btn-sm')}
+    </div>
+    <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
+    <div class="ccard" style="padding:6px">
+      <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
+      ${rows.map(([l,i,act])=>`<div class="mrow" data-act="${act}">${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
+      <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
+    </div>
+    <div class="ccard" style="padding:6px">
+      <div class="mrow" data-act="msettings">${ic('gear',17)}<span style="flex:1">${t('Settings')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
+      <div class="mrow" data-act="reset-demo">${ic('trash',17)}<span style="flex:1">${t('Reset demo data')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
+      <div class="mrow" data-act="switch-role">${ic('users',17)}<span style="flex:1">${t('Switch role')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
+      <div class="mrow" data-act="signout" style="color:var(--red)">${ic('x',17)}<span>${t('Sign out')}</span></div>
+    </div>
+    <div class="muted" style="font-size:10.5px;text-align:center;padding:6px 0 2px">CoachMint · v15.8 · PWA · BETA · ${t('Your decisions. Zero automation.')}</div>
+  </div>`;
+}
+function mClientView(){
+  const c=client(S.mClient),db=DB[c.id];
+  const w=todaysPlan(c.id).w; // v18.62 — today's slot decides, not "first pending"
+  const ac=attCnt(c.name);
+  return `<div class="mstack">
+    <div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Client')}</b></div>
+    <div class="ccard" style="display:flex;align-items:center;gap:12px">
+      ${avC(c.name,52)}
+      <div style="flex:1;min-width:0"><b style="font-size:16px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.goal)}</div></div>
+      ${stBdg(c.status)}
+    </div>
+    <div class="row" style="gap:6px;flex-wrap:wrap">
+      <span class="chip">${t('Weight')}: ${uwS(c.weight||null)}</span>
+      <span class="chip">${t('Program')}: ${t(c.prog)}</span>
+      <span class="chip">🔥 ${esc(streakLbl(c))}</span>
+      <span class="chip">${t('Attendance')}: ${nf(ac.d)} ✓ / ${nf(ac.m)} ✗</span>
+    </div>
+    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="row">${ic('dumbbell',15)}<b style="font-size:13.5px">${esc(w.name)}</b></div>
+      <span class="bdg ${wDone(w)?'bdg-gray':'bdg-lime'}" style="font-size:10px">${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</span></div>`:''}
+    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${t('Training Summary')}</div>
+      ${[['Workouts Completed',nf(db.stats.done)],['Workouts Missed',nf(db.stats.missed)],['Attendance',`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`],['Last Workout',t(c.last)],['Next Workout',t(c.nextW)]].map(([k,v])=>`
+      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
+    </div>
+    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight Progress')}</b>${wtBadge(c.id)}</div>
+      ${wChart(c.id,150)}</div>
+    <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Recent Notes')}</div>
+      ${NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,2).map(n=>`
+      <div style="padding:9px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
+      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
+      ||`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`}
+    </div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <button class="btn btn-dark btn-sm" data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',14)} ${t('Messages')}</button>
+      <button class="btn btn-primary btn-sm" data-act="wp-open">${ic('calendar',14)} ${t('Week plan')}</button>
+      <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+      <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form reports')}</button>
+      <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+      <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
+      <button class="btn btn-outline btn-sm" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>
+      <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
+    </div>
+    <button class="btn btn-ghost btn-sm" style="align-self:flex-start" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+  </div>`;
+}
+
+/* ================= CLIENT PORTAL ================= */
+function vClient(){
+  const c=client(S.cid);
+  const cunread=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&!m.read).length;
+  /* v18.71 — mockup nav: 5 tabs (Today · Training · Nutrition · Progress · Chat).
+     Calendar moved to the header month icon, Profile to the avatar — exactly
+     like design/client-app-screens.html. The other ptab keys still render (deep
+     links / old state keep working); they're just not in the bottom bar. */
+  const tabs=[['today','Today','zap'],['workouts','Training','dumbbell'],['nutrition','Nutrition','utensils'],['progress','Progress','chart'],['chat','Messages','mail']];
+  /* v18.76 — mockup-exact header (design/client-app-screens.html): every screen
+     has its OWN eyebrow + right-side control. Today & Chat keep the full set
+     (streak · calendar · bell · avatar — the Calendar/Profile entry points);
+     Training shows the W6/12 program pill, Nutrition the Day-N pill, Progress
+     the grade pill, Calendar the Week pill; Profile has none (you are there). */
+  const pmH=progMeta(c);
+  const tgH=NEng.targets(c);
+  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1):0;
+  const scH=RPT.score(c).score,gradeH=scH>=80?'A':scH>=60?'B':'C';
+  const wkN=(()=>{const t2=new Date(Date.UTC(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate()));const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)})();
+  const monthYr=TDATE.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'long',year:'numeric'});
+  const headFull=`<span class="chead-streak" title="${t('day streak')}">${ic('flame',13)}${nf(c.dayStreak||0)}</span>
+            <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
+            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
+            <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>`;
+  const headA={today:headFull,chat:headFull,profile:'',
+    workouts:`<span class="pill">W${nf(pmH.wk)}/${nf(pmH.weeks)}</span>`,
+    nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
+    progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
+    sessions:`<span class="pill">${t('Week')} ${nf(wkN)}</span>`};
+  const headEyebrow={today:`${t('Build')} ${t('Better Habits')}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
+    workouts:pmH.name?esc(t(pmH.name)):t('Training'),
+    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:`${t('Build')} ${t('Better Habits')}`,
+    progress:t('Daily Report'),sessions:esc(monthYr)};
+  const ptabTitle={today:'Today',workouts:'Training',progress:'Progress',nutrition:'Nutrition',sessions:'Calendar',chat:'Messages',profile:'Profile'};
+  /* v18.71 — guard: a stale/unknown ptab (old localStorage) must never make
+     `undefined()` blow up the whole portal — fall back to Today. */
+  const ptabView={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile};
+  const body=(ptabView[S.ptab]||ptabView.today)();
+  return `
+  <div class="clientwrap">
+    <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
+    ${langBtn('btn-outline btn-sm')}
+    ${fbBtn('top:18px;inset-inline-end:18px;')}
+    <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
+      <div class="capp" id="capp">
+        <div class="chead">
+          <div class="chead-t">
+            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
+            <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Today')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
+          </div>
+          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
+        </div>
+        ${body}
+      </div>
+      <div class="cnav">${tabs.map(([k,l,i])=>`<button class="cnav-it ${S.ptab===k?'on':''}" data-act="cnav" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='chat'&&cunread?'<span class="cdot"></span>':''}</button>`).join('')}</div>
+      ${S.player?cPlayer():''}
+    </div>
+  </div>`;
+}
+function cToday(){
+  const c=client(S.cid);
+  /* v18.62 — Today follows the WEEK SPLIT: today's slot decides between a
+     training day (that exact workout, even when already completed → summary),
+     a rest day, or an unset day. */
+  const tp=todaysPlan(c.id);
+  const w=tp.w;
+  const restToday=tp.rest;
+  /* v18.38 — unread coach reminder (auto-sent by the coach's device after
+     3+ skipped days). */
+  const remMsg=MSGS.filter(m=>m.client===c.name&&m.from==='coach'&&m.type==='reminder'&&!m.read).slice(-1)[0];
+  /* v18.81 — active challenges for the bottom wiring block (entry → chalListModal). */
+  const chs=CHALLENGES.filter(ch=>ch.status==='active'&&CHAL.parts(ch).some(x=>x.id===c.id));
+  /* v18.71 — habits checklist (auto/count/tick) for Today. */
+  const HS=habitsSummary(c,isoToday());
+  const HL=(c.hlog||{})[isoToday()]||{};
+  const pmT=progMeta(c); /* v18.76 — mockup fhero "who" line shows the program week */
+  /* Real nutrition snapshot — NEng, the exact source the Nutrition page uses. */
+  const tg=NEng.targets(c),coN=NEng.consumed(c,isoToday()),remK=NEng.remaining(c,isoToday());
+  const wkTotal=w?w.exercises.reduce((a,e)=>a+e.sets,0):0;
+  return `<div class="cbody">
+    <!-- v18.76 — mockup 01 Today: momentum hero is the FIRST card (greeting
+         strip + month strip removed — the 7-day strip covers the week) -->
+    <!-- v18.71 mockup 01 Today — Daily Momentum hero: today pts + level bar + 7-day strip + streak guard -->
+    ${(()=>{ const P=c.pts||0, lvl=Math.floor(P/100)+1, toNext=100-(P%100);
+      const today=isoToday(), ptsToday=(c.ptsDate===today)?(c.ptsDay||0):0;
+      const WL=wlogOf(c.id), actToday=WL.some(l=>l&&l.d===today)||(HS&&HS.done>0);
+      const atRisk=(c.dayStreak||0)>0&&!actToday;
+      const mon=new Date(TDATE); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+      const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6];
+      const DL=lang==='fa'?['ش','ی','د','س','چ','پ','ج']:['Mo','Tu','We','Th','Fr','Sa','Su'];
+      const cells=order.map((dow,k)=>{ const d=new Date(mon); d.setDate(mon.getDate()+dow);
+        const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const isT=d.toDateString()===TDATE.toDateString(), did=WL.some(l=>l&&l.d===iso);
+        return `<div class="mw-d ${did?'done':''} ${isT?'today':''}"><i>${DL[k]}</i><b>${did?ic('check',12):''}</b></div>`;
+      }).join('');
+      return `<div class="hero-m">
+        <div class="mom-top"><div class="eyebrow">${t('Daily Momentum')}</div>
+          <span class="pill" style="height:26px;font-size:11.5px">${ic('flame',13)}${nf(c.dayStreak||0)} ${t('days')}</span></div>
+        <div class="mom-big">
+          <div class="mom-num"><b>+${nf(ptsToday)}</b><span>${t('pts today')}</span></div>
+          <div class="mom-lvl"><div class="mom-lvl-l"><span>${t('Level')} ${nf(lvl)}</span><span class="mono">${nf(toNext)} ${t('pt to Level')} ${nf(lvl+1)}</span></div>
+            <div class="pbar"><i style="width:${100-toNext}%"></i></div></div>
+        </div>
+        <div class="mom-week">${cells}</div>
+        ${atRisk?`<div class="mom-danger"><span class="md-ic">${ic('alert-circle',16)}</span>
+            <div class="md-txt"><b>${nf(c.dayStreak)} ${t('streak at risk')}</b><span>${t('Finish one habit today to keep it')}</span></div>
+            <button class="btn btn-lime" data-act="jump-habits">${t('Protect')}</button></div>`
+          :(actToday&&c.dayStreak>0?`<div class="mom-danger saved"><span class="md-ic">${ic('check-circle',16)}</span>
+            <div class="md-txt"><b>${t('Streak kept')} — ${nf(c.dayStreak)} ${t('days')}</b><span>${t('Activity logged today')}</span></div></div>`:'')}
+      </div>`; })()}
+    <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
+    ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
+      if(!actN)return '';
+      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Action needed')}</span><span class="sec-c">${nf(actN)}</span></div>
+      ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
+        <div class="row">
+          <span class="badge b-amber">${ic('clock',13)}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted">${t('Start a session or send a check-in')}</div></div>
+          ${w?`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="open-player" data-wid="${w.id}">${t('Start')}</button>`:`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
+          <button class="btn btn-ghost btn-icon" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}" title="${t('Got it')}" style="width:28px;height:28px;flex:none">${ic('x',13)}</button>
+        </div>
+      </div>`:''}
+      ${!c.intake?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
+        <div class="row">
+          <span class="badge b-amber">${ic('clipboard-list',13)}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${t('Intake form')}</b><div class="muted">${t('Your coach needs your health background before the first session')}</div></div>
+          <button class="btn btn-lime" style="padding:8px 11px;font-size:11.5px;flex:none" data-act="intake-open">${t('Fill intake form')}</button>
+        </div>
+      </div>`:''}`})()}
+    <!-- Habits accordion — mockup .hab-card (header + dashed divider + tick rows) -->
+    <div class="cc hab-card">
+      <div class="hab-hd ${S.habOpen===false?'':'open'}" data-act="hab-toggle">
+        <span class="hab-ic">${ic('flame',18)}</span>
+        <div class="hab-t"><b>${t('Habits')} <span class="new">NEW</span></b><span><b>${nf(HS.done)}/${nf(HS.all)}</b> ${t('Done')} · <span>${nf(HS.pct)}%</span> ${t('today')}</span></div>
+        ${ic('chevD',17)}
+      </div>
+      <div class="hab-bd ${S.habOpen===false?'closed':''}"><div class="hab-wr">
+        <div class="pbar" style="margin:0 0 8px"><i style="width:${HS.pct}%"></i></div>
+        ${HS.rows.map(({h,s})=>`
+        <div class="hab ${s.done?'done':''}">
+          <button class="tick" data-act="hab-tick" data-k="${esc(h.id)}" aria-label="${esc(h.name)}">${ic('check',13)}</button>
+          <div class="txt"><b>${esc(t(h.name))}</b><span>${esc(s.sub)}</span></div>
+          ${h.type==='count'
+            ?`<input class="hab-n" type="number" min="0" inputmode="numeric" data-change="hab-num" data-k="${esc(h.id)}" value="${+HL[h.id]||0}">`
+            :`<span class="hv ${s.done?'':'off'}">${s.val==='✓'?ic('check',12):esc(s.val)}</span>`}
+        </div>`).join('')}
+      </div></div>
+    </div>
+    <!-- Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
+    <div class="sec"><span class="sec-t">${ic('dumbbell',15)} ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
+    ${w?`<div class="fhero">
+      <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
+        <span class="chip">${t(w.day)}</span>
+        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
+      </div>
+      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
+      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}`:''}</div>
+      <div class="meta" style="position:relative;z-index:1">
+        <div>${t('Duration')}<b>${t(w.dur)}</b></div>
+        <div>${t('exercises')}<b>${nf(w.exercises.length)}</b></div>
+        <div>${t('sets')}<b>${nf(wkTotal)}</b></div>
+      </div>
+      <div class="cta" style="position:relative;z-index:1">
+        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
+        <button class="btn btn-out" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
+      </div>
+    </div>`
+    :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
+    :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
+    <!-- Nutrition — mockup .sec header + compact "Left today" card -->
+    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
+    ${tg?`<div class="cc tight">
+      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t('Left today')}</b><span class="badge b-lime mono">${nf(remK?remK.kcal:0)} kcal</span></div>
+      <div class="pbar" style="margin-top:9px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
+    </div>`:`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
+    <!-- v18.81 — WIRING (below the mockup's last block, so everything above stays
+         pixel-identical to the mockup): the client tools the mockup's Today does not
+         draw but the system still needs reachable — daily check-in, challenges, form check. -->
+    <div class="sec"><span class="sec-t">${ic('activity',15)} ${t('Quick check-in')}</span></div>
+    <div class="cc tight">
+      <div class="muted" style="font-size:12.5px;margin-bottom:8px">${t('How did training feel today?')}</div>
+      ${[['Energy','cEnergy',['Low','OK','High']],['Soreness','cSore',['None','Some','A lot']],['Sleep','cSleep',['Poor','Fine','Great']]].map(([lbl,key,opts])=>`
+      <div style="margin-bottom:8px"><div class="lbl" style="margin-bottom:4px">${t(lbl)}</div>
+      <div class="seg" style="width:100%;display:flex">${opts.map(o=>`<button style="flex:1" class="${S[key]===o?'on':''}" data-act="ck" data-k="${key}" data-v="${o}">${t(o)}</button>`).join('')}</div></div>`).join('')}
+      <button class="btn btn-lime" data-act="send-checkin">${t('Send check-in')}</button>
+    </div>
+    <div class="sec"><span class="sec-t">${ic('flag',15)} ${t('Challenges')}</span>${chs.length?`<span class="sec-c">${nf(chs.length)}</span>`:''}</div>
+    <div class="cc tight">
+      <div class="row" style="gap:8px">
+        <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" data-act="chal-list">${ic('trophy',13)} ${t('See all')}</button>
+        <button class="btn btn-lime btn-sm" style="flex:1;justify-content:center" data-act="chal-own">${ic('plus',13)} ${t('New')}</button>
+      </div>
+      <button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:8px" data-act="fc-open">${ic('camera',14)} ${t('Form check')}</button>
+    </div>
+  </div>`;
+}
+/* v18.75 — plan 1ج: the STRUCTURED current-program record (c.prog2) rides on
+   the client so the Training hero can show block/phase/weeks for real.\   Falls back to the legacy flat fields (c.prog + c.week, 12-week block) so
+   every client saved before this renders exactly as it did before. */
+function progMeta(c){
+  const p=c&&c.prog2&&typeof c.prog2==='object'?c.prog2:null;
+  const weeks=Math.max(1,Math.min(52,+(p&&p.weeks)||12));
+  const phases=+(p&&p.phases)||0, phase=+(p&&p.phase)||0;
+  const wk=Math.max(1,Math.min(weeks,+(p&&p.week)||+(c&&c.week)||1));
+  const name=(p&&p.name)||((c&&c.prog)||'');
+  const freq=(c&&c.freq)||'';
+  const chip=(phase>0&&phases>0)?`${t('Phase')} ${nf(phase)}/${nf(phases)}`
+    :(/block|phase/i.test(name)?name:freq);
+  return {name,wk,weeks,phase,phases,chip,pct:Math.round(wk/weeks*100)};
+}
+function cWorkouts(){
+  const c=client(S.cid),db=DB[c.id];
+  /* v18.14 — pill filters. v18.62 — Pending/Completed = THIS week.
+     v18.71 — mockup Training screen (#02): program hero → today spotlight →
+     interactive week strip → filterable list → session history. */
+  const f=S.cwfilter||'All';
+  const list=db.workouts.filter(w=>f==='All'||(f==='Pending'?!wDone(w):wDone(w)));
+  const cnt=v=>v==='All'?db.workouts.length:db.workouts.filter(w=>v==='Pending'?!wDone(w):wDone(w)).length;
+  /* --- hero: prog2 (plan 1ج) with a legacy fallback --- */
+  const pm=progMeta(c);
+  const prog=pm.name;
+  const chip=pm.chip;
+  const freqN=parseInt(c.freq)||0;
+  const avgMin=db.workouts.length?Math.round(db.workouts.reduce((a,w)=>a+(parseInt(w.dur)||0),0)/db.workouts.length):0;
+  const sp=splitOf(c.id);
+  const spW=sp.map(s=>s&&s.t==='w'?splitW(c.id,s):null).filter(Boolean);
+  const setsWk=spW.length?spW.reduce((a,w)=>a+w.exercises.reduce((x,e)=>x+e.sets,0),0)
+                         :db.workouts.reduce((a,w)=>a+w.exercises.reduce((x,e)=>x+e.sets,0),0);
+  const weekTotal=spW.length||db.workouts.length;
+  const weekDone=spW.length?spW.filter(w=>wDone(w)).length:db.workouts.filter(wDone).length;
+  const wk=pm.wk, weeks=pm.weeks;
+  const wkPct=weekTotal?Math.round(weekDone/weekTotal*100):0;
+  /* --- today spotlight --- */
+  const DAYN=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const tp=todaysPlan(c.id),tw=tp.w,tRest=tp.rest;
+  /* v18.85 — mockup chips are short tags (Squat / RDL / Leg Press / Calf Raise)
+     that fit ONE row. The demo's names are long ("Incline Dumbbell Press"), which
+     wrapped the row to 60px instead of the mockup's 27px. Cap each chip at two
+     words / 16 chars — short names stay untouched, long ones stay readable. */
+  const chipNm=s=>{const w=String(s).split(' ');const n=w.length>2?w.slice(0,2).join(' '):s;return n.length>16?n.slice(0,15)+'…':n};
+  const twChips=tw?tw.exercises.slice(0,3).map(e=>`<span>${esc(chipNm(t(EXERCISES[e.ex].n)))}</span>`).join('')+(tw.exercises.length>3?`<i>+${nf(tw.exercises.length-3)}</i>`:''):'';
+  const lastLog=tw?wlogOf(c.id).find(l=>l&&l.n===tw.name):null;
+  /* --- week strip (mockup .tr-week/.wkd) --- */
+  const mon=new Date(TDATE);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+  const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6];
+  const DLBL=lang==='fa'?['ش','ی','د','س','چ','پ','ج']:['Mo','Tu','We','Th','Fr','Sa','Su'];
+  const weekCells=order.map((dow,k)=>{
+    const d=new Date(mon);d.setDate(mon.getDate()+dow);
+    const isT=d.toDateString()===TDATE.toDateString();
+    const s=sp[dow];
+    const inner=`<span>${DLBL[k]}</span><b>${nf(d.getDate())}</b>`;
+    if(!s)return `<span class="wkd ${isT?'today':''}">${inner}<em>—</em></span>`;
+    if(s.t==='rest')return `<span class="wkd rest ${isT?'today':''}">${inner}<em>${t('Rest')}</em></span>`;
+    const w=splitW(c.id,s);
+    /* v18.88 — WIRING: every cell rendered cursor:pointer but carried NO data-act
+       (click = NO-OP, confirmed by a click test). A training day now opens THAT
+       day's workout via the same open-player path the cards use; rest/unset days
+       carry no action at all, and the CSS only shows a pointer for [data-act]. */
+    const wn=w?String(t(w.name)).split(/[ —–-]+/)[0]:'…';
+    return `<span class="wkd ${w&&wDone(w)?'done':''} ${isT?'today':''}"${w?` data-act="open-player" data-wid="${esc(String(w.id))}"`:''}>${inner}<em>${esc(wn)}</em></span>`;
+  }).join('');
+  const hero=`
+    <div class="tr-hero">
+      <div class="tr-hero-top">
+        <div><div class="tr-eb">${t('Current program')}</div><div class="tr-name">${esc(prog||t('No workouts yet'))}</div></div>
+        ${chip?`<span class="tr-phase">${esc(t(chip))}</span>`:''}
+      </div>
+      <div class="tr-segwk">${Array.from({length:weeks},(_,i)=>`<i class="${i+1<wk?'d':(i+1===wk?'cur':'')}"></i>`).join('')}</div>
+      <div class="tr-segwk-l"><span>${t('Week')} ${nf(wk)} ${t('of')} ${nf(weeks)}</span><span>${nf(pm.pct)}%</span></div>
+      <div class="tr-hstats">
+        <div><b>${freqN?nf(freqN):'—'}</b><span>${t('days / wk')}</span></div>
+        <div><b>${avgMin?nf(avgMin)+"'":'—'}</b><span>${t('avg time')}</span></div>
+        <div><b>${nf(setsWk)}</b><span>${t('sets / wk')}</span></div>
+        <div><b>${nf(weekDone)}</b><span>${t('this week')}</span></div>
+      </div>
+    </div>`;
+  const spotlight=tw?`
+    <div class="tr-today">
+      <div class="tr-today-h"><span class="tr-today-eb">${t('Today')} · ${t(DAYN[TODAY])}</span><span class="badge b-amber">${t('Next up')}</span></div>
+      <div class="tr-today-name">${esc(t(tw.name))}</div>
+      <div class="tr-exrow">${twChips}</div>
+      ${lastLog?`<div class="tr-last">${t('Last')}: ${nf(lastLog.done)} ${t('sets')}${lastLog.rpe!=null?` · RPE ${nf(lastLog.rpe)}`:''}</div>`:''}
+      <div class="tr-today-cta">
+        <button class="btn btn-lime" data-act="open-player" data-wid="${esc(String(tw.id))}">${ic('play',13)} ${wDone(tw)?t('View summary'):t('Start Workout')}</button>
+        <button class="btn btn-out" data-act="open-player" data-wid="${esc(String(tw.id))}">${t('Preview')}</button>
+      </div>
+    </div>`:tRest?`
+    <div class="tr-today">
+      <div class="tr-today-h"><span class="tr-today-eb">${t('Today')} · ${t(DAYN[TODAY])}</span></div>
+      <div class="tr-today-name">${ic('moon',15)} ${t('Rest day')}</div>
+      <div class="tr-last" style="color:var(--ink3)">${t('Recovery is part of the program — come back stronger')}</div>
+    </div>`:'';
+  return `<div class="cbody">
+    ${hero}
+    ${spotlight}
+    <div class="sec"><span class="sec-t">${ic('calendar',14)} ${t('This week')}</span><span class="sec-c mono">${nf(weekDone)}/${nf(weekTotal)} ${t('Done')}</span></div>
+    <div class="tr-week">
+      <div class="tr-wdays">${weekCells}</div>
+      <div class="tr-wfoot"><div class="lbl"><span>${t('Weekly goal')} · ${nf(weekTotal)} ${t('sessions')}</span><b>${nf(wkPct)}%</b></div>
+      <div class="pbar"><i style="width:${wkPct}%"></i></div></div>
+    </div>
+    <div class="sec"><span class="sec-t">${ic('dumbbell',14)} ${t('Workouts')}</span><span class="muted mono">${nf(list.length)} ${t('total')}</span></div>
+    <div class="filters">
+      ${['All','Pending','Completed'].map(v=>`<button class="fchip ${f===v?'on':''}" data-act="cwfilter" data-v="${v}">${t(v)} ${nf(cnt(v))}</button>`).join('')}
+    </div>
+    ${list.length?list.map(w=>{const total=w.exercises.reduce((a,e)=>a+e.sets,0);
+    const done=wDone(w);
+    const dots=w.exercises.slice(0,3).map(e=>{const n=String(t(EXERCISES[e.ex].n)).split(' ');return `<span>${esc(n[n.length-1]||n)}</span>`}).join('')
+      +(w.exercises.length>3?`<i>+${nf(w.exercises.length-3)}</i>`:'');
+    const d3=String(w.day||'').slice(0,3).toUpperCase();
+    /* v18.76 — mockup: REAL date number on the day tile + tonnage + last RPE.
+       w.day is the full day NAME ("Thursday") — map it through WDN (Mon=0). */
+    const di=WDN.indexOf(String(w.day||'').slice(0,3));
+    const dnum=(()=>{const d=new Date(mon);d.setDate(mon.getDate()+(di>=0?di:0));return d.getDate()})();
+    const lg=done?wlogOf(c.id).slice().reverse().find(l=>l&&l.n===w.name):null;
+    const tons=lg&&lg.vol?Math.round(lg.vol/10)/100:Math.round(w.exercises.reduce((a,e)=>a+e.sets*(+e.kg||0)*(+e.reps||0),0)/100)/10;
+    return `<div class="wcard" data-st="${done?'done':'pend'}" data-act="open-player" data-wid="${esc(String(w.id))}" style="cursor:pointer">
+      <div class="tr-day"><b>${esc(d3)}</b><span>${nf(dnum)}</span></div>
+      <div class="t"><b>${esc(w.name)}</b>
+        <div class="tr-exdots">${dots}</div>
+        <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(tons)} ${t('t')}</i><i>${esc(String(t(w.dur)).replace(/\s*(min\b|دقیقه)/i,'m'))}</i></div>
+      </div>
+      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?ic('check',11)+' '+t('Done'):ic('play',11)+' '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
+    </div>`}).join('')
+    :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
+    <!-- v18.87 - Session history block removed from the student Training tab
+         (user request). The coach-side list in the client Overview card is a
+         different section and is untouched; wlogOf is still used for the
+         cards' tonnage/RPE and the mockup's "Last week" line. -->
+  </div>`;
+}
+/* v18.24 — FitFlow month strip: S M T W T F S letter row + date row, today
+   highlighted with a lime pill (like the inspiration board's March strip).
+   Shows the current calendar week (Mon..Sun). */
+function monthStrip(){
+  const mon=new Date(TDATE);mon.setDate(mon.getDate()-((mon.getDay()+6)%7)); // Monday of this week
+  const days=[...Array(7)].map((_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d});
+  const letters=['S','M','T','W','T','F','S'];
+  const faLetters=['ش','ی','د','س','چ','پ','ج']; // Persian week starts Saturday
+  const order=lang==='fa'?[6,0,1,2,3,4,5]:[0,1,2,3,4,5,6]; // FA: ش ی د س چ پ ج = Sat..Fri
+  /* v18.60 — Stitch calendar strip: uppercase month + week chip + Calendar
+     link, full-width day tiles (today = accent fill). Same dates as before. */
+  const cell=(i)=>{const idx=order[i];const d=days[idx];const isT=d.toDateString()===TDATE.toDateString();
+    /* v18.62 — split marker: 💪 training (named workout), 🌙 rest, none unset */
+    const s=splitOf(S.cid)[idx];
+    const mk=s?(s.t==='rest'?`<span class="td-mk rest">${ic('moon',10)}</span>`:`<span class="td-mk">${ic('dumbbell',10)}</span>`):`<span class="td-mk"></span>`;
+    return `<div class="td-day ${isT?'on':''}" title="${s?(s.t==='rest'?t('Rest day'):esc(t((splitW(S.cid,s)||{}).name||''))):''}">
+      <span class="td-dl">${lang==='fa'?faLetters[idx]:letters[idx]}</span>
+      <span class="td-dn">${nf(d.getDate())}</span>
+      ${mk}
+    </div>`};
+  const mName=lang==='fa'?TDATE.toLocaleDateString('fa-IR',{month:'long'}):TDATE.toLocaleDateString('en-US',{month:'long'});
+  /* ISO-ish week number of the displayed date (decorative chip, like the
+     design's "Week 42"). */
+  const wkOf=(d)=>{const t2=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+    const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);
+    const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));
+    return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)};
+  return `<div class="ccard" style="padding:12px 14px">
+    <div class="row" style="justify-content:space-between;margin-bottom:9px">
+      <div class="row" style="gap:8px"><b class="td-cal-m">${esc(mName)} ${nf(TDATE.getFullYear())}</b><span class="td-chip">${t('Week')} ${nf(wkOf(TDATE))}</span></div>
+      <button class="td-calbtn" data-act="cnav" data-t="sessions">${t('Calendar')} ${ic('chevR',13)}</button>
+    </div>
+    <div style="display:flex;gap:5px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
+  </div>`;
+}
+/* v18.81 — achievement badge emoji → lucide, PHONE ONLY. GAM.BADGES is shared with
+   the coach platform, so we map at the render site instead of mutating the data —
+   the two platforms stay independent (mockup's hydration MAP mirrored here). */
+const BADGE_ICONS={'🌱':'sprout','💪':'dumbbell','🏋':'dumbbell','🏆':'trophy','👑':'crown','🔥':'flame','⚡':'zap','🥗':'salad','📸':'camera','🎯':'target','💧':'droplet','✅':'check-circle'};
+/* Strip U+FE0F (emoji presentation selector) first — '🏋️' ≠ '🏋'. */
+const badgeIcon=e=>BADGE_ICONS[String(e||'').replace(/\uFE0F/g,'')]||null;
+function cProgress(){
+  const lm=lastM(S.cid);
+  const c=client(S.cid);
+  const photos=(DB[c.id].photos||[]).filter(p=>p.ok!==false);
+  const sc=RPT.score(c).score;
+  const ad=RPT.adherence(c);
+  const tr=RPT.trend(c);
+  const fm=RPT.form(c);
+  const range=S.prgRange||'Week';
+  /* v18.61 — real data: Week = last 7 days (did I train?), Day = today,
+     Month = last 12 weeks of consistency vs my weekly target. */
+  const daily=range!=='Month'?dailyTrain(c.id,range==='Day'?1:7):null;
+  const cons=range==='Month'?consistWeeks(c.id,12):null;
+  /* v18.71 — mockup 06 Progress: grade ring + weight chart + PR rows + photo
+     compare + badge board, all computed from the client's real data. */
+  const wtR=S.wtRange||'3M';
+  const prs=prList(c.id,5);
+  const sorted=[...photos].sort((a,b)=>(a.id||0)-(b.id||0));
+  const older=sorted[0],newer=sorted[sorted.length-1];
+  const first1=String(c.name||'').split(' ')[0];
+  const train7=dailyTrain(c.id,7);
+  /* dailyTrain marks a trained day as 100 — count the DAYS, don't sum them. */
+  const t7=train7&&Array.isArray(train7.d)?train7.d.filter(v=>+v>0).length:0;
+  const adh7=NEng.adherence(c,7);
+  const gW=lm&&lm.w!=null?lm.w:(c.weight||0);
+  const trTxt=tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg';
+  const gName=sc>=80?t('Strong week'):sc>=60?t('Solid week'):t('Keep building');
+  return `<div class="cbody">
+    <div class="grade">
+      <div class="ring">
+        <svg viewBox="0 0 78 78" width="78" height="78"><circle cx="39" cy="39" r="32" fill="none" stroke="#22262D" stroke-width="7"/><circle cx="39" cy="39" r="32" fill="none" stroke="#C8F04B" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="${Math.max(0,Math.min(201,Math.round(201*(1-sc/100))))}" transform="rotate(-90 39 39)"/></svg>
+        <span>${nf(sc)}</span>
+      </div>
+      <div class="t">
+        <div class="eb">${t('Health grade')}</div>
+        <b>${gName}, ${esc(first1)}</b>
+        <p>${t('Training')} ${nf(t7)}/7 · ${t('protein hit')} ${nf(adh7.protHits)} ${t('days')}</p>
+        <div class="gm"><span class="up">${ad.pct!=null?'↑ '+nf(ad.pct)+'%':t('Not enough data')}</span><span>${t('Weight')} ${nf(gW)}kg</span><span>${trTxt}</span></div>
+      </div>
+    </div>
+    <div class="chart">
+      <div class="h"><b>${t('Weight trend')}</b>
+        <div class="rng">${[['30D','4W'],['3M','12W'],['1Y','1Y']].map(([r,l])=>`<i class="${wtR===r?'on':''}" data-act="wt-range" data-r="${r}">${l}</i>`).join('')}</div></div>
+      <div class="sub">${nf(gW)} kg · ${trTxt}</div>
+      ${wChart(S.cid,90,wtR)}
+      <div class="row" style="justify-content:space-between;align-items:center;margin-top:9px">
+        <span>${wtBadge(S.cid)||`<span class="muted" style="font-size:11px">${t('Every week')}</span>`}</span>
+        <button class="btn btn-outline btn-sm" data-act="cmeas-open">${ic('ruler',13)} ${t('Weekly check-in')}</button>
+      </div>
+    </div>
+    <div class="card-t" style="margin:2px 14px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px 12px">
+      ${[
+        ['Calories',(nPlanOf(c.name)?nPlanOf(c.name).train.kcal:0)||'—',(nPlanOf(c.name)?'kcal':'')],
+        ['Weight',lm&&lm.w!=null?nf(lm.w):nf(c.weight||0),'kg'],
+        ['Body Fat',lm&&lm.bf!=null?nf(lm.bf):nf(c.bf||0),'%'],
+        ['Heart beat','80','bpm']
+      ].map(([k,v,u])=>`
+      <div class="ccard" style="padding:12px 14px">
+        <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:11px;font-weight:700">${t(k)}</span><span style="color:var(--accent)">${ic(k==='Calories'?'utensils':k==='Weight'?'ruler':k==='Body Fat'?'user':'zap',13)}</span></div>
+        <div style="font-weight:800;font-size:19px;margin-top:6px;letter-spacing:-.02em">${typeof v==='number'?nf(v):v}</div>
+        ${u?`<div class="muted" style="font-size:10px;font-weight:700;margin-top:1px">${u}</div>`:''}
+      </div>`).join('')}
+    </div>
+    <div class="ccard">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <b style="font-size:13.5px">${t('Workout')}</b>
+        <div class="seg">${['Week','Day','Month'].map(r=>`<button class="${range===r?'on':''}" data-act="prg-range" data-r="${r}">${t(r)}</button>`).join('')}</div>
+      </div>
+      ${daily?barChart(daily.d,{h:150,labels:daily.labs,c:'var(--accent)'}):cons?barChart(cons,{h:150,labels:['W1','W3','W5','W7','W9','W11'],c:'var(--accent)'}):chartEmpty(t('Complete a workout to fill this chart'))}
+      <div class="row" style="gap:10px;margin-top:8px;font-size:11px;color:var(--ink2)">
+        <span>${t('Workout completion')}: <b style="color:var(--ink)">${ad.pct!=null?nf(ad.pct)+'%':'—'}</b></span>
+        <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
+      </div>
+    </div>
+    <div class="sec"><span class="sec-t">${ic('trophy',15)} ${t('Personal records')}</span><span class="sec-c">${nf(prs.length)}</span></div>
+    ${prs.length?`<div class="cc tight prs">
+      ${prs.map(p=>`<div class="pr"><span class="ic">${ic('dumbbell',17)}</span><div class="t"><b>${t(p.n)}</b><span>${p.d} · ${p.g}</span></div><span class="v">${p.t}</span></div>`).join('')}
+    </div>`:`<div class="cc tight">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}
+    ${PREFS.priv.photos?`
+    <div class="sec"><span class="sec-t">${ic('camera',15)} ${t('Progress photos')}</span><span class="sec-c muted">${t('Drag to compare')}</span></div>
+    <div class="cc tight">
+      ${sorted.length>=2?`<div class="compare">
+        <div class="base" style="background-image:url('${older.src}');background-size:cover;background-position:center"><span class="lab">${t('Earlier')}</span></div>
+        <div class="top" id="cmpTop" style="width:52%;background-image:url('${newer.src}');background-size:cover;background-position:left center"><span class="lab">${t('Latest')}</span></div>
+        <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
+      </div>`
+      :(sorted.length?`<div class="row" style="gap:8px">${sorted.slice(-4).map(p=>`<div style="flex:1;aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid #2E333B"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`
+        :`<div class="muted" style="font-size:12px">${t('No photos yet — add the first one')}</div>`)}
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
+    </div>`:''}
+    <div class="sec"><span class="sec-t">${ic('award',15)} ${t('Achievements')}</span><span class="sec-c mono">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</span></div>
+    <div class="cc tight">
+      <div class="badges">
+        ${GAM.BADGES.slice(0,8).map(b=>{const on=(c.badges||[]).some(x=>x&&x.id===b.id);
+        return `<div class="bg1 ${on?'':'lock'}" data-act="gam-open" style="cursor:pointer"><div class="em">${badgeIcon(b.e)?ic(badgeIcon(b.e),22):esc(b.e)}</div><b>${esc(t(b.n))}</b></div>`}).join('')}
+      </div>
+      <div class="row" style="justify-content:space-between;margin-top:10px;align-items:center">
+        <span class="chip">⭐ ${nf(c.pts||0)} ${t('Points')}</span>
+        <button class="btn btn-outline btn-sm" data-act="gam-open">${t('View all')} ${t('Badges')}</button>
+      </div>
+    </div>
+    ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
+    /* v18.71 mockup 06 — weight chart + check-in moved UP into the .chart card */
+    <div class="ccard"><b style="font-size:13.5px">${t('Strength Progression')}</b>
+      ${(()=>{const st=strengthSeries(c.id);
+        const ss=st?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
+          .filter(([k])=>st[k]).map(([k,col,l])=>({d:st[k],c:col,l})):[];
+        if(!ss.length)return chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'));
+        return `<div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap">${ss.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</div>
+      ${multiChart(ss.map(({d,c:col})=>({d,c:col})))}`})()}</div>
+    /* v18.71 mockup 06 — PRs + photos now live in the sections above */
+  </div>`;
+}
+/* ================= v18.48 — STUDENT NUTRITION HUB =================
+   The student side of the Nutrition Assistant: daily dashboard, one-tap
+   logging, "what should I eat now?", the assistant chat and the personal
+   nutrition profile. The coach's PLAN stays the source of truth for targets —
+   the assistant works AROUND it and never overwrites it. */
+let NA_PIC=null; // photo attached to the next assistant message (vision-ready path)
+function naBar(k,a,b,u){
+  const pct=b>0?Math.min(100,Math.round(a/b*100)):0;
+  const over=b>0&&a>b;
+  return `<div style="margin-bottom:9px"><div class="row" style="justify-content:space-between;font-size:12px"><span style="color:var(--ink2);font-weight:600">${t(k)}</span><b style="${over?'color:var(--amber)':''}">${nf(a)} / ${nf(b)} ${u}</b></div><div class="pbar" style="margin-top:3px"><i style="width:${pct}%"></i></div></div>`;
+}
+function cNutrition(){
+  const c=client(S.cid);
+  const p=nPlanOf(c.name);
+  const tg=NEng.targets(c),co=NEng.consumed(c,isoToday()),rem=NEng.remaining(c,isoToday());
+  const water=NEng.waterOf(c,isoToday()),waterT=NEng.waterT(c);
+  const logs=NEng.logs(c,isoToday()).filter(l=>l.type!=='water');
+  const mealsN=NEng.mealsLogged(c,isoToday());
+  const mealsGoal=(c.nprof&&c.nprof.meals>0)?c.nprof.meals:(p?5:4);
+  const np=c.nprof;
+  const fresh=!p&&!np&&!NLOGS.some(l=>l.client===c.name);
+  const sug=fresh?null:NEng.suggestNow(c);
+  /* v18.71 — mockup 04: one-tap favorites are REAL library foods with their own
+     serving sizes, so kcal/macros are computed, never invented. */
+  const FAV_DEF=[['Whey Protein',30],['Banana',100],['White Rice (cooked)',200],['Greek Yogurt',150],['Almonds',15]];
+  const favs=FAV_DEF.map(([n,g])=>{const f=FOODS.find(x=>x.n===n);return f?{key:n,name:foodName(n),g,k:Math.round(f.kcal*g/100)}:null}).filter(Boolean);
+  const quickN=logs.filter(l=>l&&l.src==='qfav').length;
+  const lastWater=NEng.logs(c,isoToday()).filter(l=>l&&l.ml).sort((a,b)=>(b.at||0)-(a.at||0))[0];
+  const wPct=waterT?Math.min(100,Math.round(water/waterT*100)):0;
+  const mp=(v,goal)=>goal&&goal>0?Math.min(100,Math.round(v/goal*100)):0;
+  return `<div class="cbody">
+    ${fresh?`<div class="ccard cempty">${ic('utensils',26)}<b>${t('Your nutrition companion')}</b><span class="muted" style="font-size:12.5px">${t('Log what you eat, ask for meal ideas and let your coach follow your progress.')}</span>
+      <button class="btn btn-lime" data-act="nprof-open" style="margin-top:10px">${ic('user',15)} ${t('Set up nutrition profile')}</button></div>`
+    :`
+    ${tg?`
+    <div class="kcal">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <span class="eyebrow">${t('Remaining today')}</span>
+        <span class="bdg ${NEng.dow(isoToday())===TODAY&&(p&&p.days[TODAY].type==='train')?'bdg-lime':'bdg-purple'}" style="font-size:9.5px">${p?(p.days[TODAY].type==='train'?t('Training Day'):t('Rest Day')):t('From your profile')}</span>
+      </div>
+      <div class="big">${nf(rem.kcal)} <small>${t('kcal left')}</small></div>
+      <div class="pbar" style="margin-top:9px"><i style="width:${mp(co.kcal,tg.kcal)}%"></i></div>
+      <div class="macros">
+        <div class="macro p"><div class="lab"><span>${t('Protein')}</span><b>${nf(co.p)}/${nf(tg.p)}g</b></div><div class="pbar"><i style="width:${mp(co.p,tg.p)}%"></i></div></div>
+        <div class="macro c"><div class="lab"><span>${t('Carbs')}</span><b>${nf(co.c)}/${nf(tg.c)}g</b></div><div class="pbar"><i style="width:${mp(co.c,tg.c)}%"></i></div></div>
+        <div class="macro f"><div class="lab"><span>${t('Fat')}</span><b>${nf(co.f)}/${nf(tg.f)}g</b></div><div class="pbar"><i style="width:${mp(co.f,tg.f)}%"></i></div></div>
+      </div>
+    </div>`
+    :`<div class="ccard"><div class="row" style="justify-content:space-between;align-items:center">
+        <b style="font-size:14px">${t('Today')}</b>
+        <button class="fchip" data-act="nprof-open">${ic('target',12)} ${t('Set targets')}</button></div>
+      <div class="muted" style="font-size:12.5px;margin-top:8px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}`}
+    ${p?`
+    <div class="sec"><span class="sec-t">${ic('utensils-crossed',15)} ${t("Today's Meals")}</span><span class="sec-c mono">${nf(mealsN)}/${nf(mealsGoal)}</span></div>
+    <div class="cc tight">
+      ${(()=>{const ms=p.days[TODAY].meals;
+        const isLogged=mm=>logs.some(l=>l.meal===mm.name&&Math.abs(l.kcal-Math.round(mealKcal(mm)))<5);
+        const firstUn=ms.findIndex(mm=>!isLogged(mm));
+        return ms.map((m,mi)=>{const logged=isLogged(m),due=!logged&&mi===firstUn;
+        const kcal=Math.round(mealKcal(m));
+        const open=(S.macc!=null)?S.macc.includes(mi):logged;
+        const nm=(m.name||'').toLowerCase();
+        const mic=nm.includes('break')||nm.includes('صبح')?['egg','#F0B457','rgba(229,169,60,.15)']
+          :nm.includes('lunch')||nm.includes('ناهار')?['salad','#7EA0FF','rgba(77,124,254,.15)']
+          :nm.includes('dinner')||nm.includes('شام')?['utensils-crossed','#B79CFF','rgba(139,92,246,.15)']
+          :nm.includes('snack')||nm.includes('میان')?['cup-soda','#5EE2A0','rgba(43,191,113,.15)']
+          :['utensils','#F0B457','rgba(229,169,60,.15)'];
+        return `<div class="macc ${open?'open':''} ${logged?'logged':''}">
+          <div class="macc-head" data-act="macc-toggle" data-i="${mi}">
+            <span class="mi" style="background:${mic[2]};color:${mic[1]}">${ic(mic[0],17)}</span>
+            <div class="t"><b>${t(m.name)}</b><span>${logged?t('Logged'):t('Planned')} · ${nf(m.foods.length)} ${t('items')}</span></div>
+            ${logged?`<span class="badge b-lime mbadge">${ic('check',13)}</span>`:due?`<span class="badge b-amber mbadge">${t('Due')}</span>`:`<span class="badge b-gray mbadge">${t('Plan')}</span>`}
+            <span class="mkc">${nf(kcal)}</span>
+          </div>
+          <div class="macc-body">
+            <div class="mcols"><span class="sp"></span><span class="f">${t('Food')}</span><span class="a">${t('Amount')}</span><span class="k">${t('Kcal')}</span></div>
+            ${m.foods.map(x=>{const f=FOODS[x.fi];if(!f)return'';const kk=Math.round(f.kcal*x.g/100);
+              return `<div class="mitem"><span class="dot"></span><span class="nm">${esc(foodName(f.n))}${x.q?` (${esc(t(x.q))})`:''}</span><span class="am">${nf(x.g)} g</span><i class="kk">${nf(kk)}</i></div>`}).join('')}
+            <div class="mtot"><span>${logged?t('Eaten'):t('Planned')}</span><b>${nf(kcal)} kcal</b></div>
+            ${logged?'':`<button class="btn btn-lime mlog-btn" data-act="nlog-plan" data-d="${TODAY}" data-m="${mi}">${t('Log this meal')}</button>`}
+          </div>
+        </div>`}).join('')})()}
+    </div>`:''}
+    <div class="sec"><span class="sec-t">${ic('droplet',15)} ${t('Hydration')}</span><span class="sec-c muted mono">${nf(water)} / ${nf(waterT)} L · ${nf(Math.max(0,Math.round((waterT-water)*10)/10))} L ${t('to go')}</span></div>
+    <div class="cc tight">
+      <div class="wtank ${water>=waterT?'done':''}">
+        <div class="wfill ${water>=waterT?'goal':''}" style="height:${wPct}%">
+          <svg class="wsurf" viewBox="0 0 240 12" preserveAspectRatio="none"><path d="M0 6q15-6 30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0V12H0Z"/></svg>
+          <svg class="wsurf s2" viewBox="0 0 240 12" preserveAspectRatio="none"><path d="M0 6q15-6 30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0V12H0Z"/></svg>
+        </div>
+        <div class="wmid"><b>${nf(water)}</b><span>${t('L of')} ${nf(waterT)} L</span></div>
+      </div>
+      <div class="wbtns">
+        <button class="wbtn" data-act="na-water" data-v="250">${ic('glass-water',15)}250 ml</button>
+        <button class="wbtn" data-act="na-water" data-v="500">${ic('milk',15)}500 ml</button>
+        <button class="wbtn wundo" data-act="na-water-undo" ${lastWater?'':'disabled'}>${ic('undo-2',15)}${t('Undo')}</button>
+      </div>
+    </div>
+    ${sug&&sug.options.length?`
+    <div class="sugg">
+      <div class="eb">${t('What should you eat now?')}</div>
+      <b>${esc(sug.options[0].label)} — ${nf(sug.options[0].kcal)} kcal</b>
+      <div class="opt"><span>${sug.options[0].items.map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' + ')}</span><i>P${nf(sug.options[0].p)} C${nf(sug.options[0].c)} F${nf(sug.options[0].f)}</i></div>
+      <button class="btn btn-lime" style="width:100%;padding:9px 0;margin-top:10px" data-act="na-log-sug" data-i="0">${t('Log this meal')}</button>
+    </div>`:''}
+    <div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Quick log')}</span><span class="lnk" style="font-size:11.5px;color:var(--accent);cursor:pointer" data-act="jump-flog">${t('History')} →</span></div>
+    <div class="cc" style="padding:13px">
+      <button class="ql-hero" data-act="na-photo">
+        <span class="qi">${ic('camera',21)}</span>
+        <span class="t"><b>${t('Snap a photo')}</b><span>${t('AI estimates calories & macros instantly')}</span></span>
+        <span class="go">${ic('sparkles',15)}</span>
+      </button>
+      <div class="ql-row">
+        <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(77,124,254,.14);color:#7EA0FF">${ic('keyboard',16)}</span><b>${t('Type text')}</b><span class="ms">“200g chicken”</span></button>
+        <button class="ql-mini" data-act="nbar-open"><span class="mi-ic" style="background:rgba(139,92,246,.14);color:#B79CFF">${ic('barcode',16)}</span><b>${t('Barcode')}</b><span class="ms">${t('Scan package')}</span></button>
+        <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(229,169,60,.14);color:#F0B457">${ic('bot',16)}</span><b>${t('Assistant')}</b><span class="ms">${t('Chat to log')}</span></button>
+      </div>
+      <div class="ql-fav-h"><b>${t('One-tap favorites')}</b><span>${nf(quickN)} ${t('logged')}</span></div>
+      <div class="ql-favs">
+        ${favs.map(f=>`<button class="ql-fav" data-act="ql-fav" data-n="${esc(f.key)}" data-g="${f.g}">${esc(f.name)} <i>${nf(f.k)}</i></button>`).join('')}
+      </div>
+    </div>
+    ${logs.length?`
+    <div class="sec"><span class="sec-t">${ic('check',13)} ${t('Food log')}</span><span class="sec-c mono">${nf(logs.length)}</span></div>
+    <div class="cc tight" id="flog">
+      ${logs.map(l=>`<div class="sess"><span class="tm">${nf(l.kcal)}</span>
+        <div class="t"><b>${t(l.meal||'Meal')}</b><span>${(l.items||[]).map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' · ')||'—'} · P${nf(l.p||0)}</span></div>
+        <button class="btn btn-ghost btn-icon" style="width:26px;height:26px" data-act="nlog-del" data-id="${l.id}">${ic('x',13)}</button></div>`).join('')}
+    </div>`:''}
+    ${naChat(c)}
+    ${np?`<div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('user',14)} ${t('Nutrition profile')}</div>
+      <div class="muted" style="font-size:11.5px;line-height:1.7">
+        ${np.allergies?`<div>⚠ ${t('Allergies')}: ${esc(np.allergies)}</div>`:''}
+        ${np.dislikes?`<div>✕ ${t('Dislikes')}: ${esc(np.dislikes)}</div>`:''}
+        ${np.likes?`<div>♥ ${t('Favorites')}: ${esc(np.likes)}</div>`:''}
+        ${np.cook?`<div>⏱ ${t('Cooking time')}: ${esc(np.cook)}</div>`:''}
+      </div>
+      <button class="fchip" style="margin-top:8px" data-act="nprof-open">${ic('edit',12)} ${t('Edit profile')}</button>
+    </div>`:''}
+  </div>`;
+}
+/* Assistant thread + composer. Quick chips push REAL intents, not small talk.
+   v18.71 — mockup05: chathead, timestamps, logcard, water/summary chips. */
+function naChat(c){
+  const ms=NCHAT.filter(m=>m.client===c.name).slice(-30);
+  const ts=m=>m.at?new Date(m.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):t(m.time||'');
+  return `<div class="ccard" style="border-color:var(--acc-line2)">
+    <div class="row" style="gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--line2)">
+      <span style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#2E3A18,#1A1D22);display:grid;place-items:center;flex:none;border:1px solid rgba(200,240,75,.3);color:var(--accent)">${ic('bot',18)}</span>
+      <span style="flex:1;min-width:0"><b style="font-size:13.5px;display:block">${t('Nutrition Assistant')}</b><span class="muted" style="font-size:10.5px">${t('Online · knows your plan')}</span></span>
+      <span class="bdg bdg-lime" style="font-size:9.5px">${t('AI · not medical advice')}</span>
+    </div>
+    <div class="chatbody" style="padding:12px 0;max-height:340px;overflow-y:auto">
+      ${ms.length?ms.map(m=>{const me=m.role==='student';
+      return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'};max-width:88%">
+        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
+        <div>${esc(t(m.body))}</div>
+        ${m.card&&!m.card.confirmed?naCard(m):''}
+        ${m.card&&m.card.confirmed?`<div class="ctx" style="margin-top:4px">${ic('check',12)} ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`:''}
+        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${ts(m)}</span>
+      </div>`}).join('')
+      :`<div class="muted" style="font-size:12px;padding:4px 2px">${t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`}
+      ${S.naTyping?`<div class="bub them" style="align-self:flex-start"><div class="muted" style="font-size:12px">${t('Thinking…')}</div></div>`:''}
+    </div>
+    <div class="quick" style="padding:8px 0 0">
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('What should I eat now?'))}">${ic('utensils-crossed',13)} ${t('What should you eat now?')}</button>
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('Food for before my workout'))}">${t('Pre-workout')}</button>
+      <button class="fchip" data-act="na-quick" data-q="${esc(t('Swap whey'))}">${ic('repeat',13)} ${t('Swap whey')}</button>
+      <button class="fchip" data-act="na-water" data-v="500">${ic('droplet',13)} ${t('Log500ml water')}</button>
+      <button class="fchip" data-act="na-summary">${ic('bar-chart-2',13)} ${t('Today summary')}</button>
+      <button class="fchip" data-act="na-photo">${ic('camera',13)} ${t('Photo')}</button>
+      ${NA_PIC?`<span class="fchip on">${ic('camera',13)} ${t('attached')}</span>`:''}
+    </div>
+    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin-top:8px">
+      <button class="btn btn-ghost btn-icon" data-act="na-photo" title="${t('Photo')}" style="width:34px;height:34px">${ic('camera',15)}</button>
+      <input class="inp" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()" style="border:none;box-shadow:none">
+      <button class="btn btn-primary btn-icon" data-act="na-send">${ic('arrowR',16)}</button>
+    </div>
+  </div>`;
+}
+/* Structured ACTION card — mockup05 .logcard: items + macros3 + confirm. */
+function naCard(m){
+  const cd=m.card;
+  return `<div class="logcard">
+    <div class="h"><b>${ic('clipboard-list',13)} ${t('Meal log')}</b><span class="badge b-amber">${t('Confirm')}</span></div>
+    ${(cd.items||[]).map(x=>`<div class="li"><span>${esc(foodName(x.n))} · ${nf(x.g)}g</span><i>${nf(x.kcal)} kcal</i></div>`).join('')}
+    <div class="macros3"><span>P ${nf(cd.p)}g</span><span>C ${nf(cd.c)}g</span><span>F ${nf(cd.f)}g</span></div>
+    <button class="btn btn-lime" style="width:100%;justify-content:center" data-act="na-confirm" data-id="${m.id}">${ic('check',14)} ${t('Confirm & log')}</button>
+  </div>`;
+}
+/* Deterministic fallback — the assistant MUST be useful with the AI offline.
+   Intent match → real engine answers; unknown → honest capability list. */
+function naFallback(c,v){
+  const s=String(v||'');
+  const parsed=NEng.parseText(s);
+  if(parsed.items.length){
+    const hour=TDATE.getHours();
+    const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<16.5?'Snack':hour<18?'Pre-Workout':hour<22?'Dinner':'Before Bed';
+    const sum=parsed.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+    return {body:t('I found these foods — confirm and I will log them:'),card:{type:'log',meal,items:parsed.items,...sum,confirmed:false}};
+  }
+  if(parsed.unknown.length)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
+  if(/eat|خور|bukhor|meal|غذا/i.test(s)){
+    const sug=NEng.suggestNow(c);
+    const o=sug.options[0];
+    if(o)return {body:t('You have')+` ${nf(sug.rem.kcal)} kcal · ${nf(sug.rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Try')}: ${o.items.map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' + ')} (~${nf(o.kcal)} kcal).`};
+  }
+  if(/replace|swap|جایگزین|دوست ندارم/i.test(s)){
+    const f=FOODS.find(x=>s.toLowerCase().includes(x.n.toLowerCase())||s.includes(foodName(x.n)));
+    if(f){const sw=NEng.swapsFor(f.n);if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'}}
+  }
+  const rem=NEng.remaining(c);
+  if(rem)return {body:t('You have')+` ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} · ${nf(rem.c)}g ${t('Carbs')} · ${nf(rem.f)}g ${t('Fat')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`};
+  return {body:t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it. You can also ask what to eat next.')};
+}
+/* Send a message to the Nutrition Assistant. Tries the server AI endpoint
+   (LLM = conversation only — the server computes all numbers deterministically
+   from the workspace payload) and falls back to the local engine so the
+   assistant works offline / without an AI key. */
+/* v18.75 — plan 1ه: the assistant photo is re-encoded SMALL before upload so
+   the vision request stays comfortably inside the body cap (≈512px / q0.6). */
+function naAiPic(src,cb){
+  if(!src)return cb(null);
+  const img=new Image();
+  img.onload=()=>{try{
+    const N=512;let w=img.width,h=img.height;
+    if(Math.max(w,h)>N){const r=N/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r)}
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(img,0,0,w,h);
+    cb(cv.toDataURL('image/jpeg',0.6));
+  }catch(e){cb(src)}};
+  img.onerror=()=>cb(src);
+  img.src=src;
+}
+window.naSend=async pre=>{
+  const inp=$('na-inp');
+  const v=String(pre!=null?pre:(inp?inp.value:'')).trim();
+  const pic=NA_PIC;
+  if(!v&&!pic)return;
+  const c=client(S.cid);if(!c)return;
+  NCHAT.push({id:uid(),client:c.name,role:'student',body:v||(pic?'📷':''),d:isoToday(),at:Date.now(),src:pic||undefined});
+  NA_PIC=null;if(inp)inp.value='';
+  S.naTyping=true;render();
+  /* v18.75 — plan 1ه: the photo now TRAVELS. A picture-only send gets a real
+     question instead of an empty message (the server rejects those). */
+  const msg=v||(lang==='fa'?'کالری و ماکروهای این عکس غذا را تخمین بزن و ثبتشان کن.':'Estimate the calories and macros of this food photo and log them.');
+  const photo=await new Promise(res=>naAiPic(pic,res));
+  let replied=false;
+  try{
+    const code=wsCode()||S.joinCode||'';
+    const r=await fetch('/api/ai/nutri',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({code,client:c.name,message:msg,lang,photo:photo||undefined,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
+    const d=await r.json().catch(()=>null);
+    if(d&&d.ok){
+      NCHAT.push({id:uid(),client:c.name,role:'assistant',body:d.reply,d:isoToday(),at:Date.now(),
+        card:d.log?{type:'log',meal:d.log.meal,items:d.log.items,kcal:d.log.kcal,p:d.log.p,c:d.log.c,f:d.log.f,confirmed:false}:null,
+        safety:!!d.safety});
+      replied=true;
+    }
+  }catch(e){}
+  if(!replied){const fb=naFallback(c,v);NCHAT.push({id:uid(),client:c.name,role:'assistant',body:fb.body,d:isoToday(),at:Date.now(),card:fb.card||null})}
+  S.naTyping=false;saveData();render();
+};
+/* Nutrition profile modal (student's own; the coach sees it in the workspace). */
+/* v18.75 — plan 1ب follow-up: Open Food Facts is thin on Iranian products, so
+   every resolved product is CACHED locally. Re-scanning (or scanning offline)
+   is then instant, and an unknown product can be typed in ONCE and reused.
+   Codes are only ever user-entered / real lookups — never invented here. */
+const BSCAN_KEY='co-bscan';
+const bscanAll=()=>{try{const l=JSON.parse(localStorage.getItem(BSCAN_KEY)||'[]');return Array.isArray(l)?l.filter(x=>x&&x.code):[]}catch(e){return[]}};
+const bscanPut=p=>{try{
+  const l=bscanAll().filter(x=>x.code!==p.code);
+  l.unshift({...p,at:Date.now()});
+  localStorage.setItem(BSCAN_KEY,JSON.stringify(l.slice(0,60)));
+}catch(e){}};
+function nbarShow(b,label){
+  return `<div class="cc tight" style="margin:0;padding:10px 12px">
+    <div class="sess" style="padding-top:0"><span class="tm">${nf(b.k)}</span>
+      <div class="t"><b>${esc(b.n)}</b><span>${label} · ${t('per100 g')} · P${nf(b.p)} C${nf(b.c)} F${nf(b.f)}</span></div></div>
+    <button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:8px" data-act="nbar-log">${ic('plus',14)} ${t('Log100 g')}</button></div>`;
+}
+/* Cache first (works offline), then Open Food Facts, then a hand entry. */
+function nbarLookup(raw){
+  const v=String(raw||'').replace(/\D/g,'');
+  if(v.length<6){toast(t('Enter the barcode number'));return}
+  S.nbar=null;
+  const box=$('nb-res');
+  const hit=bscanAll().find(x=>x.code===v);
+  if(hit){
+    S.nbar={n:hit.n,k:+hit.k||0,p:+hit.p||0,c:+hit.c||0,f:+hit.f||0};
+    if(box)box.innerHTML=nbarShow(S.nbar,t('Saved · works offline'));
+    return;
+  }
+  if(box)box.innerHTML=`<div class="muted" style="font-size:12px">${t('Searching…')}</div>`;
+  (async()=>{try{
+    const r=await fetch('https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(v)+'.json');
+    const d=await r.json();
+    const pr=d&&d.product,nu=(pr&&pr.nutriments)||{};
+    if(pr&&+nu['energy-kcal_100g']>0){
+      const b={code:v,n:String(pr.product_name||t('Scanned product')).slice(0,60),
+        k:Math.round(+nu['energy-kcal_100g']||0),p:Math.round(+nu.proteins_100g||0),
+        c:Math.round(+nu.carbohydrates_100g||0),f:Math.round(+nu.fat_100g||0)};
+      bscanPut(b);S.nbar=b;
+      if(box)box.innerHTML=nbarShow(b,'Open Food Facts');
+      return;
+    }
+  }catch(e){}
+  /* Not online / not in the database — let it be typed in once, kept forever. */
+    if(box)box.innerHTML=`<div class="muted" style="font-size:12px;margin-bottom:8px">${t('Product not found in the food database.')}</div>
+      <div class="lbl" style="margin-bottom:5px">${t('Add it once — it will be reused offline')}</div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <input class="inp" id="nb-n" placeholder="${t('Product name')}" style="flex:1;min-width:130px">
+        <input class="inp" id="nb-k" type="number" inputmode="numeric" min="0" placeholder="kcal" style="width:64px">
+        <input class="inp" id="nb-p" type="number" inputmode="numeric" min="0" placeholder="P" style="width:50px">
+        <input class="inp" id="nb-c" type="number" inputmode="numeric" min="0" placeholder="C" style="width:50px">
+        <input class="inp" id="nb-f" type="number" inputmode="numeric" min="0" placeholder="F" style="width:50px">
+      </div>
+      <div class="muted" style="font-size:10.5px;margin-top:5px">${t('Per 100 g')}</div>
+      <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:8px" data-act="nbar-save">${ic('check',13)} ${t('Save this product')}</button>`;
+  })();
+}
+function nbarModal(){
+  const rec=bscanAll().slice(0,8);
+  openModal(`
+  <div class="modal-h"><h3>${t('Barcode')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:8px">${t('Scan the package barcode or type its number.')}</div>
+    <div class="row" style="gap:8px">
+      <input class="inp" id="nb-inp" inputmode="numeric" placeholder="${t('Barcode number')}" style="flex:1" onkeydown="if(event.key==='Enter'){const b=[...document.querySelectorAll('[data-act=nbar-go]')][0];b&&b.click()}">
+      <button class="btn btn-primary" data-act="nbar-go">${ic('search',14)} ${t('Search')}</button>
+    </div>
+    <div id="nb-res" style="margin-top:10px"></div>
+    ${rec.length?`<div class="lbl" style="margin-top:14px;margin-bottom:6px">${t('Recently scanned')}</div>
+    <div class="row" style="gap:5px;flex-wrap:wrap">${rec.map(x=>`<button class="fchip" data-act="nbar-recent" data-code="${esc(x.code)}">${esc(x.n)} <span class="muted" style="font-size:10px">${nf(x.k)}</span></button>`).join('')}</div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" style="width:100%;justify-content:center" data-act="modal-x">${t('Cancel')}</button></div>`);
+  setTimeout(()=>$('nb-inp')&&$('nb-inp').focus(),60);
+}
+function nprofModal(){
+  const c=client(S.cid);const np=c.nprof||{};
+  const tg=NEng.targets(c)||{kcal:'',p:'',c:'',f:''};
+  openModal(`
+  <div class="modal-h"><h3>${t('Nutrition profile')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fs-t">${t('Daily targets')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <input class="inp" id="npf-kcal" type="number" min="0" placeholder="${t('Calories')}" value="${np.kcal||tg.kcal||''}" style="width:90px">
+      <input class="inp" id="npf-p" type="number" min="0" placeholder="${t('Protein')} g" value="${np.p||tg.p||''}" style="width:90px">
+      <input class="inp" id="npf-c" type="number" min="0" placeholder="${t('Carbs')} g" value="${np.c||tg.c||''}" style="width:90px">
+      <input class="inp" id="npf-f" type="number" min="0" placeholder="${t('Fat')} g" value="${np.f||tg.f||''}" style="width:90px">
+      <input class="inp" id="npf-water" type="number" min="0" step="0.5" placeholder="${t('Water')} L" value="${np.waterL||''}" style="width:80px">
+      <input class="inp" id="npf-meals" type="number" min="1" max="8" placeholder="${t('Meals')}" value="${np.meals||''}" style="width:80px">
+    </div>
+    <div class="muted" style="font-size:11px;margin-top:4px">${t('Leave empty to follow your coach plan.')}</div>
+    <div class="fs-t" style="margin-top:12px">${t('Preferences')}</div>
+    <input class="inp" id="npf-allergies" placeholder="${t('Allergies / intolerances')}" value="${esc(np.allergies||'')}" style="margin-bottom:8px">
+    <input class="inp" id="npf-dislikes" placeholder="${t('Foods you dislike')}" value="${esc(np.dislikes||'')}" style="margin-bottom:8px">
+    <input class="inp" id="npf-likes" placeholder="${t('Favorite foods')}" value="${esc(np.likes||'')}" style="margin-bottom:8px">
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <input class="inp" id="npf-cook" placeholder="${t('Cooking time available')}" value="${esc(np.cook||'')}" style="flex:1;min-width:130px">
+      <input class="inp" id="npf-wake" placeholder="${t('Wake up')}" value="${esc(np.wake||'')}" style="width:100px">
+      <input class="inp" id="npf-sleep" placeholder="${t('Bed time')}" value="${esc(np.sleep||'')}" style="width:100px">
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="nprof-save">${ic('check',14)} ${t('Save')}</button></div>`);
+}
+function cSessions(){
+  const c=client(S.cid);
+  const list=[...(DB[c.id].sessions||[])].sort((a,b)=>a.day-b.day||a.start-b.start);
+  const dots={};list.forEach(s=>{(dots[s.day]=dots[s.day]||[]).push(SESS_DOT[s.type]||SESS_DOT.session)});
+  /* v18.67 — the client finally SEES the plan the coach built: a READ-ONLY
+     month grid of the weekly split (💪 workout / 🌙 rest), navigable across
+     months — same recurring model the coach plans with. */
+  const sp=splitOf(c.id);
+  const off=S.calOff||0;
+  const base=calMonthBase(off);
+  const cells=monthCells(base);
+  const mName=base.toLocaleDateString(dLoc(),{month:'long',year:'numeric'});
+  /* v18.71 — mockup 09 Calendar: month stats from the REAL training log + the
+     weekly split. A planned day only counts as "planned" once it's reached. */
+  const curY=TDATE.getFullYear(),curM=TDATE.getMonth();
+  const basePast=base.getFullYear()<curY||(base.getFullYear()===curY&&base.getMonth()<curM);
+  const baseCur=base.getFullYear()===curY&&base.getMonth()===curM;
+  const reached=cl=>basePast||(baseCur&&cl.date<=TDATE);
+  const _log=DB[c.id].log||[];
+  const doneN=_log.filter(l=>{const d=new Date((l.d||'')+'T12:00');return !isNaN(+d)&&d.getMonth()===base.getMonth()&&d.getFullYear()===base.getFullYear()}).length;
+  const _spOf=cl=>sp[(cl.date.getDay()+6)%7];
+  const wday=cl=>{const s=_spOf(cl);return !!(s&&s.t!=='rest'&&splitW(c.id,s))};
+  const rday=cl=>{const s=_spOf(cl);return !!(s&&s.t==='rest')};
+  const planned=cells.filter(cl=>cl.cur&&reached(cl)&&wday(cl)).length;
+  const restN=cells.filter(cl=>cl.cur&&reached(cl)&&rday(cl)).length;
+  const adh=planned?Math.min(100,Math.round(doneN/planned*100)):null;
+  const nav=`<div class="row" style="justify-content:space-between;margin:2px 14px 8px;align-items:center">
+    <div class="row" style="gap:2px">
+      <button class="btn btn-ghost btn-icon" data-act="cal-m" data-d="-1">${ic('chevL',15)}</button>
+      <b style="font-size:13px;min-width:104px;text-align:center">${mName}</b>
+      <button class="btn btn-ghost btn-icon" data-act="cal-m" data-d="1">${ic('chevR',15)}</button>
+      ${off?`<button class="btn btn-outline btn-sm" data-act="cal-m" data-d="0">${t('Today')}</button>`:''}
+    </div>
+    <span class="muted" style="font-size:11px">${t('Every week')}</span>
+  </div>`;
+  /* mockup .mgrid — every day cell carries the split (💪 workout / 🌙 rest),
+     today gets the lime ring, other-month days are dimmed; legend below. */
+  const grid=`<div class="mgrid">
+    <div class="wk">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<span class="dhn">${t(d)}</span>`).join('')}
+    ${cells.map(cl=>{const isT=cl.date.toDateString()===TDATE.toDateString();
+      const rest=rday(cl), w=cl.cur&&!rest&&splitW(c.id,_spOf(cl));
+      const mk=cl.cur?(rest?ic('moon',10):w?ic('dumbbell',10):''):'';
+      return `<span class="day ${cl.cur?'':'out'} ${w?'w':''} ${rest?'r':''} ${isT?'today':''}">${nf(cl.n)}${mk?`<span class="mk">${mk}</span>`:''}</span>`;}).join('')}
+    </div>
+    <div class="row" style="justify-content:center;gap:14px;margin-top:10px;font-size:10.5px;color:var(--ink3)">
+      <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:4px;background:rgba(200,240,75,.3);border:1px solid rgba(200,240,75,.5)"></span>${t('Workout')}</span>
+      <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:4px;background:rgba(139,92,246,.25)"></span>${t('Rest')}</span>
+      <span class="row" style="gap:5px"><span style="width:10px;height:10px;border-radius:4px;border:2px solid var(--accent)"></span>${t('Today')}</span>
+    </div>
+  </div>`;
+  /* sessions are WEEKLY recurring — show them starting from today's weekday */
+  const toDay=d=>(d-TODAY+7)%7;
+  const ordered=[...list].sort((a,b)=>toDay(a.day)-toDay(b.day)||a.start-b.start);
+  const when=d=>toDay(d)===0?t('Today'):toDay(d)===1?t('Tomorrow'):t(DAYS[d]);
+  const tb=s=>attBadge(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
+  return `<div class="cbody">
+    ${nav}
+    ${grid}
+    <div class="sec"><span class="sec-t">${t('Upcoming sessions')}</span><span class="sec-c mono">${nf(ordered.length)}</span></div>
+    <div class="cc tight">
+      ${ordered.length?ordered.map(s=>`<div class="sess"><span class="tm">${nf(fmtT(s.start))}</span>
+        <div class="t"><b>${esc(t(s.label))}</b><span>${when(s.day)} · ${nf(s.dur)} h</span></div>${tb(s)}</div>`).join('')
+      :`<div class="muted" style="font-size:12px;padding:6px 0;text-align:center">${t('No sessions scheduled')}</div>`}
+    </div>
+    <div class="sec"><span class="sec-t">${t('This month')}</span></div>
+    <div class="cc tight">
+      <div class="row" style="justify-content:space-around;text-align:center">
+        <div><b class="mono" style="font-size:20px;font-weight:900;color:var(--accent)">${nf(doneN)}</b><div class="muted" style="font-size:10px">${t('Workouts')}</div></div>
+        <div><b class="mono" style="font-size:20px;font-weight:900">${adh===null?'—':nf(adh)+'%'}</b><div class="muted" style="font-size:10px">${t('Adherence')}</div></div>
+        <div><b class="mono" style="font-size:20px;font-weight:900">${nf(restN)}</b><div class="muted" style="font-size:10px">${t('Rest days')}</div></div>
+      </div>
+    </div>
+    <div class="cc tight" style="border-style:dashed;text-align:center">
+      <div class="muted" style="font-size:12px">${t('Every week repeats · your coach plans it')}</div>
+      <button class="btn btn-out" style="margin-top:9px;padding:9px 16px;font-size:12px" data-act="ics">${ic('calendar',14)} ${t('Add to phone calendar (.ics)')}</button>
+    </div>
+  </div>`;
+}
+function cChat(){
+  const c=client(S.cid);
+  const ms=MSGS.filter(m=>m.client===c.name);
+  /* v18.71 — mockup07 Chat: coach card + cc-in/cc-out bubbles + the daily
+     check-in rendered as the lime card + quick-reply chips. Same actions. */
+  return `<div class="cbody" style="padding-bottom:20px">
+    <div class="coachcard">${av(wsOwnerName()||t('Your coach'),44,3)}
+      <div class="t"><b>${esc(wsOwnerName()||t('Your coach'))}</b><span>${t('Your coach')} · ${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</span></div>
+      <span class="badge b-lime">${t('Replies within ~4h')}</span>
+    </div>
+    <div class="chatbody">
+      ${ms.length?ms.map(m=>{const me=m.from==='client';
+      if(m.type==='checkin'){
+        const all=String(m.body).split('·').map(s=>s.trim()).filter(Boolean);
+        const segs=(all[0]===t('Check-in'))?all.slice(1):all;
+        return `<div class="checkincard"><div class="h">${t('Daily check-in sent')}</div>
+          <div class="g">${segs.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
+          <span style="display:block;text-align:end;font-size:9px;opacity:.6;margin-top:5px">${t(m.time)}</span></div>`;
+      }
+      if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};max-width:82%">
+        ${msgVoice(m)}
+        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${t(m.time)}</span></div>`;
+      if(me)return `<div class="cc-out">
+        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
+        ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
+        <div>${esc(t(m.body))}</div><span class="rd">${ic('check',11)}${ic('check',11)} ${t(m.time)}</span></div>`;
+      return `<div class="cc-in"><span class="who">${esc(wsOwnerName()||t('Coach'))}</span>
+        ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
+        ${m.type==='reminder'?`<span class="ctx">⏰ ${t('Auto reminder')}</span>`:''}
+        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
+        <div>${esc(t(m.body))}</div>
+        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px">${t(m.time)}</span></div>`}).join('')
+      :`<div class="ccard cempty">${ic('mail',24)}<b>${t('Messages')}</b><span class="muted" style="font-size:12px">${t('Your coach publishes your plan here')}</span></div>`}
+    </div>
+    <div class="quick">
+      <button class="fchip" data-act="quick-msg" data-m="✅ ${t('Done for today')}">${t('Done for today')}</button>
+      <button class="fchip" data-act="cattach">${ic('camera',13)} ${t('Send progress photo')}</button>
+      <button class="fchip" data-act="cmsg-focus">${ic('help',13)} ${t('Ask a question')}</button>
+    </div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;padding:0 14px 8px">
+      <button class="fchip" data-act="cform">${ic('camera',13)} ${t('Record form check')}</button>
+      <button class="fchip" data-act="cattach">${ic('folder',13)} ${t('Attach file')}</button>
+    </div>
+    ${S.recVoice?`<div class="row" style="gap:8px;align-items:center;padding:0 14px 8px">
+      <span class="muted" style="font-size:11.5px;color:var(--red);font-weight:700">● ${t('Recording… tap to stop')} · ${nf(VMAX)}s</span></div>`:''}
+    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin:0 14px">
+      <button class="btn btn-ghost btn-icon" data-act="voice-rec" title="${t('Voice message')}" aria-label="${t('Voice message')}"
+        style="width:34px;height:34px;flex:none;${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',15)}</button>
+      <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
+      <button class="btn btn-primary btn-icon" data-act="send-client">${ic('arrowR',16)}</button>
+    </div>
+  </div>`;
+}
+/* v18.27 — phone skins (client app themes). prev = mini preview gradient,
+   dot = the skin's accent used in the preview chips. */
+const PHONESKINS=[
+{id:'fitflow',n:'FitFlow',d:'Charcoal · lime',prev:'linear-gradient(150deg,#1B1F26,#101318)',dot:'#C8F04B'},
+{id:'carbon',n:'Carbon',d:'Black · white',prev:'linear-gradient(150deg,#17181C,#0A0B0D)',dot:'#FFFFFF'},
+{id:'ocean',n:'Ocean',d:'Navy · cyan',prev:'linear-gradient(150deg,#0E1B30,#070D18)',dot:'#38BDF8'},
+{id:'sunset',n:'Sunset',d:'Plum · amber',prev:'linear-gradient(150deg,#241527,#100A12)',dot:'#FB923C'}];
+function cProfile(){
+  const c=client(S.cid);
+  const lm=lastM(S.cid);
+  const remain=packRemain(c.name);
+  const pack=PACKS.find(p=>p&&p.client===c.name);
+  const earned=GAM.earned(c).length;
+  const wos=(DB[c.id]&&DB[c.id].stats&&DB[c.id].stats.done)||0;
+  const jcode=joinCodeOf(c)||''; /* clientCode() mints one on first use */
+  const jlink=jcode?inviteLink(jcode):'';
+  /* v18.71 — mockup 08 Profile: hero with4 stats, session pack, REAL QR join
+     code (qrcodegen) and a settings list. Same fields/actions as before. */
+  return `<div class="cbody">
+    <div class="phero">
+      <span data-act="cp-pic" role="button" tabindex="0" title="${t(c.pic?'Change photo':'Add photo')}" style="cursor:pointer;display:block;width:72px;margin:0 auto">${av(t(c.name),72,c.id-1)}</span>
+      <b>${esc(t(c.name))}</b>
+      <div class="goal">${ic('dumbbell',13)} ${t(c.goal)}</div>
+      <div class="since">${c.since?`${t('Since')} ${String(fmtD(c.since)).toUpperCase()}`:''}</div>
+      <div class="pstats">
+        <div><b>${nf(c.dayStreak||0)}</b><span>${t('Streak')}</span></div>
+        <div><b>${nf(c.pts||0)}</b><span>${t('Points')}</span></div>
+        <div><b>${nf(earned)}/${nf(GAM.BADGES.length)}</b><span>${t('Badges')}</span></div>
+        <div><b>${nf(wos)}</b><span>${t('Workouts')}</span></div>
+      </div>
+    </div>
+    <div class="pf-hint"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
+    ${pack?`
+    <div class="sec"><span class="sec-t">${ic('ticket',15)} ${t('Session pack')}</span></div>
+    <div class="cc tight"><div class="pack">
+      <div class="t"><b>${esc(t(pack.name))}</b><span>${t('Used')} ${nf(pack.used||0)} · ${nf(Math.max(0,(pack.total||0)-(pack.used||0)))} ${t('remaining')}</span>
+        <div class="pbar" style="margin-top:7px"><i style="width:${Math.round((pack.used||0)/Math.max(1,pack.total||1)*100)}%"></i></div></div>
+      <span class="rem">${nf(Math.max(0,(pack.total||0)-(pack.used||0)))}</span>
+    </div></div>`:''}
+    <div class="sec"><span class="sec-t">${ic('key-round',15)} ${t('Personal Information')}</span><span class="sec-c" style="font-size:10px">${CLOUD.on?'● '+t('Synced'):t('Offline mode')}</span></div>
+    <div class="cc tight">
+      <div class="setrow" style="cursor:default"><span class="si" style="padding:0;overflow:hidden">${av(wsOwnerName()||t('Coach'),32,3)}</span><div class="t"><b>${t('Coach')}</b><span>${esc(wsOwnerName()||'—')}</span></div></div>
+      ${[['mail','Email',c.email||'—'],['phone','Phone',c.phone||'—'],['calendar','Training Frequency',t(c.freq||'—')],['ticket','Sessions remaining',remain!=null?nf(remain):'—']].map(([i,k,v])=>`
+      <div class="setrow" style="cursor:default"><span class="si">${ic(i,15)}</span><div class="t"><b>${t(k)}</b><span>${esc(String(v))}</span></div></div>`).join('')}
+    </div>
+    <div class="sec"><span class="sec-t">${ic('ruler',15)} ${t('Body Metrics')}</span><span class="sec-c muted">${lm?fmtD(lm.d):''}</span></div>
+    <div class="cc tight">
+        ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
+        <div class="pf-tile"><span class="pf-tk">${t(k)}</span><b class="pf-tv">${v}</b></div>`).join('')}
+      </div>
+      ${c.targetW?`<div class="pf-stat" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px">
+        <span class="pf-rt"><span class="pf-rk">${t('Target Weight')}</span><b class="pf-tv" style="text-align:start">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></span>
+        <span class="pf-pill pf-pill-acc">${nf(goalPct(c))}%</span></div>
+      <div class="pbar" style="margin-top:8px"><i style="width:${goalPct(c)}%"></i></div>`:''}
+      ${lm?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:10px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div>
+      <div class="muted" style="font-size:10.5px;margin-top:6px">${t('Last measurement')}: ${fmtD(lm.d)}</div>`:''}
+    </div>
+    ${jcode?`
+    <div class="sec"><span class="sec-t">${ic('qr',15)} ${t('My join code')}</span></div>
+    <div class="cc tight"><div class="qr">
+      <div class="code">${jlink?qrSvg(jlink,64):''}</div>
+      <div class="t"><b>${esc(jcode)}</b><span>${t('Scan to connect this device · re-share anytime')}</span>
+        <button class="btn btn-lime" data-act="qr-open" data-code="${esc(jcode)}" data-name="${esc(c.name)}">${ic('qr',14)} ${t('Show fullscreen')}</button></div>
+    </div></div>`:''}
+    <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
+    <div class="cc tight">
+      <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
+        <div class="langseg"><button class="${lang==='fa'?'on':''}" data-act="lang-set" data-l="fa">FA</button><button class="${lang==='en'?'on':''}" data-act="lang-set" data-l="en">EN</button></div></div>
+      <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
+      <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
+      <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
+        <label class="sw"><input type="checkbox" ${PREFS.priv.photos?'checked':''} data-act="pref-sw" data-k="priv.photos"><i></i></label></div>
+    </div>
+    <div class="sec"><span class="sec-t">${ic('palette',15)} ${t('App Theme')}</span></div>
+    <div class="cc tight">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${PHONESKINS.map(s=>`
+      <button class="ccard" style="padding:10px;cursor:pointer;text-align:start;${(PREFS.phoneSkin||'fitflow')===s.id?'border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,240,75,.12)':''}" data-act="skin" data-s="${s.id}">
+        <div style="height:56px;border-radius:12px;background:${s.prev};border:1px solid #2E333B;margin-bottom:8px;position:relative;overflow:hidden">
+          <span style="position:absolute;top:8px;inset-inline-start:8px;width:26px;height:5px;border-radius:99px;background:${s.dot}"></span>
+          <span style="position:absolute;bottom:8px;inset-inline-start:8px;width:40%;height:14px;border-radius:6px;background:${s.dot};opacity:.85"></span>
+        </div>
+        <b style="font-size:12.5px">${t(s.n)}${(PREFS.phoneSkin||'fitflow')===s.id?' '+ic('check',12):''}</b>
+        <div class="muted" style="font-size:10.5px;margin-top:2px">${t(s.d)}</div>
+      </button>`).join('')}
+      </div>
+      <div class="muted" style="font-size:11px;margin-top:8px">${t('Applies to this device only')}</div>
+    </div>
+    <button class="pf-out" data-act="signout">${ic('log-out',15)} ${t('Sign out')}</button>
+  </div>`;
+}
+let restIv=null,restAC=null;
+/* v18.71 — PRO REST TIMER. The clock is a wall-clock END POINT (Date.now),
+   not a decrementing counter: a background/throttled tab can no longer make
+   rest run slow. Adds 3-2-1 countdown beeps, a completion chime + vibration,
+   pause/resume, ± adjust, skip and an optional fullscreen view. */
+/* v18.90 — SMART REST TIMER (Strong / Hevy inspired). Accuracy first, then feel:
+   1. REMAINING TIME IS MILLISECONDS. The old pause path stored `restLeft` as a
+      ceil()'d SECONDS value, so every pause/resume cycle could silently add up
+      to a full second — pausing repeatedly drifted the rest LONG.
+   2. The ring repaints every 100ms with sub-second precision. It used to paint
+      only when the displayed second changed, so progress jumped in 1s steps.
+   3. The warning window is ADAPTIVE: rests >=60s tick from 5s out, shorter ones
+      from 3s — long sets get more lead time without a beep every second.
+   4. restSeek() is the single mutation path for ±15/+30, presets and skip, so
+      every clock change goes through one clamp + one save. */
+const REST_C=2*Math.PI*30;              // ring circumference (r=30, stroke 6)
+const restMs=()=>{const p=S.player;if(!p)return 0;
+  if(p.restPaused)return Math.max(0,p.restLeftMs||0);
+  if(!p.restEnd)return 0;
+  return Math.max(0,p.restEnd-Date.now());};
+function restSecs(){return Math.ceil(restMs()/1000)}
+function restBeep(freq,dur,vol){
+  if(PREFS.wk.snd===false)return;        /* v18.90 — the bell toggle silences it */
+  try{
+    if(!restAC)restAC=new (window.AudioContext||window.webkitAudioContext)();
+    if(restAC.state==='suspended')restAC.resume();
+    const o=restAC.createOscillator(),g=restAC.createGain();
+    o.type='sine';o.frequency.value=freq;
+    g.gain.setValueAtTime(vol||0.14,restAC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,restAC.currentTime+dur);
+    o.connect(g);g.connect(restAC.destination);
+    o.start();o.stop(restAC.currentTime+dur+.02);
+  }catch(e){}
+}
+const restVibe=p=>{if(PREFS.wk.vib===false)return;
+  try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+/* Ring + fullscreen numbers, painted WITHOUT a full re-render. */
+function restPaint(){
+  const p=S.player;if(!p)return;
+  const ms=restMs(),s=Math.ceil(ms/1000),total=Math.max(1,p.restTotal||1);
+  const pc=Math.max(0,Math.min(100,ms/(total*1000)*100));
+  const txt=nf(fmtMS(s));
+  const a=document.getElementById('restNum');if(a&&a.textContent!==txt)a.textContent=txt;
+  const ring=document.getElementById('restRing');
+  if(ring)ring.setAttribute('stroke-dashoffset',(REST_C*(1-pc/100)).toFixed(2));
+  const b=document.getElementById('restFill');if(b)b.style.width=pc+'%';
+  const c=document.getElementById('restFsNum');if(c&&c.textContent!==txt)c.textContent=txt;
+  const d=document.getElementById('restFsFill');if(d)d.style.width=pc+'%';
+  const e=document.getElementById('restState');
+  if(e)e.textContent=s<=0?t('Rest done'):(p.restPaused?t('On pause'):t('Rest'));
+  const box=document.querySelector('.rest-presets');   /* highlight the active preset */
+  if(box)box.querySelectorAll('.rbtn[data-s]').forEach(x=>x.classList.toggle('on',+x.dataset.s===s));
+}
+/* The end-of-rest fanfare — guarded so it can only fire once. */
+function restChime(p){
+  if(!p||p.restChimed)return;
+  p.restChimed=true;
+  restBeep(660,.18,.14);setTimeout(()=>restBeep(990,.3,.14),170);
+  restVibe([300,90,500]);
+}
+/* End a rest. `silent` = no chime (Skip, or restoring one that expired while
+   the app was closed). `advance` = move to the next unfinished set afterwards —
+   the AUTO half of the auto/manual switch (PREFS.wk.autoNext). */
+function restEnd(p,silent,advance){
+  clearInterval(restIv);restIv=null;
+  if(!silent)restChime(p);
+  p.rest=0;p.restEnd=0;p.restLeftMs=0;p.restPaused=false;p.restFs=false;
+  restSave();
+  if(advance&&PREFS.wk.autoNext!==false)setTimeout(restAdvance,220);
+}
+/* The next set not yet checked, walking exercises in order. */
+function restNext(){
+  const p=S.player;if(!p)return null;
+  const w=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===p.wid);if(!w)return null;
+  for(let ei=0;ei<w.exercises.length;ei++){
+    const e=w.exercises[ei];
+    for(let si=0;si<e.sets;si++)if(!p.checked.has(ei+'-'+si))return{ei,si};
+  }
+  return null;
+}
+/* v18.91 — the AUTO half: point the player at the next open set. It never
+   CHECKS anything for you (no invented data) — it navigates and highlights so
+   ONE tap logs it. Switching the toggle off leaves everything manual. */
+function restAdvance(){
+  const p=S.player;if(!p)return;
+  const n=restNext();if(!n)return;
+  if(p.wiz!=null&&p.wiz!==n.ei)p.wiz=n.ei;   // wizard mode follows to that exercise
+  render();
+  requestAnimationFrame(()=>{
+    const row=document.querySelector('.cplayer .str[data-k="'+n.ei+'-'+n.si+'"]');
+    if(!row)return;
+    const b=document.querySelector('.cplayer .cpbody');
+    if(b){const top=row.getBoundingClientRect().top-b.getBoundingClientRect().top;
+      try{b.scrollTo({top:Math.max(0,top-150),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top-150)}}
+    row.classList.add('nextup');
+    setTimeout(()=>{const el=document.querySelector('.cplayer .str.nextup');if(el)el.classList.remove('nextup')},3000);
+  });
+}
+/* THE single path for moving the clock (ms). `abs` = the planned total follows
+   the new value (presets); otherwise the total only GROWS (± buttons) so the
+   ring can never start past a full circle. A value of 0 ends the rest. */
+function restSeek(p,ms,abs){
+  if(!p)return;
+  ms=Math.max(0,Math.round(ms));
+  p.restBeeped=0;p.restChimed=false;
+  if(ms<=0){restEnd(p,false,true);return}
+  if(abs)p.restTotal=Math.max(1,Math.round(ms/1000));
+  else p.restTotal=Math.max(1,Math.max(p.restTotal||1,Math.round(ms/1000)));
+  p.rest=Math.ceil(ms/1000);
+  clearInterval(restIv);
+  if(p.restPaused)p.restLeftMs=ms;
+  else{p.restEnd=Date.now()+ms;restIv=setInterval(restTick,100)}
+  restSave();
+}
+function startRest(sec){
+  if(!sec||!S.player)return;
+  const p=S.player;
+  p.rest=sec;p.restTotal=sec;p.restPaused=false;p.restLeftMs=0;
+  p.restBeeped=0;p.restChimed=false;
+  p.restEnd=Date.now()+sec*1000;
+  clearInterval(restIv);
+  restIv=setInterval(restTick,100);
+  restTick();restSave();
+  restReveal();                       /* the card lives in the body — bring it up */
+}
+function restTick(){
+  const p=S.player;
+  if(!p||(!p.restEnd&&!(p.restPaused&&p.restLeftMs))){clearInterval(restIv);restIv=null;return}
+  const ms=restMs(),s=Math.ceil(ms/1000);
+  if(s<=0){restEnd(p,false,true);render();return}
+  if(s!==p.rest){
+    p.rest=s;
+    const warn=(p.restTotal||0)>=60?5:3;   /* adaptive lead-in */
+    if(s<=warn&&p.restBeeped!==s){p.restBeeped=s;restBeep(880,.07,.09);restVibe(18)}
+  }
+  restPaint();
+}
+/* The timer card scrolls with the body (mockup 03) — reveal it on every start
+   so the clock is never off-screen while it runs.
+   v18.91 BUGFIX: `togset` calls startRest() BEFORE its render(), so at call time
+   `.cplayer .rest` did not exist yet and this silently did nothing — the card
+   sat ~1000px below the fold (measured: card top 998 vs body viewport 137-434,
+   `visible:false`) which is why the whole control row looked "missing".
+   Deferring past the caller's render() is what makes it actually scroll. */
+function restReveal(){
+  setTimeout(()=>{
+    const b=document.querySelector('.cplayer .cpbody'),el=document.querySelector('.cplayer .rest');
+    if(!b||!el)return;
+    const top=el.getBoundingClientRect().top-b.getBoundingClientRect().top;
+    try{b.scrollTo({top:Math.max(0,top-70),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top-70)}
+  },60);
+}
+/* v18.90 — a refresh used to KILL the whole session (S is never persisted).
+   We persist only the RUNNING clock; `togset` already writes ticks into w.ck, so
+   the player is rebuilt from the workout itself on the way back in. */
+const REST_KEY='co-rest';
+function restSave(){
+  try{
+    const p=S.player;
+    if(!p||!(p.rest>0)){localStorage.removeItem(REST_KEY);return}
+    localStorage.setItem(REST_KEY,JSON.stringify({cid:S.cid,wid:p.wid,rest:p.rest,
+      restTotal:p.restTotal||0,restEnd:p.restEnd||0,restPaused:!!p.restPaused,
+      restLeftMs:p.restLeftMs||0,at:Date.now()}));
+  }catch(e){}
+}
+function restClear(){try{localStorage.removeItem(REST_KEY)}catch(e){}}
+/* Called from renderInner on client devices. Rebuilds the player from w.ck when
+   the rest is still live (and <=4h old), so a refresh drops you back into the
+   same set with the clock intact instead of losing the session outright. */
+function restRestore(){
+  try{
+    if(S.player)return true;
+    const raw=localStorage.getItem(REST_KEY);if(!raw)return false;
+    const d=JSON.parse(raw);if(!d||!d.wid)return false;
+    const db=d.cid?DB[d.cid]:null;
+    const w=db&&db.workouts&&db.workouts.find(x=>x.id===d.wid);
+    if(!w||Date.now()-(d.at||0)>4*3600e3){restClear();return false}
+    S.role='client';S.cid=d.cid||S.cid;S.ptab='workouts';
+    const ck=(Array.isArray(w.ck)?w.ck:[]);
+    S.player={wid:w.id,checked:new Set(ck),rpe:{...(w.rpeM||{})},
+      rest:d.rest||0,restTotal:d.restTotal||120,restEnd:d.restEnd||0,
+      restPaused:!!d.restPaused,restLeftMs:d.restLeftMs||0,
+      lastKey:ck.length?ck[ck.length-1]:null};
+    if(S.player.rest>0){
+      if(S.player.restEnd>Date.now())restIv=setInterval(restTick,100);
+      else if(!S.player.restPaused)restEnd(S.player,true,false);   /* expired while away - no jump */
+      else restPaint();
+    }
+    return true;
+  }catch(e){return false}
+}
+function cPlayer(){
+  const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
+  if(!w)return '';
+  const ro=wDone(w); // v18.62 — read-only only when finished THIS week; a stale (last week's) completion re-opens as a fresh, finishable session
+  const total=w.exercises.reduce((a,e)=>a+e.sets,0);
+  const done=S.player.checked.size;
+  /* v18.71 — mockup03 Player: ring, current exercise, next-up info, RPE card
+     (targets the LAST checked set) and the coach-cue history row. */
+  const fi=w.exercises.findIndex((e,ei)=>Array.from({length:e.sets}).some((_,si)=>!S.player.checked.has(ei+'-'+si)));
+  const curIdx=fi>=0?fi:Math.max(0,w.exercises.length-1);
+  const nx=fi>=0?w.exercises[fi]:null;
+  const lastKey=S.player.lastKey||(S.player.checked.size?[...S.player.checked].slice(-1)[0]:null);
+  const rpeVal=lastKey&&S.player.rpe[lastKey]?S.player.rpe[lastKey]:null;
+  /* v18.75 — the single-exercise wizard (mockup gap): `S.player.wiz` picks ONE
+     exercise to show; null keeps the full list. Ticks/RPE keys still carry the
+     REAL exercise index, so nothing downstream changes. */
+  const wiz=(S.player.wiz==null)?null:Math.max(0,Math.min(w.exercises.length-1,S.player.wiz));
+  const shown=wiz==null?w.exercises.map((e,i)=>({e,ei:i})):(w.exercises[wiz]?[{e:w.exercises[wiz],ei:wiz}]:[]);
+  const cw=wsOwnerName()||coachName();
+  const cueIni=String(cw).split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const prevOf=name=>{const L=wlogOf(S.cid).slice().sort((a,b)=>(b.at||0)-(a.at||0));
+    for(const l of L){if(!l||!l.sets)continue;
+      const top=l.sets.filter(s=>s&&s.x===name&&+s.kg>0).sort((a,b)=>b.kg-a.kg)[0];
+      if(top)return {kg:+top.kg,reps:+top.reps||0,d:l.d}}
+    return null};
+  return `<div class="cplayer">
+    <div class="cphead">
+      <button class="btn btn-ghost btn-icon" data-act="close-player">${ic('chevL',18)}</button>
+      <div style="flex:1;min-width:0"><b>${esc(w.name)}</b><div class="muted" style="font-size:11.5px">${t('Exercise')} ${nf(curIdx+1)}/${nf(w.exercises.length)} · ${nf(done)}/${nf(total)} ${t('sets')}${ro?' · '+t('Completed'):''}</div></div>
+      <div class="plring">
+        <svg viewBox="0 0 44 44" width="44" height="44"><circle cx="22" cy="22" r="18" fill="none" stroke="#22262D" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="#C8F04B" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="${113-Math.round(113*(total?done/total:0))}" transform="rotate(-90 22 22)"/></svg>
+        <span><b>${nf(done)}</b><i>/${nf(total)}</i></span>
+      </div>
+    </div>
+    <div class="cpbody">
+      <div class="row" style="gap:8px;align-items:center;padding:4px 14px 8px">
+        <div class="seg" style="display:flex;flex:1">
+          <button style="flex:1" class="${wiz==null?'on':''}" data-act="wiz-mode" data-v="list">${t('All exercises')}</button>
+          <button style="flex:1" class="${wiz!=null?'on':''}" data-act="wiz-mode" data-v="wiz">${t('One at a time')}</button>
+        </div>
+        <span class="muted" style="font-size:11.5px;flex:none">${wiz==null?nf(w.exercises.length):`${nf(wiz+1)}/${nf(w.exercises.length)}`}</span>
+      </div>
+      ${wiz!=null?`<div class="row" style="gap:6px;padding:0 14px 8px">
+        <button class="btn btn-outline btn-sm" data-act="wiz-step" data-d="-1" ${wiz<=0?'disabled':''} style="flex:1;justify-content:center">${ic('chevL',13)} ${t('Prev')}</button>
+        <button class="btn btn-outline btn-sm" data-act="wiz-step" data-d="1" ${wiz>=w.exercises.length-1?'disabled':''} style="flex:1;justify-content:center">${t('Next')} ${ic('chevR',13)}</button>
+      </div>`:''}
+      ${shown.map(({e,ei})=>{const ex=EXERCISES[e.ex];
+      const pv=e.note?prevOf(ex.n):null;
+      const pvDelta=pv?Math.round((e.kg-pv.kg)*10)/10:0;
+      return `<div class="ccard" style="margin-bottom:10px">
+        <div class="exh"><b>${t(ex.n)}</b><span class="tgt">${nf(e.sets)} × ${nf(e.reps)} @ ${nf(e.kg)} kg</span></div>
+        <div class="row" style="gap:6px;margin:3px 0 6px;flex-wrap:wrap"><span class="chip">${tmus(ex.m)}</span><span class="chip">${t('Rest')} ${nf(e.rest)}s</span></div>
+        ${e.note?`<div class="exnote">
+          <div class="cue-h"><span class="cue-av">${esc(cueIni)}</span>
+            <div class="t"><b>${t('Coach cue')}</b><span>${esc(cw)} · ${t('before this set')}</span></div>
+            <span class="cue-badge">${t(ex.n)}</span></div>
+          <div class="cue-txt">${esc(t(e.note))}</div>
+          ${pv?`<div class="cue-prev"><span class="k">${fmtD(pv.d)}</span><span class="v">${nf(pv.kg)} kg${pv.reps?` × ${nf(pv.reps)}`:''}</span>${pvDelta?`<span class="d">${pvDelta>0?'↑ +':'↓ '}${nf(Math.abs(pvDelta))} kg</span>`:''}</div>`:''}
+        </div>`:''}
+        ${e.vid&&isImgUrl(e.vid)?`<img src="${esc(e.vid)}" alt="" loading="lazy" style="width:100%;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid var(--line2);background:var(--surface);margin:2px 0 6px">`
+          :`<div class="exvid"><span class="vt badge b-lime">${ic('play',11)} ${t('Demo video')}</span>
+            <button class="play" data-act="${e.vid?'ex-video-url':'vid-yt'}" ${e.vid?`data-url="${esc(e.vid)}"`:`data-i="${e.ex}"`} aria-label="${t('Demo video')}">${ic('play',22)}</button></div>`}
+        <div class="settbl">
+          <div class="sth"><span>${t('Set')}</span><span>kg</span><span>${t('Reps')}</span><span>${ic('check',12)}</span></div>
+          ${Array.from({length:e.sets},(_,si)=>{const key=ei+'-'+si;const ck=S.player.checked.has(key);
+          return `<div class="str ${ck?'done':''}" data-act="togset" data-k="${key}" data-rest="${e.rest}" role="button" tabindex="0" style="cursor:pointer">
+            <span class="setn">${nf(si+1)}</span><b>${nf(e.kg)}</b><b>${nf(e.reps)}</b>
+            <span class="go">${ck?ic('check',12):''}</span></div>`}).join('')}
+        </div>
+        ${PREFS.wk.rpe&&lastKey&&lastKey.indexOf(ei+'-')===0?`<div class="cc" style="margin:0">
+          <div class="rpe-top">
+            <span class="badge b-purple">RPE</span>
+            <span class="muted" style="flex:1">${t('Rate this set')} — <b style="color:var(--ink2)" id="rpeVal">RPE ${rpeVal?nf(rpeVal):'—'}</b></span>
+            <button class="rpe-help" data-act="rpe-help" title="${t('What does RPE mean?')}">?</button>
+          </div>
+          <div class="rpe-scale">
+            ${[6,7,8,9,10].map(r=>`<button class="rchip ${rpeVal===r?'on':''}" data-act="rpe" data-k="${lastKey}" data-v="${r}">${nf(r)}</button>`).join('')}
+          </div>
+        </div>`:''}
+      </div>`}).join('')}
+      <!-- v18.89 - ORDER: the rest timer now lives in the BODY (mockup .app runs
+           head -> vid -> exh -> exnote -> settbl -> rest -> RPE -> plfoot).
+           It used to sit inside .cpfoot, which stretched that sticky bar to 240px. -->
+      ${S.player.rest>0?`<div class="rest" data-state="${S.player.restPaused?'pause':'run'}">
+        <div class="rest-main">
+          <div class="rest-ring">
+            <svg viewBox="0 0 66 66" width="66" height="66" aria-hidden="true">
+              <circle class="trk" cx="33" cy="33" r="30"/>
+              <circle class="prg" id="restRing" cx="33" cy="33" r="30" stroke-dasharray="${REST_C.toFixed(1)}" stroke-dashoffset="0"/>
+            </svg>
+            <span class="val" id="restNum">${nf(fmtMS(S.player.rest))}</span>
+          </div>
+          <div class="info">
+            <span class="rlbl" id="restState">${S.player.restPaused?t('On pause'):t('Rest')}</span>
+            <b>${nx?`${t('Next')}: ${t(EXERCISES[nx.ex].n)}`:`${t('Finish Workout')} 🏁`}</b>
+            <span>${nx?`${nf(nx.sets)} × ${nf(nx.reps)} @ ${nf(nx.kg)} kg`:`${nf(done)}/${nf(total)} ${t('sets')}`}</span>
+          </div>
+          <button class="rpause" data-act="rest-pause" title="${t('Pause')}">${S.player.restPaused?ic('play',14):ic('pause',14)}</button>
+          <button class="rpause" data-act="rest-fs" title="${t('Fullscreen')}">${ic('maximize',14)}</button>
+        </div>
+        <div class="rest-ctrls">
+          <button class="rbtn" data-act="rest-shift" data-s="-15">−15s</button>
+          <button class="rbtn" data-act="rest-shift" data-s="30">+30s</button>
+          <button class="rbtn primary" data-act="skiprest">${t('Skip rest')} →</button>
+        </div>
+        <div class="rest-presets">
+          ${[30,60,90,120].map(sn=>`<button class="rbtn" data-act="rest-set" data-s="${sn}">${nf(sn)}s</button>`).join('')}
+        </div>
+        <div class="rest-toggles">
+          <button class="rtog ${PREFS.wk.snd===false?'':'on'}" data-act="rest-snd">${ic('bell',13)} ${t('Sound')}</button>
+          <button class="rtog ${PREFS.wk.vib===false?'':'on'}" data-act="rest-vib">${ic('smartphone',13)} ${t('Vibrate')}</button>
+          <button class="rtog ${PREFS.wk.autoNext===false?'':'on'}" data-act="rest-auto">${ic('repeat',13)} ${t('Auto next')}</button>
+        </div>
+      </div>`:''}
+    </div>
+    <!-- v18.89 - mockup .plfoot: 72px translucent bar, ghost + primary pair -->
+    <div class="cpfoot">
+      <button class="btn btn-outline btn-ghost-btn" data-act="wiz-mode" data-v="${wiz==null?'wiz':'list'}" title="${t('All exercises')}">${ic('list',17)}</button>
+      ${ro?`<button class="btn btn-outline" data-act="close-player">${t('Close')}</button>`
+        :`<button class="btn btn-primary" data-act="finish-workout">${ic('check',16)} ${t('Finish Workout')} (${nf(done)}/${nf(total)})</button>`}
+    </div>
+    ${S.player.rest>0&&S.player.restFs?`<div class="restfs" data-s="${S.player.restPaused?'pause':'run'}">
+      <button class="restfs-x" data-act="rest-fs-x" aria-label="${t('Close')}">${ic('x',17)}</button>
+      <div class="restfs-l">${S.player.restPaused?t('On pause'):t('Rest')}</div>
+      <div class="restfs-n" id="restFsNum">${nf(fmtMS(S.player.rest))}</div>
+      <div class="restfs-bar"><i id="restFsFill" style="width:${S.player.restTotal?Math.max(0,Math.min(100,S.player.rest/S.player.restTotal*100)).toFixed(1):0}%"></i></div>
+      <div class="restfs-c">
+        <button class="btn btn-outline" data-act="rest-shift" data-s="-15">−15s</button>
+        <button class="btn btn-primary" data-act="rest-pause">${S.player.restPaused?t('Start'):ic('pause',15)}</button>
+        <button class="btn btn-outline" data-act="rest-shift" data-s="30">+30s</button>
+      </div>
+      <button class="btn btn-ghost" data-act="skiprest" style="width:100%;max-width:260px;margin-top:10px;color:var(--red)">${t('Skip')}</button>
+    </div>`:''}
+    ${S.player.rpeHelp?`<div class="rpe-ovl" data-act="rpe-help-x"></div>
+    <div class="rpe-sheet">
+      <div class="rpe-grab"></div>
+      <div class="rpe-sh-h"><div><b>${t('What does RPE mean?')}</b><span>${t('Rate of Perceived Exertion — how hard the set felt')}</span></div>
+        <button class="rpe-x" data-act="rpe-help-x">×</button></div>
+      ${[[6,'Easy','4+ reps still in the tank','Warm-up','#22262D','#7E8492'],[7,'Comfortable','3 reps left','Light load','rgba(43,191,113,.14)','#5EE2A0'],[8,'Standard','2 reps left — sweet spot for growth','Goal','rgba(200,240,75,.16)','#C8F04B'],[9,'Hard','1 rep left','Heavy','rgba(229,169,60,.15)','#F0B457'],[10,'Max effort','to failure — no reps left','All-out','rgba(239,91,91,.15)','#FF8484']].map(([n,lab,desc,tag,bg,fg])=>`
+      <div class="rlg"><span class="n" style="background:${bg};color:${fg}">${nf(n)}</span><div class="t"><b>${t(lab)}</b><span>${t(desc)}</span></div><span class="tag"${n===8?' style="background:var(--accent);color:var(--accent-ink)"':''}>${t(tag)}</span></div>`).join('')}
+      <div class="rpe-sh-f">💡 ${t('Tap a number right after your set — your coach reads it and adjusts next week\'s weight automatically.')}</div>
+    </div>`:''}
+  </div>`;
+}
+
+/* ================= SHELL / RENDER ================= */
+function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings}[S.view]()}
+function shell(inner){
+  const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
+  const nav=[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note'],['messages','Messages','mail']];
+  const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
+  return `<div class="shell">
+  ${fbBtn('bottom:20px;inset-inline-start:20px;')}
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
+    <nav class="nav">
+      <div class="nav-sec">${t('Workspace')}</div>${nav.slice(0,8).map(navIt).join('')}
+      <div class="nav-sec">${t('Manage')}</div>${nav.slice(8).map(navIt).join('')}
+    </nav>
+    <div class="side-foot">
+      <div class="nav-it" data-act="sb">${ic('chevL',17)}<span class="txt">${t('Collapse')}</span></div>
+      <div class="nav-it ${S.view==='settings'?'on':''}" data-act="nav" data-view="settings">${ic('gear',17)}<span class="txt">${t('Settings')}</span></div>
+      <div class="nav-it" data-act="help-open">${ic('help',17)}<span class="txt">${t('Help')}</span></div>
+      <div class="mwrap" data-mw>
+        <div class="sprof" data-act="mw">${av(coachName(),34,3)}<div><div class="n">${esc(coachName())}</div><div class="p">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div></div>
+        <div class="menu">
+          <div class="menu-it" data-act="nav" data-view="settings">${ic('gear',15)} ${t('Settings')}</div>
+          <div class="menu-it" data-act="switch-role">${ic('users',15)} ${t('Switch role')}</div>
+          <div class="menu-it" data-act="signout" style="color:var(--red)">${ic('x',15)} ${t('Sign out')}</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="btn btn-ghost btn-icon hamb" data-act="hamb">${ic('grid',18)}</button>
+      <div class="searchbox" data-act="palette">${ic('search',16)}<span style="flex:1">${t('Search clients, foods, plans, meals…')}</span><kbd>⌘K</kbd></div>
+      <span class="sp"></span>
+      ${themeBtn('btn-outline btn-sm')}
+      ${langBtn('btn-outline btn-sm')}
+      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${t('Coach')}</span>
+      <div class="mwrap" data-mw>
+        <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
+        <div class="menu"><div class="menu-hd">${t('Create')}</div>
+          ${[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar'],['Create Template','stack'],['Create Note','note']].map(([l,i])=>`<div class="menu-it" data-act="qa-item" data-item="${l}">${ic(i,15)} ${t(l)}</div>`).join('')}
+        </div>
+      </div>
+      <div class="mwrap" data-mw>
+        <button class="btn btn-ghost btn-icon" data-act="mw" style="position:relative">${ic('bell',18)}<span style="position:absolute;top:6px;inset-inline-end:7px;width:8px;height:8px;border-radius:50%;background:var(--accent-deep);border:2px solid var(--bg)"></span></button>
+        <div class="menu" style="min-width:300px"><div class="menu-hd row" style="justify-content:space-between">${t('Notifications')} <a class="lnk" style="font-size:11.5px" data-act="markread">${t('Mark all read')}</a></div>
+        ${NOTIFS.map(n=>`<div class="menu-it" style="align-items:flex-start" data-act="notif-open" data-t="${esc(n.t)}"><span style="width:8px;height:8px;border-radius:50%;background:${n.un?'var(--accent-deep)':'var(--line)'};margin-top:6px;flex:none"></span><div><div style="font-weight:${n.un?600:500}">${t(n.t)}</div><div class="muted" style="font-size:11.5px">${t(n.d)}</div></div></div>`).join('')}
+        </div>
+      </div>
+      ${av(coachName(),34,3)}
+    </div>
+    <div class="content">${inner}</div>
+    ${aiFab()}
+  </div></div>`;
+}
+function renderInner(){
+  if(S.role==='client'){
+    /* v18.90 — bring a RUNNING rest back after a reload. Must run before vClient()
+       so S.player exists when cPlayer() renders; no-ops when nothing is stored. */
+    restRestore();
+    $('app').innerHTML=vClient();
+    fxReveal(); // v18.26 — slow scroll-reveal for the client app cards
+    if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
+    return;
+  }
+  if(S.view==='login'){$('app').innerHTML=vLogin();unlockWire();return}
+  if(isNarrow()){
+    $('app').innerHTML=renderMobile();
+    if(S.mtab==='messages'&&S.msgThread)requestAnimationFrame(()=>{const el=$('mthrbody');if(el)el.scrollTop=el.scrollHeight});
+    return;
+  }
+  $('app').innerHTML=shell(currentView());
+  if(S.view==='messages'&&S.msgThread)requestAnimationFrame(()=>{const el=$('thrbody');if(el)el.scrollTop=el.scrollHeight});
+  document.body.classList.remove('sb-c');
+}
+function render(){renderInner();saveData()}
+
+/* ================= v18.26 — SCROLL REVEAL (calm motion) =================
+   Observes the client app's cards and adds .fx-in (fade+rise, .9s) as each
+   enters the viewport, with a small stagger. One shared observer; elements
+   are unobserved after revealing (once per mount). Disabled entirely for
+   prefers-reduced-motion (CSS also flattens). */
+let FXO=null;
+function fxReveal(){
+  try{
+    if(!FXO){
+      FXO=new IntersectionObserver(es=>{
+        es.forEach(en=>{
+          if(!en.isIntersecting)return;
+          const el=en.target;
+          const sibs=[...el.parentElement.children].filter(x=>x.classList.contains('ccard')||x.classList.contains('wcard')||x.classList.contains('fhero'));
+          el.style.transitionDelay=Math.min(360,sibs.indexOf(el)*90)+'ms';
+          el.classList.add('fx-in');
+          FXO.unobserve(el);
+        });
+      },{root:null,rootMargin:'0px 0px -8% 0px',threshold:.08});
+    }
+    const els=document.querySelectorAll('.phone .cbody>.ccard,.phone .cbody>.wcard,.phone .cbody>.fhero');
+    els.forEach(el=>{el.classList.remove('fx-in');FXO.observe(el)});
+    /* Hidden tabs defer IO callbacks indefinitely — reveal anything already
+       in the viewport after a beat so the first screen is never blank. */
+    setTimeout(()=>{
+      els.forEach(el=>{
+        if(el.classList.contains('fx-in'))return;
+        const r=el.getBoundingClientRect();
+        if(r.top<innerHeight&&r.bottom>0){el.classList.add('fx-in');FXO.unobserve(el)}
+      });
+    },350);
+  }catch(e){}
+}
+
+/* ================= MODALS ================= */
+function openModal(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="modal">${html}</div></div>`;document.body.style.overflow='hidden'}
+/* v18.36 — bottom sheet (mobile-first toolbox/stopwatch). Reuses the modal
+   root so overlay-tap close and body-lock behave identically. */
+function openSheet(html){$('modal-root').innerHTML=`<div class="ovl" data-act="ovl-x"><div class="sheet">${html}</div></div>`;document.body.style.overflow='hidden'}
+function closeModal(){$('modal-root').innerHTML='';document.body.style.overflow='';
+  /* v18.17 — the form-check camera must never keep running after its modal
+     closes (X button, overlay tap, or any other modal opening over it). */
+  try{if(FC&&FC.on)fcStop()}catch(e){}
+}
+function editClientModal(name){
+  const c=CLIENTS.find(x=>x.name===name)||client(S.cid);
+  const nm=c.name.split(' ');
+  const U=PREFS.units==='Imperial';
+  openModal(`
+  <div class="modal-h"><h3>${t('Edit Client')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:14px"><button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="ec-pic" data-c="${esc(c.name)}" title="${t(c.pic?'Change photo':'Add photo')}">${avPlus(t(c.name),52,c.id-1,!!c.pic)}</button><div><b style="font-size:15px">${t(c.name)}</b><div style="margin-top:4px">${stBdg(c.status)}</div>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11.5px" data-act="ec-pic-del" data-c="${esc(c.name)}">${t('Remove photo')}</button>`:''}</div></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="ec-fn" value="${esc(nm[0]||'')}"></div>
+      <div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="ec-ln" value="${esc(nm.slice(1).join(' '))}"></div>
+      <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" id="ec-email" value="${esc(c.email||'')}"></div>
+      <div class="field"><label class="lbl">${t('National ID')} <span class="muted" style="font-weight:400;font-size:10.5px">· ${t('For contract & insurance')}</span></label><input class="inp" id="ec-nid" value="${esc(c.nid||'')}" inputmode="numeric" autocomplete="off"></div>
+      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="ec-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option value="${g}" ${c.goal===g?'selected':''}>${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Status')}</label><select class="sel" id="ec-status">${['Active','Inactive','On Hold','Pending','Archived'].map(s=>`<option value="${s}" ${c.status===s?'selected':''}>${t(s)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel" id="ec-freq">${['—','2x / week','3x / week','4x / week','5x / week'].map(f=>`<option value="${f}" ${c.freq===f?'selected':''}>${t(f)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Weight')} (${U?'lb':'kg'})</label><input class="inp" type="number" step="0.1" id="ec-weight" value="${c.weight?(U?uw(c.weight):c.weight):''}"></div>
+      <div class="field"><label class="lbl">${t('Height')} (${U?'in':'cm'})</label><input class="inp" type="number" id="ec-h" value="${c.h?(U?uc(c.h):c.h):''}"></div>
+      <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" type="number" step="0.1" id="ec-bf" value="${c.bf}"></div>
+      <div class="field"><label class="lbl">${t('Target Weight')} (${U?'lb':'kg'})</label><input class="inp" type="number" step="0.1" id="ec-targetw" value="${c.targetW?(U?uw(c.targetW):c.targetW):''}"></div>
+      <div class="field"><label class="lbl">${t('Target Date')}</label><input class="inp" type="date" id="ec-targetd" value="${esc(c.targetDate||'')}"></div>
+    </div>
+    <div class="fs-t" style="margin-top:14px">${t('Current program')}</div>
+    <div class="fgrid">
+      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Program name')}</label><input class="inp" id="ec-pname" value="${esc((c.prog2&&c.prog2.name)||c.prog||'')}" placeholder="${t('Block 2 — Strength')}"></div>
+      <div class="field"><label class="lbl">${t('Phase')} / ${t('Phases')}</label>
+        <div class="row" style="gap:6px"><input class="inp" type="number" id="ec-phase" min="0" value="${(c.prog2&&c.prog2.phase)||0}" style="flex:1"><span class="muted" style="align-self:center">/</span><input class="inp" type="number" id="ec-phases" min="0" value="${(c.prog2&&c.prog2.phases)||0}" style="flex:1"></div></div>
+      <div class="field"><label class="lbl">${t('Week')} / ${t('Weeks')}</label>
+        <div class="row" style="gap:6px"><input class="inp" type="number" id="ec-week" min="1" value="${(c.prog2&&c.prog2.week)||c.week||1}" style="flex:1"><span class="muted" style="align-self:center">/</span><input class="inp" type="number" id="ec-weeks" min="1" value="${(c.prog2&&c.prog2.weeks)||12}" style="flex:1"></div></div>
+    </div>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="ec-rem" ${!c.noRemind?'checked':''}> ${t('Auto workout reminders')} <span class="muted" style="font-size:11px">· ${t('Message clients who skip 3+ days')}</span></label>
+    <div style="margin-top:6px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div class="lbl" style="margin-bottom:6px">${t('Personal connection code')}</div>
+      <div class="row" style="gap:8px;margin-bottom:8px"><span class="chip" style="font-weight:800;letter-spacing:.12em;font-size:14px">${esc(joinCodeOf(c))}</span>
+        <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',13)} ${t('Copy')}</button>
+        <button class="btn btn-outline btn-sm" data-act="qr-open" data-code="${esc(joinCodeOf(c))}" data-name="${esc(c.name)}">${ic('qr',13)} ${t('QR')}</button>
+        <button class="btn btn-outline btn-sm" data-act="client-regen" data-c="${esc(c.name)}">${ic('refresh',13)} ${t('Regenerate')}</button></div>
+      <div class="muted" style="font-size:11.5px;margin-bottom:14px">${t('The client enters this code on the login screen — their profile opens with everything you registered')}</div>
+      <button class="btn btn-outline btn-sm" style="color:var(--red);border-color:var(--red-soft)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete client')}</button>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="ec-save" data-c="${esc(c.name)}">${ic('check',15)} ${t('Save')}</button></div>`)
+}
+function addClientModal(){openModal(`
+  <div class="modal-h"><h3>${t('Add Client')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fs"><div class="fs-t">${t('Personal Information')}</div><div class="fgrid">
+      <div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="nc-fn"></div>
+      <div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="nc-ln"></div>
+      <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" type="email" placeholder="client@mail.com"></div>
+      <div class="field"><label class="lbl">${t('National ID')} <span class="muted" style="font-weight:400;font-size:10.5px">· ${t('For contract & insurance')}</span></label><input class="inp" id="nc-nid" inputmode="numeric" autocomplete="off" placeholder="—"></div>
+      <div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" placeholder="+98 …"></div>
+      <div class="field"><label class="lbl">${t('Date of Birth')}</label><input class="inp" type="date"></div>
+      <div class="field"><label class="lbl">${t('Gender')}</label><select class="sel"><option>${t('Prefer not to say')}</option><option>${t('Male')}</option><option>${t('Female')}</option></select></div></div></div>
+    <div class="fs"><div class="fs-t">${t('Physical Information')}</div><div class="fgrid">
+      <div class="field"><label class="lbl">${t('Height (cm)')}</label><input class="inp" type="number" placeholder="175"></div>
+      <div class="field"><label class="lbl">${t('Weight (kg)')}</label><input class="inp" type="number" placeholder="72.5"></div>
+      <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" type="number" placeholder="18"></div>
+      <div class="field"><label class="lbl">${t('Activity Level')}</label><select class="sel"><option>${t('Sedentary')}</option><option selected>${t('Lightly active')}</option><option>${t('Moderately active')}</option><option>${t('Very active')}</option></select></div></div></div>
+    <div class="fs"><div class="fs-t">${t('Training Information')}</div><div class="fgrid">
+      <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel"><option>${t('Beginner')}</option><option selected>${t('Intermediate')}</option><option>${t('Advanced')}</option></select></div>
+      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option>${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel">${['2x / week','3x / week','4x / week','5x / week'].map(f=>`<option ${f==='3x / week'?'selected':''}>${t(f)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Preferred Days')}</label><input class="inp" placeholder="Mon · Wed · Fri"></div>
+      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Available Equipment')}</label><input class="inp" placeholder="${t('Full gym · Dumbbells at home')}"></div></div></div>
+    <div class="fs" style="margin-bottom:0"><div class="fs-t">${t('Health / Limitations')}</div><div class="fgrid">
+      <div class="field"><label class="lbl">${t('Injuries')}</label><input class="inp"></div>
+      <div class="field"><label class="lbl">${t('Movement Restrictions')}</label><input class="inp"></div>
+      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Important Notes')}</label><textarea class="ta"></textarea></div></div></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="save-client">${ic('check',15)} ${t('Save Client')}</button></div>`)}
+function pickerModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Add Exercise')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="row" style="margin-bottom:12px"><div class="searchbox" style="flex:1;cursor:text"><input id="pk-q" placeholder="${t('Search exercises…')}" style="border:none;outline:none;flex:1;background:none;font-size:13.5px" oninput="pkFilter()"></div>
+    <select class="sel" id="pk-m" style="width:160px" onchange="pkFilter()">${MUSCLES.map(m=>`<option value="${m}">${tmus(m)}</option>`).join('')}</select></div>
+    <div id="pk-list" style="display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow-y:auto"></div>
+  </div>`);
+  pkFilter();
+}
+function pkFilter(){
+  const q=($('pk-q')?.value||'').toLowerCase(),m=$('pk-m')?.value||'All';
+  const list=EXERCISES.map((e,i)=>({...e,i})).filter(e=>(m==='All'||e.m===m)&&(e.n.toLowerCase().includes(q)||t(e.n).toLowerCase().includes(q)));
+  $('pk-list').innerHTML=list.length?list.map(e=>`
+  <div class="card" style="padding:12px 14px"><div class="row"><div style="width:44px;height:36px;border-radius:8px;background:var(--line2);display:grid;place-items:center;color:var(--ink3)">${ic('dumbbell',16)}</div>
+  <div style="flex:1"><b style="font-size:13.5px">${t(e.n)}</b><div class="muted" style="font-size:12px">${tmus(e.m)} · ${t(e.e)} · ${t(e.t)}</div></div>
+  <button class="btn btn-primary btn-sm" data-act="pk-add" data-i="${e.i}">${ic('plus',13)} ${t('Add')}</button></div></div>`).join('')
+  :`<div style="padding:30px;text-align:center;color:var(--ink3)">${t('No exercises match your search.')}</div>`;
+}
+/* v15.6 — REAL measurement modal (v15.7: unit-aware inputs) */
+function measModal(){
+  const c=client(isNarrow()&&S.mview==='client'?S.mClient:S.cid);
+  const m=lastM(c.id);
+  const U=PREFS.units==='Imperial';
+  const fld=(id,l,u,fb)=>{const v=(m&&m[id]!=null)?m[id]:(fb!=null?fb:null);
+    const dv=v==null?'':(id==='w'?uw(v):(id==='bf'?v:uc(v)));
+    return `<div class="field"><label class="lbl">${t(l)} (${u})</label><input class="inp" type="number" step="0.1" id="ms-${id}" value="${dv}"></div>`};
+  openModal(`
+  <div class="modal-h"><h3>${t('Add Measurement')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Client')}</label><select class="sel" id="ms-client">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${t(x.name)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" type="date" id="ms-date" value="${isoToday()}"></div>
+    </div>
+    <div class="fgrid">
+      ${fld('w','Weight',U?'lb':'kg')}${fld('ht','Height',U?'in':'cm',c.h)}${fld('bf','Body Fat','%')}${fld('ch','Chest',U?'in':'cm')}
+      ${fld('wa','Waist',U?'in':'cm')}${fld('hi','Hips',U?'in':'cm')}${fld('ar','Arm',U?'in':'cm')}${fld('th','Thigh',U?'in':'cm')}${fld('ca','Calf',U?'in':'cm')}
+    </div>
+    ${m?`<div class="muted" style="font-size:12px">${t('Last measurement')}: ${fmtD(m.d)} — ${t('Weight')} ${uwS(m.w)}${m.ht!=null?` · ${t('Height')} ${ucS(m.ht)}`:''}${m.wa!=null?` · ${t('Waist')} ${ucS(m.wa)}`:''}</div>`:''}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-outline" data-act="meas-ai" title="${t('AI Analysis')}">${ic('zap',14)} ${t('AI Analysis')}</button><button class="btn btn-primary" data-act="meas-save">${ic('check',15)} ${t('Save Measurement')}</button></div>`)
+}
+/* v17.2 — shared by meas-save and meas-ai. Reads the measurement modal, converts
+   units, stores the entry (now including height) and syncs the client profile
+   (weight/bodyfat/height). requireWeight=false lets the AI button proceed with
+   whatever was entered (or nothing) and just analyze. */
+function saveMeasurementFromModal(requireWeight){
+  /* v18.61 — the CLIENT portal has no client <select> (it's always S.cid),
+     so the select is optional now. */
+  const sel=$('ms-client');
+  const cid=sel?+sel.value:S.cid;const c=CLIENTS.find(x=>x.id===cid);if(!c)return null;
+  const d=$('ms-date').value||isoToday();
+  const cvt=id=>{const raw=$('ms-'+id).value;if(raw==='')return null;const n=parseFloat(raw);
+    return id==='w'?wToKg(n):(id==='bf'?n:lToCm(n))};
+  const e={d,w:cvt('w'),ht:cvt('ht'),bf:cvt('bf'),ch:cvt('ch'),wa:cvt('wa'),hi:cvt('hi'),ar:cvt('ar'),th:cvt('th'),ca:cvt('ca')};
+  if(e.w==null){if(requireWeight)toast('Weight is required');return null}
+  DB[cid].measures=DB[cid].measures||[];
+  DB[cid].measures.push(e);
+  DB[cid].measures.sort((x,y)=>x.d<y.d?-1:1);
+  if(e.w!=null)c.weight=e.w;
+  if(e.bf!=null)c.bf=e.bf;
+  if(e.ht!=null)c.h=e.ht;
+  /* v18.61 — ACTIVITY is the coach's feed; a client device logging their own
+     check-in shouldn't claim "You logged…" on the coach's dashboard. */
+  if(S.role!=='client')ACTIVITY.unshift({w:'Just now',i:'ruler',h:lang==='fa'?`<b>شما</b> برای <b>${t(c.name)}</b> اندازه‌گیری ثبت کردید`:`<b>You</b> logged a measurement for <b>${t(c.name)}</b>`});
+  return c;
+}
+/* v18.61 — CLIENT weekly check-in: the same measurement form as the coach
+   (fixed to the logged-in client, no client picker). Saving writes the real
+   measurement, syncs the profile AND sends a check-in message so the coach
+   is notified (message thread + OS push via the data.mjs MSGS trigger). */
+function clientMeasModal(){
+  const c=client(S.cid);
+  const m=lastM(c.id);
+  const U=PREFS.units==='Imperial';
+  const fld=(id,l,u,fb)=>{const v=(m&&m[id]!=null)?m[id]:(fb!=null?fb:null);
+    const dv=v==null?'':(id==='w'?uw(v):(id==='bf'?v:uc(v)));
+    return `<div class="field"><label class="lbl">${t(l)} (${u})</label><input class="inp" type="number" step="0.1" id="ms-${id}" value="${dv}"></div>`};
+  openModal(`
+  <div class="modal-h"><h3>${t('Weekly check-in')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Log weight & measurements')} — ${t('your coach sees it instantly')}</div>
+    <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" type="date" id="ms-date" value="${isoToday()}"></div>
+    <div class="fgrid">
+      ${fld('w','Weight',U?'lb':'kg')}${fld('ht','Height',U?'in':'cm',c.h)}${fld('bf','Body Fat','%')}${fld('ch','Chest',U?'in':'cm')}
+      ${fld('wa','Waist',U?'in':'cm')}${fld('hi','Hips',U?'in':'cm')}${fld('ar','Arm',U?'in':'cm')}${fld('th','Thigh',U?'in':'cm')}${fld('ca','Calf',U?'in':'cm')}
+    </div>
+    ${m?`<div class="muted" style="font-size:12px">${t('Last measurement')}: ${fmtD(m.d)} — ${t('Weight')} ${uwS(m.w)}${m.wa!=null?` · ${t('Waist')} ${ucS(m.wa)}`:''}</div>`:`<div class="muted" style="font-size:12px">${t('No measurements yet')}</div>`}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="cmeas-save">${ic('check',15)} ${t('Save check-in')}</button></div>`)
+}
+function quickNoteModal(pre,nt){
+  openModal(`
+  <div class="modal-h"><h3>${t('Quick Note')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <select class="sel" id="qn-client" style="margin-bottom:10px">${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${pre===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
+    <select class="sel" id="nt-type" style="margin-bottom:10px">${['General Note','Training Note','Progress Note','Injury / Restriction Note','Nutrition Note'].map(x=>`<option value="${x}" ${nt===x?'selected':''}>${t(x)}</option>`).join('')}</select>
+    <input class="inp" id="nt-title" placeholder="${t('Title')}" style="margin-bottom:10px">
+    <textarea class="ta" id="nt-body" placeholder="${t('Write your note…')}" style="margin-bottom:10px"></textarea>
+    <label class="chk"><input type="checkbox" id="nt-share" checked>${t('Visible to client')}</label>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="qn-add">${ic('check',15)} ${t('Save Note')}</button></div>`)}
+function newSessionModal(){
+  const CH=calHours();
+  const times=Array.from({length:Math.round((CH.end-CH.start)*2)},(_,i)=>CH.start+i*0.5);
+  const cur=client(S.cid).name;
+  const pre=S.nsPre||{};S.nsPre=null;
+  const pday=pre.day??TODAY,pstart=Math.min(Math.max(pre.start??Math.min(9,CH.end-1),CH.start),CH.end-0.5);
+  openModal(`
+  <div class="modal-h"><h3>${t('New Session')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Client')}</label><select class="sel" id="ns-client" onchange="nsConflict()">${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${c.name===cur?'selected':''}>${t(c.name)}</option>`).join('')}</select></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Session type')}</label><select class="sel" id="ns-type"><option value="session">${t('Session')}</option><option value="assess">${t('Assessment')}</option><option value="meas">${t('Measurement')}</option><option value="appt">${t('Appointment')}</option></select></div>
+      <div class="field"><label class="lbl">${t('Training Day')}</label><select class="sel" id="ns-day" onchange="nsConflict()">${[0,1,2,3,4,5,6].map(i=>`<option value="${i}" ${i===pday?'selected':''}>${dayLbl(i)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Time')}</label><select class="sel" id="ns-time" onchange="nsConflict()">${times.map(v=>`<option value="${v}" ${v===pstart?'selected':''}>${nf(fmtT(v))}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Duration')}</label><select class="sel" id="ns-dur" onchange="nsConflict()"><option value="0.5">${t('30 min')}</option><option value="1" selected>${t('60 min')}</option><option value="1.5">${t('90 min')}</option><option value="2">${t('120 min')}</option></select></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Title')}</label><input class="inp" id="ns-label" placeholder="${t('Training Session')}"></div>
+    <div id="ns-conflict"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="ns-save">${ic('check',15)} ${t('Save')}</button></div>`);
+  nsConflict();
+}
+function targetsModal(){
+  const p=NPLANS[S.nplan];
+  openModal(`
+  <div class="modal-h"><h3>${t('Target Macros')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="fs-t">${t('Training Day')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="tg-tk" value="${p.train.kcal}"></div>
+      <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="tg-tp" value="${p.train.p}"></div>
+      <div class="field"><label class="lbl">${t('Carbs')} (g)</label><input class="inp" type="number" id="tg-tc" value="${p.train.c}"></div>
+      <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="tg-tf" value="${p.train.f}"></div>
+    </div>
+    <div class="fs-t">${t('Rest Day')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="tg-rk" value="${p.rest.kcal}"></div>
+      <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="tg-rp" value="${p.rest.p}"></div>
+      <div class="field"><label class="lbl">${t('Carbs')} (g)</label><input class="inp" type="number" id="tg-rc" value="${p.rest.c}"></div>
+      <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="tg-rf" value="${p.rest.f}"></div>
+    </div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="tg-save">${ic('check',15)} ${t('Save')}</button></div>`)}
+function ptUseModal(i){
+  const tp=PTPL[i];
+  openModal(`
+  <div class="modal-h"><h3>${t('Use Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="card" style="padding:12px 14px;margin-bottom:14px"><b>${t(tp.n)}</b>
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:6px"><span class="chip">${nf(tp.meals)} ${t('Meals')}</span><span class="chip">${nf(tp.kcal)} kcal</span><span class="chip">${nf(tp.p)}g P</span><span class="chip">${nf(tp.c)}g C</span><span class="chip">${nf(tp.f)}g F</span></div></div>
+    <div class="field"><label class="lbl">${t('Client')}</label><select class="sel" id="pt-client">${CLIENTS.map(c=>`<option value="${esc(c.name)}">${t(c.name)}</option>`).join('')}</select></div>
+    <div class="field"><label class="lbl">${t('Plan Name')}</label><input class="inp" id="pt-name" value="${esc(t(tp.n))}"></div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="pt-save" data-i="${i}">${ic('check',15)} ${t('Create Plan')}</button></div>`)}
+
+/* ================= COMMAND PALETTE ================= */
+let palIdx=0,palItems=[];
+function paletteData(){return [
+  ...CLIENTS.map(c=>({g:'Clients',i:'users',t:t(c.name),s:t(c.prog),run:()=>{S.role='coach';S.view='wspace';S.cid=c.id;S.tab='overview';closePal()}})),
+  ...[['Dashboard','dash','grid'],['Clients','clients','users'],['Workouts','builder','dumbbell'],['Calendar','calendar','calendar'],['Progress','progress','chart'],['Nutrition','nutrition','utensils'],['Exercise Library','library','book'],['Templates','templates','stack'],['Notes','notes','note'],['Messages','messages','mail'],['Settings','settings','gear']].map(([l,v,i])=>({g:'Pages',i,t:t(l),s:t('Go to page'),run:()=>{S.role='coach';S.view=v;closePal()}})),
+  ...TEMPLATES.map(tp=>({g:'Templates',i:'stack',t:tp.n,s:`${nf(tplExN(tp))} ${t('exercises')} · ${t(tp.dur)}`,run:()=>{S.role='coach';S.view='templates';closePal()}})),
+  ...EXERCISES.slice(0,8).map(e=>({g:'Exercises',i:'dumbbell',t:t(e.n),s:`${tmus(e.m)} · ${t(e.e)}`,run:()=>{S.role='coach';S.view='library';closePal()}})),
+  ...NOTES.map(n=>({g:'Notes',i:'note',t:t(n.title),s:t(n.client),run:()=>{S.role='coach';S.view='notes';closePal()}})),
+  ...FILES.map(f=>({g:'Files',i:'folder',t:t(f.n),s:`${t(f.t)} · ${f.s}`,run:()=>{S.role='coach';S.view='wspace';S.tab='files';closePal()}}))
+]}
+function renderPal(q=''){
+  const data=paletteData().filter(x=>!q||x.t.toLowerCase().includes(q.toLowerCase())||x.s.toLowerCase().includes(q.toLowerCase()));
+  palItems=data;palIdx=Math.min(palIdx,Math.max(0,data.length-1));
+  let last='',html='';
+  data.forEach((x,i)=>{if(x.g!==last){html+=`<div class="pal-sec">${t(x.g)}</div>`;last=x.g}
+    html+=`<div class="pal-it ${i===palIdx?'sel':''}" data-pi="${i}">${ic(x.i,16)}<span>${esc(x.t)}</span><span class="muted" style="font-size:12px">${esc(x.s)}</span><span class="arrow">${ic('arrowR',13)}</span></div>`});
+  $('pal-root').innerHTML=`<div class="pal" data-act="pal-x"><div class="pal-box" onclick="event.stopPropagation()">
+    <div class="pal-in">${ic('search',18)}<input id="pal-q" placeholder="${t('Search clients, workouts, templates, exercises, notes, files…')}"><kbd>ESC</kbd></div>
+    <div class="pal-res" id="pal-res">${html||`<div style="padding:34px;text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}</div>
+  </div></div>`;
+  const inp=$('pal-q');if(inp){inp.value=q;
+  inp.addEventListener('input',()=>{palIdx=0;renderPal(inp.value)});
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'){e.preventDefault();palIdx=Math.min(palIdx+1,palItems.length-1);renderPal(inp.value)}
+    if(e.key==='ArrowUp'){e.preventDefault();palIdx=Math.max(palIdx-1,0);renderPal(inp.value)}
+    if(e.key==='Enter'&&palItems[palIdx]){palItems[palIdx].run();render()}
+  });inp.focus();}
+  $('pal-res')?.querySelectorAll('[data-pi]').forEach(el=>el.addEventListener('click',()=>{palItems[+el.dataset.pi].run();render()}));
+}
+const closePal=()=>$('pal-root').innerHTML='';
+const openPal=()=>{palIdx=0;renderPal()};
+
+/* ================= SEND HELPERS ================= */
+window.sendCoachMsg=name=>{
+  const inp=$('msg-inp');const v=inp?.value.trim();if(!v)return;
+  MSGS.push({id:uid(),client:name,from:'coach',type:'text',body:v,time:'Just now',read:true});
+  render();toast('Message sent');
+};
+window.sendClientMsg=()=>{
+  const inp=$('cmsg-inp');const v=inp?.value.trim();if(!v)return;
+  const c=client(S.cid);
+  MSGS.push({id:uid(),client:c.name,from:'client',type:'text',body:v,time:'Just now',read:false});
+  NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+  render();toast('Message sent');
+};
+/* ================= v18.75 — VOICE NOTES (Trainerize gap) =================
+   MediaRecorder → data-URL rides on MSGS like any image (payload cap5 MB).
+   Capped at VMAX seconds; mime is negotiated because Safari only does mp4. */
+const VMAX=15;
+let VREC=null,VCH=[],VSTART=0,SV=new Audio(),SVPLAY=null;
+const VURLS={}; // message id → blob: URL (one decode per voice note)
+const voiceMime=()=>{
+  const c=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+  for(const m of c){try{if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m}catch(e){}}
+  return '';
+};
+window.voiceToggle=async ()=>{
+  if(VREC){try{VREC.stop()}catch(e){}return}
+  if(!navigator.mediaDevices||!window.MediaRecorder){toast(t('Voice messages are not supported in this browser'));return}
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}
+  catch(e){toast(t('Microphone permission was denied'));return}
+  try{
+    const mime=voiceMime();VCH=[];VSTART=Date.now();
+    VREC=new MediaRecorder(mime?{mimeType:mime}:undefined);
+    VREC.ondataavailable=e=>{if(e.data&&e.data.size)VCH.push(e.data)};
+    VREC.onstop=()=>{
+      const dur=Math.max(1,Math.min(VMAX,Math.round((Date.now()-VSTART)/1000)));
+      try{stream.getTracks().forEach(x=>x.stop())}catch(e){}
+      const blob=new Blob(VCH,{type:(VREC&&VREC.mimeType)||'audio/webm'});
+      VREC=null;VCH=[];S.recVoice=false;
+      const rd=new FileReader();
+      rd.onload=()=>window.voiceSend(String(rd.result),dur);
+      rd.onerror=()=>{render();toast(t('Could not start recording'))};
+      rd.readAsDataURL(blob);
+    };
+    VREC.start();
+    setTimeout(()=>{if(VREC&&VREC.state==='recording'){try{VREC.stop()}catch(e){}}},VMAX*1000);
+    S.recVoice=true;render();
+  }catch(e){VREC=null;S.recVoice=false;render();toast(t('Could not start recording'))}
+};
+window.voiceSend=(src,dur)=>{
+  const c=client(S.cid);if(!c||!src)return;
+  MSGS.push({id:uid(),client:c.name,from:'client',type:'voice',
+    body:`🎙 ${t('Voice message')} · ${fmtMS(dur||0)}`,src,dur:dur||0,time:'Just now',read:false});
+  NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+  saveData();render();toast(t('Voice message sent'));
+};
+window.voicePlay=id=>{
+  const m=MSGS.find(x=>String(x.id)===String(id));if(!m||!m.src)return;
+  const same=SVPLAY===String(id);
+  try{SV.pause()}catch(e){}
+  if(same){SV=new Audio();SVPLAY=null;render();return}
+  /* CSP is `media-src 'self' blob:` — a raw data: URL is blocked by the
+     browser, so decode it into a blob: URL once per message and reuse it. */
+  let url=m.src;
+  if(m.src.startsWith('data:')){
+    try{
+      if(!VURLS[String(id)]){
+        const i=m.src.indexOf(',');
+        const b64=m.src.slice(i+1),bin=atob(b64);
+        const u=new Uint8Array(bin.length);
+        for(let k=0;k<bin.length;k++)u[k]=bin.charCodeAt(k);
+        const mime=(m.src.slice(5,i).split(';')[0]||'audio/webm');
+        VURLS[String(id)]=URL.createObjectURL(new Blob([u],{type:mime}));
+      }
+      url=VURLS[String(id)];
+    }catch(e){toast(t('Could not play this voice message'));return}
+  }
+  SV=new Audio(url);SVPLAY=String(id);
+  SV.onended=()=>{SVPLAY=null;render()};
+  SV.onerror=()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))};
+  const p=SV.play();
+  if(p&&p.catch)p.catch(()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))});
+  render();
+};
+/* The voice bubble — used by BOTH the student thread and the coach inbox. */
+function msgVoice(m){
+  const playing=SVPLAY===String(m.id);
+  return `<div class="voice">
+    <button class="play" data-act="voice-play" data-id="${esc(m.id)}" aria-label="${t('Play')}" title="${t('Play')}">${playing?ic('square',12):ic('play',13)}</button>
+    <span class="wave">${[8,15,21,12,18,9,16,22,11,7,14,19].map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
+    <span class="dur">${fmtMS(m.dur||0)}</span>
+  </div>`;
+}
+
+/* ================= EVENTS ================= */
+document.addEventListener('click',e=>{
+  document.querySelectorAll('.mwrap.open').forEach(m=>{if(!m.contains(e.target))m.classList.remove('open')});
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const a=el.dataset.act,mw=el.closest('[data-mw]');
+  switch(a){
+    case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
+    case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
+    case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
+    /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed)
+       v18.54 — 'Try again' RETRIES with the SAME scanned code (it never clears
+       it — the student must not re-scan for a transient failure); 'Try another
+       code' is the only path that returns to the input. */
+    case 'un-retry':{S.unInvalid=false;S.unOffline=false;S.unT0=0;S.unFetching=false;S.wsConnected=false;
+      if(!S.joinCode){S.pickCid=null;S.joinCid=null}
+      render();break}
+    case 'un-newcode':{S.joinCode=null;S.wsConnected=false;S.unInvalid=false;S.unOffline=false;S.unT0=0;S.unFetching=false;S.pickCid=null;S.joinCid=null;render();break}
+    case 'demo-client':S.demoPick=true;render();break;
+    case 'pick-client':S.pickCid=+el.dataset.cid;render();break;
+    case 'continue-client':{if(!CLIENTS.length){toast(t('No clients yet'));break}
+      S.role='client';S.cid=S.pickCid||CLIENTS[0].id;S.ptab='today';S.player=null;S.joinCode=null;
+      try{if(CLOUD.on)localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:S.cid}))}catch(e){}
+      try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}render();break}
+    case 'join-code':cloudJoinCode();break;
+    case 'exitdemo':case 'signout':case 'switch-role':clearInterval(restIv);S.player=null;S.msgThread=null;S.role=null;S.loginRole=null;S.view='login';S.authMode='login';S.joinCid=null;S.unInvalid=false;S.unT0=0;authLogout();try{localStorage.removeItem('co-join')}catch(e){}render();if(a!=='switch-role')toast(t('Signed out'));break;
+    case 'auth-mode':S.authMode=el.dataset.m==='signup'?'signup':'login';render();break;
+    case 'auth-goto-signup':S.role=null;S.loginRole='coach';S.authMode='signup';S.view='login';render();break;
+    case 'goto-shop':try{window.open('/shop/index.html#pricing','_blank','noopener')}catch(e){location.href='/shop/index.html#pricing'}break;
+    case 'signup':authSignup();break;
+    case 'login':authLogin();break;
+    case 'profile-save':authProfile();break;
+    case 'pf-pic':pickPic(u=>{COACH_PIC=u;saveData();render();toast(t('Photo saved ✓'))});break;
+    case 'pf-pic-del':COACH_PIC='';saveData();render();toast(t('Photo removed'));break;
+    case 'ec-pic':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(c)pickPic(u=>{c.pic=u;saveData();render();editClientModal(c.name);toast(t('Photo saved ✓'))});break}
+    case 'ec-pic-del':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(c){delete c.pic;saveData();render();editClientModal(c.name);toast(t('Photo removed'))}break}
+    case 'cp-pic':pickPic(u=>{const c=client(S.cid);if(c){c.pic=u;saveData();render();toast(t('Photo saved ✓'))}});break;
+    case 'cp-pic-del':{const c=client(S.cid);if(c){delete c.pic;saveData();render();toast(t('Photo removed'))}break}
+    case 'ai-draft':aiModal();break;
+    case 'ai-generate':aiGenerate();break;
+    case 'ai-chat-fab':aiChatOpen();break;
+    case 'ai-chat-close':aiChatClose();break;
+    case 'ai-chat-send':window.aiSend();break;
+    case 'ai-apply-toggle':S.aiApply=!S.aiApply;renderAiChat();break;
+    /* v18.17 — camera form check */
+    case 'fc-open':formCheckModal(null);break;
+    case 'fc-reports':formReportsModal(el.dataset.c);break;
+    case 'fc-new':formCheckModal(el.dataset.c);break;
+    case 'fc-pattern':fcStart(el.dataset.p);break;
+    case 'fc-flip':fcFlip();break;
+    case 'fc-mask':fcToggleMask(el);break;
+    case 'fc-acc':{S.fcAcc=el.dataset.a;try{localStorage.setItem('co-fc-acc',S.fcAcc)}catch(e){}if(FC_POSE){FC_POSE.close().catch(()=>{});FC_POSE=null;FC_ACC=null}formCheckModal(S.fcName);break}
+    case 'fc-finish':fcFinish();break;
+    case 'fc-cancel':fcStop();closeModal();break;
+    case 'fc-save':fcSave(el);break;
+    case 'ai-chat-clear':AI_CHAT=[];aiChatSave();renderAiChat();break;
+    case 'ai-weekly':aiInsight('weekly');break;
+    case 'ai-reply':aiReplyDraft(el.dataset.c,el);break;
+    case 'ai-analyze':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(c)aiAnalyze(c);break}
+    case 'ai-an-save':{
+      const name=el.dataset.c,a=AI_LAST;if(!a)break;
+      const L=[];
+      (a.findings||[]).forEach(f=>L.push('• ['+t(f.severity)+'] '+f.title+' — '+f.detail));
+      if(a.calories)L.push('• '+t('Calories')+': '+nf(a.calories.target)+' kcal — '+t('Protein')+' '+nf(a.calories.protein)+'g · '+t('Carbs')+' '+nf(a.calories.carbs)+'g · '+t('Fat')+' '+nf(a.calories.fat)+'g');
+      if(a.nutrition&&a.nutrition.summary)L.push('• '+t('Nutrition')+': '+a.nutrition.summary);
+      if(a.workout&&a.workout.summary)L.push('• '+t('Workout')+': '+a.workout.summary);
+      (a.actions||[]).forEach(x=>L.push('→ '+x));
+      NOTES.unshift({id:uid(),client:name,from:'coach',shared:false,type:'Progress',title:t('AI Analysis'),date:'Just now',body:L.join(' · '),pin:false,arch:false});
+      closeModal();render();toast(t('Saved as client note'));break}
+    case 'forgot':forgotModal();break;
+    case 'forgot-send':authForgotSend();break;
+    case 'reset-do':authResetDo();break;
+    case 'pw-save':authPassword();break;
+    case 'pw-others':authLogoutOthers();break;
+    case 'ws-export':{const blob=new Blob([JSON.stringify(cloudPack(),null,2)],{type:'application/json'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+      a.download='coachmint-workspace-'+(CLOUD.code||'local')+'.json';a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+      toast(t('Workspace exported ✓'));break}
+    case 'invite-open':inviteModal();break;
+    case 'cl-filter':clFilterModal();break;
+    case 'cl-filter-set':{S.cfilter=el.dataset.s;closeModal();render();break}
+    case 'cl-sort':clSortModal();break;
+    case 'cl-sort-set':{S.csort=el.dataset.k;closeModal();render();break}
+    case 'act-all':activityModal();break;
+    case 'rpt-all':smartReportsModal();break;
+    case 'rpt-open':clientReportModal(el.dataset.c);break;
+    case 'rpt-ai':{closeModal();if(!S.aiOpen)aiChatOpen();const inp=$('ai-chat-inp');if(inp){inp.value=`${t('Analyze')} ${el.dataset.c}: ${t('what should I change this week?')}`;inp.focus()}break}
+    /* v18.22 — push + install */
+    case 'push-enable':pushEnable();break;
+    case 'push-dismiss':{try{localStorage.setItem('co-push-dismiss','1')}catch(e){}const pn=$('push-nudge');if(pn)pn.remove();break}
+    case 'pwa-install':{const b=$('pwa-banner');if(b)b.remove();if(PWA.deferred){PWA.deferred.prompt();PWA.deferred=null}else showIosInstall();break}
+    case 'pwa-hide':{try{localStorage.setItem('co-pwa-hide','1')}catch(e){}const pb=$('pwa-banner');if(pb)pb.remove();break}
+    case 'help-open':helpModal();break;
+    case 'notif-open':{const txt=el.dataset.t||'';const cc=CLIENTS.find(x=>txt.includes(x.name));
+      NOTIFS.forEach(n2=>{if(n2.t===txt)n2.un=false});
+      if(cc){closeModal();S.tab='overview';if(isNarrow()){S.mClient=cc.id;S.mview='client'}else{S.view='wspace';S.cid=cc.id}loadClientProgram(cc.id);render()}
+      else render();break}
+    case 'bill-redeem':billRedeem();break;
+    case 'bill-request':billRequest(el.dataset.p);break;
+    case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
+    case 'signin':S.role='coach';S.view='dash';render();toast('Welcome back, Coach');cloudEnsure();break;
+    case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
+    case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();S.calOff=0;
+      if(isNarrow()){S.mClient=+el.dataset.cid;S.mview='client'}else{S.view='wspace';S.cid=+el.dataset.cid}
+      loadClientProgram(S.cid);
+      render();window.scrollTo({top:0});break}
+    case 'ec-open':editClientModal(el.dataset.c);break;
+    case 'ec-save':{const c=CLIENTS.find(x=>x.name===el.dataset.c)||client(S.cid);
+      const fn=$('ec-fn').value.trim()||c.name.split(' ')[0];
+      const ln=$('ec-ln').value.trim();
+      const newName=ln?fn+' '+ln:fn;
+      const oldName=c.name;
+      c.name=newName;
+      c.goal=$('ec-goal').value;
+      c.status=$('ec-status').value;
+      c.freq=$('ec-freq').value;
+      const wv=$('ec-weight').value;c.weight=wv===''?c.weight:wToKg(parseFloat(wv));
+      const hv=$('ec-h').value;c.h=hv===''?c.h:lToCm(parseFloat(hv));
+      c.bf=parseFloat($('ec-bf').value)||c.bf;
+      c.email=$('ec-email').value.trim()||c.email;
+      // National ID — profile-only data for contracts/insurance. NEVER used for
+      // login or join codes (those stay random secrets).
+      c.nid=$('ec-nid')?($('ec-nid').value.trim()||undefined):c.nid;
+      // v18.38 — per-client auto-reminder opt-out (coach consent is per client).
+      c.noRemind=$('ec-rem')?!$('ec-rem').checked:c.noRemind;
+      // v17.5 — goal target: startW anchors the progress bar at the weight the
+      // target was set with (never re-anchored on later edits).
+      const twv=$('ec-targetw').value;c.targetW=twv===''?undefined:wToKg(parseFloat(twv));
+      c.targetDate=$('ec-targetd').value||undefined;
+      /* v18.75 — plan 1ج: the structured current program. `c.prog` stays the
+         human label the tables/PDF already read; prog2 carries the block math. */
+      if($('ec-pname')){
+        const pn=$('ec-pname').value.trim();
+        const nv=id=>{const el=$(id);if(!el)return null;const v=parseInt(el.value,10);return Number.isFinite(v)?v:null};
+        const ph=nv('ec-phase'),phs=nv('ec-phases'),wk2=nv('ec-week'),wks=nv('ec-weeks');
+        const old=c.prog2&&typeof c.prog2==='object'?c.prog2:{};
+        if(pn||ph!==null||phs!==null||wk2!==null||wks!==null){
+          c.prog2={name:pn||old.name||c.prog||'',
+            phase:ph!==null?Math.max(0,ph):(old.phase||0),
+            phases:phs!==null?Math.max(0,phs):(old.phases||0),
+            week:wk2!==null?Math.max(1,wk2):(old.week||c.week||1),
+            weeks:wks!==null?Math.max(1,wks):(old.weeks||12)};
+          if(pn)c.prog=pn;
+        }
+      }
+      if(c.targetW&&!c.startW)c.startW=c.weight||c.targetW;
+      if(!c.targetW){c.startW=undefined}
+      if(newName!==oldName){
+        NPLANS.forEach(p=>{if(p.client===oldName)p.client=newName});
+        NOTES.forEach(n=>{if(n.client===oldName)n.client=newName});
+        MSGS.forEach(m=>{if(m.client===oldName)m.client=newName});
+        EVENTS.forEach(ev=>{if(ev.client===oldName)ev.client=newName});
+        if(S.msgThread===oldName)S.msgThread=newName;
+      }
+      closeModal();render();toast('Client updated ✓');break}
+    case 'client-arch':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
+      c.status='Archived';render();toast('Client archived');break}
+    case 'client-regen':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
+      // Issue a fresh personal code (old one stops working on next pull).
+      c.code=genCode(8);cloudSchedule();editClientModal(c.name);toast(t('Code regenerated ✓'));break}
+    case 'client-del':{const name=el.dataset.c;
+      if(el.dataset.arm!=='1'){
+        el.dataset.arm='1';el.style.color='var(--red)';
+        el.innerHTML=`${ic('trash',14)} ${t('Are you sure? Click again')}`;
+        toast('Are you sure? Click again');break}
+      if(CLIENTS.length<=1){toast('At least one client required');break}
+      const c=CLIENTS.find(x=>x.name===name);const cid=c?.id;
+      const ci=CLIENTS.findIndex(x=>x.name===name);if(ci>=0)CLIENTS.splice(ci,1);
+      if(cid!=null){delete DB[cid];markDead('CLIENTS',cid)}
+      for(let j=NPLANS.length-1;j>=0;j--)if(NPLANS[j].client===name){markDead('NPLANS',NPLANS[j].id);NPLANS.splice(j,1)}
+      for(let j=NOTES.length-1;j>=0;j--)if(NOTES[j].client===name){markDead('NOTES',NOTES[j].id);NOTES.splice(j,1)}
+      for(let j=MSGS.length-1;j>=0;j--)if(MSGS[j].client===name){markDead('MSGS',MSGS[j].id);MSGS.splice(j,1)}
+      for(let j=EVENTS.length-1;j>=0;j--)if(EVENTS[j].client===name){markDead('EVENTS',EVENTS[j].id);EVENTS.splice(j,1)};
+      ACTIVITY.unshift({w:'Just now',i:'trash',h:lang==='fa'?`<b>شما</b> شاگرد <b>${t(name)}</b> را حذف کردید`:`<b>You</b> deleted client <b>${t(name)}</b>`});
+      if(!CLIENTS.find(x=>x.id===S.cid))S.cid=CLIENTS[0]?.id||1;
+      if(S.msgThread===name)S.msgThread=null;
+      if(S.pickCid===cid)S.pickCid=S.cid;
+      if(S.mClient===cid)S.mClient=S.cid;
+      closeModal();
+      if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';
+      render();toast('Client deleted');break}
+    case 'att-mark':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
+      const v=el.dataset.v;
+      const was=ev.att;
+      ev.att=ev.att===v?undefined:v;
+      packCharge(ev,was);
+      syncClientSessions(ev.client);
+      render();
+      toast(v==='done'?(ev.att?'Marked attended ✓':'Attendance cleared'):v==='miss'?(ev.att?'Marked missed — client flagged':'Attendance cleared'):'Attendance cleared');
+      break}
+    case 'att-mark-modal':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
+      const v=el.dataset.v||undefined;
+      const was=ev.att;
+      ev.att=v;packCharge(ev,was);syncClientSessions(ev.client);saveData();
+      [...el.parentElement.children].forEach(b=>b.classList.toggle('on',b===el));
+      toast(v==='done'?'Marked attended ✓':v==='miss'?'Marked missed — client flagged':'Attendance cleared');break}
+    case 'tpl-new':{S.tplEdit=null;if(isNarrow()){S.mview='builder'}else S.view='builder';render();window.scrollTo({top:0});break}
+    case 'tpl-use':{const tp=TEMPLATES[+el.dataset.i];if(!tp)break;
+      if(tp.parts){tplDayModal(+el.dataset.i);break}
+      loadTpl(tp);break}
+    case 'tpl-preview':tplPreview(+el.dataset.i);break;
+    case 'tpl-load-day':{const tp=TEMPLATES[+el.dataset.i];const p=tp?.parts?.[+el.dataset.p];if(!p)break;
+      closeModal();
+      if(isNarrow()){S.mview='builder'}else S.view='builder';
+      S.tplEdit=null;
+      BUILDER.length=0;(p.exs||[]).forEach(x=>BUILDER.push({...x}));fillVids();
+      S.wname=p.n+' — '+client(S.cid).name;
+      if(tp.dur)S.wdur=tp.dur;
+      if(tp.note)S.wnote=tp.note;
+      render();toast(p.n+' — '+nf((p.exs||[]).length)+' '+t('exercises')+' '+t('loaded into the builder'));break}
+    case 'tpl-edit':{const tp=TEMPLATES[+el.dataset.i];if(!tp)break;
+      if(tp.parts){toast('This template has multiple days — pick one to load into the builder');break}
+      S.tplEdit=+el.dataset.i;
+      if(isNarrow()){S.mview='builder'}else S.view='builder';
+      BUILDER.length=0;(tp.exs||[]).forEach(x=>BUILDER.push({...x}));fillVids();
+      if(tp.note)S.wnote=tp.note;
+      render();toast(t('Editing template')+': '+tp.n);break}
+    case 'tpl-edit-x':S.tplEdit=null;render();break;
+    case 'tpl-dup':{const tp=TEMPLATES[+el.dataset.i];if(!tp)break;
+      TEMPLATES.splice(+el.dataset.i+1,0,JSON.parse(JSON.stringify({...tp,n:tp.n+' (Copy)'})));
+      render();toast('Template duplicated');break}
+    case 'tpl-arch':{const tp=TEMPLATES[+el.dataset.i];if(!tp)break;markDead('TEMPLATES',tp.n);TEMPLATES.splice(+el.dataset.i,1);render();toast('Template archived');break}
+    case 'b-tpl':tplSaveModal();break;
+    case 'tpl-save':{const i=+el.dataset.i;
+      const n=$('tp-n').value.trim()||t('New Template');
+      const days=$('tp-days').value||'Full Body';
+      const dur=$('tp-dur').value.trim()||'60 min';
+      const exs=JSON.parse(JSON.stringify(BUILDER));
+      if(!exs.length){toast('Add exercises first');break}
+      if(i>=0&&TEMPLATES[i]){const tp=TEMPLATES[i];tp.n=n;tp.days=days;tp.dur=dur;tp.note=S.wnote;tp.exs=exs;tp.mod='Just now';S.tplEdit=null;toast('Template updated ✓')}
+      else{TEMPLATES.unshift({n,days,dur,mod:'Just now',note:S.wnote,exs});toast('Template saved ✓')}
+      closeModal();if(isNarrow()){S.mview='templates'}else S.view='templates';render();break}
+    case 'tab':S.tab=el.dataset.tab;render();window.scrollTo({top:0});break;
+    case 'ntab':S.nview=el.dataset.v;render();break;
+    case 'nstat':S.nstat=el.dataset.s;render();break;
+    case 'nopen':S.nplan=+el.dataset.i;S.nview='planner';S.nday=0;S.view='nutrition';S.mview='nutrition';render();window.scrollTo({top:0});break;
+    case 'ndup':{const p=NPLANS[+el.dataset.i];const cp=JSON.parse(JSON.stringify(p));cp.name=p.name+' (Copy)';cp.updated='Just now';NPLANS.splice(+el.dataset.i+1,0,cp);render();toast('Plan duplicated');break}
+    case 'narch':{NPLANS[+el.dataset.i].status='Archived';render();toast('Plan archived');break}
+    case 'np-new':newPlanModal(el.dataset.c||null);break;
+    /* ===== v18.48 — coach nutrition monitoring ===== */
+    case 'nrules-open':nrulesModal();break;
+    case 'nrules-save':{
+      NRULES.forEach((r,i)=>{
+        r.on=!!$('nrl-on'+i)?.checked;
+        if($('nrl-thr'+i))r.thr=Math.max(10,Math.min(200,parseFloat($('nrl-thr'+i).value)||r.thr));
+        r.days=Math.max(1,Math.min(30,parseInt($('nrl-days'+i).value)||r.days));
+        const sv=$('nrl-sev'+i)?.value;if(['info','warn','alert'].includes(sv))r.sev=sv;
+      });
+      closeModal();saveData();render();toast(t('Rules saved ✓'));break}
+    case 'nweekly-open':nweeklyModal();break;
+    case 'nweekly-ai':nweeklyAI();break;
+    case 'np-save':{const name=$('np-name').value.trim()||t('New Nutrition Plan');const cl=$('np-client').value;
+      const kcal=+$('np-kcal').value||2600,p=+$('np-p').value||170,c=+$('np-c').value||300,f=+$('np-f').value||80;
+      const std=$('np-type').value==='std';const scale=kcal/2772;
+      const dt=new Date($('np-date').value||isoToday());const start=fmtShortDate(dt);
+      const rest=std?{kcal,p,c,f}:{kcal:Math.round(kcal*0.9),p,c:Math.round(c*0.8),f};
+      const types=std?[1,1,1,1,1,1,1]:D01;
+      const days=DAYS.map((_,i)=>({type:types[i]?'train':'rest',meals:JSON.parse(JSON.stringify(types[i]?scM(TRAIN_T,scale):scM(REST_T,scale)))}));
+      const plan={id:uid(),client:cl,name,goal:$('np-goal').value,phase:'Phase 1',week:'Week 1',updated:'Just now',status:'Active',train:{kcal,p,c,f},rest,days,phases:mkPh(scale,start)};
+      NPLANS.unshift(plan);
+      NHIST.unshift({d:fmtShortDate(new Date()),i:'plus',t:'New Nutrition Plan',d2:name,snap:JSON.parse(JSON.stringify(plan))});
+      if(NHIST.length>60)NHIST.length=60;
+      ACTIVITY.unshift({w:'Just now',i:'utensils',h:lang==='fa'?`<b>شما</b> برنامه تغذیه <b>${esc(name)}</b> را ساختید`:`<b>You</b> created nutrition plan <b>${esc(name)}</b>`});
+      S.nplan=0;S.nview='planner';S.nday=0;closeModal();
+      if(isNarrow()){S.mview='nutrition'}else S.view='nutrition';
+      render();toast('Plan created ✓');break}
+    case 'ntype':{NPLANS[S.nplan].days[S.nday].type=el.dataset.v;render();break}
+    case 'nday':S.nday=+el.dataset.i;render();break;
+    case 'tg-open':targetsModal();break;
+    case 'tg-save':{const p=NPLANS[S.nplan];const old=p.train.kcal;
+      p.train={kcal:+$('tg-tk').value||old,p:+$('tg-tp').value,c:+$('tg-tc').value,f:+$('tg-tf').value};
+      p.rest={kcal:+$('tg-rk').value||p.rest.kcal,p:+$('tg-rp').value,c:+$('tg-rc').value,f:+$('tg-rf').value};
+      NHIST.unshift({d:fmtShortDate(new Date()),i:'edit',t:'Nutrition Plan Updated',d2:`${nf(old)} → ${nf(p.train.kcal)} kcal`,snap:JSON.parse(JSON.stringify(p))});
+      if(NHIST.length>60)NHIST.length=60;
+      closeModal();render();toast('Saved');break}
+    case 'fp-open':{S.fp={q:'',cat:'All',fi:null,g:150,custom:false,mi:+el.dataset.mi};fpOpen(S.fp.mi);break}
+    case 'fpcat':S.fp.cat=el.dataset.c;fpRender();break;
+    case 'fpsel':S.fp.fi=+el.dataset.i;S.fp.custom=false;fpRender();break;
+    case 'fpqty':S.fp.g=+el.dataset.g;fpRender();break;
+    case 'fpcustom':S.fp.custom=true;fpRender();break;
+    case 'fpcadd':{const n=scrubName($('fc-n').value.trim())||'Custom Food';
+      // #fc-cat is a <select>: .textContent returns EVERY option label
+      // concatenated ("MeatChickenFish…"), so the saved category was garbage
+      // and never matched a real category filter. .value is the selection.
+      FOODS.push({n,cat:$('fc-cat').value||'Other',kcal:+$('fc-k').value||100,p:+$('fc-p').value||10,c:+$('fc-c').value||0,f:+$('fc-f').value||2,alt:[]});
+      S.fp.fi=FOODS.length-1;S.fp.custom=false;fpRender();toast('Custom food added');break}
+    case 'fpadd':{const p=NPLANS[S.nplan];const it={fi:S.fp.fi,g:S.fp.g};
+      p.days[S.nday].meals[S.fp.mi].foods.push(it);
+      closeModal();render();toast(foodName(FOODS[S.fp.fi].n)+' '+t('added to meal'));break}
+    case 'falt':altModal(+el.dataset.fi);break;
+    case 'altadd':{const f=FOODS.find(x=>x.n===el.dataset.n);f.alt=f.alt||[];f.alt.push($('alt-sel').value);altRender(FOODS.indexOf(f));break}
+    case 'altdel':{const f=FOODS[+el.dataset.fi];if(f)f.alt=(f.alt||[]).filter(x=>x!==el.dataset.n);altRender(+el.dataset.fi);break}
+    case 'mealup':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;if(i>0){[ms[i-1],ms[i]]=[ms[i],ms[i-1]];render()}break}
+    case 'mealdn':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;if(i<ms.length-1){[ms[i+1],ms[i]]=[ms[i],ms[i+1]];render()}break}
+    case 'mdup':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;ms.splice(i+1,0,JSON.parse(JSON.stringify(ms[i])));render();toast('Meal duplicated');break}
+    case 'mdel':{const ms=NPLANS[S.nplan].days[S.nday].meals;ms.splice(+el.dataset.mi,1);render();toast('Meal deleted');break}
+    case 'medit':mealEditModal(+el.dataset.mi);break;
+    case 'medit-save':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.time=$('me-time').value;m.name=$('me-name').value.trim()||m.name;closeModal();render();toast('Meal updated ✓');break}
+    case 'mnote':mealNoteModal(+el.dataset.mi);break;
+    case 'mnote-save':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.note=$('mn-note').value.trim();closeModal();render();toast('Meal note saved');break}
+    case 'fdel':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.foods.splice(+el.dataset.xi,1);render();break}
+    case 'madd':{const ms=NPLANS[S.nplan].days[S.nday].meals;ms.push({time:'12:00',name:t('New Meal'),foods:[],note:''});render();toast('Meal added ✓');break}
+    case 'wcopy':{S.nclip=JSON.parse(JSON.stringify(NPLANS[S.nplan].days[S.nday].meals));toast('Day copied');break}
+    case 'wpaste':{if(!S.nclip)break;NPLANS[S.nplan].days[S.nday].meals=JSON.parse(JSON.stringify(S.nclip));render();toast('Pasted ✓');break}
+    case 'wapply':{const src=JSON.parse(JSON.stringify(NPLANS[S.nplan].days[S.nday].meals));NPLANS[S.nplan].days.forEach(d=>d.meals=JSON.parse(JSON.stringify(src)));render();toast('Applied to week ✓');break}
+    case 'ph-add':phaseModal(null);break;
+    case 'ph-edit':phaseModal(+el.dataset.i);break;
+    case 'ph-save':{const p=NPLANS[S.nplan];const ph={n:$('ph-n').value.trim()||'Phase',weeks:$('ph-w').value,kcal:+$('ph-k').value,p:+$('ph-p').value,c:+$('ph-c').value,fl:+$('ph-f').value,start:$('ph-s').value,status:'Upcoming'};
+      const i=+el.dataset.i;if(i>=0)p.phases[i]=ph;else p.phases.push(ph);
+      closeModal();render();toast('Phase saved ✓');break}
+    case 'mtcat':S.mtcat=el.dataset.c;render();break;
+    case 'mt-use':{if(!NPLANS.length){toast('Create a plan first');break}
+      const x=MTPL[+el.dataset.i];const def={Breakfast:'07:30',Snack:'10:30',Lunch:'13:30',Dinner:'20:30','Pre-Workout':'17:00','Post-Workout':'18:30'};
+      NPLANS[S.nplan].days[S.nday].meals.push({time:def[x.cat]||'12:00',name:x.n,foods:JSON.parse(JSON.stringify(x.foods)),note:''});
+      S.nview='planner';render();toast(t(x.n)+' '+t('added to meal'));break}
+    case 'mt-dup':{const x=MTPL[+el.dataset.i];MTPL.splice(+el.dataset.i+1,0,{...x,n:x.n+' (Copy)'});render();toast('Template duplicated');break}
+    case 'mt-arch':{const x=MTPL[+el.dataset.i];if(!x)break;markDead('MTPL',x.n);MTPL.splice(+el.dataset.i,1);render();toast('Template archived');break}
+    case 'mt-add':openModal(`
+      <div class="modal-h"><h3>${t('Create Meal Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+      <div class="modal-b"><div class="fgrid">
+        <div class="field"><label class="lbl">${t('Meal name')}</label><input class="inp" id="mt-n"></div>
+        <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-c">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option>${t(c)}</option>`).join('')}</select></div>
+        <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="mt-k" value="500"></div>
+        <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="mt-p" value="35"></div>
+      </div></div>
+      <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="mt-addsave">${ic('check',15)} ${t('Save')}</button></div>`);break;
+    case 'mt-addsave':{MTPL.unshift({n:$('mt-n').value.trim()||t('New Meal'),cat:$('mt-c').value,foods:[],mk:{kcal:+$('mt-k').value||500,p:+$('mt-p').value||35}});
+      closeModal();render();toast('Meal template created ✓');break}
+    case 'mt-edit':mtEditModal(+el.dataset.i);break;
+    case 'mtf-del':{if(S.mtEdit){S.mtEdit.foods.splice(+el.dataset.xi,1);mtFoods()}break}
+    case 'mt-edit-save':{const x=MTPL[+el.dataset.i];if(!x||!S.mtEdit)break;
+      const nn=scrubName($('mt-en').value.trim())||x.n;
+      if(nn!==x.n)markDead('MTPL',x.n);
+      x.n=nn;x.cat=$('mt-ec').value;x.foods=S.mtEdit.foods;
+      if(!x.foods.length)x.mk={kcal:+($('mt-ek')&&$('mt-ek').value)||((x.mk&&x.mk.kcal)||500),p:+($('mt-ep')&&$('mt-ep').value)||((x.mk&&x.mk.p)||35)};
+      else delete x.mk;
+      S.mtEdit=null;saveData();closeModal();render();toast(t('Template updated ✓'));break}
+    case 'pt-edit':ptEditModal(+el.dataset.i);break;
+    case 'pt-edit-save':{const tp=PTPL[+el.dataset.i];if(!tp)break;
+      const nn=scrubName($('pt-en').value.trim())||tp.n;
+      if(nn!==tp.n)markDead('PTPL',tp.n);
+      tp.n=nn;tp.meals=Math.max(1,Math.min(8,+$('pt-em').value||tp.meals));
+      tp.kcal=+$('pt-ek').value||tp.kcal;tp.p=+$('pt-epp').value||tp.p;tp.c=+$('pt-ec').value||tp.c;tp.f=+$('pt-ef').value||tp.f;
+      saveData();closeModal();render();toast(t('Template updated ✓'));break}
+    case 'hist-view':histViewModal(+el.dataset.i);break;
+    case 'pt-use':ptUseModal(+el.dataset.i);break;
+    case 'pt-save':{const tp=PTPL[+el.dataset.i];const cl=$('pt-client').value;const name=$('pt-name').value.trim()||tp.n;
+      const scale=tp.kcal/2772;
+      const days=DAYS.map((_,i)=>({type:D01[i]?'train':'rest',meals:JSON.parse(JSON.stringify(D01[i]?scM(TRAIN_T,scale):scM(REST_T,scale)))}));
+      const plan={id:uid(),client:cl,name,goal:tp.n.includes('Hypertrophy')?'Muscle Gain':tp.n.includes('Fat')?'Fat Loss':'Maintenance',phase:'Phase 1',week:'Week 1',updated:'Just now',status:'Active',train:{kcal:tp.kcal,p:tp.p,c:tp.c,f:tp.f},rest:{kcal:Math.round(tp.kcal*0.9),p:tp.p,c:Math.round(tp.c*0.8),f:tp.f},days,phases:mkPh(tp.kcal/2850)};
+      NPLANS.unshift(plan);
+      NHIST.unshift({d:fmtShortDate(new Date()),i:'plus',t:'New Nutrition Plan',d2:name,snap:JSON.parse(JSON.stringify(plan))});
+      if(NHIST.length>60)NHIST.length=60;
+      ACTIVITY.unshift({w:'Just now',i:'utensils',h:lang==='fa'?`<b>شما</b> برنامه تغذیه <b>${esc(name)}</b> را ساختید`:`<b>You</b> created nutrition plan <b>${esc(name)}</b>`});
+      S.nplan=0;S.nview='planner';S.nday=0;closeModal();
+      if(isNarrow()){S.mview='nutrition'}else S.view='nutrition';
+      render();toast('Plan created ✓');break}
+    case 'pt-dup':{const tp=PTPL[+el.dataset.i];PTPL.splice(+el.dataset.i+1,0,{...tp,n:tp.n+' (Copy)'});render();toast('Template duplicated');break}
+    case 'pt-arch':{const x=PTPL[+el.dataset.i];if(!x)break;markDead('PTPL',x.n);PTPL.splice(+el.dataset.i,1);render();toast('Template archived');break}
+    case 'nn-plantpl':S.nview='plantpl';render();break;
+    case 'cnav':S.ptab=el.dataset.t;
+      if(S.ptab==='sessions')S.calOff=0; // client calendar always opens on this month
+      if(S.ptab==='chat'){const c=client(S.cid);MSGS.forEach(m=>{if(m.client===c.name&&m.from==='coach')m.read=true})}
+      render();break;
+    case 'ctoday':S.ctoday=el.dataset.t;render();break;
+    case 'cv':S.cv=el.dataset.cv;render();break;
+    /* ===== v17.11 — onboarding wizard + template sport filter ===== */
+    case 'onb-open':{S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};onbWizard();break}
+    case 'onb-pick':{S.onb[el.dataset.k]=el.dataset.v;onbWizard();break}
+    case 'onb-back':{S.onb.step=Math.max(0,S.onb.step-1);onbWizard();break}
+    case 'onb-next':{
+      if(S.onb.step<3){S.onb.step++;onbWizard();break}
+      ONBOARD={sport:S.onb.sport,context:S.onb.context,scale:S.onb.scale,focus:S.onb.focus,done:true,at:Date.now()};
+      saveData();closeModal();
+      S.view=landingView();render();
+      toast(t('Workspace tailored ✓ — change it later in Settings'));break}
+    case 'onb-skip':{ONBOARD=Object.assign({},ONBOARD,{done:true,at:Date.now()});saveData();closeModal();break}
+    case 'tsp':S.tsp=el.dataset.v;render();break;
+    case 'range':S.range=el.dataset.r;render();break;
+    case 'scrim':document.body.classList.remove('sb-open');break;
+    case 'sb':document.body.classList.toggle('sb-c');break;
+    case 'hamb':document.body.classList.toggle('sb-open');break;
+    case 'mw':mw.classList.toggle('open');break;
+    case 'palette':openPal();break;
+    case 'pal-x':closePal();break;
+    case 'open-thread':S.msgThread=el.dataset.c;MSGS.forEach(m=>{if(m.client===S.msgThread&&m.from==='client')m.read=true});
+      if(isNarrow()){S.mview='tabs';S.mtab='messages'}render();break;
+    case 'back-inbox':S.msgThread=null;render();break;
+    case 'send-coach':sendCoachMsg(el.dataset.c);break;
+    case 'send-client':sendClientMsg();break;
+    /* v18.75 — voice notes (recorder + player). */
+    case 'voice-rec':window.voiceToggle();break;
+    case 'voice-play':window.voicePlay(el.dataset.id);break;
+    /* ===== v18.48 — Nutrition Assistant (student side) ===== */
+    case 'na-send':naSend();break;
+    case 'na-quick':naSend(el.dataset.q);break;
+    case 'na-photo':{
+      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+      /* v18.75 — plan 1ه: "Snap a photo" opens the CAMERA on a phone (desktop
+         ignores capture and still shows the normal picker). */
+      try{inp.setAttribute('capture','environment')}catch(e){}
+      inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+        resizeImage(f,src=>{NA_PIC=src;render();toast(t('Photo attached — describe your meal'))})};
+      inp.click();break}
+    case 'na-confirm':{
+      const m=NCHAT.find(x=>String(x.id)===el.dataset.id);
+      if(!m||!m.card||m.card.confirmed)break;
+      const c=client(S.cid);
+      const cd=m.card;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:cd.meal||'Meal',items:cd.items.map(x=>({...x})),kcal:cd.kcal,p:cd.p,c:cd.c,f:cd.f,src:'chat',at:Date.now()});
+      cd.confirmed=true;saveData();render();toast(t('Meal logged ✓'));break}
+    case 'na-water':{
+      const c=client(S.cid);const ml=+el.dataset.v||250;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),type:'water',ml,meal:'',items:[],kcal:0,p:0,c:0,f:0,src:'quick',at:Date.now()});
+      saveData();render();toast(t('Water logged 💧'));break}
+    case 'na-water-undo':{
+      const c=client(S.cid);
+      const wl=NLOGS.map((l,i)=>({l,i})).filter(x=>x.l&&x.l.client===c.name&&x.l.d===isoToday()&&x.l.ml).sort((a,b)=>(b.l.at||0)-(a.l.at||0))[0];
+      if(!wl){toast(t('Nothing to undo'));break}
+      DEAD.NLOGS.push(String(wl.l.id));NLOGS.splice(wl.i,1);
+      saveData();render();toast(t('Water entry removed'));break}
+    /* Meals accordion (mockup 04): default open = meals already logged. */
+    case 'macc-toggle':{
+      const c=client(S.cid);const pp=nPlanOf(c.name);if(!pp)break;
+      const lg=NEng.logs(c,isoToday()).filter(l=>l.type!=='water');
+      const isL=m=>lg.some(l=>l.meal===m.name&&Math.abs(l.kcal-Math.round(mealKcal(m)))<5);
+      const ms=pp.days[TODAY].meals||[];
+      const def=ms.map((m,mi)=>isL(m)?mi:-1).filter(i=>i>=0);
+      const set=new Set(S.macc!=null?S.macc:def);
+      const ii=+el.dataset.i;set.has(ii)?set.delete(ii):set.add(ii);
+      S.macc=[...set];render();break}
+    /* One-tap favorite — REAL macro from the library (never invented). */
+    case 'ql-fav':{
+      const c=client(S.cid);const it=NEng.itemM(el.dataset.n,+el.dataset.g||100);
+      if(!it){toast(t('I could not find')+': '+el.dataset.n);break}
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:t('Quick log'),items:[it],kcal:it.kcal,p:it.p,c:it.c,f:it.f,src:'qfav',at:Date.now()});
+      saveData();render();toast(`✓ ${nf(it.kcal)} kcal · ${t('Logged')}`);break}
+    /* Jump the .capp scroller (smooth scrollIntoView is unreliable in it). */
+    case 'na-focus':{const el2=$('na-inp');if(!el2)break;
+      const sc=document.querySelector('#app .capp')||document.querySelector('.capp');
+      const card=el2.closest('.ccard');
+      if(sc&&card){const r=card.getBoundingClientRect(),sr=sc.getBoundingClientRect();sc.scrollTop+=r.top-sr.top-30}
+      el2.focus({preventScroll:true});break}
+    case 'jump-flog':{const _sc=document.querySelector('#app .capp')||document.querySelector('.capp');
+      const _el=document.getElementById('flog');
+      if(_sc&&_el){const r=_el.getBoundingClientRect(),sr=_sc.getBoundingClientRect();_sc.scrollTop+=r.top-sr.top-60}
+      break}
+    case 'na-log-sug':{
+      const c=client(S.cid);const sug=NEng.suggestNow(c);const o=sug&&sug.options[+el.dataset.i];
+      if(!o)break;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:o.meal,items:o.items.map(x=>({...x})),kcal:o.kcal,p:o.p,c:o.c,f:o.f,src:'quick',at:Date.now()});
+      saveData();render();toast(t('Meal logged ✓'));break}
+    case 'nlog-plan':{
+      const c=client(S.cid);const p=nPlanOf(c.name);if(!p)break;
+      const day=p.days[+el.dataset.d];const m=day&&day.meals[+el.dataset.m];if(!m)break;
+      const items=m.foods.map(x=>{const f=FOODS[x.fi];return f?NEng.itemM(f.n,x.g):null}).filter(Boolean);
+      if(!items.length){toast(t('No foods to log'));break}
+      const sum=items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:m.name,items,kcal:sum.kcal,p:sum.p,c:sum.c,f:sum.f,src:'plan',at:Date.now()});
+      saveData();render();toast(t('Meal logged ✓'));break}
+    case 'nlog-del':{
+      const id=el.dataset.id;const i=NLOGS.findIndex(l=>String(l.id)===id);if(i<0)break;
+      DEAD.NLOGS.push(String(NLOGS[i].id));NLOGS.splice(i,1);
+      saveData();render();toast(t('Entry removed'));break}
+    case 'nprof-open':nprofModal();break;
+    /* v18.71 plan 1ب — barcode → OpenFoodFacts lookup → real macros per100 g. */
+    case 'nbar-open':nbarModal();break;
+    /* Today summary — deterministic chat answer from the real engine. */
+    case 'na-summary':{const c=client(S.cid);if(!c)break;
+      const tg=NEng.targets(c),co=NEng.consumed(c,isoToday());
+      const w=NEng.waterOf(c,isoToday()),wt=NEng.waterT(c),meals=NEng.mealsLogged(c,isoToday());
+      const line=tg?`📊 ${nf(co.kcal)} / ${nf(tg.kcal)} kcal · P${nf(co.p)} C${nf(co.c)} F${nf(co.f)} · ${t('Water')} ${nf(w)}/${nf(wt)} L · ${nf(meals)} ${t('meals')}`
+        :`📊 ${t('No targets yet — set your profile or ask your coach for a plan.')}`;
+      NCHAT.push({id:uid(),client:c.name,role:'assistant',body:line,d:isoToday(),at:Date.now()});
+      saveData();render();break}
+    case 'nbar-go':{nbarLookup($('nb-inp')?.value);break}
+    case 'nbar-recent':{const er=$('nb-inp');if(er)er.value=el.dataset.code;nbarLookup(el.dataset.code);break}
+    case 'nbar-save':{const c=client(S.cid);if(!c)break;
+      const vS=($('nb-inp')?.value||'').replace(/\D/g,'');
+      const nS=($('nb-n')?.value||'').trim();
+      const kS=Math.round(+($('nb-k')?.value)||0);
+      if(vS.length<6||!nS||!kS){toast(t('Enter the barcode number'));break}
+      const bS={code:vS,n:nS.slice(0,60),k:kS,p:Math.round(+($('nb-p')?.value)||0),c:Math.round(+($('nb-c')?.value)||0),f:Math.round(+($('nb-f')?.value)||0)};
+      bscanPut(bS);S.nbar=bS;
+      const boxS=$('nb-res');if(boxS)boxS.innerHTML=nbarShow(bS,t('Saved · works offline'));
+      toast(t('Product saved'));break}
+    case 'nbar-log':{const c=client(S.cid);const b=S.nbar;if(!b)break;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:t('Barcode'),items:[{n:b.n,g:100,kcal:b.k,p:b.p,c:b.c,f:b.f}],kcal:b.k,p:b.p,c:b.c,f:b.f,src:'barcode',at:Date.now()});
+      S.nbar=null;closeModal();saveData();render();toast(t('Meal logged ✓'));break}
+    case 'nprof-save':{
+      const c=client(S.cid);
+      const num=v=>{const n=parseFloat(v);return Number.isFinite(n)&&n>0?n:0};
+      c.nprof={kcal:num($('npf-kcal').value),p:num($('npf-p').value),c:num($('npf-c').value),f:num($('npf-f').value),
+        waterL:num($('npf-water').value),meals:num($('npf-meals').value),
+        allergies:$('npf-allergies').value.trim().slice(0,200),dislikes:$('npf-dislikes').value.trim().slice(0,200),
+        likes:$('npf-likes').value.trim().slice(0,200),cook:$('npf-cook').value.trim().slice(0,60),
+        wake:$('npf-wake').value.trim().slice(0,20),sleep:$('npf-sleep').value.trim().slice(0,20)};
+      closeModal();saveData();render();toast(t('Profile saved ✓'));break}
+    /* v18.81 — WIRING FIX: chat images carried data-act="img-open" but there was
+       no case for it (clicking a photo did nothing). Open the real viewer. */
+    case 'img-open':{const im=MSGS.find(x=>String(x.id)===String(el.dataset.id));
+      if(im&&im.src)imgModal(im.src,t('Photo'));break}
+    case 'msg-note':{const m=MSGS.find(x=>x.id===+el.dataset.id);if(!m||m.noted)break;
+      NOTES.unshift({id:uid(),client:m.client,from:'coach',shared:false,type:'General',title:`${t('From chat')} — ${t(m.client)}`,date:'Just now',body:m.body,pin:false,arch:false});
+      m.noted=true;render();toast('Saved as note');break}
+    case 'cform':{const c=client(S.cid);
+      const w=todaysPlan(c.id).w; // v18.62 — reference today's planned workout
+      const ctx=w?`${w.name} · ${t(EXERCISES[w.exercises[0].ex].n)} · ${t('Set')} 2`:`${t("Today's Workout")} · ${t('Set')} 2`;
+      MSGS.push({id:uid(),client:c.name,from:'client',type:'form',body:t('Please check my form on this set'),ctx,time:'Just now',read:false,dur:'0:12'});
+      NOTIFS.unshift({t:`🎥 ${t(c.name)} — ${t('Form check')}`,d:'Just now',un:true});
+      render();toast('Form check sent');break}
+    case 'ck':S[el.dataset.k]=el.dataset.v;render();break;
+    case 'cattach':{
+      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+      inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+        const c=client(S.cid);
+        resizeImage(f,src=>{
+          MSGS.push({id:uid(),client:c.name,from:'client',type:'file',body:`📎 ${f.name}`,src,time:'Just now',read:false});
+          NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+          saveData();render();toast(t('Photo attached'))});
+      };
+      inp.click();break}
+    case 'send-checkin':{
+      if(!S.cEnergy||!S.cSore||!S.cSleep){toast('Answer all three first');break}
+      const c=client(S.cid);
+      const body=`${t('Check-in')} · ${t('Energy')}: ${t(S.cEnergy)} · ${t('Soreness')}: ${t(S.cSore)} · ${t('Sleep')}: ${t(S.cSleep)}`;
+      NOTES.unshift({id:uid(),client:c.name,from:'client',shared:true,type:'General',title:`${t('Check-in')} — ${t(c.name)}`,date:'Just now',body,pin:false,arch:false});
+      MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
+      gamAward(c,'checkin'); // v18.38 — +3 pts, badge checks
+      NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+    /* ===== v17.5 — competitor-parity actions ===== */
+    case 'photo-add':pickPhoto('coach');break;
+    case 'photo-add-client':pickPhoto('client');break;
+    case 'photo-del':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
+      if(pdb&&pdb.photos){const i=pdb.photos.findIndex(p=>p.id===pid);if(i>=0){pdb.photos.splice(i,1);saveData();render();toast(t('Photo deleted'))}}break}
+    case 'photo-ok':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
+      if(pdb&&pdb.photos){const p=pdb.photos.find(x=>x.id===pid);if(p){p.ok=true;saveData();render();toast(t('Approved ✓'))}}break}
+    case 'intake-open':intakeModal();break;
+    case 'intake-save':{const ic2=client(S.cid);
+      const ans=INTAKE_Q.map((q,i)=>{const f=$('iq-'+i);return f?(f.value||'').trim():''});
+      if(ans.some(v=>!v)){toast(t('Answer all questions'));break}
+      ic2.intake={a:ans,at:Date.now()};
+      /* v18.56 — DELIVER it to the coach: a submitted intake used to update
+         ONLY the client record (the coach never noticed until they opened
+         that client by hand). It now arrives exactly like a check-in: a
+         thread message + a bell notification + an activity entry — and the
+         server turns the new client→coach MSGS into a real web push
+         (clientMsgDiff in data.mjs). Re-submissions also notify: a changed
+         medical answer must reach the coach. */
+      MSGS.push({id:uid(),client:ic2.name,from:'client',type:'intake',body:`📋 ${t('Intake form')} — ${t('Submitted')}`,time:'Just now',read:false});
+      NOTIFS.unshift({t:`📋 ${t(ic2.name)} — ${t('Intake form')} — ${t('Submitted')}`,d:'Just now',un:true});
+      ACTIVITY.unshift({w:'Just now',i:'note',h:lang==='fa'?`<b>${t(ic2.name)}</b> فرم ورود اطلاعات (PAR-Q) را تکمیل کرد`:`<b>${t(ic2.name)}</b> completed the intake form (PAR-Q)`});
+      saveData();closeModal();render();toast(t('Intake form saved ✓'));break}
+    case 'intake-view':intakeViewModal(el.dataset.c);break;
+    case 'pack-open':packsModal(el.dataset.c);break;
+    case 'pack-add':{const pname=el.dataset.c;
+      const pn=($('pk-name')&&$('pk-name').value.trim())||'Session Pack';
+      const pt=Math.max(1,Math.min(200,parseInt($('pk-total')&&$('pk-total').value,10)||10));
+      PACKS.push({id:uid(),client:pname,name:pn,total:pt,used:0,createdAt:Date.now()});
+      saveData();render();packsModal(pname);toast(t('Pack added ✓'));break}
+    case 'pack-del':{const pid=+el.dataset.id;const i=PACKS.findIndex(p=>p.id===pid);
+      if(i>=0){markDead('PACKS',pid);PACKS.splice(i,1);saveData();render();packsModal(el.dataset.c);toast(t('Pack deleted'))}break}
+    case 'announce-open':announceModal();break;
+    case 'announce-send':{const title=($('an-title')&&$('an-title').value.trim())||'';
+      const body=($('an-body')&&$('an-body').value.trim())||'';
+      if(!body){toast(t('Write the announcement…'));break}
+      const txt=title?`📣 ${title}\n${body}`:`📣 ${body}`;
+      let n=0;CLIENTS.filter(cc=>cc.status!=='Archived').forEach(cc=>{MSGS.push({id:uid(),client:cc.name,from:'coach',type:'text',body:txt,time:'Just now',read:false});n++});
+      NOTIFS.unshift({t:`${t('Announcement sent')} — ${nf(n)}`,d:'Just now',un:false});
+      saveData();closeModal();render();toast(t('Announcement sent')+' ('+nf(n)+')');break}
+    case 'msgtpl-open':msgtplModal();break;
+    case 'msgtpl-add':{const tn=($('mt-name')&&$('mt-name').value.trim())||'';const tb=($('mt-body')&&$('mt-body').value.trim())||'';
+      if(!tn||!tb){toast(t('Template name and text are required'));break}
+      if(MSGTPL.some(x=>x.n===tn)){toast(t('A template with this name exists'));break}
+      MSGTPL.push({n:tn,body:tb});saveData();render();msgtplModal();toast(t('Template saved ✓'));break}
+    case 'msgtpl-del':{const i=MSGTPL.findIndex(x=>x.n===el.dataset.n);
+      if(i>=0){markDead('MSGTPL',el.dataset.n);MSGTPL.splice(i,1);saveData();render();msgtplModal()}break}
+    case 'msgtpl-use':{const tp=MSGTPL.find(x=>x.n===el.dataset.n);if(!tp)break;
+      const inp=$('msg-inp');
+      if(inp){inp.value=tp.body;closeModal();inp.focus();toast(t('Inserted into the composer'))}
+      else{try{navigator.clipboard.writeText(tp.body)}catch(e){}closeModal();toast(t('Copied ✓'))}break}
+    case 'print-workout':printWorkout();break;
+    case 'print-nutrition':printNutrition();break;
+    /* v18.38 — gamification + reminders + PDF export */
+    case 'gam-open':gamModal();break;
+    /* v18.39 — challenges */
+    case 'chal-new':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(null);break}
+    case 'chal-edit':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(el.dataset.id);break}
+    case 'chal-open':(S.role==='client'?chalClientModal:chalDetail)(el.dataset.id);break;
+    /* v18.75 — plan 1وB/C: the student's own challenge list + authoring. */
+    case 'chal-list':chalListModal();break;
+    case 'chal-own':{if(S.role!=='client'){toast(t('Only you can start this one'));break}S.ownDraft=null;chalOwnModal();break}
+    case 'own-set':{if(!S.ownDraft)return;
+      /* the modal RE-REnders from the draft, so anything already typed has to
+         be lifted into it first — otherwise picking an emoji wipes the name. */
+      const _n=$('co-name'),_t=$('co-target'),_d=$('co-days'),_u=$('co-unit'),_m=$('co-metric'),_s=$('co-start');
+      if(_n)S.ownDraft.name=_n.value;
+      if(_t)S.ownDraft.target=parseInt(_t.value,10)||S.ownDraft.target;
+      if(_d)S.ownDraft.days=parseInt(_d.value,10)||S.ownDraft.days;
+      if(_u)S.ownDraft.unit=_u.value;
+      if(_m)S.ownDraft.metric=_m.value;
+      if(_s)S.ownDraft.start=_s.value;
+      S.ownDraft[el.dataset.k]=el.dataset.v;
+      if(el.dataset.k==='type'){const d=S.ownDraft;
+        d.metric=d.type==='habit'?'checkins':'workouts';
+        d.unit=d.type==='habit'?'check-ins':(d.type==='streak'?'days':'workouts')}
+      chalOwnModal();break}
+    case 'chal-own-save':{if(S.role!=='client'){break}
+      const cOw=client(S.cid);const dOw=S.ownDraft;if(!cOw||!dOw)break;
+      const nmOw=($('co-name')?.value||'').trim();
+      if(!nmOw){toast(t('Challenge name is required'));break}
+      const tyOw=dOw.type==='streak'||dOw.type==='habit'?dOw.type:'target';
+      const tgOw=Math.max(1,parseInt($('co-target')?.value,10)||dOw.target||8);
+      const dyOw=Math.max(1,parseInt($('co-days')?.value,10)||dOw.days||28);
+      const chOw={id:'ch'+Date.now().toString(36),name:nmOw,emoji:dOw.emoji||'🏆',desc:'',
+        type:tyOw,metric:tyOw==='target'?($('co-metric')?.value||dOw.metric||'workouts'):(tyOw==='habit'?'checkins':'streak'),
+        target:tgOw,unit:($('co-unit')?.value||dOw.unit||'workouts'),
+        start:$('co-start')?.value||isoToday(),days:dyOw,parts:[cOw.name],owner:'client',
+        reward:{pts:tyOw==='streak'?120:80,be:'🎖',bn:'Self-made'},
+        stages:[{e:'🌱',n:'Start'},{e:'💪',n:'Halfway'},{e:'🔥',n:'Almost'},{e:'🏆',n:'Finish'}],
+        prog:{},done:[],status:'active',createdAt:Date.now()};
+      CHALLENGES.push(chOw);S.ownDraft=null;
+      saveData();closeModal();render();toast(t('Challenge started'));
+      break}
+    case 'mchal':chalListModal();break;
+    case 'chal-draft':{const d=S.chalDraft;if(!d)break;d[el.dataset.k]=el.dataset.v;
+      if(el.dataset.k==='type'&&el.dataset.v==='streak')d.unit='days';
+      renderChalEditor();break}
+    case 'chal-part':{const d=S.chalDraft;if(!d)break;const n=el.dataset.n;let ps=(d.parts||[]).slice();
+      if(n==='*'){ps=ps.includes('*')?[]:['*']}
+      else{ps=ps.filter(x=>x!=='*');ps=ps.includes(n)?ps.filter(x=>x!==n):ps.concat([n])}
+      d.parts=ps.length?ps:['*'];renderChalEditor();break}
+    case 'chal-stage-add':{const d=S.chalDraft;if(!d)break;chalReadStages();(d.stages=d.stages||[]).push({e:'⭐',n:''});renderChalEditor();break}
+    case 'chal-stage-del':{const d=S.chalDraft;if(!d)break;chalReadStages();d.stages.splice(+el.dataset.i,1);renderChalEditor();break}
+    case 'chal-save':{const d=S.chalDraft;if(!d)break;if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
+      d.name=($('ce-name')&&$('ce-name').value.trim())||d.name||'Challenge';
+      d.desc=($('ce-desc')&&$('ce-desc').value.trim())||'';
+      chalReadStages();
+      const tg=$('ce-target');if(tg)d.target=Math.max(1,parseInt(tg.value,10)||1);
+      const un=$('ce-unit');if(un)d.unit=un.value.trim()||d.unit||'';
+      const sd=$('ce-start');if(sd)d.start=sd.value||isoToday();
+      const dy=$('ce-days');if(dy)d.days=Math.max(1,parseInt(dy.value,10)||30);
+      const pt=$('ce-pts');if(pt)d.reward={pts:Math.max(0,parseInt(pt.value,10)||0),be:($('ce-be')&&$('ce-be').value.trim())||'🏅',bn:($('ce-bn')&&$('ce-bn').value.trim())||'Champion'};
+      if(d.type==='streak')d.unit='days';
+      if(d.type==='habit'){d.metric='checkins';d.unit=d.unit||'check-ins'}
+      const ci=CHALLENGES.findIndex(x=>String(x.id)===String(d.id));
+      if(ci>=0)CHALLENGES[ci]=d;else CHALLENGES.unshift(d);
+      S.chalDraft=null;saveData();closeModal();render();toast(t('Challenge saved ✓'));break}
+    case 'chal-end':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));if(!ch)break;
+      if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
+      ch.status='ended';saveData();render();toast(t('Challenge ended'));break}
+    case 'chal-del':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
+      const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));if(!ch)break;
+      markDead('CHALLENGES',ch.id);CHALLENGES.splice(CHALLENGES.indexOf(ch),1);
+      saveData();render();toast(t('Challenge deleted'));break}
+    case 'chal-nudge':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const cn=el.dataset.c;if(!ch||!cn)break;
+      MSGS.push({id:uid(),type:'reminder',from:'coach',client:cn,body:lang==='fa'?`${ch.emoji||'🏆'} چالش «${ch.name}» منتظرته — ${nf(CHAL.left(ch))} روز فرصت داری!`:`${ch.emoji||'🏆'} Don't fall behind on "${ch.name}" — ${nf(CHAL.left(ch))} days left!`,time:'Just now',read:false,at:Date.now()});
+      saveData();chalDetail(ch.id);toast(t('Nudge sent ✓'));break}
+    case 'chal-bump':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const cid=el.dataset.c;const v=+el.dataset.v||1;if(!ch||!cid)break;
+      ch.prog=ch.prog||{};ch.prog[cid]=Math.max(0,((ch.prog[cid]||0)+v));
+      const cc=CLIENTS.find(x=>String(x.id)===String(cid));if(cc)chalEvalClient(cc);
+      saveData();chalDetail(ch.id);render();break}
+    case 'chal-log':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const c=client(S.cid);if(!ch||!c)break;
+      ch.prog=ch.prog||{};ch.prog[c.id]=(ch.prog[c.id]||0)+1;
+      const dc=chalEvalClient(c);saveData();render();
+      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({e:(x.reward&&x.reward.be)||x.emoji||'🏆',n:(x.reward&&x.reward.bn)||x.name})),dc.reduce((a,x)=>a+((x.reward&&x.reward.pts)||50),0));
+      else toast('⭐ +1 '+t('Points'));break}
+    /* v18.71 — Habits checklist: collapse / tick (number entry lives in
+       habNum(), bound from the shared `change` listener via data-change). */
+    /* Protect → jump the scroll container to the habits checklist (plain
+       scrollTop: smooth scrollIntoView is unreliable inside .capp). */
+    case 'jump-habits':{const _sc=document.querySelector('#app .capp')||document.querySelector('.capp');
+      const _hd=document.querySelector('#app .hab-hd');
+      if(_sc&&_hd){const r=_hd.getBoundingClientRect(),sr=_sc.getBoundingClientRect();
+        _sc.scrollTop=_sc.scrollTop+(r.top-sr.top)-(sr.height-r.height)/2}
+      break}
+    case 'hab-toggle':{S.habOpen=S.habOpen===false;render();break}
+    case 'hab-tick':{
+      const hc=client(S.cid);if(!hc)break;
+      const hh=habitsOf(hc).find(x=>x&&x.id===el.dataset.k);
+      if(!hh)break;
+      const hi=isoToday(),hl=hlogOf(hc),hd=hl[hi]||(hl[hi]={});
+      /* v18.80 — every row toggles: auto = manual override, count = 0/target. */
+      const cur=hh.type==='count'
+        ?(+hd[hh.id]||0)>=+(hh.target||1)
+        :(hd[hh.id]===true||hd[hh.id]===1);
+      const on=!cur;
+      if(hh.type==='count')hd[hh.id]=on?+(hh.target||1):0;
+      else hd[hh.id]=on;
+      if(on)gamAward(hc,'habit');
+      else gamRevoke(hc,'habit');
+      saveData();render();break}
+    /* v18.75 — plan 1د part 2: the COACH's habit builder. */
+    case 'hab-open':{if(S.role!=='coach'){toast(t('Only the coach can manage habits'));break}S.habEdit=null;habCoachModal();break}
+    case 'hab-add':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      const src=HAB_CATALOG.find(x=>x&&x.id===el.dataset.id);if(!src)break;
+      if(!Array.isArray(c.habits)||!c.habits.length)c.habits=HAB_SEED.map(h=>({...h}));
+      if(c.habits.some(h=>h&&h.id===src.id))break;
+      c.habits.push({...src,order:(c.habits.length+1),on:true});
+      saveData();render();habCoachModal();toast(t('Habit added'));break}
+    case 'hab-custom':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      const nm=($('hb-cn')?.value||'').trim();
+      if(!nm){toast(t('Habit name is required'));break}
+      const tg=parseInt($('hb-ct')?.value,10)||1;
+      const un=($('hb-cu')?.value||'').trim();
+      const ty=$('hb-ctype')?.value==='count'?'count':'tick';
+      if(!Array.isArray(c.habits)||!c.habits.length)c.habits=HAB_SEED.map(h=>({...h}));
+      c.habits.push({id:'h'+Date.now().toString(36),name:nm,type:ty,target:tg,unit:un,on:true,order:(c.habits.length+1)});
+      saveData();render();habCoachModal();toast(t('Habit added'));break}
+    case 'hab-edit':{S.habEdit=(S.habEdit===+el.dataset.i)?null:+el.dataset.i;habCoachModal();break}
+    case 'hab-save':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      const i=+el.dataset.i,h=c.habits&&c.habits[i];if(!h)break;
+      const nm=($('hb-n-'+i)?.value||'').trim();if(nm)h.name=nm;
+      if(h.type!=='auto'){const tg=parseInt($('hb-t-'+i)?.value,10);if(Number.isFinite(tg))h.target=Math.max(1,tg)}
+      h.unit=($('hb-u-'+i)?.value||'').trim();
+      S.habEdit=null;saveData();render();habCoachModal();toast(t('Habit updated'));break}
+    case 'hab-etype':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      const h=c.habits&&c.habits[+el.dataset.i];if(!h)break;
+      h.type=el.dataset.v==='count'?'count':el.dataset.v==='auto'?'auto':'tick';
+      if(h.type==='auto'&&h.metric==null)h.type='tick'; /* auto needs a metric to compute */
+      if(h.type!=='auto'&&!h.target)h.target=1;
+      saveData();render();habCoachModal();break}
+    case 'hab-on':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      const h=c.habits&&c.habits[+el.dataset.i];if(!h)break;
+      h.on=h.on===false;saveData();render();habCoachModal();break}
+    case 'hab-del':{const c=client(S.cid);if(!c||S.role!=='coach')break;
+      if(!Array.isArray(c.habits))break;
+      c.habits.splice(+el.dataset.i,1);
+      saveData();render();habCoachModal();toast(t('Habit removed'));break}
+    case 'hab-move':{const c=client(S.cid);if(!c||S.role!=='coach'||!Array.isArray(c.habits))break;
+      const i=+el.dataset.i,j=i+(+el.dataset.d||0);
+      if(j<0||j>=c.habits.length||i===j)break;
+      const tmp=c.habits[i];c.habits[i]=c.habits[j];c.habits[j]=tmp;
+      saveData();render();habCoachModal();break}
+    case 'hab-ctick':{if(S.role!=='coach')break;
+      const hc2=client(S.cid);if(!hc2)break;
+      const hh2=habitsOf(hc2).find(x=>x&&x.id===el.dataset.k);
+      if(!hh2||hh2.type==='auto')break;
+      const hi2=isoToday(),hl2=hlogOf(hc2),hd2=hl2[hi2]||(hl2[hi2]={});
+      const on2=!(hd2[hh2.id]===true||hd2[hh2.id]===1);
+      hd2[hh2.id]=on2;
+      if(on2)gamAward(hc2,'habit');else gamRevoke(hc2,'habit');
+      saveData();render();habCoachModal();break}
+    case 'rem-dismiss':{const m=MSGS.find(x=>String(x.id)===String(el.dataset.id));if(m){m.read=true;saveData()}render();break}
+    case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
+    case 'open-player':{const w=(DB[S.cid].workouts||[]).find(x=>x.id===el.dataset.wid);if(!w)break;
+      const keys=[];w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++)keys.push(ei+'-'+si)});
+      /* v18.61 — resume REAL progress: ticks/RPE saved on the workout survive
+         close/reopen and page reloads (falls back to 'all checked' for old
+         completed workouts that predate persisted state).
+         v18.62 — weekly split: a completion from a PREVIOUS week opens a
+         FRESH session (fresh ticks, fresh RPE), not a read-only summary. */
+      const stale=w.status==='completed'&&!wDone(w);
+      if(stale){w.ck=[];w.rpeM={}}
+      const ck=(Array.isArray(w.ck)&&w.ck.length)?w.ck.filter(k=>keys.includes(k)):((w.status==='completed'&&!stale)?keys:[]);
+      S.player={wid:w.id,checked:new Set(ck),rpe:{...(w.rpeM||{})},rest:0,restTotal:1};
+      render();break}
+    case 'togset':{if(!S.player)break;const w=DB[S.cid].workouts.find(x=>x.id===S.player.wid);
+      if(w&&w.status==='completed'&&wDone(w))break; // v18.62 — stale (last week's) completion is re-tickable
+      const k=el.dataset.k;
+      if(S.player.checked.has(k))S.player.checked.delete(k);
+      else{S.player.checked.add(k);S.player.lastKey=k;startRest(+el.dataset.rest)}
+      if(w){w.ck=[...S.player.checked];w.rpeM={...S.player.rpe}} // v18.61 — persist ticks (render→saveData below)
+      render();break}
+    case 'rpe':{if(!S.player)break;S.player.rpe[el.dataset.k]=+el.dataset.v;
+      const wR=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===S.player.wid);
+      if(wR)wR.rpeM={...S.player.rpe}; // v18.61 — persist RPE
+      render();break}
+    /* RPE help bottom-sheet (mockup03). */
+    case 'rpe-help':{if(S.player)S.player.rpeHelp=!S.player.rpeHelp;render();break}
+    case 'rpe-help-x':{if(S.player)S.player.rpeHelp=false;render();break}
+    /* v18.75 — the single-exercise wizard (mockup gap). */
+    case 'wiz-mode':{if(!S.player)break;
+      if(el.dataset.v==='list'){S.player.wiz=null}
+      else{
+        const wW=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===S.player.wid);
+        let fi=wW?wW.exercises.findIndex((e2,i)=>Array.from({length:e2.sets}).some((_,s2)=>!S.player.checked.has(i+'-'+s2))):-1;
+        S.player.wiz=fi>=0?fi:0;
+      }
+      render();break}
+    case 'wiz-step':{if(!S.player)break;
+      const wW2=DB[S.cid]&&DB[S.cid].workouts.find(x=>x.id===S.player.wid);if(!wW2)break;
+      const base=S.player.wiz==null?0:S.player.wiz;
+      S.player.wiz=Math.max(0,Math.min(wW2.exercises.length-1,base+(+el.dataset.d||0)));
+      render();break}
+    /* v18.90 — smart rest timer: every clock change funnels through restSeek,
+       pause stores MILLISECONDS (the old seconds + ceil() drifted a second per
+       pause/resume cycle), and the two alert toggles persist in PREFS.wk. */
+    case 'skiprest':if(S.player){restEnd(S.player,true,true);render()}break;
+    case 'rest-pause':{const p=S.player;if(!p||p.rest<=0)break;
+      if(p.restPaused){p.restEnd=Date.now()+(p.restLeftMs||0);p.restPaused=false;p.restBeeped=0;
+        clearInterval(restIv);restIv=setInterval(restTick,100)}
+      else{p.restLeftMs=Math.max(0,p.restEnd-Date.now());p.restPaused=true;clearInterval(restIv);restIv=null}
+      restSave();render();break}
+    case 'rest-shift':{const p=S.player;if(!p||p.rest<=0)break;
+      restSeek(p,restMs()+(+el.dataset.s||0)*1000,false);render();break}
+    case 'rest-set':{const p=S.player;if(!p)break;
+      restSeek(p,(+el.dataset.s||0)*1000,true);render();break}
+    case 'rest-snd':{PREFS.wk.snd=(PREFS.wk.snd===false);savePrefs();
+      if(PREFS.wk.snd!==false)restBeep(760,.07,.12);render();break}
+    case 'rest-vib':{PREFS.wk.vib=(PREFS.wk.vib===false);savePrefs();
+      if(PREFS.wk.vib!==false)restVibe(30);render();break}
+    case 'rest-auto':{PREFS.wk.autoNext=(PREFS.wk.autoNext===false);savePrefs();render();break}
+    case 'rest-fs':if(S.player&&S.player.rest>0){S.player.restFs=true;render()}break;
+    case 'rest-fs-x':if(S.player){S.player.restFs=false;render()}break;
+    case 'close-player':S.player=null;clearInterval(restIv);restIv=null;restClear();render();break;
+    case 'finish-workout':{
+      const w=DB[S.cid].workouts.find(x=>x.id===S.player?.wid);if(!w)break;
+      const total=w.exercises.reduce((a,e)=>a+e.sets,0);
+      w.status='completed';w.setsDone=`${S.player.checked.size}/${total}`;
+      w.doneAt=new Date().toISOString(); // v18.38 — the day-streak engine needs the completion date
+      /* v18.61 — THE REAL HISTORY: record every checked set with the weight,
+         reps and RPE the client actually used, so charts/PRs/consistency are
+         computed from real training instead of hardcoded demo arrays. */
+      {const sets=[];
+        w.exercises.forEach((ex,ei)=>{for(let si=0;si<ex.sets;si++){const k=ei+'-'+si;
+          if(S.player.checked.has(k))sets.push({x:EXERCISES[ex.ex]?EXERCISES[ex.ex].n:'',s:si+1,kg:+ex.kg||0,reps:+ex.reps||0,rpe:S.player.rpe[k]||null})}});
+        const rpes=sets.map(s=>+s.rpe).filter(r=>r>0);
+        const bucket=DB[S.cid];bucket.log=bucket.log||[];
+        bucket.log.unshift({id:uid(),wid:w.id,n:w.name,d:ymdOf(new Date()),at:Date.now(),
+          sets,done:sets.length,total,vol:sets.reduce((a,s)=>a+s.kg*s.reps,0),
+          rpe:rpes.length?Math.round(rpes.reduce((a,b)=>a+b,0)/rpes.length*10)/10:null});
+        if(bucket.log.length>150)bucket.log.length=150; // payload cap
+        w.ck=[...S.player.checked];w.rpeM={...S.player.rpe};
+      }
+      DB[S.cid].stats.done=(DB[S.cid].stats.done||0)+1;
+      const cNow=client(S.cid);
+      cNow.last='Just now'; // real "last workout" instead of the frozen demo label
+      /* v18.38 — gamification: consecutive-day streak, points, badges. */
+      const __today=ymdOf(new Date()),__yst=ymdOf(new Date(Date.now()-864e5));
+      if(cNow.lastDone!==__today){cNow.dayStreak=cNow.lastDone===__yst?(cNow.dayStreak||0)+1:1;cNow.lastDone=__today}
+      const __before=cNow.pts||0;
+      gamAward(cNow,'workout');
+      const cn=t(cNow.name);
+      ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
+      clearInterval(restIv);S.player=null;restClear();S.ptab='today';render();
+      toast(`💪 ${t('Workout completed')} · ⭐ +${nf((cNow.pts||0)-__before)} ${t('Points')} · 🔥 ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
+    case 'add-client':addClientModal();break;
+    case 'save-client':{if(billGuard('client'))break;
+      // Names are inserted into HTML all over the app and into quoted
+      // attributes — strip markup chars at the source as well as at render.
+      const fn=scrubName($('nc-fn').value.trim())||'New',ln=scrubName($('nc-ln').value.trim())||'Client';
+      // v16.3 — every client gets a PERSONAL connection code at creation; the
+      // coach shares it and the student's device binds straight to this profile.
+      // nid = optional national ID (contract/insurance paperwork only).
+      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined),since:isoToday()};
+      CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
+      ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
+      closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
+      clientCodeModal(nc);break}
+    case 'copy-code':{const v=el.dataset.code||'';
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(()=>toast('Copied ✓')).catch(()=>toast(v))}
+      else toast(v);break}
+    case 'qr-open':qrModal(el.dataset.name||'',el.dataset.code||'');break;
+    case 'modal-x':closeModal();if(el.dataset.msg)toast(el.dataset.msg);break;
+    case 'ovl-x':if(e.target===el)closeModal();break;
+    /* v18.36/37 — coach toolbox FAB (mobile): toggle orbital tools */
+    case 'tbx-toggle':{const w=$('tbxWrap');if(w)w.classList.toggle('open');break}
+    case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');stopwatchSheet();break}
+    case 'sw-toggle':swToggle();break;
+    case 'sw-reset':swReset();break;
+    case 'pk':pickerModal();break;
+    case 'pk-add':{const ex=EXERCISES[+el.dataset.i];
+      BUILDER.push({ex:+el.dataset.i,sets:3,reps:10,kg:20,rest:90,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''});fillVids();
+      render();pickerModal();toast(ex.n+' '+t('added to workout'));break}
+    case 'b-dup':BUILDER.splice(+el.dataset.bi+1,0,{...BUILDER[+el.dataset.bi]});render();toast('Exercise duplicated');break;
+    case 'b-del':BUILDER.splice(+el.dataset.bi,1);render();toast('Exercise removed');break;
+    case 'b-up':{const i=+el.dataset.bi;if(i>0){[BUILDER[i-1],BUILDER[i]]=[BUILDER[i],BUILDER[i-1]];render()}break}
+    case 'b-dn':{const i=+el.dataset.bi;if(i<BUILDER.length-1){[BUILDER[i+1],BUILDER[i]]=[BUILDER[i],BUILDER[i+1]];render()}break}
+    case 'b-save':{const n=$('w-name');if(n)S.wname=n.value;const d=$('w-day');if(d)S.wday=d.value;
+      const note=$('w-note');if(note)S.wnote=note.value;
+      /* v18.64 — never publish a nameless workout: an empty name rendered an
+         INVISIBLE cell on the calendar ("nothing gets registered"). */
+      const wn=((S.wname.split(' — ')[0])||'').trim()||'New workout';
+      const dbS=DB[S.cid]||(DB[S.cid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()});
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      const di=FULLDAYS.indexOf(S.wday);
+      /* v18.64 — editing an existing workout (✎ in the saved list) UPDATES it
+         in place and MOVES its split assignment; only a fresh draft publishes
+         a new workout. Previously every save duplicated and the old day stayed
+         occupied — "changing the Training Day did nothing". */
+      const ed=S.wEdit?(dbS.workouts||[]).find(x=>String(x.id)===String(S.wEdit)):null;
+      let nid;
+      if(ed){ed.name=wn;ed.day=S.wday;ed.dur=S.wdur||'60 min';ed.note=S.wnote||'';ed.exercises=BUILDER.map(b=>({...b}));nid=ed.id;
+        dbS.split.forEach((s,j)=>{if(s&&s.t==='w'&&String(s.w)===String(nid))dbS.split[j]=null})}
+      else{nid='w'+Date.now();
+        dbS.workouts.unshift({id:nid,name:wn,day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'})}
+      if(di>=0)dbS.split[di]={t:'w',w:nid};
+      S.wEdit=null;
+      /* v18.63 — if this save came from the calendar's "New workout for this
+         day", land back on the calendar so the coach sees the new assignment. */
+      if(isNarrow()){S.mview='client';S.mClient=S.cid}
+      else{S.view='wspace';S.tab=S.calReturn?'calendar':'overview';window.scrollTo({top:0})}
+      S.calReturn=false;
+      render();toast(t('Published to')+' '+t(client(S.cid).name)+' ✓ · '+t(S.wday));break}
+    case 'w-new':{BUILDER.length=0;S.wname='New Workout — '+client(S.cid).name;S.wdur='60 min';S.wnote='';S.tplEdit=null;S.wEdit=null;
+      /* v18.64 — KEEP the current Training Day + calendar-return: starting a
+         fresh draft must not silently reset the day the coach just picked.
+         Already in the workspace? Stay there (no jump to the standalone page). */
+      if(isNarrow()){S.mview='builder'}else if(S.view!=='wspace')S.view='builder';render();window.scrollTo({top:0});break}
+    case 'b-cancel':{BUILDER.length=0;S.wname='New Workout';S.wdur='60 min';S.wnote='';S.tplEdit=null;S.wEdit=null;
+      render();toast(t('Builder cleared'));break}
+    case 'w-load':{const w=(DB[S.cid].workouts||[])[+el.dataset.wi];if(!w)break;
+      BUILDER.length=0;(w.exercises||[]).forEach(x=>BUILDER.push({...x}));fillVids();
+      S.wname=w.name+' — '+client(S.cid).name;S.wday=w.day||'Monday';S.wdur=w.dur||'60 min';S.wnote=w.note||'';
+      S.wEdit=String(w.id); /* v18.64 — save now UPDATES + MOVES this workout */
+      if(isNarrow()){S.mview='builder'}else if(S.view!=='wspace')S.view='builder';render();window.scrollTo({top:0});break}
+    case 'w-del':{const list=DB[S.cid].workouts||[];const w=list[+el.dataset.wi];if(!w)break;
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
+      list.splice(+el.dataset.wi,1);
+      /* v18.62 — a deleted workout must not leave a dangling split slot. */
+      {const dbS=DB[S.cid];if(Array.isArray(dbS.split))dbS.split.forEach((s,i)=>{if(s&&s.t==='w'&&String(s.w)===String(w.id))dbS.split[i]=null})}
+      render();toast(t('Workout deleted'));break}
+    /* ===== v18.62 — WEEK SPLIT actions ===== */
+    case 'split-day':splitDayModal(+el.dataset.i,el.dataset.d);break;
+    /* ===== v18.68 — copy-day, month print ===== */
+    case 'copy-day':{const i=+el.dataset.i,j=+el.dataset.j;const dbS=DB[S.cid];if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      /* keep one-workout-one-day: if the target holds the SAME workout it
+         stays; if it holds another one, the copy is refused. */
+      const src=dbS.split[i],dst=dbS.split[j];
+      if(src&&src.t==='w'&&dst&&dst.t==='w'&&String(dst.w)!==String(src.w)){toast(t('One workout per day'));break}
+      dbS.split[j]=src?{...src}:null;
+      if(src&&src.t==='w'){const w=(dbS.workouts||[]).find(x=>String(x.id)===String(src.w));if(w)w.day=FULLDAYS[j]}
+      closeModal();render();toast(t('Day copied')+' · '+t(FULLDAYS[j]));break}
+    case 'print-month':printMonthPlan();break;
+    /* ===== v18.67 — quick week setup: the whole split in one modal ===== */
+    case 'cal-quick':splitQuickModal();break; // v18.69 — ws-quick retired with the builder sidebar
+    case 'quick-save':{const dbS=DB[S.cid];if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      const seen=new Set();let dup=0;
+      document.querySelectorAll('select[data-quick]').forEach(sel=>{const i=+sel.dataset.quick;const v=sel.value;
+        if(!v){dbS.split[i]=null;return}
+        if(v==='__rest'){dbS.split[i]={t:'rest'};return}
+        /* keep the one-workout-one-day invariant: a repeated pick is dropped */
+        if(seen.has(v)){dbS.split[i]=null;dup++;return}
+        seen.add(v);dbS.split[i]={t:'w',w:v}});
+      dbS.split.forEach((s,i)=>{if(s&&s.t==='w'){const w=(dbS.workouts||[]).find(x=>String(x.id)===String(s.w));if(w)w.day=FULLDAYS[i]}});
+      closeModal();render();
+      toast(dup?t('One workout per day'):t('Week updated'));break}
+    /* ===== v18.66 — client calendar month navigation (multi-month planning:
+       the weekly split repeats, so future months show the same plan) ===== */
+    case 'cal-m':{const d=+el.dataset.d;S.calOff=d===0?0:Math.max(-12,Math.min(24,(S.calOff||0)+d));render();break}
+    /* one tap for "3 training days + the rest rest": every still-empty
+       weekday becomes an explicit rest day. */
+    case 'cal-rest-empty':{const dbS=DB[S.cid];if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      let n=0;dbS.split.forEach((s,i)=>{if(!s){dbS.split[i]={t:'rest'};n++}});
+      render();toast(t('Unplanned days set to rest'));break}
+    /* ===== v18.65 — the month grid is the only add surface on the client
+       calendar; the v18.63 header picker (cal-add) is retired. weekPlanModal
+       stays for the coach-mobile client view (no calendar grid there). */
+    case 'cal-new':{const i=+el.dataset.i;
+      /* New workout FOR this day: preset Training Day, remember the calendar
+         so b-save lands back here, then open a clean draft. Desktop stays in
+         the workspace (Workouts tab = same builder, same client context). */
+      BUILDER.length=0;S.tplEdit=null;S.wEdit=null;
+      S.wname='New Workout — '+client(S.cid).name;
+      S.wday=FULLDAYS[i];S.wdur='60 min';S.wnote='';
+      S.calReturn=true;
+      closeModal();
+      if(isNarrow()){S.mview='builder'}else{S.view='wspace';S.tab='workouts'}
+      render();window.scrollTo({top:0});
+      toast(t('Training Day')+': '+t(FULLDAYS[i]));break}
+    case 'split-assign':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      const w=(dbS.workouts||[]).find(x=>String(x.id)===String(el.dataset.w));
+      if(!w)break;
+      /* v18.62 — one workout lives on ONE day: assigning it here detaches it
+         from any other day, so "completed" can only ever mean that day. */
+      dbS.split.forEach((s,j)=>{if(j!==i&&s&&s.t==='w'&&String(s.w)===String(w.id))dbS.split[j]=null});
+      dbS.split[i]={t:'w',w:String(w.id)};
+      w.day=FULLDAYS[i]; // mirror so older displays (chips/lists) stay correct
+      closeModal();render();toast(t('Day updated ✓')+' · '+t(FULLDAYS[i]));break}
+    case 'split-rest':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      dbS.split[i]={t:'rest'};
+      closeModal();render();toast(t('Rest day set')+' · '+t(FULLDAYS[i]));break}
+    case 'split-clear':{const i=+el.dataset.i;const dbS=DB[S.cid];
+      if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
+      dbS.split[i]=null;
+      closeModal();render();toast(t('Day cleared')+' · '+t(FULLDAYS[i]));break}
+    case 'ex-add':{const ex=EXERCISES[+el.dataset.i];S.view='builder';
+      BUILDER.push({ex:+el.dataset.i,sets:3,reps:10,kg:20,rest:90,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note:''});fillVids();
+      render();toast(ex.n+' '+t('added to workout'));break}
+    case 'ex-video':vidModal(null,+el.dataset.i);break;
+    case 'ex-video-url':{const u=el.dataset.url||'';if(/^https?:\/\//i.test(u))window.open(u,'_blank','noopener');break}
+    case 'b-vid':vidModal(+el.dataset.bi);break;
+    case 'vid-yt':{const ex=EXERCISES[+el.dataset.i];if(ex)window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(ex.n),'_blank','noopener');break}
+    case 'vid-save':{const inp=$('vid-url');if(!inp)break;
+      const u=(inp.value||'').trim();
+      if(u&&!/^https?:\/\//i.test(u)){toast(t('Link must start with http'));break}
+      if(el.dataset.bi!=null){const b=BUILDER[+el.dataset.bi];if(!b)break;
+        if(u){b.vid=u;toast(t('Video saved ✓'))}else delete b.vid}
+      else{const ex=EXERCISES[+el.dataset.exi];if(!ex)break;
+        if(u){EXVID[ex.n]=u;toast(t('Saved to video bank ✓'))}else delete EXVID[ex.n];
+        saveData()}
+      closeModal();render();break}
+    case 'vid-del':{if(el.dataset.bi!=null){const b=BUILDER[+el.dataset.bi];if(b)delete b.vid}
+      else{const ex=EXERCISES[+el.dataset.exi];if(ex){delete EXVID[ex.n];saveData()}}
+      closeModal();render();toast(t('Video removed'));break}
+    case 'ex-vid-exp':vidExportModal();break;
+    case 'ex-vid-imp':vidImportModal();break;
+    case 'vid-exp-copy':{const ta=$('vid-exp'),v=ta?ta.value:'';
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(()=>toast(t('Copied ✓'))).catch(()=>toast(t('Select and copy manually')));
+      else toast(t('Select and copy manually'));break}
+    case 'vid-imp-save':{const ta=$('vid-imp');if(!ta)break;
+      const map={};EXERCISES.forEach(x=>{map[x.n.toLowerCase()]=x.n;const fa=t(x.n);if(fa&&fa!==x.n)map[String(fa).toLowerCase()]=x.n});
+      let ok=0,bad=0;
+      (ta.value||'').split(/\r?\n/).forEach(ln=>{const s=ln.trim();if(!s)return;
+        const parts=s.split(/\t|\|/).map(x=>x.trim()).filter(Boolean);
+        if(parts.length<2){bad++;return}
+        const name=map[parts[0].toLowerCase()],url=parts[parts.length-1];
+        if(name&&/^https?:\/\//i.test(url)){EXVID[name]=url;ok++}else bad++});
+      if(ok)saveData();
+      closeModal();render();
+      toast(ok?`${nf(ok)} ${t('links imported')}${bad?` · ${nf(bad)} ${t('not matched')}`:''}`:t('No links imported'));break}
+    case 'ex-muscle':{EXM=el.dataset.m||'All';document.querySelectorAll('#ex-mus .fchip').forEach(b=>b.classList.toggle('on',b.dataset.m===EXM));exFilter();break}
+    case 'cex-new':exEditModal(null);break;
+    case 'cex-edit':exEditModal(+el.dataset.id);break;
+    case 'cex-del':{const id=+el.dataset.id;const i=CEXS.findIndex(y=>y.id===id);if(i<0)break;
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
+      markDead('CEXS',id);CEXS.splice(i,1);syncCustomEx();saveData();closeModal();render();toast(t('Exercise deleted'));break}
+    case 'cex-save':{const n=scrubName($('cex-n').value.trim());
+      if(!n){toast(t('Enter a name'));break}
+      const rec={n,m:$('cex-m').value,e:$('cex-e').value,t:$('cex-t').value};
+      const id=el.dataset.id;
+      if(id!==''){const x=CEXS.find(y=>y.id===+id);if(x)Object.assign(x,rec)}
+      else{CEXS.push({id:uid(),...rec});syncCustomEx()}
+      saveData();closeModal();render();toast(t('Custom exercise saved ✓'));break}
+    case 'fav':{const n=el.dataset.n||'';const f=PREFS.favs=PREFS.favs||[];const fi=f.indexOf(n);
+      if(fi>=0)f.splice(fi,1);else f.push(n);
+      savePrefs();el.style.color=fi>=0?'var(--ink3)':'#E1B014';break}
+    case 'cal-v':S.calV=el.dataset.v;render();break;
+    case 'cal-nav':S.weekOff+=+el.dataset.d;render();break;
+    case 'cal-today':S.weekOff=0;S.selDay=TODAY;render();break;
+    case 'cal-day':S.selDay=+el.dataset.day;if(!isNarrow())S.calV='Day';render();break;
+    case 'day-nav':S.selDay=Math.max(0,Math.min(6,S.selDay+(+el.dataset.d)));render();break;
+    case 'calf-type':S.calfType=el.dataset.t;render();break;
+    case 'cal-preset':{PREFS.cal={start:+el.dataset.s,end:+el.dataset.e};savePrefs();render();toast(t('Working hours updated'));break}
+    case 'slot-new':{if(S.calV!=='Week')break;
+      const rect=el.getBoundingClientRect();
+      const CH=calHours(),slots=Math.round((CH.end-CH.start)*2);
+      const slot=Math.max(0,Math.min(slots-1,Math.floor((e.clientY-rect.top)/24)));
+      S.nsPre={day:+el.dataset.day,start:CH.start+slot*0.5};
+      newSessionModal();break}
+    case 'ev-open':eventModal(+el.dataset.eid);break;
+    case 'ev-save':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
+      ev.label=$('ev-label').value.trim()||ev.label;
+      ev.client=$('ev-client').value;ev.type=$('ev-type').value;
+      ev.day=+$('ev-day').value;ev.start=parseFloat($('ev-time').value);ev.dur=parseFloat($('ev-dur').value);
+      syncClientSessions(ev.client);
+      closeModal();render();toast('Session updated ✓');break}
+    case 'ev-del':{const i=EVENTS.findIndex(x=>x.id===+el.dataset.id);if(i<0)break;
+      const cl=EVENTS[i].client;markDead('EVENTS',EVENTS[i].id);EVENTS.splice(i,1);syncClientSessions(cl);
+      closeModal();render();toast('Event deleted');break}
+    case 'ev-dup':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
+      const cp={...ev,id:uid(),start:Math.min(calHours().end-0.5,ev.start+ev.dur)};
+      EVENTS.push(cp);syncClientSessions(cp.client);
+      closeModal();render();toast('Duplicated ✓');break}
+    case 'ics':icsExport();break;
+    case 'm-add':measModal();break;
+    /* v18.61 — client weekly check-in: save the measurement, then send the
+       coach a check-in message + notification (same path send-checkin uses). */
+    case 'cmeas-open':clientMeasModal();break;
+    case 'cmeas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
+      const lm=lastM(c.id);
+      const bits=[`${t('Weight')} ${uwS(lm&&lm.w)}`];
+      if(lm&&lm.bf!=null)bits.push(`${t('Body Fat')} ${nf(lm.bf)}%`);
+      if(lm&&lm.wa!=null)bits.push(`${t('Waist')} ${ucS(lm.wa)}`);
+      if(lm&&lm.ch!=null)bits.push(`${t('Chest')} ${ucS(lm.ch)}`);
+      const body=`${t('Weekly check-in')} · ${bits.join(' · ')}`;
+      MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
+      NOTES.unshift({id:uid(),client:c.name,from:'client',shared:true,type:'General',title:`${t('Weekly check-in')} — ${t(c.name)}`,date:'Just now',body,pin:false,arch:false});
+      gamAward(c,'checkin');
+      NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+      closeModal();render();
+      toast(t('Check-in saved — your coach was notified')+' · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+    case 'meas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
+      closeModal();
+      if(isNarrow()){S.mClient=c.id;if(S.mview!=='client')S.mview='client'}
+      else{S.cid=c.id;if(S.view!=='measure'){S.view='wspace';S.tab='measurements'}}
+      window.scrollTo({top:0});render();toast('Measurement saved — charts updated');break}
+    /* v17.2 — save what was entered (weight optional here), then run the AI
+       diagnostic on the selected client so the fresh numbers are included. */
+    case 'meas-ai':{
+      const saved=saveMeasurementFromModal(false);
+      const cid=+$('ms-client').value;
+      const target=saved||CLIENTS.find(x=>x.id===cid);
+      if(!target)break;
+      closeModal();
+      if(isNarrow()){S.mClient=target.id;if(S.mview!=='client')S.mview='client'}
+      else{S.cid=target.id;if(S.view!=='measure'){S.view='wspace';S.tab='measurements'}}
+      render();
+      aiAnalyze(target);break}
+    case 'meas-del':{const cid=+el.dataset.cid;const i=+el.dataset.i;
+      if(!DB[cid]||!DB[cid].measures||!DB[cid].measures[i])break;
+      const gone=DB[cid].measures[i];if(gone&&gone.d!=null)markDead('MEAS',cid+':'+gone.d);
+      DB[cid].measures.splice(i,1);
+      render();toast('Entry deleted');break}
+    case 'note-add':{const ty=$('nt-type').value.replace(' Note',''),ti=$('nt-title').value.trim()||t('Untitled note'),b=$('nt-body').value.trim()||'—';
+      NOTES.unshift({id:uid(),client:el.dataset.c,from:'coach',shared:$('nt-share').checked,type:ty,title:ti,date:'Just now',body:b,pin:false,arch:false});
+      ACTIVITY.unshift({w:'Just now',i:'note',h:lang==='fa'?`<b>شما</b> برای <b>${t(el.dataset.c)}</b> یادداشت ثبت کردید`:`<b>You</b> added a note for <b>${t(el.dataset.c)}</b>`});
+      render();toast('Note added');break}
+    case 'note-pin':{const n=NOTES.find(x=>x.id===+el.dataset.id);if(!n)break;n.pin=!n.pin;render();break}
+    case 'note-arch':{const n=NOTES.find(x=>x.id===+el.dataset.id);if(!n)break;n.arch=true;render();toast('Note archived');break}
+    case 'note-edit':noteEditModal(+el.dataset.id);break;
+    case 'note-edit-save':{const n=NOTES.find(x=>x.id===+el.dataset.id);if(!n)break;
+      n.type=$('ne-type').value.replace(' Note','');
+      n.title=$('ne-title').value.trim()||n.title;
+      n.body=$('ne-body').value.trim()||n.body;
+      if(n.from==='coach')n.shared=$('ne-share').checked;
+      saveData();closeModal();render();toast(t('Note updated ✓'));break}
+    case 'nfilter':S.nfilter=el.dataset.t;render();break;
+    case 'file-del':{const f=FILES[+el.dataset.i];if(!f)break;markDead('FILES',f.n);FILES.splice(+el.dataset.i,1);render();toast('File deleted');break}
+    case 'file-up':{const inp=document.createElement('input');inp.type='file';inp.multiple=true;
+      inp.onchange=()=>{if(inp.files&&inp.files.length)filesAdd([...inp.files])};inp.click();break}
+    case 'file-view':{const f=FILES[+el.dataset.i];if(f)fileViewModal(f);break}
+    case 'file-dl':{const f=FILES[+el.dataset.i];if(!f)break;
+      if(!f.src){toast(t('This file has no stored content (legacy entry)'));break}
+      const a=document.createElement('a');a.href=f.src;a.download=f.n;document.body.appendChild(a);a.click();a.remove();
+      toast(t('Downloading')+' '+f.n);break}
+    case 'files-dl-all':{const fs=FILES.filter(f=>f.src);
+      if(!fs.length){toast(t('No downloadable files yet'));break}
+      fs.forEach((f,i)=>setTimeout(()=>{const a=document.createElement('a');a.href=f.src;a.download=f.n;document.body.appendChild(a);a.click();a.remove()},i*350));
+      toast(t('Downloading')+' '+nf(fs.length)+' '+t('files'));break}
+    case 'qa-item':{const it=el.dataset.item;document.querySelectorAll('.mwrap.open').forEach(m=>m.classList.remove('open'));
+      if(it==='Add Client')addClientModal();
+      else if(it==='Connect Client (Code)')inviteModal();
+      else if(it==='Create Workout'){S.view='builder';render()}
+      else if(it==='Create Nutrition Plan'){newPlanModal()}
+      else if(it==='Schedule Session'){newSessionModal()}
+      else if(it==='Add Measurement'){measModal()}
+      else if(it==='Create Template'){S.tplEdit=null;if(isNarrow()){S.mview='builder'}else S.view='builder';render()}
+      else if(it==='Add Exercise'){S.view='library';render()}
+      else if(it==='Create Note'){S.view='notes';render()}
+      break}
+    case 'markread':NOTIFS.forEach(n=>n.un=false);render();toast('All notifications marked as read');break;
+    case 'stab':S.stab=el.dataset.k;render();if(el.dataset.k==='admin')billAdminLoad();else if(el.dataset.k==='account')billRefresh().then(render).catch(()=>{});break;
+    case 'admin-refresh':billAdminLoad();break;
+    case 'adm-grant':admGrantModal(el.dataset.email,el.dataset.plan);break;
+    case 'adm-grant-do':admGrantDo(el.dataset.email);break;
+    case 'adm-suspend':admSuspendToggle(el.dataset.email,el.dataset.s==='1');break;
+    case 'adm-coupon':admCouponModal();break;
+    case 'adm-coupon-do':admCouponDo();break;
+    /* v15.7 — persisted preference handlers */
+    case 'pref-sw':{setP(PREFS,el.dataset.k,el.checked);savePrefs();toast('Setting saved');break}
+    case 'theme':{PREFS.theme=el.dataset.v;savePrefs();applyTheme();render();toast('Theme applied');break}
+    case 'tpl':{PREFS.uiTpl=el.dataset.v==='coachmint'?'coachmint':'default';savePrefs();applyTpl();applyAccent(PREFS.accent);applyTheme();saveData();render();toast(t('Theme applied'));break}
+    case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
+    case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
+    case 'cm-filter':{S.cfilter=el.dataset.v;render();break}
+    case 'prg-range':{S.prgRange=el.dataset.r;render();break}
+    case 'wt-range':{S.wtRange=el.dataset.r;render();break}
+    /* Profile settings (mockup 08): units toggle + explicit language pick. */
+    case 'units-tog':{PREFS.units=PREFS.units==='Imperial'?'Metric':'Imperial';savePrefs();render();
+      toast(t('Units')+': '+(PREFS.units==='Imperial'?'lb · in':'kg · cm'));break}
+    case 'lang-set':{const nl=el.dataset.l;if(nl&&nl!==lang){lang=nl;applyLang();render();
+      toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}break}
+    /* Chat quick replies (mockup07): pre-baked message + focus the composer. */
+    case 'quick-msg':{const c=client(S.cid);const v=el.dataset.m||'';if(!c||!v)break;
+      MSGS.push({id:uid(),client:c.name,from:'client',type:'text',body:v,time:'Just now',read:false});
+      NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
+      saveData();render();toast(t('Message sent'));break}
+    case 'cmsg-focus':{const el2=$('cmsg-inp');if(!el2)break;
+      const sc=document.querySelector('#app .capp')||document.querySelector('.capp');
+      if(sc)sc.scrollTop=sc.scrollHeight;
+      el2.focus({preventScroll:true});break}
+    case 'skin':{PREFS.phoneSkin=el.dataset.s;savePrefs();render();toast(t('Theme applied'));break}
+    case 'accent':{PREFS.accent=+el.dataset.ix;savePrefs();applyAccent(PREFS.accent);render();toast('Accent color updated');break}
+    case 'unit':{PREFS.units=el.dataset.u;savePrefs();render();toast(t('Units set to')+' '+t(PREFS.units==='Metric'?'Metric (kg · cm)':'Imperial (lb · in)'));break}
+    case 'pose':S.pose=el.dataset.p;render();break;
+    case 'ns-new':newSessionModal();break;
+    case 'ns-save':{const cl=$('ns-client').value,ty=$('ns-type').value;
+      const day=+$('ns-day').value,st=parseFloat($('ns-time').value),du=parseFloat($('ns-dur').value);
+      const label=$('ns-label').value.trim()||({session:t('Training Session'),assess:t('Assessment'),meas:t('Measurement'),appt:t('Appointment')})[ty]||t('Training Session');
+      const conf=conflictInfo(null);
+      // uid() already encodes ms + a rolling counter; adding a random offset on
+      // top could collide with a uid() minted microseconds later, and a
+      // collision makes edit/delete/duplicate act on the wrong event (and makes
+      // cloudMerge silently drop one of the two rows).
+      EVENTS.push({id:uid(),day,start:st,dur:du,client:cl,label,type:ty});
+      syncClientSessions(cl);
+      ACTIVITY.unshift({w:'Just now',i:'calendar',h:lang==='fa'?`<b>شما</b> <b>${esc(label)}</b> را برای <b>${t(cl)}</b> زمان‌بندی کردید`:`<b>You</b> scheduled <b>${esc(label)}</b> for <b>${t(cl)}</b>`});
+      closeModal();render();toast(conf.bad?conf.msg:'Session scheduled ✓');break}
+    case 'qn-open':quickNoteModal(el.dataset.c||null,el.dataset.nt||null);break;
+    case 'qn-add':{const cl=$('qn-client').value;const ty=$('nt-type').value.replace(' Note','');
+      const ti=$('nt-title').value.trim()||t('Untitled note');const b=$('nt-body').value.trim()||'—';
+      NOTES.unshift({id:uid(),client:cl,from:'coach',shared:!!($('nt-share')&&$('nt-share').checked),type:ty,title:ti,date:'Just now',body:b,pin:false,arch:false});
+      ACTIVITY.unshift({w:'Just now',i:'note',h:lang==='fa'?`<b>شما</b> برای <b>${t(cl)}</b> یادداشت ثبت کردید`:`<b>You</b> added a note for <b>${t(cl)}</b>`});
+      closeModal();render();toast('Note added');break}
+    case 'reset-demo':{
+      if(el.dataset.arm==='1'){try{localStorage.removeItem(STORE_KEY)}catch(e){}location.reload();break}
+      el.dataset.arm='1';
+      el.innerHTML=el.classList.contains('mrow')
+        ?`${ic('trash',17)}<span style="flex:1;color:var(--red)">${t('Are you sure? Click again')}</span>`
+        :t('Are you sure? Click again');
+      el.style.color='var(--red)';
+      if(el.classList.contains('btn'))el.style.borderColor='var(--red)';
+      toast('Are you sure? Click again');
+      break}
+    case 'mtab':{S.mview='tabs';S.mtab=el.dataset.t;
+      if(el.dataset.t!=='messages')S.msgThread=null;
+      render();break}
+    case 'mclient':{S.mClient=+el.dataset.cid;S.mview='client';loadClientProgram(S.mClient);render();break}
+    case 'mmsg':{S.msgThread=el.dataset.c;MSGS.forEach(m=>{if(m.client===S.msgThread&&m.from==='client')m.read=true});
+      S.mview='tabs';S.mtab='messages';render();break}
+    case 'mhome':S.mview='tabs';render();break;
+    case 'mworkout':if(S.mClient!=null)S.cid=S.mClient;S.mview='builder';loadClientProgram(S.cid);render();break;
+    case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
+    case 'msettings':S.mview='settings';render();break;
+    case 'mtemplates':S.mview='templates';render();break;
+    case 'mnut':S.mview='nutrition';render();break;
+    case 'mcal':S.mview='calendar';S.selDay=S.selDay??TODAY;render();break;
+    case 'toast':toast(el.dataset.msg||'Done');break;
+  }
+});
+document.addEventListener('change',e=>{
+  if(e.target.matches('.exb [data-bf]')){render();return}
+  const el=e.target.closest('[data-change]');if(!el)return;
+  if(el.dataset.change==='chal-draft'){const d=S.chalDraft;if(d){d[el.dataset.k]=el.value;renderChalEditor()}return}
+  if(el.dataset.change==='client'){S.cid=+el.value;loadClientProgram(S.cid);render()}
+  /* v18.71 — count habit (steps/mins): shared numeric entry. */
+  if(el.dataset.change==='hab-num'){habNum(el);return}
+  /* v18.64 — the builder's Training Day select must sync on change: previously
+     its value only reached S.wday at save time, so ANY re-render (adding or
+     editing an exercise) silently reverted the coach's day choice. */
+  if(el.dataset.change==='wday'){S.wday=el.value;render()}
+  if(el.dataset.change==='lang'){lang=el.value;applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}
+  if(el.dataset.change==='calclient'){S.calfClient=el.value;render()}
+  /* v15.7 — persisted selects (rest timer, response time) */
+  if(el.dataset.change==='pref'){setP(PREFS,el.dataset.k,el.value);savePrefs();toast('Setting saved')}
+  /* calendar working hours — numeric, sanitized, re-renders the grid */
+  if(el.dataset.change==='calhour'){setP(PREFS,el.dataset.k,parseFloat(el.value));
+    const CH=calHours();PREFS.cal.start=CH.start;PREFS.cal.end=CH.end;
+    savePrefs();render();toast(t('Working hours updated'))}
+  /* calendar type — Jalali (Shamsi) / Gregorian / auto */
+  if(el.dataset.change==='caltype'){PREFS.cal.type=el.value;savePrefs();render();toast(t('Calendar type updated'))}
+});
+document.addEventListener('input',e=>{
+  if(e.target.matches('.exb [data-bf]')){
+    const box=e.target.closest('.exb');const it=BUILDER[+box.dataset.bi];
+    if(it){
+      /* v18.71 — 'note' is free text (coach cue); the others stay numeric. */
+      if(e.target.dataset.bf==='note')it.note=String(e.target.value).slice(0,140);
+      else it[e.target.dataset.bf]=Math.max(0,+e.target.value||0);
+      saveData();
+    }
+    return}
+  if(e.target.matches('[data-range-cut]')){S.cut=+e.target.value;
+    const fig=e.target.closest('.card').querySelector('.photo');fig.style.setProperty('--cut',S.cut+'%');
+    fig.querySelector('.photo.after').style.setProperty('--cut',S.cut+'%');fig.querySelector('.handle').style.setProperty('--cut',S.cut+'%')}
+});
+let drag=null;
+document.addEventListener('dragstart',e=>{
+  const b=e.target.closest('.exb');if(b){drag={t:'ex',i:+b.dataset.bi};b.classList.add('dragging');return}
+  const ev=e.target.closest('.ev');if(ev){drag={t:'ev',id:+ev.dataset.eid};ev.style.opacity=.4;return}
+  const mc=e.target.closest('.wmealc');if(mc){drag={t:'mcard',d:+mc.dataset.d,m:+mc.dataset.m};mc.classList.add('dragging')}
+});
+document.addEventListener('dragend',()=>{
+  document.querySelectorAll('.exb').forEach(x=>x.classList.remove('dragging','over'));
+  document.querySelectorAll('.ev').forEach(x=>x.style.opacity='');
+  document.querySelectorAll('.cal-col,.wcol').forEach(x=>x.classList.remove('droptarget'));
+  document.querySelectorAll('.wmealc').forEach(x=>x.classList.remove('dragging'));
+  drag=null;
+});
+document.addEventListener('dragover',e=>{
+  if(!drag)return;e.preventDefault();
+  const b=e.target.closest('.exb');
+  document.querySelectorAll('.exb').forEach(x=>x.classList.remove('over'));
+  if(b&&drag.t==='ex'&&+b.dataset.bi!==drag.i)b.classList.add('over');
+  document.querySelectorAll('.cal-col').forEach(x=>x.classList.remove('droptarget'));
+  const col=e.target.closest('.cal-col');
+  if(col&&drag.t==='ev')col.classList.add('droptarget');
+  document.querySelectorAll('.wcol').forEach(x=>x.classList.remove('droptarget'));
+  const wc=e.target.closest('.wcol');
+  if(wc&&drag.t==='mcard')wc.classList.add('droptarget');
+});
+document.addEventListener('drop',e=>{
+  if(!drag)return;e.preventDefault();
+  const b=e.target.closest('.exb');
+  if(drag.t==='ex'&&b&&+b.dataset.bi!==drag.i){const it=BUILDER.splice(drag.i,1)[0];BUILDER.splice(+b.dataset.bi,0,it);render();return}
+  const col=e.target.closest('.cal-col');
+  if(drag.t==='ev'&&col){const ev=EVENTS.find(x=>x.id===drag.id);
+    const rect=col.getBoundingClientRect();
+    const CH=calHours(),slots=Math.round((CH.end-CH.start)*2);
+    const slot=Math.max(0,Math.min(slots-1,Math.floor((e.clientY-rect.top)/24)));
+    ev.day=+col.dataset.day;ev.start=CH.start+slot*0.5;
+    syncClientSessions(ev.client);
+    render();toast(t('Rescheduled to')+' '+dayLbl(ev.day)+' · '+nf(fmtT(ev.start)));return}
+  const wc=e.target.closest('.wcol');
+  if(drag.t==='mcard'&&wc){const p=NPLANS[S.nplan];
+    const it=p.days[drag.d].meals.splice(drag.m,1)[0];
+    p.days[+wc.dataset.day].meals.push(it);
+    render();toast('Meal moved')}
+});
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){if(S.role!=='coach')return;e.preventDefault();$('pal-root').innerHTML?closePal():openPal()}
+  if(e.key==='Escape'){
+    closePal();closeModal();
+    document.querySelectorAll('.mwrap.open').forEach(m=>m.classList.remove('open'));
+    if(S.role==='client'&&S.player){S.player=null;clearInterval(restIv);render()}
+    if(S.role==='coach'&&S.msgThread){S.msgThread=null;render()}
+  }
+});
+let _narrow=isNarrow();
+window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
+(()=>{const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
+const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}})();
+loadPrefs();
+applyLang();
+applyAccent(PREFS.accent);
+applyTpl();
+applyTheme();
+if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(PREFS.theme==='System')applyTheme()})}catch(e){}}
+loadData();
+syncCustomEx(); // re-append workspace custom exercises after the static bank
+/* P1 FIX — a JOINED student device is server-authoritative. loadData() above
+   restores this device's LOCAL bytes (demo seed, or a previous coach's
+   workspace). A device arriving through a join code must start EMPTY: the
+   server payload is adopted wholesale in the bootstrap below. Without this
+   wipe, the stale demo set rode the first PUT (freshWorkspace() only ran
+   AFTER the first server fetch), pushed 9 clients into a 5-seat trial plan,
+   tripped the server's seat-quota guard (402) on every push and — because
+   cloudMerge only unions — kept the poisoned rows forever. */
+if(S.joinCode)freshWorkspace();
+(async()=>{ // Phase-1 bootstrap: session first, then tenant-owned code
+  try{
+    if(AUTH.token)await authMe();
+    // v16.4 — the local payload must belong to the signed-in coach. On a
+    // shared device (or two tabs) STORE_KEY may still hold the PREVIOUS
+    // coach's clients; without this wipe the first sync pushes them into this
+    // coach's workspace (the exact cross-tenant leak adoptAccount fixes at
+    // login — this covers the reload path too).
+    if(AUTH.coach)adoptAccount(AUTH.coach);
+    // Session resume: a valid stored token (a buyer who just signed up on the
+    // shop and tapped "Open the app", or a returning coach reloading) goes
+    // straight into the workspace instead of role-chooser → login form.
+    // authMe() above already validated the token — a dead/expired one leaves
+    // AUTH.coach null and the normal login screen shows. Skipped for reset
+    // links and client join links, which need their own screens.
+    if(AUTH.coach&&!S.joinCode&&!S.resetToken){
+      S.role='coach';S.view=ONBOARD.done?landingView():'dash';
+    }
+    let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
+    // A signed-in coach always syncs their OWN workspace — never a stale code.
+    let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
+    /* v18.54 — the QR's WORKSPACE wins over any stale local memory (co-ws /
+       co-legacy-ws from previous joins): a scanning student must fetch THEIR
+       workspace first, never merge an old one and short-circuit to errors. */
+    {const hp=S.joinCode?parseJoinCode(S.joinCode):null;if(!code&&hp)code=hp.ws}
+    try{
+      // `co-legacy-ws` holds the pre-account anonymous code that cloudReset()
+      // parks before clearing `co-ws` on sign-in (see cloudReset()).
+      const saved=(localStorage.getItem('co-legacy-ws')||localStorage.getItem('co-ws')||'').toUpperCase().trim();
+      // Fall back to a parked code ONLY when it cannot belong to someone else:
+      // an anonymous device (no token), or an authenticated coach with no
+      // workspace (legacy claim). A token whose authMe FAILED must never sync
+      // into a parked code — it may be the previous coach's workspace.
+      if(!code&&(!AUTH.token||(AUTH.coach&&!AUTH.ws)))code=saved;
+      // One-time legacy import: an old anonymous device code moves under the
+      // coach's tenant on first authenticated push (server binds ownership).
+      if(code&&AUTH.coach&&(!AUTH.ws||!AUTH.ws.code)&&saved){
+        try{
+          await authApi('/api/auth/claim',{method:'POST',body:JSON.stringify({legacyCode:saved})});
+          const m=await authMe();
+          if(m&&AUTH.ws&&AUTH.ws.code){code=AUTH.ws.code;try{localStorage.removeItem('co-legacy-ws')}catch(e){}}
+        }catch(e){}
+      }
+    }catch(e){}
+    if(!code&&join&&join.code)code=String(join.code).toUpperCase();
+    if(code&&/^https?:$/.test(location.protocol)){
+      const out=await cloudFetch(code);
+      if(out&&out.ok){
+        CLOUD.code=code;CLOUD.on=true;
+        /* v18.54 — a stale co-join (WITHOUT its personal pcode) used to
+           OVERWRITE the QR's personal code with the bare workspace code,
+           breaking the scan. The hash always wins; co-join only fills the
+           gaps + remembers the bound profile. */
+        if(join){if(!S.joinCode)S.joinCode=join.pcode||code;if(join.cid){S.pickCid=join.cid;S.joinCid=join.cid}}
+        /* P1 FIX — a join is server-authoritative: the remote payload replaces
+           local rows (dropping demo residue a previous session left), then
+           one clean push re-seeds nothing and the device converges. */
+        if(S.joinCode){
+          if(out.data){CLOUD.rev=out.rev||0;adoptRemoteWorkspace(out.data)}
+          else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
+        }else if(out.data){CLOUD.rev=out.rev||0;cloudMerge(out.data,true)}
+        else if(!await cloudPut(cloudPack())){CLOUD.dirty=true;cloudSchedule(2000)}
+        if(out.data){cloudResync();S.wsConnected=true}
+      }
+    }
+  }catch(e){}
+  render();
+  cloudStart();
+  // A coach who arrived through a resumed session (e.g. straight from the shop
+  // signup) still gets the onboarding wizard if their workspace never finished
+  // it. Called AFTER the cloud merge so ONBOARD.done reflects the server state
+  // (a returning coach must not be re-nagged); the 600ms internal delay also
+  // re-checks it. Anonymous/demo boots return immediately (no token).
+  maybeOnboard();
+  /* v18.22 — push subscription + install banner (self-guarding: silently no-ops
+     when unsupported, unconfigured, or already handled). */
+  pwaInit();
+})();
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+  /* When a NEW service worker takes control (a fresh deploy), reload ONCE so
+     the running shell matches the served code — otherwise the user keeps the
+     old UI until their next manual reload. The sessionStorage guard prevents
+     reload loops; it is cleared on every fresh boot, so future deploys still
+     trigger exactly one refresh. */
+  try{sessionStorage.removeItem('co-sw-reload')}catch(e){}
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    try{
+      if(sessionStorage.getItem('co-sw-reload'))return;
+      sessionStorage.setItem('co-sw-reload','1');
+      location.reload();
+    }catch(e){}
+  });
+}

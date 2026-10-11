@@ -1,0 +1,1967 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoachMint · Athletics / Running Engine — mockup v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="theme_3.css">
+<style>
+/* =============================================================================
+   MOCKUP SHELL — not part of the product. Thin top strip so the design can be
+   reviewed screen by screen in one file; drawn in mono on black so it can
+   never be mistaken for app chrome.
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:var(--t-body);
+     -webkit-font-smoothing:antialiased}
+/* <button>/<input>/<select> do NOT inherit color: the UA stylesheet declares
+   `color: buttontext` (black) on them, which wins over body's inherited --ink.
+   On these dark cards every setup option title rendered rgb(0,0,0) on
+   rgb(23,26,31) — invisible — while the subtitle survived only because it
+   carried an explicit color. Class rules below still override this. */
+button,input,select,textarea{color:inherit}
+
+.mockbar{position:sticky;top:0;z-index:90;display:flex;gap:5px;align-items:center;
+  flex-wrap:wrap;padding:8px 12px;background:#000;border-bottom:1px solid #1b1b1b}
+.mockbar .mb-l{font:var(--t-label);letter-spacing:var(--tr-label);color:#666;
+  text-transform:uppercase;margin-right:6px}
+.mb{font:700 10.5px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;
+  color:#8a8a8a;background:#141414;border:1px solid #262626;padding:7px 9px;
+  border-radius:6px;cursor:pointer;transition:color .12s,background .12s,border-color .12s}
+.mb:hover{color:#ddd;background:#1e1e1e}
+.mb.on{color:#C8F04B;border-color:rgba(200,240,75,.4);background:rgba(200,240,75,.08)}
+.mb-sp{flex:1}
+.mb-th{color:#8a8a8a}
+.scr{display:none}.scr.on{display:block}
+
+/* ============ ONBOARDING (kept from v1, aligned to the real ONBOARD wizard) == */
+.ob{max-width:880px;margin:0 auto;padding:44px 24px 72px}
+.ob-prog{display:flex;align-items:center;margin-bottom:44px}
+.ob-dot{display:flex;align-items:center;flex:1;position:relative}
+.ob-dot:last-child{flex:none}
+.ob-dot .d{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font:700 11px/1 var(--font-mono);background:var(--surface2);color:var(--ink3);
+  border:1px solid var(--line);flex:none;transition:all .18s var(--e-out)}
+.ob-dot .bar{height:1px;flex:1;background:var(--line);position:relative;overflow:hidden}
+.ob-dot .bar i{position:absolute;inset:0;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .32s var(--e-out)}
+.ob-dot.done .d{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ob-dot.now .d{background:var(--accent-soft);color:var(--accent);
+  border-color:var(--accent-line);box-shadow:0 0 0 4px rgba(200,240,75,.07)}
+.ob-dot.done .bar i{transform:scaleX(1)}
+.ob-lab{position:absolute;top:32px;inset-inline-start:0;white-space:nowrap;
+  font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);text-transform:uppercase}
+.obstep{display:none}.obstep.on{display:block;animation:stepIn .26s var(--e-out) both}
+@keyframes stepIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.ob-eyebrow{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--accent);
+  text-transform:uppercase;margin-bottom:12px}
+.ob-h{font:var(--t-h1);letter-spacing:var(--tr-display);margin:0 0 8px}
+.ob-sub{font:var(--t-body);color:var(--ink3);margin:0 0 28px;max-width:62ch}
+.ob-f{margin-bottom:18px}
+.ob-f label{display:block;font:var(--t-label);letter-spacing:var(--tr-label);
+  color:var(--ink3);text-transform:uppercase;margin-bottom:7px}
+.ob-f input,.ob-f select{width:100%;height:44px;padding:0 14px;background:var(--surface2);
+  border:1px solid var(--line);border-radius:var(--r-sm);color:var(--ink);
+  font:var(--t-body);outline:none;transition:border-color .14s,box-shadow .14s}
+.ob-f input:focus{border-color:var(--accent-line);box-shadow:var(--ring)}
+.ob-f .hint{font:var(--t-body-sm);color:var(--ink3);margin-top:6px}
+.opts{display:grid;gap:10px}
+.opts.g2{grid-template-columns:1fr 1fr}
+.opts.g3{grid-template-columns:repeat(3,1fr)}
+.opt{text-align:start;color:var(--ink);background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-md);padding:15px 16px;cursor:pointer;position:relative;
+  transition:border-color .16s,background .16s,transform .16s var(--e-out)}
+.opt:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.opt b{display:block;font:700 13.5px/1.3 var(--font-ui);margin-bottom:4px}
+/* DIRECT CHILDREN ONLY. The old `.opt span` also matched the `.sck` marker and
+   the `.pill` nested inside <b>: the pill was flattened to display:block and
+   stretched to 230px, which forced <b> onto two lines and made row 1 94px tall
+   against row 2's 72px; .sck lost its grid and stopped centring its check. */
+.opt>span:not(.sck){display:block;font:var(--t-body-sm);color:var(--ink3)}
+/* Compact badge so the 22px pill stops growing <b>'s line box — row 1 was 76px
+   against row 2's 72px purely because one card carries the NEW marker. */
+.opt .pill{height:18px;padding:0 7px;font-size:9.5px}
+.opt.sel{border-color:var(--accent-line);background:
+  linear-gradient(180deg,rgba(200,240,75,.07),rgba(200,240,75,.02)),var(--surface)}
+.opt.sel b{color:var(--accent)}
+.opt .sck{position:absolute;top:13px;inset-inline-end:13px;width:19px;height:19px;
+  border-radius:50%;display:grid;place-items:center;background:var(--accent);
+  color:var(--accent-ink);opacity:0;transform:scale(0) rotate(-12deg);
+  transition:opacity .14s,transform .22s var(--e-spring)}
+.opt.sel .sck{opacity:1;transform:scale(1) rotate(0)}
+/* Sport cards — the REAL ONB_SPORTS list. Rule (C): no hue anywhere. */
+.sports{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+/* <button> vertically CENTRES its contents once a grid row stretches it, so
+   two cards on the same row put their titles at different y — measured 26px
+   vs 16px. Flex column with flex-start pins every card's text to the top. */
+.sports .opt{display:flex;flex-direction:column;justify-content:flex-start}
+.ob-note{display:flex;gap:8px;align-items:flex-start;margin-top:14px;padding:11px 13px;
+  background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  font:var(--t-body-sm);color:var(--ink3);line-height:1.55}
+.ob-note>svg{flex:none;margin-top:2px}
+.ob-nav{display:flex;gap:10px;align-items:center;margin-top:30px;
+  padding-top:22px;border-top:1px solid var(--line)}
+/* Ghost and primary used to be 36px and 44px side by side, so their labels
+   sat on different baselines. One band for the whole footer. */
+.ob-nav .btn{height:44px;padding:0 22px;font-size:14px}
+.ob-nav .sp{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  height:var(--btn-h);padding:0 16px;border-radius:var(--btn-radius);
+  font:700 13px/1 var(--font-ui);border:1px solid transparent;cursor:pointer;
+  transition:all .14s var(--e-out);text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:var(--btn-primary-sh)}
+.btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--ink2);border-color:var(--line)}
+.btn-outline:hover{border-color:var(--line-strong);color:var(--ink);background:var(--surface2)}
+.btn-ghost{background:transparent;color:var(--ink3)}
+.btn-ghost:hover{color:var(--ink);background:var(--surface2)}
+.btn-lg{height:44px;padding:0 22px;font-size:14px}
+.seg{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:var(--r-sm);
+  border:1px solid var(--line)}
+.seg span{flex:1;text-align:center;padding:9px 10px;border-radius:7px;cursor:pointer;
+  font:700 12.5px/1 var(--font-ui);color:var(--ink3);transition:all .14s}
+.seg span.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-raised)}
+
+/* ---- Build (signature) ---- */
+.build-ok{display:inline-flex;align-items:center;gap:9px;font:700 13px/1 var(--font-ui);
+  color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);
+  border-radius:var(--r-pill);padding:8px 14px;margin-bottom:18px}
+.build-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 16px}
+.build-box{background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:18px}
+.build-box h4{margin:0 0 14px;font:var(--t-label);letter-spacing:var(--tr-label);
+  color:var(--ink3);text-transform:uppercase}
+.brow{display:flex;align-items:center;gap:9px;padding:7px 0;position:relative;
+  font:500 13px/1.45 var(--font-ui);color:var(--ink)}
+.brow.kept{color:var(--ink2);opacity:.7}
+.brow .bt{width:16px;height:16px;flex:none;display:grid;place-items:center}
+.brow .rule{position:absolute;left:25px;right:0;bottom:0;height:1px;background:var(--line);
+  transform-origin:left}
+.brow em{font-style:normal;color:var(--ink3)}
+/* TRAP: the `animation` shorthand resets EVERY animation longhand — including
+   animation-delay. A delay set on `.brow` (0,1,0) is wiped the instant
+   `.build-anim .brow` (0,2,0) applies its shorthand, so the stagger silently
+   collapses to 0s. --d must be re-stated AFTER the shorthand, in the same rule. */
+.build-anim .brow{animation:listIn .24s var(--e-out) both;
+  animation-delay:var(--d,0ms)}
+.build-anim .brow .rule{animation:ruleIn .4s linear both;
+  animation-delay:calc(var(--d,0ms) + 60ms)}
+.build-anim .brow .bt svg{stroke-dasharray:22;stroke-dashoffset:22;
+  animation:checkDraw .26s linear both;animation-delay:var(--d,0ms)}
+.build-anim .brow.kept{animation:keptIn .2s var(--e-out) both;
+  animation-delay:var(--d,0ms)}
+/* THE STAGGER. Each box counts from its own <h4>, so the first .brow is
+   nth-child(2), not (1) — rules must run to 7 or the last row of the longest
+   box falls through to var(--d, 0ms) and jumps in first. 40ms is the ceiling
+   from step ③; past that it stops reading as order. */
+.build-anim .brow:nth-child(1){--d:40ms}
+.build-anim .brow:nth-child(2){--d:80ms}
+.build-anim .brow:nth-child(3){--d:120ms}
+.build-anim .brow:nth-child(4){--d:160ms}
+.build-anim .brow:nth-child(5){--d:200ms}
+.build-anim .brow:nth-child(6){--d:240ms}
+.build-anim .brow:nth-child(7){--d:280ms}
+.build-anim .brow:nth-child(8){--d:320ms}
+@keyframes listIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes keptIn{from{opacity:0}to{opacity:.7}}
+@keyframes ruleIn{to{transform:scaleX(1)}}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
+.build-cta{margin-top:26px;display:flex;justify-content:flex-end}
+.build-anim .build-cta{animation:ctaPop .32s var(--e-spring) both;animation-delay:.78s}
+@keyframes ctaPop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+
+/* ================================ WORKSPACE ================================ */
+.ws{display:grid;grid-template-columns:236px 1fr;min-height:calc(100vh - 46px)}
+.ws-side{border-inline-end:1px solid var(--line);background:var(--surface);
+  position:sticky;top:46px;height:calc(100vh - 46px);display:flex;flex-direction:column}
+.brand{display:flex;gap:10px;align-items:center;padding:15px 15px 13px;
+  border-bottom:1px solid var(--line)}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:var(--accent);
+  color:var(--accent-ink);display:grid;place-items:center;font:800 14px/1 var(--font-display)}
+.brand-name{font:800 14px/1 var(--font-display);letter-spacing:.06em}
+.brand-tag{font:600 8.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--ink3);margin-top:4px}
+.nav{padding:8px;overflow-y:auto;flex:1}
+.nav-sec{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;padding:14px 10px 6px;display:flex;gap:7px;align-items:center}
+.nav-sec i{color:var(--accent);font-style:normal;font-size:9px}
+.nav-it{display:flex;align-items:center;gap:9px;height:var(--nav-h);padding:0 10px;
+  border-radius:9px;color:var(--nav-idle-fg);font:600 13px/1 var(--font-ui);
+  cursor:pointer;transition:background .12s,color .12s;user-select:none}
+.nav-it:hover{background:var(--surface2);color:var(--ink2)}
+.nav-it.on{background:var(--nav-active-bg);color:var(--nav-active-fg)}
+.nav-it .lb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0}
+.nav-it.on .nav-dot{opacity:1}
+.ws-main{min-width:0;display:flex;flex-direction:column}
+.top{height:var(--topbar-h);display:flex;align-items:center;gap:10px;padding:0 20px;
+  border-bottom:1px solid var(--line);background:var(--topbar-bg);
+  backdrop-filter:var(--topbar-blur);position:sticky;top:46px;z-index:20}
+.top .ttl{font:700 15px/1.3 var(--font-ui)}
+.top .sub{font:var(--t-body-sm);color:var(--ink3)}
+.sp{flex:1}
+.bd{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  background:var(--surface2);color:var(--ink2);border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:6px 11px;display:inline-flex;gap:6px;align-items:center}
+.pad{padding:var(--panel-gap);display:flex;flex-direction:column;gap:var(--panel-gap)}
+.card{background:var(--panel-bg);border:var(--panel-border);
+  border-radius:var(--r-md);padding:var(--panel-pad)}
+.card-t{font:700 15px/1.3 var(--font-ui);letter-spacing:-.01em;margin:0}
+/* ALIGNMENT: the header band is locked to 30px — the tallest sibling allowed
+   inside it (pill 22, chip 22, compact btn 30). With a fixed band,
+   align-items:center can no longer shift .card-t, so every card title lands on
+   card_top + 25.25px regardless of which controls sit beside it. */
+.card-h{display:flex;align-items:center;gap:12px;min-height:30px;
+  margin-bottom:16px;flex-wrap:wrap}
+.card-h .btn{height:30px;padding:0 14px}
+/* identity header (avatar) needs to grow past the band */
+.card-h.lead{min-height:46px}
+/* Flush card (padding:0). Reproduces the padded card's 20px top gutter PLUS
+   the same 30px band, so its title lands on the identical y. */
+/* NAMED .fhdr, NOT .fh — .fh is already the profile field hint (.f .fh, used
+   13x) and sharing the name would drag display:flex/min-height:50px onto it. */
+.fhdr{display:flex;align-items:center;gap:12px;padding:20px 20px 0;
+  min-height:50px;margin-bottom:16px;flex-wrap:wrap}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--panel-gap)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--panel-gap)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--panel-gap)}
+.grid32{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--panel-gap)}
+.grid23{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--panel-gap)}
+/* Grid items default to min-width:auto, so a wide child blows the track past
+   its container instead of wrapping inside it. Every grid child opts out. */
+.grid2>*,.grid3>*,.grid4>*,.grid32>*,.grid23>*{min-width:0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:16px 18px;min-height:var(--kpi-h);display:flex;flex-direction:column;
+  justify-content:space-between}
+.kpi .kl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase}
+.kpi .kv{font:var(--t-kpi);letter-spacing:var(--tr-display);margin-top:12px}
+.kpi .kv small{font:700 13px/1 var(--font-mono);color:var(--ink3);letter-spacing:0;
+  margin-inline-start:5px}
+.kpi .kd{font:700 12px/1 var(--font-mono);margin-top:7px;color:var(--ink3)}
+.kpi .kd.up{color:var(--st-ok)}.kpi .kd.dn{color:var(--st-bad)}
+
+/* tables — same primitives as the real app */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{height:var(--tbl-head-h);background:var(--surface2);font:var(--t-label);
+  letter-spacing:var(--tr-label);color:var(--ink3);text-align:start;padding:0 13px;
+  border-bottom:1px solid var(--line);position:sticky;top:0}
+.tbl td{height:var(--tbl-row-h);padding:0 13px;border-bottom:1px solid var(--line);
+  font:500 13px/1.4 var(--font-ui);color:var(--ink2);vertical-align:middle}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--tbl-row-hover)}
+.tbl td.num,.tbl th.num{font:var(--t-num);letter-spacing:var(--tr-num);color:var(--ink);
+  font-variant-numeric:tabular-nums;text-align:end}
+.tbl td.nm{color:var(--ink);font-weight:600}
+.tbl tr:last-child td{border-bottom:none}
+/* A table must never be CLIPPED. Between 861px and ~1000px the sidebar is
+   still visible (so the ≤860 compact rules do not fire) while the content
+   column is already narrow: the activity list needed 630px inside a 628px
+   card and overflow:hidden silently shaved the Source column. Scrolling keeps
+   every cell reachable at any width. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sub2{display:block;font:400 11.5px/1.3 var(--font-ui);color:var(--ink3);margin-top:2px}
+.pill{height:var(--pill-h);display:inline-flex;align-items:center;gap:5px;padding:0 9px;
+  border-radius:var(--pill-radius);font:700 var(--pill-size)/1 var(--font-mono);
+  letter-spacing:.04em;background:var(--surface2);color:var(--ink2);
+  border:1px solid transparent;white-space:nowrap}
+.pill.ok{background:var(--st-ok-bg);color:var(--st-ok);border-color:transparent}
+.pill.warn{background:var(--st-warn-bg);color:var(--st-warn)}
+.pill.bad{background:var(--st-bad-bg);color:var(--st-bad)}
+.pill.idle{background:var(--st-idle-bg);color:var(--st-idle)}
+/* roadmap state — must never be mistakable for "connected" (rule B) */
+.pill.plan{background:var(--st-warn-bg);color:var(--st-warn)}
+.pill.accent{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.ev-chip{height:var(--ev-chip-h);padding:0 10px;display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface2);color:var(--ink2);border:1px solid var(--line);
+  border-radius:var(--r-pill);font:var(--t-label);letter-spacing:var(--tr-label);
+  text-transform:uppercase;cursor:default}
+.ev-chip.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.lnk{color:var(--accent);cursor:pointer;font:700 12.5px/1 var(--font-ui)}
+.muted{color:var(--ink3)}
+.hr{height:1px;background:var(--line);border:0;margin:16px 0}
+
+/* filter bar (§11) */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md)}
+.filters .fl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-inline-end:4px}
+.fsel{height:30px;padding:0 10px;background:var(--surface2);border:1px solid var(--line);
+  border-radius:8px;color:var(--ink2);font:600 12.5px/1 var(--font-ui);cursor:pointer}
+
+/* OPTIONAL METRICS (§5) — absent must look absent */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.m{background:var(--surface);padding:13px 14px}
+.m .ml{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:8px}
+.m .mv{font:700 19px/1 var(--font-mono);letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums}
+.m .mv u{text-decoration:none;font:700 11px/1 var(--font-mono);color:var(--ink3);
+  margin-inline-start:4px}
+.m .mv.none{color:var(--st-idle);font-size:15px}
+.m .ms{font:700 10.5px/1 var(--font-mono);color:var(--st-idle);margin-top:7px;
+  letter-spacing:.06em}
+
+/* BUILDER (§4) — the signature screen.
+   Block identity is carried by RAIL WEIGHT + a mono label, never by hue:
+   colour is reserved for status (rule C). */
+.blk{display:grid;grid-template-columns:64px 1fr;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;
+  transition:border-color .15s}
+.blk:hover{border-color:var(--line-strong)}
+.blk-rail{background:var(--surface2);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;padding:14px 6px;
+  border-inline-start:var(--e-w,1px) var(--e-s,solid) var(--e-c,var(--line-strong))}
+.blk-rail .bn{font:700 9px/1 var(--font-mono);letter-spacing:.1em;color:var(--ink3);
+  text-transform:uppercase;writing-mode:horizontal-tb;text-align:center}
+.blk-rail .bi{color:var(--ink3)}
+.blk-b{padding:15px 17px}
+.blk-hd{display:flex;align-items:center;gap:10px;margin-bottom:11px;flex-wrap:wrap}
+.blk-hd .bt{font:700 13.5px/1.3 var(--font-ui);color:var(--ink)}
+.blk-hd .sp{flex:1}
+.blk-drag{color:var(--ink3);cursor:grab}
+.blk-kv{display:flex;gap:22px;flex-wrap:wrap;padding-top:11px;
+  border-top:1px solid var(--line)}
+.kv{min-width:74px}
+.kv .kl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:6px}
+.kv .kvv{font:700 15px/1 var(--font-mono);letter-spacing:var(--tr-num);
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.kv .kvv u{text-decoration:none;font:700 10.5px/1 var(--font-mono);
+  color:var(--ink3);margin-inline-start:3px}
+.kv.focus .kvv{color:var(--accent)}
+.kv .ks{font:700 10.5px/1 var(--font-mono);color:var(--ink3);margin-top:6px;
+  letter-spacing:.05em}
+/* the six parameter groups the spec requires to be visually distinct */
+.pgrp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pg{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 13px}
+.pg .pl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.pg .pv{font:700 16px/1 var(--font-mono);font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em}
+.pg .pv u{text-decoration:none;font:700 10.5px/1 var(--font-mono);color:var(--ink3);
+  margin-inline-start:4px}
+.pg .ph{font:400 11.5px/1.4 var(--font-ui);color:var(--ink3);margin-top:7px}
+.pg.on{border-color:var(--accent-line);background:
+  linear-gradient(180deg,rgba(200,240,75,.06),transparent),var(--surface2)}
+.pg.on .pl{color:var(--accent)}
+
+/* week plan (§7/§13) */
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:12px 11px;min-height:150px;display:flex;flex-direction:column;gap:9px;
+  transition:border-color .15s,transform .15s var(--e-out)}
+.day:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.day .dh{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase}
+.day.today .dh{color:var(--accent)}
+.ses{border-radius:8px;padding:9px 10px;background:var(--surface2);
+  border-inline-start:var(--e-w,2px) var(--e-s,solid) var(--e-c,var(--line-strong))}
+.ses .st{font:700 12px/1.3 var(--font-ui);color:var(--ink);margin-bottom:5px}
+.ses .sm{font:700 10.5px/1.35 var(--font-mono);color:var(--ink3)}
+.ses.run{border-inline-start-color:var(--ink2)}
+.ses.sc{border-inline-start-color:var(--st-ok);border-inline-start-style:dashed}
+.ses.rest{background:transparent;border:1px dashed var(--line);
+  border-inline-start:0;opacity:.75}
+.ses.rest .st{color:var(--ink3);font-weight:600}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ph{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:13px 14px;position:relative;overflow:hidden}
+.ph .pn{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:8px}
+.ph .pt{font:700 13.5px/1.3 var(--font-ui);margin-bottom:6px}
+.ph .pd{font:var(--t-body-sm);color:var(--ink3)}
+.ph.now{border-color:var(--accent-line);background:
+  linear-gradient(135deg,rgba(200,240,75,.09),transparent 60%),var(--surface)}
+.ph.now .pt{color:var(--accent)}
+.ph .pbar{height:5px;border-radius:3px;background:var(--surface3);margin-top:11px;
+  overflow:hidden}
+.ph .pbar i{display:block;height:100%;background:var(--ink2);border-radius:3px}
+.ph.now .pbar i{background:var(--accent)}
+
+/* race (§8) */
+.race-hero{background:linear-gradient(135deg,rgba(200,240,75,.10),
+  rgba(200,240,75,.03) 42%,rgba(0,0,0,0) 100%),var(--surface);
+  border:1px solid var(--accent-line);border-radius:var(--r-md);
+  padding:25px 20px 18px;position:relative;overflow:hidden}
+.race-hero::after{content:"";position:absolute;inset:0;
+  background-image:var(--lane-stripe);opacity:.7;pointer-events:none}
+.race-hero>*{position:relative;z-index:1}
+.cdown{display:flex;gap:7px}
+.cd{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:9px;
+  padding:8px 10px;min-width:52px;text-align:center}
+.cd b{display:block;font:800 18px/1 var(--font-display);letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums}
+.cd span{display:block;font:700 8px/1 var(--font-mono);letter-spacing:.1em;
+  color:var(--ink3);margin-top:5px;text-transform:uppercase}
+.prow{display:flex;align-items:center;gap:12px;padding:11px 0;
+  border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:0}
+.prow .pe{font:700 13px/1 var(--font-ui);min-width:96px}
+.prow .pp{font:700 15px/1 var(--font-mono);font-variant-numeric:tabular-nums;
+  color:var(--ink);min-width:88px}
+.prow .ph2{font:700 12px/1 var(--font-mono);color:var(--ink3);min-width:76px}
+.prow .pd2{font:700 11.5px/1 var(--font-mono);color:var(--ink3);flex:1}
+/* At phone width the fixed min-widths (96+88+76) plus the status pill exceed
+   the 358px content box; wrapping beats pushing pills past the viewport. */
+@media (max-width:560px){
+  .prow{flex-wrap:wrap;row-gap:7px}
+  .prow>*{min-width:0}
+  .prow .pd2{flex:1 1 auto}
+}
+.pb{color:var(--mk-pb);font-weight:800}
+.up{color:var(--mk-delta-up)}.dn{color:var(--mk-delta-dn)}
+
+/* profile (§3) */
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.f{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 14px}
+.f .fl2{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:8px}
+.f .fv{font:600 13.5px/1.4 var(--font-ui);color:var(--ink)}
+.f .fv.mono{font:700 15px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.f.wide{grid-column:span 2}
+.f.full{grid-column:1/-1}
+.f .fh{font:400 11.5px/1.45 var(--font-ui);color:var(--ink3);margin-top:6px}
+/* Advisory note. It used to be display:flex, which makes the prose an
+   anonymous flex item whose automatic minimum is its min-content — long notes
+   then set a floor the grid could not shrink below. Block + absolute icon
+   lets the sentence wrap at the card's actual width. */
+.ext{display:block;position:relative;padding:12px 14px 12px 36px;
+  background:var(--surface2);border:1px dashed var(--line-strong);
+  border-radius:var(--r-sm);font:var(--t-body-sm);color:var(--ink3);
+  margin-top:14px;line-height:1.55}
+.ext>svg:first-child{position:absolute;inset-inline-start:13px;top:13px}
+
+/* ---- STRAVA / CONNECTED APPS (spec §2, §14, §16, §20) ---- */
+.flow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.fnode{background:var(--surface2);border:1px solid var(--line);border-radius:9px;
+  padding:11px 13px;font:700 12px/1.3 var(--font-ui);color:var(--ink2);text-align:center}
+.fnode.key{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.farrow{color:var(--ink3);font-size:15px}
+.dev{display:flex;align-items:center;gap:13px;height:var(--dev-row-h);
+  padding:0 14px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-sm);margin-bottom:8px}
+.dev .di{width:30px;height:30px;border-radius:8px;background:var(--surface2);
+  display:grid;place-items:center;color:var(--ink2);flex:none}
+.dev .dn2{font:600 13px/1.3 var(--font-ui);flex:1}
+.dev .ds{font:400 11.5px/1.3 var(--font-ui);color:var(--ink3)}
+.srctbl td.y{color:var(--st-ok);font-weight:800}
+.srctbl td.n{color:var(--st-idle)}
+.srctbl td.w{color:var(--st-warn);font-weight:700}
+
+/* ---- STRAVA / CONNECTED APPS (spec §2, §14, §16, §20) ---- */
+.integ{display:flex;align-items:center;gap:13px;padding:15px 16px;
+  background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm)}
+.integ-ic{width:38px;height:38px;border-radius:10px;background:var(--surface3);
+  display:grid;place-items:center;color:var(--ink2);flex:none}
+.integ-n{font:700 14.5px/1.3 var(--font-ui)}
+.integ-d{font:400 12.5px/1.35 var(--font-ui);color:var(--ink3);margin-top:3px}
+.integ-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+/* §14 sync log — the dot is status, the text is the event */
+.log-r{display:flex;gap:12px;align-items:center;padding:11px 0;position:relative;
+  padding-inline-start:14px;border-bottom:1px solid var(--line)}
+.log-r:last-child{border-bottom:0}
+.log-r::before{content:"";position:absolute;inset-inline-start:0;top:50%;
+  transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--st-idle)}
+.log-r.ok::before{background:var(--st-ok)}
+.log-r.bad::before{background:var(--st-bad)}
+.log-r .lt{font:700 11.5px/1 var(--font-mono);color:var(--ink3);min-width:110px}
+.log-r .lm{font:500 13px/1.4 var(--font-ui);color:var(--ink2);flex:1}
+/* §16 planned vs actual — two states, never one blended panel */
+.pv{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:15px 16px}
+.pv.actual{border-color:var(--accent-line);background:
+  linear-gradient(180deg,rgba(200,240,75,.07),transparent),var(--surface2)}
+.pv-l{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+  text-transform:uppercase;margin-bottom:9px}
+.pv.actual .pv-l{color:var(--accent)}
+.pv-t{font:700 16px/1.3 var(--font-ui);margin-bottom:6px}
+.pv-s{font:400 12.5px/1.5 var(--font-ui);color:var(--ink3)}
+/* §20 error states */
+.err{display:flex;gap:12px;align-items:flex-start;padding:10px 0;
+  border-bottom:1px solid var(--line)}
+.err:last-child{border-bottom:0}
+.err .en{font:600 12.5px/1.45 var(--font-ui);color:var(--ink);min-width:158px}
+.err .em{font:400 12.5px/1.5 var(--font-ui);color:var(--ink3);flex:1}
+
+/* athlete mobile dashboard (§10) */
+.phone-wrap{display:grid;place-items:center;padding:34px 20px 60px;min-height:calc(100vh - 46px)}
+.phone{width:392px;max-width:100%;background:var(--surface);border:1px solid var(--line);
+  border-radius:34px;overflow:hidden;box-shadow:var(--sh-float);position:relative}
+.ph-top{height:44px;display:flex;align-items:center;gap:8px;padding:0 18px;
+  background:var(--topbar-bg);backdrop-filter:var(--topbar-blur);
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.ph-top .pn2{font:700 13.5px/1 var(--font-ui)}
+.ph-body{padding:16px;display:flex;flex-direction:column;gap:14px;
+  max-height:calc(100vh - 150px);overflow-y:auto}
+.ph-nav{display:flex;border-top:1px solid var(--line);background:var(--topbar-bg);
+  backdrop-filter:var(--topbar-blur);padding:7px 6px 9px}
+.ph-nav div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  font:700 9.5px/1 var(--font-mono);letter-spacing:.05em;color:var(--ink3);
+  padding:4px 0;text-transform:uppercase}
+.ph-nav div.on{color:var(--accent)}
+.today-card{background:linear-gradient(135deg,rgba(200,240,75,.11),
+  rgba(200,240,75,.03) 45%,rgba(0,0,0,0) 100%),var(--surface);
+  border:1px solid var(--accent-line);border-radius:var(--r-md);padding:16px}
+.today-card .th{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.today-card .tt{font:700 17px/1.3 var(--font-ui);margin-bottom:12px}
+.tstat{display:flex;gap:16px;padding-top:12px;border-top:1px solid var(--line)}
+.tstat .kv .kvv{font-size:14px}
+.wbar{display:flex;gap:5px;align-items:flex-end;height:74px;margin-top:12px}
+.wbar i{flex:1;background:var(--surface3);border-radius:3px 3px 0 0;min-height:4px}
+.wbar i.hi{background:var(--accent)}
+.wbar i.miss{background:var(--st-bad-bg);box-shadow:inset 0 0 0 1px var(--st-bad)}
+.wdays{display:flex;gap:5px;margin-top:6px}
+.wdays span{flex:1;text-align:center;font:700 9.5px/1 var(--font-mono);color:var(--ink3)}
+
+@media (max-width:1180px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .grid32,.grid23,.grid2,.build-cols{grid-template-columns:1fr}
+  .wk{grid-template-columns:repeat(4,1fr)}
+  .phases{grid-template-columns:repeat(2,1fr)}
+  .fgrid{grid-template-columns:repeat(2,1fr)}
+  .mgrid{grid-template-columns:repeat(2,1fr)}
+  .sports{grid-template-columns:repeat(2,1fr)}
+  .pgrp{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .ws{grid-template-columns:1fr}
+  .ws-side{display:none}
+  .grid4,.grid3{grid-template-columns:1fr}
+  .wk{grid-template-columns:repeat(2,1fr)}
+  .phases{grid-template-columns:1fr}
+  .fgrid,.mgrid,.pgrp,.opts.g2,.opts.g3,.sports{grid-template-columns:1fr}
+  .card-h{flex-wrap:wrap;min-height:30px}
+  .tbl th:nth-child(n+5),.tbl td:nth-child(n+5){display:none}
+  /* The activity list must NOT lose Duration / Pace / Avg HR — §15 requires
+     all four of distance, duration, pace and heart rate. Drop the redundant
+     Type, When and Source columns instead of the numbers. */
+  .tbl.acttbl th:nth-child(n+5),.tbl.acttbl td:nth-child(n+5){display:table-cell}
+  .tbl.acttbl th:nth-child(2),.tbl.acttbl td:nth-child(2),
+  .tbl.acttbl th:nth-child(3),.tbl.acttbl td:nth-child(3),
+  .tbl.acttbl th:nth-child(8),.tbl.acttbl td:nth-child(8){display:none}
+  /* EXCEPTION — the metric matrix is a lookup table. Hiding its columns would
+     silently delete Sleep, Recovery and Calories from a reference the coach
+     reads to decide which provider to support. It scrolls instead. */
+  .tbl.srctbl th:nth-child(n+5),.tbl.srctbl td:nth-child(n+5){display:table-cell}
+  .srctbl-wrap,.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* Compact the activity list so its five columns fit a phone; the scroller
+     above is the safety net if a device is narrower still. */
+  .acttbl th,.acttbl td{padding:0 7px}
+  .acttbl td{font-size:12px}
+  .acttbl td:first-child{max-width:120px;overflow:hidden;text-overflow:ellipsis;
+    white-space:nowrap}
+  .f.wide{grid-column:span 1}
+  .blk{grid-template-columns:44px 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;
+    animation-iteration-count:1!important;transition-duration:.01ms!important;
+    scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="mockbar">
+  <span class="mb-l">mockup · athletics_2</span>
+  <button class="mb on" data-go="setup">① Setup</button>
+  <button class="mb" data-go="coach">② Coach</button>
+  <button class="mb" data-go="load">③ Load</button>
+  <button class="mb" data-go="athlete">④ Athlete</button>
+  <button class="mb" data-go="profile">⑤ Profile</button>
+  <button class="mb" data-go="builder">⑥ Builder</button>
+  <button class="mb" data-go="week">⑦ Week</button>
+  <button class="mb" data-go="race">⑧ Race</button>
+  <button class="mb" data-go="pbs">⑨ PBs</button>
+  <button class="mb" data-go="strava">⑩ Strava</button>
+  <span class="mb-sp"></span>
+  <button class="mb mb-th" id="themeBtn">◐ theme</button>
+</div>
+
+<!-- ═════════════════════ ① SETUP — the real wizard, kept ═════════════════════ -->
+<section class="scr on" id="setup">
+<div class="ob">
+  <div class="ob-prog" id="prog">
+    <div class="ob-dot" data-d="1"><div class="d">1</div><div class="bar"><i></i></div><span class="ob-lab">Sport</span></div>
+    <div class="ob-dot" data-d="2"><div class="d">2</div><div class="bar"><i></i></div><span class="ob-lab">Style</span></div>
+    <div class="ob-dot" data-d="3"><div class="d">3</div><div class="bar"><i></i></div><span class="ob-lab">Clients</span></div>
+    <div class="ob-dot" data-d="4"><div class="d">4</div><div class="bar"><i></i></div><span class="ob-lab">Home</span></div>
+    <div class="ob-dot" data-d="5"><div class="d">5</div><span class="ob-lab">Build</span></div>
+  </div>
+
+  <!-- step 1 · the real ONB_SPORTS -->
+  <div class="obstep on" data-s="1">
+    <div class="ob-eyebrow">Step 1 · Sport</div>
+    <h1 class="ob-h">Which sport do you coach?</h1>
+    <p class="ob-sub">This decides which screens, metrics and forms you get. A strength coach never sees a pace editor; an athletics coach never sees a 12-site girth form.</p>
+    <div class="sports" id="sports">
+      <button class="opt" data-sp="Bodybuilding &amp; Fitness"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Bodybuilding &amp; Fitness</b><span>Hypertrophy · splits · macros</span></button>
+      <button class="opt" data-sp="Powerlifting"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Powerlifting</b><span>Squat · bench · deadlift · meet blocks</span></button>
+      <button class="opt sel" data-sp="Running &amp; Endurance"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Running &amp; Endurance <span class="pill accent" style="margin-inline-start:6px">NEW</span></b>
+        <span>Athletics engine · load · races · PBs</span></button>
+      <button class="opt" data-sp="Team Sports"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Team Sports</b><span>Squads · match days · lineups</span></button>
+      <button class="opt" data-sp="General Fitness"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>General Fitness</b><span>General programming</span></button>
+    </div>
+    <div class="ob-note"><i data-lucide="zap" width="14"></i>
+      <span><b style="color:var(--ink)">Running &amp; Endurance</b> unlocks the Athletics
+      engine — block-based workout builder, training load, races, PB history and
+      Strava sync. Sprint, middle and long distance, on road and track.</span></div>
+    <div class="ob-note"><i data-lucide="info" width="14"></i>
+      <span>More sports are coming — pick the closest one for now. CrossFit, football,
+      swimming and cycling are added later as new engines, not by rewriting this one.</span></div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-skip>Skip for now</button>
+      <button class="btn btn-primary btn-lg" data-next="2">Continue <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+  <!-- step 2 · How do you coach? -->
+  <div class="obstep" data-s="2">
+    <div class="ob-eyebrow">Step 2 · Style</div>
+    <h1 class="ob-h">How do you coach?</h1>
+    <p class="ob-sub">Reorders your dashboard and decides how sessions are handed out.</p>
+    <div class="opts g2">
+      <button class="opt sel"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>1-to-1 coaching</b><span>Deep plan per athlete · full control of every block</span></button>
+      <button class="opt"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Small group</b><span>Shared weekly template with per-athlete paces</span></button>
+      <button class="opt"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Online / remote</b><span>Self-serve logging · wearable-first</span></button>
+      <button class="opt"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Club / squad</b><span>Squad view · event groups · race calendar</span></button>
+    </div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-prev="1"><i data-lucide="arrow-left" width="15"></i> Back</button>
+      <button class="btn btn-primary btn-lg" data-next="3">Continue <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+  <!-- step 3 · How many clients do you have? -->
+  <div class="obstep" data-s="3">
+    <div class="ob-eyebrow">Step 3 · Clients</div>
+    <h1 class="ob-h">How many clients do you have?</h1>
+    <p class="ob-sub">Sets your landing screen and your default weekly view.</p>
+    <div class="ob-f"><label>Athletes on your books</label><input id="obN" value="6" inputmode="numeric"></div>
+    <div class="ob-f"><label>Where do they train?</label>
+      <select><option>Road &amp; track (mixed)</option><option>Road only</option><option>Track only</option><option>Treadmill / indoor</option></select></div>
+    <div class="ob-f"><label>Do you program strength work too?</label>
+      <select><option>Yes — S&amp;C alongside running</option><option>Rarely</option><option>No — running only</option></select>
+      <div class="hint">Keeps the existing strength engine available inside an athletics week.</div></div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-prev="2"><i data-lucide="arrow-left" width="15"></i> Back</button>
+      <button class="btn btn-primary btn-lg" data-next="4">Continue <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+
+  <!-- step 4 · What do you do most? (home screen) -->
+  <div class="obstep" data-s="4">
+    <div class="ob-eyebrow">Step 4 · Home</div>
+    <h1 class="ob-h">What do you do most?</h1>
+    <p class="ob-sub">This becomes your home screen — change it anytime in Settings.</p>
+    <div class="opts g3">
+      <button class="opt sel"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Today's sessions</b><span>Who is running what, right now</span></button>
+      <button class="opt"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Training load</b><span>Weekly volume and trends across the squad</span></button>
+      <button class="opt"><span class="sck"><i data-lucide="check" width="12" stroke-width="3"></i></span>
+        <b>Race calendar</b><span>Upcoming races and where everyone stands</span></button>
+    </div>
+    <div class="ob-nav"><span class="sp"></span>
+      <button class="btn btn-ghost" data-prev="3"><i data-lucide="arrow-left" width="15"></i> Back</button>
+      <button class="btn btn-primary btn-lg" data-next="5">Build my workspace <i data-lucide="hammer" width="15"></i></button></div>
+  </div>
+
+  <!-- step 5 · BUILD — signature -->
+  <div class="obstep" data-s="5">
+    <div>
+      <div class="ob-eyebrow">Step 5 · Build</div>
+      <div class="build-ok"><i data-lucide="circle-check" width="15"></i> Workspace tailored ✓ — change it later in Settings</div>
+      <h1 class="ob-h" id="buildTitle">Athletics · 6 athletes</h1>
+      <p class="ob-sub">Here is exactly what the Athletics engine added. Nothing was removed — the fitness engine is still there.</p>
+    </div>
+
+    <div class="build-cols">
+      <div class="build-box">
+        <h4>Added to your sidebar</h4>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Athletics profile on every athlete<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Block-based running workout builder<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Training load &amp; progression<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Races, results and countdowns<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Personal-best history<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="check" width="14" stroke-width="3" color="#C8F04B"></i></span>Wearable provider layer <em>(ready, not connected)</em><span class="rule"></span></div>
+      </div>
+      <div class="build-box">
+        <h4>Dashboard KPIs swapped</h4>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Adherence <em>→</em> Athletes in season<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Active clients <em>→</em> Weekly volume<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Sessions today <em>→</em> Sessions today<span class="rule"></span></div>
+        <div class="brow"><span class="bt"><i data-lucide="refresh-cw" width="13" stroke-width="2.6" color="#C8F04B"></i></span>Hours this week <em>→</em> Next race (d)<span class="rule"></span></div>
+        <div class="brow kept"><span class="bt" style="color:var(--ink3)"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Attention · Quick actions · Activity untouched<span class="rule"></span></div>
+      </div>
+    </div>
+
+    <div class="build-box" style="margin-bottom:14px">
+      <h4>Reused, not rebuilt</h4>
+      <div class="brow kept"><span class="bt"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Auth · accounts · messaging · calendar · payments · notifications · nutrition · files · reports<span class="rule"></span></div>
+      <div class="brow kept"><span class="bt"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Exercise library, templates and the strength engine — still used by S&amp;C days<span class="rule"></span></div>
+      <div class="brow kept"><span class="bt"><i data-lucide="minus" width="13" stroke-width="3"></i></span>Existing bodybuilding workouts, plans and progress charts unchanged<span class="rule"></span></div>
+    </div>
+
+    <div class="build-cta"><button class="btn btn-primary btn-lg" data-go="coach">Open my workspace <i data-lucide="arrow-right" width="15"></i></button></div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════ WORKSPACE ═══════════════════════════ -->
+<div class="ws" id="ws" style="display:none">
+  <aside class="ws-side">
+    <div class="brand"><div class="brand-mark">C</div>
+      <div><div class="brand-name">COACHMINT</div><div class="brand-tag">NORTHLINE ENDURANCE</div></div></div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+
+  <div class="ws-main">
+    <div class="top">
+      <div><div class="ttl" id="ttl">Coach Dashboard</div><div class="sub" id="tsub"></div></div>
+      <span class="sp"></span>
+      <span class="bd" id="sportBadge"><i data-lucide="activity" width="12"></i> Running &amp; Endurance</span>
+      <button class="btn btn-primary" id="topBtn"><i data-lucide="plus" width="15"></i> New</button>
+    </div>
+    <div class="pad" id="views"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ④ ATHLETE DASHBOARD — mobile (§10) ═══════════════════ -->
+<section class="scr" id="athlete">
+<div class="phone-wrap">
+  <div class="phone">
+    <div class="ph-top">
+      <div class="brand-mark" style="width:24px;height:24px;border-radius:6px;font-size:11px">C</div>
+      <div class="pn2">Today</div><span class="sp"></span>
+      <span class="pill accent">BUILD · WK 4</span>
+    </div>
+    <div class="ph-body">
+
+      <div class="today-card">
+        <div class="th">Today's workout</div>
+        <div class="tt">Interval session · 6 × 400 m</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span class="ev-chip">Track</span><span class="ev-chip">Target 1:40–1:45</span>
+          <span class="ev-chip">Rec 90 s jog</span></div>
+        <div class="tstat">
+          <div class="kv"><div class="kl">Total</div><div class="kvv">7.4<u>km</u></div></div>
+          <div class="kv"><div class="kl">Est.</div><div class="kvv">42<u>min</u></div></div>
+          <div class="kv focus"><div class="kl">Intensity</div><div class="kvv">RPE 8</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn btn-primary" style="flex:1"><i data-lucide="play" width="15"></i> Start</button>
+          <button class="btn btn-outline">Details</button>
+        </div>
+      </div>
+
+      <div class="card" style="padding:15px">
+        <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">This week</h3>
+          <span class="sp"></span><span class="lnk">See plan</span></div>
+        <div class="mgrid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="m"><div class="ml">Distance</div><div class="mv">48.2<u>km</u></div></div>
+          <div class="m"><div class="ml">Duration</div><div class="mv">4:12<u>h</u></div></div>
+          <div class="m"><div class="ml">Sessions</div><div class="mv">5 <u>of 6</u></div></div>
+        </div>
+        <div class="wbar">
+          <i style="height:52%"></i><i class="miss" style="height:18%"></i><i style="height:64%"></i>
+          <i class="hi" style="height:88%"></i><i style="height:44%"></i><i style="height:100%"></i><i style="height:26%"></i>
+        </div>
+        <div class="wdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+      </div>
+
+      <div class="card" style="padding:15px">
+        <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">Upcoming race</h3>
+          <span class="sp"></span><span class="pill ok">12 D</span></div>
+        <div style="font:700 15px/1.3 var(--font-ui)">City Half Marathon</div>
+        <div class="sub2">18 Oct 2026 · target 1:29:00</div>
+        <div class="hr" style="margin:12px 0"></div>
+        <div style="display:flex;gap:18px">
+          <div class="kv"><div class="kl">Recent PB</div><div class="kvv">1:31:24</div></div>
+          <div class="kv"><div class="kl">Best 10K</div><div class="kvv pb">★ 41:52</div></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:15px">
+        <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">Personal bests</h3>
+          <span class="sp"></span><span class="lnk">All</span></div>
+        <div class="prow"><span class="pe">5K</span><span class="pp pb">★ 17:44</span>
+          <span class="ph2">prev 17:58</span><span class="pd2">−0:14</span><span class="up">▲</span></div>
+        <div class="prow"><span class="pe">10K</span><span class="pp">41:52</span>
+          <span class="ph2">prev 42:10</span><span class="pd2">−0:18</span><span class="up">▲</span></div>
+        <div class="prow" style="border-bottom:0"><span class="pe">1500m</span><span class="pp">4:21.6</span>
+          <span class="ph2">prev 4:24.0</span><span class="pd2">−2.4s</span><span class="up">▲</span></div>
+      </div>
+
+      <!-- §5 — optional metrics: absent must read as absent -->
+      <div class="card" style="padding:15px">
+        <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">Last session · metrics</h3>
+          <span class="sp"></span><span class="pill idle">MANUAL LOG</span></div>
+        <div class="mgrid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="m"><div class="ml">Distance</div><div class="mv">9.6<u>km</u></div></div>
+          <div class="m"><div class="ml">Avg pace</div><div class="mv">4:38<u>/km</u></div></div>
+          <div class="m"><div class="ml">Duration</div><div class="mv">44:31</div></div>
+          <div class="m"><div class="ml">Avg HR</div><div class="mv">154<u>bpm</u></div></div>
+          <div class="m"><div class="ml">Cadence</div><div class="mv none">— not recorded</div>
+            <div class="ms">NO DEVICE</div></div>
+          <div class="m"><div class="ml">Elevation</div><div class="mv none">— not recorded</div>
+            <div class="ms">NO GPS</div></div>
+        </div>
+        <div class="ext"><i data-lucide="watch" width="14"></i>
+          2 of 9 metrics unavailable — connect a device to fill them in.</div>
+      </div>
+
+      <div class="card" style="padding:15px">
+        <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">Recent sessions</h3></div>
+        <div class="prow"><span class="pe">Tempo</span><span class="pp">8.0 km</span>
+          <span class="ph2">4:12/km</span><span class="pd2">Tue · RPE 7</span><span class="pill ok">DONE</span></div>
+        <div class="prow"><span class="pe">Easy</span><span class="pp">12.0 km</span>
+          <span class="ph2">5:28/km</span><span class="pd2">Mon · RPE 4</span><span class="pill ok">DONE</span></div>
+        <div class="prow" style="border-bottom:0"><span class="pe">S&amp;C</span><span class="pp">55 min</span>
+          <span class="ph2">—</span><span class="pd2">Sun · RPE 6</span><span class="pill bad">MISSED</span></div>
+      </div>
+
+    </div>
+    <div class="ph-nav">
+      <div class="on"><i data-lucide="home" width="17"></i>Today</div>
+      <div><i data-lucide="calendar" width="17"></i>Plan</div>
+      <div><i data-lucide="flag" width="17"></i>Race</div>
+      <div><i data-lucide="medal" width="17"></i>PBs</div>
+      <div><i data-lucide="user" width="17"></i>Me</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<script>
+/* ==========================================================================
+   Mockup logic — screen switching, the kept wizard, and the one signature
+   build animation. No framework; this file has to stay readable as an artefact.
+   ========================================================================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* ------------------------------- data ---------------------------------- */
+const ATH=[
+ {n:'Lina Farahani',ev:'1500m',lvl:'National',cat:'U23',mi:42,freq:5,adh:94,pb:'4:21.6',race:'City Half',d:12,st:'In season'},
+ {n:'Daniel Okoye',ev:'100m',lvl:'Senior',cat:'Senior',mi:28,freq:6,adh:88,pb:'10.42',race:'Regional Open',d:6,st:'In season'},
+ {n:'Maya Lindqvist',ev:'5000m',lvl:'Club',cat:'Senior',mi:58,freq:6,adh:97,pb:'17:44',race:'Autumn 10K',d:20,st:'In season'},
+ {n:'Tomás Ribeiro',ev:'800m',lvl:'National',cat:'U20',mi:35,freq:5,adh:91,pb:'1:49.8',race:'League Meet',d:6,st:'Peak'},
+ {n:'Aya Nakamura',ev:'Marathon',lvl:'Elite',cat:'Senior',mi:84,freq:7,adh:99,pb:'2:41:07',race:'Spring Marathon',d:41,st:'Base'},
+ {n:'Omar Haddad',ev:'400mH',lvl:'Senior',cat:'Senior',mi:31,freq:5,adh:82,pb:'50.12',race:'Regional Open',d:6,st:'Recovery'}
+];
+const SES_TODAY=[
+ ['Lina Farahani','Interval · 6 × 400m','Track','07:00','42 min','ok'],
+ ['Tomás Ribeiro','Speed endurance · 3 × 300m','Track','08:30','38 min','ok'],
+ ['Daniel Okoye','Acceleration · 6 × 30m','Turf','10:00','35 min','warn'],
+ ['Aya Nakamura','Long run · 28 km','Road','16:00','2:35','idle'],
+ ['Omar Haddad','Recovery · 8 km easy','Road','17:30','44 min','idle'],
+ ['Maya Lindqvist','Tempo · 4 × 2 km','Canal','18:15','56 min','idle']
+];
+const PBS=[
+ ['100m','11.80','11.94','−0.14','12 Sep 2026','Race result','Season opener'],
+ ['200m','24.20','24.41','−0.21','29 Aug 2026','Time trial','Wind +1.1'],
+ ['400m','54.10','54.52','−0.42','29 Aug 2026','Race result','—'],
+ ['5K','21:32','21:47','−0:15','06 Sep 2026','Race result','Chip time'],
+ ['10K','45:10','45:44','−0:34','20 Sep 2026','Road race','Hilly course'],
+ ['Half Marathon','1:31:24','1:32:58','−1:34','14 Apr 2026','Race result','PB still standing']
+];
+const RACES=[
+ ['City Half Marathon','Half Marathon','18 Oct 2026','Bristol','1:29:00','Top 20 overall','done'],
+ ['Regional Open','100m · 200m','12 Oct 2026','Leeds','11.60 / 24.00','National standard','done'],
+ ['League Meet','800m','12 Oct 2026','Manchester','1:48.50','Season best','done'],
+ ['Autumn 10K','10K','02 Nov 2026','Bristol','44:30','Negative split','todo']
+];
+/* §9 — imported types. Ride/Swim are listed so the filter is visible: the spec
+   says do NOT blindly import every activity the API returns. */
+const ACT_IMPORT=['Run','Trail Run','Walk'];
+const ACT_SKIP=['Ride','Swim','Workout'];
+const ACTS=[
+ ['Morning Run','Run','Today · 06:40','8.42 km','42:16','5:01/km','154','act'],
+ ['Threshold 5×1K','Run','Mon · 17:30','9.60 km','48:02','5:00/km','162','act'],
+ ['Tuesday Easy','Run','Tue · 07:10','5.10 km','27:44','5:26/km','148','act'],
+ ['Long Run','Run','Sun · 08:00','21.10 km','1:52:40','5:21/km','151','act'],
+ ['Commute Walk','Walk','Sat · 18:20','2.30 km','26:10','11:23/km','—','idle'],
+ ['Recovery Jog','Run','Fri · 07:05','6.00 km','33:12','5:32/km','141','act']
+];
+/* §14 — the five states the UI must be able to show */
+const SYNCS=[
+ ['Today · 18:42','3 activities imported','ok'],
+ ['Today · 07:00','No new activities','idle'],
+ ['Yesterday · 18:42','Sync failed — rate limited, retried automatically','bad'],
+ ['Yesterday · 07:00','2 activities imported','ok'],
+ ['12 Oct · 19:05','Sync failed — Strava unavailable, will retry','bad']
+];
+/* §20 — every error state, with a human message instead of a raw API payload */
+const STRAVA_ERRS=[
+ ['OAuth denied','You cancelled the Strava authorization. Nothing was connected.'],
+ ['Invalid authorization','That authorization link expired. Start the connection again.'],
+ ['Expired access token','Access expired — CoachMint refreshed it automatically.'],
+ ['Refresh failure','Strava no longer accepts this connection. Reconnect to keep syncing.'],
+ ['Rate limit','Strava rate limit reached. Automatic sync resumes in 14 minutes.'],
+ ['Missing athlete mapping','This Strava account is not linked to a CoachMint athlete yet.'],
+ ['Duplicate activity','Already imported — the existing record was updated instead.']
+];
+
+/* ------------------------------- views --------------------------------- */
+const kpi=(l,v,s,d,c='')=>`<div class="kpi"><div class="kl">${l}</div>
+  <div><div class="kv">${v}${s?` <small>${s}</small>`:''}</div>
+  ${d?`<div class="kd ${c}">${d}</div>`:''}</div></div>`;
+
+/* §11 — coach athletics dashboard */
+function vCoachAth(){
+  return `
+  <div class="filters">
+    <span class="fl">Filter</span>
+    <select class="fsel"><option>Event: all</option><option>Sprint</option>
+      <option>Middle distance</option><option>Distance</option><option>Road</option></select>
+    <select class="fsel"><option>Athlete: all</option>${ATH.map(a=>`<option>${a.n}</option>`).join('')}</select>
+    <select class="fsel"><option>Phase: all</option><option>Base</option><option>Build</option>
+      <option>Peak / taper</option><option>Recovery</option></select>
+    <select class="fsel"><option>Date: this week</option><option>Today</option>
+      <option>Next 4 weeks</option><option>Season</option></select>
+    <select class="fsel"><option>Status: all</option><option>Completed</option>
+      <option>Scheduled</option><option>Missed</option></select>
+    <span class="sp"></span>
+    <button class="btn btn-outline" style="height:30px"><i data-lucide="rotate-ccw" width="13"></i> Reset</button>
+  </div>
+
+  <div class="grid4">
+    ${kpisFor(SEL).map(([l,v,s,d,c])=>kpi(l,v,s,d,c)).join('')}
+  </div>
+
+  <div class="grid32">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="fhdr">
+        <h3 class="card-t">Today's sessions</h3><span class="sp"></span>
+        <span class="pill accent">6 SCHEDULED</span></div>
+      <table class="tbl">
+        <thead><tr><th>Athlete</th><th>Session</th><th>Surface</th><th class="num">Start</th><th class="num">Dur</th></tr></thead>
+        <tbody>${SES_TODAY.map(([n,s,sf,t,d,st])=>`<tr>
+          <td class="nm">${n}</td><td>${s}<span class="sub2">${sf}</span></td>
+          <td><span class="ev-chip">${sf}</span></td>
+          <td class="num">${t}</td>
+          <td class="num"><span class="pill ${st}">${d}</span></td></tr>`).join('')}
+        </tbody></table>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Race calendar</h3><span class="sp"></span>
+        <span class="lnk">All races</span></div>
+      ${RACES.map(([n,ev,dt,loc,tg,goal,st])=>`
+        <div class="prow"><span class="pe" style="min-width:0;flex:1">${n}
+          <span class="sub2">${ev} · ${dt} · ${loc}</span></span>
+          <span class="pp" style="min-width:0">${tg}</span>
+          <span class="pill ${st==='done'?'ok':'idle'}">${st==='done'?'SET':'TARGET'}</span></div>`).join('')}
+      <div style="margin-top:14px"><button class="btn btn-outline" style="width:100%">
+        <i data-lucide="plus" width="14"></i> Add race</button></div>
+    </div>
+  </div>
+
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Squad</h3><span class="sp"></span>
+        <span class="pill">6 ATHLETES</span></div>
+      <table class="tbl">
+        <thead><tr><th>Athlete</th><th>Event</th><th class="num">wk km</th>
+          <th class="num">Adh</th><th class="num">PB</th><th>Phase</th></tr></thead>
+        <tbody>${ATH.map(a=>`<tr>
+          <td class="nm">${a.n}<span class="sub2">${a.lvl} · ${a.cat}</span></td>
+          <td><span class="ev-chip">${a.ev}</span></td>
+          <td class="num">${a.mi}</td>
+          <td class="num"><span class="pill ${a.adh>=90?'ok':a.adh>=85?'warn':'bad'}">${a.adh}%</span></td>
+          <td class="num pb">${a.pb}</td>
+          <td><span class="pill ${a.st==='Recovery'?'warn':'accent'}">${a.st}</span></td>
+        </tr>`).join('')}</tbody></table>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Weekly volume</h3><span class="sp"></span>
+        <span class="pill">KM · SQUAD</span></div>
+      <div class="wbar" style="height:130px">
+        <i style="height:44%"></i><i style="height:56%"></i><i style="height:49%"></i>
+        <i class="hi" style="height:78%"></i><i style="height:62%"></i><i style="height:96%"></i><i style="height:31%"></i>
+      </div>
+      <div class="wdays"><span>W29</span><span>W30</span><span>W31</span><span>W32</span>
+        <span>W33</span><span>W34</span><span>W35</span></div>
+      <div class="hr"></div>
+      <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">Recent PBs</h3></div>
+      <div class="prow"><span class="pe">A. Nakamura</span><span class="pp pb">★ 2:41:07</span>
+        <span class="pd2">Marathon</span></div>
+      <div class="prow"><span class="pe">M. Lindqvist</span><span class="pp pb">★ 17:44</span>
+        <span class="pd2">5000m</span></div>
+      <div class="prow" style="border-bottom:0"><span class="pe">T. Ribeiro</span>
+        <span class="pp pb">★ 1:49.8</span><span class="pd2">800m</span></div>
+    </div>
+  </div>`;
+}
+
+/* §6 — training load */
+function vLoad(){
+  return `
+  <div class="grid4">
+    ${kpi('Weekly distance','286','km','<span class="up">▲ 6.7%</span> vs 4-wk avg','up')}
+    ${kpi('Weekly duration','24:18','h','<span class="up">▲ 1:12</span>','up')}
+    ${kpi('Sessions','31','','5 high-intensity · 6 long')}
+    ${kpi('Long runs','6','','28 km longest')}
+  </div>
+
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Training load · last 8 weeks</h3>
+        <span class="sp"></span>
+        <div class="chips"><span class="ev-chip on">Distance</span>
+          <span class="ev-chip">Duration</span><span class="ev-chip">Session RPE</span></div></div>
+      <div class="wbar" style="height:150px">
+        <i style="height:38%"></i><i style="height:47%"></i><i style="height:52%"></i>
+        <i style="height:44%"></i><i class="hi" style="height:72%"></i><i style="height:66%"></i>
+        <i style="height:83%"></i><i class="hi" style="height:96%"></i>
+      </div>
+      <div class="wdays"><span>W28</span><span>W29</span><span>W30</span><span>W31</span>
+        <span>W32</span><span>W33</span><span>W34</span><span>W35</span></div>
+      <div class="hr"></div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div class="kv"><div class="kl">4-week avg</div><div class="kvv">268<u>km</u></div></div>
+        <div class="kv"><div class="kl">Acute load</div><div class="kvv">1 180<u>au</u></div></div>
+        <div class="kv"><div class="kl">Chronic</div><div class="kvv">1 062<u>au</u></div></div>
+        <div class="kv focus"><div class="kl">Ratio</div><div class="kvv">1.11</div>
+          <div class="ks">WITHIN BAND</div></div>
+      </div>
+      <div class="ext"><i data-lucide="info" width="14"></i>
+        These are descriptive figures for the coach to read — CoachMint does not
+        interpret them as injury risk or make any medical claim.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Session mix · this week</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Category</th><th class="num">Count</th><th class="num">Volume</th></tr></thead>
+        <tbody>
+          <tr><td class="nm">High-intensity<span class="sub2">intervals · speed</span></td>
+            <td class="num">5</td><td class="num">41 km</td></tr>
+          <tr><td class="nm">Long runs<span class="sub2">≥ 25% of weekly volume</span></td>
+            <td class="num">6</td><td class="num">96 km</td></tr>
+          <tr><td class="nm">Easy / recovery<span class="sub2">aerobic base</span></td>
+            <td class="num">14</td><td class="num">121 km</td></tr>
+          <tr><td class="nm">Strength &amp; conditioning<span class="sub2">existing engine</span></td>
+            <td class="num">4</td><td class="num">—</td></tr>
+          <tr><td class="nm">Mobility / rest<span class="sub2">logged, not scored</span></td>
+            <td class="num">2</td><td class="num">—</td></tr>
+        </tbody></table>
+      <div class="hr"></div>
+      <div class="card-h" style="margin-bottom:10px"><h3 class="card-t">RPE distribution</h3></div>
+      ${[[4,'Easy',6,'idle'],[5,'Steady',8,'idle'],[6,'Moderate',7,'warn'],
+         [7,'Hard',6,'warn'],[8,'Threshold',3,'accent'],[9,'Very hard',1,'bad']]
+        .map(([r,lab,n,c])=>`<div class="prow"><span class="pe" style="min-width:44px">
+          <span class="pill ${c}">RPE ${r}</span></span>
+          <span style="flex:1;font:600 12.5px/1 var(--font-ui);color:var(--ink2)">${lab}</span>
+          <span style="flex:2;height:7px;background:var(--surface3);border-radius:4px;overflow:hidden">
+            <i style="display:block;height:100%;width:${n*8}%;background:var(--ink2);border-radius:4px"></i></span>
+          <span class="num" style="min-width:22px;text-align:right;font:700 12px var(--font-mono)">${n}</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+/* §3 — athletics profile */
+function vProfile(){
+  return `
+  <div class="card">
+    <div class="card-h lead">
+      <div class="brand-mark" style="width:42px;height:42px;border-radius:11px;font-size:16px">LF</div>
+      <div><div style="font:700 17px/1.3 var(--font-ui)">Lina Farahani</div>
+        <div class="sub2">National · U23 · 1500m · with you since Mar 2026</div></div>
+      <span class="sp"></span>
+      <span class="pill accent">ATHLETICS</span>
+      <button class="btn btn-outline">Edit profile</button>
+    </div>
+
+    <div class="fgrid">
+      <div class="f"><div class="fl2">Primary discipline</div>
+        <div class="fv">Middle distance</div><div class="fh">Track + road</div></div>
+      <div class="f"><div class="fl2">Event</div><div class="fv mono">1500m</div>
+        <div class="fh">Secondary: 800m · 3000m</div></div>
+      <div class="f"><div class="fl2">Competitive level</div><div class="fv">National</div>
+        <div class="fh">Age category: U23</div></div>
+
+      <div class="f"><div class="fl2">Current weekly mileage</div>
+        <div class="fv mono">42 km</div><div class="fh">4-week avg 39 km · rising</div></div>
+      <div class="f"><div class="fl2">Weekly training frequency</div>
+        <div class="fv mono">5 sessions</div><div class="fh">Availability: Mon–Sat, mornings</div></div>
+      <div class="f"><div class="fl2">Training history</div>
+        <div class="fv">4 seasons</div><div class="fh">Joined Mar 2026 · 118 sessions logged</div></div>
+
+      <div class="f wide"><div class="fl2">Target race</div>
+        <div class="fv">City Half Marathon — 18 Oct 2026</div>
+        <div class="fh">12 days out · target 1:29:00 · goal: top 20 overall</div></div>
+      <div class="f"><div class="fl2">Personal bests</div>
+        <div class="fv mono">4:21.6 · 1:31:24</div><div class="fh">1500m · Half — see full history</div></div>
+
+      <div class="f full"><div class="fl2">Injury / limitation notes</div>
+        <div class="fv">Left Achilles — mild tendinopathy (Jul 2026)</div>
+        <div class="fh">Physio-cleared. No hill sprints before week 3 of a block. Avoid
+          speed work on consecutive days. Currently asymptomatic at easy load.</div></div>
+
+      <div class="f full"><div class="fl2">Coach notes</div>
+        <div class="fv">Responds well to volume, dislikes treadmill work.</div>
+        <div class="fh">Race better when the long run sits on Sunday and the key session
+          stays Thursday. Keep the S&amp;C day Tuesday — it has held her together all season.</div></div>
+    </div>
+
+    <div class="ext"><i data-lucide="database" width="14"></i>
+      Events are data, not code — <b style="color:var(--ink)">60m · 100m · 200m · 400m · 800m · 1500m ·
+      3000m · 5000m · 10K · Half Marathon · Marathon</b> ship as a seeded list.
+      Adding a discipline means adding a row, never editing the engine.</div>
+
+    <div class="hr"></div>
+    <div class="grid3">
+      <div class="kpi"><div class="kl">Sessions completed</div>
+        <div><div class="kv">118 <small>of 127</small></div><div class="kd up">93% adherence</div></div></div>
+      <div class="kpi"><div class="kl">This week</div>
+        <div><div class="kv">42<small>km</small></div><div class="kd">4 / 5 sessions</div></div></div>
+      <div class="kpi"><div class="kl">Days to target race</div>
+        <div><div class="kv">12<small>d</small></div><div class="kd">City Half Marathon</div></div></div>
+    </div>
+  </div>`;
+}
+
+/* §4 — the block builder. THE signature screen. */
+function vBuilder(){
+  const block=(rail,n,icon,title,pills,kv,extra='')=>`
+    <div class="blk">
+      <div class="blk-rail" style="--e-w:${rail.w};--e-s:${rail.s};--e-c:${rail.c}">
+        <span class="bi">${icon}</span><span class="bn">${n}</span></div>
+      <div class="blk-b">
+        <div class="blk-hd"><span class="bt">${title}</span>
+          ${pills.map(p=>`<span class="ev-chip ${p[1]?'on':''}">${p[0]}</span>`).join('')}
+          <span class="sp"></span><span class="blk-drag"><i data-lucide="grip-vertical" width="15"></i></span></div>
+        <div class="blk-kv">${kv}</div>${extra}
+      </div>
+    </div>`;
+  const kv=(l,v,u,s='',f=false)=>`<div class="kv ${f?'focus':''}">
+    <div class="kl">${l}</div><div class="kvv">${v}${u?`<u>${u}</u>`:''}</div>
+    ${s?`<div class="ks">${s}</div>`:''}</div>`;
+
+  return `
+  <div class="grid23">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Session</h3><span class="sp"></span>
+        <button class="btn btn-outline" style="height:30px"><i data-lucide="plus" width="13"></i> Block</button></div>
+      <div class="ob-f" style="margin-bottom:14px"><label>Workout name</label>
+        <input value="Interval session — 6 × 400 m"></div>
+      <div class="grid2" style="gap:12px">
+        <div class="ob-f" style="margin-bottom:0"><label>Athlete</label>
+          <select><option>Lina Farahani</option><option>Tomás Ribeiro</option></select></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Day</label>
+          <select><option>Thursday</option><option>Tuesday</option></select></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Phase</label>
+          <select><option>Build</option><option>Base</option><option>Peak / taper</option></select></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Surface</label>
+          <select><option>Track</option><option>Road</option><option>Trail</option><option>Treadmill</option></select></div>
+      </div>
+
+      <div class="hr"></div>
+      <!-- Outline, not a second copy of the block cards on the right: the left
+           rail answers "what is in this session", the right answers "how is
+           each block parameterised". Rendering both as cards duplicated them. -->
+      <div class="card-h" style="margin-bottom:8px"><h3 class="card-t">Session structure</h3>
+        <span class="sp"></span><span class="pill">4 BLOCKS</span></div>
+      <ol style="margin:0;padding-inline-start:19px;color:var(--ink2);
+        font:500 13px/1.95 var(--font-ui)">
+        <li>Warm-up <span style="color:var(--ink3)">— 10 min easy</span></li>
+        <li>Drills <span style="color:var(--ink3)">— A-skips · B-skips · High knees</span></li>
+        <li>Main set <span style="color:var(--ink3)">— 6 × 400 m · 90 s recovery</span></li>
+        <li>Cool-down <span style="color:var(--ink3)">— 10 min easy</span></li>
+      </ol>
+      <div class="ext"><i data-lucide="grip-vertical" width="14"></i>
+        Reorder by dragging — the full editor for each block is on the right.</div>
+      <div class="hr"></div>
+      <div style="display:flex;gap:9px">
+        <button class="btn btn-primary" style="flex:1"><i data-lucide="save" width="15"></i> Save workout</button>
+        <button class="btn btn-outline">Template</button></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:var(--panel-gap)">
+      <!-- the six parameter groups §4 requires to be visually distinct -->
+      <div class="card">
+        <div class="card-h"><h3 class="card-t">Main set · parameters</h3>
+          <span class="sp"></span><span class="pill accent">FOCUS</span></div>
+        <div class="pgrp">
+          <div class="pg on"><div class="pl"><i data-lucide="ruler" width="12"></i> Distance</div>
+            <div class="pv">400<u>m</u></div><div class="ph">per repetition</div></div>
+          <div class="pg"><div class="pl"><i data-lucide="clock" width="12"></i> Time</div>
+            <div class="pv">—</div><div class="ph">not used — distance governs</div></div>
+          <div class="pg on"><div class="pl"><i data-lucide="gauge" width="12"></i> Pace</div>
+            <div class="pv">1:40–1:45</div><div class="ph">target range per 400 m</div></div>
+          <div class="pg"><div class="pl"><i data-lucide="zap" width="12"></i> Speed</div>
+            <div class="pv">16.0–16.6<u>km/h</u></div><div class="ph">derived from the pace range</div></div>
+          <div class="pg"><div class="pl"><i data-lucide="repeat" width="12"></i> Recovery</div>
+            <div class="pv">90<u>s</u></div><div class="ph">easy jog — continuous, not standing</div></div>
+          <div class="pg on"><div class="pl"><i data-lucide="flame" width="12"></i> Intensity</div>
+            <div class="pv">RPE 8</div><div class="ph">HR 162–172 · 89–94% max</div></div>
+        </div>
+        <div class="hr"></div>
+        <div class="blk-kv" style="border-top:0;padding-top:0">
+          ${kv('Reps','6','×','')}
+          ${kv('Total volume','2.4','km','')}
+          ${kv('Est. session','42','min','incl. warm-up &amp; cool-down')}
+          ${kv('Terrain','Track','')}
+          ${kv('Cadence target','—','',"NOT SET",'')}
+          ${kv('Surface','Tartan','')}
+        </div>
+      </div>
+
+      ${block({w:'1px',s:'solid',c:'var(--ink3)'},'01','<i data-lucide="sunrise" width="15"></i>','Warm-up',
+        [['Time'],['Easy'],['RPE 3']],
+        kv('Duration','10','min','','')+kv('Pace','5:40','/km')+kv('Distance','1.8','km'))}
+
+      ${block({w:'1px',s:'dashed',c:'var(--ink3)'},'02','<i data-lucide="footprints" width="15"></i>','Drills',
+        [['Technique'],['Track']],
+        kv('Items','3','','A-skips · B-skips · High knees')+kv('Reps','2','×','30 m each')+kv('RPE','5',''))}
+
+      ${block({w:'4px',s:'solid',c:'var(--ink)'},'03','<i data-lucide="zap" width="15"></i>','Main set',
+        [['Key session'],['RPE 8'],['Track']],
+        kv('Reps','6','×')+kv('Distance','400','m')+kv('Target','1:40–1:45','')+kv('Recovery','90','s'),
+        `<div class="ext" style="margin-top:12px"><i data-lucide="info" width="14"></i>
+          Key session of the week — do not schedule strength work the day before.</div>`)}
+
+      ${block({w:'1px',s:'dotted',c:'var(--line-strong)'},'04','<i data-lucide="sunset" width="15"></i>','Cool-down',
+        [['Time'],['Easy']],
+        kv('Duration','10','min')+kv('Pace','6:00','/km')+kv('Distance','1.6','km'))}
+    </div>
+  </div>`;
+}
+
+/* §7 + §13 — periodization + a mixed running / S&C week */
+function vWeek(){
+  const names=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  /* every row is [type,title,sub,dur] — the day comes from names[], never from
+     the tuple, so a run day and an S&C day cannot drift out of alignment. */
+  const days=[
+   ['run','Interval session','6 × 400m · RPE 8','42 min'],
+   ['sc','Strength & Conditioning','Existing engine · lower + core','55 min'],
+   ['run','Easy run','12 km · RPE 4','1:06'],
+   ['rest','Rest / mobility','Optional 20 min flow','—'],
+   ['run','Tempo run','4 × 2 km @ 4:12/km','56 min'],
+   ['run','Long run','28 km · RPE 5','2:35'],
+   ['rest','Recovery','Walk · stretch · sleep','—']
+  ];
+  return `
+  <div class="card">
+    <div class="card-h">
+      <h3 class="card-t">Training phases</h3><span class="sp"></span>
+      <span class="pill">METHOD-AGNOSTIC</span>
+      <button class="btn btn-outline" style="height:30px">Change template</button></div>
+    <div class="phases">
+      <div class="ph"><div class="pn">Phase 1 · W1–W6</div><div class="pt">Base</div>
+        <div class="pd">Aerobic volume · easy mileage · strength</div>
+        <div class="pbar"><i style="width:35%"></i></div></div>
+      <div class="ph now"><div class="pn">Phase 2 · W7–W14 · now</div><div class="pt">Build</div>
+        <div class="pd">Threshold · intervals · hills · power</div>
+        <div class="pbar"><i style="width:78%"></i></div></div>
+      <div class="ph"><div class="pn">Phase 3 · W15–W16</div><div class="pt">Peak / taper</div>
+        <div class="pd">Sharpening · volume down · intensity held</div>
+        <div class="pbar"><i style="width:52%"></i></div></div>
+      <div class="ph"><div class="pn">Phase 4 · W17</div><div class="pt">Recovery</div>
+        <div class="pd">Unload · easy running · address niggles</div>
+        <div class="pbar"><i style="width:20%"></i></div></div>
+    </div>
+    <div class="ext"><i data-lucide="layers" width="14"></i>
+      Phase names and lengths are coach-defined — CoachMint does not impose one
+      periodization methodology. Swap in Daniels, Lydiard, Pfitzinger or your own template.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h3 class="card-t">Week 9 · Build</h3><span class="sp"></span>
+      <span class="pill accent">TARGET 52 KM</span>
+      <span class="pill ok">S&amp;C INCLUDED</span>
+      <button class="btn btn-outline" style="height:30px"><i data-lucide="plus" width="13"></i> Session</button></div>
+    <div class="wk">
+      ${days.map(([type,title,sub,dur],i)=>`
+        <div class="day ${i===3?'today':''}">
+          <div class="dh">${names[i]}${i===3?' · today':''}</div>
+          <div class="ses ${type}">
+            <div class="st">${title}</div>
+            <div class="sm">${sub}</div>
+            <div class="sm" style="color:var(--ink2);margin-top:6px">${dur}</div>
+          </div>
+          <span style="flex:1"></span>
+          <span style="font:700 10px/1 var(--font-mono);color:var(--ink3)">
+            ${type==='sc'?'STRENGTH':type==='rest'?'OFF':'RUN'}</span>
+        </div>`).join('')}
+    </div>
+    <div class="hr"></div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <div class="kv"><div class="kl">Running</div><div class="kvv">52<u>km</u></div>
+        <div class="ks">5 SESSIONS</div></div>
+      <div class="kv"><div class="kl">Strength &amp; conditioning</div><div class="kvv">1<u>day</u></div>
+        <div class="ks">EXISTING ENGINE</div></div>
+      <div class="kv"><div class="kl">Rest / mobility</div><div class="kvv">1<u>day</u></div></div>
+      <div class="kv focus"><div class="kl">High-intensity</div><div class="kvv">2<u>key</u></div>
+        <div class="ks">MON · FRI</div></div>
+    </div>
+  </div>`;
+}
+
+/* §8 — races */
+function vRace(){
+  return `
+  <div class="grid32">
+    <div class="race-hero">
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <div><div class="tm-lab" style="font:var(--t-label);letter-spacing:var(--tr-label);
+          color:var(--ink3);text-transform:uppercase;margin-bottom:7px">Next race</div>
+          <div style="font:700 19px/1.3 var(--font-display);letter-spacing:-.02em">
+            City Half Marathon</div>
+          <div style="font:600 13px/1.4 var(--font-ui);color:var(--ink2);margin-top:6px">
+            18 Oct 2026 · Bristol · Half Marathon</div></div>
+        <span class="sp" style="flex:1"></span>
+        <div class="cdown">
+          <div class="cd"><b>12</b><span>days</span></div>
+          <div class="cd"><b>06</b><span>hrs</span></div>
+          <div class="cd"><b>41</b><span>min</span></div>
+        </div>
+      </div>
+      <div class="hr" style="background:var(--line)"></div>
+      <div style="display:flex;gap:26px;flex-wrap:wrap">
+        <div class="kv"><div class="kl">Target time</div><div class="kvv">1:29:00</div></div>
+        <div class="kv"><div class="kl">Goal</div><div class="kvv" style="font-size:13px">Top 20 overall</div></div>
+        <div class="kv focus"><div class="kl">Prep sessions done</div><div class="kvv">18 <u>of 21</u></div>
+          <div class="ks">ON TRACK</div></div>
+        <div class="kv"><div class="kl">Recent PB</div><div class="kvv pb">★ 1:31:24</div></div>
+      </div>
+      <!-- spec §8 "Recent performance" — this card had 172px of dead space
+           before it, and the athlete view is required to show recent form. -->
+      <div style="margin-top:14px">
+        <div style="font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+          text-transform:uppercase;margin-bottom:3px">Recent performance</div>
+        <div class="prow"><span class="pe">Autumn 10K</span><span class="pp pb">★ 45:10</span>
+          <span class="pd2">20 Sep · target 44:30</span><span class="pill ok">PB</span></div>
+        <div class="prow"><span class="pe">League Meet</span><span class="pp">4:21.6</span>
+          <span class="pd2">12 Sep · 1500m · target 4:20.0</span><span class="pill warn">OFF</span></div>
+        <div class="prow"><span class="pe">Regional Open</span><span class="pp pb">★ 4:21.6</span>
+          <span class="pd2">29 Aug · 1500m</span><span class="pill ok">PB · 2nd</span></div>
+      </div>
+      <div style="display:flex;gap:9px;margin-top:14px">
+        <button class="btn btn-primary"><i data-lucide="pencil" width="15"></i> Log result</button>
+        <button class="btn btn-outline">Open plan</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Create race</h3></div>
+      <div class="ob-f" style="margin-bottom:13px"><label>Name</label>
+        <input placeholder="e.g. City Half Marathon"></div>
+      <div class="grid2" style="gap:11px">
+        <div class="ob-f" style="margin-bottom:0"><label>Event / distance</label>
+          <select><option>Half Marathon</option><option>5K</option><option>10K</option>
+            <option>Marathon</option><option>1500m</option><option>Custom…</option></select></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Date</label>
+          <input value="2026-10-18" type="date"></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Location</label>
+          <input placeholder="City / venue"></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Target time</label>
+          <input placeholder="1:29:00" inputmode="numeric"></div>
+      </div>
+      <div class="ob-f" style="margin-bottom:14px"><label>Goal</label>
+        <input placeholder="Top 20 overall · negative split"></div>
+      <button class="btn btn-primary" style="width:100%"><i data-lucide="plus" width="15"></i> Add race</button>
+    </div>
+  </div>
+
+  <div class="grid23">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="fhdr"><h3 class="card-t">Race history</h3></div>
+      <table class="tbl">
+        <thead><tr><th>Race</th><th class="num">Target</th><th class="num">Actual</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td class="nm">Autumn 10K<span class="sub2">20 Sep 2026 · Bristol</span></td>
+            <td class="num">44:30</td><td class="num pb">★ 45:10</td>
+            <td><span class="pill ok">PB</span></td></tr>
+          <tr><td class="nm">League Meet<span class="sub2">12 Sep 2026 · 1500m</span></td>
+            <td class="num">4:20.0</td><td class="num">4:21.6</td>
+            <td><span class="pill warn">OFF TARGET</span></td></tr>
+          <tr><td class="nm">Regional Open<span class="sub2">29 Aug 2026 · 1500m</span></td>
+            <td class="num">4:22.0</td><td class="num pb">★ 4:21.6</td>
+            <td><span class="pill ok">PB · 2nd</span></td></tr>
+          <tr><td class="nm">Spring 10K<span class="sub2">05 Apr 2026 · Bristol</span></td>
+            <td class="num">46:20</td><td class="num pb">★ 46:02</td>
+            <td><span class="pill ok">PB</span></td></tr>
+          <tr><td class="nm">Cross Country<span class="sub2">15 Mar 2026 · 8 km</span></td>
+            <td class="num">—</td><td class="num">8th</td>
+            <td><span class="pill">SEASON OPENER</span></td></tr>
+          <tr><td class="nm">Winter 5K<span class="sub2">08 Feb 2026 · Bristol</span></td>
+            <td class="num">18:30</td><td class="num">18:41</td>
+            <td><span class="pill bad">OFF TARGET</span></td></tr>
+        </tbody></table>
+      <div style="padding:16px 20px 20px">
+        <div class="hr" style="margin:0 0 14px"></div>
+        <div class="grid3" style="gap:14px">
+          <div class="kv"><div class="kl">Completed</div><div class="kvv">6</div>
+            <div class="ks">THIS SEASON</div></div>
+          <div class="kv"><div class="kl">PBs from racing</div><div class="kvv pb">3</div>
+            <div class="ks">50% OF STARTS</div></div>
+          <div class="kv"><div class="kl">Next start</div><div class="kvv">12<u>d</u></div>
+            <div class="ks">CITY HALF</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Log result · Autumn 10K</h3>
+        <span class="sp"></span><span class="pill ok">COMPLETED</span></div>
+      <div class="grid2" style="gap:11px">
+        <div class="ob-f" style="margin-bottom:0"><label>Actual time</label>
+          <input value="45:10" inputmode="numeric"></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Position</label>
+          <input value="14 / 412" inputmode="numeric"></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Splits available</label>
+          <select><option>Yes — 5 km splits</option><option>Full km splits</option>
+            <option>None — manual entry</option></select></div>
+        <div class="ob-f" style="margin-bottom:0"><label>Source</label>
+          <select><option>Race result</option><option>Manual</option>
+            <option>Device (not connected)</option></select></div>
+      </div>
+      <div class="ob-f" style="margin-bottom:14px"><label>Coach notes</label>
+        <input value="Positive first 3 km — went out too hard on the hill."></div>
+
+      <div class="hr"></div>
+      <div class="blk-kv" style="border-top:0;padding-top:0">
+        <div class="kv"><div class="kl">Avg pace</div><div class="kvv">4:31<u>/km</u></div></div>
+        <div class="kv"><div class="kl">Split 5K</div><div class="kvv">22:18</div>
+          <div class="ks">2ND HALF FASTER</div></div>
+        <div class="kv focus"><div class="kl">Personal best</div>
+          <div class="kvv pb">★ NEW</div>
+          <div class="ks">−0:34 VS PREVIOUS</div></div>
+      </div>
+      <div class="ext"><i data-lucide="info" width="14"></i>
+        Saving a result writes to the PB history automatically when it beats the
+        previous mark for that event.</div>
+      <button class="btn btn-primary" style="width:100%;margin-top:14px">
+        <i data-lucide="check" width="15"></i> Save result</button>
+    </div>
+  </div>`;
+}
+
+/* §9 — PB history */
+function vPbs(){
+  return `
+  <div class="grid4">
+    ${kpi('Events tracked','6','','extensible list')}
+    ${kpi('PBs this season','5','','<span class="up">▲ 2</span> vs last','up')}
+    ${kpi('Improved this month','3','','12 · 29 Aug · 20 Sep','up')}
+    ${kpi('Longest standing','184','d','Half Marathon · 14 Apr')}
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="fhdr">
+      <h3 class="card-t">Personal best history</h3><span class="sp"></span>
+      <div class="chips"><span class="ev-chip on">All events</span><span class="ev-chip">Track</span>
+        <span class="ev-chip">Road</span><span class="ev-chip">Cross</span></div>
+      <button class="btn btn-outline" style="height:30px"><i data-lucide="plus" width="13"></i> Record mark</button>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Event</th><th class="num">Performance</th><th class="num">Previous</th>
+        <th class="num">Δ</th><th class="num">Date</th><th>Source</th><th>Notes</th></tr></thead>
+      <tbody>${PBS.map(([e,p,pr,dl,dt,src,nt],i)=>`<tr>
+        <td class="nm">${e}</td>
+        <td class="num ${i<5?'pb':''}">${i<5?'★ ':''}${p}</td>
+        <td class="num" style="color:var(--ink3)">${pr}</td>
+        <td class="num up">${dl}</td>
+        <td class="num">${dt}</td>
+        <td><span class="ev-chip">${src}</span></td>
+        <td style="color:var(--ink3)">${nt}</td></tr>`).join('')}
+      </tbody></table>
+  </div>
+
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Event catalogue</h3><span class="sp"></span>
+        <span class="pill">SEED DATA</span></div>
+      <div class="grid3" style="gap:10px">
+        ${[['Sprint','60m · 100m · 200m · 400m'],
+           ['Middle distance','800m · 1500m'],
+           ['Distance','3000m · 5000m · 10K'],
+           ['Road','Half Marathon · Marathon'],
+           ['Combined','400mH · Steeplechase'],
+           ['Custom','coach-defined events']]
+          .map(([g,ev])=>`<div class="f"><div class="fl2">${g}</div>
+            <div class="fv" style="font-size:12.5px">${ev}</div></div>`).join('')}
+      </div>
+      <div class="ext"><i data-lucide="database" width="14"></i>
+        The catalogue is a table, not an enum. New events appear in every
+        dropdown the moment a row is added — no release required.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Improvement · 5K</h3></div>
+      <div class="wbar" style="height:130px">
+        <i style="height:40%"></i><i style="height:47%"></i><i style="height:55%"></i>
+        <i style="height:64%"></i><i style="height:72%"></i><i class="hi" style="height:92%"></i>
+      </div>
+      <div class="wdays"><span>Apr</span><span>May</span><span>Jun</span>
+        <span>Jul</span><span>Aug</span><span>Sep</span></div>
+      <div class="hr"></div>
+      <div class="prow"><span class="pe">Latest</span><span class="pp pb">★ 17:44</span>
+        <span class="pd2">20 Sep 2026</span></div>
+      <div class="prow"><span class="pe">Previous</span><span class="pp">17:58</span>
+        <span class="pd2">12 Jun 2026</span></div>
+      <div class="prow" style="border-bottom:0"><span class="pe">Improvement</span>
+        <span class="pp up">−0:14</span><span class="pd2">1.3% faster</span></div>
+    </div>
+  </div>`;
+}
+
+/* §12 — wearable abstraction */
+/* §1–§28 — STRAVA. Devices screen removed and replaced by this one.
+   Honest labelling matters: no endpoint here is wired yet, so the card says so. */
+function vStrava(){
+  return `
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Connected apps</h3><span class="sp"></span>
+        <span class="pill warn">DESIGN MOCKUP · NOT WIRED</span></div>
+
+      <div class="integ">
+        <div class="integ-ic"><i data-lucide="link" width="18"></i></div>
+        <div><div class="integ-n">Strava</div>
+          <div class="integ-d">Running activities and training data</div></div>
+        <span class="sp"></span>
+        <span class="pill ok">● Connected</span>
+      </div>
+
+      <div class="integ-meta">
+        <div class="kv"><div class="kl">Last sync</div><div class="kvv">18:42</div>
+          <div class="ks">TODAY</div></div>
+        <div class="kv"><div class="kl">Auto-sync</div>
+          <div class="kvv" style="color:var(--st-ok)">ON</div>
+          <div class="ks">WEBHOOK</div></div>
+        <div class="kv"><div class="kl">Imported</div><div class="kvv">142</div>
+          <div class="ks">ACTIVITIES</div></div>
+        <div class="kv"><div class="kl">Token</div><div class="kvv">6<u>h</u></div>
+          <div class="ks">AUTO REFRESH</div></div>
+      </div>
+
+      <div class="hr"></div>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn btn-primary"><i data-lucide="refresh-cw" width="15"></i> Sync Now</button>
+        <button class="btn btn-outline">Disconnect</button>
+        <span class="sp"></span>
+        <span class="pill idle">ATHLETE-OWNED</span>
+      </div>
+      <div class="ext"><i data-lucide="shield-check" width="14"></i>
+        The athlete authorizes their own account through Strava's official OAuth
+        flow. CoachMint never asks for a Strava password, and no access or
+        refresh token is ever returned to the browser.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Sync log</h3><span class="sp"></span>
+        <span class="pill idle">LIMIT 200 / 15 MIN</span></div>
+      ${SYNCS.map(([w,m,st])=>`<div class="log-r ${st}">
+        <span class="lt">${w}</span><span class="lm">${m}</span></div>`).join('')}
+      <div class="ext"><i data-lucide="info" width="14"></i>
+        <b style="color:var(--ink)">Sync Now</b> is throttled by the same Strava
+        rate limit automatic sync obeys — 200 requests / 15 min and 2 000 / day.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="fhdr"><h3 class="card-t">Recent running activities</h3><span class="sp"></span>
+      <div class="chips">
+        ${ACT_IMPORT.map(t=>`<span class="ev-chip on">${t}</span>`).join('')}
+        ${ACT_SKIP.map(t=>`<span class="ev-chip" style="opacity:.55">${t} skipped</span>`).join('')}
+      </div></div>
+    <div class="tbl-wrap">
+    <table class="tbl acttbl">
+      <thead><tr><th>Activity</th><th>Type</th><th>When</th><th class="num">Distance</th>
+        <th class="num">Duration</th><th class="num">Pace</th><th class="num">Avg HR</th>
+        <th>Source</th></tr></thead>
+      <tbody>${ACTS.map(([n,ty,w,d,du,p,hr,st])=>`<tr>
+        <td class="nm">${n}</td>
+        <td><span class="ev-chip">${ty}</span></td>
+        <td style="color:var(--ink3)">${w}</td>
+        <td class="num">${d}</td><td class="num">${du}</td><td class="num">${p}</td>
+        <td class="num"${hr==='—'?' style="color:var(--st-idle)"':''}>${hr}</td>
+        <td><span class="pill ${st}">STRAVA</span></td></tr>`).join('')}
+      </tbody></table>
+      </div>
+    <div style="padding:14px 20px 18px">
+      <div class="ext" style="margin-top:0"><i data-lucide="filter" width="14"></i>
+        Run, Trail Run and Walk are imported; Ride and Swim are not. The skipped
+        types are shown on purpose — nothing is pulled in merely because the API
+        offers it.</div>
+    </div>
+  </div>
+
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Planned vs actual</h3><span class="sp"></span>
+        <span class="pill">DATA FOUNDATION</span></div>
+      <div class="grid2" style="gap:12px">
+        <div class="pv"><div class="pv-l">Planned</div>
+          <div class="pv-t">6 × 400m</div>
+          <div class="pv-s">Target 1:40–1:45 per 400m<br>Recovery 90 s easy jog</div></div>
+        <div class="pv actual"><div class="pv-l">Actual</div>
+          <div class="pv-t">6 × 400m</div>
+          <div class="pv-s">Recorded through Strava<br>
+            1:41.2 · 1:42.0 · 1:43.8 · 1:44.6 · 1:45.1 · 1:46.0</div></div>
+      </div>
+      <div class="hr"></div>
+      <div class="blk-kv" style="border-top:0;padding-top:0">
+        <div class="kv"><div class="kl">Planned</div><div class="kvv">5.0<u>km</u></div>
+          <div class="ks">@ 5:00/KM</div></div>
+        <div class="kv"><div class="kl">Actual</div><div class="kvv">5.2<u>km</u></div>
+          <div class="ks">@ 4:55/KM</div></div>
+        <div class="kv"><div class="kl">Distance Δ</div><div class="kvv up">+0.2<u>km</u></div></div>
+        <div class="kv"><div class="kl">Pace Δ</div><div class="kvv up">−0:05<u>/km</u></div></div>
+      </div>
+      <div class="ext"><i data-lucide="info" width="14"></i>
+        Objective differences only — no interpretation and no medical or
+        performance conclusions. This is the data foundation, not an analysis
+        feature.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Error states</h3><span class="sp"></span>
+        <span class="pill">HUMAN MESSAGES</span></div>
+      ${STRAVA_ERRS.map(([n,m])=>`<div class="err">
+        <span class="en">${n}</span><span class="em">${m}</span></div>`).join('')}
+      <div class="ext"><i data-lucide="eye-off" width="14"></i>
+        Raw API responses, tokens and secrets are never surfaced to the athlete
+        or the coach.</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Privacy</h3><span class="sp"></span>
+        <span class="pill ok">PRIVACY BY DESIGN</span></div>
+      <div class="grid2" style="gap:11px">
+        <div class="f"><div class="fl2">What is imported</div>
+          <div class="fv" style="font-size:12.5px">Run · Trail Run · Walk</div>
+          <div class="fh">distance, duration, pace, heart rate, elevation</div></div>
+        <div class="f"><div class="fl2">What is not</div>
+          <div class="fv" style="font-size:12.5px">Routes, GPS, followers, profile</div>
+          <div class="fh">only what the coaching features actually use</div></div>
+        <div class="f"><div class="fl2">Who can see it</div>
+          <div class="fv" style="font-size:12.5px">You + your assigned coach</div>
+          <div class="fh">coach access is enforced server-side, not in the UI</div></div>
+        <div class="f"><div class="fl2">How to disconnect</div>
+          <div class="fv" style="font-size:12.5px">Disconnect above, anytime</div>
+          <div class="fh">sync stops and credentials are removed — your training
+            history in CoachMint is kept</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Provider abstraction</h3><span class="sp"></span>
+        <span class="pill accent">STRAVA ONLY</span></div>
+      <div class="flow">
+        <div class="fnode">Strava<br><span style="font:400 10.5px var(--font-mono);color:var(--ink3)">OAuth · webhook</span></div>
+        <span class="farrow">→</span>
+        <div class="fnode key">ExternalActivityProvider</div><span class="farrow">→</span>
+        <div class="fnode">CoachMint Activity</div><span class="farrow">→</span>
+        <div class="fnode">Athletics engine</div>
+      </div>
+      <div class="hr"></div>
+      <div style="font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink3);
+        text-transform:uppercase;margin-bottom:9px">Normalization (§11)</div>
+      <div class="blk-kv" style="border-top:0;padding-top:0">
+        <div class="kv"><div class="kl">Strava</div>
+          <div class="kvv" style="font-size:12.5px">moving_time</div></div>
+        <div class="kv"><div class="kl">→ CoachMint</div>
+          <div class="kvv" style="font-size:12.5px">duration</div></div>
+        <div class="kv"><div class="kl">Strava</div>
+          <div class="kvv" style="font-size:12.5px">average_heartrate</div></div>
+        <div class="kv"><div class="kl">→ CoachMint</div>
+          <div class="kvv" style="font-size:12.5px">heartRate</div></div>
+      </div>
+      <div class="ext"><i data-lucide="git-branch" width="14"></i>
+        The Athletics engine reads <b style="color:var(--ink)">CoachMint Activity</b>,
+        never a Strava payload. Garmin, Apple Health, Health Connect and Coros
+        plug into the same interface later — none of them are implemented, and
+        the unique key is <b style="color:var(--ink)">provider + providerActivityId</b>
+        so a re-delivered webhook updates the record instead of duplicating it.</div>
+    </div>
+  </div>`;
+}
+
+/* The dashboard a coach gets for ANY sport that has not extended the app.
+   Deliberately mirrors the shipping fitness dashboard — athletics panels
+   (Race calendar, Weekly volume, Recent PBs) do not belong here. */
+function vCoachBase(){
+  return `
+  <div class="grid4">
+    ${kpisFor(SEL).map(([l,v,s,d,c])=>kpi(l,v,s,d,c)).join('')}
+  </div>
+  <div class="grid32">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Needs your attention</h3><span class="sp"></span>
+        <span class="pill bad">3</span></div>
+      <div class="prow"><span class="pe">Reza Moradi</span>
+        <span class="pd2">Missed 2 sessions this week</span><span class="pill bad">MISSED</span></div>
+      <div class="prow"><span class="pe">Sara Ahmadi</span>
+        <span class="pd2">Protein target missed 3 days running</span>
+        <span class="pill warn">NUTRITION</span></div>
+      <div class="prow"><span class="pe">Neda Hosseini</span>
+        <span class="pd2">Measurement due · last taken 47 days ago</span>
+        <span class="pill warn">DUE</span></div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="fhdr"><h3 class="card-t">Today's sessions</h3><span class="sp"></span>
+        <span class="pill">6 SCHEDULED</span></div>
+      <table class="tbl">
+        <thead><tr><th>Athlete</th><th>Workout</th><th class="num">Start</th>
+          <th class="num">Duration</th></tr></thead>
+        <tbody>${[['Ali Rezaei','Push A','09:00','60 min','ok'],
+                  ['Sara Ahmadi','Full Body A','11:00','45 min','ok'],
+                  ['Mohammad Karimi','Leg A','14:30','65 min','idle'],
+                  ['Neda Hosseini','Pull A','17:00','55 min','idle'],
+                  ['Hamed Naderi','Push B','18:00','60 min','idle'],
+                  ['Maryam Sadeghi','Mobility B','19:00','40 min','idle']]
+          .map(([n,w,t,d,st])=>`<tr><td class="nm">${n}</td><td>${w}</td>
+            <td class="num">${t}</td><td class="num">
+              <span class="pill ${st}">${d}</span></td></tr>`).join('')}
+        </tbody></table>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Quick actions</h3></div>
+      <div class="grid2" style="gap:10px">
+        ${[['Add Client','users'],['Create Workout','dumbbell'],
+           ['Add Measurement','ruler'],['Schedule Session','calendar']]
+          .map(([l,ic])=>`<button class="btn btn-outline"
+            style="height:42px;justify-content:flex-start">
+            <i data-lucide="${ic}" width="16"></i> ${l}</button>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h3 class="card-t">Recent activity</h3></div>
+      ${[['Mohammad Karimi hit a new PR — Deadlift · 145 kg','3 h ago'],
+         ['Sara Ahmadi completed Full Body A — all sets logged','1 h ago'],
+         ['Ali Rezaei uploaded 2 progress photos','Yesterday'],
+         ['You created template Hypertrophy 4 Day','2 days ago']]
+        .map(([h,w])=>`<div class="prow"><span class="pe" style="min-width:0;flex:1">${h}
+          <span class="sub2">${w}</span></span></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+const VIEWS={
+  coach:{t:'Coach Dashboard',sFn:()=>`${SEL} · week 35 · 6 athletes`,
+         f:()=>isAthletic()?vCoachAth():vCoachBase(),btn:'New session',bi:'plus'},
+  load:{t:'Training Load',s:'Squad · last 8 weeks',f:vLoad,btn:'Export',bi:'download'},
+  profile:{t:'Athletes',s:'6 athletes · athletics profiles',f:vProfile,btn:'Add athlete',bi:'user-plus'},
+  builder:{t:'Builder',s:'Block-based running workout',f:vBuilder,btn:'New workout',bi:'plus'},
+  week:{t:'Week Plan',s:'Week 9 · Build · target 52 km',f:vWeek,btn:'Publish week',bi:'send'},
+  race:{t:'Races',s:'4 races · 1 upcoming in 12 days',f:vRace,btn:'Add race',bi:'flag'},
+  pbs:{t:'Personal Bests',s:'6 events · 5 PBs this season',f:vPbs,btn:'Record mark',bi:'medal'},
+  strava:{t:'Connected apps',s:'Strava · official OAuth + webhook · design mockup, not wired',f:vStrava,btn:'Sync Now',bi:'refresh-cw'}
+};
+
+/* ==========================================================================
+   SPORT EXTENSION ARCHITECTURE
+   THE RULE: a section belongs to a sport and appears ONLY when that sport is
+   picked in setup — and a future sport is added by adding ONE row below.
+   Nothing is hard-coded to "athletics"; Running & Endurance is simply the
+   first entry in the table.
+   ========================================================================== */
+/* What every coach gets regardless of sport — mirrors the shipping sidebar. */
+const NAV_BASE=[
+  {g:'Workspace',items:[['coach','Dashboard','layout-grid'],['clients','Clients','users'],
+    ['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],
+    ['messages','Messages','mail']]},
+  {g:'Today',items:[['progress','Progress','trending-up'],
+    ['measure','Measurements','ruler'],['nutrition','Nutrition','utensils']]},
+  {g:'Manage',items:[['challenges','Challenges','trophy'],['templates','Templates','layers'],
+    ['library','Exercise Library','book-open'],['notes','Notes','sticky-note']]}
+];
+/* `into`  appends to an existing group.
+   `group` creates a new one, rendered directly after Workspace.
+   `views` are screens this sport owns that are NOT sidebar entries
+           (the athlete's own phone view). */
+const SPORT_EXT={
+  /* ---- the first extension ---- */
+  'Running & Endurance':{
+    views:['athlete'],
+    groups:[
+      {into:'Workspace',items:[['week','Week Plan','calendar-days'],
+                               ['race','Races','flag']]},
+      {group:'Athletics',star:true,items:[['profile','Athletes','user-round'],
+        ['load','Training Load','gauge'],['pbs','Personal Bests','medal'],
+        ['strava','Strava','link']]}
+    ]
+  }
+  /* ---- future rows need no code changes ----
+  ,'Team Sports': { views:[], groups:[{group:'Team', star:true, items:[...]}] }
+  ,'CrossFit':    { views:[], groups:[{group:'CrossFit', star:true, items:[...]}] }
+  ,'Swimming':    { views:[], groups:[{group:'Aquatics', star:true, items:[...]}] }
+     --------------------------------------------------------------- */
+};
+/* Dashboard KPIs are part of the profile too — those four numbers are the
+   first thing that tells a coach "this is my sport's dashboard". */
+const KPI_BY_SPORT={
+  'Running & Endurance':[
+    ['Athletes in season','5','of 6','1 recovering',''],
+    ['Weekly volume','286','km','<span class="up">▲ 18 km</span> vs last','up'],
+    ['Sessions today','6','','3 completed · 3 to come',''],
+    ['Next race','6','d','Regional Open','']
+  ]
+};
+const KPI_BASE=[
+  ['Adherence','93','%','4-week rolling',''],
+  ['Active clients','6','','2 recovering',''],
+  ['Sessions today','6','','3 completed · 3 to come',''],
+  ['Hours this week','18','h','<span class="up">▲ 2 h</span> vs last','up']
+];
+const kpisFor=s=>KPI_BY_SPORT[s]||KPI_BASE;
+const isAthletic=()=>!!SPORT_EXT[SEL];
+
+let CURRENT='setup';
+function allowedViews(){
+  const ok=new Set(['setup','coach','builder']);
+  const ext=SPORT_EXT[SEL]; if(!ext) return ok;
+  (ext.views||[]).forEach(v=>ok.add(v));
+  (ext.groups||[]).forEach(g=>g.items.forEach(i=>ok.add(i[0])));
+  return ok;
+}
+function buildNav(){
+  const ext=(SPORT_EXT[SEL]||{}).groups||[];
+  const groups=NAV_BASE.map(g=>({g:g.g,star:false,items:g.items.map(i=>i.slice())}));
+  const fresh=[];
+  for(const e of ext){
+    const dest=groups.find(x=>x.g===e.into);
+    if(dest) dest.items.push(...e.items.map(i=>i.slice()));
+    else fresh.push({g:e.group,star:!!e.star,items:e.items.map(i=>i.slice())});
+  }
+  /* new sport groups sit right after Workspace, before Today */
+  groups.splice(groups.findIndex(x=>x.g==='Workspace')+1,0,...fresh);
+  const nav=$('#nav'); if(!nav) return;
+  nav.innerHTML=groups.map(gr=>
+    `<div class="nav-sec">${gr.g}${gr.star?' <i>★</i>':''}</div>`+
+    gr.items.map(([k,l,ic])=>
+      `<div class="nav-it ${CURRENT===k?'on':''}" data-go="${k}">
+         <i data-lucide="${ic}" width="17"></i><span class="lb">${l}</span>
+         <span class="nav-dot"></span></div>`).join('')
+  ).join('')+
+  `<div class="nav-it" style="margin-top:6px"><i data-lucide="settings" width="17"></i>
+     <span class="lb">Settings</span></div>`;
+}
+function syncSport(){
+  const ok=allowedViews();
+  /* The mockbar is the review harness, but it must mirror the product: a screen
+     the selected sport does not own is not offered. Pick Running & Endurance
+     in step 1 to bring them back. */
+  $$('.mb[data-go]').forEach(b=>{ b.style.display=ok.has(b.dataset.go)?'':'none'; });
+  buildNav();
+  const badge=$('#sportBadge');
+  if(badge) badge.innerHTML=`<i data-lucide="activity" width="12"></i> ${SEL}`;
+  if(CURRENT && !ok.has(CURRENT) && VIEWS[CURRENT]) go('coach');
+  window.lucide&&lucide.createIcons();
+}
+
+/* ------------------------------ router --------------------------------- */
+function go(name){
+  if(name==='setup'){
+    $('#ws').style.display='none'; $('#athlete').classList.remove('on');
+    $('#setup').classList.add('on');
+    $$('.mb').forEach(b=>b.classList.toggle('on',b.dataset.go==='setup'));
+    window.scrollTo({top:0}); return;
+  }
+  if(name==='athlete'){
+    $('#ws').style.display='none'; $('#setup').classList.remove('on');
+    $('#athlete').classList.add('on');
+    $$('.mb').forEach(b=>b.classList.toggle('on',b.dataset.go==='athlete'));
+    window.scrollTo({top:0}); window.lucide&&lucide.createIcons(); return;
+  }
+  const v=VIEWS[name]; if(!v) return;
+  /* a screen the current sport does not own is not reachable */
+  if(!allowedViews().has(name)) return;
+  CURRENT=name;
+  $('#setup').classList.remove('on'); $('#athlete').classList.remove('on');
+  $('#ws').style.display='grid';
+  $('#ttl').textContent=v.t;
+  $('#tsub').textContent=v.sFn?v.sFn():v.s;
+  $('#views').innerHTML=v.f();
+  $('#topBtn').innerHTML=`<i data-lucide="${v.bi}" width="15"></i> ${v.btn}`;
+  $$('.mb').forEach(b=>b.classList.toggle('on',b.dataset.go===name));
+  $$('.nav-it[data-go]').forEach(n=>n.classList.toggle('on',n.dataset.go===name));
+  window.scrollTo({top:0});
+  window.lucide&&lucide.createIcons();
+}
+
+/* --------------------------- wizard steps ------------------------------ */
+let step=1, SEL='Running & Endurance';
+function setStep(n,back){
+  const from=$(`.obstep[data-s="${step}"]`), to=$(`.obstep[data-s="${n}"]`);
+  if(!to||n===step) return;
+  from.classList.remove('on'); void to.offsetWidth; to.classList.add('on');
+  step=n;
+  $$('.ob-dot').forEach(d=>{const i=+d.dataset.d;
+    d.classList.toggle('done',i<n); d.classList.toggle('now',i===n);});
+  if(n===5){
+    const box=$('.obstep[data-s="5"]');
+    box.classList.remove('build-anim'); void box.offsetWidth; box.classList.add('build-anim');
+    const n=$('#obN')||{};
+    $('#buildTitle').textContent=`${SEL} · ${n.value||'—'} athletes`;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  window.lucide&&lucide.createIcons();
+}
+
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');  if(g){go(g.dataset.go);return}
+  const n=e.target.closest('[data-next]');if(n){setStep(+n.dataset.next,false);return}
+  const p=e.target.closest('[data-prev]');if(p){setStep(+p.dataset.prev,true);return}
+  const sk=e.target.closest('[data-skip]');if(sk){setStep(5,false);return}
+  const o=e.target.closest('.opt');
+  if(o){
+    const grid=o.parentElement;
+    [...grid.querySelectorAll('.opt')].forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel');
+    /* the Build headline must come from data-sp, not from inner text — the
+       Athletics card carries a "NEW ENGINE" badge inside its <b>. */
+    if(o.dataset.sp!==undefined){ SEL=o.dataset.sp; syncSport(); }
+    return;
+  }
+  const sg=e.target.closest('.seg span');
+  if(sg){[...sg.parentElement.children].forEach(x=>x.classList.remove('on'));
+    sg.classList.add('on'); return}
+  const fs=e.target.closest('.fsel');
+  if(fs&&fs.tagName==='SELECT')return;
+  const ec=e.target.closest('.ev-chip');
+  if(ec&&ec.parentElement.classList.contains('chips')){
+    [...ec.parentElement.children].forEach(x=>x.classList.remove('on'));
+    ec.classList.add('on'); return}
+  if(e.target.closest('#themeBtn')){
+    const h=document.documentElement;
+    h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';
+    document.body.style.background=h.dataset.theme==='dark'?'var(--bg)':'#F6F7F9';
+    return}
+});
+
+$$('.ob-dot').forEach(d=>{const i=+d.dataset.d;
+  d.classList.toggle('done',i<1); d.classList.toggle('now',i===1);});
+syncSport();
+window.lucide&&lucide.createIcons();
+</script>
+</body>
+</html>
