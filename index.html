@@ -1438,6 +1438,128 @@ body.sb-open .scrim{display:block}
 .tbx-orb{position:absolute;top:50%;inset-inline-start:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--surface);color:var(--accent-deep);display:grid;place-items:center;cursor:pointer;border:1px solid var(--acc-line);box-shadow:0 8px 24px -6px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translate(0,0) scale(.3);transition:transform .38s var(--e,cubic-bezier(.22,.61,.2,1)),opacity .28s ease}
 .tbx-orb .ic{stroke-width:2}
 .tbx-wrap.open .tbx-orb{opacity:1;pointer-events:auto}
+/* ═══════════════════════════════════════════════════════════════════
+   v19.19 — MOBILE FLOOR. Five things the desktop does not have, because
+   a coach on the gym floor answers "who is next and what do I do" in one   glance and logs a set with one thumb:   · .mfloor-now  the NOW hero — a bar under the countdown, so "38 min left"     is evidence, not a claim   · .mrail       every athletics view, one tap, without opening More   · .msig        derived signals (the app's own attention data, one row each)
+   · .mpulse      a ring per athlete, arced to their week   · the Live screen, plus two overlays (Jump palette, log sheet)   OVERLAYS ARE CHILDREN OF .mshell, NEVER OF A SCREEN: a .mmain descendant   with a transform becomes the containing block for position:fixed/absolute   children, which is exactly how a bottom sheet ends up pinned to the wrong   box. All colours come from the theme tokens — nothing is hard-coded.
+   ═══════════════════════════════════════════════════════════════════ */
+.mfloor-now{position:relative}
+.mfloor-now .mprog{height:6px;border-radius:99px;background:var(--line2);margin-top:10px;overflow:hidden}
+.mfloor-now .mprog i{display:block;height:100%;border-radius:99px;background:var(--accent);
+  transform-origin:left;animation:mbarGrow .28s cubic-bezier(.22,.61,.2,1) both}
+@keyframes mbarGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.mrail{display:flex;gap:7px;overflow-x:auto;padding:3px 0 4px;scrollbar-width:none}
+.mrail::-webkit-scrollbar,.mpulse::-webkit-scrollbar{display:none}
+.mrail .fchip{flex:none;height:38px;display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:0 14px}
+.msig{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:11px 14px;border-radius:12px;cursor:pointer}
+.msig .msig-i{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none;
+  background:var(--accent-soft);color:var(--accent-deep)}
+.msig.warn .msig-i{background:var(--amber-soft);color:var(--amber)}
+.msig.bad .msig-i{background:var(--red-soft);color:var(--red)}
+.msig .msig-t{font-weight:650;font-size:13px}
+.msig .msig-s{font-size:11px;color:var(--ink3);margin-top:2px}
+.msig .msig-v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+  color:var(--ink2);font-variant-numeric:tabular-nums}
+.mpulse{display:flex;gap:10px;overflow-x:auto;padding:3px 0 4px;scrollbar-width:none}
+.mpulse .mp{flex:none;width:58px;background:none;border:0;padding:0;cursor:pointer;color:inherit}
+.mpulse .mp .r{position:relative;width:46px;height:46px;margin:0 auto;display:grid;place-items:center}
+.mpulse .mp .r svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.mpulse .mp .r .tr{fill:none;stroke:var(--line);stroke-width:2.5;opacity:.75}
+.mpulse .mp .r .pg{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-dasharray:125.66}
+.mpulse .mp.watch .r .pg{stroke:var(--amber)}
+.mpulse .mp.risk .r .pg{stroke:var(--red)}
+.mpulse .mp.idle .r .pg{stroke:var(--line-strong,var(--line))}
+.mpulse .mp .r b{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;position:relative}
+.mpulse .mp .nm{display:block;font-size:10px;color:var(--ink3);margin-top:6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ── live session ──────────────────────────────────────────────── */
+.mlive-ring{position:relative;width:184px;height:184px;margin:6px auto 2px}
+.mlive-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.mlive-ring .tr{fill:none;stroke:var(--line2);stroke-width:11}
+.mlive-ring .pg{fill:none;stroke:var(--accent);stroke-width:11;stroke-linecap:round;
+  stroke-dasharray:515.2;transition:stroke-dashoffset .2s ease}
+.mlive-ring .fc{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:5px}
+.mlive-ring .fc .tm{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:40px;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.mlive-ring .fc .lb{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.mlive-ring .fc .sb2{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;color:var(--accent-deep)}
+.mstep{display:grid;grid-template-columns:60px minmax(0,1fr) 60px;gap:10px;align-items:center;
+  padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.mstep .sb3{height:56px;border-radius:11px;border:1px solid var(--line2);background:var(--surface);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.mstep .sb3:active{transform:scale(.93)}
+.mstep .sb3.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.mstep .mid{text-align:center;min-width:0}
+.mstep .cnt{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:30px;line-height:1;
+  font-variant-numeric:tabular-nums}
+.mstep .cnt small{font-size:14px;color:var(--ink3)}
+.mstep .lb{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.mstep .segs{grid-column:1/-1;display:flex;gap:6px}
+.mstep .segs i{flex:1;height:5px;border-radius:99px;background:var(--line2)}
+.mstep .segs i.done{background:var(--accent)}
+.mstep .segs i.now{background:var(--acc-mid)}
+.mrpe{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mrpe .r2{height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink2);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+  cursor:pointer;display:grid;place-items:center}
+.mrpe .r2.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* The semantic hues FLIP between themes — --amber is a dark ochre in light and
+   a pale peach in dark — so a fixed white on top fails on one of them (it
+   measured 1.70 on dark). The theme-aware soft pair keeps --ink legible in   both: --amber-soft/--red-soft are opaque tints in light and translucent   ones over a dark surface, so --ink lands on a usable surface either way. */
+.mrpe .r2.hard.on{background:var(--amber-soft);border-color:var(--amber);color:var(--ink)}
+.mrpe .r2.max.on{background:var(--red-soft);border-color:var(--red);color:var(--ink)}
+.mtool{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mtool button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  min-height:64px;padding:10px 4px;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface);color:var(--ink2);font-size:11px;font-weight:600;cursor:pointer}
+.mtool button:active{transform:scale(.95);background:var(--accent-soft)}
+/* ── overlays ──────────────────────────────────────────────────── */
+.mjump{position:fixed;inset:0;z-index:70;background:var(--surface);display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transform:translateY(10px);
+  transition:opacity .22s ease,transform .22s ease}
+.mshell[data-jump] .mjump{opacity:1;pointer-events:auto;transform:none}
+.mjump-in{display:flex;gap:9px;align-items:center;padding:14px 14px 12px;border-bottom:1px solid var(--line)}
+.mjump-b{flex:1;overflow-y:auto;padding:13px 14px 90px;display:flex;flex-direction:column;gap:16px}
+.mjump-sec{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:0 0 8px}
+.mjump-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mjump-it{display:flex;align-items:center;gap:9px;padding:12px 13px;min-height:48px;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);
+  font-weight:650;font-size:12.5px;cursor:pointer;text-align:start}
+.mjump-it:active{transform:scale(.97);background:var(--accent-soft)}
+.mjump-it .ic{color:var(--accent-deep);flex:none}
+.mjump-it span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msheet-scrim{position:fixed;inset:0;background:rgba(9,11,14,.5);z-index:70;opacity:0;
+  pointer-events:none;transition:opacity .2s}
+.mshell[data-sheet] .msheet-scrim{opacity:1;pointer-events:auto}
+.msheet{position:fixed;left:0;right:0;bottom:0;z-index:71;background:var(--surface);
+  border-top-left-radius:18px;border-top-right-radius:18px;border-top:1px solid var(--line);
+  padding:10px 14px calc(18px + env(safe-area-inset-bottom,0px));max-height:86vh;overflow-y:auto;
+  transform:translateY(102%);transition:transform .24s cubic-bezier(.22,.61,.2,1);
+  box-shadow:0 -12px 32px -8px rgba(0,0,0,.35)}
+.mshell[data-sheet] .msheet{transform:none}
+.msheet .handle{width:38px;height:4px;border-radius:99px;background:var(--line2);margin:2px auto 12px}
+.msheet .field{margin-bottom:12px}
+.msheet .field label{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink3);display:block;margin-bottom:6px}
+/* the sheet is the one place a coach types with one hand mid-session — every
+   control clears the 44px floor WITHOUT touching the app's shared .btn/.inp
+   sizes, which other screens depend on. */
+.msheet .inp,.msheet .sel,.msheet .ta{height:44px;min-height:44px}
+.msheet .btn{height:44px;min-height:44px}
+.msheet .btn-icon{width:44px;height:44px;padding:0}
+.msheet .fchip{height:44px}
+.mfchips{display:flex;gap:6px;flex-wrap:wrap}
+/* the coach's Log button lives in the THUMB BAR, not floating over content */
+.cnav-fab{position:absolute;left:50%;bottom:calc(34px + env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:var(--accent);
+  color:var(--accent-ink);border:3px solid rgba(13,15,19,.94);display:grid;place-items:center;
+  cursor:pointer;z-index:16;box-shadow:0 8px 20px -4px rgba(0,0,0,.5)}
+.cnav-fab:active{transform:translateX(-50%) scale(.94)}
+.cnav-gap{visibility:hidden}
+@media (prefers-reduced-motion:reduce){
+  .mfloor-now .mprog i,.msheet,.mjump{animation:none!important;transition:none!important}
+}
 /* orbit positions: arc up and around the box (RTL-safe via logical side) */
 .tbx-wrap.open .tbx-orb[data-orb="1"]{transform:translate(calc(var(--tbx-dx,1) * 58px),-46px) scale(1)}
 .tbx-wrap.open .tbx-orb[data-orb="2"]{transform:translate(calc(var(--tbx-dx,1) * 8px),-84px) scale(1)}
@@ -3514,8 +3636,76 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
 let __lastPack='';
+/* ================================================================ v19.19
+   LIVE SESSION — the coach on the gym floor (mobile).
+   A single running session per workspace, in its own array so the timer   survives a locked phone, a tab switch and a cloud pull. Two rules keep it   honest:
+     1. The clock is anchored to `startedAt`, never to a counter — nothing   drifts and nothing has to tick while the tab is in the background.
+     2. Ending a session writes ONE row into DB[cid].log, the same log the   client portal reads, so the coach's view and the athlete's view can never   disagree. `sets:[]` means "no per-set load was recorded"; it is never   filled with zeros, because a zero load is a lie.
+   Rides the workspace payload like TLOG. Merge is a plain id-union plus   tombstone, so ending marks the record dead and the next pull clears it off   every other device. */
+function defaultLive(){return []}
+let LIVE=[];
+/* the newest running record — two devices may each hold one; the floor shows   whichever was touched last, never both. */
+const liveRec=()=>LIVE.length?LIVE.slice().sort((a,b)=>(b.at||0)-(a.at||0))[0]:null;
+function liveStart(cid,evId){
+  const c=CLIENTS.find(x=>x.id===+cid);if(!c)return null;
+  /* one session at a time: a second start retires the first, tombstoned so   it does not come back on the next pull */
+  LIVE.slice().forEach(r=>markDead('LIVE',r.id));LIVE.length=0;
+  const ev=EVENTS.find(e=>e.id===evId)||null;
+  const w=todaysPlan(c.id).w;
+  const rec={id:uid(),cid:c.id,name:c.name,at:Date.now(),
+    label:ev?ev.label:(w?w.name:t('Session')),evId:ev?ev.id:null,
+    startedAt:Date.now(),done:0,restEnd:0,
+    set:0,sets:(w&&Array.isArray(w.exercises)&&w.exercises.length)?w.exercises.length:4,
+    rpe:null,paused:false,restSec:90,notes:[],endedAt:0};
+  LIVE.push(rec);
+  ACTIVITY.unshift({w:'Just now',i:'zap',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(c.name)}</b> را شروع کردید`:`<b>You</b> started a session with <b>${esc(c.name)}</b>`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  saveData();return rec;
+}
+/* ── the clock ──────────────────────────────────────────────────────────
+   elapsed = done (everything before the current stretch) + (now − startedAt).
+   Pausing folds the current stretch into `done` and resuming restarts
+   `startedAt`, so a locked phone, a tab switch or ten pause/resume cycles   can never drift or double-count. `startedAt` is the only anchor and it is   never re-derived from a counter. */
+function liveSec(r){if(!r)return 0;
+  const span=r.paused?0:(Date.now()-(+r.startedAt||Date.now()));
+  return Math.max(0,Math.floor(((+r.done||0)+span)/1000))}
+function liveElapsed(r){return Math.round(liveSec(r)/60)}
+function livePause(){const r=liveRec();if(!r)return null;
+  if(r.paused){r.paused=false;r.startedAt=Date.now()}
+  else{r.done=(+r.done||0)+Math.max(0,Date.now()-(+r.startedAt||Date.now()));r.paused=true}
+  r.at=Date.now();saveData();return r}
+/* completing a set starts the rest clock; the ring counts it down */
+function liveSet(d){const r=liveRec();if(!r)return;
+  r.set=Math.max(0,Math.min((+r.sets||0),(+(r.set||0))+(+d||0)));
+  if(+d>0)r.restEnd=Date.now()+(+r.restSec||0)*1000;
+  r.at=Date.now();saveData()}
+function liveRestLeft(r){if(!r)return 0;
+  return Math.max(0,Math.ceil(((+r.restEnd||0)-Date.now())/1000))}
+function liveRpe(v){const r=liveRec();if(!r)return;
+  r.rpe=(+r.rpe===+v)?null:+v||null;r.at=Date.now();saveData()}
+function liveRest(sec){const r=liveRec();if(!r)return;
+  r.restSec=Math.max(15,Math.min(600,Math.round(sec)));r.at=Date.now();saveData()}
+function liveNote(txt){const r=liveRec();if(!r)return false;
+  const body=String(txt==null?'':txt).trim().slice(0,400);if(!body)return false;
+  r.notes.push({at:Date.now(),body});r.at=Date.now();saveData();return true}
+function liveEnd(){
+  const r=liveRec();if(!r)return null;
+  const d=new Date(r.startedAt);
+  const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const min=Math.max(1,liveElapsed(r));
+  if(!DB[r.cid])DB[r.cid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+  if(!Array.isArray(DB[r.cid].log))DB[r.cid].log=[];
+  /* sets:[] on purpose — a duration and an RPE were recorded, a load was not */
+  DB[r.cid].log.unshift({id:'ls'+r.id,n:r.label||t('Session'),d:iso,at:r.startedAt,
+    sets:[],done:+r.set||0,total:+r.sets||0,vol:0,rpe:+r.rpe||0});
+  ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(r.name)}</b> را ثبت کردید — ${nf(min)} ${t('min')}`:`<b>You</b> logged <b>${esc(r.name)}</b> — ${nf(min)} ${t('min')}`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  markDead('LIVE',r.id);LIVE.length=0;saveData();
+  return {min,rpe:+r.rpe||0,sets:+r.set||0,cid:r.cid,name:r.name};
+}
+/* ============================ persistence ============================ */
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
    held A's clients, and the first sync "seeded" B's empty workspace with them
@@ -3545,7 +3735,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -3585,6 +3775,8 @@ function loadData(){
     repl(PHASES,d.PHASES||[]);
     repl(RUNW,d.RUNW||[]);
     repl(TLOG,d.TLOG||[]);
+    /* LIVE has no seed rows, so a missing key is simply "nothing running" —   no backfill guard needed (that guard exists for stores whose demo rows   must survive an old payload). */
+    repl(LIVE,d.LIVE||[]);
     if(!hadRACES)defaultRaces().forEach(r=>RACES.push(r));
     if(!hadPBSD)defaultPbs().forEach(p=>PBSD.push(p));
     if(!Array.isArray(d.APROF))defaultAprof().forEach(p=>APROF.push(p));
@@ -3682,6 +3874,7 @@ function freshWorkspace(){
   NLOGS.length=0;NCHAT.length=0;NINS.length=0;NRULES.length=0;
   defaultNrules().forEach(r=>NRULES.push(r));
   FORMS.length=0;CHALLENGES.length=0;RACES.length=0;PBSD.length=0;APROF.length=0;PHASES.length=0;RUNW.length=0;TLOG.length=0;
+  LIVE.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
   // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
@@ -4038,7 +4231,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -4175,7 +4368,7 @@ function cloudMerge(d,adopt){
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
   // v18.48 — NLOGS/NCHAT/NINS/NRULES join the same id-union path.
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['RACES',RACES],['PBSD',PBSD],['APROF',APROF],['PHASES',PHASES],['RUNW',RUNW],['TLOG',TLOG],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['RACES',RACES],['PBSD',PBSD],['APROF',APROF],['PHASES',PHASES],['RUNW',RUNW],['TLOG',TLOG],['LIVE',LIVE],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -4242,9 +4435,17 @@ function cloudMerge(d,adopt){
       if(xidx[x.id]===undefined){CEXS.push(x);xidx[x.id]=CEXS.length-1;ch=true;__cexChanged=true}
     });
   }
-  // onboarding answers — the coach's own device wins only while local is
-  // unfinished; once done:true anywhere, it propagates everywhere.
-  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&(d.ONBOARD.done||!ONBOARD.done)&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){ONBOARD=d.ONBOARD;ch=true}
+  /* v19.17 — ONBOARD is LAST-WRITER-WINS by `at`. The old rule was
+     "remote wins whenever it is done:true", and cloudPush() merges the remote   payload BEFORE it puts, while cloudPull() runs every 7s — so a coach who had   just picked a sport had it reverted seconds later, and the reverted value was   then pushed. Reproduced exactly: pick Running (ath rail 20, 3 athletics items)   → merge a payload 60s older → sport null, rail 14, 0 items.
+     `at` is stamped by the wizard, by onb-skip and by the Settings sport
+     selector. The last branch stops a brand-new device that skipped setup from   erasing a sport it simply does not have yet; when the ages tie we keep the   historical rule so legacy payloads behave exactly as before. */
+  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){
+    const ra=+d.ONBOARD.at||0, la=+ONBOARD.at||0;
+    const adopt = ra>la
+      || (ra===la && (d.ONBOARD.done||!ONBOARD.done))
+      || (la>ra && !ONBOARD.sport && !!d.ONBOARD.sport);
+    if(adopt){ONBOARD=d.ONBOARD;ch=true}
+  }
   /* v18.35 — design template: last-writer-wins. The remote value always wins
      on pull (the device that just switched it pushed it); local changes push
      immediately via saveData→cloudSchedule. */
@@ -4533,7 +4734,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,calOff:0,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
-mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
+mtab:'today',mview:'tabs',mClient:1,mcf:'All',mlogCid:null,msheet:false,mjump:false,macc:{},cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
 nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null};
@@ -9235,6 +9436,290 @@ function loadTpl(tp){
 }
 
 /* ================= COACH MOBILE ================= */
+/* ════════════════════════════════ MOBILE FLOOR · v19.19 ════════════════
+   A coach on the gym floor answers three things at a glance: who is next,   what do I do, and where do I log it. Every widget below reads data the   workspace ALREADY has — nothing here invents a number, and nothing is   shown that could not be derived from a row that exists.                       ═════════════════════════════════════════════════════════════════════ */
+const mInit=n=>String(n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+const mFirst=n=>{const s=String(n||'').trim();return s?s.split(/\s+/)[0]:s};
+const mClock=s=>{s=Math.max(0,Math.round(+s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+/* RPE drift — mean of the last three logged sessions vs the three before.
+   Below six sessions there is nothing to compare, so it returns null and the
+   row is simply not rendered. Never a guess. */
+function rpeDrift(cid){
+  const rows=TLOG.filter(x=>+x.cid===+cid)
+    .sort((a,b)=>((b.w||0)-(a.w||0))||((a.date||'')<(b.date||'')?1:-1));
+  if(rows.length<6)return null;
+  const now=rows.slice(0,3).reduce((s,x)=>s+(+x.rpe||0),0)/3;
+  const bef=rows.slice(3,6).reduce((s,x)=>s+(+x.rpe||0),0)/3;
+  return {d:Math.round((now-bef)*10)/10,now:Math.round(now*10)/10,bef:Math.round(bef*10)/10};
+}
+/* ── athletics quick rail — the SAME SPORT_EXT rows the desktop claims ── */
+function mRail(){
+  if(!isAthletics())return '';
+  const items=[];sportSections().forEach(g=>g.items.forEach(it=>items.push(it)));
+  if(!items.length)return '';
+  return `<div class="mrail">${items.map(([k,l,i])=>
+    `<button class="fchip" data-act="mnav" data-v="${k}">${ic(i,14)}${t(l)}</button>`).join('')}</div>`;
+}
+/* ── NOW hero ──────────────────────────────────────────────────────────
+   The bar is the point: "38 min left" is a claim, the bar is the evidence. */
+function mNow(){
+  const r=liveRec();
+  if(r){
+    return `<div class="ccard mfloor-now" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)">
+      <div class="row" style="justify-content:space-between">
+        <span class="eyebrow" style="color:var(--accent-deep)">${ic('zap',12)} ${t('Live now')}</span>
+        <span class="bdg bdg-lime" style="font-size:10px">${nf(liveElapsed(r))} ${t('min')}</span></div>
+      <b style="display:block;margin-top:8px;font-size:15px">${esc(t(r.name))}</b>
+      <div class="muted" style="font-size:12px">${esc(t(r.label||t('Session')))} · ${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}${r.rpe!=null?` · RPE ${nf(r.rpe)}`:''}</div>
+      <div class="row" style="gap:8px;margin-top:12px">
+        <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-open">${ic('play',14)} ${t('Open session')}</button>
+        <button class="btn btn-outline btn-sm" data-act="live-end">${ic('check',14)} ${t('Finish')}</button></div>
+    </div>`;
+  }
+  const todays=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const running=todays.find(e=>e.start<=NOW&&e.start+e.dur>NOW&&!e.att)||null;
+  const ev=running||todays.find(e=>e.start>NOW&&!e.att)||null;
+  const doneN=todays.filter(e=>e.start+e.dur<=NOW||e.att).length;
+  const pctv=todays.length?Math.round(doneN/todays.length*100):0;
+  const cc=ev?CLIENTS.find(c=>c.name===ev.client):null;
+  return `<div class="ccard mfloor-now">
+    <div class="row" style="justify-content:space-between">
+      <span class="eyebrow">${running?t('Now'):t('Next up')}</span>
+      ${ev?`<span class="bdg ${running?'bdg-lime':'bdg-amber'}" style="font-size:10px">${nf(fmtT(ev.start))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</span>`
+            :`<span class="bdg bdg-gray" style="font-size:10px">${t('Free')}</span>`}</div>
+    <div class="mprog" role="img" aria-label="${nf(doneN)}/${nf(todays.length)} ${t('sessions done')}"><i style="width:${pctv}%"></i></div>
+    ${ev?`<div class="row" style="gap:11px;margin-top:11px">
+      ${cc?avC(cc.name,42):av(t('Coach'),42,3)}
+      <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(t(ev.client))}</b>
+      <div class="muted" style="font-size:12px">${esc(t(ev.label))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</div></div></div>
+      <div class="row" style="gap:8px;margin-top:12px">
+        <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-start"${cc?` data-cid="${cc.id}"`:''} data-eid="${ev.id}">${ic('play',14)} ${t('Start session')}</button>
+        ${cc?`<button class="btn btn-outline btn-sm" data-act="mclient" data-cid="${cc.id}">${t('Open')}</button>`:''}</div>`
+    /* the bar is derived from todays.length, so saying "no events" under a   1/1 bar was a direct contradiction — split the two cases. */
+    :`<div class="muted" style="font-size:12px;padding:10px 0">${todays.length?t('All sessions done for today'):t('No events this day')}</div>`}
+  </div>`;
+}
+/* ── signals ─────────────────────────────────────────────────────────
+   The app's OWN attention list, one row each — plus an athletics-only RPE   drift computed from TLOG. The icon colour carries the severity; the text   carries the meaning. */
+function mSignals(){
+  const out=[];
+  if(isAthletics())CLIENTS.filter(c=>c.status==='Active').forEach(c=>{
+    const d=rpeDrift(c.id);
+    if(d&&d.d>=1.5)out.push({cls:'warn',icon:'chart',
+      t:`RPE ${d.d>0?'+':''}${nf(d.d)}`,s:`${t(c.name)} · ${nf(d.bef)} → ${nf(d.now)}`,
+      act:'open-client',data:`data-cid="${c.id}"`});
+  });
+  attentionList().forEach(it=>{
+    if(out.length>=6)return;
+    out.push({cls:it.bt==='bdg-red'?'bad':(it.bt==='bdg-amber'?'warn':''),
+      icon:it.icon,t:t(it.why),s:`${t(it.name)}${it.d?' · '+t(it.d):''}`,
+      act:it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client',
+      data:it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code||'')}"`:`data-cid="${it.cid}"`});
+  });
+  if(!out.length)return '';
+  return `<div class="ccard" style="padding:6px 14px">
+    <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Signals')} · ${nf(out.length)}</div>
+    ${out.map(s=>`<div class="msig ${s.cls}" data-act="${s.act}" ${s.data}>
+      <span class="msig-i">${ic(s.icon,15)}</span>
+      <div style="min-width:0"><div class="msig-t">${esc(s.t)}</div><div class="msig-s">${esc(s.s)}</div></div>
+      ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
+  </div>`;
+}
+/* ── squad pulse ──────────────────────────────────────────────────────
+   The ring is arced to that athlete's attendance rate — the SAME attCnt()
+   the desktop uses. r=20 → circumference 125.66, rotated −90° so it starts
+   at twelve o'clock. The colour is the status, not decoration. */
+function mSquad(){
+  const list=CLIENTS.filter(c=>c.status!=='Archived');
+  if(!list.length)return '';
+  const C=2*Math.PI*20;
+  return `<div class="ccard" style="padding:6px 14px">
+    <div class="card-t" style="padding:10px 0 4px">${ic('users',14)} ${t('Squad')} · ${nf(list.length)}</div>
+    <div class="mpulse">${list.map(c=>{
+      const ac=attCnt(c.name);
+      const tot=(+ac.d||0)+(+ac.m||0);
+      /* no recorded attendance is NOT 100%: defaulting to a full ring made   every untouched athlete look perfectly on track. Zero evidence → empty   arc + the neutral state colour. */
+      const rate=tot?Math.round((+ac.d||0)/tot*100):0;
+      const st=c.status==='On Hold'||c.status==='Paused'?'watch'
+        :(c.status==='Inactive'||(tot&&rate<60))?'risk':(tot?'ok':'idle');
+      const off=(C*(1-Math.max(0,Math.min(100,rate))/100)).toFixed(2);
+      /* "0 of 0 sessions" reads like a score. No recorded attendance is a   different statement and must say so. */
+      const cnt=tot?`${nf(ac.d)}/${nf(tot)} ${t('sessions')}`:t('No attendance recorded');
+      return `<button class="mp ${st}" data-act="mclient" data-cid="${c.id}"
+        title="${esc(t(c.name))} — ${esc(cnt)}"
+        aria-label="${esc(t(c.name))}, ${esc(cnt)}">
+        <span class="r"><svg viewBox="0 0 46 46" aria-hidden="true">
+          <circle class="tr" cx="23" cy="23" r="20"/><circle class="pg" cx="23" cy="23" r="20"
+          stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${off}"/></svg>
+          <b>${esc(mInit(c.name))}</b></span>
+        <span class="nm">${esc(mFirst(t(c.name)))}</span></button>`;
+    }).join('')}</div></div>`;
+}
+/* ── LIVE SESSION screen ────────────────────────────────────────────── */
+function mLive(){
+  const r=liveRec();
+  const back=`<div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Live session')}</b>${r?`<span class="sp"></span><span class="bdg bdg-lime" style="font-size:10px">${t('Recording')}</span>`:''}</div>`;
+  if(!r)return `<div class="mstack">${back}
+    <div class="ccard cempty">${ic('clock',24)}<b>${t('No session running')}</b>
+    <span class="muted" style="font-size:12px">${t('Start one from Today, or from an athlete')}</span></div></div>`;
+  const c=CLIENTS.find(x=>x.id===r.cid);
+  const rest=liveRestLeft(r);
+  const R=82,C=2*Math.PI*R;
+  const dash=rest>0?(C*Math.max(0,Math.min(1,rest/(+r.restSec||90)))).toFixed(1):'0';
+  return `<div class="mstack">${back}
+    ${c?`<div class="ccard row" style="gap:11px" data-act="mclient" data-cid="${c.id}">
+      ${avC(c.name,42)}<div style="flex:1;min-width:0"><b style="font-size:14px">${esc(t(c.name))}</b>
+      <div class="muted" style="font-size:11.5px">${esc(t(r.label||t('Session')))}</div></div>
+      ${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`:''}
+    <div class="ccard">
+      <div class="mlive-ring">
+        <svg viewBox="0 0 184 184" aria-hidden="true">
+          <circle class="tr" cx="92" cy="92" r="${R}" fill="none"/>
+          <circle class="pg" id="restRing" cx="92" cy="92" r="${R}" fill="none" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${dash}"/></svg>
+        <div class="fc">
+          <span class="lb" id="restLbl">${rest>0?t('Rest'):t('Elapsed')}</span>
+          <span class="tm" id="liveClock">${rest>0?mClock(rest):mClock(liveSec(r))}</span>
+          <span class="sb2">${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}</span></div>
+      </div>
+      <div class="mstep">
+        <button class="sb3" data-act="live-set" data-d="-1" aria-label="${t('Fewer sets')}">${ic('chevD',22)}</button>
+        <div class="mid">
+          <div class="cnt">${nf(r.set||0)}<small>/${nf(r.sets||0)}</small></div>
+          <div class="lb">${esc(t(r.label||t('Session')))}</div></div>
+        <button class="sb3 go" data-act="live-set" data-d="1" aria-label="${t('Set done')}">${ic('plus',22)}</button>
+        <div class="segs" aria-hidden="true">${Array.from({length:Math.max(1,+r.sets||4)},(_,i)=>
+          `<i class="${i<(+r.set||0)?'done':(i===(+r.set||0)?'now':'')}"></i>`).join('')}</div>
+      </div>
+    </div>
+    <div class="ccard">
+      <div class="card-t" style="margin-bottom:8px">${t('Session RPE')}</div>
+      <div class="mrpe">${[1,2,3,4,5,6,7,8,9,10].map(v=>
+        `<button class="r2 ${v>=8&&v<10?'hard':''} ${v===10?'max':''} ${+r.rpe===v?'on':''}" data-act="live-rpe" data-v="${v}">${nf(v)}</button>`).join('')}</div>
+      ${r.rpe!=null?`<div class="muted" style="font-size:11px;margin-top:8px">${t('Tap again to clear')}</div>`:''}
+    </div>
+    <div class="mtool">
+      <button data-act="live-note">${ic('note',20)}${t('Note')}</button>
+      <button data-act="live-photo">${ic('camera',20)}${t('Photo')}</button>
+      <button data-act="live-rest">${ic('stopwatch',20)}${t('Rest')}</button>
+      <button data-act="live-pause">${ic(r.paused?'play':'pause',20)}${r.paused?t('Resume'):t('Pause')}</button>
+    </div>
+    ${r.notes&&r.notes.length?`<div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Notes')} · ${nf(r.notes.length)}</div>
+      ${r.notes.slice(-3).reverse().map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)">
+      <div style="font-size:12.5px">${esc(n.body)}</div>
+      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${nf(new Date(n.at).getHours())}:${String(new Date(n.at).getMinutes()).padStart(2,'0')}</div></div>`).join('')}</div>`:''}
+    <button class="btn btn-dark" style="width:100%;justify-content:center;color:var(--red)" data-act="live-end">${ic('check',15)} ${t('Finish & log')}</button>
+  </div>`;
+}
+/* keeps the ring and the clock alive without a full re-render per second */
+let __liveTick=0;
+function liveTick(){
+  clearInterval(__liveTick);
+  __liveTick=setInterval(()=>{
+    const r=liveRec();const clk=document.getElementById('liveClock');
+    if(!r||!clk||S.role!=='coach'||S.mview!=='live'){clearInterval(__liveTick);return}
+    const rest=liveRestLeft(r),ring=document.getElementById('restRing'),lbl=document.getElementById('restLbl');
+    const R=82,C=2*Math.PI*R;
+    clk.textContent=rest>0?mClock(rest):mClock(liveSec(r));
+    if(lbl)lbl.textContent=rest>0?t('Rest'):t('Elapsed');
+    if(ring)ring.setAttribute('stroke-dashoffset',rest>0?(C*Math.max(0,Math.min(1,rest/(+r.restSec||90)))).toFixed(1):'0');
+  },1000);
+}
+/* ── JUMP: the command palette ──────────────────────────────────────── */
+function mJumpDest(){
+  const D=[['Today','zap','mtab','today'],['Clients','users','mtab','clients'],
+    ['Messages','mail','mtab','messages'],['More','more','mtab','more'],
+    ['Add Client','users','add-client',''],['Calendar','calendar','mcal',''],
+    ['Templates','stack','mtemplates',''],['Create Workout','dumbbell','mworkout',''],
+    ['Nutrition','utensils','mnut',''],['Challenges','trophy','mchal',''],
+    ['Settings','gear','msettings','']];
+  sportSections().forEach(g=>g.items.forEach(([k,l,i])=>D.push([l,i,'mnav',k])));
+  return D;
+}
+function mJump(){
+  const dest=mJumpDest();
+  const att=CLIENTS.filter(c=>c.status!=='Archived').slice(0,6);
+  return `<div class="mjump" role="dialog" aria-label="${t('Jump to…')}">
+    <div class="mjump-in">
+      <button class="btn btn-ghost btn-icon" data-act="mjump-close" aria-label="${t('Close')}">${ic('x',18)}</button>
+      <input class="inp" id="mjump-q" placeholder="${t('Jump to an athlete, screen or action…')}"
+        style="border:none;box-shadow:none;flex:1" oninput="mJumpFilter(this.value)">
+    </div>
+    <div class="mjump-b">
+      <div><div class="mjump-sec">${t('Actions')}</div>
+        <div class="mjump-grid" id="mjump-acts">${dest.slice(4).map(([l,i,a,v])=>
+          `<button class="mjump-it" data-act="${a}"${v?` data-v="${v}"`:''} data-mjump>${ic(i,16)}<span>${t(l)}</span></button>`).join('')}</div></div>
+      <div><div class="mjump-sec">${t('Athletes')} · ${nf(CLIENTS.length)}</div>
+        <div class="mjump-grid" id="mjump-ath">${att.map(c=>
+          `<button class="mjump-it" data-act="mclient" data-cid="${c.id}" data-mjump>${ic('user-round',16)}<span>${esc(t(c.name))}</span></button>`).join('')||
+          `<div class="muted" style="font-size:12px">${t('No results found.')}</div>`}</div></div>
+      <div><div class="mjump-sec">${t('Screens')} · ${nf(dest.length)}</div>
+        <div class="mjump-grid" id="mjump-scr">${dest.map(([l,i,a,v])=>
+          `<button class="mjump-it" data-act="${a}"${v?` data-v="${v}"`:''} data-mjump>${ic(i,16)}<span>${t(l)}</span></button>`).join('')}</div></div>
+    </div></div>`;
+}
+window.mJumpFilter=q=>{
+  q=String(q||'').toLowerCase();
+  document.querySelectorAll('.mjump-it').forEach(b=>{
+    b.style.display=(!q||b.textContent.toLowerCase().includes(q))?'':'none';
+  });
+};
+/* ── LOG SHEET ──────────────────────────────────────────────────────── */
+function mLogSheet(){
+  const live=liveRec();
+  const opts=CLIENTS.filter(c=>c.status!=='Archived');
+  const sel=S.mlogCid||(live&&live.cid)||(opts[0]&&opts[0].id);
+  return `<div class="msheet-scrim" data-act="msheet-close"></div>
+  <div class="msheet" role="dialog" aria-label="${t('Log session')}">
+    <div class="handle"></div>
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <b style="font-size:14px">${t('Log session')}</b>
+      <button class="btn btn-ghost btn-icon" data-act="msheet-close" aria-label="${t('Close')}">${ic('x',18)}</button></div>
+    <div class="field"><label>${t('Athlete')}</label>
+      <select class="sel" id="msheet-cid" style="width:100%">
+        ${opts.map(c=>`<option value="${c.id}"${+sel===c.id?' selected':''}>${esc(t(c.name))}</option>`).join('')}</select></div>
+    <div class="field"><label>${t('Type')}</label>
+      <div class="mfchips" id="msheet-kind">${TLOG_KINDS.map(([k,l],i)=>
+        `<button class="fchip${i===0?' on':''}" data-act="msheet-kind" data-k="${k}">${t(l)}</button>`).join('')}</div></div>
+    <div class="row" style="gap:10px">
+      <div class="field" style="flex:1"><label>${t('Distance (km)')}</label>
+        <input class="inp" id="msheet-km" inputmode="decimal" placeholder="0" style="width:100%"></div>
+      <div class="field" style="flex:1"><label>${t('Duration (min)')}</label>
+        <input class="inp" id="msheet-min" inputmode="numeric" placeholder="0" style="width:100%"></div></div>
+    <div class="field"><label>${t('RPE')}</label>
+      <div class="mfchips" id="msheet-rpe">${[3,4,5,6,7,8,9,10].map(v=>
+        `<button class="fchip${v===7?' on':''}" data-act="msheet-rpe" data-v="${v}">${nf(v)}</button>`).join('')}</div></div>
+    <div class="row" style="gap:8px;margin-top:14px">
+      <button class="btn btn-primary" style="flex:1;justify-content:center" data-act="msheet-save">${ic('check',15)} ${t('Save')}</button>
+      <button class="btn btn-outline" data-act="msheet-close">${t('Cancel')}</button></div>
+  </div>`;
+}
+/* writes ONE row into the athlete's own log — the same array the client
+   portal reads, so the coach's view and the athlete's view cannot disagree */
+function mLogSave(){
+  const cid=+((document.getElementById('msheet-cid')||{}).value)||0;
+  const c=CLIENTS.find(x=>x.id===cid);
+  if(!c){toast(t('Pick an athlete first'));return}
+  const kind=(document.querySelector('#msheet-kind .fchip.on')||{}).dataset;
+  const rpeEl=document.querySelector('#msheet-rpe .fchip.on');
+  const km=parseFloat((document.getElementById('msheet-km')||{}).value)||0;
+  const min=parseInt((document.getElementById('msheet-min')||{}).value)||0;
+  if(!min&&!km){toast(t('Add a duration or a distance'));return}
+  const d=new Date();
+  const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const name=(TLOG_KINDS.find(k=>k[0]===(kind&&kind.k))||[])[1]||t('Session');
+  if(isAthletics()){
+    TLOG.push({id:'tl'+uid(),cid:c.id,
+      w:Math.max(0,...TLOG.map(x=>+x.w||0)),date:iso,name,kind:(kind&&kind.k)||'easy',
+      km:+km||0,min:+min||0,rpe:+((rpeEl||{}).dataset&&rpeEl.dataset.v)||7});
+  }
+  if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+  if(!Array.isArray(DB[c.id].log))DB[c.id].log=[];
+  DB[c.id].log.unshift({id:'ls'+uid(),n:name,d:iso,at:Date.now(),sets:[],done:0,total:0,
+    vol:0,rpe:+((rpeEl||{}).dataset&&rpeEl.dataset.v)||0});
+  ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(c.name)}</b> را ثبت کردید`:`<b>You</b> logged a session for <b>${esc(c.name)}</b>`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  saveData();S.msheet=false;render();toast(t('Session logged'));
+}
 function renderMobile(){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
   let body='';
@@ -9246,6 +9731,7 @@ function renderMobile(){
   if(isAthletics())mvMap.aprof=vAprofile;
   const sportMv=mvMap[sportKey(S.mview)];
   if(S.mview==='client')body=mClientView();
+  else if(S.mview==='live')body=mLive();
   else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
   else if(S.mview==='settings')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vSettings();
   else if(S.mview==='nutrition')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+nNutrition();
@@ -9253,22 +9739,31 @@ function renderMobile(){
   else if(S.mview==='calendar')body=mCalView();
   else if(sportMv)body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+sportMv(S.mClient);
   else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
-  return `<div class="mshell">
+  /* v19.19 — OVERLAYS live on .mshell, never inside a screen. A descendant   with an animation-driven transform becomes the containing block for   position:fixed children, which is how a bottom sheet ends up pinned to   the wrong box. The FAB sits IN the thumb bar (the coach's thumb is already   there) instead of floating over content. */
+  if(S.mview==='live')liveTick();
+  return `<div class="mshell"${S.mjump?' data-jump':''}${S.msheet?' data-sheet':''}>
     ${aiFabRound()}
     ${toolboxFab()}
     <div class="mhead">
       <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
       <div class="row" style="gap:4px">
         ${themeBtn('btn-ghost btn-icon')}
+        <button class="btn btn-ghost btn-icon" data-act="mjump" aria-label="${t('Jump to…')}" title="${t('Jump to…')}">${ic('search',19)}</button>
         <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
         <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
     <div class="cnav">
-      ${[['today','Today','zap'],['clients','Clients','users'],['messages','Messages','mail'],['more','More','more']].map(([k,l,i])=>`
-      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='messages'&&unreadN?'<span class="cdot"></span>':''}</button>`).join('')}
+      ${[['today','Today','zap'],['clients','Athletes','users']].map(([k,l,i])=>`
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
+      <button class="cnav-it cnav-gap" tabindex="-1" aria-hidden="true">${ic('plus',20)}<span>${t('Log')}</span></button>
+      ${[['more','More','more']].map(([k,l,i])=>`
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
     </div>
+    <button class="cnav-fab" data-act="msheet" aria-label="${t('Log session')}" title="${t('Log session')}">${ic('plus',24)}</button>
+    ${S.mjump?mJump():''}
+    ${S.msheet?mLogSheet():''}
   </div>`;
 }
 function mCalView(){
@@ -9337,6 +9832,9 @@ function mToday(){
   return `<div class="mstack">
     <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
     <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
+    ${mNow()}
+    ${mRail()}
+    ${mSignals()}
     <div class="ccard" style="padding:6px 14px">
       <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
       ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
@@ -9347,26 +9845,28 @@ function mToday(){
       </div>`}).join('')
       :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
     </div>
-    <div class="ccard" style="padding:6px 14px">
-      <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Clients Needing Attention')} · ${nf(att.length)}</div>
-      ${att.length?att.slice(0,3).map(it=>`<div class="tl-row click" style="padding:11px 2px" data-act="${it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client'}"
-        ${it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code)}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`}>
-        <span class="bdg ${it.bt}" style="flex:none;font-size:10px">${ic(it.icon,11)}</span>
-        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${t(it.name)}</div><div class="muted" style="font-size:11px">${t(it.why)}</div></div>
-        ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')
-      :`<div class="tl-row" style="padding:11px 2px"><span class="bdg bdg-green" style="flex:none;font-size:10px">${ic('check',11)}</span><b style="font-size:13px">${t('All clients on track ✓')}</b></div>`}
-    </div>
+    ${mSquad()}
     <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
     <button class="btn btn-dark" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div>`;
 }
 function mClients(){
   const q=(S.mcq||'').toLowerCase();
-  const list=CLIENTS.filter(c=>!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q));
+  /* v19.19 — status chips, the same four buckets the mockup shows. Each filter
+     is derived from c.status; "Attention" reuses attentionList(), the very list
+     the Signals rows on Today are built from, so the two can never disagree. */
+  const chips=[['All',()=>true],['Active',c=>c.status==='Active'],
+    ['Attention',c=>attentionList().some(a=>a.cid===c.id||a.name===c.name)],
+    ['On Hold',c=>c.status==='On Hold'||c.status==='Paused']];
+  const cf=chips.find(x=>x[0]===S.mcf)||chips[0];
+  const list=CLIENTS.filter(c=>(!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q))&&cf[1](c));
+  const strip=`<div class="row" style="gap:6px;overflow-x:auto;padding-bottom:2px;flex:none">${chips.map(([l,f])=>
+    `<button class="fchip ${cf[0]===l?'on':''}" data-act="mc-filter" data-f="${l}" style="flex:none">${t(l)} · ${nf(CLIENTS.filter(f).length)}</button>`).join('')}</div>`;
   /* v18.35 — CoachMint template: roster rows with readiness rings. */
   if(PREFS.uiTpl==='coachmint'){
     return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${strip}
     ${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
     return `<div class="ccard cm-ath" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
       ${avC(c.name,42)}
@@ -9381,6 +9881,7 @@ function mClients(){
   }
   return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${strip}
     ${list.map(c=>{const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
     return `<div class="ccard" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
       <div class="row" style="gap:10px">${avC(c.name,44)}
@@ -9432,31 +9933,48 @@ function mThread(name){
     </div>
   </div>`;
 }
+/* ── one collapsible block. Open state lives in S.macc so a re-render keeps   what the coach opened; no height animation — content is simply present. ── */
+const mAcc=(k,label,badge,inner)=>{
+  const open=!!(S.macc||{})[k];
+  return `<div class="ccard" style="padding:0">
+    <button class="mrow" style="width:100%;margin:0" data-act="macc" data-k="${k}">
+      <span style="flex:1">${t(label)}</span>
+      ${badge?`<span class="muted" style="font-size:11.5px;font-weight:500">${badge}</span>`:''}
+      ${ic(open?'chevD':'chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+    ${open?`<div style="padding:2px 12px 12px">${inner}</div>`:''}</div>`;
+}
 function mMore(){
-  const rows=[
-    ['Add Client','users','add-client'],
-    ['Add Measurement','ruler','m-add'],
-    ['Create Note','note','qn-open'],
-    ['Schedule Session','calendar','ns-new'],
-    ['Calendar','calendar','mcal'],
-    ['Create Workout','dumbbell','mworkout'],
-    ['Templates','stack','mtemplates'],
-    ['Nutrition','utensils','mnut'],
-    ['Challenges','trophy','mchal']];
-  /* v19.3 — the mobile entry point for sport sections comes from the SAME   SPORT_EXT table the desktop rail uses, so a future sport needs no edit here. */
-  sportSections().forEach(g=>g.items.forEach(([k,l,i])=>rows.push([l,i,'mnav',k])));
+  /* v19.19 — the COMPLETE index, grouped. Nothing that exists on the desktop   rail is missing here, and athletics sections come from the SAME SPORT_EXT   table, so a future sport needs no edit. */
+  const quick=[
+    ['Messages','mail','mtab','messages'],
+    ['Add Client','users','add-client',''],
+    ['Add Measurement','ruler','m-add',''],
+    ['Create Note','note','qn-open',coachFirstClient()],
+    ['Schedule Session','calendar','ns-new',''],
+    ['Calendar','calendar','mcal',''],
+    ['Create Workout','dumbbell','mworkout',''],
+    ['Templates','stack','mtemplates',''],
+    ['Nutrition','utensils','mnut',''],
+    ['Challenges','trophy','mchal','']];
+  const ath=[];sportSections().forEach(g=>g.items.forEach(([k,l,i])=>ath.push([l,i,'mnav',k])));
+  /* data-t rides alongside data-v: `mtab` reads data-t, `mnav` reads data-v,
+     so one row helper serves both without a special case. */
+  const grp=(title,rows)=>rows.length?`<div class="card-t" style="margin:2px">${t(title)}</div>
+    <div class="ccard" style="padding:6px">${rows.map(([l,i,act,v])=>
+      `<div class="mrow" data-act="${act}"${v?` data-v="${v}" data-t="${v}"`:''}>${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}</div>`:'';
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
       <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div>
       ${langBtn('btn-outline btn-sm')}
     </div>
-    <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
     <div class="ccard" style="padding:6px">
+      <div class="mrow" data-act="mjump" style="color:var(--accent-deep)">${ic('search',17)}<span style="flex:1">${t('Jump to…')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      ${rows.map(([l,i,act,v])=>`<div class="mrow" data-act="${act}"${v?` data-v="${v}"`:''}>${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
       <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
     </div>
+    ${grp('Quick actions',quick)}
+    ${ath.length?grp('Athletics',ath):''}
     <div class="ccard" style="padding:6px">
       <div class="mrow" data-act="msettings">${ic('gear',17)}<span style="flex:1">${t('Settings')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       <div class="mrow" data-act="reset-demo">${ic('trash',17)}<span style="flex:1">${t('Reset demo data')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
@@ -9466,51 +9984,77 @@ function mMore(){
     <div class="muted" style="font-size:10.5px;text-align:center;padding:6px 0 2px">CoachMint · v15.8 · PWA · BETA · ${t('Your decisions. Zero automation.')}</div>
   </div>`;
 }
+function coachFirstClient(){const c=CLIENTS.find(x=>x.status!=='Archived');return c?String(c.name):''}
 function mClientView(){
   const c=client(S.mClient),db=DB[c.id];
   const w=todaysPlan(c.id).w; // v18.62 — today's slot decides, not "first pending"
   const ac=attCnt(c.name);
+  const live=liveRec();
+  const inSession=live&&+live.cid===+c.id;
+  const r=live&&inSession?live:rpeDrift(c.id);
+  const meas=(db.measures||[]).slice(0,3);
+  const notes=NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,3);
+  const files=(DB[c.id]&&DB[c.id].photos)||[];
   return `<div class="mstack">
-    <div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Client')}</b></div>
-    <div class="ccard" style="display:flex;align-items:center;gap:12px">
-      ${avC(c.name,52)}
-      <div style="flex:1;min-width:0"><b style="font-size:16px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.goal)}</div></div>
-      ${stBdg(c.status)}
+    <div class="row" style="gap:8px">
+      <button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button>
+      <b style="font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(c.name))}</b>
+      ${stBdg(c.status)}</div>
+    <div class="s" style="margin:0;color:var(--ink3);font-size:12px">${esc(t(c.goal))} · ${t('Program')}: ${esc(t(c.prog))}${c.week?` · ${t('Week')} ${nf(c.week)}`:''}</div>
+
+    <!-- one dock: the four things a coach does with a thumb, above the fold -->
+    <div class="mtool">
+      <button data-act="${inSession?'live-open':'live-start'}" data-cid="${c.id}" style="${inSession?'color:var(--accent-deep);border-color:var(--acc-line)':''}">${ic(inSession?'play':'zap',20)}${inSession?t('Live'):t('Start')}</button>
+      <button data-act="msheet" data-cid="${c.id}">${ic('plus',20)}${t('Log')}</button>
+      <button data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',20)}${t('Message')}</button>
+      <button data-act="macc" data-k="more">${ic('more',20)}${t('More')}</button>
     </div>
-    <div class="row" style="gap:6px;flex-wrap:wrap">
-      <span class="chip">${t('Weight')}: ${uwS(c.weight||null)}</span>
-      <span class="chip">${t('Program')}: ${t(c.prog)}</span>
-      <span class="chip">🔥 ${esc(streakLbl(c))}</span>
-      <span class="chip">${t('Attendance')}: ${nf(ac.d)} ✓ / ${nf(ac.m)} ✗</span>
-    </div>
-    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div class="row">${ic('dumbbell',15)}<b style="font-size:13.5px">${esc(w.name)}</b></div>
-      <span class="bdg ${wDone(w)?'bdg-gray':'bdg-lime'}" style="font-size:10px">${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</span></div>`:''}
-    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${t('Training Summary')}</div>
-      ${[['Workouts Completed',nf(db.stats.done)],['Workouts Missed',nf(db.stats.missed)],['Attendance',`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`],['Last Workout',t(c.last)],['Next Workout',t(c.nextW)]].map(([k,v])=>`
-      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
-    </div>
-    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight Progress')}</b>${wtBadge(c.id)}</div>
-      ${wChart(c.id,150)}</div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Recent Notes')}</div>
-      ${NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,2).map(n=>`
-      <div style="padding:9px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b>
-      <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
-      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
-      ||`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`}
-    </div>
-    <div class="row" style="gap:8px;flex-wrap:wrap">
-      <button class="btn btn-dark btn-sm" data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',14)} ${t('Messages')}</button>
-      <button class="btn btn-primary btn-sm" data-act="wp-open">${ic('calendar',14)} ${t('Week plan')}</button>
-      <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
-      <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form reports')}</button>
-      <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
-      <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
-      <button class="btn btn-outline btn-sm" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>
-      ${isAthletics()?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Athletics Profile')}</button>`:''}
-      <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
-    </div>
-    <button class="btn btn-ghost btn-sm" style="align-self:flex-start" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+
+    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface)">
+      <span class="eyebrow" style="color:var(--accent-deep)">${t('Next action')}</span>
+      <div class="row" style="gap:9px;margin-top:8px">${ic('dumbbell',16)}<b style="font-size:14px">${esc(w.name)}</b></div>
+      <div class="muted" style="font-size:12px;margin-top:3px">${esc(t(w.day))} · ${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="wp-open">${ic('play',14)} ${t('Open week plan')}</button>
+    </div>`:''}
+
+    ${mAcc('train','Training',`${nf(db.stats.done)} ✓ / ${nf(db.stats.missed)} ✗`,
+      `<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Completed')}</span><b style="font-size:12.5px">${nf(db.stats.done)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Missed')}</span><b style="font-size:12.5px">${nf(db.stats.missed)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Last Workout')}</span><b style="font-size:12.5px">${esc(t(c.last))}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Next Workout')}</span><b style="font-size:12.5px">${esc(t(c.nextW))}</b></div>
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mworkout">${ic('dumbbell',14)} ${t('Create Workout')}</button>`)}
+
+    ${mAcc('meas','Measurements',meas.length?esc(t(meas[0].d||'')):t('—'),
+      `${wtBadge(c.id)}${wChart(c.id,150)}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>`)}
+
+    ${mAcc('nut','Nutrition',nPlanOf(c.name)?t('Plan set'):t('—'),
+      `${nPlanOf(c.name)
+        ?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Plan')}</span><b style="font-size:12.5px">${esc(t(nPlanOf(c.name).name||''))}</b></div>`
+        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>`}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mnut">${ic('utensils',14)} ${t('Nutrition')}</button>`)}
+
+    ${mAcc('notes',t('Notes'),nf(notes.length),
+      (notes.length?notes.map(n=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+        <b style="font-size:12.5px">${esc(t(n.title))}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
+        <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)
+      +`<button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>`)}
+
+    ${mAcc('files','Files',nf(files.length),
+      files.length?files.map(f=>`<div class="mrow" style="padding:8px 0">${ic('camera',15)}<span style="flex:1;font-size:12.5px">${esc(f.n||t('Photo'))}</span></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)}
+
+    ${mAcc('more','More actions','',
+      `<div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('camera',14)} ${t('Form reports')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        ${isAthletics()?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Athletics Profile')}</button>`:''}
+        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+        <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
+      </div>`)}
   </div>`;
 }
 
@@ -12455,6 +12999,9 @@ document.addEventListener('click',e=>{
   document.querySelectorAll('.mwrap.open').forEach(m=>{if(!m.contains(e.target))m.classList.remove('open')});
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act,mw=el.closest('[data-mw]');
+  /* v19.19 — a Jump item runs its action AND closes the palette in the same
+     pass, so the destination never renders underneath an open overlay. */
+  if(el.hasAttribute('data-mjump')&&S.mjump)S.mjump=false;
   switch(a){
     case 'lang':break; /* v18.116 — language switcher removed */
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
@@ -13796,9 +14343,65 @@ document.addEventListener('click',e=>{
       S.mview='tabs';S.mtab='messages';render();break}
     /* v19.12 — Back from §3 returns to the athlete it belongs to, not to the
        More tab it no longer appears in. Every other sport screen keeps 'tabs'. */
-    case 'mhome':S.mview=(S.mview==='aprof')?'client':'tabs';render();break;
+    case 'mhome':S.mview=(S.mview==='aprof')?'client':(S.mview==='live'?(S.mLiveFrom||'tabs'):'tabs');render();break;
     /* v19.3 — sport sections from the mobile More menu */
     case 'mnav':S.mview=el.dataset.v;render();window.scrollTo({top:0});break;
+    /* ═══════ v19.19 — MOBILE FLOOR wiring ═══════
+       Every action below reaches a real store write; nothing here is a stub.
+       The timer is anchored to `startedAt` inside liveSec(), so none of these   handlers need to run on an interval — only the Live screen repaints, and
+       only its clock node, once a second (liveTick). */
+    case 'live-start':{
+      const cid=+el.dataset.cid||(CLIENTS.find(c=>c.status!=='Archived')||{}).id;
+      if(!cid){toast(t('Add a client first'));break}
+      S.mLiveFrom=(S.mview==='client')?'client':'tabs';
+      if(liveRec())liveEnd();               /* one session at a time */
+      liveStart(cid,el.dataset.eid?+el.dataset.eid:null);
+      S.mClient=cid;S.mview='live';render();window.scrollTo({top:0});break}
+    case 'live-open':{
+      const r=liveRec();if(!r)break;
+      S.mLiveFrom=(S.mview==='client')?'client':'tabs';
+      S.mClient=r.cid;S.mview='live';render();window.scrollTo({top:0});break}
+    case 'live-set':liveSet(+el.dataset.d);render();break;
+    case 'live-rpe':liveRpe(+el.dataset.v);render();break;
+    case 'live-pause':livePause();render();break;
+    case 'live-rest':{const r=liveRec();if(r){liveRest((+r.restSec||90)===90?60:90);render();toast(t('Rest')+' '+nf(liveRec().restSec)+'s')}break}
+    case 'live-note':{
+      openModal(`<div class="card-t" style="margin-bottom:8px">${t('Session note')}</div>
+        <textarea class="ta" id="live-note-in" rows="3" style="width:100%" placeholder="${t('What did you see?')}"></textarea>
+        <div class="row" style="gap:8px;margin-top:12px">
+          <button class="btn btn-primary" style="flex:1;justify-content:center" data-act="live-note-save">${ic('check',15)} ${t('Save')}</button>
+          <button class="btn btn-outline" data-act="ovl-x">${t('Cancel')}</button></div>`);
+      break}
+    case 'live-note-save':{
+      const v=(document.getElementById('live-note-in')||{}).value;
+      if(liveNote(v)){closeModal();render();toast(t('Note added'))}else toast(t('Write something first'));
+      break}
+    case 'live-photo':{const r=liveRec();
+      if(!r){toast(t('Start a session first'));break}
+      formCheckModal(r.name);break}
+    case 'live-end':{
+      const out=liveEnd();if(!out)break;
+      toast(`${t('Session logged')} · ${nf(out.min)} ${t('min')}${out.rpe?` · RPE ${nf(out.rpe)}`:''}`);
+      S.mview=(S.mLiveFrom==='client')?'client':'tabs';
+      if(S.mview==='tabs')S.mtab='today';
+      render();window.scrollTo({top:0});break}
+    /* ── Jump palette ── */
+    case 'mjump':S.mjump=true;render();
+      {const q=document.getElementById('mjump-q');if(q)q.focus()}break;
+    case 'mjump-close':S.mjump=false;render();break;
+    /* ── log sheet ── */
+    case 'msheet':S.mlogCid=+el.dataset.cid||S.mClient||null;S.msheet=true;render();break;
+    case 'msheet-close':S.msheet=false;render();break;
+    case 'msheet-save':mLogSave();break;
+    case 'msheet-kind':case 'msheet-rpe':{
+      /* toggle in the DOM only — a re-render would wipe the typed distance and
+         duration the coach already entered */
+      const box=el.parentElement;
+      box.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');break}
+    /* ── roster filter + accordions ── */
+    case 'mc-filter':S.mcf=el.dataset.f;render();break;
+    case 'macc':{const k=el.dataset.k;S.macc=S.macc||{};S.macc[k]=!S.macc[k];render();break}
     case 'mworkout':if(S.mClient!=null)S.cid=S.mClient;S.mview='builder';loadClientProgram(S.cid);render();break;
     case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
     case 'msettings':S.mview='settings';render();break;
@@ -13840,7 +14443,10 @@ document.addEventListener('change',e=>{
      its data in the payload on purpose — switch back and it is all still there. */
   if(el.dataset.change==='osport'){
     const v=el.value||'';
-    if(v!==(ONBOARD.sport||'')){ONBOARD.sport=v;saveData();render();
+    if(v!==(ONBOARD.sport||'')){
+      /* v19.17 — stamp `at`: without it the local pick looked OLDER than the
+         remote copy and the next cloudPull/cloudPush reverted it. */
+      ONBOARD.sport=v;ONBOARD.at=Date.now();saveData();render();
       toast(`${t('Sport updated')}: ${v?t(v):t('None (base workspace)')}`)}
   }
 });
