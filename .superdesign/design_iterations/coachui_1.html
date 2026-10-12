@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoachMint · Coach App UI — Signal &amp; Surface (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme_4.css">
+<style>
+/* ============================================================================
+   coachui_1 — mockup-only shell. Everything themable lives in theme_4.css;
+   this block is layout chrome for the five templates, nothing reusable.
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font:var(--t-body);
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select{font-family:inherit}
+
+/* ---- design-review chrome (not part of the product) --------------------- */
+.dbar{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;
+  padding:10px 18px;background:var(--surface);border-bottom:var(--hair);
+}
+.dbar .ttl{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink-3)}
+.dbar .tabs{display:flex;gap:2px;background:var(--inset);border:var(--hair);border-radius:var(--r-md);padding:3px;overflow-x:auto;scrollbar-width:none}
+.dbar .tabs button{
+  height:28px;padding:0 12px;border:0;background:transparent;border-radius:var(--r-sm);
+  font:650 12px/1 var(--font-ui);color:var(--ink-3);cursor:pointer;white-space:nowrap;
+  transition:background var(--d-hover) var(--ease-out),color var(--d-hover) var(--ease-out);
+}
+.dbar .tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 0 var(--accent-line)}
+@media (hover:hover) and (pointer:fine){
+  .dbar .tabs button:hover:not([aria-selected="true"]){color:var(--ink)}
+}
+.dbar .sp{flex:1}
+.mock{font:var(--t-label);letter-spacing:.08em;color:var(--accent-text);background:var(--accent-soft);
+  border:1px solid var(--accent-line);border-radius:var(--r-pill);padding:5px 10px}
+.themebtn{height:28px;padding:0 12px;border-radius:var(--r-sm);border:var(--hair-strong);
+  background:transparent;color:var(--ink-2);font:600 12px/1 var(--font-ui);cursor:pointer;
+  transition:background var(--d-hover) var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.themebtn:hover{background:var(--inset);color:var(--ink)}}
+
+/* ---- rail ---------------------------------------------------------------- */
+.stage{display:grid;grid-template-columns:212px minmax(0,1fr);min-height:calc(100vh - 49px)}
+.rail{
+  border-right:var(--hair);background:var(--surface);
+  padding:16px 10px;display:flex;flex-direction:column;gap:14px;position:sticky;top:49px;
+  height:calc(100vh - 49px);
+}
+.rail .brand{display:flex;align-items:center;gap:9px;padding:4px 6px 0}
+.rail .mark{width:26px;height:26px;border-radius:7px;background:var(--accent);
+  color:var(--accent-ink);display:grid;place-items:center;flex:none}
+.rail .bn{font:800 13.5px/1 var(--font-display);font-style:italic;letter-spacing:.02em}
+.rail .bt{font:var(--t-label);letter-spacing:.18em;color:var(--ink-3);font-size:8.5px;margin-top:3px}
+.navgrp{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-faint);
+  text-transform:uppercase;padding:0 8px;margin-bottom:6px}
+.navit{
+  display:flex;align-items:center;gap:9px;height:32px;padding:0 8px;border-radius:var(--r-sm);
+  color:var(--ink-2);font:600 13px/1 var(--font-ui);cursor:pointer;
+  transition:background var(--d-hover) var(--ease-out),color var(--d-hover) var(--ease-out);
+}
+.navit .i{width:16px;height:16px;flex:none;opacity:.75}
+.navit.on{background:var(--accent-soft);color:var(--accent-text);box-shadow:inset 2px 0 0 var(--accent)}
+@media (hover:hover) and (pointer:fine){
+  .navit:hover{background:var(--inset);color:var(--ink)}
+  .navit.on:hover{background:var(--accent-soft);color:var(--accent-text)}
+}
+.navit .cnt{margin-left:auto;font:var(--t-num-sm);color:var(--ink-3)}
+
+.canvas{padding:22px 26px 40px;min-width:0}
+.panel[hidden]{display:none}
+.panel{animation:panelIn var(--d-panel) var(--ease-out) both}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---- page head ----------------------------------------------------------- */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.ph h1{margin:0;font:var(--t-h1);letter-spacing:var(--tr-display);text-transform:uppercase}
+.ph .sub{margin-top:5px;font:var(--t-sm);color:var(--ink-3)}
+.ph .kick{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--accent-text);
+  text-transform:uppercase;margin-bottom:7px;display:block}
+
+/* ---- grid helpers -------------------------------------------------------- */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--panel-gap)}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--panel-gap)}
+.card{background:var(--surface);border:var(--hair);border-radius:var(--r-lg);overflow:hidden}
+.card-p{padding:var(--panel-pad)}
+.ct{font:var(--t-h3);margin:0;color:var(--ink)}
+.cm{font:var(--t-sm);color:var(--ink-3);margin:0}
+
+/* ==========================================================================
+   A · COMMAND DECK
+   ========================================================================== */
+.deck{display:grid;grid-template-columns:var(--spine-w) minmax(0,1fr);gap:var(--panel-gap);align-items:start}
+.spine{background:var(--spine-bg);border:var(--hair);border-radius:var(--r-md);padding:14px 0;position:sticky;top:70px}
+.spine .sl{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-faint);
+  text-transform:uppercase;padding:0 12px;margin:0 0 8px}
+.sched{display:flex;flex-direction:column}
+.sched .it{display:flex;align-items:center;gap:8px;padding:8px 12px;position:relative;
+  transition:background var(--d-hover) var(--ease-out)}
+.sched .it::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent}
+.sched .it.now::before{background:var(--accent)}
+.sched .it.now{background:var(--accent-soft)}
+.sched .tm{font:var(--t-num-sm);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sched .nm{font:600 12px/1.3 var(--font-ui);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rhythm{margin-top:16px;padding-top:14px;border-top:var(--hair)}
+.rh{display:flex;gap:4px;align-items:flex-end;height:46px;padding:0 12px}
+.rh i{flex:1;background:var(--seg-bg);border-radius:2px 2px 0 0;min-height:3px;display:block}
+.rh i.on{background:var(--accent)}
+.rh-d{display:flex;gap:4px;padding:5px 12px 0}
+.rh-d span{flex:1;text-align:center;font:var(--t-num-sm);color:var(--ink-faint);font-size:9px}
+
+.needs{border:1px solid var(--accent-line);background:linear-gradient(180deg,var(--accent-soft),transparent 70%),var(--surface)}
+.needs-h{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px var(--panel-pad) 10px}
+.needs-h .t{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--accent-text)}
+.nrow{display:flex;align-items:center;gap:12px;padding:13px var(--panel-pad);border-top:var(--hair)}
+.nrow .who{font:var(--t-h3);min-width:96px}
+.nrow .why{flex:1;min-width:0;color:var(--ink-2);font-size:13px}
+.nrow .why b{color:var(--ink);font-weight:650}
+.nrow .acts{display:flex;gap:8px;flex:none}
+.who-w{display:flex;align-items:center;gap:8px}
+.av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font:700 10.5px/1 var(--font-num);color:var(--ink);background:var(--seg-bg);border:var(--hair-strong)}
+
+/* timeline */
+.tl{padding:4px var(--panel-pad) var(--panel-pad)}
+.tl-r{display:grid;grid-template-columns:52px 3px minmax(0,1fr) auto;gap:12px;align-items:center;
+  padding:12px 0;border-top:var(--hair)}
+.tl-r:first-child{border-top:0}
+.tl-t{font:var(--t-num-sm);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.tl-bar{width:3px;height:34px;border-radius:2px;background:var(--seg-bg);position:relative}
+.tl-bar.done{background:var(--accent)}
+.tl-bar.next{background:var(--warn)}
+.tl-m .n{font:var(--t-h3)}
+.tl-m .s{font:var(--t-sm);color:var(--ink-3);margin-top:3px}
+
+/* ==========================================================================
+   B · SPLIT CANVAS
+   ========================================================================== */
+.split{display:grid;grid-template-columns:var(--roster-w) minmax(0,1fr);gap:var(--panel-gap);align-items:start}
+.roster{background:var(--surface);border:var(--hair);border-radius:var(--r-lg);overflow:hidden}
+.roster-h{display:flex;gap:6px;padding:10px 12px;border-bottom:var(--hair);background:var(--inset)}
+.rrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:12px 14px;border-bottom:var(--hair);cursor:pointer;position:relative;
+  background:var(--surface);
+  transition:background var(--d-panel) var(--ease-out),box-shadow var(--d-panel) var(--ease-out)}
+.rrow:last-child{border-bottom:0}
+.rrow .n{font:650 13.5px/1.2 var(--font-ui)}
+.rrow .s{font:var(--t-sm);color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rrow[aria-selected="true"]{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.rrow[aria-selected="true"] .n{color:var(--accent-text)}
+@media (hover:hover) and (pointer:fine){
+  .rrow:hover{background:var(--inset)}
+  .rrow[aria-selected="true"]:hover{background:var(--accent-soft)}
+}
+.dt-h{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:16px var(--panel-pad) 0}
+.dt-h .nm{font:800 20px/1.1 var(--font-display);letter-spacing:var(--tr-display);margin:0}
+.next-well{margin:16px var(--panel-pad);background:var(--inset);border:var(--hair);
+  border-radius:var(--r-md);padding:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  border-inline-start:3px solid var(--accent)}
+.next-well .k{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);
+  text-transform:uppercase;display:block;margin-bottom:7px}
+.next-well .v{font:var(--t-h3);font-size:16px}
+.next-well .m{font:var(--t-sm);color:var(--ink-3);margin-top:4px}
+.mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--panel-gap);
+  padding:0 var(--panel-pad) var(--panel-pad)}
+.days{display:flex;gap:4px;align-items:flex-end;height:52px}
+.days i{flex:1;background:var(--seg-bg);border-radius:2px 2px 0 0;min-height:4px;display:block;
+  transform-origin:bottom;animation:barUp var(--d-modal) var(--ease-out) both}
+.days i.on{background:var(--accent)}
+.days i.miss{background:var(--bad-soft);box-shadow:inset 0 0 0 1px var(--bad)}
+.days-d{display:flex;gap:4px;margin-top:5px}
+.days-d span{flex:1;text-align:center;font:var(--t-num-sm);color:var(--ink-faint);font-size:9px}
+.att{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:var(--hair)}
+.att:first-of-type{border-top:0}
+.att .tx{flex:1;min-width:0;font-size:13px;color:var(--ink-2)}
+.att .tx b{color:var(--ink);display:block;font-weight:650}
+
+/* ==========================================================================
+   C · EVIDENCE ROW
+   ========================================================================== */
+.list{background:var(--surface);border:var(--hair);border-radius:var(--r-lg);overflow:hidden}
+.list-h{display:flex;align-items:center;gap:10px;padding:13px var(--panel-pad);border-bottom:var(--hair);background:var(--inset)}
+.search{flex:1;max-width:260px;height:30px;border-radius:var(--r-sm);border:var(--hair-strong);
+  background:var(--surface);padding:0 11px;color:var(--ink);font-size:13px}
+.search::placeholder{color:var(--ink-faint)}
+.spark{width:var(--spark-w);height:22px;display:block}
+.spark polyline{fill:none;stroke:var(--accent-text);stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round}
+.spark .base{stroke:var(--line-strong)}
+.tag{font:var(--t-label);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ==========================================================================
+   D · SEASON LANES
+   ========================================================================== */
+.lanes-wrap{position:relative;margin-bottom:var(--panel-gap)}
+.lanes .ind{position:absolute;left:3px;bottom:3px;height:2px;background:var(--accent);
+  border-radius:2px;transform-origin:left center;
+  transition:transform var(--d-panel) var(--ease-in-out),width var(--d-panel) var(--ease-in-out)}
+.lane-body{animation:laneIn var(--d-panel) var(--ease-out) both}
+@keyframes laneIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.plan-vs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 132px;gap:0;
+  background:var(--surface);border:var(--hair);border-radius:var(--r-lg);overflow:hidden}
+.pv{padding:16px 18px;border-top:var(--hair)}
+.pv:first-child{border-top:0}
+.pv .lab{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink-3)}
+.pv .big{font:var(--t-num);font-size:18px;margin-top:9px}
+.pv .sub{font:var(--t-sm);color:var(--ink-3);margin-top:6px}
+.pv.actual{background:linear-gradient(180deg,var(--accent-soft),transparent 75%),var(--surface)}
+.pv.actual .lab{color:var(--accent-text)}
+.gap{padding:16px 18px;border-top:var(--hair);background:var(--inset);display:flex;
+  flex-direction:column;justify-content:center;gap:7px}
+.gap .k{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-faint);text-transform:uppercase}
+.gap .v{font:var(--t-num);font-variant-numeric:tabular-nums}
+.hdr{background:var(--inset);padding:11px 18px;border-bottom:var(--hair);
+  font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink-3)}
+
+/* ==========================================================================
+   E · MOBILE
+   ========================================================================== */
+.phone-wrap{display:flex;justify-content:center;padding:4px 0 8px}
+.phone{width:352px;max-width:100%;background:var(--surface);border:var(--hair);
+  border-radius:26px;overflow:hidden;box-shadow:var(--sh-pop)}
+.ph-top{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:13px 16px 9px;border-bottom:var(--hair);background:var(--inset)}
+.ph-top .l{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);text-transform:uppercase}
+.ph-b{padding:14px 14px 4px;display:flex;flex-direction:column;gap:12px}
+.ph-card{border:var(--hair);border-radius:var(--r-md);padding:14px;background:var(--surface)}
+.ph-hero{border-color:var(--accent-line);
+  background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface)}
+.ph-hero .k{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--accent-text);text-transform:uppercase}
+.ph-hero .v{font:700 17px/1.3 var(--font-ui);margin-top:8px}
+.ph-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:var(--hair);border-radius:var(--r-md);overflow:hidden;margin-top:12px}
+.ph-metrics div{background:var(--surface);padding:9px 10px}
+.ph-metrics .k{font:var(--t-label);letter-spacing:.1em;color:var(--ink-3);font-size:9px;text-transform:uppercase}
+.ph-metrics .v{font:var(--t-num);font-size:15px;margin-top:5px}
+.ph-cta{position:sticky;bottom:64px;margin:0 14px 10px;display:flex;gap:8px}
+.ph-cta .btn-p{flex:1;justify-content:center;height:42px}
+.tabbar{display:flex;border-top:var(--hair);background:var(--inset);padding:7px 4px 9px}
+.tabbar div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  font:var(--t-label);letter-spacing:.06em;font-size:9px;color:var(--ink-3);text-transform:uppercase}
+.tabbar div.on{color:var(--accent-text)}
+.logfab{position:absolute;right:14px;bottom:74px;height:38px;padding:0 15px;border-radius:var(--r-pill);
+  background:var(--accent);color:var(--accent-ink);border:0;display:flex;align-items:center;gap:7px;
+  font:700 12.5px/1 var(--font-ui);box-shadow:var(--sh-pop);cursor:pointer;
+  transition:transform var(--d-press) var(--ease-out)}
+.logfab:active{transform:scale(.96)}
+.phone{position:relative}
+
+/* ==========================================================================
+   STEP ③ — MOTION (per the signed-off animation plan)
+   ========================================================================== */
+/* purpose: delight, once per mount — NOT re-run on the dashboard's cloud re-render */
+.stagger>*{animation:riseIn var(--d-modal) var(--ease-out) both}
+.stagger>*:nth-child(1){animation-delay:0ms}
+.stagger>*:nth-child(2){animation-delay:60ms}
+.stagger>*:nth-child(3){animation-delay:120ms}
+@keyframes riseIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* purpose: state indication — the bar grows, the NUMBER never moves */
+.days i:nth-child(1){animation-delay:0ms}
+.days i:nth-child(2){animation-delay:40ms}
+.days i:nth-child(3){animation-delay:80ms}
+.days i:nth-child(4){animation-delay:120ms}
+.days i:nth-child(5){animation-delay:160ms}
+.days i:nth-child(6){animation-delay:200ms}
+.days i:nth-child(7){animation-delay:240ms}
+@keyframes barUp{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+
+/* press feedback */
+.btn-p{transition:background var(--d-press) var(--ease-out),transform var(--d-press) var(--ease-out)}
+
+@media (prefers-reduced-motion:reduce){
+  .panel,.lane-body,.stagger>*,.days i{animation:none!important;transform:none!important;opacity:1!important;
+    transition:opacity .15s linear}
+  .lanes .ind{transition:none}
+}
+@media (hover:none),(pointer:coarse){ .rrow:hover{background:var(--surface)} }
+</style>
+</head>
+
+<body>
+
+<div class="dbar">
+  <span class="ttl">Signal &amp; Surface · coach app</span>
+  <div class="tabs" role="tablist" id="tabs">
+    <button role="tab" aria-selected="true"  data-p="a">A · Command Deck</button>
+    <button role="tab" aria-selected="false" data-p="b">B · Split Canvas</button>
+    <button role="tab" aria-selected="false" data-p="c">C · Evidence Row</button>
+    <button role="tab" aria-selected="false" data-p="d">D · Season Lanes</button>
+    <button role="tab" aria-selected="false" data-p="e">E · Mobile</button>
+  </div>
+  <span class="sp"></span>
+  <button class="themebtn" id="themeBtn">Dark</button>
+  <span class="mock">Design mockup</span>
+</div>
+
+<div class="stage">
+
+  <!-- ══════════════════════════ RAIL ══════════════════════════ -->
+  <aside class="rail">
+    <div class="brand">
+      <span class="mark"><svg width="15" height="13" viewBox="0 0 120 100"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg></span>
+      <div><div class="bn">COACHMINT</div><div class="bt">ONE COACH</div></div>
+    </div>
+
+    <div>
+      <div class="navgrp">Workspace</div>
+      <div class="navit on"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v16h16"/><path d="M7.5 14.5l3.5-4 3 2.5 4.5-5.5"/></svg>Dashboard</div>
+      <div class="navit"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19.5c.7-3.1 2.9-4.7 5.5-4.7s4.8 1.6 5.5 4.7"/><path d="M15.5 5.2a3.4 3.4 0 0 1 0 5.6"/></svg>Clients<span class="cnt">8</span></div>
+      <div class="navit"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5.5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8 3.5v4M16 3.5v4"/></svg>Calendar</div>
+      <div class="navit"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></svg>Messages<span class="cnt">2</span></div>
+    </div>
+
+    <div>
+      <div class="navgrp">Athletics</div>
+      <div class="navit"><span class="i dot live"></span>Races</div>
+      <div class="navit"><span class="i dot live"></span>Training Load</div>
+      <div class="navit"><span class="i dot live"></span>Wearables</div>
+    </div>
+
+    <div>
+      <div class="navgrp">Today</div>
+      <div class="navit">Progress</div>
+      <div class="navit">Measurements</div>
+      <div class="navit">Nutrition</div>
+    </div>
+
+    <div>
+      <div class="navgrp">Manage</div>
+      <div class="navit">Workouts</div>
+      <div class="navit">Templates</div>
+      <div class="navit">Notes</div>
+      <div class="navit">Settings</div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════ CANVAS ══════════════════════════ -->
+  <main class="canvas">
+
+  <!-- ─────────── A · COMMAND DECK ─────────── -->
+  <section class="panel" id="p-a">
+    <div class="ph">
+      <div>
+        <span class="kick">Command deck</span>
+        <h1>Today</h1>
+        <div class="sub">Wednesday 12 October · Running &amp; Endurance · Base W6</div>
+      </div>
+      <div style="display:flex;gap:9px">
+        <button class="btn-g">Export</button>
+        <button class="btn-p">＋ New session</button>
+      </div>
+    </div>
+
+    <div class="deck">
+      <!-- SPINE -->
+      <div class="spine">
+        <div class="sl">Schedule</div>
+        <div class="sched">
+          <div class="it"><span class="tm">07:00</span><span class="nm">Ali R.</span></div>
+          <div class="it now"><span class="tm">09:30</span><span class="nm">Sara A.</span></div>
+          <div class="it"><span class="tm">11:00</span><span class="nm">Mohammad K.</span></div>
+          <div class="it"><span class="tm">14:30</span><span class="nm">Neda H.</span></div>
+          <div class="it"><span class="tm">18:00</span><span class="nm">Hamed N.</span></div>
+        </div>
+        <div class="rhythm">
+          <div class="sl">Rhythm</div>
+          <div class="rh">
+            <i style="height:44%"></i><i style="height:70%"></i><i class="on" style="height:96%"></i>
+            <i style="height:35%"></i><i style="height:62%"></i><i style="height:20%"></i><i style="height:52%"></i>
+          </div>
+          <div class="rh-d"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+        </div>
+      </div>
+
+      <!-- PRIORITY + SIGNALS + TIMELINE -->
+      <div style="display:flex;flex-direction:column;gap:var(--panel-gap);min-width:0">
+
+        <div class="card needs">
+          <div class="needs-h">
+            <span class="t">Needs you now</span>
+            <span class="pill warn">3 of 8 athletes</span>
+          </div>
+          <div class="stagger">
+            <div class="nrow">
+              <div class="who-w"><span class="av">SA</span><span class="who">Sara A.</span></div>
+              <div class="why"><b>Form check</b> — no reply for 3 days</div>
+              <div class="acts"><button class="btn-g">Reply</button><button class="btn-p">Open</button></div>
+            </div>
+            <div class="nrow">
+              <div class="who-w"><span class="av">MK</span><span class="who">Mohammad K.</span></div>
+              <div class="why"><b>Protein target</b> missed 3 days running</div>
+              <div class="acts"><button class="btn-g">Open</button></div>
+            </div>
+            <div class="nrow">
+              <div class="who-w"><span class="av">RM</span><span class="who">Reza M.</span></div>
+              <div class="why"><b>On hold</b> — no session in 9 days</div>
+              <div class="acts"><button class="btn-g">Nudge</button><button class="btn-g">Open</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="g3">
+          <div class="card card-p mwell" style="border-radius:var(--r-lg)">
+            <span class="k">Next race</span>
+            <span class="v">4<span class="u">d</span></span>
+            <span class="s">Regional Open · 100m</span>
+          </div>
+          <div class="card card-p mwell" style="border-radius:var(--r-lg)">
+            <span class="k">Weekly volume</span>
+            <span class="v">67.6<span class="u">km</span></span>
+            <span class="s">▲ 12% vs week 7</span>
+          </div>
+          <div class="card card-p mwell" style="border-radius:var(--r-lg)">
+            <span class="k">Phase</span>
+            <span class="v">Base</span>
+            <span class="s">W1–W6 · load 35%</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="needs-h" style="padding-bottom:6px">
+            <span class="ct">Timeline · today</span>
+            <span class="pill quiet">5 sessions</span>
+          </div>
+          <div class="tl">
+            <div class="tl-r">
+              <span class="tl-t">07:00</span><span class="tl-bar done"></span>
+              <div class="tl-m"><div class="n">Ali Rezaei · Push A</div><div class="s">60 min · 3 exercises · volume 3,660 kg</div></div>
+              <button class="btn-g">Summary</button>
+            </div>
+            <div class="tl-r">
+              <span class="tl-t">09:30</span><span class="tl-bar next"></span>
+              <div class="tl-m"><div class="n">Sara Ahmadi · Form check</div><div class="s">45 min · photo + video upload</div></div>
+              <button class="btn-p">Open</button>
+            </div>
+            <div class="tl-r">
+              <span class="tl-t">11:00</span><span class="tl-bar"></span>
+              <div class="tl-m"><div class="n">Mohammad Karimi · Leg A</div><div class="s">65 min · strength 5×5 · week 8</div></div>
+              <button class="btn-g">Open</button>
+            </div>
+            <div class="tl-r">
+              <span class="tl-t">14:30</span><span class="tl-bar"></span>
+              <div class="tl-m"><div class="n">Neda Hosseini · Pull A</div><div class="s">55 min · hypertrophy</div></div>
+              <button class="btn-g">Open</button>
+            </div>
+            <div class="tl-r">
+              <span class="tl-t">18:00</span><span class="tl-bar"></span>
+              <div class="tl-m"><div class="n">Hamed Naderi · Push B</div><div class="s">60 min · pending publish</div></div>
+              <span class="pill warn">Draft</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── B · SPLIT CANVAS ─────────── -->
+  <section class="panel" id="p-b" hidden>
+    <div class="ph">
+      <div><span class="kick">Split canvas</span><h1>Clients</h1>
+        <div class="sub">8 active · click a row — the detail pane never navigates away</div></div>
+      <button class="btn-p">＋ Add client</button>
+    </div>
+
+    <div class="split">
+      <div class="roster">
+        <div class="roster-h">
+          <span class="pill quiet">All 8</span><span class="pill warn">Attention 3</span><span class="pill ok">Today 4</span>
+        </div>
+        <div class="rrow" aria-selected="true">
+          <span class="av">AR</span>
+          <div><div class="n">Ali Rezaei</div><div class="s">Push A · today 09:00</div></div>
+          <span class="dot live"></span>
+        </div>
+        <div class="rrow" aria-selected="false">
+          <span class="av">SA</span>
+          <div><div class="n">Sara Ahmadi</div><div class="s">Form check · 3 days waiting</div></div>
+          <span class="dot warn"></span>
+        </div>
+        <div class="rrow" aria-selected="false">
+          <span class="av">MK</span>
+          <div><div class="n">Mohammad Karimi</div><div class="s">Leg A · today 11:00</div></div>
+          <span class="dot live"></span>
+        </div>
+        <div class="rrow" aria-selected="false">
+          <span class="av">NH</span>
+          <div><div class="n">Neda Hosseini</div><div class="s">Pull A · today 14:30</div></div>
+          <span class="dot live"></span>
+        </div>
+        <div class="rrow" aria-selected="false">
+          <span class="av">RM</span>
+          <div><div class="n">Reza Moradi</div><div class="s">On hold · 9 days</div></div>
+          <span class="dot bad"></span>
+        </div>
+        <div class="rrow" aria-selected="false">
+          <span class="av">AJ</span>
+          <div><div class="n">Amir Jafari</div><div class="s">Inactive · 3 weeks</div></div>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="dt-h">
+          <span class="av" style="width:38px;height:38px;font-size:14px">AR</span>
+          <div style="flex:1;min-width:0">
+            <p class="nm">Ali Rezaei</p>
+            <div class="cm">Muscle Gain · Hypertrophy — Week 6 · since Jul 2026</div>
+          </div>
+          <span class="pill ok">Active</span>
+          <button class="btn-g">Edit</button>
+        </div>
+
+        <div style="padding:14px var(--panel-pad) 0;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="chip on">Overview</span><span class="chip">Workout</span><span class="chip">Calendar</span>
+          <span class="chip">Progress</span><span class="chip">Nutrition</span><span class="chip">Notes</span>
+        </div>
+
+        <div class="next-well">
+          <div style="flex:1;min-width:0">
+            <span class="k">Next action</span>
+            <div class="v">Push A · today 09:00 · 3 exercises</div>
+            <div class="m">Volume 3,660 kg · rest 90s · last done yesterday</div>
+          </div>
+          <button class="btn-p">▶ Start workout</button>
+        </div>
+
+        <div class="mini">
+          <div class="card card-p" style="background:var(--inset);border-style:solid">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="ct">Last 7 days</span><span class="pill ok">5 of 6</span>
+            </div>
+            <div class="days" style="margin-top:14px">
+              <i style="height:52%"></i><i class="miss" style="height:16%"></i><i style="height:64%"></i>
+              <i class="on" style="height:92%"></i><i style="height:44%"></i><i class="on" style="height:100%"></i><i style="height:26%"></i>
+            </div>
+            <div class="days-d"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          </div>
+
+          <div class="card card-p" style="background:var(--inset);border-style:solid">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="ct">Needs attention</span><span class="pill warn">3</span>
+            </div>
+            <div class="att" style="margin-top:10px"><span class="dot warn"></span>
+              <div class="tx"><b>Form check pending</b>3 days without a reply</div></div>
+            <div class="att"><span class="dot bad"></span>
+              <div class="tx"><b>Missed 2 sessions</b>this week</div></div>
+            <div class="att"><span class="dot"></span>
+              <div class="tx"><b>Measurement due</b>last taken 47 days ago</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── C · EVIDENCE ROW ─────────── -->
+  <section class="panel" id="p-c" hidden>
+    <div class="ph">
+      <div><span class="kick">Evidence row</span><h1>Workouts</h1>
+        <div class="sub">One row = one program + its real usage. The sparkline answers "is this used?"</div></div>
+      <button class="btn-p">＋ New workout</button>
+    </div>
+
+    <div class="list">
+      <div class="list-h">
+        <input class="search" placeholder="Search programs…">
+        <span class="sp" style="flex:1"></span>
+        <span class="tag">3 programs</span>
+        <button class="btn-g" style="height:30px">Sort: recent</button>
+      </div>
+
+      <div class="erow">
+        <div style="min-width:0">
+          <p class="t">Hypertrophy 4 Day</p>
+          <p class="m">W1–W12 · 4 days/week · last run yesterday · 6 athletes</p>
+        </div>
+        <svg class="spark" viewBox="0 0 72 22" aria-label="usage"><polyline points="2,16 13,11 24,17 35,7 46,9 57,4 70,6"/></svg>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="pill ok">In use</span><button class="btn-g">Open</button>
+        </div>
+      </div>
+
+      <div class="erow">
+        <div style="min-width:0">
+          <p class="t">Strength 5×5</p>
+          <p class="m">W1–W10 · 3 days/week · last run 4 days ago · 2 athletes</p>
+        </div>
+        <svg class="spark" viewBox="0 0 72 22"><polyline points="2,14 13,13 24,15 35,10 46,14 57,12 70,13"/></svg>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="pill ok">In use</span><button class="btn-g">Open</button>
+        </div>
+      </div>
+
+      <div class="erow">
+        <div style="min-width:0">
+          <p class="t">Conditioning Block</p>
+          <p class="m">W1–W8 · 5 days/week · last run 3 weeks ago · 1 athlete</p>
+        </div>
+        <svg class="spark" viewBox="0 0 72 22"><polyline class="base" points="2,18 13,19 24,20 35,20 46,21 57,21 70,21"/></svg>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="pill quiet">Idle 21d</span><button class="btn-g">Open</button>
+        </div>
+      </div>
+
+      <div class="erow">
+        <div style="min-width:0">
+          <p class="t">Deload Week</p>
+          <p class="m">Template · never assigned · 0 athletes</p>
+        </div>
+        <svg class="spark" viewBox="0 0 72 22"><polyline class="base" points="2,21 70,21"/></svg>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="pill quiet">Never used</span><button class="btn-g">Open</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:var(--panel-gap)">
+      <div class="card card-p">
+        <span class="ct">Same row, other sections</span>
+        <p class="cm" style="margin-top:8px">Templates · Exercise Library · Notes · Challenges · Calendar all reuse
+          <b>.erow</b> — only the metadata columns change, so the eye learns one shape.</p>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:0;border-top:var(--hair)">
+          <div class="erow" style="border:0;padding-inline:0;background:transparent">
+            <div><p class="t">Push / Pull / Legs</p><p class="m">4 sessions · 32 exercises · used by 5</p></div>
+            <svg class="spark" viewBox="0 0 72 22"><polyline points="2,15 13,12 24,14 35,8 46,10 57,7 70,9"/></svg>
+            <span class="pill ok">Used</span>
+          </div>
+          <div class="erow" style="border:0;padding-inline:0;background:transparent">
+            <div><p class="t">Barbell Bench Press</p><p class="m">Chest · 41 logged sets this month</p></div>
+            <svg class="spark" viewBox="0 0 72 22"><polyline points="2,17 13,16 24,12 35,13 46,9 57,6 70,5"/></svg>
+            <span class="pill ok">Used</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-p">
+        <span class="ct">Why a sparkline, not a badge</span>
+        <p class="cm" style="margin-top:8px">A badge says "active". A sparkline says <i>which way</i> and how often —
+          the coach can see a programme decaying before it stops working. Same footprint as the badge,
+          no extra column.</p>
+        <div style="margin-top:16px;display:flex;gap:22px">
+          <div class="mwell" style="flex:1"><span class="k">Rows scanned</span><span class="v">1.4<span class="u">s</span></span>
+            <span class="s">before opening anything</span></div>
+          <div class="mwell" style="flex:1"><span class="k">Clicks saved</span><span class="v">3<span class="u">/4</span></span>
+            <span class="s">decisions made from the list</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── D · SEASON LANES ─────────── -->
+  <section class="panel" id="p-d" hidden>
+    <div class="ph">
+      <div><span class="kick">Season lanes</span><h1>Athletics</h1>
+        <div class="sub">Seven screens become one lane strip — the body changes, the strip does not move.</div></div>
+      <button class="btn-p">＋ Log session</button>
+    </div>
+
+    <div class="lanes-wrap">
+      <div class="lanes" id="lanes" role="tablist">
+        <button role="tab" aria-selected="true">Profile</button>
+        <button role="tab" aria-selected="false">Races</button>
+        <button role="tab" aria-selected="false">Phases</button>
+        <button role="tab" aria-selected="false">Builder</button>
+        <button role="tab" aria-selected="false">Load</button>
+        <button role="tab" aria-selected="false">PBs</button>
+        <button role="tab" aria-selected="false">Wearables</button>
+        <span class="ind" id="laneInd"></span>
+      </div>
+    </div>
+
+    <div class="lane-body" id="laneBody">
+      <div class="g3" style="margin-bottom:var(--panel-gap)">
+        <div class="mwell"><span class="k">Season load</span><span class="v">1,284<span class="u">au</span></span>
+          <span class="s">Base → Build in 2 weeks</span></div>
+        <div class="mwell"><span class="k">Sessions / week</span><span class="v">5<span class="u">of 5</span></span>
+          <span class="s">plan met 4 of 5 weeks</span></div>
+        <div class="mwell"><span class="k">Athletes in season</span><span class="v">6<span class="u">/8</span></span>
+          <span class="s">2 in recovery</span></div>
+      </div>
+
+      <div class="plan-vs">
+        <div class="hdr">Planned</div>
+        <div class="hdr">Actual</div>
+        <div class="hdr">Gap</div>
+
+        <div class="pv">
+          <span class="lab">Thursday · Interval 6 × 400 m</span>
+          <div class="big">4.1 km</div>
+          <div class="sub">Target 1:40–1:45 · RPE 8 · Track</div>
+        </div>
+        <div class="pv actual">
+          <span class="lab">Thursday</span>
+          <div class="big">9.6 km</div>
+          <div class="sub">48 min · 5:00/km · RPE 8</div>
+        </div>
+        <div class="gap">
+          <span class="k">Distance Δ</span><span class="v" style="color:var(--accent-text)">+5.5 km</span>
+          <span class="k">Pace Δ</span><span class="v">—</span>
+        </div>
+
+        <div class="pv">
+          <span class="lab">Saturday · Long run 28 km</span>
+          <div class="big">30.9 km</div>
+          <div class="sub">Target 5:15–5:30 · RPE 6 · Road</div>
+        </div>
+        <div class="pv actual">
+          <span class="lab">Saturday</span>
+          <div class="big">28 km</div>
+          <div class="sub">155 min · 5:32/km · RPE 6</div>
+        </div>
+        <div class="gap">
+          <span class="k">Distance Δ</span><span class="v" style="color:var(--bad)">−2.9 km</span>
+          <span class="k">Pace Δ</span><span class="v" style="color:var(--ok)">0:00</span>
+        </div>
+      </div>
+
+      <div class="card card-p" style="margin-top:var(--panel-gap)">
+        <span class="ct">Why a lane strip instead of 7 nav items</span>
+        <p class="cm" style="margin-top:8px">Profile · Races · Phases · Builder · Load · PBs · Wearables are all
+          <i>one journey</i>. The strip keeps the coach's place visible, cuts two levels of navigation,
+          and lets a future sport add a lane without touching the rail.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── E · MOBILE ─────────── -->
+  <section class="panel" id="p-e" hidden>
+    <div class="ph">
+      <div><span class="kick">Mobile</span><h1>Coach · on the floor</h1>
+        <div class="sub">The one action that matters is sticky above the tab bar — never more than one tap away.</div></div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="ph-top">
+          <span class="l">Today · Wed 12 Oct</span>
+          <span class="pill accent">Base · W6</span>
+        </div>
+
+        <div class="ph-b">
+          <div class="ph-card ph-hero">
+            <span class="k">Now · 09:30</span>
+            <div class="v">Sara Ahmadi — Form check</div>
+            <div class="ph-metrics">
+              <div><span class="k">Duration</span><span class="v">45<span style="font-size:10px">m</span></span></div>
+              <div><span class="k">Streak</span><span class="v">4</span></div>
+              <div><span class="k">Waiting</span><span class="v">3<span style="font-size:10px">d</span></span></div>
+            </div>
+          </div>
+
+          <div class="ph-card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="ct" style="font-size:13.5px">This week</span><span class="pill ok">5 of 6</span>
+            </div>
+            <div class="days" style="margin-top:12px;height:44px">
+              <i style="height:52%"></i><i class="miss" style="height:16%"></i><i style="height:64%"></i>
+              <i class="on" style="height:92%"></i><i style="height:44%"></i><i class="on" style="height:100%"></i><i style="height:26%"></i>
+            </div>
+            <div class="days-d"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          </div>
+
+          <div class="ph-card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="ct" style="font-size:13.5px">Upcoming race</span><span class="pill warn">4 d</span>
+            </div>
+            <div style="font-weight:650;margin-top:9px">Regional Open</div>
+            <div class="cm">12 Oct 2026 · target 10.60 · 100m</div>
+          </div>
+        </div>
+
+        <div class="ph-cta">
+          <button class="btn-p">＋ Log session</button>
+          <button class="btn-g" style="height:42px">Scan</button>
+        </div>
+
+        <div class="tabbar">
+          <div class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Today</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19.5c.7-3.1 2.9-4.7 5.5-4.7"/></svg>Clients</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Log</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>More</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<script>
+/* ── panel switch ─────────────────────────────────────────────────────────
+   The panel re-enters with panelIn (opacity + 6px). CSS transitions retarget,
+   so clicking twice a second never restarts from zero — no keyframes.        */
+const tabs=document.getElementById('tabs');
+tabs.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-p]');if(!b)return;
+  [...tabs.children].forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+  ['a','b','c','d','e'].forEach(p=>{
+    const el=document.getElementById('p-'+p);
+    el.hidden = p!==b.dataset.p;
+    if(p===b.dataset.p){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; }
+  });
+  if(b.dataset.p==='d') moveIndicator();
+});
+
+/* ── D · lane indicator ──────────────────────────────────────────────────
+   The indicator never disappears and never re-mounts: it TRANSLATES. That is
+   the whole signature — ease-in-out because it moves ON screen, while the body
+   below uses ease-out because it enters. Two curves, on purpose.            */
+const lanes=document.getElementById('lanes'), ind=document.getElementById('laneInd'),
+      laneBody=document.getElementById('laneBody');
+function moveIndicator(){
+  const on=lanes.querySelector('[aria-selected="true"]');
+  if(!on)return;
+  ind.style.width=on.offsetWidth+'px';
+  ind.style.transform='translateX('+(on.offsetLeft-3)+'px)';
+}
+lanes.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  [...lanes.querySelectorAll('button')].forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+  moveIndicator();
+  /* body swap: opacity + 6px, ease-out, 200ms — never animate width/height */
+  laneBody.style.animation='none'; void laneBody.offsetWidth; laneBody.style.animation='';
+});
+
+/* ── theme toggle ──────────────────────────────────────────────────────── */
+const tb=document.getElementById('themeBtn');
+tb.addEventListener('click',()=>{
+  const dark=document.documentElement.dataset.theme==='dark';
+  document.documentElement.dataset.theme=dark?'light':'dark';
+  tb.textContent=dark?'Dark':'Light';
+});
+addEventListener('resize',()=>{ if(!document.getElementById('p-d').hidden) moveIndicator(); });
+addEventListener('load',()=>{ moveIndicator(); });
+</script>
+</body>
+</html>

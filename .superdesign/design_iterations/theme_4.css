@@ -1,0 +1,293 @@
+/* ============================================================================
+   theme_4.css — CoachMint COACH APP · "Signal & Surface"
+   Step ② of the superdesign workflow (colour · type · spacing · shadow).
+
+   Self-contained: defines its own :root + dark block, no @import chain, so a
+   mockup can use it alone. Fonts are the three the product ALREADY loads —
+   Oxanium (display), Inter (UI), JetBrains Mono (labels/numerals) — so this
+   adds zero network cost and works offline.
+
+   THE RULE FOR THIS THEME: every token that can carry TEXT was checked against
+   WCAG AA (4.5:1 for normal, 3:1 for ≥24px or ≥18.66px+700) on the SURFACE IT
+   ACTUALLY SITS ON — not on white. Ratios are noted inline. Two things that
+   bit this codebase before and are therefore banned here:
+     · a text colour tuned for --surface then placed on --seg-bg  (was 3.97)
+     · an accent used as a FILL being reused as text               (was 1.96)
+   ========================================================================== */
+
+:root{
+  color-scheme:light;
+
+  /* ---- surfaces: a warm neutral ladder, not one flat grey ----------------
+     page  #DDDDD0  (kept from the product — it is the brand's warm bone)
+     card  #FFFFFF
+     inset #F2F2EC  (recessed panels: SPINE, chart wells, code-ish rows)
+     seg   #EAEAE2  (table headers, segmented controls)                    */
+  --bg:#DDDDD0;
+  --surface:#FFFFFF;
+  --raised:#FFFFFF;
+  --inset:#F2F2EC;
+  --seg-bg:#EAEAE2;
+  --seg-on:#FFFFFF;
+  --line:#E2E2DA;
+  --line-strong:#C9C9BC;
+
+  /* ---- ink (all four verified on the WORST-case light surface, #DDDDD0) --
+     ink-2  → 6.15 on card · 4.69 on page
+     ink-3  → 6.42 on card · 4.69 on page · 5.53 on inset · 5.29 on seg-bg
+     ink-faint is DECORATIVE ONLY (dividers, disabled chrome) — never text.  */
+  --ink:#14170F;
+  --ink-2:#4A4F45;
+  --ink-3:#5C6157;
+  --ink-faint:#A3A79C;
+  --ink-inverse:#FFFFFF;
+
+  /* ---- accent -------------------------------------------------------------
+     The lime IS the logo, so it stays. Split its three jobs into three tokens
+     — this is the single most important thing in this file:
+       --accent       fills, bars, active chips, the primary button
+       --accent-ink   text ON a lime fill
+       --accent-text  accent-hued TEXT on a light surface  (6.76 card / 4.93 page)
+     #C8F04B as text measures 1.31 — it may never be used for glyphs.        */
+  --accent:#C8F04B;
+  --accent-hover:#BCE43A;
+  --accent-ink:#14170F;
+  --accent-text:#4A6406;
+  --accent-soft:#F2FADF;
+  --accent-line:#C3DE7B;
+
+  /* ---- status (text on its own tint; every pair measured ≥4.5) ----------
+     ok   5.77 · warn 5.63 · bad 5.65 · info 5.60                          */
+  --ok:#1B6B3A;      --ok-soft:#E7F4EC;   --ok-line:#BFE3CC;
+  --warn:#8A5300;    --warn-soft:#FDF0DC; --warn-line:#F0D4A6;
+  --bad:#B02A25;     --bad-soft:#FCEAEA;  --bad-line:#F3C7C5;
+  --info:#1F5FA8;    --info-soft:#E8F0FB; --info-line:#C4D8F3;
+
+  /* ---- type -------------------------------------------------------------- */
+  --font-display:'Oxanium','Inter',system-ui,sans-serif;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-num:'JetBrains Mono','SFMono-Regular',Consolas,monospace;
+
+  /* display carries the "control room" voice: tight, angular, high weight */
+  --t-display:800 40px/1.05 var(--font-display);
+  --t-h1:700 26px/1.2 var(--font-display);
+  --t-h2:700 18px/1.3 var(--font-ui);
+  --t-h3:650 15px/1.35 var(--font-ui);
+  --t-body:400 14px/1.55 var(--font-ui);
+  --t-sm:400 12.5px/1.45 var(--font-ui);
+  /* labels and numerals are ALWAYS mono — this is what makes rows read as
+     instrumentation rather than prose */
+  --t-label:700 10.5px/1 var(--font-num);
+  --t-num:700 15px/1 var(--font-num);
+  --t-num-sm:700 12px/1 var(--font-num);
+  --tr-label:.14em;
+  --tr-display:-.02em;
+
+  /* ---- space (4px base) -------------------------------------------------- */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px;
+  --s6:24px; --s8:32px; --s10:40px; --s14:56px;
+  --panel-pad:20px;
+  --panel-gap:16px;
+
+  /* ---- shape: sharper than the product's current 16px radius -------------
+     tighter radii + hairlines read as an instrument panel; 16px reads soft.  */
+  --r-xs:4px; --r-sm:6px; --r-md:10px; --r-lg:14px; --r-pill:999px;
+  --hair:1px solid var(--line);
+  --hair-strong:1px solid var(--line-strong);
+
+  /* ---- elevation: one focal lift, everything else is flat ----------------
+     Shadow is a SCARCE resource here. Only the element the eye should go to
+     first gets lift; every other card is separated by a hairline + a tone.   */
+  --sh-focal:0 18px 40px -24px rgba(20,23,15,.45), 0 0 0 1px var(--accent-line);
+  --sh-pop:0 12px 28px -16px rgba(20,23,15,.35);
+  --sh-none:none;
+
+  /* ---- motion (step ③, signed off) ------------------------------------
+     These MUST live in the theme: every component below writes
+     `transition: <prop> var(--d-…) var(--ease-…)`, and an unresolvable var
+     makes the whole declaration invalid — the browser then falls back to
+     `all 0s`, so the animation silently never runs instead of failing loudly. */
+  --ease-out:cubic-bezier(0.23,1,0.32,1);        /* entering / exiting */
+  --ease-in-out:cubic-bezier(0.77,0,0.175,1);    /* moving on screen */
+  --ease-drawer:cubic-bezier(0.32,0.72,0,1);
+  --d-press:120ms;   /* button press feedback   */
+  --d-hover:140ms;   /* colour-only hover       */
+  --d-micro:160ms;   /* chips, row selection    */
+  --d-panel:200ms;   /* lane swap, tab swap     */
+  --d-modal:240ms;   /* modal, staggered entry  */
+
+  /* ---- layout primitives for the five layout templates ------------------- */
+  /* A · Command Deck */
+  --spine-w:88px;
+  --spine-bg:var(--inset);
+  /* B · Split Canvas */
+  --detail-w:1fr;
+  --roster-w:300px;
+  /* C · Evidence Row */
+  --row-h:56px;
+  --spark-w:72px;
+  /* D · Season Lanes */
+  --lane-h:40px;
+  --lane-rail:34px;
+  /* signal dots — state is carried by a dot + a tint, never by hue alone */
+  --dot:8px;
+  --dot-idle:var(--ink-faint);
+  --dot-live:var(--accent);
+  --dot-warn:var(--warn);
+  --dot-bad:var(--bad);
+}
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+
+  --bg:#0D1013;
+  --surface:#15181D;
+  --raised:#1C2027;
+  --inset:#11141A;
+  --seg-bg:#22262E;
+  --seg-on:#2B303A;
+  --line:#262B33;
+  --line-strong:#39404A;
+
+  --ink:#E9EBEE;
+  --ink-2:#B0B6C0;
+  /* 4.61 on --seg-bg · 5.02 on --raised · 4.92 on --surface */
+  --ink-3:#868F9C;
+  --ink-faint:#5A6270;
+  --ink-inverse:#14170F;
+
+  /* the lime needs no re-tuning on a dark ground: 13.6:1 on --surface */
+  --accent:#C8F04B;
+  --accent-hover:#D5F063;
+  --accent-ink:#14170F;
+  --accent-text:#C8F04B;
+  --accent-soft:#1E2510;
+  --accent-line:#5E7222;
+
+  /* status on dark: bright glyph on a deep tint (6.2 – 7.5:1) */
+  --ok:#57CE8A;      --ok-soft:#17331F;   --ok-line:#2C5C3D;
+  --warn:#F0B45C;    --warn-soft:#3A2A11; --warn-line:#6B4E1E;
+  --bad:#FF8079;     --bad-soft:#3D1C1A;  --bad-line:#713330;
+  --info:#79B8FF;    --info-soft:#132A44; --info-line:#2A4E78;
+
+  --sh-focal:0 18px 40px -24px rgba(0,0,0,.75), 0 0 0 1px var(--accent-line);
+  --sh-pop:0 12px 28px -16px rgba(0,0,0,.7);
+}
+
+/* ============================================================================
+   COMPONENT PRIMITIVES the five layout templates share.
+   Deliberately few: A–E differ in ARRANGEMENT, not in vocabulary.
+   ========================================================================== */
+
+/* ---- C · Evidence Row ----------------------------------------------------
+   One row = one entity + its history. The sparkline is the whole point: it
+   answers "is this actually being used?" without opening anything.          */
+.erow{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) var(--spark-w) auto;
+  gap:var(--s4);
+  align-items:center;
+  min-height:var(--row-h);
+  padding:var(--s3) var(--panel-pad);
+  background:var(--surface);
+  border-bottom:var(--hair);
+}
+.erow:last-child{border-bottom:0}
+.erow:hover{background:var(--inset)}
+.erow .t{font:var(--t-h3);color:var(--ink);margin:0}
+.erow .m{font:var(--t-sm);color:var(--ink-3);margin:2px 0 0}
+.erow .n{font:var(--t-num);color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---- signal dot ----------------------------------------------------------
+   State is dot + label + tint. Colour alone never carries meaning.          */
+.dot{
+  display:inline-block;width:var(--dot);height:var(--dot);border-radius:50%;
+  background:var(--dot-idle);flex:none;
+}
+.dot.live{background:var(--dot-live)}
+.dot.warn{background:var(--dot-warn)}
+.dot.bad{background:var(--dot-bad)}
+
+/* ---- metric well (inset, mono numerals) --------------------------------- */
+.mwell{
+  background:var(--inset);
+  border:var(--hair);
+  border-radius:var(--r-md);
+  padding:var(--s3) var(--s4);
+}
+.mwell .k{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);
+  text-transform:uppercase;display:block}
+.mwell .v{font:var(--t-num);font-size:24px;color:var(--ink);display:block;
+  margin-top:var(--s2);font-variant-numeric:tabular-nums}
+.mwell .u{font:var(--t-num-sm);color:var(--ink-3);margin-inline-start:4px}
+.mwell .s{font:var(--t-sm);color:var(--ink-3);display:block;margin-top:6px}
+
+/* ---- status pill (tinted, never saturated text on white) ---------------- */
+.pill{
+  display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;
+  border-radius:var(--r-pill);font:var(--t-label);letter-spacing:.06em;
+  text-transform:uppercase;border:1px solid transparent;white-space:nowrap;
+}
+.pill.ok{background:var(--ok-soft);color:var(--ok);border-color:var(--ok-line)}
+.pill.warn{background:var(--warn-soft);color:var(--warn);border-color:var(--warn-line)}
+.pill.bad{background:var(--bad-soft);color:var(--bad);border-color:var(--bad-line)}
+.pill.info{background:var(--info-soft);color:var(--info);border-color:var(--info-line)}
+.pill.accent{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent-line)}
+.pill.quiet{background:var(--seg-bg);color:var(--ink-2);border-color:var(--line)}
+
+/* ---- primary / ghost button -------------------------------------------- */
+.btn-p{
+  display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 18px;
+  border-radius:var(--r-sm);border:1px solid transparent;
+  background:var(--accent);color:var(--accent-ink);
+  font:650 13.5px/1 var(--font-ui);cursor:pointer;
+  transition:background .15s,transform .15s;
+}
+.btn-p:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-p:active{transform:translateY(0)}
+.btn-g{
+  display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;
+  border-radius:var(--r-sm);background:transparent;
+  border:var(--hair-strong);color:var(--ink-2);
+  font:650 13.5px/1 var(--font-ui);cursor:pointer;
+}
+.btn-g:hover{background:var(--inset);color:var(--ink)}
+
+/* ---- tab strip (D · Season Lanes) --------------------------------------- */
+.lanes{
+  display:flex;gap:2px;background:var(--inset);border:var(--hair);
+  border-radius:var(--r-md);padding:3px;overflow-x:auto;scrollbar-width:none;
+}
+.lanes button{
+  flex:1;min-width:max-content;height:32px;padding:0 14px;border:0;
+  background:transparent;border-radius:var(--r-sm);
+  font:650 12.5px/1 var(--font-ui);color:var(--ink-3);cursor:pointer;
+  white-space:nowrap;transition:background .15s,color .15s;
+}
+.lanes button:hover{color:var(--ink)}
+.lanes button[aria-selected="true"]{
+  background:var(--surface);color:var(--ink);
+  box-shadow:0 1px 0 0 var(--accent-line);
+}
+
+/* ---- segmented / filter chip ------------------------------------------- */
+.chip{
+  height:28px;padding:0 12px;border-radius:var(--r-pill);
+  background:var(--surface);border:var(--hair);color:var(--ink-2);
+  font:600 12.5px/1 var(--font-ui);cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.chip:hover{background:var(--inset);color:var(--ink)}
+.chip[aria-pressed="true"],.chip.on{
+  background:var(--accent-soft);border-color:var(--accent-line);
+  color:var(--accent-text);font-weight:700;
+}
+
+/* ---- inset panel (SPINE, chart wells, notes) ---------------------------- */
+.well{background:var(--inset);border:var(--hair);border-radius:var(--r-md)}
+
+/* ---- focus ring: one token, used everywhere ----------------------------- */
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--accent-text);
+  outline-offset:2px;
+}

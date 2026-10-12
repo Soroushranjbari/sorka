@@ -1,0 +1,1024 @@
+<!doctype html>
+<html lang="fa" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoachMint · Coach MOBILE UI — Signal &amp; Surface (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme_4.css">
+<style>
+/* ============================================================================
+   coachui_2 — COACH MOBILE. Reuses theme_4.css (signed off in step ②); this
+   block is the review chrome + the phone shell only.
+
+   One principle runs through all five screens: desktop answers
+   "how is my business doing", mobile answers "what do I do in the next ten
+   minutes". Nothing here is a shrunken desktop page.
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font:var(--t-body);-webkit-font-smoothing:antialiased}
+button,input,select{font-family:inherit}
+
+/* ---- review chrome (not product) ---------------------------------------- */
+.dbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:10px 18px;background:var(--surface);border-bottom:var(--hair)}
+.dbar .ttl{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--ink-3)}
+.dbar .sp{flex:1}
+.mock{font:var(--t-label);letter-spacing:.08em;color:var(--accent-text);background:var(--accent-soft);
+  border:1px solid var(--accent-line);border-radius:var(--r-pill);padding:5px 10px}
+.themebtn{height:28px;padding:0 12px;border-radius:var(--r-sm);border:var(--hair-strong);
+  background:transparent;color:var(--ink-2);font:600 12px/1 var(--font-ui);cursor:pointer}
+@media (hover:hover) and (pointer:fine){.themebtn:hover{background:var(--inset);color:var(--ink)}}
+
+.wrap{max-width:1180px;margin:0 auto;padding:26px 22px 60px;
+  display:grid;grid-template-columns:320px minmax(0,1fr);gap:38px;align-items:start}
+
+/* ---- left column: screen index + rationale ------------------------------ */
+.idx{position:sticky;top:70px}
+.idx h2{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 10px}
+.sbtn{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:start;
+  padding:11px 13px;border:1px solid transparent;border-radius:var(--r-md);
+  background:transparent;cursor:pointer;color:var(--ink-2);
+  transition:background var(--d-micro) var(--ease-out),color var(--d-micro) var(--ease-out)}
+.sbtn b{font:650 13.5px/1.25 var(--font-ui);color:var(--ink);display:block}
+.sbtn span{font:var(--t-sm);color:var(--ink-3);display:block;margin-top:3px}
+.sbtn .n{font:var(--t-num-sm);color:var(--ink-faint);flex:none;padding-top:2px;width:16px}
+@media (hover:hover) and (pointer:fine){.sbtn:hover{background:var(--inset);color:var(--ink)}}
+.sbtn[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent-text)}
+.sbtn[aria-selected="true"] .n{color:var(--accent-text)}
+.sbtn[aria-selected="true"] b{color:var(--accent-text)}
+.note{margin-top:18px;padding:14px 15px;background:var(--inset);border:var(--hair);
+  border-radius:var(--r-md);font:var(--t-sm);color:var(--ink-3);line-height:1.55}
+.note b{color:var(--ink);font-weight:650}
+
+/* ---- phone --------------------------------------------------------------- */
+.phoneCol{display:flex;justify-content:center}
+.phone{width:390px;max-width:100%;height:790px;background:var(--surface);
+  border:var(--hair);border-radius:30px;box-shadow:var(--sh-pop);
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+
+/* RAIL 1 = 15px (phone border 1 + padding 14): header title, section labels,
+   card edges, sheet fields. RAIL 2 = 30px (+border+padding): every icon,
+   avatar and line of body text. Nothing may sit between the two. --------- */
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:13px 14px 10px;border-bottom:var(--hair);background:var(--inset);flex:none}
+.mhead .l{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);text-transform:uppercase;
+  /* space-between floated this title to a different x on every sub-screen
+     (116 on Live, 99 on Athlete). An auto margin pins it right after the
+     back button so it is in the same place everywhere. */
+  margin-inline-end:auto}
+.mhead .r{display:flex;gap:6px;align-items:center}
+.icb{width:32px;height:32px;border-radius:var(--r-sm);border:var(--hair);background:var(--surface);
+  color:var(--ink-2);display:grid;place-items:center;cursor:pointer;position:relative}
+.icb .dot{position:absolute;top:6px;right:6px}
+.back{width:32px;height:32px;border-radius:var(--r-sm);border:0;background:transparent;
+  color:var(--ink);display:grid;place-items:center;cursor:pointer}
+
+.mbody{flex:1;overflow-y:auto;padding:14px 14px 96px;display:flex;flex-direction:column;gap:12px}
+.screen{animation:screenIn var(--d-panel) var(--ease-out) both}
+@keyframes screenIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.cardm{background:var(--surface);border:var(--hair);border-radius:var(--r-md);padding:14px}
+.cardm.hero{border-color:var(--accent-line);
+  background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)}
+.k{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);text-transform:uppercase}
+.k.on{color:var(--accent-text)}
+.v{font:800 21px/1 var(--font-num);font-variant-numeric:tabular-nums;margin-top:8px}
+.v small{font:700 11px/1 var(--font-num);color:var(--ink-3);margin-inline-start:4px}
+.n{font:700 15px/1.3 var(--font-ui)}
+.s{font:var(--t-sm);color:var(--ink-3);margin-top:4px}
+.sec{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:16px 0 8px;font:var(--t-label);letter-spacing:var(--tr-label);
+  text-transform:uppercase;color:var(--ink-3)}
+.sec .c{font:var(--t-num-sm);color:var(--ink-3)}
+
+/* one row, one action */
+.mrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:12px 14px;border:var(--hair);border-radius:var(--r-md);background:var(--surface);
+  cursor:pointer;
+  transition:background var(--d-panel) var(--ease-out),box-shadow var(--d-panel) var(--ease-out)}
+.mrow .av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font:700 11px/1 var(--font-num);color:var(--ink);background:var(--seg-bg);border:var(--hair-strong)}
+.mrow .go{color:var(--ink-faint);flex:none}
+@media (hover:hover) and (pointer:fine){.mrow:hover{background:var(--inset)}}
+.mrow .t{font:650 13.5px/1.25 var(--font-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .m{font:var(--t-sm);color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* filter chips */
+.fchips{display:flex;gap:6px;flex-wrap:wrap}
+
+/* accordion — NO height animation (transform/opacity only) */
+.acc{border:var(--hair);border-radius:var(--r-md);background:var(--surface);overflow:hidden}
+.acc>button{display:flex;align-items:center;gap:10px;width:100%;padding:13px 14px;
+  border:0;background:transparent;cursor:pointer;text-align:start;color:var(--ink)}
+.acc>button .t{font:650 13.5px/1.2 var(--font-ui);flex:1;min-width:0}
+.acc>button .v{font:var(--t-num-sm);color:var(--ink-3);margin:0}
+.acc>button .cv{color:var(--ink-faint);transition:transform var(--d-micro) var(--ease-out);flex:none}
+.acc[data-open] .cv{transform:rotate(180deg)}
+.acc .body{display:none;padding:0 14px 14px;border-top:var(--hair);margin-top:-1px;
+  animation:accIn var(--d-panel) var(--ease-out) both}
+.acc[data-open] .body{display:block}
+@keyframes accIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.acc .body .mrow{margin-top:10px}
+
+/* bottom bar + centre FAB */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:62px;display:flex;align-items:center;
+  background:var(--inset);border-top:var(--hair);padding:0 2px;z-index:5}
+.tabbar div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 0;
+  font:var(--t-label);letter-spacing:.05em;font-size:8.5px;color:var(--ink-3);
+  text-transform:uppercase;cursor:pointer;
+  transition:color var(--d-micro) var(--ease-out)}
+.tabbar div.on{color:var(--accent-text)}
+.fab{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);
+  width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+  border:3px solid var(--surface);box-shadow:var(--sh-pop);display:grid;place-items:center;
+  cursor:pointer;z-index:6;
+  transition:transform var(--d-press) var(--ease-out)}
+.fab:active{transform:translateX(-50%) scale(.94)}
+
+/* log sheet — a drawer, so ease-out + translateY on its own height */
+.scrim{position:absolute;inset:0;background:rgba(20,23,15,.42);z-index:7;opacity:0;
+  pointer-events:none;transition:opacity var(--d-panel) var(--ease-out)}
+.phone[data-sheet] .scrim{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:8;
+  background:var(--surface);border-top-left-radius:20px;border-top-right-radius:20px;
+  border-top:var(--hair);padding:10px 14px 18px;max-height:88%;overflow-y:auto;
+  transform:translateY(102%);
+  transition:transform var(--d-modal) var(--ease-out)}
+.phone[data-sheet] .sheet{transform:translateY(0)}
+.handle{width:38px;height:4px;border-radius:99px;background:var(--line-strong);margin:2px auto 12px}
+.field{margin-bottom:12px}
+.field label{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);
+  text-transform:uppercase;display:block;margin-bottom:6px}
+.inp{width:100%;height:38px;border-radius:var(--r-sm);border:var(--hair-strong);
+  background:var(--surface);padding:0 11px;color:var(--ink);font-size:14px}
+.sheet-actions{display:flex;gap:9px;margin-top:14px}
+.sheet-actions .btn-p{flex:1;justify-content:center;height:46px}
+.sheet-actions .btn-g{flex:none}
+.btn-g{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;
+  border-radius:var(--r-sm);background:transparent;border:var(--hair-strong);color:var(--ink-2);
+  font:650 13.5px/1 var(--font-ui);cursor:pointer}
+
+/* step ③ motion, mobile additions only */
+.stg>*{animation:riseIn var(--d-modal) var(--ease-out) both}
+.stg>*:nth-child(1){animation-delay:0ms}
+.stg>*:nth-child(2){animation-delay:60ms}
+.stg>*:nth-child(3){animation-delay:120ms}
+@keyframes riseIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.days{display:flex;gap:4px;align-items:flex-end;height:44px;margin-top:12px}
+.days i{flex:1;background:var(--seg-bg);border-radius:2px 2px 0 0;min-height:4px;display:block;
+  transform-origin:bottom;animation:barUp var(--d-modal) var(--ease-out) both}
+.days i.on{background:var(--accent)}
+.days i.miss{background:var(--bad-soft);box-shadow:inset 0 0 0 1px var(--bad)}
+.days i:nth-child(1){animation-delay:0ms}
+.days i:nth-child(2){animation-delay:40ms}
+.days i:nth-child(3){animation-delay:80ms}
+.days i:nth-child(4){animation-delay:120ms}
+.days i:nth-child(5){animation-delay:160ms}
+.days i:nth-child(6){animation-delay:200ms}
+.days i:nth-child(7){animation-delay:240ms}
+@keyframes barUp{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+.days-d{display:flex;gap:4px;margin-top:5px}
+.days-d span{flex:1;text-align:center;font:var(--t-num-sm);font-size:9px;color:var(--ink-faint)}
+
+/* ══════════════════════════════════════════════════════════════════
+   FLOOR SYSTEM — icons, signals, reach.  No emoji anywhere in this file.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ---- Lucide, inlined. `<i data-ic="bell">` is hydrated by ic().
+        stroke=currentColor so an icon takes the colour of its context,
+        never a colour of its own. ------------------------------------- */
+i[data-ic]{display:inline-flex;align-items:center;justify-content:center;
+  width:var(--sz,18px);height:var(--sz,18px);flex:none;vertical-align:-.2em}
+i[data-ic] svg{width:100%;height:100%;display:block;overflow:visible}
+.icb i[data-ic]{--sz:17px}
+.mrow .go i[data-ic]{--sz:17px;color:var(--ink-faint)}
+.back i[data-ic]{--sz:19px}
+.pill i[data-ic]{--sz:12px}
+
+/* ---- touch targets: a coach taps these with a thumb, mid-set ----------
+   Floor rule: nothing interactive is under 44×44. 10-across made the RPE keys
+   32×40 — unwettable — so the scale became a 5×2 keypad. ------------------ */
+.icb{width:44px;height:44px}
+.back{width:44px;height:44px}
+.mrow{min-height:56px}
+.tabbar{height:64px}
+.tabbar div{min-height:56px;justify-content:center}
+
+/* ---- SIGNAL LANGUAGE — one role per colour, identical everywhere ------ */
+/* 30px badge + 10px gap → text at 70, exactly where `.mrow` puts it */
+.sig{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:11px 14px;border:var(--hair);border-radius:var(--r-md);background:var(--surface);
+  cursor:pointer;transition:background var(--d-micro) var(--ease-out),
+    transform var(--d-press) var(--ease-out)}
+.sig:active{transform:scale(.985)}
+.sig .si{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none;
+  background:var(--inset);color:var(--ink-2)}
+.sig .si i[data-ic]{--sz:15px}
+.sig.act .si{background:var(--accent);color:var(--accent-ink)}
+.sig.watch .si{background:var(--warn-soft);color:var(--warn)}
+.sig.risk .si{background:var(--bad-soft);color:var(--bad)}
+.sig .tt{font:650 13.5px/1.25 var(--font-ui);color:var(--ink)}
+.sig .mm{font:var(--t-sm);color:var(--ink-3);margin-top:3px}
+.sig .val{font:800 15px/1 var(--font-num);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+
+/* ---- SQUAD PULSE — every athlete, one tap, no scrolling to find them --- */
+/* horizontal rails start flush at 15 — no 2px scroll-padding kick */
+.pulse{display:flex;gap:9px;overflow-x:auto;padding:3px 0 5px;
+  scroll-snap-type:x proximity;scrollbar-width:none}
+.pulse::-webkit-scrollbar,.qrail::-webkit-scrollbar{display:none}
+.pulse .p{flex:none;width:58px;scroll-snap-align:start;background:transparent;border:0;
+  padding:0;cursor:pointer;color:inherit}
+.pulse .p .ring{position:relative;width:46px;height:46px;margin:0 auto;border-radius:50%;
+  display:grid;place-items:center;background:var(--surface);
+  transition:transform var(--d-press) var(--ease-out)}
+.pulse .p:active .ring{transform:scale(.92)}
+/* the ring is now EVIDENCE: it is arc'd to the athlete's weekly completion,
+   not a flat circle. r=20 → circumference 125.66. */
+.pulse .p .arcs{position:absolute;inset:0;transform:rotate(-90deg)}
+.pulse .p .atr{fill:none;stroke:var(--line-strong);stroke-width:2.5;opacity:.55}
+.pulse .p .aprg{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:125.66;transition:stroke-dashoffset var(--d-panel) var(--ease-out)}
+.pulse .p.watch .aprg{stroke:var(--warn)}
+.pulse .p.risk .aprg{stroke:var(--bad)}
+.pulse .p.idle .aprg{stroke:var(--line-strong)}
+.pulse .p .ring b{font:700 13px/1 var(--font-num);letter-spacing:.02em;position:relative}
+.pulse .p .st{position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;border-radius:50%;
+  border:2.5px solid var(--surface)}
+.pulse .p .nm{display:block;font:600 10px/1.2 var(--font-ui);color:var(--ink-3);margin-top:7px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st.ok{background:var(--accent)} .st.watch{background:var(--warn)}
+.st.risk{background:var(--bad)}  .st.idle{background:var(--line-strong)}
+
+/* ---- QUICK RAIL — the athletics views without opening More ------------ */
+.qrail{display:flex;gap:7px;overflow-x:auto;padding:3px 0 5px;scrollbar-width:none}
+.qrail .q{flex:none;display:flex;align-items:center;gap:7px;height:44px;padding:0 15px;
+  border-radius:var(--r-pill);border:var(--hair);background:var(--surface);color:var(--ink-2);
+  font:650 12.5px/1 var(--font-ui);cursor:pointer;white-space:nowrap;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.qrail .q:active{transform:scale(.94)}
+.qrail .q i[data-ic]{--sz:15px;color:var(--accent-text)}
+.qrail .q.hot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.qrail .q.hot i[data-ic]{color:var(--accent-ink)}
+
+/* ---- LIVE SESSION — the screen a coach actually uses on the floor ------ */
+.clockWrap{display:grid;place-items:center;padding:16px 0 4px}
+.clockRing{position:relative;width:196px;height:196px}
+.clockRing svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.clockRing .trk{stroke:var(--seg-bg)}
+.clockRing .prg{stroke:var(--accent);stroke-linecap:round;
+  transition:stroke-dashoffset var(--d-panel) var(--ease-out)}
+.clockFace{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:6px}
+.clockFace .tm{font:800 46px/1 var(--font-num);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.clockFace .lb{font:var(--t-label);letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+.clockFace .sub{font:700 11.5px/1 var(--font-num);color:var(--accent-text)}
+
+.stepper{display:grid;grid-template-columns:64px minmax(0,1fr) 64px;gap:11px;align-items:center;
+  padding:14px;border:var(--hair);border-radius:var(--r-md);background:var(--surface)}
+.stepper .sb{height:58px;border-radius:var(--r-sm);border:var(--hair-strong);background:var(--inset);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.stepper .sb:active{transform:scale(.92);background:var(--accent-soft)}
+.stepper .sb.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.stepper .mid{text-align:center;min-width:0}
+.stepper .cnt{font:800 34px/1 var(--font-num);font-variant-numeric:tabular-nums}
+.stepper .cnt small{font:700 15px/1 var(--font-num);color:var(--ink-faint);margin-inline:3px}
+.stepper .lb{font:var(--t-label);letter-spacing:var(--tr-label);color:var(--ink-3);
+  text-transform:uppercase;margin-top:7px}
+
+/* 5×2 keypad, not 10 across: at 390px a single row leaves 32×40 targets */
+.rpeRow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.rpeRow .r{height:44px;border-radius:var(--r-sm);border:var(--hair);background:var(--surface);
+  color:var(--ink-2);font:700 13px/1 var(--font-num);cursor:pointer;display:grid;place-items:center;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.rpeRow .r:active{transform:scale(.88)}
+.rpeRow .r.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:800}
+.rpeRow .r.hard.on{background:var(--warn);border-color:var(--warn);color:#fff}
+.rpeRow .r.max.on{background:var(--bad);border-color:var(--bad);color:#fff}
+
+.toolRow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.toolRow button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  padding:12px 4px;border:var(--hair);border-radius:var(--r-md);background:var(--surface);
+  color:var(--ink-2);font:600 11px/1 var(--font-ui);cursor:pointer;min-height:66px;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.toolRow button:active{transform:scale(.94);background:var(--inset)}
+.toolRow button i[data-ic]{--sz:20px;color:var(--accent-text)}
+
+/* ---- JUMP — the command palette. Reachable from the thumb bar. -------- */
+.palette{position:absolute;inset:0;z-index:9;background:var(--surface);display:flex;
+  flex-direction:column;opacity:0;transform:translateY(12px);pointer-events:none;
+  transition:opacity var(--d-modal) var(--ease-out),transform var(--d-modal) var(--ease-out)}
+.phone[data-jump] .palette{opacity:1;transform:none;pointer-events:auto}
+.jumpIn{display:flex;gap:9px;align-items:center;padding:14px 14px 12px;border-bottom:var(--hair)}
+.jumpIn .back{flex:none}          /* the input would otherwise shrink it to 39px */
+.jumpIn .inp{height:44px;font-size:14.5px;min-width:0;flex:1}
+.palBody{flex:1;overflow-y:auto;padding:13px 14px 26px;display:flex;flex-direction:column;gap:16px}
+.palSec{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 8px}
+.palGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.palItem{display:flex;align-items:center;gap:9px;padding:12px 14px;min-height:48px;
+  border:var(--hair);border-radius:var(--r-md);background:var(--surface);color:var(--ink);
+  font:650 13px/1.2 var(--font-ui);cursor:pointer;text-align:start;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.palItem:active{transform:scale(.965);background:var(--inset)}
+.palItem i[data-ic]{--sz:16px;color:var(--accent-text)}
+.palItem span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- misc ------------------------------------------------------------- */
+.phone .btn-g{height:46px}          /* was 42 — under the floor */
+.phone .fchips .chip{height:44px;padding-inline:15px}  /* was 28 */
+.av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font:700 11px/1 var(--font-num);letter-spacing:.02em;color:var(--ink);background:var(--seg-bg);
+  border:var(--hair-strong)}
+.av i[data-ic]{--sz:15px;color:var(--ink-2)}
+.dock{display:flex;gap:9px;padding-top:4px}
+.dock .btn-p{flex:1;justify-content:center;height:46px}
+.danger{border-color:var(--bad);color:var(--bad)}
+
+/* ---- NOVATY 1 · NOW hero → a bar, so "38 min left" becomes evidence ---- */
+.prog{height:6px;border-radius:99px;background:var(--seg-bg);overflow:hidden;margin-top:10px}
+.prog>i{display:block;height:100%;border-radius:99px;background:var(--accent);
+  transform-origin:left;animation:barGrow var(--d-modal) var(--ease-out) both}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ---- NOVATY 2 · Live stepper → which sets are already banked ---------- */
+.stepper .sets{grid-column:1/-1;display:flex;gap:6px}
+.stepper .sets i{flex:1;height:5px;border-radius:99px;background:var(--seg-bg);
+  transition:background var(--d-micro) var(--ease-out)}
+.stepper .sets i.done{background:var(--accent)}
+.stepper .sets i.now{background:var(--accent-line)}
+
+@media (hover:hover) and (pointer:fine){.sig:hover,.palItem:hover{background:var(--inset)}}
+@media (hover:none),(pointer:coarse){.sig:hover,.palItem:hover{background:var(--surface)}}
+
+@media (prefers-reduced-motion:reduce){
+  .screen,.acc .body,.stg>*,.days i,.prog>i{animation:none!important;transform:none!important;opacity:1!important;
+    transition:opacity .15s linear}
+  .sheet,.palette,.qrail,.pulse,.clockRing .prg,.pulse .aprg{transition:none}
+  .sig,.palItem,.stepper .sb,.rpeRow .r,.toolRow button,.fab{transition:background .12s linear}
+}
+</style>
+</head>
+
+<body>
+
+<div class="dbar">
+  <span class="ttl">Signal &amp; Surface · COACH MOBILE</span>
+  <span class="sp"></span>
+  <button class="themebtn" id="themeBtn">Dark</button>
+  <span class="mock">Design mockup</span>
+</div>
+
+<div class="wrap">
+
+  <!-- ═════════ LEFT: index + rationale ═════════ -->
+  <div class="idx">
+    <h2>Screens</h2>
+    <button class="sbtn" aria-selected="true" data-s="today"><span class="n">1</span>
+      <span><b>Today</b><span>فلورِ مربی — الان چه خبر است، قدم بعدی کجاست</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="live"><span class="n">2</span>
+      <span><b>Live session</b><span>سطرِ زمین — تایمر، شمارشِ ست، RPE با یک دست</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="athletes"><span class="n">3</span>
+      <span><b>Athletes</b><span>روستر با chip وضعیت، جستجو و filter</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="athlete"><span class="n">4</span>
+      <span><b>Athlete workspace</b><span>«قدم بعدی» + آکاردئون (۱۳۶۶px → ~۴۰۰px)</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="jump"><span class="n">5</span>
+      <span><b>Jump</b><span>پالتِ فرمان — ۲۰ صفحه در ۲ ضربه، از هر کجا</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="log"><span class="n">6</span>
+      <span><b>Log sheet</b><span>FAB مرکزی — ثبتِ جلسه بدون ترکِ صفحه</span></span></button>
+    <button class="sbtn" aria-selected="false" data-s="more"><span class="n">7</span>
+      <span><b>More</b><span>فهرستِ کامل — هیچ مقصدی حذف نشده</span></span></button>
+
+    <div class="note">
+      <b>چهار تصمیم کلیدی</b><br>
+      ۱. <b>هیچ ایموجی نیست</b> — همه نشانه‌ها Lucide SVG با <code>currentColor</code>؛ رنگ از زمینه می‌آید، نه از متن.<br>
+      ۲. <b>سه لایهٔ دسترسی</b> برای مربیِ سرِ زمین: نوارِ پایین (شست) · Jump از هر صفحه · More (فهرستِ کامل).<br>
+      ۳. <b>Live session صفحهٔ اصلیِ باشگاه است</b> — حلقهٔ استراحت، شمارشِ ست با دکمه‌های ۵۸px، RPE ۱–۱۰.<br>
+      ۴. <b>یک زبانِ سیگنال</b> — لایم = اقدام · کهربرا = پیگیری · قرمز = ریسک؛ در همهجا یکسان.
+    </div>
+
+    <div class="note" style="margin-top:10px">
+      هدفِ لمسی <b>≥ 44px</b> · اعداد با <b>Oxanium tabular</b> تا ثابت بمانند ·
+      داده، اکشن‌ها و توکن‌های تم با دسکتاپ <b>مشترک‌اند</b>؛ چیدمان کاملاً مستقل است.
+    </div>
+  </div>
+
+  <!-- ═════════ RIGHT: phone ═════════ -->
+  <div class="phoneCol">
+  <div class="phone" id="phone">
+
+    <!-- ─── 1 · TODAY — the floor overview ─── -->
+    <div class="screen" id="s-today">
+      <div class="mhead">
+        <span class="l">Today · Mon 12 Oct</span>
+        <span class="r">
+          <span class="pill accent"><i data-ic="radio"></i> Base · W6</span>
+          <span class="icb"><i data-ic="bell"></i><span class="dot" style="background:var(--bad)"></span></span>
+        </span>
+      </div>
+
+      <div class="mbody">
+
+        <!-- NOW -->
+        <div class="cardm hero">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="k on" style="display:inline-flex;align-items:center;gap:6px">
+              <i data-ic="radio" style="--sz:13px"></i> Now · 09:30</span>
+            <span class="pill warn">38 min left</span>
+          </div>
+          <!-- NOVATY: the pill says 38 left; the bar SHOWS it (7 of 45 elapsed) -->
+          <div class="prog" role="img" aria-label="7 of 45 minutes elapsed"><i style="width:16%"></i></div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:12px">
+            <span class="av" style="width:42px;height:42px;font-size:13px;background:var(--accent-soft);color:var(--accent-text)">SA</span>
+            <div style="min-width:0">
+              <div class="n" style="font-size:16.5px">Sara Ahmadi</div>
+              <div class="s">Form check · 45 min · photo + video</div>
+            </div>
+          </div>
+          <div class="s" style="margin-top:9px;display:flex;gap:7px;align-items:center;color:var(--warn);font-weight:650">
+            <i data-ic="alert" style="--sz:14px"></i> 3 روز بدونِ جوابِ شما
+          </div>
+          <div class="dock">
+            <button class="btn-p" data-go="live"><i data-ic="play" style="--sz:16px"></i> شروعِ جلسه</button>
+            <button class="btn-g" data-go="athlete">باز کردن <i data-ic="chev-right" style="--sz:15px"></i></button>
+          </div>
+        </div>
+
+        <!-- QUICK RAIL — every athletics view, one tap, without opening More -->
+        <div class="qrail">
+          <button class="q hot" data-go="live"><i data-ic="zap"></i>Live</button>
+          <button class="q"><i data-ic="flag"></i>Races</button>
+          <button class="q"><i data-ic="layers"></i>Phases</button>
+          <button class="q"><i data-ic="dumbbell"></i>Builder</button>
+          <button class="q"><i data-ic="activity"></i>Load</button>
+          <button class="q"><i data-ic="trophy"></i>PBs</button>
+          <button class="q"><i data-ic="watch"></i>Wearables</button>
+        </div>
+
+        <!-- SIGNALS — derived cues, not a to-do list -->
+        <div class="sec">Signals <span class="c">4</span></div>
+        <div class="stg">
+          <div class="sig watch">
+            <span class="si"><i data-ic="trending-up"></i></span>
+            <div><div class="tt">RPE دارد بالا می‌رود</div><div class="mm">Sara · ۳ جلسهٔ اخیر، ۲ واحد بالاتر از برنامه</div></div>
+            <span class="val">8</span>
+          </div>
+          <div class="sig act">
+            <span class="si"><i data-ic="message"></i></span>
+            <div><div class="tt">۲ پیامِ بی‌جواب</div><div class="mm">Sara · Ali — از دیروز</div></div>
+            <span class="val">2</span>
+          </div>
+          <div class="sig risk">
+            <span class="si"><i data-ic="clock"></i></span>
+            <div><div class="tt">۹ روز بدونِ جلسه</div><div class="mm">Reza Moradi · قفل شده از ۳ اکتبر</div></div>
+            <span class="val">9d</span>
+          </div>
+          <div class="sig">
+            <span class="si"><i data-ic="target"></i></span>
+            <div><div class="tt">هفتهٔ سوم رویِ هدف</div><div class="mm">Mohammad · ۶۵ از ۶۵ کیلومتر</div></div>
+            <span class="val">100%</span>
+          </div>
+        </div>
+
+        <!-- NEXT UP -->
+        <div class="sec">Next up <span class="c">3</span></div>
+        <div class="stg">
+          <div class="mrow" data-go="athlete"><span class="av">MK</span>
+            <div><div class="t">Mohammad Karimi</div><div class="m">11:00 · Leg A · 65 min</div></div>
+            <span class="go"><i data-ic="chev-right"></i></span></div>
+          <div class="mrow" data-go="athlete"><span class="av">NH</span>
+            <div><div class="t">Neda Hosseini</div><div class="m">14:30 · Pull A · 55 min</div></div>
+            <span class="go"><i data-ic="chev-right"></i></span></div>
+          <div class="mrow" data-go="athlete"><span class="av">HN</span>
+            <div><div class="t">Hamed Naderi</div><div class="m">18:00 · Push B · draft</div></div>
+            <span class="pill quiet">Draft</span></div>
+        </div>
+
+        <!-- SQUAD PULSE — all eight, visible at once -->
+        <div class="sec">Squad pulse <span class="c">8</span></div>
+        <!-- NOVATY: each ring is arced to that athlete's week (r=20 → 125.66) -->
+        <div class="pulse">
+          <button class="p watch" data-go="athlete" title="Sara — 4 of 6 sessions this week"
+                  aria-label="Sara, 4 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="41.5"/></svg><b>SA</b><i class="st watch"></i></span><span class="nm">Sara</span></button>
+          <button class="p" data-go="athlete" title="Ali — 5 of 5 sessions this week"
+                  aria-label="Ali, 5 of 5 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="0"/></svg><b>AR</b><i class="st ok"></i></span><span class="nm">Ali</span></button>
+          <button class="p" data-go="athlete" title="Mohammad — 6 of 6 sessions this week"
+                  aria-label="Mohammad, 6 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="0"/></svg><b>MK</b><i class="st ok"></i></span><span class="nm">Mohammad</span></button>
+          <button class="p" data-go="athlete" title="Neda — 4 of 5 sessions this week"
+                  aria-label="Neda, 4 of 5 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="25.1"/></svg><b>NH</b><i class="st ok"></i></span><span class="nm">Neda</span></button>
+          <button class="p risk" data-go="athlete" title="Reza — 1 of 6 sessions this week"
+                  aria-label="Reza, 1 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="104.3"/></svg><b>RM</b><i class="st risk"></i></span><span class="nm">Reza</span></button>
+          <button class="p idle" data-go="athlete" title="Amir — 0 of 6 sessions this week"
+                  aria-label="Amir, 0 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="125.7"/></svg><b>AJ</b><i class="st idle"></i></span><span class="nm">Amir</span></button>
+          <button class="p idle" data-go="athlete" title="Maryam — 3 of 6 sessions this week"
+                  aria-label="Maryam, 3 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="62.8"/></svg><b>MS</b><i class="st idle"></i></span><span class="nm">Maryam</span></button>
+          <button class="p" data-go="athlete" title="Hamed — 5 of 6 sessions this week"
+                  aria-label="Hamed, 5 of 6 sessions this week">
+            <span class="ring"><svg class="arcs" viewBox="0 0 46 46" aria-hidden="true"><circle class="atr" cx="23" cy="23" r="20"/><circle class="aprg" cx="23" cy="23" r="20" stroke-dashoffset="21.4"/></svg><b>HN</b><i class="st ok"></i></span><span class="nm">Hamed</span></button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── 3 · ATHLETES ─── -->
+    <div class="screen" id="s-athletes" hidden>
+      <div class="mhead"><span class="l">Athletes · 8</span>
+        <span class="r"><span class="icb"><i data-ic="bell"></i></span><span class="icb"><i data-ic="plus"></i></span></span></div>
+      <div class="mbody">
+        <div style="position:relative">
+          <i data-ic="search" style="--sz:16px;color:var(--ink-3);position:absolute;left:13px;top:14px"></i>
+          <input class="inp" placeholder="نام، ورزش یا وضعیت…" style="height:44px;padding-inline-start:38px;border-radius:var(--r-pill)">
+        </div>
+        <div class="fchips">
+          <span class="chip on">All 8</span><span class="chip">Attention 3</span>
+          <span class="chip">Today 4</span><span class="chip">On hold 1</span>
+        </div>
+        <div class="mrow" data-go="athlete"><span class="av" style="background:var(--warn-soft);color:var(--warn)">SA</span>
+          <div><div class="t">Sara Ahmadi</div><div class="m">Form check · ۳ روز</div></div>
+          <span class="dot watch" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">AR</span>
+          <div><div class="t">Ali Rezaei</div><div class="m">Push A · ۰۹:۰۰</div></div>
+          <span class="dot live" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">MK</span>
+          <div><div class="t">Mohammad Karimi</div><div class="m">Leg A · ۱۱:۰۰</div></div>
+          <span class="dot live" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">NH</span>
+          <div><div class="t">Neda Hosseini</div><div class="m">Pull A · ۱۴:۳۰</div></div>
+          <span class="dot live" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av" style="background:var(--bad-soft);color:var(--bad)">RM</span>
+          <div><div class="t">Reza Moradi</div><div class="m">On hold · ۹ روز</div></div>
+          <span class="dot bad" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">AJ</span>
+          <div><div class="t">Amir Jafari</div><div class="m">Inactive · ۳ هفته</div></div>
+          <span class="dot" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">MS</span>
+          <div><div class="t">Maryam Sadeghi</div><div class="m">Mobility B · فردا</div></div>
+          <span class="dot" style="width:10px;height:10px"></span></div>
+        <div class="mrow" data-go="athlete"><span class="av">HN</span>
+          <div><div class="t">Hamed Naderi</div><div class="m">Push B · ۱۸:۰۰</div></div>
+          <span class="dot live" style="width:10px;height:10px"></span></div>
+      </div>
+    </div>
+
+    <!-- ─── 4 · ATHLETE WORKSPACE ─── -->
+    <div class="screen" id="s-athlete" hidden>
+      <div class="mhead">
+        <button class="back" data-go="athletes" aria-label="Back"><i data-ic="arrow-left"></i></button>
+        <span class="l" style="letter-spacing:.02em;text-transform:none;font:700 15px/1 var(--font-ui);color:var(--ink)">Sara Ahmadi</span>
+        <span class="r">
+          <span class="icb" data-go="jump" aria-label="Jump"><i data-ic="search"></i></span>
+          <span class="pill warn">Form check</span>
+        </span>
+      </div>
+      <div class="mbody">
+        <div class="s" style="margin:0">Fat Loss · Cutting — Week 3 · since Sep 2026</div>
+
+        <!-- every common action, one tap, no menu diving -->
+        <div class="toolRow">
+          <button data-go="live"><i data-ic="play"></i>Start</button>
+          <button data-go="log"><i data-ic="plus"></i>Log</button>
+          <button><i data-ic="message"></i>Message</button>
+          <button><i data-ic="more"></i>More</button>
+        </div>
+
+        <div class="cardm" style="border-inline-start:3px solid var(--accent);padding-inline-start:12px;background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface)">
+          <span class="k on">Next action</span>
+          <div class="n" style="margin-top:9px">امروز ۰۹:۰۰ · Form check</div>
+          <div class="s">ارسال عکس و ویدیو · ۴۵ دقیقه</div>
+          <button class="btn-p" data-go="live" style="width:100%;justify-content:center;height:46px;margin-top:13px"><i data-ic="play" style="--sz:16px"></i> شروع</button>
+        </div>
+
+        <div class="sec">Details</div>
+
+        <div class="acc" data-acc>
+          <button><i data-ic="dumbbell" style="--sz:16px;color:var(--accent-text)"></i><span class="t">Training</span><span class="v">5 of 6 · W3</span><span class="cv"><i data-ic="chev-down"></i></span></button>
+          <div class="body">
+            <div class="mrow"><span class="av"><i data-ic="check"></i></span><div><div class="t">Full Body A</div><div class="m">دیروز · کامل شد</div></div></div>
+            <div class="mrow"><span class="av" style="background:var(--accent-soft)"><i data-ic="check" style="color:var(--accent-text)"></i></span><div><div class="t">Full Body B</div><div class="m">امروز ۰۹:۰۰</div></div><span class="pill accent">Now</span></div>
+          </div>
+        </div>
+
+        <div class="acc" data-acc>
+          <button><i data-ic="gauge" style="--sz:16px;color:var(--accent-text)"></i><span class="t">Measurements</span><span class="v">10 Oct</span><span class="cv"><i data-ic="chev-down"></i></span></button>
+          <div class="body">
+            <div class="mrow"><span class="av">kg</span><div><div class="t">64.1 kg</div><div class="m">وزن · −0.6 این هفته</div></div></div>
+            <div class="mrow"><span class="av">%</span><div><div class="t">24.6%</div><div class="m">چربی بدن</div></div></div>
+          </div>
+        </div>
+
+        <div class="acc" data-acc>
+          <button><i data-ic="utensils" style="--sz:16px;color:var(--accent-text)"></i><span class="t">Nutrition</span><span class="v">1,840 / 2,850</span><span class="cv"><i data-ic="chev-down"></i></span></button>
+          <div class="body"><div class="mrow"><span class="av">P</span><div><div class="t">120 / 180 g</div><div class="m">پروتئین · ۳ روز کم</div></div></div></div>
+        </div>
+
+        <div class="acc" data-acc>
+          <button><i data-ic="pencil" style="--sz:16px;color:var(--accent-text)"></i><span class="t">Notes</span><span class="v">4</span><span class="cv"><i data-ic="chev-down"></i></span></button>
+          <div class="body"><div class="mrow"><span class="av"><i data-ic="pencil"></i></span><div><div class="t">Form check یادآوری</div><div class="m">۱۰ اکتبر · از موبایل</div></div></div></div>
+        </div>
+
+        <div class="acc" data-acc>
+          <button><i data-ic="image" style="--sz:16px;color:var(--accent-text)"></i><span class="t">Files</span><span class="v">2</span><span class="cv"><i data-ic="chev-down"></i></span></button>
+          <div class="body"><div class="mrow"><span class="av"><i data-ic="image"></i></span><div><div class="t">squat-front.jpg</div><div class="m">۸ اکتبر · 2.1 MB</div></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 2 · LIVE SESSION — the floor screen ─── -->
+    <div class="screen" id="s-live" hidden>
+      <div class="mhead">
+        <button class="back" data-go="today" aria-label="Back"><i data-ic="arrow-left"></i></button>
+        <span class="l" style="letter-spacing:.02em;text-transform:none;font:700 15px/1 var(--font-ui);color:var(--ink)">Live session</span>
+        <span class="r">
+          <span class="pill accent" style="gap:5px"><i data-ic="radio"></i> REC</span>
+          <span class="icb" data-go="jump" aria-label="Jump"><i data-ic="search"></i></span>
+        </span>
+      </div>
+      <div class="mbody">
+        <div class="mrow" data-go="athlete" style="border-color:var(--accent-line);background:linear-gradient(160deg,var(--accent-soft),transparent 75%),var(--surface)">
+          <span class="av" style="background:var(--accent-soft);color:var(--accent-text)">SA</span>
+          <div><div class="t">Sara Ahmadi</div><div class="m">Form check · Block 2 of 4 · 12:04 elapsed</div></div>
+          <span class="go"><i data-ic="chev-right"></i></span>
+        </div>
+
+        <!-- rest ring -->
+        <div class="clockWrap">
+          <div class="clockRing">
+            <svg viewBox="0 0 196 196" aria-hidden="true">
+              <circle class="trk" cx="98" cy="98" r="88" fill="none" stroke-width="11"/>
+              <circle class="prg" cx="98" cy="98" r="88" fill="none" stroke-width="11"
+                      stroke-dasharray="552.9" stroke-dashoffset="184"/>
+            </svg>
+            <div class="clockFace">
+              <span class="lb">Rest</span>
+              <span class="tm">0:45</span>
+              <span class="sub">next · goblet squat</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- set stepper — 58px targets, thumb-height -->
+        <div class="stepper">
+          <button class="sb" data-d="-1" aria-label="Fewer sets"><i data-ic="minus" style="--sz:24px"></i></button>
+          <div class="mid">
+            <div class="cnt" data-n="3" data-total="4">3<small>/4</small></div>
+            <div class="lb">Goblet squat · 12 reps</div>
+          </div>
+          <button class="sb go" data-d="1" aria-label="Set done"><i data-ic="plus" style="--sz:24px"></i></button>
+          <!-- NOVATY: which sets are banked. n = sets COMPLETED, so 3/4 shows
+               three filled and the fourth as the one being worked. -->
+          <div class="sets" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i></div>
+        </div>
+
+        <!-- session RPE -->
+        <div class="sec">Session RPE <span class="c">tap 1–10</span></div>
+        <div class="rpeRow">
+          <span class="r">1</span><span class="r">2</span><span class="r">3</span><span class="r">4</span><span class="r">5</span>
+          <span class="r">6</span><span class="r">7</span><span class="r hard on">8</span><span class="r hard">9</span><span class="r max">10</span>
+        </div>
+
+        <!-- one-handed tools -->
+        <div class="toolRow">
+          <button><i data-ic="pencil"></i>Note</button>
+          <button><i data-ic="camera"></i>Photo</button>
+          <button><i data-ic="mic"></i>Voice</button>
+          <button><i data-ic="rotate"></i>Skip</button>
+        </div>
+
+        <div class="dock">
+          <button class="btn-g" style="flex:1;justify-content:center;height:46px"><i data-ic="pause" style="--sz:16px"></i> Pause</button>
+          <button class="btn-g danger" style="flex:1;justify-content:center;height:46px"><i data-ic="stop" style="--sz:16px"></i> End session</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 5 · JUMP — command palette. An OVERLAY on .phone, not a screen.
+         One tap from the thumb bar on every screen; lists all 20 screens. ─── -->
+    <div class="palette">
+      <div class="jumpIn">
+        <button class="back" data-close-jump aria-label="Close"><i data-ic="chev-left"></i></button>
+        <input class="inp" placeholder="Jump to an athlete, screen or action…">
+      </div>
+      <div class="palBody">
+        <div>
+          <div class="palSec">Actions</div>
+          <div class="palGrid">
+            <button class="palItem" data-jump-go="live"><i data-ic="zap"></i><span>Live session</span></button>
+            <button class="palItem" data-jump-go="log"><i data-ic="plus"></i><span>Log session</span></button>
+            <button class="palItem" data-jump-go="athletes"><i data-ic="qr"></i><span>Scan athlete</span></button>
+            <button class="palItem" data-jump-go="today"><i data-ic="timer"></i><span>Rest timer</span></button>
+          </div>
+        </div>
+        <div>
+          <div class="palSec">Athletes · 8</div>
+          <div class="palGrid">
+            <button class="palItem" data-jump-go="athlete"><i data-ic="user"></i><span>Sara · form check</span></button>
+            <button class="palItem" data-jump-go="athlete"><i data-ic="user"></i><span>Ali · Push A</span></button>
+            <button class="palItem" data-jump-go="athlete"><i data-ic="user"></i><span>Mohammad · Leg A</span></button>
+            <button class="palItem" data-jump-go="athlete"><i data-ic="user"></i><span>Neda · Pull A</span></button>
+          </div>
+        </div>
+        <div>
+          <div class="palSec">Screens · 20</div>
+          <div class="palGrid">
+            <button class="palItem"><i data-ic="home"></i><span>Overview</span></button>
+            <button class="palItem" data-jump-go="today"><i data-ic="calendar"></i><span>Today</span></button>
+            <button class="palItem" data-jump-go="athletes"><i data-ic="users"></i><span>Athletes</span></button>
+            <button class="palItem"><i data-ic="calendar"></i><span>Calendar</span></button>
+            <button class="palItem"><i data-ic="activity"></i><span>Progress</span></button>
+            <button class="palItem"><i data-ic="message"></i><span>Messages</span></button>
+            <button class="palItem"><i data-ic="grid"></i><span>Templates</span></button>
+            <button class="palItem"><i data-ic="dumbbell"></i><span>Builder</span></button>
+            <button class="palItem"><i data-ic="utensils"></i><span>Nutrition</span></button>
+            <button class="palItem"><i data-ic="trophy"></i><span>Challenges</span></button>
+            <button class="palItem"><i data-ic="pencil"></i><span>Notes</span></button>
+            <button class="palItem"><i data-ic="ruler"></i><span>Measure</span></button>
+            <button class="palItem"><i data-ic="book"></i><span>Library</span></button>
+            <button class="palItem"><i data-ic="settings"></i><span>Settings</span></button>
+            <button class="palItem"><i data-ic="flag"></i><span>Races</span></button>
+            <button class="palItem"><i data-ic="layers"></i><span>Training phases</span></button>
+            <button class="palItem"><i data-ic="dumbbell"></i><span>Run builder</span></button>
+            <button class="palItem"><i data-ic="activity"></i><span>Training load</span></button>
+            <button class="palItem"><i data-ic="trophy"></i><span>Personal bests</span></button>
+            <button class="palItem"><i data-ic="watch"></i><span>Wearables</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 7 · MORE — the complete index, nothing removed ─── -->
+    <div class="screen" id="s-more" hidden>
+      <div class="mhead"><span class="l">More</span>
+        <span class="r">
+          <span class="icb" data-go="jump" aria-label="Jump"><i data-ic="search"></i></span>
+          <span class="icb" aria-label="Settings"><i data-ic="settings"></i></span>
+        </span></div>
+      <div class="mbody">
+        <div class="cardm" style="display:flex;align-items:center;gap:11px">
+          <span class="av" style="width:40px;height:40px;font-size:13px;background:var(--accent-soft);color:var(--accent-text)">CS</span>
+          <div style="flex:1;min-width:0"><div class="n" style="font-size:14px">Coach Soroush</div>
+            <div class="s">PRO · 8 athletes</div></div>
+          <span class="pill accent"><i data-ic="radio"></i> Base · W6</span>
+        </div>
+
+        <div class="sec">Complete index <span class="c">20 screens</span></div>
+        <div class="s" style="margin:-2px 0 4px">Today و Athletes در نوارِ پایین‌اند؛ بقیه اینجا.</div>
+
+        <div class="palSec">Athletics · 6</div>
+        <div class="palGrid">
+          <button class="palItem"><i data-ic="flag"></i><span>Races</span></button>
+          <button class="palItem"><i data-ic="layers"></i><span>Training phases</span></button>
+          <button class="palItem"><i data-ic="dumbbell"></i><span>Run builder</span></button>
+          <button class="palItem"><i data-ic="activity"></i><span>Training load</span></button>
+          <button class="palItem"><i data-ic="trophy"></i><span>Personal bests</span></button>
+          <button class="palItem"><i data-ic="watch"></i><span>Wearables</span></button>
+        </div>
+
+        <div class="palSec">Coach · 11</div>
+        <div class="palGrid">
+          <button class="palItem"><i data-ic="home"></i><span>Overview</span></button>
+          <button class="palItem"><i data-ic="calendar"></i><span>Calendar</span></button>
+          <button class="palItem"><i data-ic="activity"></i><span>Progress</span></button>
+          <button class="palItem"><i data-ic="message"></i><span>Messages</span></button>
+          <button class="palItem"><i data-ic="grid"></i><span>Templates</span></button>
+          <button class="palItem"><i data-ic="dumbbell"></i><span>Builder</span></button>
+          <button class="palItem"><i data-ic="utensils"></i><span>Nutrition</span></button>
+          <button class="palItem"><i data-ic="trophy"></i><span>Challenges</span></button>
+          <button class="palItem"><i data-ic="pencil"></i><span>Notes</span></button>
+          <button class="palItem"><i data-ic="ruler"></i><span>Measure</span></button>
+          <button class="palItem"><i data-ic="book"></i><span>Library</span></button>
+        </div>
+
+        <div class="palSec">Account</div>
+        <div class="mrow"><span class="av"><i data-ic="link"></i></span><div><div class="t">Connect Client</div><div class="m">اشتراک‌گذاری کد یا QR</div></div><span class="go"><i data-ic="chev-right"></i></span></div>
+        <div class="mrow"><span class="av"><i data-ic="settings"></i></span><div><div class="t">Settings</div><div class="m">زبان · ورزش · پرداخت</div></div><span class="go"><i data-ic="chev-right"></i></span></div>
+        <div class="mrow"><span class="av" style="background:var(--bad-soft);color:var(--bad)"><i data-ic="logout" style="color:var(--bad)"></i></span><div><div class="t" style="color:var(--bad)">Sign out</div></div></div>
+      </div>
+    </div>
+
+    <!-- ─── OVERLAYS (children of .phone, never of .screen) ───
+         A .screen with a transform animation becomes the containing block for
+         absolutely-positioned descendants, so a sheet pinned inside it floats
+         above the frame instead of seating on its bottom edge. -->
+    <div class="scrim" data-close-sheet></div>
+    <div class="sheet">
+      <div class="handle"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <span class="k">Log session</span>
+        <button class="back" data-close-sheet aria-label="Close"><i data-ic="x"></i></button>
+      </div>
+      <div class="field"><label>Athlete</label>
+        <select class="inp"><option>Sara Ahmadi</option><option>Ali Rezaei</option><option>Mohammad Karimi</option></select></div>
+      <div class="field"><label>Type</label>
+        <div class="fchips">
+          <span class="chip on">Intervals</span><span class="chip">Easy</span><span class="chip">Long</span>
+          <span class="chip">Recovery</span><span class="chip">Strength</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="field"><label>Distance (km)</label><input class="inp" value="9.6"></div>
+        <div class="field"><label>Duration (min)</label><input class="inp" value="48"></div>
+      </div>
+      <div class="field"><label>RPE</label><input class="inp" value="8"></div>
+      <div class="sheet-actions">
+        <button class="btn-p" data-close-sheet>ثبت جلسه</button>
+        <button class="btn-g" data-close-sheet>انصراف</button>
+      </div>
+    </div>
+
+    <!-- ─── bottom bar — the thumb zone. Every screen, always. ─── -->
+    <div class="tabbar">
+      <div class="on" data-go="today">
+        <i data-ic="home" style="--sz:19px"></i>
+        <span>Today</span></div>
+      <div data-go="athletes">
+        <i data-ic="users" style="--sz:19px"></i>
+        <span>Athletes</span></div>
+      <div style="visibility:hidden"><i data-ic="plus"></i><span>Log</span></div>
+      <div data-go="jump">
+        <i data-ic="search" style="--sz:19px"></i>
+        <span>Jump</span></div>
+      <div data-go="more">
+        <i data-ic="menu" style="--sz:19px"></i>
+        <span>More</span></div>
+    </div>
+    <button class="fab" data-go="log" aria-label="Log session">
+      <i data-ic="plus" style="--sz:25px"></i>
+    </button>
+
+  </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   ICONS — Lucide geometry, inlined. One map, one hydrator.
+   `<i data-ic="bell">` becomes an SVG whose stroke is `currentColor`, so an
+   icon inherits the colour of whatever contains it and changes with the
+   theme. An emoji cannot: its colour is baked into the glyph, it ignores
+   `font-family`, and it renders differently on every platform. That is why
+   there is not a single emoji in this file.
+   ══════════════════════════════════════════════════════════════════ */
+const ICONS={
+search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+alert:'<path d="m21.718-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+radio:'<circle cx="12" cy="12" r="2"/><path d="M4.9 19.1a10 10 0 0 1 0-14.2"/><path d="M7.8 16.2a6 6 0 0 1 0-8.4"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4"/><path d="M19.1 4.9a10 10 0 0 1 0 14.2"/>',
+play:'<path d="M6 3.5 20 12 6 20.5z"/>',
+pause:'<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>',
+stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',
+check:'<path d="M20 6 9 17l-5-5"/>',
+x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+plus:'<path d="M5 12h14"/><path d="M12 5v14"/>',
+minus:'<path d="M5 12h14"/>',
+'chev-right':'<path d="m9 18 6-6-6-6"/>',
+'chev-left':'<path d="m15 18-6-6 6-6"/>',
+'chev-down':'<path d="m6 9 6 6 6-6"/>',
+'arrow-left':'<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+calendar:'<path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/>',
+clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+timer:'<path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/>',
+message:'<path d="M22 17a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/>',
+users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/>',
+home:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+menu:'<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
+more:'<circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
+layers:'<path d="m12 2-10 5 10 5 10-5-10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/>',
+dumbbell:'<path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>',
+activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.7V17c0 .6-.5 1-1 1.2C7.9 18.8 7 20.2 7 22"/><path d="M14 14.7V17c0 .6.5 1 1 1.2 1.1.6 2 2 2 3.8"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+watch:'<circle cx="12" cy="12" r="6"/><path d="M12 10v2l1.5 1.5"/><path d="m16.5 17.4-.4 3.8a2 2 0 0 1-2 1.8H9.9a2 2 0 0 1-2-1.8l-.4-3.8"/><path d="m17.5 6.6.4-3.8A2 2 0 0 0 15.9 1H9.9a2 2 0 0 0-2 1.8l.4 3.8"/>',
+book:'<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/>',
+utensils:'<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
+pencil:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+ruler:'<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>',
+settings:'<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
+camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+mic:'<path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/>',
+image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
+gauge:'<path d="m12 14 4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/>',
+rotate:'<path d="M3 12a9 9 0 1 0 9-9 9.8 9.8 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/>',
+zap:'<path d="M4 14a1 1 0 0 1-.8-1.6l9.9-10.2a.5.5 0 0 1 .9.5l-1.9 6A1 1 0 0 0 13 10h7a1 1 0 0 1 .8 1.6l-9.9 10.2a.5.5 0 0 1-.9-.5l1.9-6A1 1 0 0 0 11 14z"/>',
+'trending-up':'<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>',
+target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>'
+};
+function ic(name){const d=ICONS[name];
+  return d?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>':''}
+function hydrate(){document.querySelectorAll('i[data-ic]').forEach(el=>{if(!el.firstChild)el.innerHTML=ic(el.dataset.ic)})}
+hydrate();
+
+/* ── screen switch ─────────────────────────────────────────────────
+   transform+opacity only; re-entering re-triggers the animation by clearing
+   the inline name — a transition retargets, so double taps never restart.  */
+const idx=document.querySelector('.idx'), phone=document.getElementById('phone');
+let cur='today';
+
+function show(name){
+  /* 'log' and 'jump' are OVERLAYS on .phone, not screens: they render
+     whatever is already underneath and raise themselves above it. Keeping
+     them out of .screen is structural, not cosmetic — screenIn's fill:both
+     leaves a transform on the screen, which makes that screen the containing
+     block for absolutely-positioned descendants, and a sheet pinned inside it
+     floats ~327px above the frame bottom while reading transform:none. */
+  const ov = name==='log'||name==='jump';
+  const target = ov ? cur : name;
+  if(!ov) cur=name;
+  document.querySelectorAll('.screen').forEach(s=>{
+    const on = s.id==='s-'+target;
+    s.hidden=!on;
+    if(on){ s.style.animation='none'; void s.offsetWidth; s.style.animation=''; }
+  });
+  idx.querySelectorAll('.sbtn').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.s===name)));
+  /* a sub-screen lights its PARENT tab — otherwise standing in Live or in an
+     athlete's workspace leaves the bar with no active state at all. */
+  const PARENT={live:'today',athlete:'athletes'};
+  const lit = PARENT[target] || target;
+  document.querySelectorAll('.tabbar div').forEach(d=>{
+    if(!d.dataset.go)return;
+    d.classList.toggle('on', d.dataset.go===lit);
+  });
+  phone.toggleAttribute('data-sheet', name==='log');
+  phone.toggleAttribute('data-jump',  name==='jump');
+}
+
+idx.addEventListener('click',e=>{const b=e.target.closest('.sbtn');if(b)show(b.dataset.s)});
+
+phone.addEventListener('click',e=>{
+  if(e.target.closest('[data-close-jump]')){show(cur);return}
+  const jg=e.target.closest('[data-jump-go]');
+  if(jg){show(jg.dataset.jumpGo);return}
+  const t=e.target.closest('[data-go]');
+  if(t){show(t.dataset.go);return}
+  if(e.target.closest('[data-close-sheet]')){show(cur);return}
+
+  /* accordions — no height animation, only opacity/translateY on the body */
+  const btn=e.target.closest('.acc > button');
+  if(btn){
+    const acc=btn.parentElement;
+    if(acc.hasAttribute('data-open')) acc.removeAttribute('data-open');
+    else acc.setAttribute('data-open','');
+    const body=acc.querySelector('.body');
+    if(body){ body.style.animation='none'; void body.offsetWidth; body.style.animation=''; }
+    return;
+  }
+
+  /* session RPE — one selection, recoloured by severity band */
+  const r=e.target.closest('.rpeRow .r');
+  if(r){ r.parentElement.querySelectorAll('.r').forEach(x=>x.classList.remove('on'));
+         r.classList.add('on'); return; }
+
+  /* set stepper — reads its own data-d, so one handler covers both buttons */
+  const sb=e.target.closest('.stepper .sb');
+  if(sb){
+    const c=sb.parentElement.querySelector('.cnt');
+    /* clamp to the PRESCRIBED total: without this two taps on + produced
+       "5/4" and filled every segment, contradicting the block below it. */
+    const total=+(c.dataset.total||4);
+    /* read the attribute explicitly: `+c.dataset.n || 3` resets to 3 the
+       instant n reaches 0, because 0 is falsy — five taps on − landed on
+       2/4 instead of 0/4. */
+    const cur = c.dataset.n===undefined ? 3 : +c.dataset.n;
+    const n=Math.max(0,Math.min(total,cur+(+sb.dataset.d||0)));
+    c.dataset.n=n; c.innerHTML=n+'<small>/'+total+'</small>';
+    /* keep the segment strip in step with the number — a stale strip would
+       contradict the counter it sits under */
+    const box=sb.parentElement.querySelector('.sets');
+    if(box)[...box.children].forEach((seg,i)=>{
+      seg.className = i<n ? 'done' : (i===n ? 'now' : '');
+    });
+    return;
+  }
+
+  /* status filter chips */
+  const ch=e.target.closest('.fchips .chip');
+  if(ch){ ch.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+          ch.classList.add('on'); }
+});
+
+/* ── theme ───────────────────────────────────────────────────────── */
+const tb=document.getElementById('themeBtn');
+tb.addEventListener('click',()=>{
+  const dark=document.documentElement.dataset.theme==='dark';
+  document.documentElement.dataset.theme=dark?'light':'dark';
+  tb.textContent=dark?'Dark':'Light';
+});
+show('today');
+</script>
+</body>
+</html>
