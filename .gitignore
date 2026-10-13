@@ -46,6 +46,9 @@ Thumbs.db
 # misc
 *.tmp
 
+# incident docs — local only, never publish remediation notes
+ROTATION-RUNBOOK.md
+
 # old marketing mockups / leftover drafts (kept on disk, not in the repo)
 shop/COACH-OS-The-Operating-System-for-Fitness-Coaches*
 

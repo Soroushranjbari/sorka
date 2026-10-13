@@ -87,7 +87,10 @@ let lang='en';
 /* Falls back to the shop's locale key (coach-os-locale, see shop/README.md) so
    a buyer who browsed the shop in Persian gets the app in Persian on first
    boot; after that co-lang (the app's own choice) wins. */
-try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){}
+/* v18.116 — Persian removed for now ("فعلا"): never restore the locale from
+   storage. Keeping the read would let a stale co-lang='fa' reach the 60
+   `lang==='fa'` branches before the boot-time applyLang() pin runs. */
+lang='en';
 const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
@@ -202,7 +205,7 @@ const FA={
     'Recording… tap to stop':'در حال ضبط… برای توقف بزن','Hold a quick voice note':'یک یادداشت صوتی کوتاه بگیر',
     'Voice messages are not supported in this browser':'این مرورگر پیام صوتی را پشتیبانی نمی‌کند',
     'Microphone permission was denied':'دسترسی به میکروفون داده نشد','Could not start recording':'ضبط شروع نشد',
-    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
+    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Volume':'حجم تمرین','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
 'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی','Back to calendar':'بازگشت به تقویم','training days / week':'روز تمرین در هفته','Rest unplanned days':'استراحت روزهای بی‌برنامه','Unplanned days set to rest':'روزهای بی‌برنامه استراحت شدند','Quick week setup':'تنظیم سریع هفته','Unassigned':'بی‌برنامه','One workout per day':'هر تمرین فقط یک روز','Week updated':'هفته به‌روزرسانی شد','Pick a workout or rest for each day — repeats every week':'برای هر روز تمرین یا استراحت انتخاب کن — هر هفته تکرار می‌شود','Training days adherence':'پایبندی روزهای تمرین','last':'۸','weeks':'هفته اخیر','No data yet':'هنوز داده‌ای نیست','done / planned · from real logged sessions':'انجام‌شده / برنامه · از جلسات واقعی ثبت‌شده','Copy to':'کپی به','Day copied':'روز کپی شد','Monthly workout plan':'برنامه تمرینی ماهانه',
 'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
 'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
@@ -215,7 +218,7 @@ const FA={
 'Day 1 — Push':'روز ۱ — پوش','Day 2 — Pull':'روز ۲ — پول','Day 3 — Legs':'روز ۳ — پا','Day 4 — Upper':'روز ۴ — بالاتنه','Day 5 — Lower':'روز ۵ — پایتنه','Day 1 — Squat':'روز ۱ — اسکوات','Day 2 — Bench':'روز ۲ — پرس سینه','Day 3 — Deadlift':'روز ۳ — ددلیفت',
 'Upper':'بالاتنه','Lower':'پایتنه','Conditioning':'آمادگی',
 'Template Name':'نام قالب','Template updated ✓':'قالب به‌روزرسانی شد ✓','Template saved ✓':'قالب ذخیره شد ✓','Editing template':'ویرایش قالب','Update Template':'به‌روزرسانی قالب','This template has multiple days — pick one to load into the builder':'این قالب چند روز دارد — یکی را برای بارگذاری در سازنده انتخاب کن','Load':'بارگذاری','Current builder content will be saved into the template':'محتوای فعلی سازنده در قالب ذخیره می‌شود','This template has no exercises yet':'این قالب هنوز حرکتی ندارد','Add exercises first':'اول حرکت اضافه کن',
-'July 6 — 12, 2026':'۱۵ – ۲۱ تیر ۱۴۰۵','Month':'ماه','Day':'روز','Today':'امروز','💡 Drag events between days to reschedule':'💡 برای جابه‌جایی، رویدادها را بین روزها درگ کن',
+'July 6 — 12, 2026':'۱۵ – ۲۱ تیر ۱۴۰۵','Month':'ماه','Day':'روز','Today':'امروز','Drag events between days to reschedule':'برای جابه‌جایی، رویدادها را بین روزها درگ کن',
 'Session':'جلسه','Appointment':'قرار',
 'Mon 6':'دوشنبه ۱۵','Tue 7':'سه‌شنبه ۱۶','Wed 8':'چهارشنبه ۱۷','Thu 9':'پنجشنبه ۱۸','Fri 10':'جمعه ۱۹','Sat 11':'شنبه ۲۰','Sun 12':'یکشنبه ۲۱',
 'Mon':'دوشنبه','Tue':'سه‌شنبه','Wed':'چهارشنبه','Thu':'پنجشنبه','Fri':'جمعه','Sat':'شنبه','Sun':'یکشنبه',
@@ -271,7 +274,7 @@ const FA={
 'Copy Day':'کپی روز','Paste Day':'چسباندن روز','Apply to Week':'اعمال به هفته','Day copied':'روز کپی شد','Pasted ✓':'چسبانده شد ✓','Applied to week ✓':'به کل هفته اعمال شد ✓','Meal moved':'وعده جابه‌جا شد',
 'Chicken & Rice Lunch':'ناهار مرغ و برنج','Meal template created ✓':'قالب وعده ساخته شد ✓',
 'Meals':'وعده‌ها',
-"Today's Meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
+"Today's Meals":'وعده‌های امروز',"Today's meals":'وعده‌های امروز','Open Nutrition Workspace':'باز کردن فضای کاری تغذیه','Nutrition × Progress':'تغذیه × پیشرفت','Create a plan first':'اول یک برنامه بسازید','Saved':'ذخیره شد','Meal':'وعده',
 'Data storage':'ذخیره داده‌ها','On this device (auto-save)':'روی همین دستگاه (ذخیره خودکار)','Reset demo data':'بازنشانی داده‌های دمو','Are you sure? Click again':'مطمئنی؟ دوباره کلیک کن','Feedback':'بازخورد',
 'Connect Client (Code)':'اتصال شاگرد (کد)','Connect':'اتصال','Connection code':'کد اتصال','Connection link':'لینک اتصال','Join with connection code':'اتصال با کد مربی','Connected with code':'اتصال با کد','Client connection codes':'کدهای اتصال شاگردها','Each client has a personal code — share only theirs':'هر شاگرد کد اختصاصی خودش را دارد — فقط کد خودش را برایش بفرست','Personal connection code':'کد اتصال اختصاصی','Personal code':'کد اختصاصی','The client enters this code on the login screen — their profile opens with everything you registered':'شاگرد این کد را در صفحه ورود وارد می‌کند — پروفایلش با همه‌ی مشخصاتی که ثبت کرده‌ای باز می‌شود','Client added ✓':'شاگرد اضافه شد ✓','added to your clients':'به شاگردانت اضافه شد','Code regenerated ✓':'کد جدید صادر شد ✓','Regenerate':'بازتولید کد','Enter the personal code your coach gave you':'کد اختصاصی‌ای که مربی‌ات به تو داده را وارد کن','Connected as':'وصل شدی به‌عنوان','Copy connection code':'کپی کد اتصال','Link':'لینک','Code':'کد','One code for your whole workspace — every client joins with it':'یک کد برای کل فضای کاری‌ات — همه‌ی شاگردها با همین کد وصل می‌شوند','Your clients join your workspace with this code — only your data, only your clients':'شاگردانت با این کد به فضای کاری تو وصل می‌شوند — فقط داده‌های تو، فقط شاگردهای تو','Invalid code':'کد نامعتبر است','Connected to your coach ✓':'به مربی‌ات وصل شدی ✓','Copy':'کپی','Copied ✓':'کپی شد ✓','Share this link or code with your client':'این لینک یا کد را برای شاگردت بفرست','Simulated in demo — works across devices once backend is live':'در دمو شبیه‌سازی شده — با راه‌اندازی بک‌اند بین دستگاه‌ها واقعی می‌شود',
 'List':'لیست','No events this day':'این روز رویدادی نیست','Session updated ✓':'جلسه به‌روزرسانی شد ✓','Event deleted':'رویداد حذف شد','Duplicated ✓':'تکثیر شد ✓','Delete':'حذف','Edit Session':'ویرایش جلسه','Calendar exported (.ics)':'تقویم خروجی گرفته شد (.ics)','Sessions This Week':'جلسات این هفته','Total Hours':'مجموع ساعت‌ها','Busiest Day':'شلوغ‌ترین روز','⚠️ This client already has an event at this time':'⚠️ این شاگرد در این ساعت رویداد دیگری دارد','⚠️ You already have another event at this time':'⚠️ خودت در این ساعت رویداد دیگری داری','✓ No conflicts':'✓ تداخلی نیست','Export (.ics)':'خروجی (.ics)','All Clients':'همه شاگردان',
@@ -295,7 +298,7 @@ const FA={
 'Hold the dumbbell to lift':'دمبل را نگه دار تا بلند شود','Keep holding until it lifts':'نگه دار تا کامل بلند شود','Slide to unlock':'برای باز کردن بکش','Unlocking…':'در حال باز کردن…','Your coach invited you':'مربی‌ات تو را دعوت کرده است','Who are you?':'کدام‌یک از شاگردها هستی؟','Enter the code your coach gave you':'کدی که مربی‌ات داده را وارد کن','Welcome back':'خوش برگشتی','Unlocking opens your portal':'بکش تا پورتالت باز شود','Connect with your code first':'اول با کدت وصل شو','Pick your name to continue':'اسمت را انتخاب کن تا وارد شوی','Code not found':'کد پیدا نشد','Ask your coach for a new invite code':'از مربی‌ات یک کد دعوت جدید بگیر','Try another code':'کد دیگری را امتحان کن','Cannot reach the server':'اتصال به سرور برقرار نشد','Check your internet connection and try again':'اتصال اینترنت را بررسی کن و دوباره امتحان کن','Try again':'دوباره امتحان کن','Personal code needed':'کد شخصی لازم است','Ask your coach for your personal invite code':'از مربی‌ات کد دعوت شخصی‌ات را بگیر','I have a connection code':'کد اتصال دارم','Your coach':'مربی تو',
 'Forearms':'ساعد','Kettlebell':'کتل‌بل','Band':'کش مقاومتی',
 /* v18.38 — gamification */
-'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
+'Badge unlocked!':'نشان باز شد!','Awesome!':'عالی بود!','Achievements':'دستاوردها','Challenge complete':'چالش تمام شد','Progress logged':'پیشرفت ثبت شد','Badges':'نشان‌ها','Next badge':'نشان بعدی','View all':'مشاهده همه','Points':'امتیاز','Workout completed':'تمرین انجام شد',
 'First Workout':'اولین تمرین','10 Workouts':'۱۰ تمرین','25 Workouts':'۲۵ تمرین','50 Workouts':'۵۰ تمرین','100 Workouts':'۱۰۰ تمرین',
 '3-Day Streak':'۳ روز پیاپی','7-Day Streak':'۷ روز پیاپی','14-Day Streak':'۱۴ روز پیاپی','30-Day Streak':'۳۰ روز پیاپی','100-Day Streak':'۱۰۰ روز پیاپی',
 '10 Check-ins':'۱۰ چک‌این','Form Master':'استاد فرم','5 Measurements':'۵ اندازه‌گیری','Fuel Plan':'برنامه تغذیه',
@@ -324,16 +327,19 @@ const t=s=>lang==='fa'?(FA[s]??s):s;
 const tmus=m=>lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m;
 const nf=v=>{v=String(v);return lang==='fa'?v.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):v};
 const pct=n=>nf(n)+(lang==='fa'?'٪':'%');
+/* v18.116 — applyLang() is the single choke point: every language-changing
+   handler calls it, so pinning lang='en' here makes the FA dictionary, all 60   `lang==='fa'` branches and all 73 html[lang="fa"] rules unreachable no matter   what else runs. Fully reversible: delete this pin and the whole FA surface   comes back untouched — that is why the dictionary itself was NOT deleted. */
 function applyLang(){
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==='fa'?'rtl':'ltr';
-  document.title=lang==='fa'?'CoachMint — فضای کاری مربی و شاگرد':'CoachMint — Coach & Client Workspace';
-  try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang)}catch(e){}
+  lang='en';
+  document.documentElement.lang='en';
+  document.documentElement.dir='ltr';
+  document.title='CoachMint — Coach & Client Workspace';
+  try{localStorage.setItem('co-lang','en');localStorage.setItem('coach-os-locale','en')}catch(e){}
 }
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
 const PREFS_KEY='co-prefs';
-const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',remind:true,
+const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],phoneSkin:'fitflow',uiTpl:'default',wtRange:'',remind:true,
   notifs:{sr:true,cw:true,ms:true,ncm:true,mr:false,pr:true,wr:true},
   /* v18.90 — rest-timer alerts. loadPrefs() merges `wk` so saved prefs from
      before this line pick snd/vib up automatically (they default to ON; the
@@ -956,8 +962,19 @@ const sparkBars=(arr,c='var(--accent-deep)')=>{const mx=Math.max(...arr,1);
 /* v18.11 — Strava-style gradient bars + native per-bar tooltips (day: value) */
 const gid='sg'+Math.random().toString(36).slice(2,7);
 return `<svg width="86" height="26" viewBox="0 0 86 26"><defs><linearGradient id="${gid}" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--acc-mid)"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>${arr.map((v,i)=>{const h=Math.max(2,Math.round(v/mx*22));return `<rect x="${i*12+1}" y="${24-h}" width="8" height="${h}" rx="2.5" fill="url(#${gid})" opacity="${i===arr.length-1?1:.35}"><title>${t(DAYS[i]||'')} · ${nf(v)}</title></rect>`}).join('')}</svg>`};
-const attBadge=e=>e&&e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e&&e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'';
-const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name);return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
+/* v18.112 — an event that hasn't happened yet cannot have been attended. The
+   demo seed marks some upcoming sessions done/miss, which rendered "Attended"
+   on TOMORROW's row.
+   NOTE: evState() is deliberately DAY-BLIND — it only compares start+dur with
+   NOW, because every coach-side caller filters to one day first (byDay(d)).
+   attOK() therefore resolves the weekday itself: (day-TODAY+7)%7 is 0 today,
+   1 tomorrow, and negative for an earlier day this week. Without that, a
+   "Tomorrow 09:00" event evaluated as past whenever the clock was past 09:00. */
+const dayInWeek=d=>((d==null?NaN:d)-TODAY+7)%7;
+const attOK=e=>{if(!e)return false;const k=dayInWeek(e.day);
+  if(k>0)return false; if(k<0)return true; return evState(e).k!=='future';};
+const attBadge=e=>!attOK(e)?'':(e.att==='done'?`<span class="bdg bdg-green">${ic('check',11)} ${t('Attended')}</span>`:e.att==='miss'?`<span class="bdg bdg-red">${ic('x',11)} ${t('Missed')}</span>`:'');
+const attCnt=name=>{const l=EVENTS.filter(e=>e.client===name&&attOK(e));return{d:l.filter(e=>e.att==='done').length,m:l.filter(e=>e.att==='miss').length,t:l.length}};
 const pd=dstr=>{const p=String(dstr).split('-');return new Date(+p[0],+p[1]-1,+p[2])};
 const fmtD=dstr=>fmtShortDate(pd(dstr));
 const daysSince=dstr=>Math.round((TDATE-pd(dstr))/864e5);
@@ -974,7 +991,10 @@ function wChart(cid,h,range){
   if(ms.length<2)return `<div style="min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
   const conv=v=>PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v;
   const labs=[fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)];
-  return lineChart(ms.map(m=>conv(m.w)),{h,labels:labs});
+  /* v18.98 — lineChart() emits height:auto with a 640-wide viewBox, so h=90
+     rendered as 39px in a 280px container (aspect scaling). Force the element
+     height AND match the mockup's 300x90 viewBox so the drawing fills it. */
+  return lineChart(ms.map(m=>conv(m.w)),{h,w:300,labels:labs}).replace('height:auto',`height:${h}px`);
 }
 function attentionList(){
   const items=[];
@@ -1118,6 +1138,56 @@ const ONB_SCALE=[['starting','Just starting','Less than 5 clients','basic'],['gr
 const ONB_FOCUS=[['programs','Program design','builder'],['nutrition','Nutrition planning','nutrition'],['progress','Progress tracking','progress'],['clients','Client management','clients']];
 const landingView=()=>({programs:'builder',nutrition:'nutrition',progress:'progress',clients:'clients'}[ONBOARD.focus]||'dash');
 const suggestedPlan=()=>({starting:'basic',growing:'professional',established:'club'}[ONBOARD.scale]||null);
+/* v19.1 — SPORT EXTENSION TABLE.
+   The rule: a section belongs to a sport and appears ONLY when that sport is
+   picked in the wizard above. ONB_SPORTS says which sports can be chosen;
+   this table says what each one ADDS on top of the base rail. A future
+   discipline (CrossFit, swimming, cycling) is one row here — shell(), the   command palette and every view stay untouched.
+
+   No entry means base workspace only, which is the default for every existing
+   workspace, for the demo and for every test: nothing on the rail moves until
+   a sport actually claims a section.
+
+   groups[] render as their own nav group directly after "Workspace", in the   same [key,label,icon] shape nav.workspaces already uses, so navIt() and
+   data-act="nav" keep working unchanged:
+     {label:'Athletics', items:[['athletes','Athletes','users'], …]} */
+const SPORT_EXT={
+  /* v19.12 — §3 ATHLETICS PROFILE is no longer a rail section. It is per-athlete
+     data, so it moved onto the athlete's own page (workspace tab / mobile client
+     view) where the athlete is already known and the duplicate ap-pick chips
+     could be deleted. ATH_KEYS derives from this table, so the gate follows
+     automatically. */
+  'Running & Endurance':{groups:[{label:'Athletics',items:[
+    ['races','Races','flag'],
+    ['phases','Training Phases','clock'],['runbuild','Run Builder','dumbbell'],
+    ['load','Training Load','trending-up'],['pbs','Personal Bests','medal'],
+    ['wear','Wearables','watch']]}]}
+};
+const sportSections=()=>{
+  const e=SPORT_EXT[ONBOARD.sport];
+  return (e&&Array.isArray(e.groups))?e.groups:[];
+};
+/* v19.7 — every key ANY sport extension claims. Keeping a section off the rail
+   is not a gate on its own: a restored or bookmarked S.view would still render
+   a screen the coach never picked in setup. sportKey() closes that hole — a key
+   no selected sport owns resolves to the dashboard, in currentView() and in
+   renderMobile()'s sport dispatch alike. Adding a sport = adding rows above;
+   this function never changes. */
+const ATH_KEYS=Object.keys(SPORT_EXT).flatMap(s=>SPORT_EXT[s].groups.flatMap(g=>g.items.map(i=>i[0])));
+const sportKey=k=>(ATH_KEYS.indexOf(k)>=0&&!sportSections().some(g=>g.items.some(i=>i[0]===k)))?'dash':k;
+/* v19.8 — ATHLETICS §11. The spec's coach route is
+   `f:()=>isAthletic()?vCoachAth():vCoachBase()` — an athletics sport owns the
+   WHOLE dashboard, not an extra card on it. One row per sport; a sport with no
+   row keeps the generic dashboard, so nothing moves for Bodybuilding, the demo
+   or any existing workspace. */
+const DASH_EXT={'Running & Endurance':1};
+/* §10/§8 read the SAME table: a sport that owns a coach dashboard also owns the
+   athletics blocks on the athlete's Today screen. One row, two consumers. */
+/* v19.12 — widened: "the sport added athletics sections" (SPORT_EXT), not just
+   "it replaces the coach dashboard" (DASH_EXT). Same result today, but a sport
+   that adds sections without claiming the dashboard still gets the §10/§8
+   athlete blocks and this profile tab. */
+const isAthletics=()=>sportSections().length>0;
 const NCATS=['Meat','Chicken','Fish','Eggs','Dairy','Rice & Grains','Bread','Fruit','Vegetables','Nuts','Oils','Drinks','Supplements','Other'];
 const D01=[1,1,0,1,1,1,0];
 const TRAIN_T=[
@@ -1173,6 +1243,108 @@ let NHIST=[
    customs are APPENDED after it, sorted by id (uid() is time-based → the same
    order on every device), keeping every index deterministic. */
 let CEXS=[];
+/* v19.2 — ATHLETICS spec §8 RACES / §9 PERSONAL BESTS.
+   Both are coach-owned rows joined to a client by name, exactly how EVENTS   already works, so no new ownership model is introduced.
+   PBSD is a HISTORY, not a latest-value column: §9 explicitly requires the   previous mark, the date, the source and a note, because "100m → 11.80" alone   cannot show progression or where a mark came from. */
+function defaultRaces(){return [
+ {id:'rc1',name:'City Half Marathon',event:'Half Marathon',dist:'21.1 km',date:'2026-10-18',loc:'Bristol',target:'1:29:00',goal:'Top 20 overall',notes:'',ath:''},
+ {id:'rc2',name:'Regional Open',event:'100m · 200m',dist:'100 m',date:'2026-10-12',loc:'Leeds',target:'10.60',goal:'National standard',notes:'',ath:'Daniel Okoye'},
+ {id:'rc3',name:'Autumn 10K',event:'10K',dist:'10 km',date:'2026-11-02',loc:'Bristol',target:'44:30',goal:'Negative split',notes:'',ath:'Maya Lindqvist'},
+ {id:'rc0',name:'Regional Open',event:'1500m',dist:'1500 m',date:'2026-08-29',loc:'Leeds',target:'4:22.0',goal:'Season best',notes:'Went out too hard on the bell.',ath:'Lina Farahani',result:{time:'4:21.6',pos:'2nd',pb:true,notes:'PB by 0.4s'}}
+ ]}
+function defaultPbs(){return [
+ {id:'pb1',ev:'100m',val:'11.80',prev:'11.94',date:'2026-09-12',src:'Race result',notes:'Season opener'},
+ {id:'pb2',ev:'200m',val:'24.20',prev:'24.41',date:'2026-08-29',src:'Time trial',notes:'Wind +1.1'},
+ {id:'pb3',ev:'400m',val:'54.10',prev:'54.52',date:'2026-08-29',src:'Race result',notes:''},
+ {id:'pb4',ev:'5K',val:'21:32',prev:'21:47',date:'2026-09-06',src:'Race result',notes:'Chip time'},
+ {id:'pb5',ev:'10K',val:'45:10',prev:'45:44',date:'2026-09-20',src:'Road race',notes:'Hilly course'},
+ {id:'pb6',ev:'Half Marathon',val:'1:31:24',prev:'1:32:58',date:'2026-04-14',src:'Race result',notes:'Still standing'}
+ ]}
+let RACES=defaultRaces();
+let PBSD=defaultPbs();
+/* v19.3 — ATHLETICS §3 ATHLETE PROFILE.
+   Deliberately top-level and keyed by client id rather than DB[cid].ath:   cloudMerge only unions workouts / measures / stats / split inside DB, so a   new DB field would keep working locally and silently never sync. Top-level   rides the same id-union table RACES/PBSD already use. */
+function defaultAprof(){return [
+ {id:'ap1',cid:1,disc:'Middle distance',event:'1500m',dist:'1500 m',level:'National',age:'U23',
+  pb:'4:21.6 (1500m) · 1:31:24 (Half)',target:'City Half Marathon',targetDate:'2026-10-18',
+  avail:'Mon–Sat, mornings',freq:'5',mileage:'42',history:'4 seasons · 118 sessions',
+  injury:'Left Achilles — mild tendinopathy (Jul 2026), physio-cleared',
+  notes:'Responds well to volume, dislikes the treadmill. Key session Thursday.'},
+ {id:'ap2',cid:2,disc:'Sprint',event:'100m',dist:'100 m',level:'Senior',age:'Senior',
+  pb:'10.42 (100m) · 21.47 (200m)',target:'Regional Open',targetDate:'2026-10-12',
+  avail:'Mon–Fri evenings',freq:'6',mileage:'28',history:'2 seasons · 64 sessions',
+  injury:'None recorded',notes:'Needs 48 h between maximal velocity sessions.'}
+ ]}
+let APROF=defaultAprof();
+/* §3: "Events should be extensible… adding a discipline means adding a row,   never editing the engine." A plain list + datalist, exactly like ONB_SPORTS. */
+const AEVTS=['60m','100m','200m','400m','800m','1500m','3000m','5000m','10K',
+  'Half Marathon','Marathon','400mH','Steeplechase','Marathon relay'];
+const aprofOf=cid=>APROF.find(p=>String(p.cid)===String(cid))||null;
+/* v19.4 — ATHLETICS §7 TRAINING PHASES.
+   Deliberately methodology-agnostic: the coach names the phase, sets its week   range, its focus and a load %. Nothing here assumes base→build→peaktaper is   THE model — the spec forbids hard-coding one. `now` marks the current block. */
+function defaultPhases(){return [
+ {id:'ph1',name:'Base',weeks:'W1–W6',focus:'Aerobic volume · easy mileage · general strength',load:35,now:false},
+ {id:'ph2',name:'Build',weeks:'W7–W14',focus:'Threshold · intervals · hills · power',load:78,now:true},
+ {id:'ph3',name:'Peak / taper',weeks:'W15–W16',focus:'Sharpening · volume down · intensity held',load:52,now:false},
+ {id:'ph4',name:'Recovery',weeks:'W17',focus:'Unload · easy running · address niggles',load:20,now:false}
+ ]}
+let PHASES=defaultPhases();
+/* v19.5 — ATHLETICS §4 BLOCK WORKOUT BUILDER.
+   Its own top-level store rather than TEMPLATES: the template screens render   `exs` (sets/reps/kg), and a block workout has none of that — folding blocks   in would break vTemplates/vBuilder. Sports stay filterable via `sp` like   every other template, so nothing in the library needs to change.   A workout is an ordered list of BLOCKS; each block type owns its own field   schema (BLK_FIELDS) so Distance / Time / Pace / Speed / Recovery / Intensity   stay visibly distinct instead of collapsing into one generic row. */
+const BLK_TYPES=[['warmup','Warm-up'],['drills','Drills'],['main','Main set'],
+  ['recovery','Recovery'],['cooldown','Cool-down']];
+const BLK_FIELDS={
+ warmup:[['name','Block name'],['dur','Duration'],['pace','Target pace'],['note','Note']],
+ drills:[['name','Block name'],['items','Drills'],['reps','Repetitions'],['rpe','RPE']],
+ main:[['name','Block name'],['reps','Repetitions'],['dist','Distance'],['dur','Duration'],
+   ['target','Target pace'],['speed','Speed'],['rec','Recovery'],['rpe','Intensity (RPE)'],
+   ['surface','Surface']],
+ recovery:[['name','Block name'],['dur','Duration'],['type','Recovery type'],['rpe','RPE']],
+ cooldown:[['name','Block name'],['dur','Duration'],['pace','Target pace'],['note','Note']]
+};
+const blkLabel=t=>(BLK_TYPES.find(x=>x[0]===t)||[,'Block'])[1];
+function defaultRunW(){return [
+ {id:'rw1',name:'Interval session — 6 × 400m',day:'Thursday',sp:['Running & Endurance'],blocks:[
+  {t:'warmup',name:'Warm-up',dur:'10 min',pace:'5:40/km',note:'Easy and relaxed'},
+  {t:'drills',name:'Drills',items:'A-skips · B-skips · High knees',reps:'2 × 30 m',rpe:'5'},
+  {t:'main',name:'Main set',reps:'6 × 400 m',dist:'400 m',dur:'—',target:'1:40–1:45',
+   speed:'16.0–16.6 km/h',rec:'90 s easy jog',rpe:'8',surface:'Track'},
+  {t:'cooldown',name:'Cool-down',dur:'10 min',pace:'6:00/km',note:'Flush and stretch'}]},
+ {id:'rw2',name:'Long run — 28 km',day:'Saturday',sp:['Running & Endurance'],blocks:[
+  {t:'warmup',name:'Warm-up',dur:'10 min',pace:'6:00/km',note:'Walk then easy jog'},
+  {t:'main',name:'Main set',reps:'1 × 28 km',dist:'28 km',dur:'2:35',target:'5:15–5:30',
+   speed:'10.4–10.9 km/h',rec:'—',rpe:'6',surface:'Road'},
+  {t:'recovery',name:'Recovery',dur:'8 min',type:'Walk',rpe:'2'},
+  {t:'cooldown',name:'Cool-down',dur:'8 min',pace:'6:30/km',note:''}]}
+ ]}
+let RUNW=defaultRunW();
+/* v19.6 — ATHLETICS §6 TRAINING LOAD.
+   Completed sessions, not plans: §6 asks for weekly distance/duration/session   count/high-intensity/long/recovery/RPE/load, none of which RUNW (a plan) has.   `w` is an explicit week index (0 = oldest, last = current) rather than a   parsed date, so grouping never disagrees with a timezone.   Session load = Foster's session-RPE: Σ(minutes/60 × RPE) — a standard,   citable measure. NO acute:chronic ratio and NO injury-risk reading: the spec   forbids presenting this as a medical or diagnostic tool. */
+const TLOG_KINDS=[['hi','High-intensity'],['long','Long run'],['easy','Easy'],
+  ['recovery','Recovery'],['strength','Strength & conditioning']];
+function defaultTLog(){
+  const out=[];let n=0;const day=864e5,base=Date.now();
+  const tpl=[
+   {d:1,k:'hi',      km:9.6, min:48, rpe:8, name:'Intervals · 6 × 400m'},
+   {d:2,k:'strength',km:0,   min:55, rpe:7, name:'Strength & conditioning'},
+   {d:3,k:'easy',    km:12,  min:66, rpe:4, name:'Easy run'},
+   {d:4,k:'hi',      km:10,  min:50, rpe:7, name:'Tempo · 4 × 2 km'},
+   {d:6,k:'long',    km:28,  min:155,rpe:6, name:'Long run'},
+   {d:0,k:'recovery',km:8,   min:44, rpe:3, name:'Recovery jog'}];
+  /* 8 weeks, oldest → current, with a gentle ramp so progression is visible   without inventing a dramatic curve. Week 7 is the current one. */
+  for(let w=0;w<8;w++){
+    const ramp=0.86+w*0.02;
+    tpl.forEach((t,ti)=>{
+      const dt=new Date(base-(7-w)*7*day-(6-t.d)*day);
+      /* spread across three athletes so the filter is meaningful */
+      out.push({id:'tl'+(++n),cid:(ti%3)+1,w:w,date:dt.toISOString().slice(0,10),
+        name:t.name,kind:t.k,km:+(t.km*ramp).toFixed(1),min:Math.round(t.min*ramp),rpe:t.rpe});
+    });
+  }
+  return out;
+}
+let TLOG=defaultTLog();
+const tlogLoad=rows=>+rows.reduce((s,x)=>s+((+x.min||0)/60)*(+x.rpe||0),0).toFixed(1);
 let CEXBASE=0;
 function syncCustomEx(){
   if(!CEXBASE)CEXBASE=EXERCISES.length;
@@ -1212,8 +1384,76 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
 let __lastPack='';
+/* ================================================================ v19.19
+   LIVE SESSION — the coach on the gym floor (mobile).
+   A single running session per workspace, in its own array so the timer   survives a locked phone, a tab switch and a cloud pull. Two rules keep it   honest:
+     1. The clock is anchored to `startedAt`, never to a counter — nothing   drifts and nothing has to tick while the tab is in the background.
+     2. Ending a session writes ONE row into DB[cid].log, the same log the   client portal reads, so the coach's view and the athlete's view can never   disagree. `sets:[]` means "no per-set load was recorded"; it is never   filled with zeros, because a zero load is a lie.
+   Rides the workspace payload like TLOG. Merge is a plain id-union plus   tombstone, so ending marks the record dead and the next pull clears it off   every other device. */
+function defaultLive(){return []}
+let LIVE=[];
+/* the newest running record — two devices may each hold one; the floor shows   whichever was touched last, never both. */
+const liveRec=()=>LIVE.length?LIVE.slice().sort((a,b)=>(b.at||0)-(a.at||0))[0]:null;
+function liveStart(cid,evId){
+  const c=CLIENTS.find(x=>x.id===+cid);if(!c)return null;
+  /* one session at a time: a second start retires the first, tombstoned so   it does not come back on the next pull */
+  LIVE.slice().forEach(r=>markDead('LIVE',r.id));LIVE.length=0;
+  const ev=EVENTS.find(e=>e.id===evId)||null;
+  const w=todaysPlan(c.id).w;
+  const rec={id:uid(),cid:c.id,name:c.name,at:Date.now(),
+    label:ev?ev.label:(w?w.name:t('Session')),evId:ev?ev.id:null,
+    startedAt:Date.now(),done:0,restEnd:0,
+    set:0,sets:(w&&Array.isArray(w.exercises)&&w.exercises.length)?w.exercises.length:4,
+    rpe:null,paused:false,restSec:90,notes:[],endedAt:0};
+  LIVE.push(rec);
+  ACTIVITY.unshift({w:'Just now',i:'zap',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(c.name)}</b> را شروع کردید`:`<b>You</b> started a session with <b>${esc(c.name)}</b>`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  saveData();return rec;
+}
+/* ── the clock ──────────────────────────────────────────────────────────
+   elapsed = done (everything before the current stretch) + (now − startedAt).
+   Pausing folds the current stretch into `done` and resuming restarts
+   `startedAt`, so a locked phone, a tab switch or ten pause/resume cycles   can never drift or double-count. `startedAt` is the only anchor and it is   never re-derived from a counter. */
+function liveSec(r){if(!r)return 0;
+  const span=r.paused?0:(Date.now()-(+r.startedAt||Date.now()));
+  return Math.max(0,Math.floor(((+r.done||0)+span)/1000))}
+function liveElapsed(r){return Math.round(liveSec(r)/60)}
+function livePause(){const r=liveRec();if(!r)return null;
+  if(r.paused){r.paused=false;r.startedAt=Date.now()}
+  else{r.done=(+r.done||0)+Math.max(0,Date.now()-(+r.startedAt||Date.now()));r.paused=true}
+  r.at=Date.now();saveData();return r}
+/* completing a set starts the rest clock; the ring counts it down */
+function liveSet(d){const r=liveRec();if(!r)return;
+  r.set=Math.max(0,Math.min((+r.sets||0),(+(r.set||0))+(+d||0)));
+  if(+d>0)r.restEnd=Date.now()+(+r.restSec||0)*1000;
+  r.at=Date.now();saveData()}
+function liveRestLeft(r){if(!r)return 0;
+  return Math.max(0,Math.ceil(((+r.restEnd||0)-Date.now())/1000))}
+function liveRpe(v){const r=liveRec();if(!r)return;
+  r.rpe=(+r.rpe===+v)?null:+v||null;r.at=Date.now();saveData()}
+function liveRest(sec){const r=liveRec();if(!r)return;
+  r.restSec=Math.max(15,Math.min(600,Math.round(sec)));r.at=Date.now();saveData()}
+function liveNote(txt){const r=liveRec();if(!r)return false;
+  const body=String(txt==null?'':txt).trim().slice(0,400);if(!body)return false;
+  r.notes.push({at:Date.now(),body});r.at=Date.now();saveData();return true}
+function liveEnd(){
+  const r=liveRec();if(!r)return null;
+  const d=new Date(r.startedAt);
+  const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const min=Math.max(1,liveElapsed(r));
+  if(!DB[r.cid])DB[r.cid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+  if(!Array.isArray(DB[r.cid].log))DB[r.cid].log=[];
+  /* sets:[] on purpose — a duration and an RPE were recorded, a load was not */
+  DB[r.cid].log.unshift({id:'ls'+r.id,n:r.label||t('Session'),d:iso,at:r.startedAt,
+    sets:[],done:+r.set||0,total:+r.sets||0,vol:0,rpe:+r.rpe||0});
+  ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(r.name)}</b> را ثبت کردید — ${nf(min)} ${t('min')}`:`<b>You</b> logged <b>${esc(r.name)}</b> — ${nf(min)} ${t('min')}`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  markDead('LIVE',r.id);LIVE.length=0;saveData();
+  return {min,rpe:+r.rpe||0,sets:+r.set||0,cid:r.cid,name:r.name};
+}
+/* ============================ persistence ============================ */
 /* v16.4 — tenant ownership of the LOCAL dataset. The leak: coach A signs out,
    coach B signs in on the SAME device; the local arrays (and STORE_KEY) still
    held A's clients, and the first sync "seeded" B's empty workspace with them
@@ -1243,7 +1483,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -1274,7 +1514,24 @@ function loadData(){
     repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
     if(Array.isArray(d.NRULES)&&d.NRULES.length){NRULES.length=0;d.NRULES.forEach(r=>NRULES.push(r))}
     repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(FOODS,d.FOODS);
-    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
+    repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);
+    /* v19.2 — payloads saved before these existed carry no key at all, so ||[]   (a bare repl() would wipe the seeded demo rows). */
+    /* v19.2 — a payload saved BEFORE this feature has no RACES/PBSD key at   all. That means "never configured", so backfill the demo rows — the same   rule FOODS uses below. An explicit empty array means the coach cleared them   and must stay empty. */
+    const hadRACES=Array.isArray(d.RACES),hadPBSD=Array.isArray(d.PBSD);
+    repl(RACES,d.RACES||[]);repl(PBSD,d.PBSD||[]);
+    repl(APROF,d.APROF||[]);
+    repl(PHASES,d.PHASES||[]);
+    repl(RUNW,d.RUNW||[]);
+    repl(TLOG,d.TLOG||[]);
+    /* LIVE has no seed rows, so a missing key is simply "nothing running" —   no backfill guard needed (that guard exists for stores whose demo rows   must survive an old payload). */
+    repl(LIVE,d.LIVE||[]);
+    if(!hadRACES)defaultRaces().forEach(r=>RACES.push(r));
+    if(!hadPBSD)defaultPbs().forEach(p=>PBSD.push(p));
+    if(!Array.isArray(d.APROF))defaultAprof().forEach(p=>APROF.push(p));
+    if(!Array.isArray(d.PHASES))defaultPhases().forEach(p=>PHASES.push(p));
+    if(!Array.isArray(d.RUNW))defaultRunW().forEach(w=>RUNW.push(w));
+    if(!Array.isArray(d.TLOG))defaultTLog().forEach(x=>TLOG.push(x));
+    syncCustomEx();
     // v18.9.1 — workspaces saved before the food seed existed carry FOODS:[]
     // (freshWorkspace used to leave it empty). There is no food-delete UI, so
     // an empty library is always a broken state, never intentional: backfill.
@@ -1338,7 +1595,7 @@ const wsOwnerName=()=>AUTH.coach?coachName():(WS_OWNER||'');
    otherwise the next coach's sync keeps targeting the previous coach's
    workspace (403 foreign) and pulls foreign data over local rows. */
 function cloudReset(){
-  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;
+  CLOUD.on=false;CLOUD.code='';CLOUD.rev=0;CLOUD.dirty=false;CLOUD.started=false;sseStop();
   CLOUD.rej402=0;CLOUD.adopting402=false;
   clearTimeout(CLOUD.pushT);
   // The 7s poll used to be started with a bare setInterval() and never cleared,
@@ -1364,7 +1621,8 @@ function freshWorkspace(){
   NHIST.length=0;ACTIVITY.length=0;NOTIFS.length=0;PACKS.length=0;MSGTPL.length=0;
   NLOGS.length=0;NCHAT.length=0;NINS.length=0;NRULES.length=0;
   defaultNrules().forEach(r=>NRULES.push(r));
-  FORMS.length=0;CHALLENGES.length=0;
+  FORMS.length=0;CHALLENGES.length=0;RACES.length=0;PBSD.length=0;APROF.length=0;PHASES.length=0;RUNW.length=0;TLOG.length=0;
+  LIVE.length=0;
   CEXS.length=0;syncCustomEx();
   // v18.9.1 — a new coach still needs a usable nutrition library: the 20
   // starter foods + meal/plan templates. FOODS used to stay EMPTY here, so
@@ -1720,8 +1978,8 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
-const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -1734,8 +1992,28 @@ const cloudPut=async data=>{
   try{
     const r=await fetch('/api/data?code='+encodeURIComponent(CLOUD.code),{method:'PUT',headers:Object.assign({'content-type':'application/json'},authHeaders()),body:JSON.stringify({rev:CLOUD.rev,data})});
     const o=await r.json();
-    if(r.ok&&o.ok){CLOUD.rev=o.rev;return true}
+    if(r.ok&&o.ok){CLOUD.rev=o.rev;CLOUD.storageDown=0;return true}
     if(r.status===409){CLOUD.rev=o.rev||0;CLOUD.dirty=true}
+    /* v18.107 — 503 = the server's KV circuit is open (bad DATABASE_URL);
+       429 = it asked us to slow down. Either way: hold the push and let
+       cloudSchedule back off, instead of hammering every 1.5s. A later probe
+       that succeeds clears the flag. Local data is never at risk — saveData()
+       writes localStorage first. */
+    if(r.status===503||r.status===429){CLOUD.storageDown=Date.now();CLOUD.dirty=true;return false}
+    /* v18.101 — 413 = payload over DATA_MAX_BYTES (5MB). Without this branch the
+       caller just cloudSchedule(1500)s again → an infinite retry loop and a
+       silent failure. Hold the push and tell the user what is actually wrong. */
+    if(r.status===413){
+      CLOUD.dirty=false;
+      CLOUD.rej413=(CLOUD.rej413||0)+1;
+      if(CLOUD.rej413>=2){
+        CLOUD.over413=true;
+        if(!CLOUD.warned413){CLOUD.warned413=true;
+          toast(lang==='fa'?'همگام‌سازی متوقف شد — حجم داده از سقف سرور (۵ مگابایت) بیشتر است. عکس‌ها یا پیام‌های ضمیمه‌دار را حذف کن.':'Sync paused — the workspace payload exceeds the server limit (5 MB). Delete some photos or attachments.');
+        }
+      }
+      return false;
+    }
     /* P1 FIX — a rejected push must not retry forever. The server is
        AUTHORITATIVE on quota/subscription: when a workspace exceeds its
        plan's seat cap, the device was pushing stale rows (typically the demo
@@ -1838,7 +2116,7 @@ function cloudMerge(d,adopt){
    if(ch)CLIENTS.sort((a,b)=>(b.id||0)-(a.id||0)); // identical order on every device (newest first)
   // EVENTS / MSGS / NOTES / NPLANS / PACKS — union by id (NOTES & NPLANS stay newest-first)
   // v18.48 — NLOGS/NCHAT/NINS/NRULES join the same id-union path.
-  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
+  [['EVENTS',EVENTS],['MSGS',MSGS],['NOTES',NOTES],['NPLANS',NPLANS],['PACKS',PACKS],['FORMS',FORMS],['RACES',RACES],['PBSD',PBSD],['APROF',APROF],['PHASES',PHASES],['RUNW',RUNW],['TLOG',TLOG],['LIVE',LIVE],['NLOGS',NLOGS],['NCHAT',NCHAT],['NINS',NINS],['NRULES',NRULES]].forEach(([k,arr])=>{
     for(let i=arr.length-1;i>=0;i--){const x=arr[i];if(x&&x.id!=null&&deadSets[k].has(String(x.id))){arr.splice(i,1);ch=true}}
     const idx={};arr.forEach((x,i)=>{if(x&&x.id!=null)idx[String(x.id)]=i});
     (d[k]||[]).forEach(rc=>{
@@ -1905,9 +2183,17 @@ function cloudMerge(d,adopt){
       if(xidx[x.id]===undefined){CEXS.push(x);xidx[x.id]=CEXS.length-1;ch=true;__cexChanged=true}
     });
   }
-  // onboarding answers — the coach's own device wins only while local is
-  // unfinished; once done:true anywhere, it propagates everywhere.
-  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&(d.ONBOARD.done||!ONBOARD.done)&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){ONBOARD=d.ONBOARD;ch=true}
+  /* v19.17 — ONBOARD is LAST-WRITER-WINS by `at`. The old rule was
+     "remote wins whenever it is done:true", and cloudPush() merges the remote   payload BEFORE it puts, while cloudPull() runs every 7s — so a coach who had   just picked a sport had it reverted seconds later, and the reverted value was   then pushed. Reproduced exactly: pick Running (ath rail 20, 3 athletics items)   → merge a payload 60s older → sport null, rail 14, 0 items.
+     `at` is stamped by the wizard, by onb-skip and by the Settings sport
+     selector. The last branch stops a brand-new device that skipped setup from   erasing a sport it simply does not have yet; when the ages tie we keep the   historical rule so legacy payloads behave exactly as before. */
+  if(d.ONBOARD&&typeof d.ONBOARD==='object'&&JSON.stringify(d.ONBOARD)!==JSON.stringify(ONBOARD)){
+    const ra=+d.ONBOARD.at||0, la=+ONBOARD.at||0;
+    const adopt = ra>la
+      || (ra===la && (d.ONBOARD.done||!ONBOARD.done))
+      || (la>ra && !ONBOARD.sport && !!d.ONBOARD.sport);
+    if(adopt){ONBOARD=d.ONBOARD;ch=true}
+  }
   /* v18.35 — design template: last-writer-wins. The remote value always wins
      on pull (the device that just switched it pushed it); local changes push
      immediately via saveData→cloudSchedule. */
@@ -1998,6 +2284,29 @@ function adoptRemoteWorkspace(d){
   if(Array.isArray(d.DEAD))Object.keys(DEAD).forEach(k=>{DEAD[k].length=0;((d.DEAD||{})[k]||[]).forEach(x=>DEAD[k].push(String(x)))});
 }
 const cloudResync=()=>CLIENTS.forEach(c=>syncClientSessions(c.name));
+/* v18.108 — realtime chat. The stream only carries the workspace REVISION; the
+   payload still comes from cloudPull(), which is O(1) when nothing changed.
+   EventSource reconnects on its own (the server sends retry: 3000) and the 7 s
+   poll covers any gap. No third-party domain and no new dependency — the CSP's
+   `connect-src 'self'` already allows it. */
+function sseStart(){
+  if(!CLOUD.on||CLOUD.sse||typeof EventSource==='undefined')return;
+  try{
+    const es=new EventSource('/api/chat/stream?code='+encodeURIComponent(CLOUD.code));
+    CLOUD.sse=es;
+    es.onmessage=e=>{
+      try{
+        const d=JSON.parse(e.data);
+        /* frames carry {rev}, {rev,hello} or {ping} — only a NEW rev triggers a
+           pull, and one that matches is a no-op (the client is already current). */
+        if(d&&d.rev&&d.rev!==CLOUD.rev)cloudPull();
+      }catch(_){}
+    };
+    es.onerror=()=>{}; /* let EventSource reconnect; the 7 s poll covers gaps */
+  }catch(e){CLOUD.sse=null}
+}
+function sseStop(){try{CLOUD.sse&&CLOUD.sse.close()}catch(e){}CLOUD.sse=null}
+
 async function cloudPull(){
   if(!CLOUD.on)return;
   const out=await cloudFetch(CLOUD.code,CLOUD.rev); // rev check: server skips the payload when unchanged
@@ -2008,6 +2317,23 @@ async function cloudPull(){
 }
 function cloudSchedule(ms){
   if(!CLOUD.on)return;
+  /* v18.101 — 413 guard. The server caps the workspace at DATA_MAX_BYTES (5MB)
+     and cloudPut had NO branch for 413, so the caller re-scheduled forever:
+     a silent 413 storm with no feedback. After two rejections we hold the push
+     and say why; we resume automatically once the payload fits again (the user
+     deleted media), so nothing is ever lost. */
+  if(CLOUD.over413){
+    let n=0;try{n=JSON.stringify(cloudPack()).length}catch(e){}
+    if(n>4800000){CLOUD.dirty=false;return}
+    CLOUD.over413=false;CLOUD.rej413=0;CLOUD.warned413=false;
+  }
+  /* v18.107 — storage circuit open: probe once every 30s instead of every 1.5s.
+     The gate clears itself when a push succeeds (cloudPut resets storageDown). */
+  if(CLOUD.storageDown&&Date.now()-CLOUD.storageDown<30000){
+    CLOUD.dirty=true;
+    clearTimeout(CLOUD.pushT);CLOUD.pushT=setTimeout(cloudPush,30000);
+    return;
+  }
   CLOUD.dirty=true;
   clearTimeout(CLOUD.pushT);CLOUD.pushT=setTimeout(cloudPush,ms||900);
 }
@@ -2025,6 +2351,10 @@ function cloudStart(){
   CLOUD.started=true;
   // Handle stored on CLOUD so cloudReset() can stop it (see cloudReset).
   CLOUD.pollT=setInterval(()=>{if(!document.hidden)cloudPull()},7000);
+  /* v18.108 — realtime: one EventSource replaces "wait up to 7 s". The 7 s poll
+     above STAYS as the safety net, and since v18.104 an unchanged poll is O(1),
+     so a dead stream degrades to "slower", never to "broken". */
+  sseStart();
   /* v18.21 — daily smart-report sweep: shortly after boot, then every 6h. */
   setTimeout(rptAutoRun,4000);
   CLOUD.rptT=setInterval(()=>{if(!document.hidden)rptAutoRun()},6*3600*1000);
@@ -2034,6 +2364,8 @@ function cloudStart(){
   /* v18.38 — smart workout reminder sweep (coach devices only, see remSweep). */
   setTimeout(remSweep,6000);
   CLOUD.remT=setInterval(()=>{if(!document.hidden)remSweep()},6*3600*1000);
+  /* v18.103 — lift any pre-existing inline voice blobs into /api/media. */
+  setTimeout(()=>migrateVoice(),9000);
 }
 async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legacy code
   if(CLOUD.on){cloudStart();return}
@@ -2150,7 +2482,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 /* ================= STATE & HELPERS ================= */
 const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,calOff:0,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
-mtab:'today',mview:'tabs',mClient:1,cEnergy:null,cSore:null,cSleep:null,
+mtab:'today',mview:'tabs',mClient:1,mcf:'All',mlogCid:null,msheet:false,mjump:false,macc:{},cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
 nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null};
@@ -2255,7 +2587,23 @@ const packRemain=name=>{const ps=PACKS.filter(p=>p.client===name);return ps.leng
 const goalPct=c=>{if(!c||!c.targetW||!c.weight)return 0;const s=c.startW||c.weight;const span=c.targetW-s;if(!span)return 100;return Math.max(0,Math.min(100,Math.round((c.weight-s)/span*100)))};
 const INTAKE_Q=['Emergency contact (name & phone)','Injuries or medical conditions','Current medications','Chest pain or dizziness during exercise?','Heart condition diagnosed by a doctor?','Bone or joint problem that could worsen?','Currently doing other training?','Main goal & expectations'];
 const INTAKE_YN=[3,4,5,6]; // indexes of the yes/no (PAR-Q) questions
-function photoTotalBytes(){let n=0;Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=(p.src||'').length}));return n}
+/* v18.101 — count EVERY base64 blob that rides in the workspace payload, not just
+   progress photos: chat images (MSGS), assistant photos (NCHAT), attachments
+   (FILES) and the coach avatar are in the same JSON. Counting only DB[].photos
+   meant the 3.5MB guard never fired and the SERVER answered 413 instead. */
+function photoTotalBytes(){
+  /* v18.101 — count every blob that rides in the payload; v18.103 — only INLINE
+     base64 counts now, because a voice note that was lifted to /api/media is a
+     ~30-char URL, not 160 KB of base64. */
+  const dlen=v=>(typeof v==='string'&&v.startsWith('data:'))?v.length:0;
+  let n=0;
+  Object.keys(DB).forEach(k=>((DB[k].photos)||[]).forEach(p=>{n+=dlen(p&&p.src)}));
+  (MSGS||[]).forEach(m=>{n+=dlen(m&&m.src)});
+  (NCHAT||[]).forEach(m=>{n+=dlen(m&&m.src)});
+  (FILES||[]).forEach(f=>{n+=dlen(f&&f.src)});
+  n+=dlen(COACH_PIC);
+  return n;
+}
 /* Downscale to ≤640px JPEG (~40-60 KB) — the workspace payload has a 5 MB cap,
    so raw phone photos (3-8 MB) would break sync after the first upload. */
 function resizeImage(file,cb){
@@ -2268,7 +2616,12 @@ function resizeImage(file,cb){
       cv.getContext('2d').drawImage(img,0,0,w,h);
       cb(cv.toDataURL('image/jpeg',0.7));
     };
+    /* v18.96 — a file that is not a decodable image took NEITHER branch, so cb
+       never ran: the caller did nothing at all and gave no feedback. Signal the
+       failure with an empty string so callers can report it. */
+    img.onerror=()=>cb('');
     img.src=rd.result};
+  rd.onerror=()=>cb('');
   rd.readAsDataURL(file);
 }
 function pickPhoto(by){
@@ -2281,6 +2634,7 @@ function pickPhoto(by){
     if(photos.length>=8){toast(t('Photo limit reached — delete an older photo first'));return}
     if(photoTotalBytes()>3500000){toast(t('Photo storage is full — delete some photos first'));return}
     resizeImage(f,src=>{
+      if(!src){toast(t('Could not read the picture'));return}
       photos.push({id:uid(),d:Date.now(),tag:({Front:'front',Back:'back',Side:'side'})[S.pose]||'front',src,by,ok:by==='coach'});
       saveData();render();
       toast(by==='coach'?t('Photo added ✓'):t('Photo sent — waiting for coach approval'));
@@ -2458,7 +2812,7 @@ function printWorkout(){
     return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td><td>${esc(t(b.note||''))}</td></tr>`}).join('');
   printDoc(name,`<h1>${esc(t(name))}</h1>
     <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
-    ${note?`<div class="meta">✎ ${esc(t(note))}</div>`:''}
+    ${note?`<div class="meta">${esc(t(note))}</div>`:''}
     <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`,c.name);
 }
 function printNutrition(){
@@ -2559,7 +2913,8 @@ function packCharge(ev,was){
     ev.packId=undefined;
   }
 }
-const langBtn=cls=>`<button class="btn ${cls}" data-act="lang">${ic('globe',15)} ${lang==='en'?'فا':'EN'}</button>`;
+/* v18.116 — language switcher removed; kept as a no-op so its six call sites   render nothing instead of needing six separate edits. */
+const langBtn=()=>'';
 /* v18.12 — one-tap theme switch: shows the theme you'll GET (sun in dark mode,
    moon in light mode), like GitHub/Linear. System pref stays available in
    Settings → Appearance; this button flips Light↔Dark directly. */
@@ -2828,7 +3183,6 @@ function habNum(el){
   const was=+hd[hh.id]||0,tgt=+(hh.target||1);
   hd[hh.id]=v;
   if(v>=tgt&&was<tgt)gamAward(hc,'habit');
-  else if(v<tgt&&was>=tgt)gamRevoke(hc,'habit');
   saveData();render();
   /* coach editing the SAME field from the habits modal → refresh it too. */
   if(S.role==='coach'&&document.getElementById('modal-root').firstChild)habCoachModal();
@@ -2976,7 +3330,7 @@ function coachLogin(){return `
         <div class="divider"><span>${t('or')}</span></div>
         <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
         <div class="row" style="justify-content:center;margin-top:20px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${t('Create account')}</a></div>`}
-    <div class="row" style="justify-content:center;margin-top:20px">${langBtn('btn-outline btn-sm')}</div>
+    <div class="row" style="justify-content:center;margin-top:8px">${t('English')}</div>
   </form></div>
 </div>`}
 function clientPicker(){
@@ -3059,7 +3413,7 @@ function vUnlock(){
         </svg>
         ${avC(known.name,86,known.id-1)}
       </div>
-      <div class="un-hi">${t('Hello')} ${esc(first)} 👋</div>
+      <div class="un-hi">${t('Hello')} ${esc(first)}</div>
       <b class="un-name">${esc(t(known.name))}</b>
       ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
   }else if(st==='multi'){
@@ -3315,7 +3669,7 @@ function vClientsCm(){
         <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
         <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
           <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
-          ${c.streak?`<span class="cm-meta">🔥 ${esc(streakLbl(c))}</span>`:''}
+          ${c.streak?`<span class="cm-meta">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
           <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
         </div>
       </div>
@@ -3327,12 +3681,210 @@ function vClientsCm(){
       </div>
     </div>`}).join('')}</div>`}`;
 }
+/* v19.11 — §11's Event filter is a CATALOGUE, not a value derived from the
+   roster. Deriving it from APROF.disc meant the option list changed whenever a
+   profile was added or cleared, and it only ever offered the disciplines some
+   athlete happened to have — Distance and Road never appeared at all. Same rule
+   §3 uses for AEVTS: a discipline is a row, never something the engine invents.
+   An option that matches nobody lands on the existing empty state, which is
+   honest; an option that silently does not exist is not. */
+const ADISCS=['Sprint','Middle distance','Distance','Road'];
+/* ============ ATHLETICS §11 — COACH DASHBOARD ============
+   Replaces the generic dashboard while an athletics sport is selected — the
+   spec's coach route is literally `isAthletic()? vCoachAth(): vCoachBase()`.
+   Every one of the five filters is backed by REAL data, no placeholder:
+     Event   ← APROF.disc (§3)                     Athlete ← CLIENTS
+     Phase   ← CLIENTS.week ∩ PHASES[].weeks (§7)  DERIVED, no second store
+     Date    ← ISO date math on RACES; today/week on the schedule
+     Status  ← EVENTS.att + evState()
+   Recent PBs is deliberately NOT filtered: PBSD carries no per-athlete key (a
+   documented §9 limitation), so filtering it by athlete would advertise a
+   breakdown that does not exist. The panel says so instead of faking one.
+   Delays to a race are descriptive countdowns only — no readiness or risk
+   reading, same constraint §6 works under. */
+function vDashAth(){
+  const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+  const parseW=s=>{const n=String(s||'').match(/\d+/g)||[];
+    return n.length?[+n[0],+(n[n.length-1]||n[0])]:null};
+  const phaseOf=wk=>{const ps=PHASES;for(let i=0;i<ps.length;i++){const r=parseW(ps[i].weeks);
+    if(r&&wk>=r[0]&&wk<=r[1])return ps[i]}return null};
+  const roster=CLIENTS.filter(c=>c.status!=='Archived');
+  const disc=c=>(aprofOf(c.id)||{}).disc||'';
+  const phName=c=>(phaseOf(+c.week||0)||{}).name||'—';
+  const ath=F.ath==='all'?null:roster.filter(c=>String(c.id)===String(F.ath))[0]||null;
+  const squad=roster.filter(c=>
+    (F.ev==='all'||disc(c)===F.ev)&&
+    (F.ath==='all'||String(c.id)===String(F.ath))&&
+    (F.ph==='all'||phName(c)===F.ph));
+  const names=new Set(squad.map(c=>c.name));
+  const stOf=e=>e.att==='miss'?'Missed':(e.att==='done'||evState(e).k==='past'?'Completed':'Scheduled');
+  const sess=EVENTS.filter(e=>names.has(e.client)
+      &&(F.dt!=='today'||e.day===TODAY)
+      &&(F.st==='all'||stOf(e)===F.st))
+    .sort((a,b)=>a.day-b.day||a.start-b.start);
+  const todaySess=sess.filter(e=>e.day===TODAY);
+  const now0=new Date(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate());
+  const dOf=r=>{const p=String(r.date||'').split('-');return new Date(+p[0]||2000,(+p[1]||1)-1,+p[2]||1)};
+  const dLeft=r=>Math.round((dOf(r)-now0)/864e5);
+  const races=RACES.filter(r=>{
+    if(ath&&r.ath&&r.ath!==ath.name)return false;
+    const dd=dLeft(r);
+    if(F.dt==='season')return true;
+    if(dd<0)return false;
+    if(F.dt==='today')return dd===0;
+    if(F.dt==='week')return dd<=7;
+    return dd<=28;
+  }).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const cw=TLOG.length?Math.max.apply(null,TLOG.map(r=>+r.w)):0;
+  const ids=new Set(squad.map(c=>String(c.id)));
+  const wkRows=TLOG.filter(r=>+r.w===cw&&ids.has(String(r.cid)));
+  const kmW=+wkRows.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const nextR=races.filter(r=>dLeft(r)>=0)[0];
+  const adhOf=c=>{const s=(DB[c.id]||{}).stats||{};const d=+s.done||0,m=+s.missed||0;
+    return Math.round(d/((d+m)||1)*100)};
+  const weekKm=c=>+TLOG.filter(r=>+r.w===cw&&String(r.cid)===String(c.id))
+    .reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const sel=(k,opts)=>`<select class="sel" style="height:30px;width:auto;min-width:118px;flex:none"
+      data-change="athf" data-k="${k}">${opts.map(v=>
+      `<option value="${esc(String(v[0]))}"${F[k]===String(v[0])?' selected':''}>${v[1]}</option>`).join('')}</select>`;
+  /* §11 FILTERS — chips, not a boxed row of dropdowns.
+     The box read as a form and every option repeated its category name
+     ("Event: all"), which made five controls shout at once. Now each dimension
+     is a tiny label followed by pills: an unselected pill is quiet white, only
+     the ACTIVE one takes the accent, so four groups read as four calm lines and
+     a switch is ONE click instead of click-then-pick. Athlete keeps a menu —
+     eight names cannot be pills without swallowing the row. */
+  const fchip=(k,v,label)=>`<button class="fchip ${F[k]===v?'on':''}" data-act="ath-f" data-k="${k}" data-v="${esc(v)}">${label}</button>`;
+  const flbl=t2=>`<span style="flex:none;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);min-width:50px">${t(t2)}</span>`;
+  const grp=(label,inner)=>`<span class="row" style="gap:6px;align-items:center;flex:none">${flbl(label)}${inner}</span>`;
+  const filters=`<div class="row" style="gap:11px 26px;flex-wrap:wrap;align-items:center;margin-bottom:18px">
+    ${grp('Event',[fchip('ev','all',t('All'))].concat(ADISCS.map(d=>fchip('ev',d,t(d)))).join(''))}
+    ${grp('Phase',[fchip('ph','all',t('All'))].concat(PHASES.map(p=>fchip('ph',p.name,t(p.name)))).join(''))}
+    ${grp('Date',[fchip('dt','today',t('Today')),fchip('dt','week',t('This week')),
+      fchip('dt','4w',t('Next 4 weeks')),fchip('dt','season',t('Season'))].join(''))}
+    ${grp('Status',[fchip('st','all',t('All')),fchip('st','Completed',t('Completed')),
+      fchip('st','Scheduled',t('Scheduled')),fchip('st','Missed',t('Missed'))].join(''))}
+    <span class="row" style="gap:6px;align-items:center;flex:none">${flbl('Athlete')}
+      ${sel('ath',[['all',t('All athletes')]].concat(roster.map(c=>[String(c.id),c.name])))}</span>
+    <button class="btn btn-ghost btn-sm" data-act="ath-reset" style="margin-inline-start:auto;flex:none">${ic('refresh',13)} ${t('Reset')}</button>
+  </div>`;
+  if(!squad.length)return `<div class="page-h"><div><h1>${t('Dashboard')}</h1>
+    <div class="sub">${t('Athletics')} · ${t('no athletes match the current filters')}</div></div>
+    <button class="btn btn-outline" data-act="ath-reset">${ic('refresh',15)} ${t('Reset')}</button></div>${filters}
+    <div class="empty">${ic('users',24)}<b>${t('No athletes in view')}</b>
+      <span class="muted" style="font-size:12.5px">${t('Widen the Event, Athlete or Phase filter')}</span></div>`;
+  const cell=(l,v,u,sub,i,c)=>`<div class="card stat">
+      <div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':'--'+c})">${ic(i,17)}</span>
+        <span class="k">${t(l)}</span><span class="sp"></span></div>
+      <div class="v">${v}${u?`<span style="font-size:15px;font-weight:700;margin-inline-start:3px;color:var(--ink3)">${u}</span>`:''}</div>
+      <div class="muted" style="font-size:11.5px;font-weight:600">${sub}</div></div>`;
+  const kpis=`<div class="stats" style="margin-bottom:14px">
+    ${cell('Athletes',nf(squad.filter(c=>c.status==='Active').length),'',
+      `${nf(squad.length)} ${t('in view')} · ${nf(roster.length)} ${t('roster')}`,'users','accent')}
+    ${cell('Weekly volume',nf(kmW),'km',
+      `${nf(wkRows.length)} ${t('sessions')} · ${t('Week')} ${nf(cw+1)}`,'chart','blue')}
+    ${cell('Sessions today',nf(todaySess.length),'',
+      `${nf(sess.length)} ${t('in scope')} · ${nf(todaySess.filter(e=>stOf(e)==='Completed').length)} ${t('done')}`,'calendar','purple')}
+    ${cell('Next race',nextR?nf(dLeft(nextR)):'—',nextR?`${t('days')}`:'',
+      nextR?esc(nextR.name):t('No race in range'),'flag','amber')}
+  </div>`;
+  const sessRows=sess.slice(0,8).map(e=>{const st=evState(e);
+    return `<tr class="click" data-act="ev-open" data-eid="${e.id}">
+      <td><b>${esc(e.client)}</b></td><td>${esc(t(e.label))}</td>
+      <td class="num">${t(dayLbl(e.day))} ${nf(fmtT(e.start))}</td>
+      <td class="num">${nf(e.dur)} ${t('h')}</td>
+      <td class="num"><span class="bdg ${st.b}">${t(stOf(e))}</span></td></tr>`}).join('');
+  const raceRows=races.slice(0,5).map(r=>{const dd=dLeft(r);
+    const pill=r.result?`<span class="bdg bdg-green">${t('Set')}</span>`
+      :(dd<0?`<span class="bdg bdg-gray">${t('Done')}</span>`
+      :`<span class="bdg ${dd<=7?'bdg-lime':'bdg-gray'}">${nf(dd)} ${t('d')}</span>`);
+    return `<div class="tl-row">
+      <span class="bdg bdg-gray" style="flex:none">${ic('flag',13)}</span>
+      <div style="flex:1;min-width:0"><div style="font-weight:600">${esc(r.name)}</div>
+        <div class="muted" style="font-size:12.5px">${esc(r.event||'')} · ${esc(fmtD(r.date))}${r.loc?` · ${esc(r.loc)}`:''}</div></div>
+      <div class="row" style="gap:8px;flex:none"><b style="font-size:13px">${esc(r.target||'—')}</b>${pill}</div>
+    </div>`}).join('');
+  const squadRows=squad.map(c=>{const p=aprofOf(c.id)||{};const ph=phName(c);const a=adhOf(c);
+    return `<tr>
+      <td><b>${esc(c.name)}</b><div class="muted" style="font-size:11.5px">${esc(p.level||p.goal||'')} ${p.age?`· ${esc(p.age)}`:''}</div></td>
+      <td><span class="chip">${esc(p.event||p.disc||'—')}</span></td>
+      <td class="num"><span class="bdg ${ph==='Recovery'?'bdg-amber':'bdg-lime'}">${esc(ph)}</span></td>
+      <td class="num">${nf(weekKm(c))} km</td>
+      <td class="num"><span class="bdg ${a>=90?'bdg-green':a>=75?'bdg-amber':'bdg-gray'}">${nf(a)}%</span></td>
+      <td class="num">${esc((p.pb||'—').split(' · ')[0])}</td></tr>`}).join('');
+  const wks=[...new Set(TLOG.map(r=>+r.w))].sort((a,b)=>a-b);
+  const wOf=w=>+TLOG.filter(r=>+r.w===w&&ids.has(String(r.cid))).reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const maxW=Math.max(1,...wks.map(wOf));
+  const pbs=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,3);
+  const scopeNote=F.dt==='4w'||F.dt==='season'?` · ${t('schedule holds one week')}`:'';
+  return `<div class="page-h"><div><h1>${t('Dashboard')}</h1>
+    <div class="sub">${t(ONBOARD.sport||'Athletics')} · ${nf(squad.length)} ${t(squad.length===1?'athlete':'athletes')}${F.ph!=='all'?` · ${t('Phase')}: ${esc(F.ph)}`:''}</div></div>
+    <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
+  ${filters}
+  ${kpis}
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:0;overflow-x:auto">
+      <div style="padding:16px 18px 6px"><span class="card-t">${ic('calendar',14)} ${t('Sessions')}</span>
+        <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${nf(sess.length)} ${t('in scope')}${scopeNote}</span></div>
+      ${sessRows?`<table class="tbl"><thead><tr><th>${t('Athlete')}</th><th>${t('Session')}</th>
+        <th class="num">${t('When')}</th><th class="num">${t('Dur')}</th><th class="num">${t('Status')}</th></tr></thead>
+        <tbody>${sessRows}</tbody></table>`
+      :`<div class="empty" style="margin:14px 18px 18px">${ic('calendar',22)}<b>${t('No sessions match')}</b>
+        <span class="muted" style="font-size:12.5px">${t('Try a wider Date or Status filter')}</span></div>`}
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('flag',14)} ${t('Race calendar')}</span>
+        <span class="bdg bdg-gray" style="font-size:10px">${nf(races.length)}</span></div>
+      <div style="margin-top:6px">${raceRows||`<div class="muted" style="font-size:12.5px;padding:10px 0">${t('No races in this date range')}</div>`}</div>
+      <button class="btn btn-outline" style="width:100%;margin-top:12px" data-act="nav" data-view="races">${ic('plus',14)} ${t('Open races')}</button>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:0;overflow-x:auto">
+      <div style="padding:16px 18px 6px"><span class="card-t">${ic('users',14)} ${t('Squad')}</span>
+        <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${nf(squad.length)} ${t('athletes')}</span></div>
+      <table class="tbl"><thead><tr><th>${t('Athlete')}</th><th>${t('Event')}</th><th>${t('Phase')}</th>
+        <th class="num">${t('wk km')}</th><th class="num">${t('Adh')}</th><th class="num">${t('PB')}</th></tr></thead>
+        <tbody>${squadRows}</tbody></table>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Weekly volume')}</span>
+        <span class="bdg bdg-gray" style="font-size:10px">${nf(wks.length)} ${t('weeks')}</span></div>
+      <div class="row" style="gap:5px;align-items:flex-end;height:92px;margin-top:12px">
+        ${wks.map(w=>{const k=wOf(w);const h=Math.max(4,Math.round(k/maxW*64));const now=w===cw;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%">
+            <span style="font:700 9.5px/1 var(--font);font-variant-numeric:tabular-nums;color:${now?'var(--accent-text)':'var(--ink3)'}">${nf(k)}</span>
+            <div style="width:100%;height:${h}px;border-radius:4px 4px 0 0;background:${now?'var(--accent-deep)':'var(--ink3)'};opacity:${now?1:.45}"></div></div>`}).join('')}
+      </div>
+      <div class="row" style="gap:5px;margin-top:6px">${wks.map(w=>`<span style="flex:1;text-align:center;font:700 9px/1 var(--font);font-variant-numeric:tabular-nums;color:${w===cw?'var(--accent-text)':'var(--ink3)'}">${nf(w+1)}</span>`).join('')}</div>
+      <div style="height:1px;background:var(--line2);margin:13px 0 11px"></div>
+      <div class="row" style="justify-content:space-between"><span class="card-t">${ic('medal',14)} ${t('Recent PBs')}</span>
+        <span class="muted" style="font-size:10.5px">${t('all athletes')}</span></div>
+      <div style="margin-top:6px">${pbs.map(p=>`<div class="tl-row" style="padding:7px 0">
+        <span class="bdg bdg-lime" style="flex:none">${esc(p.ev)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:13.5px">★ ${esc(p.val)}</b>
+          <span class="muted" style="font-size:11.5px">${t('prev')} ${esc(p.prev||'—')}</span></div>
+        <span class="muted" style="font-size:11.5px;flex:none">${esc(fmtD(p.date))}</span>
+      </div>`).join('')||`<div class="muted" style="font-size:12.5px">${t('No PBs recorded')}</div>`}</div>
+    </div>
+  </div>
+  <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('Phase is derived from each athlete\u2019s program week against the phase ranges you set in Training Phases — no phase is assumed. Counts and countdowns are descriptive only.')}</div>`;
+}
 function vDash(){
+  /* v19.8 — ATHLETICS §11. Checked BEFORE the ui template so the sport always
+     owns its dashboard; a sport with no DASH_EXT row keeps everything below. */
+  if(DASH_EXT[ONBOARD.sport])return vDashAth();
   if(PREFS.uiTpl==='coachmint')return vDashCm();
   const roster=CLIENTS;
   const active=CLIENTS.filter(c=>c.status==='Active').length;
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
-  const doneT=today.filter(e=>e.start+e.dur<=NOW).length;
+  /* v18.119 — a past event the coach marked "miss" used to count in BOTH
+     "Completed" and "Missed", so one event rendered as "1 Completed · ✗ 1".
+     Completed now excludes misses, and Upcoming is counted on its own instead
+     of `today.length - doneT` (which swept misses into Upcoming as well).
+     Scoped to vDash: vDashCm has an identical line and is left untouched. */
+  const doneT=today.filter(e=>e.att!=='miss'&&e.start+e.dur<=NOW).length;
+  const upT=today.filter(e=>e.att!=='miss'&&e.start+e.dur>NOW).length;
   const missT=today.filter(e=>e.att==='miss').length;
   const perDayCnt=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).length);
   const perDayHrs=Array.from({length:7},(_,i)=>EVENTS.filter(e=>e.day===i).reduce((a,e)=>a+e.dur,0));
@@ -3351,9 +3903,13 @@ function vDash(){
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
-    ['Total Clients',nf(roster.length),`${t('Active')}: ${nf(active)}`,avStack,'users','accent'],
+    /* v18.119 — "Total Clients" and "Active Clients" showed the same 6 twice
+       (8 total, 6 active, 2 inactive). Replaced the first with Adherence, a
+       metric the dashboard did not surface at all and the one that actually
+       predicts churn. The roster count is still derivable from card 2. */
+    ['Adherence',pct(pctW),`${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)} ${t('Workouts Completed')}`,avStack,'target','accent'],
     ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check','green'],
-    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(today.length-doneT)} ${t('Upcoming')}${missT?` · ✗ ${nf(missT)}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
     ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple']];
   const attRow=it=>`<div class="tl-row">
     <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,13)}</span>
@@ -3363,11 +3919,25 @@ function vDash(){
      :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
+  <!-- v18.118 — header down to TWO lines. Was: eyebrow + "Welcome back, Coach"
+       + a subtitle that only restated the page name ("Here's what's happening…").
+       The coaching context (sport · style) is KEPT — it moved into the eyebrow,
+       so nothing is lost except the filler line. -->
   <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
-    <div><div class="hero-k">${t('Dashboard')} · ${fmtFullDate(TDATE)}</div><h1>${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')} 👋</h1><div class="sub">${t("Here's what's happening with your clients today.")}${ONBOARD.done?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div></div>
+    <div><div class="hero-k">${fmtFullDate(TDATE)}${ONBOARD.done&&ONBOARD.sport?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div><h1>${t('Dashboard')}</h1></div>
     <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
     <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
   </div></div>
+  <!-- v18.118 — FOCAL PANEL. This was the 4th of six cards, behind two rows of
+       equal-weight content. It is now first because it is the only panel that
+       is ACTIONABLE: the coach's opening question is "who needs me?", not
+       "how many clients do I have". The lime hairline is the only elevation
+       on the screen, which is what makes it read as the anchor. -->
+  <div class="card" style="border-color:rgba(200,240,75,.32);box-shadow:0 18px 44px -22px rgba(200,240,75,.30);margin-bottom:14px">
+    <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
+    ${att.length?att.slice(0,3).map(attRow).join('')+(att.length>3?`<div class="tl-row" style="justify-content:center"><button class="btn btn-outline btn-sm" data-act="nav" data-view="clients">${t('View all →')}</button></div>`:'')
+    :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
+  </div>
   <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
     <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
@@ -3389,9 +3959,9 @@ function vDash(){
     </div>
     <div class="stack">
       <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
-        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+        <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px">
         ${qa.map(([l,i])=>`
-          <button class="btn btn-ghost" style="justify-content:flex-start" data-act="qa-item" data-item="${l}">${ic('plus',15)} ${t(l)}</button>`).join('')}
+          <button class="btn btn-ghost" style="justify-content:flex-start;font-size:12.5px;padding:0 8px;white-space:normal;text-align:start;min-width:0" data-act="qa-item" data-item="${l}">${ic('plus',14)} ${t(l)}</button>`).join('')}
         </div>
       </div>
       <div class="card" style="padding:18px"><div class="card-t">${ic('target',14)} ${t('Workout Completion')}</div>
@@ -3400,12 +3970,10 @@ function vDash(){
       </div>
     </div>
   </div>
-  <div class="grid2" style="grid-template-columns:1.15fr .85fr">
-    <div class="card">
-      <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
-      ${att.length?att.slice(0,6).map(attRow).join('')+(att.length>6?`<div class="tl-row"><span class="muted" style="font-size:12.5px">+${nf(att.length-6)} ${t('More')} …</span></div>`:'')
-      :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
-    </div>
+  <!-- v18.118 — the attention panel was hoisted above (see the comment up top),
+       so this row is now Smart Reports beside Recent Activity. It was a
+       1.15fr/.85fr grid whose left cell is gone; a plain stack is honest
+       about that instead of leaving a half-width hole. -->
     <div class="stack">
       <div class="card" style="padding:16px 18px;cursor:pointer" data-act="rpt-all">
         <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Smart Reports')}</span><span class="bdg bdg-lime">${t('Auto daily')}</span></div>
@@ -3414,7 +3982,7 @@ function vDash(){
       <div class="card">
         <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="act-all">${t('View all →')}</a></div>
         <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ACTIVITY.slice(0,7).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
+          ${ACTIVITY.slice(0,4).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
         </div>
       </div>
     </div>
@@ -3433,6 +4001,13 @@ function vClients(){
      sort (name / status / streak / next session) applied to BOTH views. */
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
   const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  /* v19.12 — §3 completion surfaced WHERE THE COACH ALREADY LOOKS. Without it,
+     "who has not filled their athletics profile?" was only answerable by
+     opening athletes one at a time — and the profile screen itself now lives
+     inside the workspace, so the rail no longer advertises it. Gated on the sport. */
+  const profBdg=cid=>{const p=aprofOf(cid);
+    return p&&p.id?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Profile set')}</span>`
+      :`<span class="bdg bdg-gray" style="font-size:10px">${t('Not set')}</span>`};
   return `
   <div class="page-h"><div><h1>${t('Clients')}</h1><div class="sub">${sub}</div></div>
   <div class="row">
@@ -3456,7 +4031,8 @@ function vClients(){
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(c.goal)}</span>
         ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
-        ${c.streak?`<span class="chip">🔥 ${esc(streakLbl(c))}</span>`:''}
+        ${isAthletics()?profBdg(c.id):''}
+        ${c.streak?`<span class="chip">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
         <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
@@ -3471,8 +4047,8 @@ function vClients(){
     <tr data-act="open-client" data-cid="${c.id}">
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
       <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
-      <td class="hide-md">${c.streak||c.dayStreak?`🔥 ${esc(streakLbl(c))}`:'—'}</td>
-      <td><div class="row" style="gap:6px">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}</div></td>
+      <td class="hide-md">${c.streak||c.dayStreak?`${ic('flame',13)} ${esc(streakLbl(c))}`:'—'}</td>
+      <td><div class="row" style="gap:6px;flex-wrap:wrap">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}${isAthletics()?profBdg(c.id):''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
@@ -3484,7 +4060,15 @@ function vClients(){
 function vWorkspace(){
   const c=client(S.cid);
   const np=nPlanOf(c.name);
-  const tabs=[['overview','Overview'],['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
+  /* v19.12 — §3 Athletics Profile is the second tab and only exists when the
+     sport has athletics sections. The body map is built the same way, so a
+     stale S.tab='athletics' with no athletics sport falls through to Overview   instead of calling an undefined function. */
+  const tabs=[['overview','Overview'],...(isAthletics()?[['athletics','Athletics']]:[]),
+    ['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],
+    ['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
+  const body={overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
+    measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles};
+  if(isAthletics())body.athletics=()=>vAprofile(S.cid);
   const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
   return `
   ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
@@ -3497,7 +4081,7 @@ function vWorkspace(){
       <div style="flex:1;min-width:240px">
         <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
         <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
-          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))],['Points',`⭐ ${nf(c.pts||0)}`]].map(([k,v])=>`
+          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))]].map(([k,v])=>`
           <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
           ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
         </div>
@@ -3526,7 +4110,7 @@ function vWorkspace(){
     </div>
   </div>
   <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${t(l)}</button>`).join('')}</div>
-  ${({overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles})[S.tab]()}
+  ${(body[S.tab]||body.overview)()}
   `;
 }
 function vCOverview(){
@@ -3697,7 +4281,7 @@ function exBlock(b,i){
       <div class="mi" style="margin-top:9px"><span>${t('Coach cue')}</span><input type="text" value="${esc(t(b.note||''))}" data-bf="note" maxlength="140" placeholder="${t('e.g. Elbows ~45°, full ROM')}"></div>
       <div style="margin-top:9px;display:flex;gap:6px;flex-wrap:wrap">
         <span class="chip">${b.rpe}</span><span class="chip">${b.rir}</span><span class="chip">${t('Tempo')} ${b.tempo}</span>
-        ${b.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(b.note))}</span>`:''}
+        ${b.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">${esc(t(b.note))}</span>`:''}
         ${b.vid?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">▶ ${t('Video')} ✓</span>`:''}
       </div>
     </div>
@@ -4119,7 +4703,7 @@ function vCalendar(){
     <button class="fchip ${S.calfType==='All'?'on':''}" data-act="calf-type" data-t="All">${t('All Types')}</button>
     ${['session','assess','meas','appt'].map(k=>`<button class="fchip ${S.calfType===k?'on':''}" data-act="calf-type" data-t="${k}">${t(EVLBL[k])}</button>`).join('')}
     <select class="sel" style="width:auto" data-change="calclient"><option value="All">${t('All Clients')}</option>${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${S.calfClient===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
-    <span class="sp"></span><span class="muted" style="font-size:12px">${t('💡 Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
+    <span class="sp"></span><span class="muted" style="font-size:12px">${t('Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
   </div>
   <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
     <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>
@@ -4280,6 +4864,15 @@ function vSettings(){
     <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
     <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
     <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
+    <!-- v19.14 — the sport used to be writable ONLY by the wizard, so a wrong   pick meant redoing all four steps just to change one value. This writes the
+       same ONBOARD.sport the wizard commits, and nothing downstream needs a reset:   SPORT_EXT / DASH_EXT / sportSections / isAthletics all read it at render time,
+       so the rail, dashboard, tabs and Clients badge re-derive on their own. -->
+    <div class="set-row" style="margin:6px 0 2px"><div><span class="t">${t('Sport')}</span>
+      <div class="d">${t('Drives the athletics sections, dashboard and athlete screens')}</div></div>
+      <select class="sel" style="width:212px" data-change="osport">
+        <option value=""${!ONBOARD.sport?' selected':''}>${t('None (base workspace)')}</option>
+        ${ONB_SPORTS.map(s=>`<option value="${esc(s)}"${ONBOARD.sport===s?' selected':''}>${t(s)}</option>`).join('')}
+      </select></div>
     <div class="set-row" style="margin:6px 0 14px"><div><span class="t">${t('Setup wizard')}</span><div class="d">${t('Sport, coaching style and home screen')}</div></div><button class="btn btn-outline btn-sm" data-act="onb-open">${t('Redo')}</button></div>
     <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
   account:`<div class="card" style="padding:22px">
@@ -4298,7 +4891,7 @@ function vSettings(){
     </div>
     <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
     <div class="fs-t" style="margin-top:18px">${t('Preferences')}</div>
-    <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
+    <div class="set-row"><div><span class="t">${t('Language')}</span></div><div class="muted" style="font-size:12.5px">${t('English')}</div></div>
     <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
       ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
     <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
@@ -4425,16 +5018,18 @@ window.admFilter=v=>{S.admQ=v;const p=$('adm-q');if(!p)return;
 /* ================= MESSAGES (coach) ================= */
 function bubble(m){
   const me=m.from==='coach';
-  /* v18.75 — voice note: a player, not a text line. */
-  if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};display:flex;flex-direction:column;align-items:${me?'flex-end':'flex-start'};max-width:82%">
-    ${msgVoice(m)}
-    <span style="font-size:10px;opacity:.65;margin-top:4px">${t(m.time)}</span></div>`;
+  /* v18.75 — voice note: a player, not a text line.
+     v18.102 — no wrapper: .voice's max-width:78% resolved against a shrink-to-fit
+     parent (78% of 167 = 130) while the content needs 167, so it overflowed its
+     own border. Direct child of .chatbody → 78% of the thread, like the mockup. */
+  if(m.type==='voice')return `${msgVoice(m,me?'flex-end':'flex-start')}
+    <span style="display:block;font-size:10px;opacity:.65;text-align:${me?'end':'start'}">${t(m.time)}</span>`;
   return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
-    ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
+    ${m.ctx?`<span class="ctx">${ic('map-pin',12)} ${esc(m.ctx)}</span>`:''}
     ${m.src?`<img src="${m.src}" alt="" style="max-width:220px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
     ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',30)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
     <div>${esc(t(m.body))}</div>
-    <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?'<span>✓✓</span>':''}</div>
+    <div class="row" style="justify-content:space-between;font-size:10px;opacity:.65;margin-top:3px"><span>${t(m.time)}</span>${me?`<span>${ic('check',11)}${ic('check',11)}</span>`:''}</div>
     ${!me&&m.type!=='checkin'&&!m.noted?`<div style="margin-top:5px"><button class="lnk" style="font-size:11px" data-act="msg-note" data-id="${m.id}">${ic('note',11)} ${t('Save as note')}</button></div>`:''}
     ${m.noted?`<div style="margin-top:5px"><span class="bdg bdg-lime" style="font-size:10px">📝 ${t('Saved as note')}</span></div>`:''}
   </div>`;
@@ -4565,9 +5160,9 @@ function nHealth(){
       </div>
     </div>
     <div class="row" style="gap:10px;flex-wrap:wrap;margin:4px 0 10px">
-      <span class="bdg bdg-green">🟢 ${t('On Track')} — ${nf(okN)}</span>
-      <span class="bdg bdg-amber">🟡 ${t('Needs Attention')} — ${nf(warnN)}</span>
-      <span class="bdg bdg-red">🔴 ${t('Action Required')} — ${nf(alertN)}</span>
+      <span class="bdg bdg-green">${t('On Track')} — ${nf(okN)}</span>
+      <span class="bdg bdg-amber">${t('Needs Attention')} — ${nf(warnN)}</span>
+      <span class="bdg bdg-red">${t('Action Required')} — ${nf(alertN)}</span>
     </div>
     ${attention.length?attention.map(r=>`
     <div class="row" style="justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line2)">
@@ -4763,7 +5358,7 @@ function nMealCard(p,day,m,mi){
   const MC={Breakfast:['var(--amber-soft)','var(--amber)'],Lunch:['var(--green-soft)','var(--green)'],Dinner:['var(--blue-soft)','var(--blue)'],Snack:['var(--purple-soft)','var(--purple)']}[m.name]||['var(--accent-soft)','var(--accent-deep)'];
   return `<div class="card" style="padding:14px 16px;border-top:3px solid ${MC[1]}">
     <div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap">
-      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">✎ ${esc(t(m.note))}</span>`:''}</div>
+      <div class="row"><span class="mtime" style="background:${MC[0]};color:${MC[1]}">${t(m.time)}</span><b style="font-size:14px">${t(m.name)}</b>${m.note?`<span class="chip" style="background:var(--accent-soft);color:var(--accent-ink)">${esc(t(m.note))}</span>`:''}</div>
       <div class="row" style="gap:2px">
         <button class="btn btn-ghost btn-icon" data-act="mealup" data-mi="${mi}">${ic('chevL',14)}</button>
         <button class="btn btn-ghost btn-icon" data-act="mealdn" data-mi="${mi}">${ic('chevR',14)}</button>
@@ -4808,7 +5403,7 @@ function nWeekly(){
     <button class="btn btn-outline btn-sm" data-act="wcopy">${ic('copy',14)} ${t('Copy Day')}</button>
     <button class="btn btn-outline btn-sm" data-act="wpaste" ${S.nclip?'':'disabled style="opacity:.5"'}>${ic('upload',14)} ${t('Paste Day')}</button>
     <button class="btn btn-outline btn-sm" data-act="wapply">${ic('stack',14)} ${t('Apply to Week')}</button>
-    <span class="muted" style="font-size:12px">💡 ${t('💡 Drag events between days to reschedule').replace('events','meals').replace('جلسات','وعده‌ها')}</span>
+    <span class="muted" style="font-size:12px">${t('Drag events between days to reschedule').replace('events','meals').replace('جلسات','وعده‌ها')}</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;overflow-x:auto;padding-bottom:8px">
     ${DAYS.map((d,di)=>{const day=p.days[di];const s=daySum(day.meals);
@@ -4945,7 +5540,7 @@ function wNutrition(){
     </div>
   </div>
   <div class="grid2b" style="margin-bottom:14px">
-    <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's Meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
+    <div class="card"><div class="card-h"><span class="card-t">${ic('utensils',14)} ${t("Today's meals")}</span><span class="bdg bdg-lime">${nf(s.kcal)} kcal</span></div>
       ${day.meals.map(m=>`<div class="tl-row"><span class="mtime">${t(m.time)}</span><div style="flex:1"><b style="font-size:13px">${t(m.name)}</b><div class="muted" style="font-size:11.5px">${m.foods.map(x=>FOODS[x.fi]?foodName(FOODS[x.fi].n)+' '+nf(x.g)+'g':'').filter(Boolean).join(' · ')||'—'}</div></div><span class="chip">${nf(Math.round(mealKcal(m)))} kcal</span></div>`).join('')}
     </div>
     <div class="stack">
@@ -5403,140 +5998,54 @@ function rptAutoRun(){
     const rows=CLIENTS.filter(c=>c.status!=='Archived').map(c=>({c,...RPT.score(c)}));
     const weak=rows.filter(r=>r.score<60);
     if(weak.length){
-      NOTIFS.unshift({t:`📊 ${t('Smart report')}: ${nf(weak.length)} ${t('clients need attention')}`,d:'Just now',un:true});
+      NOTIFS.unshift({t:`${t('Smart report')}: ${nf(weak.length)} ${t('clients need attention')}`,d:'Just now',un:true});
       weak.slice(0,3).forEach(r=>NOTIFS.unshift({t:`⚠️ ${t(r.c.name)} — ${t('score')} ${nf(r.score)}`,d:'Just now',un:true}));
       ACTIVITY.unshift({w:'Just now',i:'chart',h:lang==='fa'?`<b>گزارش هوشمند</b> برای ${nf(rows.length)} شاگرد ساخته شد — ${nf(weak.length)} نیاز به توجه دارند`:`<b>Smart report</b> generated for ${nf(rows.length)} clients — ${nf(weak.length)} need attention`});
       saveData();
     }
   }catch(e){}
 }
-/* ================= v18.38 — GAMIFICATION (day streak · points · badges) =================
-   c.streak (weeks) was demo-only and never updated by real activity. The real
-   engine lives on the client record: dayStreak (consecutive DAYS with a
-   completed workout), lastDone (local YYYY-MM-DD of the last completion),
-   pts (points) and badges [{id,at}]. All four ride the workspace payload —
-   cloudMerge merges them like the other client fields. */
-const GAM={
-  PTS:{workout:10,checkin:3,form:5,badge:20,habit:2},
-  BADGES:[
-    {id:'first',e:'🎯',n:'First Workout',t:c=>((DB[c.id]||{}).stats||{}).done>=1},
-    {id:'w10',e:'💪',n:'10 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=10},
-    {id:'w25',e:'🏋️',n:'25 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=25},
-    {id:'w50',e:'🏆',n:'50 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=50},
-    {id:'w100',e:'👑',n:'100 Workouts',t:c=>((DB[c.id]||{}).stats||{}).done>=100},
-    {id:'s3',e:'🔥',n:'3-Day Streak',t:c=>(c.dayStreak||0)>=3},
-    {id:'s7',e:'🔥',n:'7-Day Streak',t:c=>(c.dayStreak||0)>=7},
-    {id:'s14',e:'⚡',n:'14-Day Streak',t:c=>(c.dayStreak||0)>=14},
-    {id:'s30',e:'🌟',n:'30-Day Streak',t:c=>(c.dayStreak||0)>=30},
-    {id:'s100',e:'💎',n:'100-Day Streak',t:c=>(c.dayStreak||0)>=100},
-    {id:'chk10',e:'📋',n:'10 Check-ins',t:c=>MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length>=10},
-    {id:'form85',e:'🎯',n:'Form Master',t:c=>{const f=FORMS.filter(x=>x.client===c.name);return f.length>0&&f.reduce((a,x)=>a+(x.score||0),0)/f.length>=85}},
-    {id:'meas5',e:'📏',n:'5 Measurements',t:c=>((DB[c.id]||{}).measures||[]).length>=5},
-    {id:'nut',e:'🥗',n:'Fuel Plan',t:c=>!!nPlanOf(c.name)}
-  ],
-  earned:c=>GAM.BADGES.filter(b=>(c.badges||[]).some(x=>x&&x.id===b.id)),
-  /* First un-earned badge + progress toward it (drives the Today card bar). */
-  next(c){
-    const done=((DB[c.id]||{}).stats||{}).done||0;
-    const chk=MSGS.filter(m=>m.client===c.name&&m.type==='checkin').length;
-    const meas=((DB[c.id]||{}).measures||[]).length;
-    const fs=FORMS.filter(x=>x.client===c.name);
-    const fmAvg=fs.length?Math.round(fs.reduce((a,x)=>a+(x.score||0),0)/fs.length):0;
-    const prog={first:[done,1],w10:[done,10],w25:[done,25],w50:[done,50],w100:[done,100],
-      s3:[c.dayStreak||0,3],s7:[c.dayStreak||0,7],s14:[c.dayStreak||0,14],s30:[c.dayStreak||0,30],s100:[c.dayStreak||0,100],
-      chk10:[chk,10],meas5:[meas,5],form85:[fmAvg,85],nut:[nPlanOf(c.name)?1:0,1]};
-    const b=GAM.BADGES.find(x=>!(c.badges||[]).some(y=>y&&y.id===x.id));
-    if(!b)return null;
-    const [v,mx]=prog[b.id]||[0,1];
-    return {b,pct:Math.min(100,Math.round(v/mx*100))};
-  }
-};
+/* ============ v18.114 — the POINTS / BADGE engine is GONE ============
+   v18.38 built `GAM` (PTS + 14 emoji badges + gamAward + gamRevoke) around
+   c.pts / c.badges. v18.113 removed every VISIBLE surface of it, so v18.114
+   removes the engine as well:
+     · gamAward no longer accrues points or evaluates badges — it is now purely
+       the action → CHALLENGE trigger (chalEvalClient), which is the only part       the rest of the app ever depended on.
+     · gamRevoke, GAM.earned, GAM.next, BADGE_ICONS are dead and deleted.
+   c.pts / c.badges / c.ptsDay still RIDE THE PAYLOAD untouched: cloudMerge
+   reads them (line ~3910), so stripping them would be a SYNC change, not a       cleanup. They simply stop changing. */
 /* Local YYYY-MM-DD — streaks are day-granular in the device's timezone. */
 const ymdOf=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-/* Award points for an action, evaluate every badge test AND every active
-   challenge. Returns {nb, doneCh}; the celebration modal + coach notification
-   are centralized here so callers stay one-liners. */
-function gamAward(c,kind){
+/* v18.114 — the action → CHALLENGE trigger. Points accrual and badge
+   evaluation were removed with the gamification engine; this function survives   because it is the ONLY main-path caller of chalEvalClient() — habit   threshold, habit tick, check-in ×2, form check and workout complete all   funnel through it. `kind` stays in the signature so those seven call sites   do not have to change. */
+function gamAward(c){
   if(!c)return {nb:[],doneCh:[]};
-  const _pre=c.pts||0;
-  c.pts=(c.pts||0)+(GAM.PTS[kind]||0);
-  const nb=[];
-  GAM.BADGES.forEach(b=>{
-    if((c.badges||[]).some(x=>x&&x.id===b.id))return;
-    let ok=false;try{ok=b.t(c)}catch(e){}
-    if(ok)nb.push(b);
-  });
-  if(nb.length){
-    c.badges=(c.badges||[]).concat(nb.map(b=>({id:b.id,at:Date.now()})));
-    c.pts+=nb.length*GAM.PTS.badge;
-  }
   const doneCh=chalEvalClient(c);
-  /* ptsToday for the momentum hero — reset whenever the local date rolls over */
-  const _iso=isoToday(); if(c.ptsDate!==_iso){c.ptsDate=_iso;c.ptsDay=0;} c.ptsDay=(c.ptsDay||0)+((c.pts||0)-_pre);
-  const celeb=[...nb,...doneCh.map(ch=>({e:(ch.reward&&ch.reward.be)||ch.emoji||'🏆',n:(ch.reward&&ch.reward.bn)||ch.name}))];
-  if(celeb.length){
-    NOTIFS.unshift({t:`🏅 ${t(c.name)} — ${celeb.map(b=>b.e+' '+t(b.n)).join(' · ')}`,d:'Just now',un:true});
-    if(S.role==='client')badgeModal(celeb,GAM.PTS.badge*nb.length+doneCh.reduce((a,ch)=>a+((ch.reward&&ch.reward.pts)||50),0));
+  /* v18.113 — only a COMPLETED CHALLENGE announces itself: no emoji, no points. */
+  if(doneCh.length){
+    NOTIFS.unshift({t:`${t(c.name)} — ${doneCh.map(ch=>t(ch.name)).join(' · ')}`,d:'Just now',un:true});
+    if(S.role==='client')badgeModal(doneCh.map(ch=>({n:(ch.reward&&ch.reward.bn)||ch.name})));
   }
-  return {nb,doneCh};
+  return {nb:[],doneCh};
 }
-/* v18.84 — symmetric UNDO for gamAward. The three revoke paths (count habit drops
-   below target, habit untick, coach habit untick) only decremented `pts`, so the
-   momentum hero's "+pts today" on Today stayed INFLATED while the total fell —
-   the two counters drifted apart. Same shape as gamAward's tail. */
-function gamRevoke(c,kind){
-  if(!c)return;
-  const d=GAM.PTS[kind]||0;
-  if(!d)return;
-  const before=c.pts||0;
-  c.pts=Math.max(0,before-d);
-  /* Only touch ptsDay when it still represents TODAY — otherwise the hero
-     already resets it on a date mismatch and a stale value is irrelevant. */
-  if(c.ptsDate===isoToday())c.ptsDay=Math.max(0,(c.ptsDay||0)+(c.pts-before));
-}
-/* Badge celebration — shown on the client device right after a workout. */
-function badgeModal(list,pts){
+/* v18.114 — gamRevoke deleted with the points engine. Its three call sites   (habit count drops below target, habit untick, coach habit untick) now simply   do nothing on the way down, which matches gamAward no longer doing anything   on the way up. */
+/* v18.113 — CHALLENGE completion only. Was the badge celebration: emoji at 52px,
+   "Badge unlocked!" and "⭐ +40 Points" / "Awesome! 🔥". Now a neutral training
+   confirmation — lucide trophy, no emoji, no points. Points/badges keep accruing
+   in the engine, invisibly. */
+function badgeModal(list){
   openModal(`
   <div class="modal-b" style="text-align:center;padding:30px 22px 22px">
-    <div style="font-size:52px;line-height:1">${list.map(b=>b.e).join(' ')}</div>
-    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Badge unlocked!')}</b>
+    <div style="color:var(--accent)">${ic('trophy',44)}</div>
+    <b style="font-size:19px;display:block;margin-top:12px;letter-spacing:-.02em">${t('Challenge complete')}</b>
     <div class="muted" style="font-size:13px;margin-top:6px">${list.map(b=>esc(t(b.n))).join(' · ')}</div>
-    <div style="margin-top:12px"><span class="bdg bdg-lime" style="font-size:12px;padding:5px 14px">⭐ +${nf(pts)} ${t('Points')}</span></div>
   </div>
-  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Awesome!')} 🔥</button></div>`);
+  <div class="modal-f"><button class="btn btn-primary" style="width:100%;justify-content:center" data-act="modal-x">${t('Done')}</button></div>`);
 }
-/* Full achievements grid — earned badges colored + dated, locked ones dimmed. */
-function gamModal(){
-  const c=client(S.cid);
-  const has=id=>(c.badges||[]).some(x=>x&&x.id===id);
-  const at=id=>{const x=(c.badges||[]).find(y=>y&&y.id===id);return x&&x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—'};
-  openModal(`
-  <div class="modal-h"><h3>${ic('crown',16)} ${t('Achievements')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
-  <div class="modal-b">
-    <div class="row" style="gap:16px;margin-bottom:14px">
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Points')}</span><b style="font-size:22px">⭐ ${nf(c.pts||0)}</b></div>
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('day streak')}</span><b style="font-size:22px">🔥 ${nf(c.dayStreak||0)}</b></div>
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Badges')}</span><b style="font-size:22px">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</b></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px">
-      ${GAM.BADGES.map(b=>{const on=has(b.id);return `
-      <div class="ccard" style="padding:12px 8px;text-align:center;${on?'':'opacity:.45;filter:grayscale(1)'}">
-        <div style="font-size:26px">${b.e}</div>
-        <b style="font-size:10.5px;display:block;margin-top:5px">${t(b.n)}</b>
-        <div class="muted" style="font-size:9.5px;margin-top:2px">${on?esc(at(b.id)):'🔒'}</div>
-      </div>`}).join('')}
-      ${(c.badges||[]).filter(x=>x&&String(x.id).startsWith('chal-')).map(x=>{const ch=CHALLENGES.find(y=>String(y.id)===String(String(x.id).slice(5)));
-        if(!ch)return '';
-        return `<div class="ccard" style="padding:12px 8px;text-align:center;border-color:var(--acc-line)">
-        <div style="font-size:26px">${(ch.reward||{}).be||ch.emoji||'🏆'}</div>
-        <b style="font-size:10.5px;display:block;margin-top:5px">${esc(t((ch.reward||{}).bn||ch.name))}</b>
-        <div class="muted" style="font-size:9.5px;margin-top:2px">${esc(x.at?new Date(x.at).toLocaleDateString(lang==='fa'?'fa-IR':'en-US'):'—')}</div>
-      </div>`}).join('')}
-    </div>
-    <div class="muted" style="font-size:11.5px;margin-top:12px">${t('Earn points: workout +10 · check-in +3 · form check +5 · each badge +20')}</div>
-  </div>
-  <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Close')}</button></div>`);
-}
+/* v18.113 — gamModal() (the Achievements grid: ⭐ Points, 🔥 streak, 14 emoji
+   badges, "Earn points: workout +10…") is gone together with its only trigger,
+   the Progress Achievements section. Challenges still report their own status in
+   the Challenges list; badges/points keep accruing in the engine, invisibly. */
 /* ================= v18.39 — CHALLENGE BUILDER + JOURNEY PATHS =================
    The coach designs challenges (Target / Streak / Habit) with a GRAPHICAL
    journey path: a serpentine trail of stages the client walks node by node.
@@ -5545,7 +6054,7 @@ function gamModal(){
    hitting 100% auto-awards the reward badge + points through the gamification
    engine. Everything rides the workspace payload. */
 const CHAL={
-  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',points:'Points',custom:'Manual log'},
+  METRICS:{workouts:'Workouts',checkins:'Check-ins',forms:'Form checks',custom:'Manual log'},
   EMOJIS:['🏆','🔥','💪','⚡','🌟','🥇','🎯','🚀','🏃','🥗','💎','👑'],
   parts(ch){const ps=ch.parts||['*'];return CLIENTS.filter(c=>c.status!=='Archived'&&(ps.includes('*')||ps.includes(c.name)))},
   val(ch,c){
@@ -5664,7 +6173,7 @@ function chalDetail(id){
       <span class="chip">${ic('target',11)} ${t('Target')}: ${nf(ch.target)} ${esc(ch.unit||'')}</span>
       <span class="chip">${ic('calendar',11)} ${t('Start Date')}: ${fmtD(ch.start)}</span>
       ${ch.status==='ended'?`<span class="bdg bdg-gray" style="font-size:10px">${t('Ended')}</span>`:`<span class="chip">${ic('clock',11)} ${t('Days left')}: ${nf(CHAL.left(ch))}</span>`}
-      <span class="chip">${ic('gift',12)} ${t('Reward')}: ${nf((ch.reward||{}).pts||50)} ${t('Points')}</span>
+      <span class="chip">${ic('gift',12)} ${t('Reward')}</span>
     </div>
     <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-bottom:14px">
       ${chalPath(ch.stages,rows.length?CHAL.node(ch,rows[0].pct):0,{w:520})}
@@ -5731,7 +6240,7 @@ function renderChalEditor(){
     <div class="field"><label class="lbl">${t('Participants')}</label>
       <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*',ic('users',12)+' '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
     <div class="fgrid">
-      <div class="field"><label class="lbl">${t('Reward')} (${t('Points')})</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
+      <div class="field"><label class="lbl">${t('Reward')}</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
       <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
       <div class="field"><label class="lbl">${t('Badge name')}</label><input class="inp" id="ce-bn" value="${esc((d.reward||{}).bn||'')}" placeholder="${t('Challenge Champion')}"></div>
     </div>
@@ -6675,32 +7184,334 @@ function loadTpl(tp){
 }
 
 /* ================= COACH MOBILE ================= */
+/* ════════════════════════════════ MOBILE FLOOR · v19.19 ════════════════
+   A coach on the gym floor answers three things at a glance: who is next,   what do I do, and where do I log it. Every widget below reads data the   workspace ALREADY has — nothing here invents a number, and nothing is   shown that could not be derived from a row that exists.                       ═════════════════════════════════════════════════════════════════════ */
+const mInit=n=>String(n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+const mFirst=n=>{const s=String(n||'').trim();return s?s.split(/\s+/)[0]:s};
+const mClock=s=>{s=Math.max(0,Math.round(+s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+/* RPE drift — mean of the last three logged sessions vs the three before.
+   Below six sessions there is nothing to compare, so it returns null and the
+   row is simply not rendered. Never a guess. */
+function rpeDrift(cid){
+  const rows=TLOG.filter(x=>+x.cid===+cid)
+    .sort((a,b)=>((b.w||0)-(a.w||0))||((a.date||'')<(b.date||'')?1:-1));
+  if(rows.length<6)return null;
+  const now=rows.slice(0,3).reduce((s,x)=>s+(+x.rpe||0),0)/3;
+  const bef=rows.slice(3,6).reduce((s,x)=>s+(+x.rpe||0),0)/3;
+  return {d:Math.round((now-bef)*10)/10,now:Math.round(now*10)/10,bef:Math.round(bef*10)/10};
+}
+/* ── athletics quick rail — the SAME SPORT_EXT rows the desktop claims ── */
+function mRail(){
+  if(!isAthletics())return '';
+  const items=[];sportSections().forEach(g=>g.items.forEach(it=>items.push(it)));
+  if(!items.length)return '';
+  return `<div class="mrail">${items.map(([k,l,i])=>
+    `<button class="fchip" data-act="mnav" data-v="${k}">${ic(i,14)}${t(l)}</button>`).join('')}</div>`;
+}
+/* ── NOW hero ──────────────────────────────────────────────────────────
+   The bar is the point: "38 min left" is a claim, the bar is the evidence. */
+function mNow(){
+  const r=liveRec();
+  if(r){
+    return `<div class="ccard mfloor-now" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)">
+      <div class="row" style="justify-content:space-between">
+        <span class="eyebrow" style="color:var(--accent-deep)">${ic('zap',12)} ${t('Live now')}</span>
+        <span class="bdg bdg-lime" style="font-size:10px">${nf(liveElapsed(r))} ${t('min')}</span></div>
+      <b style="display:block;margin-top:8px;font-size:15px">${esc(t(r.name))}</b>
+      <div class="muted" style="font-size:12px">${esc(t(r.label||t('Session')))} · ${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}${r.rpe!=null?` · RPE ${nf(r.rpe)}`:''}</div>
+      <div class="row" style="gap:8px;margin-top:12px">
+        <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-open">${ic('play',14)} ${t('Open session')}</button>
+        <button class="btn btn-outline btn-sm" data-act="live-end">${ic('check',14)} ${t('Finish')}</button></div>
+    </div>`;
+  }
+  const todays=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
+  const running=todays.find(e=>e.start<=NOW&&e.start+e.dur>NOW&&!e.att)||null;
+  const ev=running||todays.find(e=>e.start>NOW&&!e.att)||null;
+  const doneN=todays.filter(e=>e.start+e.dur<=NOW||e.att).length;
+  const pctv=todays.length?Math.round(doneN/todays.length*100):0;
+  const cc=ev?CLIENTS.find(c=>c.name===ev.client):null;
+  return `<div class="ccard mfloor-now">
+    <div class="row" style="justify-content:space-between">
+      <span class="eyebrow">${running?t('Now'):t('Next up')}</span>
+      ${ev?`<span class="bdg ${running?'bdg-lime':'bdg-amber'}" style="font-size:10px">${nf(fmtT(ev.start))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</span>`
+            :`<span class="bdg bdg-gray" style="font-size:10px">${t('Free')}</span>`}</div>
+    <div class="mprog" role="img" aria-label="${nf(doneN)}/${nf(todays.length)} ${t('sessions done')}"><i style="width:${pctv}%"></i></div>
+    ${ev?`<div class="row" style="gap:11px;margin-top:11px">
+      ${cc?avC(cc.name,42):av(t('Coach'),42,3)}
+      <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(t(ev.client))}</b>
+      <div class="muted" style="font-size:12px">${esc(t(ev.label))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</div></div></div>
+      <div class="row" style="gap:8px;margin-top:12px">
+        <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-start"${cc?` data-cid="${cc.id}"`:''} data-eid="${ev.id}">${ic('play',14)} ${t('Start session')}</button>
+        ${cc?`<button class="btn btn-outline btn-sm" data-act="mclient" data-cid="${cc.id}">${t('Open')}</button>`:''}</div>`
+    /* the bar is derived from todays.length, so saying "no events" under a   1/1 bar was a direct contradiction — split the two cases. */
+    :`<div class="muted" style="font-size:12px;padding:10px 0">${todays.length?t('All sessions done for today'):t('No events this day')}</div>`}
+  </div>`;
+}
+/* ── signals ─────────────────────────────────────────────────────────
+   The app's OWN attention list, one row each — plus an athletics-only RPE   drift computed from TLOG. The icon colour carries the severity; the text   carries the meaning. */
+function mSignals(){
+  const out=[];
+  if(isAthletics())CLIENTS.filter(c=>c.status==='Active').forEach(c=>{
+    const d=rpeDrift(c.id);
+    if(d&&d.d>=1.5)out.push({cls:'warn',icon:'chart',
+      t:`RPE ${d.d>0?'+':''}${nf(d.d)}`,s:`${t(c.name)} · ${nf(d.bef)} → ${nf(d.now)}`,
+      act:'open-client',data:`data-cid="${c.id}"`});
+  });
+  attentionList().forEach(it=>{
+    if(out.length>=6)return;
+    out.push({cls:it.bt==='bdg-red'?'bad':(it.bt==='bdg-amber'?'warn':''),
+      icon:it.icon,t:t(it.why),s:`${t(it.name)}${it.d?' · '+t(it.d):''}`,
+      act:it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client',
+      data:it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code||'')}"`:`data-cid="${it.cid}"`});
+  });
+  if(!out.length)return '';
+  return `<div class="ccard" style="padding:6px 14px">
+    <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Signals')} · ${nf(out.length)}</div>
+    ${out.map(s=>`<div class="msig ${s.cls}" data-act="${s.act}" ${s.data}>
+      <span class="msig-i">${ic(s.icon,15)}</span>
+      <div style="min-width:0"><div class="msig-t">${esc(s.t)}</div><div class="msig-s">${esc(s.s)}</div></div>
+      ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
+  </div>`;
+}
+/* ── squad pulse ──────────────────────────────────────────────────────
+   The ring is arced to that athlete's attendance rate — the SAME attCnt()
+   the desktop uses. r=20 → circumference 125.66, rotated −90° so it starts
+   at twelve o'clock. The colour is the status, not decoration. */
+function mSquad(){
+  const list=CLIENTS.filter(c=>c.status!=='Archived');
+  if(!list.length)return '';
+  const C=2*Math.PI*20;
+  return `<div class="ccard" style="padding:6px 14px">
+    <div class="card-t" style="padding:10px 0 4px">${ic('users',14)} ${t('Squad')} · ${nf(list.length)}</div>
+    <div class="mpulse">${list.map(c=>{
+      const ac=attCnt(c.name);
+      const tot=(+ac.d||0)+(+ac.m||0);
+      /* no recorded attendance is NOT 100%: defaulting to a full ring made   every untouched athlete look perfectly on track. Zero evidence → empty   arc + the neutral state colour. */
+      const rate=tot?Math.round((+ac.d||0)/tot*100):0;
+      const st=c.status==='On Hold'||c.status==='Paused'?'watch'
+        :(c.status==='Inactive'||(tot&&rate<60))?'risk':(tot?'ok':'idle');
+      const off=(C*(1-Math.max(0,Math.min(100,rate))/100)).toFixed(2);
+      /* "0 of 0 sessions" reads like a score. No recorded attendance is a   different statement and must say so. */
+      const cnt=tot?`${nf(ac.d)}/${nf(tot)} ${t('sessions')}`:t('No attendance recorded');
+      return `<button class="mp ${st}" data-act="mclient" data-cid="${c.id}"
+        title="${esc(t(c.name))} — ${esc(cnt)}"
+        aria-label="${esc(t(c.name))}, ${esc(cnt)}">
+        <span class="r"><svg viewBox="0 0 46 46" aria-hidden="true">
+          <circle class="tr" cx="23" cy="23" r="20"/><circle class="pg" cx="23" cy="23" r="20"
+          stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${off}"/></svg>
+          <b>${esc(mInit(c.name))}</b></span>
+        <span class="nm">${esc(mFirst(t(c.name)))}</span></button>`;
+    }).join('')}</div></div>`;
+}
+/* ── LIVE SESSION screen ────────────────────────────────────────────── */
+function mLive(){
+  const r=liveRec();
+  const back=`<div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Live session')}</b>${r?`<span class="sp"></span><span class="bdg bdg-lime" style="font-size:10px">${t('Recording')}</span>`:''}</div>`;
+  if(!r)return `<div class="mstack">${back}
+    <div class="ccard cempty">${ic('clock',24)}<b>${t('No session running')}</b>
+    <span class="muted" style="font-size:12px">${t('Start one from Today, or from an athlete')}</span></div></div>`;
+  const c=CLIENTS.find(x=>x.id===r.cid);
+  const rest=liveRestLeft(r);
+  const R=82,C=2*Math.PI*R;
+  const dash=rest>0?(C*Math.max(0,Math.min(1,rest/(+r.restSec||90)))).toFixed(1):'0';
+  return `<div class="mstack">${back}
+    ${c?`<div class="ccard row" style="gap:11px" data-act="mclient" data-cid="${c.id}">
+      ${avC(c.name,42)}<div style="flex:1;min-width:0"><b style="font-size:14px">${esc(t(c.name))}</b>
+      <div class="muted" style="font-size:11.5px">${esc(t(r.label||t('Session')))}</div></div>
+      ${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`:''}
+    <div class="ccard">
+      <div class="mlive-ring">
+        <svg viewBox="0 0 184 184" aria-hidden="true">
+          <circle class="tr" cx="92" cy="92" r="${R}" fill="none"/>
+          <circle class="pg" id="restRing" cx="92" cy="92" r="${R}" fill="none" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${dash}"/></svg>
+        <div class="fc">
+          <span class="lb" id="restLbl">${rest>0?t('Rest'):t('Elapsed')}</span>
+          <span class="tm" id="liveClock">${rest>0?mClock(rest):mClock(liveSec(r))}</span>
+          <span class="sb2">${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}</span></div>
+      </div>
+      <div class="mstep">
+        <button class="sb3" data-act="live-set" data-d="-1" aria-label="${t('Fewer sets')}">${ic('chevD',22)}</button>
+        <div class="mid">
+          <div class="cnt">${nf(r.set||0)}<small>/${nf(r.sets||0)}</small></div>
+          <div class="lb">${esc(t(r.label||t('Session')))}</div></div>
+        <button class="sb3 go" data-act="live-set" data-d="1" aria-label="${t('Set done')}">${ic('plus',22)}</button>
+        <div class="segs" aria-hidden="true">${Array.from({length:Math.max(1,+r.sets||4)},(_,i)=>
+          `<i class="${i<(+r.set||0)?'done':(i===(+r.set||0)?'now':'')}"></i>`).join('')}</div>
+      </div>
+    </div>
+    <div class="ccard">
+      <div class="card-t" style="margin-bottom:8px">${t('Session RPE')}</div>
+      <div class="mrpe">${[1,2,3,4,5,6,7,8,9,10].map(v=>
+        `<button class="r2 ${v>=8&&v<10?'hard':''} ${v===10?'max':''} ${+r.rpe===v?'on':''}" data-act="live-rpe" data-v="${v}">${nf(v)}</button>`).join('')}</div>
+      ${r.rpe!=null?`<div class="muted" style="font-size:11px;margin-top:8px">${t('Tap again to clear')}</div>`:''}
+    </div>
+    <div class="mtool">
+      <button data-act="live-note">${ic('note',20)}${t('Note')}</button>
+      <button data-act="live-photo">${ic('camera',20)}${t('Photo')}</button>
+      <button data-act="live-rest">${ic('stopwatch',20)}${t('Rest')}</button>
+      <button data-act="live-pause">${ic(r.paused?'play':'pause',20)}${r.paused?t('Resume'):t('Pause')}</button>
+    </div>
+    ${r.notes&&r.notes.length?`<div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Notes')} · ${nf(r.notes.length)}</div>
+      ${r.notes.slice(-3).reverse().map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)">
+      <div style="font-size:12.5px">${esc(n.body)}</div>
+      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${nf(new Date(n.at).getHours())}:${String(new Date(n.at).getMinutes()).padStart(2,'0')}</div></div>`).join('')}</div>`:''}
+    <button class="btn btn-dark" style="width:100%;justify-content:center;color:var(--red)" data-act="live-end">${ic('check',15)} ${t('Finish & log')}</button>
+  </div>`;
+}
+/* keeps the ring and the clock alive without a full re-render per second */
+let __liveTick=0;
+function liveTick(){
+  clearInterval(__liveTick);
+  __liveTick=setInterval(()=>{
+    const r=liveRec();const clk=document.getElementById('liveClock');
+    if(!r||!clk||S.role!=='coach'||S.mview!=='live'){clearInterval(__liveTick);return}
+    const rest=liveRestLeft(r),ring=document.getElementById('restRing'),lbl=document.getElementById('restLbl');
+    const R=82,C=2*Math.PI*R;
+    clk.textContent=rest>0?mClock(rest):mClock(liveSec(r));
+    if(lbl)lbl.textContent=rest>0?t('Rest'):t('Elapsed');
+    if(ring)ring.setAttribute('stroke-dashoffset',rest>0?(C*Math.max(0,Math.min(1,rest/(+r.restSec||90)))).toFixed(1):'0');
+  },1000);
+}
+/* ── JUMP: the command palette ──────────────────────────────────────── */
+function mJumpDest(){
+  const D=[['Today','zap','mtab','today'],['Clients','users','mtab','clients'],
+    ['Messages','mail','mtab','messages'],['More','more','mtab','more'],
+    ['Add Client','users','add-client',''],['Calendar','calendar','mcal',''],
+    ['Templates','stack','mtemplates',''],['Create Workout','dumbbell','mworkout',''],
+    ['Nutrition','utensils','mnut',''],['Challenges','trophy','mchal',''],
+    ['Settings','gear','msettings','']];
+  sportSections().forEach(g=>g.items.forEach(([k,l,i])=>D.push([l,i,'mnav',k])));
+  return D;
+}
+function mJump(){
+  const dest=mJumpDest();
+  const att=CLIENTS.filter(c=>c.status!=='Archived').slice(0,6);
+  return `<div class="mjump" role="dialog" aria-label="${t('Jump to…')}">
+    <div class="mjump-in">
+      <button class="btn btn-ghost btn-icon" data-act="mjump-close" aria-label="${t('Close')}">${ic('x',18)}</button>
+      <input class="inp" id="mjump-q" placeholder="${t('Jump to an athlete, screen or action…')}"
+        style="border:none;box-shadow:none;flex:1" oninput="mJumpFilter(this.value)">
+    </div>
+    <div class="mjump-b">
+      <div><div class="mjump-sec">${t('Actions')}</div>
+        <div class="mjump-grid" id="mjump-acts">${dest.slice(4).map(([l,i,a,v])=>
+          `<button class="mjump-it" data-act="${a}"${v?` data-v="${v}"`:''} data-mjump>${ic(i,16)}<span>${t(l)}</span></button>`).join('')}</div></div>
+      <div><div class="mjump-sec">${t('Athletes')} · ${nf(CLIENTS.length)}</div>
+        <div class="mjump-grid" id="mjump-ath">${att.map(c=>
+          `<button class="mjump-it" data-act="mclient" data-cid="${c.id}" data-mjump>${ic('user-round',16)}<span>${esc(t(c.name))}</span></button>`).join('')||
+          `<div class="muted" style="font-size:12px">${t('No results found.')}</div>`}</div></div>
+      <div><div class="mjump-sec">${t('Screens')} · ${nf(dest.length)}</div>
+        <div class="mjump-grid" id="mjump-scr">${dest.map(([l,i,a,v])=>
+          `<button class="mjump-it" data-act="${a}"${v?` data-v="${v}"`:''} data-mjump>${ic(i,16)}<span>${t(l)}</span></button>`).join('')}</div></div>
+    </div></div>`;
+}
+window.mJumpFilter=q=>{
+  q=String(q||'').toLowerCase();
+  document.querySelectorAll('.mjump-it').forEach(b=>{
+    b.style.display=(!q||b.textContent.toLowerCase().includes(q))?'':'none';
+  });
+};
+/* ── LOG SHEET ──────────────────────────────────────────────────────── */
+function mLogSheet(){
+  const live=liveRec();
+  const opts=CLIENTS.filter(c=>c.status!=='Archived');
+  const sel=S.mlogCid||(live&&live.cid)||(opts[0]&&opts[0].id);
+  return `<div class="msheet-scrim" data-act="msheet-close"></div>
+  <div class="msheet" role="dialog" aria-label="${t('Log session')}">
+    <div class="handle"></div>
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <b style="font-size:14px">${t('Log session')}</b>
+      <button class="btn btn-ghost btn-icon" data-act="msheet-close" aria-label="${t('Close')}">${ic('x',18)}</button></div>
+    <div class="field"><label>${t('Athlete')}</label>
+      <select class="sel" id="msheet-cid" style="width:100%">
+        ${opts.map(c=>`<option value="${c.id}"${+sel===c.id?' selected':''}>${esc(t(c.name))}</option>`).join('')}</select></div>
+    <div class="field"><label>${t('Type')}</label>
+      <div class="mfchips" id="msheet-kind">${TLOG_KINDS.map(([k,l],i)=>
+        `<button class="fchip${i===0?' on':''}" data-act="msheet-kind" data-k="${k}">${t(l)}</button>`).join('')}</div></div>
+    <div class="row" style="gap:10px">
+      <div class="field" style="flex:1"><label>${t('Distance (km)')}</label>
+        <input class="inp" id="msheet-km" inputmode="decimal" placeholder="0" style="width:100%"></div>
+      <div class="field" style="flex:1"><label>${t('Duration (min)')}</label>
+        <input class="inp" id="msheet-min" inputmode="numeric" placeholder="0" style="width:100%"></div></div>
+    <div class="field"><label>${t('RPE')}</label>
+      <div class="mfchips" id="msheet-rpe">${[3,4,5,6,7,8,9,10].map(v=>
+        `<button class="fchip${v===7?' on':''}" data-act="msheet-rpe" data-v="${v}">${nf(v)}</button>`).join('')}</div></div>
+    <div class="row" style="gap:8px;margin-top:14px">
+      <button class="btn btn-primary" style="flex:1;justify-content:center" data-act="msheet-save">${ic('check',15)} ${t('Save')}</button>
+      <button class="btn btn-outline" data-act="msheet-close">${t('Cancel')}</button></div>
+  </div>`;
+}
+/* writes ONE row into the athlete's own log — the same array the client
+   portal reads, so the coach's view and the athlete's view cannot disagree */
+function mLogSave(){
+  const cid=+((document.getElementById('msheet-cid')||{}).value)||0;
+  const c=CLIENTS.find(x=>x.id===cid);
+  if(!c){toast(t('Pick an athlete first'));return}
+  const kind=(document.querySelector('#msheet-kind .fchip.on')||{}).dataset;
+  const rpeEl=document.querySelector('#msheet-rpe .fchip.on');
+  const km=parseFloat((document.getElementById('msheet-km')||{}).value)||0;
+  const min=parseInt((document.getElementById('msheet-min')||{}).value)||0;
+  if(!min&&!km){toast(t('Add a duration or a distance'));return}
+  const d=new Date();
+  const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const name=(TLOG_KINDS.find(k=>k[0]===(kind&&kind.k))||[])[1]||t('Session');
+  if(isAthletics()){
+    TLOG.push({id:'tl'+uid(),cid:c.id,
+      w:Math.max(0,...TLOG.map(x=>+x.w||0)),date:iso,name,kind:(kind&&kind.k)||'easy',
+      km:+km||0,min:+min||0,rpe:+((rpeEl||{}).dataset&&rpeEl.dataset.v)||7});
+  }
+  if(!DB[c.id])DB[c.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[]};
+  if(!Array.isArray(DB[c.id].log))DB[c.id].log=[];
+  DB[c.id].log.unshift({id:'ls'+uid(),n:name,d:iso,at:Date.now(),sets:[],done:0,total:0,
+    vol:0,rpe:+((rpeEl||{}).dataset&&rpeEl.dataset.v)||0});
+  ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>شما</b> جلسهٔ <b>${esc(c.name)}</b> را ثبت کردید`:`<b>You</b> logged a session for <b>${esc(c.name)}</b>`});
+  ACTIVITY.length=Math.min(ACTIVITY.length,60);
+  saveData();S.msheet=false;render();toast(t('Session logged'));
+}
 function renderMobile(){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
   let body='';
+  /* v19.3 — sport sections on mobile. Keyed by the SAME view keys the desktop   rail claims, so a future sport's screens appear here with no new branch. */
+  /* v19.12 — aprof is NOT in SPORT_EXT any more, so sportKey() cannot gate it;
+     the map entry is added only while the sport has athletics sections. The
+     athlete is passed in explicitly (S.mClient) — vAprofile takes a cid. */
+  const mvMap={races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+  if(isAthletics())mvMap.aprof=vAprofile;
+  const sportMv=mvMap[sportKey(S.mview)];
   if(S.mview==='client')body=mClientView();
+  else if(S.mview==='live')body=mLive();
   else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
   else if(S.mview==='settings')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vSettings();
   else if(S.mview==='nutrition')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+nNutrition();
   else if(S.mview==='templates')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vTemplates();
   else if(S.mview==='calendar')body=mCalView();
+  else if(sportMv)body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+sportMv(S.mClient);
   else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
-  return `<div class="mshell">
+  /* v19.19 — OVERLAYS live on .mshell, never inside a screen. A descendant   with an animation-driven transform becomes the containing block for   position:fixed children, which is how a bottom sheet ends up pinned to   the wrong box. The FAB sits IN the thumb bar (the coach's thumb is already   there) instead of floating over content. */
+  if(S.mview==='live')liveTick();
+  return `<div class="mshell"${S.mjump?' data-jump':''}${S.msheet?' data-sheet':''}>
     ${aiFabRound()}
     ${toolboxFab()}
     <div class="mhead">
       <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
       <div class="row" style="gap:4px">
         ${themeBtn('btn-ghost btn-icon')}
+        <button class="btn btn-ghost btn-icon" data-act="mjump" aria-label="${t('Jump to…')}" title="${t('Jump to…')}">${ic('search',19)}</button>
         <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
         <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
     <div class="cnav">
-      ${[['today','Today','zap'],['clients','Clients','users'],['messages','Messages','mail'],['more','More','more']].map(([k,l,i])=>`
-      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='messages'&&unreadN?'<span class="cdot"></span>':''}</button>`).join('')}
+      ${[['today','Today','zap'],['clients','Athletes','users']].map(([k,l,i])=>`
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
+      <button class="cnav-it cnav-gap" tabindex="-1" aria-hidden="true">${ic('plus',20)}<span>${t('Log')}</span></button>
+      ${[['more','More','more']].map(([k,l,i])=>`
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
     </div>
+    <button class="cnav-fab" data-act="msheet" aria-label="${t('Log session')}" title="${t('Log session')}">${ic('plus',24)}</button>
+    ${S.mjump?mJump():''}
+    ${S.msheet?mLogSheet():''}
   </div>`;
 }
 function mCalView(){
@@ -6769,6 +7580,9 @@ function mToday(){
   return `<div class="mstack">
     <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
     <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
+    ${mNow()}
+    ${mRail()}
+    ${mSignals()}
     <div class="ccard" style="padding:6px 14px">
       <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
       ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
@@ -6779,26 +7593,28 @@ function mToday(){
       </div>`}).join('')
       :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
     </div>
-    <div class="ccard" style="padding:6px 14px">
-      <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Clients Needing Attention')} · ${nf(att.length)}</div>
-      ${att.length?att.slice(0,3).map(it=>`<div class="tl-row click" style="padding:11px 2px" data-act="${it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client'}"
-        ${it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code)}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`}>
-        <span class="bdg ${it.bt}" style="flex:none;font-size:10px">${ic(it.icon,11)}</span>
-        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${t(it.name)}</div><div class="muted" style="font-size:11px">${t(it.why)}</div></div>
-        ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')
-      :`<div class="tl-row" style="padding:11px 2px"><span class="bdg bdg-green" style="flex:none;font-size:10px">${ic('check',11)}</span><b style="font-size:13px">${t('All clients on track ✓')}</b></div>`}
-    </div>
+    ${mSquad()}
     <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
     <button class="btn btn-dark" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div>`;
 }
 function mClients(){
   const q=(S.mcq||'').toLowerCase();
-  const list=CLIENTS.filter(c=>!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q));
+  /* v19.19 — status chips, the same four buckets the mockup shows. Each filter
+     is derived from c.status; "Attention" reuses attentionList(), the very list
+     the Signals rows on Today are built from, so the two can never disagree. */
+  const chips=[['All',()=>true],['Active',c=>c.status==='Active'],
+    ['Attention',c=>attentionList().some(a=>a.cid===c.id||a.name===c.name)],
+    ['On Hold',c=>c.status==='On Hold'||c.status==='Paused']];
+  const cf=chips.find(x=>x[0]===S.mcf)||chips[0];
+  const list=CLIENTS.filter(c=>(!q||t(c.name).toLowerCase().includes(q)||String(c.email||'').toLowerCase().includes(q))&&cf[1](c));
+  const strip=`<div class="row" style="gap:6px;overflow-x:auto;padding-bottom:2px;flex:none">${chips.map(([l,f])=>
+    `<button class="fchip ${cf[0]===l?'on':''}" data-act="mc-filter" data-f="${l}" style="flex:none">${t(l)} · ${nf(CLIENTS.filter(f).length)}</button>`).join('')}</div>`;
   /* v18.35 — CoachMint template: roster rows with readiness rings. */
   if(PREFS.uiTpl==='coachmint'){
     return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${strip}
     ${list.map(c=>{const p=Math.round(goalPct(c)||0);const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
     return `<div class="ccard cm-ath" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
       ${avC(c.name,42)}
@@ -6813,6 +7629,7 @@ function mClients(){
   }
   return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
+    ${strip}
     ${list.map(c=>{const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
     return `<div class="ccard" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
       <div class="row" style="gap:10px">${avC(c.name,44)}
@@ -6864,29 +7681,48 @@ function mThread(name){
     </div>
   </div>`;
 }
+/* ── one collapsible block. Open state lives in S.macc so a re-render keeps   what the coach opened; no height animation — content is simply present. ── */
+const mAcc=(k,label,badge,inner)=>{
+  const open=!!(S.macc||{})[k];
+  return `<div class="ccard" style="padding:0">
+    <button class="mrow" style="width:100%;margin:0" data-act="macc" data-k="${k}">
+      <span style="flex:1">${t(label)}</span>
+      ${badge?`<span class="muted" style="font-size:11.5px;font-weight:500">${badge}</span>`:''}
+      ${ic(open?'chevD':'chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+    ${open?`<div style="padding:2px 12px 12px">${inner}</div>`:''}</div>`;
+}
 function mMore(){
-  const rows=[
-    ['Add Client','users','add-client'],
-    ['Add Measurement','ruler','m-add'],
-    ['Create Note','note','qn-open'],
-    ['Schedule Session','calendar','ns-new'],
-    ['Calendar','calendar','mcal'],
-    ['Create Workout','dumbbell','mworkout'],
-    ['Templates','stack','mtemplates'],
-    ['Nutrition','utensils','mnut'],
-    ['Challenges','trophy','mchal']];
+  /* v19.19 — the COMPLETE index, grouped. Nothing that exists on the desktop   rail is missing here, and athletics sections come from the SAME SPORT_EXT   table, so a future sport needs no edit. */
+  const quick=[
+    ['Messages','mail','mtab','messages'],
+    ['Add Client','users','add-client',''],
+    ['Add Measurement','ruler','m-add',''],
+    ['Create Note','note','qn-open',coachFirstClient()],
+    ['Schedule Session','calendar','ns-new',''],
+    ['Calendar','calendar','mcal',''],
+    ['Create Workout','dumbbell','mworkout',''],
+    ['Templates','stack','mtemplates',''],
+    ['Nutrition','utensils','mnut',''],
+    ['Challenges','trophy','mchal','']];
+  const ath=[];sportSections().forEach(g=>g.items.forEach(([k,l,i])=>ath.push([l,i,'mnav',k])));
+  /* data-t rides alongside data-v: `mtab` reads data-t, `mnav` reads data-v,
+     so one row helper serves both without a special case. */
+  const grp=(title,rows)=>rows.length?`<div class="card-t" style="margin:2px">${t(title)}</div>
+    <div class="ccard" style="padding:6px">${rows.map(([l,i,act,v])=>
+      `<div class="mrow" data-act="${act}"${v?` data-v="${v}" data-t="${v}"`:''}>${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}</div>`:'';
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
       <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div>
       ${langBtn('btn-outline btn-sm')}
     </div>
-    <div class="card-t" style="margin:2px">${t('Quick Actions')}</div>
     <div class="ccard" style="padding:6px">
+      <div class="mrow" data-act="mjump" style="color:var(--accent-deep)">${ic('search',17)}<span style="flex:1">${t('Jump to…')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      ${rows.map(([l,i,act])=>`<div class="mrow" data-act="${act}">${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
       <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
     </div>
+    ${grp('Quick actions',quick)}
+    ${ath.length?grp('Athletics',ath):''}
     <div class="ccard" style="padding:6px">
       <div class="mrow" data-act="msettings">${ic('gear',17)}<span style="flex:1">${t('Settings')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       <div class="mrow" data-act="reset-demo">${ic('trash',17)}<span style="flex:1">${t('Reset demo data')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
@@ -6896,50 +7732,77 @@ function mMore(){
     <div class="muted" style="font-size:10.5px;text-align:center;padding:6px 0 2px">CoachMint · v15.8 · PWA · BETA · ${t('Your decisions. Zero automation.')}</div>
   </div>`;
 }
+function coachFirstClient(){const c=CLIENTS.find(x=>x.status!=='Archived');return c?String(c.name):''}
 function mClientView(){
   const c=client(S.mClient),db=DB[c.id];
   const w=todaysPlan(c.id).w; // v18.62 — today's slot decides, not "first pending"
   const ac=attCnt(c.name);
+  const live=liveRec();
+  const inSession=live&&+live.cid===+c.id;
+  const r=live&&inSession?live:rpeDrift(c.id);
+  const meas=(db.measures||[]).slice(0,3);
+  const notes=NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,3);
+  const files=(DB[c.id]&&DB[c.id].photos)||[];
   return `<div class="mstack">
-    <div class="row" style="gap:8px"><button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button><b style="font-size:15px">${t('Client')}</b></div>
-    <div class="ccard" style="display:flex;align-items:center;gap:12px">
-      ${avC(c.name,52)}
-      <div style="flex:1;min-width:0"><b style="font-size:16px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.goal)}</div></div>
-      ${stBdg(c.status)}
+    <div class="row" style="gap:8px">
+      <button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button>
+      <b style="font-size:15px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(c.name))}</b>
+      ${stBdg(c.status)}</div>
+    <div class="s" style="margin:0;color:var(--ink3);font-size:12px">${esc(t(c.goal))} · ${t('Program')}: ${esc(t(c.prog))}${c.week?` · ${t('Week')} ${nf(c.week)}`:''}</div>
+
+    <!-- one dock: the four things a coach does with a thumb, above the fold -->
+    <div class="mtool">
+      <button data-act="${inSession?'live-open':'live-start'}" data-cid="${c.id}" style="${inSession?'color:var(--accent-deep);border-color:var(--acc-line)':''}">${ic(inSession?'play':'zap',20)}${inSession?t('Live'):t('Start')}</button>
+      <button data-act="msheet" data-cid="${c.id}">${ic('plus',20)}${t('Log')}</button>
+      <button data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',20)}${t('Message')}</button>
+      <button data-act="macc" data-k="more">${ic('more',20)}${t('More')}</button>
     </div>
-    <div class="row" style="gap:6px;flex-wrap:wrap">
-      <span class="chip">${t('Weight')}: ${uwS(c.weight||null)}</span>
-      <span class="chip">${t('Program')}: ${t(c.prog)}</span>
-      <span class="chip">🔥 ${esc(streakLbl(c))}</span>
-      <span class="chip">${t('Attendance')}: ${nf(ac.d)} ✓ / ${nf(ac.m)} ✗</span>
-    </div>
-    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div class="row">${ic('dumbbell',15)}<b style="font-size:13.5px">${esc(w.name)}</b></div>
-      <span class="bdg ${wDone(w)?'bdg-gray':'bdg-lime'}" style="font-size:10px">${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</span></div>`:''}
-    <div class="ccard"><div class="card-t" style="margin-bottom:4px">${t('Training Summary')}</div>
-      ${[['Workouts Completed',nf(db.stats.done)],['Workouts Missed',nf(db.stats.missed)],['Attendance',`${nf(ac.d)} ✓ / ${nf(ac.m)} ✗`],['Last Workout',t(c.last)],['Next Workout',t(c.nextW)]].map(([k,v])=>`
-      <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t(k)}</span><b style="font-size:12.5px">${v}</b></div>`).join('')}
-    </div>
-    <div class="ccard"><div class="row" style="justify-content:space-between;margin-bottom:6px"><b style="font-size:13px">${t('Weight Progress')}</b>${wtBadge(c.id)}</div>
-      ${wChart(c.id,150)}</div>
-    <div class="ccard"><div class="card-t" style="margin-bottom:2px">${ic('note',14)} ${t('Recent Notes')}</div>
-      ${NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,2).map(n=>`
-      <div style="padding:9px 0;border-bottom:1px solid var(--line2)"><b style="font-size:12.5px">${esc(t(n.title))}</b>
-      <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
-      <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
-      ||`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`}
-    </div>
-    <div class="row" style="gap:8px;flex-wrap:wrap">
-      <button class="btn btn-dark btn-sm" data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',14)} ${t('Messages')}</button>
-      <button class="btn btn-primary btn-sm" data-act="wp-open">${ic('calendar',14)} ${t('Week plan')}</button>
-      <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
-      <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form reports')}</button>
-      <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
-      <button class="btn btn-outline btn-sm" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>
-      <button class="btn btn-outline btn-sm" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>
-      <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
-    </div>
-    <button class="btn btn-ghost btn-sm" style="align-self:flex-start" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+
+    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface)">
+      <span class="eyebrow" style="color:var(--accent-deep)">${t('Next action')}</span>
+      <div class="row" style="gap:9px;margin-top:8px">${ic('dumbbell',16)}<b style="font-size:14px">${esc(w.name)}</b></div>
+      <div class="muted" style="font-size:12px;margin-top:3px">${esc(t(w.day))} · ${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="wp-open">${ic('play',14)} ${t('Open week plan')}</button>
+    </div>`:''}
+
+    ${mAcc('train','Training',`${nf(db.stats.done)} ✓ / ${nf(db.stats.missed)} ✗`,
+      `<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Completed')}</span><b style="font-size:12.5px">${nf(db.stats.done)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Missed')}</span><b style="font-size:12.5px">${nf(db.stats.missed)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Last Workout')}</span><b style="font-size:12.5px">${esc(t(c.last))}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Next Workout')}</span><b style="font-size:12.5px">${esc(t(c.nextW))}</b></div>
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mworkout">${ic('dumbbell',14)} ${t('Create Workout')}</button>`)}
+
+    ${mAcc('meas','Measurements',meas.length?esc(t(meas[0].d||'')):t('—'),
+      `${wtBadge(c.id)}${wChart(c.id,150)}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>`)}
+
+    ${mAcc('nut','Nutrition',nPlanOf(c.name)?t('Plan set'):t('—'),
+      `${nPlanOf(c.name)
+        ?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Plan')}</span><b style="font-size:12.5px">${esc(t(nPlanOf(c.name).name||''))}</b></div>`
+        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>`}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mnut">${ic('utensils',14)} ${t('Nutrition')}</button>`)}
+
+    ${mAcc('notes',t('Notes'),nf(notes.length),
+      (notes.length?notes.map(n=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+        <b style="font-size:12.5px">${esc(t(n.title))}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
+        <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)
+      +`<button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>`)}
+
+    ${mAcc('files','Files',nf(files.length),
+      files.length?files.map(f=>`<div class="mrow" style="padding:8px 0">${ic('camera',15)}<span style="flex:1;font-size:12.5px">${esc(f.n||t('Photo'))}</span></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)}
+
+    ${mAcc('more','More actions','',
+      `<div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('camera',14)} ${t('Form reports')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        ${isAthletics()?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Athletics Profile')}</button>`:''}
+        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+        <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
+      </div>`)}
   </div>`;
 }
 
@@ -6959,7 +7822,13 @@ function vClient(){
      the grade pill, Calendar the Week pill; Profile has none (you are there). */
   const pmH=progMeta(c);
   const tgH=NEng.targets(c);
-  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1):0;
+  /* v18.93 — the Nutrition "Day N" pill disappeared for any client whose
+     `since` was never set (the demo seed has none → dayN=0 → falsy → no pill,
+     which also collapsed the eyebrow/title widths). Fall back to the day-count
+     of the PROGRAM: (week-1)*7 + day-of-week. Derived from real data, never
+     invented, and always >=1. */
+  const dayN=c.since?Math.max(1,Math.round((TDATE-new Date(c.since))/864e5)+1)
+    :Math.max(1,(pmH.wk-1)*7+((TDATE.getDay()+6)%7)+1);
   const scH=RPT.score(c).score,gradeH=scH>=80?'A':scH>=60?'B':'C';
   const wkN=(()=>{const t2=new Date(Date.UTC(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate()));const dn=(t2.getUTCDay()+6)%7;t2.setUTCDate(t2.getUTCDate()-dn+3);const f=new Date(Date.UTC(t2.getUTCFullYear(),0,4));return 1+Math.round(((t2-f)/864e5-3+((f.getUTCDay()+6)%7))/7)})();
   const monthYr=TDATE.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'long',year:'numeric'});
@@ -6967,40 +7836,167 @@ function vClient(){
             <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
             <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
             <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>`;
-  const headA={today:headFull,chat:headFull,profile:'',
+  const headA={today:headFull,chat:headFull,
+    /* v18.105 — mockup 08: a gear in the header. Settings live inline on this
+       screen (no separate route), so it scrolls to that section. */
+    profile:`<span class="icobtn" data-act="pf-gear" role="button" tabindex="0" title="${t('Settings')}">${ic('gear',15)}</span>`,
     workouts:`<span class="pill">W${nf(pmH.wk)}/${nf(pmH.weeks)}</span>`,
     nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
     progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
     sessions:`<span class="pill">${t('Week')} ${nf(wkN)}</span>`};
-  const headEyebrow={today:`${t('Build')} ${t('Better Habits')}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
+  /* v18.111 — the Today eyebrow used to read "Build Better Habits", which is
+     habit-tracker language sitting on top of a workout app. It now states the
+     program context, so header + workout hero tell one sport story.
+     The program name is used alone when present because seed names already
+     carry the week ("Hypertrophy — Week 6") — appending Week 6/12 duplicated it. */
+  const headEyebrow={today:pmH.name?esc(t(pmH.name)):`${t('Week')} ${nf(pmH.wk)}/${nf(pmH.weeks)}`,chat:esc(wsOwnerName()||t('Coach')),profile:t('My Profile'),
     workouts:pmH.name?esc(t(pmH.name)):t('Training'),
-    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:`${t('Build')} ${t('Better Habits')}`,
+    nutrition:tgH?`${t('Fuel Plan')} · ${nf(tgH.kcal)} kcal`:t('Fuel Plan'),
     progress:t('Daily Report'),sessions:esc(monthYr)};
   const ptabTitle={today:'Today',workouts:'Training',progress:'Progress',nutrition:'Nutrition',sessions:'Calendar',chat:'Messages',profile:'Profile'};
   /* v18.71 — guard: a stale/unknown ptab (old localStorage) must never make
      `undefined()` blow up the whole portal — fall back to Today. */
   const ptabView={today:cToday,workouts:cWorkouts,progress:cProgress,nutrition:cNutrition,sessions:cSessions,chat:cChat,profile:cProfile};
+  /* v18.94 — the Nutrition Assistant is now its OWN screen (mockup cell 05).
+     It used to be an inline card glued to the end of Nutrition, but mockup cell
+     04 ends at the quick-log block — the assistant is a separate full view.
+     HIDDEN tab (same pattern as Calendar/Profile): no bottom-bar entry, reached
+     from the quick-log "Type text" / "Assistant" tiles via na-focus. */
+  ptabView.assistant=cAssistant;
+  ptabTitle.assistant='Nutrition Assistant';
+  headEyebrow.assistant=headEyebrow.nutrition;
+  headA.assistant='';
   const body=(ptabView[S.ptab]||ptabView.today)();
+  /* v18.102 — mockup 05 AND 07 are FULL-SCREEN chat views: they swap .chead for
+     a .chathead, hide the bottom bar and float the composer. Chat is a real
+     bottom-bar TAB, so on that screen leaving means .chathead's back button. */
+  const full=S.ptab==='assistant'||S.ptab==='chat';
+  const head=S.ptab==='assistant'?naHead(c)
+    :S.ptab==='chat'?chatHead(c)
+    :`<div class="chead">
+          <div class="chead-t">
+            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
+            <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Back')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
+          </div>
+          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
+        </div>`;
+  const foot=full?(S.ptab==='assistant'?naComposer():chatComposer())
+    :`<div class="cnav">${tabs.map(([k,l,i])=>`<button class="cnav-it ${S.ptab===k?'on':''}" data-act="cnav" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='chat'&&cunread?'<span class="cdot"></span>':''}</button>`).join('')}</div>`;
   return `
   <div class="clientwrap">
     <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
     ${langBtn('btn-outline btn-sm')}
     ${fbBtn('top:18px;inset-inline-end:18px;')}
     <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
-      <div class="capp" id="capp">
-        <div class="chead">
-          <div class="chead-t">
-            <span class="chead-eyebrow">${headEyebrow[S.ptab]||headEyebrow.today}</span>
-            <div class="chead-title">${(S.ptab==='sessions'||S.ptab==='profile')?`<button class="bk" data-act="cnav" data-t="today" aria-label="${t('Today')}">${ic('chevL',17)}</button>`:''}${t(ptabTitle[S.ptab]||'Today')}</div>
-          </div>
-          <div class="chead-a">${headA[S.ptab]!=null?headA[S.ptab]:headFull}</div>
-        </div>
+      <div class="capp${S.ptab==='assistant'?' na':''}${full?' fs':''}" id="capp">
+        ${head}
         ${body}
       </div>
-      <div class="cnav">${tabs.map(([k,l,i])=>`<button class="cnav-it ${S.ptab===k?'on':''}" data-act="cnav" data-t="${k}">${ic(i,20)}<span>${t(l)}</span>${k==='chat'&&cunread?'<span class="cdot"></span>':''}</button>`).join('')}</div>
+      ${foot}
       ${S.player?cPlayer():''}
     </div>
   </div>`;
+}
+/* ============ ATHLETICS §10 + §8 — ATHLETE DASHBOARD ============
+   Injected into the athlete's Today screen only while the workspace sport has
+   athletics sections. Everything is READ from the stores the coach side owns —
+   this is a view of the coach's data, never a second source of truth:
+     This week  ← TLOG[ w === current week, cid === this athlete ]
+     Race card  ← RACES (ath empty = squad-wide, or matching this name), with a
+                  fallback to APROF.target/targetDate when no race row exists
+     PBs        ← APROF.pb (§3, per athlete). PBSD is deliberately NOT used:
+                  it carries no cid, so its marks belong to the whole squad and
+                  would be wrong on one athlete's phone.
+   §5 optional metrics are deliberately omitted: TLOG holds no HR, cadence or
+   elevation, and printing zeros there would break §5's "absent must read as
+   absent" rule. Countdowns are descriptive days only. */
+function athToday(c){
+  if(!isAthletics())return '';
+  const p=aprofOf(c.id)||{};
+  const hm=m=>{m=Math.round(m);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')};
+  const cw=TLOG.length?Math.max.apply(null,TLOG.map(r=>+r.w)):0;
+  const mine=TLOG.filter(r=>+r.w===cw&&String(r.cid)===String(c.id));
+  const km=+mine.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+  const mins=mine.reduce((s,x)=>s+(+x.min||0),0);
+  const byDow=[0,0,0,0,0,0,0];
+  mine.forEach(r=>{const q=String(r.date||'').split('-');if(q.length<3)return;
+    const d=new Date(+q[0],+q[1]-1,+q[2]);if(isNaN(d))return;
+    byDow[(d.getDay()+6)%7]+=(+r.km||0)});
+  const maxD=Math.max(1,...byDow);
+  const nowDow=(TDATE.getDay()+6)%7;
+  const now0=new Date(TDATE.getFullYear(),TDATE.getMonth(),TDATE.getDate());
+  const dOf=r=>{const q=String(r.date||'').split('-');return new Date(+q[0]||2000,(+q[1]||1)-1,+q[2]||1)};
+  const cands=RACES.filter(r=>!r.ath||r.ath===c.name)
+    .map(r=>({r:r,dd:Math.round((dOf(r)-now0)/864e5)}))
+    .filter(x=>x.dd>=0).sort((a,b)=>a.dd-b.dd);
+  let race=null,dd=-1;
+  if(cands.length){race=cands[0].r;dd=cands[0].dd}
+  else if(p.target&&p.targetDate){const x=Math.round((dOf({date:p.targetDate})-now0)/864e5);
+    if(x>=0){race={name:p.target,event:'',date:p.targetDate,loc:'',target:''};dd=x}}
+  const pbs=(p.pb||'').split(' \u00b7 ').filter(s=>s.trim());
+  const pbRow=s=>{const m=/\(([^)]+)\)/.exec(s);
+    return {val:(m?s.replace(/\s*\(.*$/,''):s).trim(),ev:m?m[1]:''}};
+  const week=`<div class="sec"><span class="sec-t">${ic('chart',15)} ${t('This week')}</span>
+      <span class="muted">${nf(mine.length)} ${t('sessions')}</span></div>
+    <div class="cc tight">
+      <div class="row" style="gap:12px">
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Distance')}</div>
+          <b style="font-size:17px">${nf(km)}<i style="font-style:normal;font-size:11px;color:var(--ink3)"> km</i></b></div>
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Duration')}</div>
+          <b style="font-size:17px">${hm(mins)}</b></div>
+        <div style="flex:1;min-width:0"><div class="muted" style="font-size:11px">${t('Sessions')}</div>
+          <b style="font-size:17px">${nf(mine.length)}</b></div>
+      </div>
+      <div style="display:flex;gap:5px;align-items:flex-end;height:54px;margin-top:12px">
+        ${byDow.map((v,i)=>{const h=v>0?Math.max(4,Math.round(v/maxD*44)):3;const cur=i===nowDow;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+            <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${v>0?(cur?'var(--accent)':'var(--ink2)'):'var(--line2)'}"></div></div>`}).join('')}
+      </div>
+      <div style="display:flex;gap:5px;margin-top:5px">${['M','T','W','T','F','S','S'].map((d,i)=>
+        `<span style="flex:1;text-align:center;font:700 9px/1 var(--font);color:${i===nowDow?'var(--accent-text)':'var(--ink3)'}">${d}</span>`).join('')}</div>
+    </div>`;
+  const raceCard=race?`<div class="sec"><span class="sec-t">${ic('flag',15)} ${t('Upcoming race')}</span>
+      <span class="badge b-lime mono">${nf(dd)} ${t('D')}</span></div>
+    <div class="cc tight">
+      <div class="row">
+        <span class="badge b-lime mono" style="flex:none">${nf(dd)}<i style="font-style:normal;font-size:10px"> ${t('d')}</i></span>
+        <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(race.name||'')}</b>
+          <div class="muted" style="font-size:12px">${esc(fmtD(race.date))}${race.target?` \u00b7 ${t('target')} ${esc(race.target)}`:''}${race.event?` \u00b7 ${esc(race.event)}`:''}</div></div>
+      </div>
+      ${dd<=7?`<div class="muted" style="font-size:11.5px;margin-top:8px">${ic('info',12)} ${t('Race week — keep the easy days easy')}</div>`:''}
+    </div>`:'';
+  const pbCard=pbs.length?`<div class="sec"><span class="sec-t">${ic('medal',15)} ${t('Personal bests')}</span>
+      <span class="muted">${t('yours')}</span></div>
+    <div class="cc tight">${pbs.map(s=>{const b=pbRow(s);
+      return `<div class="row" style="padding:5px 0"><div style="flex:1;min-width:0">
+        <b style="font-size:13.5px">${esc(b.val)}</b>${b.ev?` <span class="muted" style="font-size:12px">${esc(b.ev)}</span>`:''}</div>
+        <span class="bdg bdg-lime" style="flex:none;font-size:9.5px">${t('PB')}</span></div>`}).join('')}</div>`:'';
+  /* §5 — optional metrics. Absent must READ as absent: a missing device is
+     never filled with 0 or a plausible-looking guess. */
+  const lastRow=TLOG.map((r,i)=>[i,r]).filter(x=>String(x[1].cid)===String(c.id))
+    .sort((a,b)=>(b[1].w-a[1].w)||(b[0]-a[0]))[0];
+  const lv=lastRow?lastRow[1]:null;
+  const paceOf=(k,mn)=>(k>0&&mn>0)?pvClock(mn*60/k):'';
+  const mTile=(l,v,u,note,none)=>`<div style="background:var(--surface);padding:11px 12px">
+      <div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${l}</div>
+      ${none?`<div style="font-weight:700;font-size:13px;margin-top:5px;color:var(--ink3)">— ${t('not recorded')}</div>
+        ${note?`<div style="font-size:9.5px;color:var(--ink3);margin-top:6px;letter-spacing:.07em;font-weight:700">${t(note)}</div>`:''}`
+      :`<div style="font-weight:800;font-size:16px;margin-top:5px;font-variant-numeric:tabular-nums">${v}${u?`<span style="font-size:11px;font-weight:700;color:var(--ink3);margin-inline-start:3px">${u}</span>`:''}</div>`}</div>`;
+  const metricCard=lv?`<div class="sec"><span class="sec-t">${ic('activity',15)} ${t('Last session · metrics')}</span>
+      <span class="badge" style="background:var(--line2);color:var(--ink3);font-size:9.5px">${t('MANUAL LOG')}</span></div>
+    <div class="cc tight">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden">
+        ${mTile(t('Distance'),lv.km?nf(lv.km):'—','km')}
+        ${mTile(t('Avg pace'),paceOf(+lv.km,+lv.min)||'—','/km')}
+        ${mTile(t('Duration'),nf(+lv.min||0),'min')}
+        ${mTile('RPE',nf(+lv.rpe||0),'')}
+        ${mTile(t('Avg HR'),'','','NO DEVICE',true)}
+        ${mTile(t('Cadence'),'','','NO DEVICE',true)}
+        ${mTile(t('Elevation'),'','','NO GPS',true)}
+      </div>
+      <div class="muted" style="font-size:11.5px;margin-top:9px">${ic('info',12)} ${t('3 of 7 metrics unavailable — connect a device to fill them in.')}</div>
+    </div>`:'';
+  return week+raceCard+pbCard+metricCard;
 }
 function cToday(){
   const c=client(S.cid);
@@ -7022,46 +8018,60 @@ function cToday(){
   /* Real nutrition snapshot — NEng, the exact source the Nutrition page uses. */
   const tg=NEng.targets(c),coN=NEng.consumed(c,isoToday()),remK=NEng.remaining(c,isoToday());
   const wkTotal=w?w.exercises.reduce((a,e)=>a+e.sets,0):0;
+  /* v18.111 — hero chip "Volume": real tonnage = sets × reps × kg */
+  const wkKg=w?w.exercises.reduce((a,e)=>a+(+e.sets||0)*(+e.reps||0)*(+e.kg||0),0):0;
   return `<div class="cbody">
     <!-- v18.76 — mockup 01 Today: momentum hero is the FIRST card (greeting
          strip + month strip removed — the 7-day strip covers the week) -->
-    <!-- v18.71 mockup 01 Today — Daily Momentum hero: today pts + level bar + 7-day strip + streak guard -->
-    ${(()=>{ const P=c.pts||0, lvl=Math.floor(P/100)+1, toNext=100-(P%100);
-      const today=isoToday(), ptsToday=(c.ptsDate===today)?(c.ptsDay||0):0;
-      const WL=wlogOf(c.id), actToday=WL.some(l=>l&&l.d===today)||(HS&&HS.done>0);
-      const atRisk=(c.dayStreak||0)>0&&!actToday;
-      const mon=new Date(TDATE); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
-      const order=lang==='fa'?[5,6,0,1,2,3,4]:[0,1,2,3,4,5,6];
-      const DL=lang==='fa'?['ش','ی','د','س','چ','پ','ج']:['Mo','Tu','We','Th','Fr','Sa','Su'];
-      const cells=order.map((dow,k)=>{ const d=new Date(mon); d.setDate(mon.getDate()+dow);
-        const iso=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const isT=d.toDateString()===TDATE.toDateString(), did=WL.some(l=>l&&l.d===iso);
-        return `<div class="mw-d ${did?'done':''} ${isT?'today':''}"><i>${DL[k]}</i><b>${did?ic('check',12):''}</b></div>`;
-      }).join('');
-      return `<div class="hero-m">
-        <div class="mom-top"><div class="eyebrow">${t('Daily Momentum')}</div>
-          <span class="pill" style="height:26px;font-size:11.5px">${ic('flame',13)}${nf(c.dayStreak||0)} ${t('days')}</span></div>
-        <div class="mom-big">
-          <div class="mom-num"><b>+${nf(ptsToday)}</b><span>${t('pts today')}</span></div>
-          <div class="mom-lvl"><div class="mom-lvl-l"><span>${t('Level')} ${nf(lvl)}</span><span class="mono">${nf(toNext)} ${t('pt to Level')} ${nf(lvl+1)}</span></div>
-            <div class="pbar"><i style="width:${100-toNext}%"></i></div></div>
-        </div>
-        <div class="mom-week">${cells}</div>
-        ${atRisk?`<div class="mom-danger"><span class="md-ic">${ic('alert-circle',16)}</span>
-            <div class="md-txt"><b>${nf(c.dayStreak)} ${t('streak at risk')}</b><span>${t('Finish one habit today to keep it')}</span></div>
-            <button class="btn btn-lime" data-act="jump-habits">${t('Protect')}</button></div>`
-          :(actToday&&c.dayStreak>0?`<div class="mom-danger saved"><span class="md-ic">${ic('check-circle',16)}</span>
-            <div class="md-txt"><b>${t('Streak kept')} — ${nf(c.dayStreak)} ${t('days')}</b><span>${t('Activity logged today')}</span></div></div>`:'')}
-      </div>`; })()}
-    <!-- v18.76 — mockup "⚡ Action needed": section header + count + compact amber rows -->
-    ${(()=>{const actN=(remMsg?1:0)+(!c.intake?1:0);
+    <!-- v18.111 — TODAY HERO (superdesign ①-④). The workout is now the FIRST
+         thing on screen. "Daily Momentum" (pts / Level / 7-day strip / streak
+         guard) was cut — its streak already lives in the header pill. The
+         element stays .fhero so all four phone skins keep styling it. -->
+    ${w?`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('clock',13)} ${t(w.dur)}</span></div>
+      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
+      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}/${nf(pmT.weeks)}`:''}</div>
+      <div class="ws-chips" style="position:relative;z-index:1">
+        <div class="ws-chip"><b>${nf(w.exercises.length)}</b><span>${t('exercises')}</span></div>
+        <div class="ws-chip"><b>${nf(wkKg)}</b><span>${t('Volume')}</span></div>
+        <div class="ws-chip"><b>${nf(wkTotal)}</b><span>${t('sets')}</span></div>
+      </div>
+      <div class="cta ws-cta" style="position:relative;z-index:1">
+        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
+      </div>
+    </div>`
+    :restToday?`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('moon',13)} ${t('Rest day')}</span></div>
+      <h3 style="position:relative;z-index:1">${t('Rest day')}</h3>
+      <div class="who" style="position:relative;z-index:1">${t('Recovery is part of the program — come back stronger')}</div>
+      <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('calendar',15)} ${t('Week Split')}</button></div>
+    </div>`
+    :`<div class="fhero ws-hero">
+      <div class="ws-eye" style="position:relative;z-index:1"><span>${t("Today's Workout")}</span><span class="ws-dur">${ic('calendar',13)}</span></div>
+      <h3 style="position:relative;z-index:1">${t('No workout scheduled today')}</h3>
+      <div class="who" style="position:relative;z-index:1">${t('Your coach publishes your plan here')}</div>
+      <div class="cta ws-cta" style="position:relative;z-index:1"><button class="btn btn-outline" data-act="cnav" data-t="workouts">${ic('list',15)} ${t('Week Split')}</button></div>
+    </div>`}
+    ${athToday(c)}
+    <!-- v18.112 — Next up now LEADS with today's session and its real start time
+         (the mockup's "18:00 · Upper Body"), then the pending to-dos. -->
+    ${(()=>{const todaysEv=EVENTS.filter(e=>e.client===c.name&&e.day===TODAY).sort((a,b)=>a.start-b.start);
+      const nextEv=todaysEv.find(e=>evState(e).k!=='past')||todaysEv[0]||null;
+      const actN=(nextEv?1:0)+(remMsg?1:0)+(!c.intake?1:0);
       if(!actN)return '';
-      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Action needed')}</span><span class="sec-c">${nf(actN)}</span></div>
+      return `<div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Next up')}</span><span class="sec-c">${nf(actN)}</span></div>
+      ${nextEv?`<div class="cc tight">
+        <div class="row">
+          <span class="badge b-lime mono">${nf(fmtT(nextEv.start))}</span>
+          <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(nextEv.label))}</b><div class="muted">${nf(nextEv.dur)} h · ${t(EVLBL[nextEv.type]||'Session')}</div></div>
+          ${attBadge(nextEv)||`<span class="bdg ${evState(nextEv).b}">${t(evState(nextEv).l)}</span>`}
+        </div>
+      </div>`:''}
       ${remMsg?`<div class="cc tight" style="border-color:rgba(229,169,60,.35)">
         <div class="row">
           <span class="badge b-amber">${ic('clock',13)}</span>
           <div style="flex:1;min-width:0"><b style="font-size:13px;display:block">${esc(t(remMsg.body))}</b><div class="muted">${t('Start a session or send a check-in')}</div></div>
-          ${w?`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="open-player" data-wid="${w.id}">${t('Start')}</button>`:`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
+          ${w?'':`<button class="btn btn-lime" style="padding:8px 13px;font-size:12px;flex:none" data-act="cnav" data-t="workouts">${t('Start')}</button>`}
           <button class="btn btn-ghost btn-icon" data-act="rem-dismiss" data-id="${esc(String(remMsg.id))}" title="${t('Got it')}" style="width:28px;height:28px;flex:none">${ic('x',13)}</button>
         </div>
       </div>`:''}
@@ -7072,7 +8082,29 @@ function cToday(){
           <button class="btn btn-lime" style="padding:8px 11px;font-size:11.5px;flex:none" data-act="intake-open">${t('Fill intake form')}</button>
         </div>
       </div>`:''}`})()}
-    <!-- Habits accordion — mockup .hab-card (header + dashed divider + tick rows) -->
+    <!-- v18.111 — TODAY: the old habits slot now holds the nutrition ring
+         (real NEng numbers), so kcal / left / streak sit right under the hero. -->
+    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Today')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
+    ${tg?(()=>{const goal=+tg.kcal||1,pct=Math.max(0,Math.min(100,Math.round(coN.kcal/goal*100)));
+      const C=2*Math.PI*32,off=C-C*pct/100;
+      return `<div class="cc tight ring-row">
+        <div class="rr">
+          <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
+            <circle cx="37" cy="37" r="32" fill="none" stroke="#22262D" stroke-width="7"></circle>
+            <circle cx="37" cy="37" r="32" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"></circle>
+          </svg>
+          <div class="rv"><b>${nf(coN.kcal)}</b><span>KCAL</span></div>
+        </div>
+        <div class="rm">
+          <div class="k">${t('Left today')}</div>
+          <div class="big">${nf(remK?remK.kcal:0)}<i> / ${nf(tg.kcal)}</i></div>
+          <div class="sub"><b>${nf(HS.done)}/${nf(HS.all)}</b> ${t('Done')} · ${nf(c.dayStreak||0)} ${t('days')}</div>
+        </div>
+      </div>`;})()
+    :`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
+    <!-- v18.111 — HABITS moved DOWN, past the hero/ring, exactly as the
+         approved layout asked: the six habit rows no longer own the top of
+         the screen. The accordion header already carries count + chevron. -->
     <div class="cc hab-card">
       <div class="hab-hd ${S.habOpen===false?'':'open'}" data-act="hab-toggle">
         <span class="hab-ic">${ic('flame',18)}</span>
@@ -7091,33 +8123,6 @@ function cToday(){
         </div>`).join('')}
       </div></div>
     </div>
-    <!-- Today's Workout — mockup .sec header + .fhero (chips · h3 · who · meta · cta) -->
-    <div class="sec"><span class="sec-t">${ic('dumbbell',15)} ${t("Today's Workout")}</span>${w?`<span class="muted mono">${t(w.dur)}</span>`:''}</div>
-    ${w?`<div class="fhero">
-      <div class="row" style="gap:6px;flex-wrap:wrap;position:relative;z-index:1">
-        <span class="chip">${t(w.day)}</span>
-        <span class="chip">${nf(w.exercises.length)} ${t('exercises')} · ${nf(wkTotal)} ${t('sets')}</span>
-      </div>
-      <h3 style="position:relative;z-index:1">${esc(w.name)}</h3>
-      <div class="who" style="position:relative;z-index:1"><b>${esc(wsOwnerName()||t('Your coach'))}</b> · ${t(c.goal)}${pmT.wk?` · ${t('Week')} ${nf(pmT.wk)}`:''}</div>
-      <div class="meta" style="position:relative;z-index:1">
-        <div>${t('Duration')}<b>${t(w.dur)}</b></div>
-        <div>${t('exercises')}<b>${nf(w.exercises.length)}</b></div>
-        <div>${t('sets')}<b>${nf(wkTotal)}</b></div>
-      </div>
-      <div class="cta" style="position:relative;z-index:1">
-        <button class="btn btn-lime" data-act="open-player" data-wid="${w.id}">${ic('play',15)} ${wDone(w)?t('View summary'):t('Start Workout')}</button>
-        <button class="btn btn-out" data-act="open-player" data-wid="${w.id}" title="${t('Preview exercises')}">${ic('list',17)}</button>
-      </div>
-    </div>`
-    :restToday?`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('moon',26)}<b>${t('Rest day')}</b><span class="muted" style="font-size:12.5px">${t('Recovery is part of the program — come back stronger')}</span></div>`
-    :`<div class="ccard cempty" style="border-color:var(--acc-line2)">${ic('calendar',26)}<b>${t('No workout scheduled today')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
-    <!-- Nutrition — mockup .sec header + compact "Left today" card -->
-    <div class="sec"><span class="sec-t">${ic('salad',15)} ${t('Nutrition')}</span>${tg?`<span class="muted mono">${nf(coN.kcal)} / ${nf(tg.kcal)}</span>`:''}</div>
-    ${tg?`<div class="cc tight">
-      <div class="row" style="justify-content:space-between"><b style="font-size:13px">${t('Left today')}</b><span class="badge b-lime mono">${nf(remK?remK.kcal:0)} kcal</span></div>
-      <div class="pbar" style="margin-top:9px"><i style="width:${tg.kcal?Math.min(100,Math.round(coN.kcal/tg.kcal*100)):0}%"></i></div>
-    </div>`:`<div class="cc tight"><div class="muted" style="font-size:12.5px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}
     <!-- v18.81 — WIRING (below the mockup's last block, so everything above stays
          pixel-identical to the mockup): the client tools the mockup's Today does not
          draw but the system still needs reachable — daily check-in, challenges, form check. -->
@@ -7309,12 +8314,8 @@ function monthStrip(){
     <div style="display:flex;gap:5px">${[0,1,2,3,4,5,6].map(cell).join('')}</div>
   </div>`;
 }
-/* v18.81 — achievement badge emoji → lucide, PHONE ONLY. GAM.BADGES is shared with
-   the coach platform, so we map at the render site instead of mutating the data —
-   the two platforms stay independent (mockup's hydration MAP mirrored here). */
-const BADGE_ICONS={'🌱':'sprout','💪':'dumbbell','🏋':'dumbbell','🏆':'trophy','👑':'crown','🔥':'flame','⚡':'zap','🥗':'salad','📸':'camera','🎯':'target','💧':'droplet','✅':'check-circle'};
-/* Strip U+FE0F (emoji presentation selector) first — '🏋️' ≠ '🏋'. */
-const badgeIcon=e=>BADGE_ICONS[String(e||'').replace(/\uFE0F/g,'')]||null;
+/* v18.114 — BADGE_ICONS + badgeIcon deleted: their only caller was the
+   Progress Achievements grid, removed in v18.113. */
 function cProgress(){
   const lm=lastM(S.cid);
   const c=client(S.cid);
@@ -7322,20 +8323,20 @@ function cProgress(){
   const sc=RPT.score(c).score;
   const ad=RPT.adherence(c);
   const tr=RPT.trend(c);
-  const fm=RPT.form(c);
-  const range=S.prgRange||'Week';
-  /* v18.61 — real data: Week = last 7 days (did I train?), Day = today,
-     Month = last 12 weeks of consistency vs my weekly target. */
-  const daily=range!=='Month'?dailyTrain(c.id,range==='Day'?1:7):null;
-  const cons=range==='Month'?consistWeeks(c.id,12):null;
-  /* v18.71 — mockup 06 Progress: grade ring + weight chart + PR rows + photo
-     compare + badge board, all computed from the client's real data. */
-  const wtR=S.wtRange||'3M';
+  /* v18.101 — PREFS has its OWN localStorage store, so the chosen range now
+     survives a reload (S is runtime-only and is never persisted). */
+  const wtR=S.wtRange||PREFS.wtRange||'3M';
   const prs=prList(c.id,5);
   const sorted=[...photos].sort((a,b)=>(a.id||0)-(b.id||0));
   const older=sorted[0],newer=sorted[sorted.length-1];
   const first1=String(c.name||'').split(' ')[0];
   const train7=dailyTrain(c.id,7);
+  /* v18.98 mockup 06 — cell 06 is EXACTLY chead + grade + chart + 3 sections.
+     The Health-Metrics / Workout / Measurements / Strength cards, the Points
+     row and the check-in row were removed: the 'Heart beat' card carried a
+     HARDCODED '80' (invented data — never allowed) and none of them exist in
+     the mockup. NOTE: never park such a note inside the template literal below
+     — a C-style comment there is emitted as visible text on the page. */
   /* dailyTrain marks a trained day as 100 — count the DAYS, don't sum them. */
   const t7=train7&&Array.isArray(train7.d)?train7.d.filter(v=>+v>0).length:0;
   const adh7=NEng.adherence(c,7);
@@ -7351,44 +8352,22 @@ function cProgress(){
       <div class="t">
         <div class="eb">${t('Health grade')}</div>
         <b>${gName}, ${esc(first1)}</b>
-        <p>${t('Training')} ${nf(t7)}/7 · ${t('protein hit')} ${nf(adh7.protHits)} ${t('days')}</p>
+        <p>${t('Training')} ${nf(t7)}/7 · ${t('protein hit')} ${nf(adh7.protHits)} ${t('days')} · ${t('Score')} ${nf(sc)}</p>
         <div class="gm"><span class="up">${ad.pct!=null?'↑ '+nf(ad.pct)+'%':t('Not enough data')}</span><span>${t('Weight')} ${nf(gW)}kg</span><span>${trTxt}</span></div>
       </div>
     </div>
     <div class="chart">
       <div class="h"><b>${t('Weight trend')}</b>
-        <div class="rng">${[['30D','4W'],['3M','12W'],['1Y','1Y']].map(([r,l])=>`<i class="${wtR===r?'on':''}" data-act="wt-range" data-r="${r}">${l}</i>`).join('')}</div></div>
+        <span style="display:flex;align-items:center;gap:7px">
+          <div class="rng">${[['30D','4W'],['3M','12W'],['1Y','1Y']].map(([r,l])=>`<i class="${wtR===r?'on':''}" data-act="wt-range" data-r="${r}">${l}</i>`).join('')}</div>
+          <!-- v18.99 — the client's ONLY measurement entry point used to live in a
+               row that mockup 06 does not have. Moved into the chart header so the
+               weekly check-in stays reachable without breaking the mockup layout. -->
+          <button class="btn btn-ghost btn-icon" data-act="cmeas-open" aria-label="${t('Weekly check-in')}" title="${t('Weekly check-in')}" style="width:24px;height:24px;padding:0;flex:none">${ic('ruler',14)}</button>
+        </span>
+      </div>
       <div class="sub">${nf(gW)} kg · ${trTxt}</div>
       ${wChart(S.cid,90,wtR)}
-      <div class="row" style="justify-content:space-between;align-items:center;margin-top:9px">
-        <span>${wtBadge(S.cid)||`<span class="muted" style="font-size:11px">${t('Every week')}</span>`}</span>
-        <button class="btn btn-outline btn-sm" data-act="cmeas-open">${ic('ruler',13)} ${t('Weekly check-in')}</button>
-      </div>
-    </div>
-    <div class="card-t" style="margin:2px 14px -4px">${ic('activity',13)} ${t('Health Metrics')}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px 12px">
-      ${[
-        ['Calories',(nPlanOf(c.name)?nPlanOf(c.name).train.kcal:0)||'—',(nPlanOf(c.name)?'kcal':'')],
-        ['Weight',lm&&lm.w!=null?nf(lm.w):nf(c.weight||0),'kg'],
-        ['Body Fat',lm&&lm.bf!=null?nf(lm.bf):nf(c.bf||0),'%'],
-        ['Heart beat','80','bpm']
-      ].map(([k,v,u])=>`
-      <div class="ccard" style="padding:12px 14px">
-        <div class="row" style="justify-content:space-between"><span class="muted" style="font-size:11px;font-weight:700">${t(k)}</span><span style="color:var(--accent)">${ic(k==='Calories'?'utensils':k==='Weight'?'ruler':k==='Body Fat'?'user':'zap',13)}</span></div>
-        <div style="font-weight:800;font-size:19px;margin-top:6px;letter-spacing:-.02em">${typeof v==='number'?nf(v):v}</div>
-        ${u?`<div class="muted" style="font-size:10px;font-weight:700;margin-top:1px">${u}</div>`:''}
-      </div>`).join('')}
-    </div>
-    <div class="ccard">
-      <div class="row" style="justify-content:space-between;margin-bottom:6px">
-        <b style="font-size:13.5px">${t('Workout')}</b>
-        <div class="seg">${['Week','Day','Month'].map(r=>`<button class="${range===r?'on':''}" data-act="prg-range" data-r="${r}">${t(r)}</button>`).join('')}</div>
-      </div>
-      ${daily?barChart(daily.d,{h:150,labels:daily.labs,c:'var(--accent)'}):cons?barChart(cons,{h:150,labels:['W1','W3','W5','W7','W9','W11'],c:'var(--accent)'}):chartEmpty(t('Complete a workout to fill this chart'))}
-      <div class="row" style="gap:10px;margin-top:8px;font-size:11px;color:var(--ink2)">
-        <span>${t('Workout completion')}: <b style="color:var(--ink)">${ad.pct!=null?nf(ad.pct)+'%':'—'}</b></span>
-        <span>${t('Weight trend')}: <b style="color:var(--ink)">${tr.dir==='none'?t('Not enough data'):(tr.delta>0?'+':'')+nf(tr.delta)+' kg'}</b></span>
-      </div>
     </div>
     <div class="sec"><span class="sec-t">${ic('trophy',15)} ${t('Personal records')}</span><span class="sec-c">${nf(prs.length)}</span></div>
     ${prs.length?`<div class="cc tight prs">
@@ -7402,32 +8381,19 @@ function cProgress(){
         <div class="top" id="cmpTop" style="width:52%;background-image:url('${newer.src}');background-size:cover;background-position:left center"><span class="lab">${t('Latest')}</span></div>
         <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
       </div>`
-      :(sorted.length?`<div class="row" style="gap:8px">${sorted.slice(-4).map(p=>`<div style="flex:1;aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid #2E333B"><img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`
-        :`<div class="muted" style="font-size:12px">${t('No photos yet — add the first one')}</div>`)}
+      /* v18.98 — sits BETWEEN two template literals, i.e. in JS position, so a
+         C-style comment is correct here (an HTML comment would leak its second
+         line as code). Always show the compare frame: with fewer than two photos
+         we render the mockup's own gradients so the block keeps its 150px. */
+      :`<div class="compare">
+        <div class="base"><span class="lab">${t('Earlier')}</span></div>
+        <div class="top" id="cmpTop" style="width:52%"><span class="lab">${t('Latest')}</span></div>
+        <div class="ghost">${ic('camera',34)}</div>
+        <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
+      </div>
+      <div class="muted" style="font-size:11.5px;text-align:center;margin-top:7px">${t('No photos yet — add the first one')}</div>`}
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
     </div>`:''}
-    <div class="sec"><span class="sec-t">${ic('award',15)} ${t('Achievements')}</span><span class="sec-c mono">${nf(GAM.earned(c).length)}/${nf(GAM.BADGES.length)}</span></div>
-    <div class="cc tight">
-      <div class="badges">
-        ${GAM.BADGES.slice(0,8).map(b=>{const on=(c.badges||[]).some(x=>x&&x.id===b.id);
-        return `<div class="bg1 ${on?'':'lock'}" data-act="gam-open" style="cursor:pointer"><div class="em">${badgeIcon(b.e)?ic(badgeIcon(b.e),22):esc(b.e)}</div><b>${esc(t(b.n))}</b></div>`}).join('')}
-      </div>
-      <div class="row" style="justify-content:space-between;margin-top:10px;align-items:center">
-        <span class="chip">⭐ ${nf(c.pts||0)} ${t('Points')}</span>
-        <button class="btn btn-outline btn-sm" data-act="gam-open">${t('View all')} ${t('Badges')}</button>
-      </div>
-    </div>
-    ${lm?`<div class="ccard" style="border-color:rgba(200,240,75,.3)"><div class="card-t">${ic('ruler',13)} ${t('Measurements')} — ${fmtD(lm.d)}</div>
-      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">${[['w','Weight'],['ht','Height'],['bf','Body Fat'],['wa','Waist'],['ar','Arm']].filter(([k])=>lm[k]!=null).map(([k,l])=>`<span class="chip">${t(l)}: ${k==='w'?uwS(lm[k]):k==='bf'?nf(lm[k])+' %':ucS(lm[k])}</span>`).join('')}</div></div>`:''}
-    /* v18.71 mockup 06 — weight chart + check-in moved UP into the .chart card */
-    <div class="ccard"><b style="font-size:13.5px">${t('Strength Progression')}</b>
-      ${(()=>{const st=strengthSeries(c.id);
-        const ss=st?[['bench','var(--accent-deep)','Bench'],['squat','var(--blue)','Squat'],['dead','var(--purple)','Deadlift']]
-          .filter(([k])=>st[k]).map(([k,col,l])=>({d:st[k],c:col,l})):[];
-        if(!ss.length)return chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'));
-        return `<div class="row" style="gap:10px;font-size:10.5px;font-weight:600;margin:4px 0;flex-wrap:wrap">${ss.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</div>
-      ${multiChart(ss.map(({d,c:col})=>({d,c:col})))}`})()}</div>
-    /* v18.71 mockup 06 — PRs + photos now live in the sections above */
   </div>`;
 }
 /* ================= v18.48 — STUDENT NUTRITION HUB =================
@@ -7466,10 +8432,11 @@ function cNutrition(){
     :`
     ${tg?`
     <div class="kcal">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <span class="eyebrow">${t('Remaining today')}</span>
-        <span class="bdg ${NEng.dow(isoToday())===TODAY&&(p&&p.days[TODAY].type==='train')?'bdg-lime':'bdg-purple'}" style="font-size:9.5px">${p?(p.days[TODAY].type==='train'?t('Training Day'):t('Rest Day')):t('From your profile')}</span>
-      </div>
+      <!-- v18.93 — mockup .kcal is eyebrow → big → bar → macros, nothing else.
+           The Training/Rest badge we used to show here forced a flex row, which
+           cut the eyebrow from full-width (278px) to content width (106px) and
+           made the hero 6px taller. Removed for mockup parity. -->
+      <div class="eyebrow">${t('Remaining today')}</div>
       <div class="big">${nf(rem.kcal)} <small>${t('kcal left')}</small></div>
       <div class="pbar" style="margin-top:9px"><i style="width:${mp(co.kcal,tg.kcal)}%"></i></div>
       <div class="macros">
@@ -7483,7 +8450,7 @@ function cNutrition(){
         <button class="fchip" data-act="nprof-open">${ic('target',12)} ${t('Set targets')}</button></div>
       <div class="muted" style="font-size:12.5px;margin-top:8px">${t('No targets yet — set your profile or ask your coach for a plan.')}</div></div>`}`}
     ${p?`
-    <div class="sec"><span class="sec-t">${ic('utensils-crossed',15)} ${t("Today's Meals")}</span><span class="sec-c mono">${nf(mealsN)}/${nf(mealsGoal)}</span></div>
+    <div class="sec"><span class="sec-t">${ic('utensils-crossed',15)} ${t("Today's meals")}</span><span class="sec-c mono">${nf(mealsN)}/${nf(mealsGoal)}</span></div>
     <div class="cc tight">
       ${(()=>{const ms=p.days[TODAY].meals;
         const isLogged=mm=>logs.some(l=>l.meal===mm.name&&Math.abs(l.kcal-Math.round(mealKcal(mm)))<5);
@@ -7543,7 +8510,9 @@ function cNutrition(){
         <span class="go">${ic('sparkles',15)}</span>
       </button>
       <div class="ql-row">
-        <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(77,124,254,.14);color:#7EA0FF">${ic('keyboard',16)}</span><b>${t('Type text')}</b><span class="ms">“200g chicken”</span></button>
+        <!-- v18.95 - "Type text" is its OWN fast path now (modal, no chat);
+             "Assistant" keeps the conversation screen. -->
+        <button class="ql-mini" data-act="ntext-open"><span class="mi-ic" style="background:rgba(77,124,254,.14);color:#7EA0FF">${ic('keyboard',16)}</span><b>${t('Type text')}</b><span class="ms">“200g chicken”</span></button>
         <button class="ql-mini" data-act="nbar-open"><span class="mi-ic" style="background:rgba(139,92,246,.14);color:#B79CFF">${ic('barcode',16)}</span><b>${t('Barcode')}</b><span class="ms">${t('Scan package')}</span></button>
         <button class="ql-mini" data-act="na-focus"><span class="mi-ic" style="background:rgba(229,169,60,.14);color:#F0B457">${ic('bot',16)}</span><b>${t('Assistant')}</b><span class="ms">${t('Chat to log')}</span></button>
       </div>
@@ -7559,7 +8528,8 @@ function cNutrition(){
         <div class="t"><b>${t(l.meal||'Meal')}</b><span>${(l.items||[]).map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' · ')||'—'} · P${nf(l.p||0)}</span></div>
         <button class="btn btn-ghost btn-icon" style="width:26px;height:26px" data-act="nlog-del" data-id="${l.id}">${ic('x',13)}</button></div>`).join('')}
     </div>`:''}
-    ${naChat(c)}
+    <!-- v18.94 - the assistant card was removed from here; naChat(c) now renders
+         as its own screen (cAssistant) reached from the quick-log tiles. -->
     ${np?`<div class="ccard"><div class="card-t" style="margin-bottom:4px">${ic('user',14)} ${t('Nutrition profile')}</div>
       <div class="muted" style="font-size:11.5px;line-height:1.7">
         ${np.allergies?`<div>⚠ ${t('Allergies')}: ${esc(np.allergies)}</div>`:''}
@@ -7571,44 +8541,104 @@ function cNutrition(){
     </div>`:''}
   </div>`;
 }
-/* Assistant thread + composer. Quick chips push REAL intents, not small talk.
-   v18.71 — mockup05: chathead, timestamps, logcard, water/summary chips. */
+/* v18.94 — the Nutrition Assistant as a SCREEN (mockup 05): a .cbody wrapper
+   around the same naChat card. HIDDEN tab — no bottom-bar entry. */
+function cAssistant(){
+  const c=client(S.cid);
+  return `<div class="cbody">${naChat(c)}</div>`;
+}
+/* v18.97 — mockup cell 05 has NO .chead and NO .cnav: it swaps the standard
+   header for a chat head and the bottom bar for the composer (composer is
+   absolute bottom:0 in the mockup). Both therefore live in vClient, outside
+   .capp — nested inside, the composer would scroll away with the thread. */
+function naHead(c){
+  return `<div class="chathead">
+    <button class="back" data-act="cnav" data-t="nutrition" aria-label="${t('Back')}">${ic('chevL',17)}</button>
+    <div class="t"><b>${t('Nutrition Assistant')}</b><span>${t('Online · knows your plan')}</span></div>
+    <span class="av">${ic('bot',15)}</span>
+  </div>`;
+}
+function naComposer(){
+  return `<div class="composer fs">
+    <button class="plus" data-act="na-plus" aria-label="${t('More')}" title="${t('More')}">${ic('plus',17)}</button>
+    <input class="fake" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()">
+    <button class="snd" data-act="na-send" aria-label="${t('Send')}" title="${t('Send')}">${ic('arrowR',16)}</button>
+  </div>`;
+}
+/* v18.102 — mockup 07: the coach's name + reply promise live in the chat head,
+   which is why the app's .coachcard is redundant here. */
+function chatHead(c){
+  return `<div class="chathead">
+    <button class="back" data-act="cnav" data-t="today" aria-label="${t('Back')}">${ic('chevL',17)}</button>
+    <div class="t"><b>${esc(wsOwnerName()||t('Your coach'))}</b><span>${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</span></div>
+    ${av(wsOwnerName()||t('Coach'),32,3)}
+  </div>`;
+}
+/* The mic is the DEFAULT state (that is what the mockup's .snd is) and it swaps
+   to a send arrow while there is text. Swapping data-act directly — no render —
+   so the caret never jumps. */
+function chatComposer(){
+  return `<div class="composer fs">
+    <button class="plus" data-act="chat-plus" aria-label="${t('More')}" title="${t('More')}">${ic('plus',17)}</button>
+    <input class="fake" id="cmsg-inp" placeholder="${t('Message coach…')}" oninput="chatSndState()" onkeydown="if(event.key==='Enter')sendClientMsg()">
+    <button class="snd" id="cmsg-snd" data-act="voice-rec" data-has="false" aria-label="${t('Voice message')}" title="${t('Voice message')}" style="${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',16)}</button>
+  </div>`;
+}
+window.chatSndState=function(){
+  const b=$('cmsg-snd'),i=$('cmsg-inp');if(!b||!i)return;
+  const has=!!String(i.value||'').trim();
+  if(String(b.dataset.has)===String(has))return;
+  b.dataset.has=String(has);
+  b.dataset.act=has?'send-client':'voice-rec';
+  b.innerHTML=has?ic('arrowR',16):ic('mic',16);
+  const lab=has?t('Send'):t('Voice message');
+  b.setAttribute('aria-label',lab);b.setAttribute('title',lab);
+};
+/* Assistant thread + quick chips (the head and composer live in vClient).
+   v18.97 — .logcard / the safety note are SIBLINGS of .bub in mockup 05.
+   Nested inside a bubble they inherited the bubble's content width: 184px
+   instead of 88% of the thread (273px). */
 function naChat(c){
   const ms=NCHAT.filter(m=>m.client===c.name).slice(-30);
   const ts=m=>m.at?new Date(m.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}):t(m.time||'');
-  return `<div class="ccard" style="border-color:var(--acc-line2)">
-    <div class="row" style="gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--line2)">
-      <span style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#2E3A18,#1A1D22);display:grid;place-items:center;flex:none;border:1px solid rgba(200,240,75,.3);color:var(--accent)">${ic('bot',18)}</span>
-      <span style="flex:1;min-width:0"><b style="font-size:13.5px;display:block">${t('Nutrition Assistant')}</b><span class="muted" style="font-size:10.5px">${t('Online · knows your plan')}</span></span>
-      <span class="bdg bdg-lime" style="font-size:9.5px">${t('AI · not medical advice')}</span>
-    </div>
-    <div class="chatbody" style="padding:12px 0;max-height:340px;overflow-y:auto">
-      ${ms.length?ms.map(m=>{const me=m.role==='student';
-      return `<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'};max-width:88%">
-        ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
-        <div>${esc(t(m.body))}</div>
-        ${m.card&&!m.card.confirmed?naCard(m):''}
-        ${m.card&&m.card.confirmed?`<div class="ctx" style="margin-top:4px">${ic('check',12)} ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`:''}
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${ts(m)}</span>
-      </div>`}).join('')
-      :`<div class="muted" style="font-size:12px;padding:4px 2px">${t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`}
+  const sep=d=>d===isoToday()?t('Today')
+    :new Date(d+'T12:00:00').toLocaleDateString(lang==='fa'?'fa-IR':'en-GB',{month:'short',day:'numeric'});
+  let last='';
+  const rows=ms.map(m=>{
+    const me=m.role==='student';
+    let out='';
+    if(m.d&&m.d!==last){last=m.d;out+=`<div class="datesep">${esc(sep(m.d))}</div>`}
+    out+=`<div class="bub ${me?'me':'them'}" style="align-self:${me?'flex-end':'flex-start'}">
+      ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px">`:''}
+      <div>${esc(t(m.body))}</div>
+      <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;font-family:'JetBrains Mono',monospace;text-align:${me?'end':'start'}">${ts(m)}</span>
+    </div>`;
+    if(m.safety)out+=`<div class="nsafe">${ic('shield-alert',12)}<span>${t('AI · not medical advice')}</span></div>`;
+    if(m.card)out+=m.card.confirmed
+      ?`<div class="nlog-done">${ic('check',12)} ${t('Logged')} — ${nf(m.card.kcal)} kcal</div>`
+      :naCard(m);
+    return out;
+  }).join('');
+  /* Empty state = the mockup's opening line, computed from the REAL engine
+     (never invented — same keys naFallback already uses). */
+  const greet=rows?'':(()=>{const rem=NEng.remaining(c),first=String(c.name||'').split(' ')[0];
+    return `<div class="bub them" style="align-self:flex-start">${rem
+      ?`Hi ${esc(first)} — ${t('You have')} ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`
+      :t('Hi! Tell me what you ate, or ask what to eat next.')}</div>`})();
+  return `<div class="chatbody">
+      ${greet}${rows}
       ${S.naTyping?`<div class="bub them" style="align-self:flex-start"><div class="muted" style="font-size:12px">${t('Thinking…')}</div></div>`:''}
     </div>
-    <div class="quick" style="padding:8px 0 0">
+    <div class="quick">
       <button class="fchip" data-act="na-quick" data-q="${esc(t('What should I eat now?'))}">${ic('utensils-crossed',13)} ${t('What should you eat now?')}</button>
       <button class="fchip" data-act="na-quick" data-q="${esc(t('Food for before my workout'))}">${t('Pre-workout')}</button>
       <button class="fchip" data-act="na-quick" data-q="${esc(t('Swap whey'))}">${ic('repeat',13)} ${t('Swap whey')}</button>
       <button class="fchip" data-act="na-water" data-v="500">${ic('droplet',13)} ${t('Log500ml water')}</button>
       <button class="fchip" data-act="na-summary">${ic('bar-chart-2',13)} ${t('Today summary')}</button>
-      <button class="fchip" data-act="na-photo">${ic('camera',13)} ${t('Photo')}</button>
+      <!-- v18.97 - photo moved to the composer "+" (mockup05 note: كمپرسور با دكمه +)،
+           so its duplicate chip is gone. -->
       ${NA_PIC?`<span class="fchip on">${ic('camera',13)} ${t('attached')}</span>`:''}
-    </div>
-    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin-top:8px">
-      <button class="btn btn-ghost btn-icon" data-act="na-photo" title="${t('Photo')}" style="width:34px;height:34px">${ic('camera',15)}</button>
-      <input class="inp" id="na-inp" placeholder="${t('Log a meal or ask anything…')}" onkeydown="if(event.key==='Enter')naSend()" style="border:none;box-shadow:none">
-      <button class="btn btn-primary btn-icon" data-act="na-send">${ic('arrowR',16)}</button>
-    </div>
-  </div>`;
+    </div>`;
 }
 /* Structured ACTION card — mockup05 .logcard: items + macros3 + confirm. */
 function naCard(m){
@@ -7631,16 +8661,32 @@ function naFallback(c,v){
     const sum=parsed.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
     return {body:t('I found these foods — confirm and I will log them:'),card:{type:'log',meal,items:parsed.items,...sum,confirmed:false}};
   }
-  if(parsed.unknown.length)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
-  if(/eat|خور|bukhor|meal|غذا/i.test(s)){
+  /* v18.97 — INTENTS BEFORE "unknown". parseText() pushes ANY non-food text into
+     `unknown`, so the quick chips ("What should I eat now?", "Swap whey") used to
+     answer "I could not find: What should I eat now?" instead of the real engine
+     reply — i.e. the offline story advertised on cell 05 was broken.
+     Word-boundary-safe so a food like "wheat" can never match /eat/. */
+  const asksFood=/(^|\W)(eat|eating|hungry|meal|meals|breakfast|lunch|dinner|snack|food|workout)($|\W)|خور|غذا|وعده|بخور|تمرین/i.test(s);
+  const asksSwap=/(^|\W)(replace|swap|change|instead)($|\W)|جایگزین|دوست ندارم|عوض/i.test(s);
+  if(asksFood){
     const sug=NEng.suggestNow(c);
-    const o=sug.options[0];
+    const o=sug&&sug.options&&sug.options[0];
     if(o)return {body:t('You have')+` ${nf(sug.rem.kcal)} kcal · ${nf(sug.rem.p)}g ${t('Protein')} ${t('left today')}. ${t('Try')}: ${o.items.map(x=>foodName(x.n)+' '+nf(x.g)+'g').join(' + ')} (~${nf(o.kcal)} kcal).`};
   }
-  if(/replace|swap|جایگزین|دوست ندارم/i.test(s)){
-    const f=FOODS.find(x=>s.toLowerCase().includes(x.n.toLowerCase())||s.includes(foodName(x.n)));
-    if(f){const sw=NEng.swapsFor(f.n);if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'}}
+  if(asksSwap){
+    /* Strip the intent words first, then match either direction — "Swap whey"
+       must find "Whey Protein" even though the library name is longer. */
+    const key=s.toLowerCase().replace(/(^|\W)(replace|swap|change|instead|with|to)($|\W)/g,' ').replace(/\s+/g,' ').trim();
+    const f=FOODS.find(x=>key&&key.includes(String(x.n).toLowerCase()))
+        ||FOODS.find(x=>key&&String(x.n).toLowerCase().includes(key));
+    const sw=f?NEng.swapsFor(f.n):[];
+    if(sw.length)return {body:t('Instead of')+` ${foodName(f.n)}: `+sw.slice(0,4).map(x=>foodName(x.n)).join(' · ')+'.'};
+    /* No alternative exists (e.g. Whey Protein sits alone in Supplements) — the
+       fall-through below must skip "I could not find: Swap whey". */
   }
+  /* An intent already matched but had nothing to answer with — never let the
+     "I could not find: <the question itself>" branch swallow a question. */
+  if(parsed.unknown.length&&!asksFood&&!asksSwap)return {body:t('I could not find')+': '+parsed.unknown.join(', ')+'. '+t('Pick it from the food library or tell me the amount in grams.')};
   const rem=NEng.remaining(c);
   if(rem)return {body:t('You have')+` ${nf(rem.kcal)} kcal · ${nf(rem.p)}g ${t('Protein')} · ${nf(rem.c)}g ${t('Carbs')} · ${nf(rem.f)}g ${t('Fat')} ${t('left today')}. ${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}`};
   return {body:t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it. You can also ask what to eat next.')};
@@ -7680,13 +8726,25 @@ window.naSend=async pre=>{
   let replied=false;
   try{
     const code=wsCode()||S.joinCode||'';
+    /* v18.96 — send the STUDENT's clock. ai.mjs reads body.date/dow/hour and, when
+       they are missing, falls back to the server's UTC date and local hour. For a
+       UTC+3:30 student that meant the engine answered with YESTERDAY's macros
+       between 00:00-03:30, and the meal bucket drifted ~3.5h (server snaps an
+       invalid meal to 'Snack'). NEng.dow is byte-for-byte the server's formula. */
+    const _iso=isoToday();
     const r=await fetch('/api/ai/nutri',{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({code,client:c.name,message:msg,lang,photo:photo||undefined,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
+      body:JSON.stringify({code,client:c.name,message:msg,lang,date:_iso,dow:NEng.dow(_iso),hour:TDATE.getHours(),
+        photo:photo||undefined,foods:FOODS.map(f=>({n:f.n,fa:FA_FOOD[f.n]||''}))})});
     const d=await r.json().catch(()=>null);
     if(d&&d.ok){
       NCHAT.push({id:uid(),client:c.name,role:'assistant',body:d.reply,d:isoToday(),at:Date.now(),
         card:d.log?{type:'log',meal:d.log.meal,items:d.log.items,kcal:d.log.kcal,p:d.log.p,c:d.log.c,f:d.log.f,confirmed:false}:null,
         safety:!!d.safety});
+      replied=true;
+    }else if(r.status===402||(d&&d.error==='ai-quota')){
+      /* v18.96 — hitting the daily cap used to drop straight into the local
+         fallback, so the student never learned WHY the assistant went quiet. */
+      NCHAT.push({id:uid(),client:c.name,role:'assistant',body:t('AI daily quota reached'),d:isoToday(),at:Date.now()});
       replied=true;
     }
   }catch(e){}
@@ -7750,6 +8808,45 @@ function nbarLookup(raw){
       <div class="muted" style="font-size:10.5px;margin-top:5px">${t('Per 100 g')}</div>
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:8px" data-act="nbar-save">${ic('check',13)} ${t('Save this product')}</button>`;
   })();
+}
+/* v18.95 — "Type text" is its OWN quick path, deliberately NOT the chat.
+   It reuses the exact same deterministic parser the assistant falls back on
+   (NEng.parseText → real FOODS + real grams), so the numbers are identical to
+   what the AI would produce — just without the conversation. One tap = logged. */
+function ntextModal(){
+  openModal(`
+  <div class="modal-h"><h3>${t('Type text')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12px;margin-bottom:8px">${t('Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.')}</div>
+    <div class="row" style="gap:8px">
+      <input class="inp" id="nt-inp" placeholder="“200g chicken”" style="flex:1" onkeydown="if(event.key==='Enter'){const b=[...document.querySelectorAll('[data-act=nt-go]')][0];b&&b.click()}">
+      <button class="btn btn-primary" data-act="nt-go">${ic('search',14)} ${t('Search')}</button>
+    </div>
+    <div id="nt-res" style="margin-top:10px"></div>
+    <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="nt-to-chat">${ic('bot',14)} ${t('Chat to log')}</button>
+  </div>`);
+  setTimeout(()=>{const i=$('nt-inp');if(i)i.focus()},60);
+}
+function ntParse(raw){
+  const box=$('nt-res');if(!box)return;
+  const s=String(raw||'').trim();
+  S.nt=null;
+  if(!s){box.innerHTML='';return}
+  const p=NEng.parseText(s);
+  if(!p.items.length){
+    box.innerHTML=`<div class="muted" style="font-size:12px">${t('I could not find')}: ${esc((p.unknown||[]).join(', ')||s)}. ${t('Pick it from the food library or tell me the amount in grams.')}</div>`;
+    return;
+  }
+  const sum=p.items.reduce((a,x)=>({kcal:a.kcal+x.kcal,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{kcal:0,p:0,c:0,f:0});
+  const hour=TDATE.getHours();
+  const meal=hour<11?'Breakfast':hour<15?'Lunch':hour<16.5?'Snack':hour<18?'Pre-Workout':hour<22?'Dinner':'Before Bed';
+  S.nt={meal,items:p.items,kcal:sum.kcal,p:sum.p,c:sum.c,f:sum.f};
+  box.innerHTML=`<div class="cc tight" style="margin:0;padding:10px 12px">
+    ${p.items.map(x=>`<div class="sess" style="padding-top:5px"><span class="tm">${nf(x.kcal)}</span>
+      <div class="t"><b>${esc(foodName(x.n))}</b><span>${nf(x.g)} g · P${nf(x.p)} C${nf(x.c)} F${nf(x.f)}</span></div></div>`).join('')}
+    <div class="sess" style="padding-top:5px"><span class="tm">${nf(sum.kcal)}</span>
+      <div class="t"><b>${t('total')}</b><span>P${nf(sum.p)} C${nf(sum.c)} F${nf(sum.f)} · ${t(meal)}</span></div></div>
+    <button class="btn btn-lime" style="width:100%;justify-content:center;margin-top:8px" data-act="nt-log">${ic('check',14)} ${t('Log this meal')}</button></div>`;
 }
 function nbarModal(){
   const rec=bscanAll().slice(0,8);
@@ -7850,7 +8947,13 @@ function cSessions(){
   const toDay=d=>(d-TODAY+7)%7;
   const ordered=[...list].sort((a,b)=>toDay(a.day)-toDay(b.day)||a.start-b.start);
   const when=d=>toDay(d)===0?t('Today'):toDay(d)===1?t('Tomorrow'):t(DAYS[d]);
-  const tb=s=>attBadge(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
+  /* v18.106 — mockup 09 wants the flat `.badge` pill (fs10/900, text only), not
+     the coach-side `.bdg` with its icon. `attBadge()` is shared by 10 other
+     screens, so the conversion lives here rather than at the source. */
+  /* v18.112 — same future guard as attBadge(): "Tomorrow · Attended" was wrong. */
+  const attPill=s=>!attOK(s)?'':(s.att==='done'?`<span class="badge b-lime">${t('Attended')}</span>`
+    :s.att==='miss'?`<span class="badge b-red">${t('Missed')}</span>`:'');
+  const tb=s=>attPill(s)||`<span class="badge ${s.type==='assess'?'b-blue':s.type==='meas'?'b-purple':s.type==='appt'?'b-amber':'b-lime'}">${t(EVLBL[s.type]||'Session')}</span>`;
   return `<div class="cbody">
     ${nav}
     ${grid}
@@ -7877,54 +8980,50 @@ function cSessions(){
 function cChat(){
   const c=client(S.cid);
   const ms=MSGS.filter(m=>m.client===c.name);
-  /* v18.71 — mockup07 Chat: coach card + cc-in/cc-out bubbles + the daily
-     check-in rendered as the lime card + quick-reply chips. Same actions. */
-  return `<div class="cbody" style="padding-bottom:20px">
-    <div class="coachcard">${av(wsOwnerName()||t('Your coach'),44,3)}
-      <div class="t"><b>${esc(wsOwnerName()||t('Your coach'))}</b><span>${t('Your coach')} · ${t('Replies within')} ${esc(PREFS.resp||'~4 h')}</span></div>
-      <span class="badge b-lime">${t('Replies within ~4h')}</span>
-    </div>
-    <div class="chatbody">
-      ${ms.length?ms.map(m=>{const me=m.from==='client';
-      if(m.type==='checkin'){
-        const all=String(m.body).split('·').map(s=>s.trim()).filter(Boolean);
-        const segs=(all[0]===t('Check-in'))?all.slice(1):all;
-        return `<div class="checkincard"><div class="h">${t('Daily check-in sent')}</div>
-          <div class="g">${segs.map(s=>`<span>${esc(s)}</span>`).join('')}</div>
-          <span style="display:block;text-align:end;font-size:9px;opacity:.6;margin-top:5px">${t(m.time)}</span></div>`;
-      }
-      if(m.type==='voice')return `<div style="align-self:${me?'flex-end':'flex-start'};max-width:82%">
-        ${msgVoice(m)}
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px;text-align:${me?'end':'start'}">${t(m.time)}</span></div>`;
-      if(me)return `<div class="cc-out">
+  /* v18.102 — mockup 07: .datesep day separators + bubbles + the lime check-in
+     card + exactly 3 quick chips. The coach card moved into .chathead (vClient)
+     and the composer floats outside .capp, so neither lives here any more. */
+  /* MSGS only carries a DISPLAY time ("Just now", "2 h ago", "Yesterday"),
+     so group on what the text actually means rather than inventing a date. */
+  const dayKey=m=>{const s=String(m.time||'');
+    return (/just now/i.test(s)||/\d+\s*(min|h|hour)s?\s*ago/i.test(s))?t('Today'):t(s)};
+  const SEGI=['zap','activity','moon']; /* Energy · Soreness · Sleep — order is fixed */
+  let last='';
+  const rows=ms.map(m=>{
+    const me=m.from==='client';
+    let out='';
+    const k=dayKey(m);
+    if(k!==last){last=k;out+=`<div class="datesep">${esc(k)}</div>`}
+    if(m.type==='checkin'){
+      const all=String(m.body).split('·').map(s=>s.trim()).filter(Boolean);
+      const segs=(all[0]===t('Check-in'))?all.slice(1):all;
+      /* mockup's .g holds the VALUE only ("Low"), not "Energy: Low" — the long
+         form wrapped to two lines and pushed the card to 109px vs the mockup's 73. */
+      const val=s=>{const i=s.indexOf(':');return ((i<0?s:s.slice(i+1)).trim()||s)};
+      out+=`<div class="checkincard"><div class="h">${t('Daily check-in sent')}</div>
+        <div class="g">${segs.map((s,i)=>`<span>${ic(SEGI[i]||'circle',11)} ${esc(val(s))}</span>`).join('')}</div></div>`;
+      return out;
+    }
+    if(m.type==='voice')return out+msgVoice(m,me?'flex-end':'flex-start');
+    if(me)return out+`<div class="cc-out">
         ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
         ${m.type==='form'?`<div class="vid" data-act="fc-reports" data-c="${esc(m.client)}" style="cursor:pointer">${ic('play',28)}<span class="lbl">${t('Form check')}</span><span class="dur">${m.dur||'0:12'}</span></div>`:''}
         <div>${esc(t(m.body))}</div><span class="rd">${ic('check',11)}${ic('check',11)} ${t(m.time)}</span></div>`;
-      return `<div class="cc-in"><span class="who">${esc(wsOwnerName()||t('Coach'))}</span>
-        ${m.ctx?`<span class="ctx">📍 ${esc(m.ctx)}</span>`:''}
-        ${m.type==='reminder'?`<span class="ctx">⏰ ${t('Auto reminder')}</span>`:''}
+    return out+`<div class="cc-in"><span class="who">${esc(wsOwnerName()||t('Coach'))}</span>
+        ${m.ctx?`<span class="ctx">${ic('map-pin',12)} ${esc(m.ctx)}</span>`:''}
+        ${m.type==='reminder'?`<span class="ctx">${ic('clock',12)} ${t('Auto reminder')}</span>`:''}
         ${m.src?`<img src="${m.src}" alt="" style="max-width:200px;border-radius:10px;display:block;margin-bottom:4px;cursor:pointer" data-act="img-open" data-id="${m.id}">`:''}
         <div>${esc(t(m.body))}</div>
-        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px">${t(m.time)}</span></div>`}).join('')
-      :`<div class="ccard cempty">${ic('mail',24)}<b>${t('Messages')}</b><span class="muted" style="font-size:12px">${t('Your coach publishes your plan here')}</span></div>`}
-    </div>
+        <span style="display:block;font-size:9.5px;opacity:.55;margin-top:4px">${t(m.time)}</span></div>`}).join('');
+  return `<div class="cbody">
+    <div class="chatbody">${rows||`<div class="ccard cempty">${ic('mail',24)}<b>${t('Messages')}</b><span class="muted" style="font-size:12px">${t('Your coach publishes your plan here')}</span></div>`}</div>
     <div class="quick">
-      <button class="fchip" data-act="quick-msg" data-m="✅ ${t('Done for today')}">${t('Done for today')}</button>
+      <button class="fchip" data-act="quick-msg" data-m="${t('Done for today')}">${t('Done for today')}</button>
       <button class="fchip" data-act="cattach">${ic('camera',13)} ${t('Send progress photo')}</button>
       <button class="fchip" data-act="cmsg-focus">${ic('help',13)} ${t('Ask a question')}</button>
     </div>
-    <div class="row" style="gap:6px;flex-wrap:wrap;padding:0 14px 8px">
-      <button class="fchip" data-act="cform">${ic('camera',13)} ${t('Record form check')}</button>
-      <button class="fchip" data-act="cattach">${ic('folder',13)} ${t('Attach file')}</button>
-    </div>
     ${S.recVoice?`<div class="row" style="gap:8px;align-items:center;padding:0 14px 8px">
       <span class="muted" style="font-size:11.5px;color:var(--red);font-weight:700">● ${t('Recording… tap to stop')} · ${nf(VMAX)}s</span></div>`:''}
-    <div class="composer" style="border:1px solid var(--line);border-radius:14px;padding:8px;margin:0 14px">
-      <button class="btn btn-ghost btn-icon" data-act="voice-rec" title="${t('Voice message')}" aria-label="${t('Voice message')}"
-        style="width:34px;height:34px;flex:none;${S.recVoice?'color:var(--red);box-shadow:0 0 0 2px rgba(239,91,91,.35)':''}">${S.recVoice?ic('square',15):ic('mic',15)}</button>
-      <input class="inp" id="cmsg-inp" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendClientMsg()" style="border:none;box-shadow:none">
-      <button class="btn btn-primary btn-icon" data-act="send-client">${ic('arrowR',16)}</button>
-    </div>
   </div>`;
 }
 /* v18.27 — phone skins (client app themes). prev = mini preview gradient,
@@ -7939,10 +9038,21 @@ function cProfile(){
   const lm=lastM(S.cid);
   const remain=packRemain(c.name);
   const pack=PACKS.find(p=>p&&p.client===c.name);
-  const earned=GAM.earned(c).length;
   const wos=(DB[c.id]&&DB[c.id].stats&&DB[c.id].stats.done)||0;
+  /* v18.112 — sport metrics for the hero, replacing Points / Badges. These are
+     numbers a trainee actually trains against (this week's split + program
+     week); Streak and Workouts were already honest. */
+  const pmF=progMeta(c);
+  const spFW=splitOf(c.id).map(s=>s&&s.t==='w'?splitW(c.id,s):null).filter(Boolean);
+  const wkTotal=spFW.length, wkDone=spFW.filter(w=>wDone(w)).length;
   const jcode=joinCodeOf(c)||''; /* clientCode() mints one on first use */
   const jlink=jcode?inviteLink(jcode):'';
+  /* v18.105 — mockup 08 always renders a SINCE line (14px, part of the hero's
+     rhythm). The demo seed has no `since`, so fall back to the client's
+     EARLIEST measurement — a real stored date, never an invented one. */
+  const meas0=((DB[c.id]||{}).measures)||[];
+  const sinceD=c.since||(meas0[0]&&meas0[0].d)||'';
+  const sinceTxt=sinceD?`${t('Since')} ${String(fmtD(sinceD)).toUpperCase()}`:'';
   /* v18.71 — mockup 08 Profile: hero with4 stats, session pack, REAL QR join
      code (qrcodegen) and a settings list. Same fields/actions as before. */
   return `<div class="cbody">
@@ -7950,12 +9060,12 @@ function cProfile(){
       <span data-act="cp-pic" role="button" tabindex="0" title="${t(c.pic?'Change photo':'Add photo')}" style="cursor:pointer;display:block;width:72px;margin:0 auto">${av(t(c.name),72,c.id-1)}</span>
       <b>${esc(t(c.name))}</b>
       <div class="goal">${ic('dumbbell',13)} ${t(c.goal)}</div>
-      <div class="since">${c.since?`${t('Since')} ${String(fmtD(c.since)).toUpperCase()}`:''}</div>
+      <div class="since">${sinceTxt}</div>
       <div class="pstats">
         <div><b>${nf(c.dayStreak||0)}</b><span>${t('Streak')}</span></div>
-        <div><b>${nf(c.pts||0)}</b><span>${t('Points')}</span></div>
-        <div><b>${nf(earned)}/${nf(GAM.BADGES.length)}</b><span>${t('Badges')}</span></div>
         <div><b>${nf(wos)}</b><span>${t('Workouts')}</span></div>
+        <div><b>${nf(wkDone)}/${nf(wkTotal)}</b><span>${t('this week')}</span></div>
+        <div><b>${nf(pmF.wk)}/${nf(pmF.weeks)}</b><span>${t('Week')}</span></div>
       </div>
     </div>
     <div class="pf-hint"><span class="muted" style="font-size:10.5px">${t('Tap the photo to change it')}</span>${c.pic?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11px" data-act="cp-pic-del">${t('Remove photo')}</button>`:''}</div>
@@ -7976,7 +9086,6 @@ function cProfile(){
     <div class="cc tight">
         ${[['Current Weight',uwS(c.weight)],['Height',c.h?ucS(c.h):'—'],['Body Fat',(c.bf!=null&&c.bf!=='')?nf(c.bf)+' %':'—']].map(([k,v])=>`
         <div class="pf-tile"><span class="pf-tk">${t(k)}</span><b class="pf-tv">${v}</b></div>`).join('')}
-      </div>
       ${c.targetW?`<div class="pf-stat" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px">
         <span class="pf-rt"><span class="pf-rk">${t('Target Weight')}</span><b class="pf-tv" style="text-align:start">${uwS(c.targetW)}${c.targetDate?` · ${esc(c.targetDate)}`:''}</b></span>
         <span class="pf-pill pf-pill-acc">${nf(goalPct(c))}%</span></div>
@@ -7994,11 +9103,13 @@ function cProfile(){
     <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
     <div class="cc tight">
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
-        <div class="langseg"><button class="${lang==='fa'?'on':''}" data-act="lang-set" data-l="fa">FA</button><button class="${lang==='en'?'on':''}" data-act="lang-set" data-l="en">EN</button></div></div>
+        <div class="muted" style="font-size:12.5px">${t('English')}</div></div>
       <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
         <label class="sw"><input type="checkbox" ${PREFS.priv.photos?'checked':''} data-act="pref-sw" data-k="priv.photos"><i></i></label></div>
+      <!-- v18.105 - mockup 08's 5th row; reuses the existing theme-toggle handler -->
+      <div class="setrow" data-act="theme-toggle" style="cursor:pointer"><span class="si">${ic('moon',15)}</span><div class="t"><b>${t('Appearance')}</b><span>${PREFS.theme==='Dark'?t('Dark theme'):t('Light theme')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
     </div>
     <div class="sec"><span class="sec-t">${ic('palette',15)} ${t('App Theme')}</span></div>
     <div class="cc tight">
@@ -8033,7 +9144,7 @@ let restIv=null,restAC=null;
       from 3s — long sets get more lead time without a beep every second.
    4. restSeek() is the single mutation path for ±15/+30, presets and skip, so
       every clock change goes through one clamp + one save. */
-const REST_C=2*Math.PI*30;              // ring circumference (r=30, stroke 6)
+const REST_C=2*Math.PI*24;             // ring circumference (r=24, stroke 6) — v18.91: 66->54px so the card fits above the foot
 const restMs=()=>{const p=S.player;if(!p)return 0;
   if(p.restPaused)return Math.max(0,p.restLeftMs||0);
   if(!p.restEnd)return 0;
@@ -8161,13 +9272,15 @@ function restTick(){
    `.cplayer .rest` did not exist yet and this silently did nothing — the card
    sat ~1000px below the fold (measured: card top 998 vs body viewport 137-434,
    `visible:false`) which is why the whole control row looked "missing".
-   Deferring past the caller's render() is what makes it actually scroll. */
+   Deferring past the caller's render() is what makes it actually scroll.
+   v18.91b: scroll to offset 0 (was -70). On a short viewport the foot eats the
+   bottom of the body, so a 70px lead pushed the LAST row under it. */
 function restReveal(){
   setTimeout(()=>{
     const b=document.querySelector('.cplayer .cpbody'),el=document.querySelector('.cplayer .rest');
     if(!b||!el)return;
     const top=el.getBoundingClientRect().top-b.getBoundingClientRect().top;
-    try{b.scrollTo({top:Math.max(0,top-70),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top-70)}
+    try{b.scrollTo({top:Math.max(0,top),behavior:'smooth'})}catch(e){b.scrollTop=Math.max(0,top)}
   },60);
 }
 /* v18.90 — a refresh used to KILL the whole session (S is never persisted).
@@ -8295,9 +9408,9 @@ function cPlayer(){
       ${S.player.rest>0?`<div class="rest" data-state="${S.player.restPaused?'pause':'run'}">
         <div class="rest-main">
           <div class="rest-ring">
-            <svg viewBox="0 0 66 66" width="66" height="66" aria-hidden="true">
-              <circle class="trk" cx="33" cy="33" r="30"/>
-              <circle class="prg" id="restRing" cx="33" cy="33" r="30" stroke-dasharray="${REST_C.toFixed(1)}" stroke-dashoffset="0"/>
+            <svg viewBox="0 0 54 54" width="54" height="54" aria-hidden="true">
+              <circle class="trk" cx="27" cy="27" r="24"/>
+              <circle class="prg" id="restRing" cx="27" cy="27" r="24" stroke-dasharray="${REST_C.toFixed(1)}" stroke-dashoffset="0"/>
             </svg>
             <span class="val" id="restNum">${nf(fmtMS(S.player.rest))}</span>
           </div>
@@ -8354,19 +9467,707 @@ function cPlayer(){
   </div>`;
 }
 
+/* ================= ATHLETICS §8 — RACES =================
+   Target race + countdown + result. The coach owns the row; `ath` is optional   so a squad-wide event and an athlete's target both fit the same shape. */
+function raceCard(r){
+  const d=Math.round((Date.parse(r.date+'T00:00:00')-Date.parse(isoToday()+'T00:00:00'))/864e5);
+  return `<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:12px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px;flex-wrap:wrap">
+          <b style="font-size:14.5px">${esc(r.name)}</b>
+          ${r.event?`<span class="chip">${ic('flag',11)} ${esc(r.event)}</span>`:''}
+          ${r.ath?`<span class="chip">${ic('user',11)} ${esc(r.ath)}</span>`:''}
+        </div>
+        <div class="muted" style="font-size:12.5px;margin-top:5px">${fmtD(r.date)}${r.loc?' · '+esc(r.loc):''}${r.dist?' · '+esc(r.dist):''}</div>
+        ${r.goal?`<div class="muted" style="font-size:12.5px;margin-top:4px">${ic('target',12)} ${esc(r.goal)}</div>`:''}
+      </div>
+      <div style="text-align:right;min-width:98px">
+        <div class="lbl" style="font-size:10.5px">${t('Target')}</div>
+        <b style="font-size:16px">${esc(r.target||'—')}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:3px">${d>0?`${nf(d)} ${t('days left')}`:d===0?t('Today'):t('Past')}</div>
+      </div>
+    </div>
+    <div class="row" style="gap:6px;margin-top:11px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="race-del" data-id="${esc(r.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      <button class="btn btn-outline btn-sm" data-act="race-edit" data-id="${esc(r.id)}">${ic('edit',13)} ${t('Edit')}</button>
+      <button class="btn btn-primary btn-sm" data-act="race-result" data-id="${esc(r.id)}">${ic('check',13)} ${t('Log result')}</button>
+    </div>
+  </div>`;
+}
+function vRaces(){
+  const up=RACES.filter(r=>!r.result).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const done=RACES.filter(r=>r.result).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  return `<div class="page-h"><div><h1>${t('Races')}</h1>
+    <div class="sub">${t('Target races, countdowns and results')}</div></div>
+    <button class="btn btn-primary" data-act="race-new">${ic('plus',15)} ${t('New Race')}</button></div>
+  ${up.length?up.map(raceCard).join(''):`<div class="empty">${ic('flag',24)}
+    <b>${t('No upcoming races')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Add a target race so the whole block is built around it')}</span>
+    <button class="btn btn-primary btn-sm" data-act="race-new" style="margin-top:4px">${ic('plus',14)} ${t('New Race')}</button></div>`}
+  ${done.length?`<div class="sec-t" style="margin:20px 0 10px">${t('Results')}</div>
+  <div class="card" style="padding:0;overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('Race')}</th><th>${t('Date')}</th><th>${t('Target')}</th>
+      <th>${t('Result')}</th><th>${t('Position')}</th><th>${t('PB')}</th></tr></thead>
+    <tbody>${done.map(r=>`<tr>
+      <td><b>${esc(r.name)}</b><span class="muted" style="font-size:11.5px;display:block">${esc(r.event||'')}</span></td>
+      <td>${fmtD(r.date)}</td><td>${esc(r.target||'—')}</td>
+      <td><b>${esc(r.result.time||'—')}</b></td><td>${esc(r.result.pos||'—')}</td>
+      <td>${r.result.pb?`<span class="bdg bdg-green" style="font-size:10px">${t('PB')}</span>`:'—'}</td>
+    </tr>`).join('')}</tbody></table></div>`:''}`;
+}
+function raceEditor(id){
+  const r=id!=null?RACES.find(x=>String(x.id)===String(id)):null;
+  S.raceDraft=r?JSON.parse(JSON.stringify(r)):{id:'rc'+Date.now(),name:'',event:'',dist:'',date:isoToday(),loc:'',target:'',goal:'',notes:'',ath:''};
+  const d=S.raceDraft;
+  const f=(k,l,ph,ty)=>`<div class="field"><label class="lbl">${t(l)}</label>
+    <input class="inp" id="rc-${k}"${ty?` type="${ty}"`:''} value="${esc(d[k]||'')}" placeholder="${ph||''}"></div>`;
+  openModal(`
+  <div class="modal-h"><h3>${ic('flag',16)} ${r?t('Edit Race'):t('New Race')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    ${f('name','Race name','City Half Marathon')}
+    <div class="fgrid">${f('event','Event','Half Marathon')}${f('dist','Distance','21.1 km')}</div>
+    <div class="fgrid">${f('date','Date','','date')}${f('loc','Location','Bristol')}</div>
+    <div class="fgrid">${f('target','Target time','1:29:00')}${f('ath','Athlete (optional)','Whole squad')}</div>
+    ${f('goal','Goal','Top 20 overall')}
+    ${f('notes','Notes','Anything the block must respect')}
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="race-save">${ic('check',14)} ${t('Save Race')}</button></div>`);
+}
+function raceResult(id){
+  const r=RACES.find(x=>String(x.id)===String(id));if(!r)return;
+  openModal(`
+  <div class="modal-h"><h3>${ic('check-circle',16)} ${t('Log result')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="muted" style="font-size:12.5px;margin-bottom:10px">${esc(r.name)} · ${t('Target')}: ${esc(r.target||'—')}</div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Actual time')}</label><input class="inp" id="rs-time" placeholder="4:21.6"></div>
+      <div class="field"><label class="lbl">${t('Position')}</label><input class="inp" id="rs-pos" placeholder="2nd"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Coach notes')}</label><input class="inp" id="rs-notes" placeholder="Positive first 3 km"></div>
+    <label class="row" style="gap:8px;align-items:center;font-size:13px">
+      <input type="checkbox" id="rs-pb"> ${t('This was a personal best')}</label>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="result-save" data-id="${esc(r.id)}">${ic('check',14)} ${t('Save result')}</button></div>`);
+}
+/* ================= ATHLETICS §9 — PERSONAL BESTS =================
+   One row per recorded mark, newest first; the latest mark per event is   highlighted. `prev` is never dropped — §9 asks for history, not a value. */
+function vPbs(){
+  const rows=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const latestOf=ev=>rows.find(p=>p.ev===ev);
+  return `<div class="page-h"><div><h1>${t('Personal Bests')}</h1>
+    <div class="sub">${t('Every mark with its history — not just the latest value')}</div></div>
+    <button class="btn btn-primary" data-act="pb-new">${ic('plus',15)} ${t('Record mark')}</button></div>
+  ${rows.length?`<div class="card" style="padding:0;overflow-x:auto"><table class="tbl">
+    <thead><tr><th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th>
+      <th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th></tr></thead>
+    <tbody>${rows.map(p=>{const top=latestOf(p.ev)===p;return `<tr>
+      <td><b>${esc(p.ev)}</b></td>
+      <td><b style="font-size:14px;${top?'color:var(--accent-text)':''}">${esc(p.val)}</b>${top?` <span class="bdg bdg-green" style="font-size:9.5px">${t('PB')}</span>`:''}</td>
+      <td class="muted">${esc(p.prev||'—')}</td>
+      <td>${fmtD(p.date)}</td>
+      <td><span class="chip">${esc(p.src||'Manual')}</span></td>
+      <td class="muted">${esc(p.notes||'')}</td></tr>`}).join('')}</tbody></table></div>`:
+  `<div class="empty">${ic('medal',24)}<b>${t('No marks recorded yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Record a mark and every future one is compared against it')}</span>
+    <button class="btn btn-primary btn-sm" data-act="pb-new" style="margin-top:4px">${ic('plus',14)} ${t('Record mark')}</button></div>`}`;
+}
+function pbEditor(){
+  const evs=['60m','100m','200m','400m','800m','1500m','3000m','5000m','10K','Half Marathon','Marathon'];
+  openModal(`
+  <div class="modal-h"><h3>${ic('medal',16)} ${t('Record mark')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Event')}</label>
+      <input class="inp" id="pb-ev" list="pb-evs" placeholder="5K">
+      <datalist id="pb-evs">${evs.map(e=>`<option value="${e}"></option>`).join('')}</datalist></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('New mark')}</label><input class="inp" id="pb-val" placeholder="21:32"></div>
+      <div class="field"><label class="lbl">${t('Previous mark')}</label><input class="inp" id="pb-prev" placeholder="21:47"></div>
+    </div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" id="pb-date" type="date" value="${isoToday()}"></div>
+      <div class="field"><label class="lbl">${t('Source')}</label>
+        <select class="sel" id="pb-src"><option>Race result</option><option>Time trial</option>
+          <option>Road race</option><option>Manual</option></select></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Notes')}</label><input class="inp" id="pb-notes" placeholder="Wind, course, conditions"></div>
+    <div class="muted" style="font-size:12px">${t('The previous mark is kept so the history shows progression, not just the latest number.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="pb-save">${ic('check',14)} ${t('Record mark')}</button></div>`);
+}
+
+/* ================= ATHLETICS §3 — ATHLETE PROFILE =================
+   The athletics layer ON TOP of the existing athlete: discipline, target,   availability. Nothing here replaces a CLIENTS field — it extends it. */
+/* v19.12 — §3 now renders INSIDE the athlete's workspace as the "Athletics" tab
+   (desktop) or from the mobile client view. The athlete arrives as an explicit
+   cid — S.apCid and the ap-pick chip row are gone, because Clients already IS
+   the athlete picker. The Save button carries data-cid so the handler needs no
+   hidden "currently editing" state either. */
+function vAprofile(cid){
+  const c=client(cid||S.cid);
+  if(!c)return '';
+  const p=aprofOf(c.id)||{};
+  const F=(k,l,ph,dl)=>`<div class="field"><label class="lbl">${t(l)}</label>
+    <input class="inp" id="ap-${k}"${dl?` list="${dl}"`:''} value="${esc(p[k]||'')}" placeholder="${ph||''}"></div>`;
+  return `<div class="page-h"><div><h1>${t('Athletics Profile')}</h1>
+    <div class="sub">${esc(c.name)} · ${t('Discipline, target and availability — the layer the athletics engine reads')}</div></div>
+    <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button></div>
+  <div class="card" style="padding:16px">
+    <div class="row" style="gap:10px;margin-bottom:14px">${avC(c.name,40)}
+      <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(c.name)}</b>
+        <div class="muted" style="font-size:12.5px">${esc(c.goal||'')} · ${esc(c.prog||'')}</div></div>
+      ${p.id?`<span class="bdg bdg-green" style="font-size:10px">${t('Profile set')}</span>`:`<span class="bdg bdg-gray" style="font-size:10px">${t('Not set')}</span>`}</div>
+    <div class="fgrid">
+      ${F('disc','Primary discipline','Middle distance')}
+      ${F('event','Event','1500m','ap-evts')}
+      ${F('dist','Distance','1500 m')}
+      ${F('level','Competitive level','National')}
+      ${F('age','Age category','U23')}
+      ${F('pb','Personal bests','4:21.6 (1500m) · 1:31:24 (Half)')}
+      ${F('target','Target race','City Half Marathon')}
+      ${F('targetDate','Target race date','2026-10-18')}
+      ${F('avail','Training availability','Mon–Sat, mornings')}
+      ${F('freq','Weekly sessions','5')}
+      ${F('mileage','Current weekly mileage (km)','42')}
+      ${F('history','Training history','4 seasons · 118 sessions')}
+      ${F('injury','Injury / limitation notes','Left Achilles — mild tendinopathy')}
+      ${F('notes','Coach notes','Responds well to volume')}
+    </div>
+    <datalist id="ap-evts">${AEVTS.map(e=>`<option value="${e}"></option>`).join('')}</datalist>
+    <div class="muted" style="font-size:12px;margin-top:12px">${ic('database',12)} ${t('Events are data, not code — add a row to the catalogue, never a branch in the engine.')}</div>
+  </div>`;
+}
+
+/* ================= ATHLETICS §7 — TRAINING PHASES =================
+   The coach names the blocks; nothing here assumes one periodization model. */
+function vPhases(){
+  const now=PHASES.find(p=>p.now)||PHASES[0]||null;
+  const bar=v=>`<div class="pbar"><i style="width:${Math.max(4,Math.min(100,+v||0))}%"></i></div>`;
+  return `<div class="page-h"><div><h1>${t('Training Phases')}</h1>
+    <div class="sub">${t('Your season blocks — named by you, not by a fixed methodology')}</div></div>
+    <button class="btn btn-primary" data-act="ph-new">${ic('plus',15)} ${t('New phase')}</button></div>
+  ${now?`<div class="card" style="padding:16px 18px;margin-bottom:14px;border-color:var(--acc-line)">
+    <div class="row" style="gap:8px;flex-wrap:wrap"><span class="bdg bdg-lime">${t('Current phase')}</span>
+      <b style="font-size:15px">${esc(now.name)}</b>
+      ${now.weeks?`<span class="chip">${ic('clock',11)} ${esc(now.weeks)}</span>`:''}</div>
+    ${now.focus?`<div class="muted" style="font-size:12.5px;margin-top:7px">${esc(now.focus)}</div>`:''}
+    <div style="margin-top:10px">${bar(now.load)}</div></div>`:''}
+  ${PHASES.length?PHASES.map(ph=>`<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:10px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px;flex-wrap:wrap"><b style="font-size:14.5px">${esc(ph.name)}</b>
+          ${ph.weeks?`<span class="chip">${ic('calendar',11)} ${esc(ph.weeks)}</span>`:''}
+          ${ph.now?`<span class="bdg bdg-lime" style="font-size:10px">${t('Current')}</span>`:''}</div>
+        ${ph.focus?`<div class="muted" style="font-size:12.5px;margin-top:5px">${esc(ph.focus)}</div>`:''}
+      </div>
+      <div style="text-align:right;min-width:76px">
+        <div class="lbl" style="font-size:10.5px">${t('Load')}</div>
+        <b style="font-size:15px">${nf(ph.load||0)}<span class="muted" style="font-size:11px">%</span></b></div>
+    </div>
+    <div style="margin-top:9px">${bar(ph.load)}</div>
+    <div class="row" style="gap:6px;margin-top:10px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="ph-del" data-id="${esc(ph.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      ${ph.now?'':`<button class="btn btn-outline btn-sm" data-act="ph-now" data-id="${esc(ph.id)}">${ic('check',13)} ${t('Set current')}</button>`}
+    </div>
+  </div>`).join(''):`<div class="empty">${ic('calendar',24)}<b>${t('No phases yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Define the blocks your season is built from')}</span></div>`}
+  <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Phases are yours to name — CoachMint does not impose a periodization model, and your weekly plan stays where it is.')}</div>`;
+}
+function phEditor(){
+  const d=S.phDraft||{name:'',weeks:'',focus:'',load:50};
+  openModal(`
+  <div class="modal-h"><h3>${ic('clock',16)} ${t('Phase')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Phase name')}</label>
+      <input class="inp" id="ph-name" value="${esc(d.name||'')}" placeholder="Build"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Weeks')}</label>
+        <input class="inp" id="ph-weeks" value="${esc(d.weeks||'')}" placeholder="W7–W14"></div>
+      <div class="field"><label class="lbl">${t('Load')} %</label>
+        <input class="inp" id="ph-load" value="${esc(d.load!=null?d.load:'')}" placeholder="78"></div>
+    </div>
+    <div class="field"><label class="lbl">${t('Focus')}</label>
+      <input class="inp" id="ph-focus" value="${esc(d.focus||'')}" placeholder="Threshold · intervals · hills"></div>
+    <div class="muted" style="font-size:12px">${t('Name it the way YOU coach it — this is not a fixed methodology.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="ph-save">${ic('check',14)} ${t('Save phase')}</button></div>`);
+}
+
+/* ================= ATHLETICS §4 — BLOCK WORKOUT BUILDER ================= */
+function blkSummary(b){
+  const bits=[];
+  if(b.dist)bits.push(b.dist);
+  if(b.dur&&b.dur!=='—')bits.push(b.dur);
+  if(b.target)bits.push(b.target);
+  if(b.pace)bits.push(b.pace);
+  if(b.speed)bits.push(b.speed);
+  if(b.rec&&b.rec!=='—')bits.push(t('Rec')+': '+b.rec);
+  if(b.rpe)bits.push('RPE '+b.rpe);
+  if(b.items)bits.push(b.items);
+  if(b.reps)bits.push(b.reps);
+  if(b.type)bits.push(b.type);
+  if(b.surface)bits.push(b.surface);
+  if(!bits.length&&b.note)bits.push(b.note);
+  return bits.join(' · ')||t('No parameters');
+}
+function runCard(w){
+  return `<div class="card" style="padding:14px 16px;margin-bottom:10px">
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <b style="font-size:14.5px">${esc(w.name)}</b>
+      <span class="chip">${ic('calendar',11)} ${esc(w.day||'—')}</span>
+      <span class="chip">${nf((w.blocks||[]).length)} ${t('blocks')}</span>
+    </div>
+    <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+      ${(w.blocks||[]).map(b=>`<div class="row" style="gap:10px;align-items:baseline;
+        padding:7px 10px;background:var(--row-h);border-radius:8px;
+        border-inline-start:3px solid ${b.t==='main'?'var(--accent)':'var(--line2)'}">
+        <span class="chip" style="min-width:82px;justify-content:center;flex:none">${esc(blkLabel(b.t))}</span>
+        <b style="font-size:12.5px;flex:none">${esc(b.name||'')}</b>
+        <span class="muted" style="font-size:12px;flex:1;min-width:0">${esc(blkSummary(b))}</span>
+      </div>`).join('')}
+    </div>
+    <div class="row" style="gap:6px;margin-top:11px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" data-act="run-del" data-id="${esc(w.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      <button class="btn btn-outline btn-sm" data-act="run-edit" data-id="${esc(w.id)}">${ic('edit',13)} ${t('Edit')}</button>
+    </div>
+  </div>`;
+}
+function vRunBuilder(){
+  return `<div class="page-h"><div><h1>${t('Run Builder')}</h1>
+    <div class="sub">${t('Block-based running sessions — warm-up to cool-down')}</div></div>
+    <button class="btn btn-primary" data-act="run-new">${ic('plus',15)} ${t('New workout')}</button></div>
+  ${RUNW.length?RUNW.map(runCard).join(''):`<div class="empty">${ic('dumbbell',24)}
+    <b>${t('No running workouts yet')}</b>
+    <span class="muted" style="font-size:12.5px">${t('Build one from blocks — warm-up, drills, main set, recovery, cool-down')}</span>
+    <button class="btn btn-primary btn-sm" data-act="run-new" style="margin-top:4px">${ic('plus',14)} ${t('New workout')}</button></div>`}
+  <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Blocks keep Distance, Time, Pace, Speed, Recovery and Intensity separate — they are never collapsed into one field.')}</div>`;
+}
+/* Flush EVERY visible input into the draft. Without this, adding or deleting
+   a block (or changing a block's type, which swaps its whole field set) would   re-render the modal and silently discard whatever the coach had typed. */
+function runReadAll(){
+  const d=S.runDraft;if(!d)return;
+  const nm=$('rw-name'),dy=$('rw-day');
+  if(nm)d.name=nm.value;if(dy)d.day=dy.value;
+  const keys=[...new Set(Object.values(BLK_FIELDS).flat().map(f=>f[0]))];
+  (d.blocks||[]).forEach((b,i)=>{const sel=$('rw-t-'+i);if(sel)b.t=sel.value;
+    keys.forEach(k=>{const e2=$('rw-b'+i+'-'+k);if(e2)b[k]=e2.value.trim()})});
+}
+function renderRunEditor(){
+  const d=S.runDraft;if(!d)return;
+  const fields=[...new Set(Object.values(BLK_FIELDS).flat().map(f=>f[0]))];
+  const wide=['items','note','target','surface','type','rec','speed'];
+  const blocksHtml=(d.blocks||[]).map((b,i)=>`
+    <div class="ccard" style="padding:10px 12px;margin-bottom:8px">
+      <div class="row" style="gap:8px;margin-bottom:8px">
+        <span class="chip">${nf(i+1)}</span>
+        <div style="flex:1;min-width:0"><select class="sel" id="rw-t-${i}" data-change="run-btype" data-i="${i}">${BLK_TYPES.map(([k,l])=>`<option value="${k}" ${b.t===k?'selected':''}>${t(l)}</option>`).join('')}</select></div>
+        <button class="btn btn-ghost btn-icon" data-act="run-block-del" data-i="${i}" style="color:var(--red)">${ic('trash',13)}</button>
+      </div>
+      <div class="fgrid" style="gap:8px">
+        ${(BLK_FIELDS[b.t]||BLK_FIELDS.main).map(([k,l])=>{
+          const v=b[k]==null?'':b[k];
+          return `<div class="field"${wide.includes(k)?' style="grid-column:1/-1"':''}>
+            <label class="lbl">${t(l)}</label>
+            <input class="inp" id="rw-b${i}-${k}" value="${esc(v)}"></div>`}).join('')}
+      </div>
+    </div>`).join('');
+  openModal(`
+  <div class="modal-h"><h3>${ic('dumbbell',16)} ${RUNW.some(x=>String(x.id)===String(d.id))?t('Edit workout'):t('New workout')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Workout name')}</label>
+      <input class="inp" id="rw-name" value="${esc(d.name||'')}" placeholder="Interval session — 6 × 400m"></div>
+    <div class="field"><label class="lbl">${t('Day')}</label>
+      <input class="inp" id="rw-day" value="${esc(d.day||'')}" placeholder="Thursday"></div>
+    <div class="lbl" style="margin:6px 0 8px">${t('Blocks')}</div>
+    ${blocksHtml}
+    <button class="btn btn-outline btn-sm" data-act="run-block-add" style="width:100%">${ic('plus',13)} ${t('Add block')}</button>
+    <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Each block keeps its own Distance, Time, Pace, Speed, Recovery and Intensity.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="run-save">${ic('check',14)} ${t('Save workout')}</button></div>`);
+  window.lucide&&lucide.createIcons();
+}
+function runEditor(id){
+  const w=id!=null?RUNW.find(x=>String(x.id)===String(id)):null;
+  S.runDraft=w?JSON.parse(JSON.stringify(w)):{id:'rw'+Date.now(),name:'',day:'Monday',
+    sp:['Running & Endurance'],blocks:[{t:'warmup',name:'Warm-up',dur:'10 min',pace:'',note:''}]};
+  renderRunEditor();
+}
+
+/* ============ ATHLETICS §16/§17 — PLANNED VS ACTUAL helpers ============
+   A plan stores STRINGS the coach typed ('400 m', '6 × 400 m', '5:40/km',
+   '10 min', '2:35'), so parsing is unavoidable. Every number derived here comes
+   from a value the coach wrote — nothing is invented, and a field left blank
+   yields 0 / '' rather than a guess. */
+const pvNum=s=>{const m=/(-?\d+(?:\.\d+)?)/.exec(String(s||''));return m?parseFloat(m[1]):0};
+const pvPaceSec=s=>{const m=/(\d+):(\d+)/.exec(String(s||''));return m?(+m[1])*60+(+m[2]):0};
+const pvDurSec=s=>{s=String(s||'').trim();if(!s||s==='—')return 0;
+  if(/min/i.test(s))return pvNum(s)*60;
+  const m=/^(\d+):(\d{1,2})$/.exec(s);return m?(+m[1])*3600+(+m[2])*60:0};
+/* distance a block contributes: explicit dist × reps, else pace × duration */
+const pvBlockKm=b=>{if(!b)return 0;
+  if(b.dist){const km=/km/i.test(b.dist)?pvNum(b.dist):pvNum(b.dist)/1000;
+    const reps=/×/.test(b.reps||'')?pvNum(b.reps):1;return +(km*reps).toFixed(2)}
+  const p=pvPaceSec(b.pace),d=pvDurSec(b.dur);return p&&d?+(d/p).toFixed(2):0};
+/* planned pace — only when BOTH distance and duration are stated, otherwise '' */
+const pvPlanPace=b=>{if(!b||!b.dist)return '';
+  const km=/km/i.test(b.dist)?pvNum(b.dist):pvNum(b.dist)/1000,d=pvDurSec(b.dur);
+  if(!(km>0&&d>0))return '';const s=Math.round(d/km);
+  return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const pvClock=s=>Math.floor(s/60)+':'+String(Math.round(s)%60).padStart(2,'0');
+const pvDelta=(p,a)=>{const sec=x=>{const m=/(\d+):(\d+)/.exec(x);return m?(+m[1])*60+(+m[2]):0};
+  const d=sec(a)-sec(p);if(!d)return '0:00';const ab=Math.abs(d);
+  return (d<0?'-':'+')+Math.floor(ab/60)+':'+String(ab%60).padStart(2,'0')};
+/* RUNW.day is a FULLDAYS name ('Thursday'); TLOG carries a date. Both sides
+   reduce to Monday=0, which is what TODAY and EVENTS.day already use. */
+const pvDayIdx=name=>{for(let i=0;i<7;i++){if(FULLDAYS[i]===name||t(FULLDAYS[i])===name)return i}return -1};
+
+/* ================= ATHLETICS §6 — TRAINING LOAD =================
+   Every number below is computed from TLOG. Deltas are deliberately NEUTRAL:   a rise in load is not "good", so it never gets a green/red treatment.   Nothing here estimates injury risk or readiness — §6 forbids presenting   this as a diagnostic tool. */
+function vLoad(){
+  const sel=S.loadCid||'all';
+  const rows=sel==='all'?TLOG:TLOG.filter(r=>String(r.cid)===String(sel));
+  const weeks=[...new Set(rows.map(r=>r.w))].sort((a,b)=>a-b);
+  const cur=weeks.length?weeks[weeks.length-1]:0;
+  const inW=w=>rows.filter(r=>r.w===w);
+  const sum=(a,k)=>a.reduce((s,x)=>s+(+x[k]||0),0);
+  const hm=m=>{m=Math.round(m);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')};
+  const pct=(a,b)=>{if(!b)return a>0?'new':'0%';const d=Math.round((a-b)/b*100);return (d>0?'+':'')+d+'%'};
+  const c=inW(cur),p=inW(cur-1);
+  const km=sum(c,'km'),mins=sum(c,'min'),ses=c.length;
+  const hi=c.filter(r=>r.kind==='hi').length;
+  const lng=c.filter(r=>r.kind==='long').length;
+  const rec=c.filter(r=>r.kind==='recovery').length;
+  const load=tlogLoad(c),pload=tlogLoad(p);
+  /* §6's load card carries a metric switch — Distance / Duration / Session RPE.
+     Bars are normalised against the selected metric only, never mixed. */
+  const met=S.loadMet||'km';
+  const METS=[['km','Distance'],['min','Duration'],['load','Session RPE']];
+  const valOf=w=>{const g=inW(w);return met==='km'?+sum(g,'km').toFixed(1):met==='min'?Math.round(sum(g,'min')):+tlogLoad(g)};
+  const metFmt=v=>met==='min'?hm(v):nf(v);
+  const metUnit=met==='km'?'km':met==='min'?'min':'sRPE';
+  const maxV=Math.max(1,...weeks.map(valOf));
+  /* RPE distribution for the current week — §6 reads it beside session mix. */
+  const rpeDist=[1,2,3,4,5,6,7,8,9,10].map(r=>({r:r,n:c.filter(x=>(+x.rpe||0)===r).length}))
+    .filter(x=>x.n>0), maxRpe=Math.max(1,...rpeDist.map(x=>x.n));
+  /* Most-recently-written first, so the session just logged sits on top. */
+  const recent=rows.map((r,i)=>[i,r]).sort((a,b)=>(b[1].w-a[1].w)||(b[0]-a[0])).slice(0,6).map(x=>x[1]);
+  /* The app's stat tile is `.stats > .card.stat` (icw chip + .k + .v). `.kpi`   exists only in shop/index.html — using it here would render an unstyled block. */
+  const cell=(l,v,u,d,i,c)=>`<div class="card stat">
+      <div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':'--'+c})">${ic(i,17)}</span>
+        <span class="k">${t(l)}</span><span class="sp"></span></div>
+      <div class="v">${v}${u?`<span style="font-size:15px;font-weight:700;margin-inline-start:3px;color:var(--ink3)">${u}</span>`:''}</div>
+      <div class="muted" style="font-size:11.5px;font-weight:600">${ic('trending-up',11)} ${t('vs last week')}: ${d}</div></div>`;
+  const kindRows=TLOG_KINDS.map(([k,l])=>{
+    const g=c.filter(r=>r.kind===k);
+    return `<tr><td><b>${t(l)}</b></td><td class="num">${nf(g.length)}</td>
+      <td class="num">${nf(+sum(g,'km').toFixed(1))} km</td>
+      <td class="num">${hm(sum(g,'min'))}</td></tr>`}).join('');
+  const weekRows=weeks.slice().reverse().map(w=>{
+    const g=inW(w),kmw=+sum(g,'km').toFixed(1);
+    return `<tr${w===cur?' style="background:var(--seg-on)"':''}>
+      <td><b>${t('Week')} ${w+1}</b>${w===cur?` <span class="bdg bdg-lime" style="font-size:9.5px">${t('Now')}</span>`:''}</td>
+      <td class="num">${nf(kmw)} km</td><td class="num">${hm(sum(g,'min'))}</td>
+      <td class="num">${nf(g.length)}</td><td class="num">${nf(tlogLoad(g))}</td></tr>`}).join('');
+  const chips=`<div class="row" style="gap:7px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="fchip ${sel==='all'?'on':''}" data-act="load-pick" data-cid="all">${t('All athletes')}</button>
+    ${CLIENTS.map(x=>`<button class="fchip ${String(sel)===String(x.id)?'on':''}" data-act="load-pick" data-cid="${x.id}">${esc(x.name)}</button>`).join('')}</div>`;
+  if(!rows.length)return `<div class="page-h"><div><h1>${t('Training Load')}</h1>
+    <div class="sub">${t('Distance, duration, session mix and progression')}</div></div>
+    <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>${chips}
+    <div class="empty">${ic('chart',24)}<b>${t('No sessions logged yet')}</b>
+      <span class="muted" style="font-size:12.5px">${t('Log a session to start tracking volume and progression')}</span></div>`;
+  /* §16/§17 — planned vs actual. TWO PANELS, never one blended score, and a
+     planned day with no log says "Not logged yet" instead of showing zeros.
+     Paired by WEEKDAY: a plan workout owns a day name, TLOG rows carry a date. */
+  const pvPairs=RUNW.map(w=>{const di=pvDayIdx(w.day);
+    /* Pair by NAME first: a plan workout and its log entry share a leading word
+       ('Interval session — 6 × 400m' ↔ 'Intervals · 6 × 400m',
+       'Long run — 28 km' ↔ 'Long run'). Weekday-only pairing compared the
+       plan's Thursday interval session against the log's Thursday long run —
+       a big but meaningless Δ. No name match ⇒ "Not logged yet" rather than a
+       wrong pairing. Scoped to the CURRENT week (c), never the whole log. */
+    const sig=String(w.name||'').toLowerCase().split(/[^a-z]+/).filter(Boolean)[0]||'';
+    const act=sig?c.filter(r=>String(r.name||'').toLowerCase().indexOf(sig)>=0):[];
+    const main=(w.blocks||[]).filter(b=>b.t==='main')[0]||null;
+    const pkm=+(w.blocks||[]).reduce((a,b)=>a+pvBlockKm(b),0).toFixed(1);
+    const akm=+act.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
+    const amin=act.reduce((s,x)=>s+(+x.min||0),0);
+    const apace=(akm>0&&amin>0)?pvClock(amin*60/akm):'';
+    const ppace=pvPlanPace(main);
+    return {w:w,di:di,act:act,main:main,pkm:pkm,akm:akm,amin:amin,
+      dKm:+(akm-pkm).toFixed(1),ppace:ppace,apace:apace,
+      arpe:act.reduce((s,x)=>s+(+x.rpe||0),0)};});
+  const pvCard=RUNW.length?`<div class="card" style="padding:16px 18px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span class="card-t">${ic('target',14)} ${t('Planned vs actual')}</span>
+      <span class="bdg bdg-gray" style="font-size:10px">${t('DATA FOUNDATION')}</span></div>
+    <div style="margin-top:12px">${pvPairs.map(x=>`
+      <div style="margin-bottom:14px">
+        <div class="row" style="justify-content:space-between;gap:8px;margin-bottom:7px">
+          <span class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">${x.di<0?'':t(FULLDAYS[x.di])} · ${esc(x.w.name)}</span>
+          ${x.act.length?`<span class="bdg bdg-green" style="font-size:9.5px">${t('Logged')}</span>`
+            :`<span class="bdg bdg-gray" style="font-size:9.5px">${t('Not logged yet')}</span>`}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:12px 13px">
+            <div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t('Planned')}</div>
+            <div style="font-weight:700;font-size:14px;margin-top:5px">${x.pkm?nf(x.pkm)+' km':t('distance not stated')}</div>
+            <div class="muted" style="font-size:12px;margin-top:5px">${x.main&&x.main.target?`${t('Target')} ${esc(x.main.target)}`:''}${x.main&&x.main.rpe?`${x.main.target?' · ':''}RPE ${esc(x.main.rpe)}`:''}</div></div>
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:linear-gradient(180deg,rgba(200,240,75,.07),transparent),var(--surface)">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-text)">${t('Actual')}</div>
+            ${x.act.length?`<div style="font-weight:700;font-size:14px;margin-top:5px">${nf(x.akm)} km<span style="font-size:11px;font-weight:700;color:var(--ink3);margin-inline-start:4px">${nf(x.amin)} min</span></div>
+              <div class="muted" style="font-size:12px;margin-top:5px">${x.apace?x.apace+` ${t('min/km')}${' · '}`:''}${t('RPE')} ${nf(x.arpe)}</div>`
+            :`<div style="font-weight:700;font-size:13.5px;margin-top:5px;color:var(--ink3)">— ${t('not logged yet')}</div>
+              <div class="muted" style="font-size:12px;margin-top:5px">${t('Log the session to compare')}</div>`}</div>
+        </div>
+        ${x.act.length?`<div class="row" style="gap:18px;flex-wrap:wrap;margin-top:9px;padding-top:9px;border-top:1px solid var(--line2)">
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Distance Δ')}</div>
+            <b style="font-variant-numeric:tabular-nums">${(x.dKm>0?'+':'')+nf(x.dKm)} km</b></div>
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Pace Δ')}</div>
+            <b style="font-variant-numeric:tabular-nums">${x.ppace&&x.apace?pvDelta(x.ppace,x.apace):'—'}</b></div>
+          <div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.06em">${t('Sessions')}</div>
+            <b style="font-variant-numeric:tabular-nums">${nf(x.act.length)}</b></div>
+        </div>`:''}
+      </div>`).join('')}</div>
+    <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Objective differences only — no interpretation and no medical or performance conclusions. Planned distance is derived from the fields typed in each block.')}${sel==='all'?'':` ${t('The plan is workspace-wide; Actual follows the athlete filter above.')}`}</div>
+  </div>`:'';
+  return `<div class="page-h"><div><h1>${t('Training Load')}</h1>
+    <div class="sub">${t('Distance, duration, session mix and progression')}</div></div>
+    <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>
+  ${chips}
+  <div class="stats" style="margin-bottom:14px">
+    ${cell('Weekly distance',nf(km),'km',pct(km,sum(p,'km')),'chart','accent')}
+    ${cell('Weekly duration',hm(mins),'h:mm',pct(mins,sum(p,'min')),'clock','blue')}
+    ${cell('Sessions',nf(ses),'',pct(ses,p.length),'calendar','purple')}
+    ${cell('Session load',nf(load),'sRPE',pct(load,pload),'zap','amber')}
+  </div>
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="card-t">${ic('chart',14)} ${t('Weekly volume')}</span>
+        <div class="seg">${METS.map(([a,l])=>`<button class="${met===a?'on':''}" data-act="load-met" data-v="${a}">${t(l)}</button>`).join('')}</div></div>
+      <div class="row" style="gap:6px;align-items:flex-end;height:104px;margin-top:14px">
+        ${weeks.map(w=>{const k=valOf(w);
+          const h=Math.max(5,Math.round(k/maxV*72));const now=w===cur;
+          return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%">
+            <span style="font:700 10px/1 var(--font);font-variant-numeric:tabular-nums;color:${now?'var(--accent-text)':'var(--ink3)'}">${metFmt(k)}</span>
+            <div style="width:100%;height:${h}px;border-radius:5px 5px 0 0;background:${now?'var(--accent-deep)':'var(--ink3)'};opacity:${now?1:.45}"></div></div>`}).join('')}
+      </div>
+      <div class="row" style="gap:6px;margin-top:7px">${weeks.map(w=>`<span style="flex:1;text-align:center;font:700 9.5px/1 var(--font);font-variant-numeric:tabular-nums;color:${w===cur?'var(--accent-text)':'var(--ink3)'}">${w+1}</span>`).join('')}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:9px">${t('Weeks')} 1–${nf(weeks.length)} · ${metUnit} · ${t('last one is current')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <span class="card-t" style="display:block;margin-bottom:10px">${ic('filter',14)} ${t('Session mix')} · ${t('this week')}</span>
+      <table class="tbl"><thead><tr><th>${t('Type')}</th><th class="num">${t('Count')}</th>
+        <th class="num">${t('Distance')}</th><th class="num">${t('Duration')}</th></tr></thead>
+        <tbody>${kindRows}</tbody></table>
+      <div class="muted" style="font-size:11.5px;margin-top:10px">${ic('zap',11)} ${t('High-intensity')}: ${nf(hi)} · ${t('Long runs')}: ${nf(lng)} · ${t('Recovery')}: ${nf(rec)}</div>
+      <div style="height:1px;background:var(--line2);margin:13px 0 11px"></div>
+      <span class="card-t" style="display:block;margin-bottom:9px">${ic('activity',14)} ${t('RPE distribution')}</span>
+      ${rpeDist.length?rpeDist.map(x=>`<div class="row" style="gap:8px;align-items:center;margin-bottom:6px">
+          <span class="bdg bdg-gray" style="flex:none;min-width:52px;justify-content:center">RPE ${nf(x.r)}</span>
+          <span style="flex:1;height:7px;background:var(--line2);border-radius:99px;overflow:hidden">
+            <i style="display:block;height:100%;width:${Math.round(x.n/maxRpe*100)}%;background:var(--ink2);border-radius:99px"></i></span>
+          <span style="font:700 11.5px var(--font);font-variant-numeric:tabular-nums;min-width:16px;text-align:right">${nf(x.n)}</span>
+        </div>`).join(''):`<div class="muted" style="font-size:11.5px">${t('No RPE logged this week')}</div>`}
+    </div>
+  </div>
+  <div class="card" style="padding:0;overflow-x:auto;margin-bottom:14px">
+    <div style="padding:16px 18px 6px"><span class="card-t">${ic('calendar',14)} ${t('Week by week')}</span></div>
+    <table class="tbl"><thead><tr><th>${t('Week')}</th><th class="num">${t('Distance')}</th>
+      <th class="num">${t('Duration')}</th><th class="num">${t('Sessions')}</th>
+      <th class="num">${t('Load')}</th></tr></thead><tbody>${weekRows}</tbody></table>
+  </div>
+  ${pvCard}
+  <div class="card" style="padding:0;overflow-x:auto;margin-bottom:14px">
+    <div style="padding:16px 18px 6px"><span class="card-t">${ic('list',14)} ${t('Recent sessions')}</span>
+      <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${t('Newest first')}</span></div>
+    <table class="tbl"><thead><tr><th>${t('Session')}</th><th>${t('Type')}</th>
+      <th class="num">${t('Distance')}</th><th class="num">${t('Duration')}</th>
+      <th class="num">RPE</th><th class="num">${t('Load')}</th><th></th></tr></thead>
+      <tbody>${recent.map(r=>{const kl=TLOG_KINDS.find(k=>k[0]===r.kind);
+        const rl=(+r.min||0)/60*(+r.rpe||0);
+        return `<tr><td><b>${esc(r.name)}</b><div class="muted" style="font-size:11px">${t('Week')} ${nf(+r.w+1)}${r.date?` · ${esc(r.date)}`:''}</div></td>
+          <td>${kl?`<span class="bdg bdg-gray">${t(kl[1])}</span>`:''}</td>
+          <td class="num">${(+r.km||0)>0?nf(+r.km)+' km':'—'}</td>
+          <td class="num">${hm(+r.min||0)}</td>
+          <td class="num">${nf(+r.rpe||0)}</td>
+          <td class="num">${nf(+rl.toFixed(1))}</td>
+          <td class="num"><button class="btn btn-ghost btn-icon" data-act="load-del" data-id="${r.id}" title="${t('Delete')}">${ic('trash',15)}</button></td></tr>`}).join('')}</tbody></table>
+  </div>
+  <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Session load is duration × RPE (sRPE) — a plain arithmetic total to help you read the trend. CoachMint does not interpret it, and it is not a medical or readiness score.')}</div>`;
+}
+function tlogEditor(){
+  openModal(`
+  <div class="modal-h"><h3>${ic('plus',16)} ${t('Log session')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Session name')}</label>
+      <input class="inp" id="tl-name" placeholder="Tempo · 4 × 2 km"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Distance')} (km)</label>
+        <input class="inp" id="tl-km" inputmode="decimal" placeholder="10"></div>
+      <div class="field"><label class="lbl">${t('Duration')} (min)</label>
+        <input class="inp" id="tl-min" inputmode="numeric" placeholder="50"></div>
+    </div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">RPE</label>
+        <input class="inp" id="tl-rpe" inputmode="numeric" placeholder="7"></div>
+      <div class="field"><label class="lbl">${t('Type')}</label>
+        <select class="sel" id="tl-kind">${TLOG_KINDS.map(([k,l])=>`<option value="${k}">${t(l)}</option>`).join('')}</select></div>
+    </div>
+    <div class="muted" style="font-size:12px">${t('Saved into the current week. Load = duration × RPE.')}</div>
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="load-save">${ic('check',14)} ${t('Log session')}</button></div>`);
+}
+
+/* ================= ATHLETICS §12 — WEARABLES =================
+   NOTHING HERE IS WIRED. No Strava credential exists in this deployment
+   (.env is not ours to change), so the screen refuses to pretend otherwise:
+   no fake "Connected", no fake last-sync time, no seeded activity rows.
+   What it DOES ship is real: the provider contract the engine will read
+   (§11/§12), the import policy (§15/§9), the privacy promises (§21) and the
+   human error copy the UI is designed to show (§20). §16/§17's planned-vs-
+   actual panel already lives in vLoad(), so it is not duplicated here. */
+const WEAR_ERRS=[
+ ['OAuth denied','You cancelled the Strava authorization. Nothing was connected.'],
+ ['Invalid authorization','That authorization link expired. Start the connection again.'],
+ ['Expired access token','Access expired — CoachMint refreshed it automatically.'],
+ ['Refresh failure','Strava no longer accepts this connection. Reconnect to keep syncing.'],
+ ['Rate limit','Strava rate limit reached. Automatic sync resumes in 14 minutes.'],
+ ['Missing athlete mapping','This Strava account is not linked to a CoachMint athlete yet.'],
+ ['Duplicate activity','Already imported — the existing record was updated instead.']];
+function vWear(){
+  /* v19.13 — the key node must READ as the key: a pale-lime fill plus a real
+     lime edge, so it separates from the two grey nodes beside it instead of
+     sitting on the same --seg-bg as they do. The EDGE is --accent-deep (a border
+     only has to be recognisable, and the different fill already carries the
+     boundary); the LABEL stays --accent-text because #8FB51E as 12.5px bold text
+     measures 1.96:1 — illegible, which is why it was darkened in the first place. */
+  const node=(a,b,key)=>`<div style="border:1px solid ${key?'var(--accent-deep)':'var(--line)'};border-radius:9px;padding:8px 13px;background:${key?'var(--accent-key)':'var(--seg-bg)'};text-align:center">
+      <b style="font-size:12.5px;${key?'color:var(--accent-text)':''}">${a}</b>
+      ${b?`<div class="muted" style="font-size:10.5px;margin-top:2px">${b}</div>`:''}</div>`;
+  const kv=(k,v)=>`<div><div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t(k)}</div>
+    <b style="font-size:15px;font-variant-numeric:tabular-nums">${v}</b></div>`;
+  return `<div class="page-h"><div><h1>${t('Wearables')}</h1>
+      <div class="sub">${t('External activity providers — what would connect, and how it would land')}</div></div>
+    <div class="row" style="gap:8px;min-width:0"><span class="bdg bdg-amber">${t('NOT CONNECTED')}</span>
+      <button class="btn btn-primary" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button></div></div>
+  <div class="grid2" style="margin-bottom:14px">
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('link',14)} ${t('Connected apps')}</span>
+        <span class="bdg bdg-amber">${t('NOT CONNECTED')}</span></div>
+      <div class="row" style="gap:12px;margin-top:14px">
+        <span style="width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center;flex:none">${ic('watch',18)}</span>
+        <div style="flex:1;min-width:0"><b style="font-size:14.5px">Strava</b>
+          <div class="muted" style="font-size:12.5px">${t('Running activities and training data')}</div></div>
+        <span class="bdg bdg-gray" style="flex:none">${t('Off')}</span></div>
+      <div class="row" style="gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--line2)">
+        ${kv('Last sync','—')}${kv('Auto-sync',t('OFF'))}${kv('Imported','0')}${kv('Token','—')}</div>
+      <button class="btn btn-outline" style="margin-top:14px" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button>
+      <div class="muted" style="font-size:12px;margin-top:11px">${ic('shield-check',12)} ${t('The athlete authorizes their own account through the official OAuth flow. CoachMint never asks for a provider password, and no access or refresh token is ever returned to the browser.')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('refresh-cw',14)} ${t('Sync log')}</span>
+        <span class="bdg bdg-gray">${t('LIMIT 200 / 15 MIN')}</span></div>
+      <div class="empty" style="margin:14px 0 4px">${ic('refresh-cw',22)}<b>${t('No syncs yet')}</b>
+        <span class="muted" style="font-size:12.5px">${t('Connect an account and every sync attempt will be listed here')}</span></div>
+      <div class="muted" style="font-size:12px;margin-top:10px">${ic('info',12)} ${t('Strava allows 200 requests / 15 min and 2 000 / day — automatic sync and any manual refresh share that budget.')}</div>
+    </div>
+  </div>
+  <div class="card" style="padding:16px 18px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span class="card-t">${ic('git-branch',14)} ${t('Provider abstraction')}</span>
+      <span class="bdg bdg-lime">${t('STRAVA ONLY')}</span></div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      ${node('Strava',t('OAuth · webhook'),false)}<span class="muted">→</span>
+      ${node('ExternalActivityProvider','',true)}<span class="muted">→</span>
+      ${node('CoachMint Activity','',false)}<span class="muted">→</span>
+      ${node(t('Athletics engine'),'',false)}</div>
+    <div style="height:1px;background:var(--line2);margin:15px 0 12px"></div>
+    <div class="muted" style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t('Normalization')} (§11)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:9px;margin-top:9px">
+      ${[['moving_time','duration'],['average_heartrate','heartRate']].map(x=>
+        `<div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px">
+          <div class="muted" style="font-size:10.5px">Strava</div><b style="font-size:13px">${x[0]}</b>
+          <div class="muted" style="font-size:10.5px;margin-top:7px">CoachMint</div>
+          <b style="font-size:13px;color:var(--accent-text)">${x[1]}</b></div>`).join('')}</div>
+    <div class="muted" style="font-size:12px;margin-top:12px">${ic('info',12)} ${t('The athletics engine reads')} <b style="color:var(--ink)">CoachMint Activity</b>, ${t('never a provider payload. Garmin, Apple Health, Health Connect and Coros plug into the same interface later — none of them are implemented, and the unique key is')} <b style="color:var(--ink)">provider + providerActivityId</b> ${t('so a re-delivered webhook updates the record instead of duplicating it.')}</div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:16px 18px">
+      <span class="card-t">${ic('download',14)} ${t('What is imported')}</span>
+      <div class="row" style="gap:7px;flex-wrap:wrap;margin-top:12px">
+        ${['Run','Trail Run','Walk'].map(x=>`<span class="bdg bdg-lime">${t(x)}</span>`).join('')}
+        ${['Ride','Swim'].map(x=>`<span class="bdg bdg-gray">${t(x)} ${t('skipped')}</span>`).join('')}</div>
+      <div class="muted" style="font-size:12px;margin-top:10px">${ic('filter',12)} ${t('Run, Trail Run and Walk are imported; Ride and Swim are not. Skipped types are shown on purpose — nothing is pulled in merely because the API offers it.')}</div>
+      <div style="height:1px;background:var(--line2);margin:14px 0 12px"></div>
+      <span class="card-t">${ic('shield-check',14)} ${t('Privacy')}</span>
+      <div style="margin-top:9px">${[
+        [t('What is imported'),t('distance, duration, pace, heart rate, elevation')],
+        [t('What is not'),t('Routes, GPS, followers, profile')],
+        [t('Who can see it'),t('You + your assigned coach')],
+        [t('How to disconnect'),t('sync stops and credentials are removed — your training history in CoachMint is kept')]]
+        .map(x=>`<div class="row" style="gap:10px;padding:7px 0;align-items:flex-start">
+          <span class="muted" style="min-width:118px;font-size:11.5px;font-weight:700;flex:none">${x[0]}</span>
+          <span style="flex:1;min-width:0;font-size:12.5px">${x[1]}</span></div>`).join('')}</div>
+    </div>
+    <div class="card" style="padding:16px 18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span class="card-t">${ic('alert-triangle',14)} ${t('Error states')}</span>
+        <span class="bdg bdg-gray">${t('REFERENCE')}</span></div>
+      <div style="margin-top:7px">${WEAR_ERRS.map((e,i)=>
+        `<div class="row" style="gap:10px;padding:8px 0;align-items:flex-start${i<WEAR_ERRS.length-1?';border-bottom:1px solid var(--line2)':''}">
+          <b style="min-width:130px;font-size:12.5px;flex:none">${t(e[0])}</b>
+          <span class="muted" style="flex:1;min-width:0;font-size:12.5px">${t(e[1])}</span></div>`).join('')}</div>
+      <div class="muted" style="font-size:12px;margin-top:11px">${ic('eye-off',12)} ${t('Raw API responses, tokens and secrets are never surfaced to the athlete or the coach.')}</div>
+    </div>
+  </div>
+  <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('No provider is connected in this deployment — the cards above describe the contract this screen will honour once one is, and no sync, activity or timestamp on this page is invented.')}</div>`;
+}
+
 /* ================= SHELL / RENDER ================= */
-function currentView(){return {dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings}[S.view]()}
+function currentView(){const m={dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+  /* v19.1 — a view the current sport does not own (or a stale key from an old
+     bookmark) must not throw; fall back to the dashboard instead. v19.7 made
+     that a real gate: sportKey() also drops keys no selected sport owns. */
+  return (m[sportKey(S.view)]||m.dash)()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
-  const nav=[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note'],['messages','Messages','mail']];
+  /* v18.118 — regrouped from 2 sections to 3. `Messages` moved OUT of "Manage"
+     (it is a daily communication tool, not a configuration screen) and the
+     three numbers screens got their own "Today" group, so the rail scans as:
+     who/what → today's numbers → configuration. */
+  const nav={
+    workspaces:[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['messages','Messages','mail']],
+    today:[['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils']],
+    manage:[['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
+  };
   const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
+  /* v19.1 — sport extensions render as their own group between Workspace and
+     Today. With an empty table this joins to '' and the rail is unchanged. */
+  const extNav=sportSections().map(g=>
+    `<div class="nav-sec">${t(g.label)}</div>${(g.items||[]).map(navIt).join('')}`).join('');
   return `<div class="shell">
   ${fbBtn('bottom:20px;inset-inline-start:20px;')}
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
     <nav class="nav">
-      <div class="nav-sec">${t('Workspace')}</div>${nav.slice(0,8).map(navIt).join('')}
-      <div class="nav-sec">${t('Manage')}</div>${nav.slice(8).map(navIt).join('')}
+      <div class="nav-sec">${t('Workspace')}</div>${nav.workspaces.map(navIt).join('')}
+      ${extNav}
+      <div class="nav-sec">${t('Today')}</div>${nav.today.map(navIt).join('')}
+      <div class="nav-sec">${t('Manage')}</div>${nav.manage.map(navIt).join('')}
     </nav>
     <div class="side-foot">
       <div class="nav-it" data-act="sb">${ic('chevL',17)}<span class="txt">${t('Collapse')}</span></div>
@@ -8389,7 +10190,7 @@ function shell(inner){
       <span class="sp"></span>
       ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
-      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${t('Coach')}</span>
+      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${ONBOARD.sport?t(ONBOARD.sport):t('Coach')}</span>
       <div class="mwrap" data-mw>
         <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
         <div class="menu"><div class="menu-hd">${t('Create')}</div>
@@ -8415,7 +10216,8 @@ function renderInner(){
     restRestore();
     $('app').innerHTML=vClient();
     fxReveal(); // v18.26 — slow scroll-reveal for the client app cards
-    if(S.ptab==='chat')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
+    /* v18.97 — a chat opens at the NEWEST message, not the oldest. */
+    if(S.ptab==='chat'||S.ptab==='assistant')requestAnimationFrame(()=>{const el=$('capp');if(el)el.scrollTop=el.scrollHeight});
     return;
   }
   if(S.view==='login'){$('app').innerHTML=vLogin();unlockWire();return}
@@ -8753,6 +10555,70 @@ window.sendClientMsg=()=>{
 const VMAX=15;
 let VREC=null,VCH=[],VSTART=0,SV=new Audio(),SVPLAY=null;
 const VURLS={}; // message id → blob: URL (one decode per voice note)
+/* v18.109 — waveform state. WAVE_BASE is the decorative fallback shown before a
+   note has been decoded; VWAVE[id] is the REAL envelope (12 bars, 5..21px).
+   VFAIL stops a note that cannot be decoded from being retried on every render. */
+const WAVE_BASE=[8,15,21,12,18,9,16,22,11,7,14,19];
+const VWAVE={},VFAIL=new Set();
+/** Build the real amplitude envelope for one note. Lazily called on first play
+    (decoding every visible note up front would cost far more than it is worth),
+    cached per id, and silent on failure — the static bars simply stay. */
+function genWave(m){
+  const id=String(m&&m.id);
+  if(!id||VWAVE[id]||VFAIL.has(id))return;
+  const src=m.src;
+  if(typeof src!=='string'||!src){VFAIL.add(id);return}
+  /* v18.109 — a data: URL must be decoded HERE, not fetched: the CSP is
+     `connect-src 'self'`, which does not permit fetch() against data: (or blob:)
+     URLs, so the obvious fetch() path silently failed. Same-origin /api/media
+     URLs do fetch fine. */
+  const toBuf=async()=>{
+    if(src.startsWith('data:')){
+      const i=src.indexOf(',');
+      const bin=atob(src.slice(i+1));
+      const u=new Uint8Array(bin.length);
+      for(let k=0;k<bin.length;k++)u[k]=bin.charCodeAt(k);
+      return u.buffer;
+    }
+    return (await fetch(src)).arrayBuffer();
+  };
+  (async()=>{
+    try{
+      const ab=await toBuf();
+      const AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC){VFAIL.add(id);return}
+      const ctx=new AC();
+      const buf=await ctx.decodeAudioData(ab);
+      const ch=buf.getChannelData(0);
+      const B=WAVE_BASE.length, block=Math.max(1,Math.floor(ch.length/B)), out=[];
+      for(let i=0;i<B;i++){
+        let peak=0;
+        for(let k=0;k<block;k++){const v=Math.abs(ch[i*block+k]||0);if(v>peak)peak=v}
+        out.push(Math.max(5,Math.min(21,Math.round(7+peak*18))));
+      }
+      try{ctx.close()}catch(e){}
+      if(out.length){VWAVE[id]=out;render()}
+      else VFAIL.add(id);
+    }catch(e){VFAIL.add(id)}
+  })();
+}
+/* Light up bars as playback advances — no re-render, just style writes. */
+function waveProgress(){
+  if(!SVPLAY)return;
+  const box=[...document.querySelectorAll('.voice')].find(x=>x.dataset.vid===SVPLAY);
+  if(!box)return;
+  const w=box.querySelector('.wave');
+  if(!w)return;
+  const base=String(w.dataset.h||'').split(',').map(Number);
+  const bars=w.querySelectorAll('i');
+  const p=SV.duration&&isFinite(SV.duration)?Math.min(1,SV.currentTime/SV.duration):0;
+  const lit=Math.round(p*bars.length);
+  bars.forEach((b,i)=>{
+    const on=i<lit, h=base[i]||8;
+    b.style.height=(on?Math.min(21,Math.round(h*1.3)):h)+'px';
+    b.style.opacity=on?'1':'.75';
+  });
+}
 const voiceMime=()=>{
   const c=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
   for(const m of c){try{if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m))return m}catch(e){}}
@@ -8762,11 +10628,16 @@ window.voiceToggle=async ()=>{
   if(VREC){try{VREC.stop()}catch(e){}return}
   if(!navigator.mediaDevices||!window.MediaRecorder){toast(t('Voice messages are not supported in this browser'));return}
   let stream;
-  try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}})}
   catch(e){toast(t('Microphone permission was denied'));return}
   try{
     const mime=voiceMime();VCH=[];VSTART=Date.now();
-    VREC=new MediaRecorder(mime?{mimeType:mime}:undefined);
+    /* v18.109 — explicit quality knobs. Browsers disagree on MediaRecorder's
+       defaults (Chrome opus ≈64k, Safari AAC higher/lower by version), so 64 kbps
+       makes voice quality predictable and ≈120 KB for the full VMAX=15 s. The
+       constraints kill the room echo and hiss a phone mic otherwise picks up,
+       and a 1 s timeslice keeps memory flat if the tab is backgrounded. */
+    VREC=new MediaRecorder(mime?{mimeType:mime,audioBitsPerSecond:64000}:{audioBitsPerSecond:64000});
     VREC.ondataavailable=e=>{if(e.data&&e.data.size)VCH.push(e.data)};
     VREC.onstop=()=>{
       const dur=Math.max(1,Math.min(VMAX,Math.round((Date.now()-VSTART)/1000)));
@@ -8778,17 +10649,51 @@ window.voiceToggle=async ()=>{
       rd.onerror=()=>{render();toast(t('Could not start recording'))};
       rd.readAsDataURL(blob);
     };
-    VREC.start();
+    VREC.start(1000);
     setTimeout(()=>{if(VREC&&VREC.state==='recording'){try{VREC.stop()}catch(e){}}},VMAX*1000);
     S.recVoice=true;render();
   }catch(e){VREC=null;S.recVoice=false;render();toast(t('Could not start recording'))}
 };
 window.voiceSend=(src,dur)=>{
   const c=client(S.cid);if(!c||!src)return;
-  MSGS.push({id:uid(),client:c.name,from:'client',type:'voice',
-    body:`🎙 ${t('Voice message')} · ${fmtMS(dur||0)}`,src,dur:dur||0,time:'Just now',read:false});
+  const m={id:uid(),client:c.name,from:'client',type:'voice',
+    /* v18.109 — no 🎙 here: the bubble already shows a waveform, and this string
+       is plain TEXT that surfaces in the coach's list preview, where a lucide
+       icon cannot go. */
+    body:`${t('Voice message')} · ${fmtMS(dur||0)}`,src,dur:dur||0,time:'Just now',read:false};
+  MSGS.push(m);
   NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
   saveData();render();toast(t('Voice message sent'));
+  /* v18.103 — lift the blob OUT of the workspace payload (5 MB shared with every
+     plan, note and photo; a 15 s note is ~160 KB of base64). Optimistic: the
+     data: URL already plays, so nothing blocks — the swap to /api/media/… lands
+     when the upload does, and a failed upload just leaves the inline copy. */
+  moveMedia(m);
+};
+window.moveMedia=async m=>{
+  if(!m||typeof m.src!=='string'||!m.src.startsWith('data:'))return false;
+  try{
+    const code=wsCode()||S.joinCode||'';
+    if(!code)return false;
+    const r=await fetch('/api/media?code='+encodeURIComponent(code),{method:'POST',
+      headers:{'content-type':'application/json'},body:JSON.stringify({data:m.src})});
+    const d=await r.json().catch(()=>null);
+    if(d&&d.ok&&d.url){m.src=d.url;saveData();render();return true}
+  }catch(e){}
+  return false;
+};
+/* v18.103 — older voice notes still sit inline. A few per tick so a long history
+   never fires a burst of uploads at once. Only runs when we are actually online
+   (called from cloudStart), because there is no code to upload with otherwise. */
+window.migrateVoice=async()=>{
+  let n=0;
+  for(const m of MSGS.slice()){
+    if(n>=3)break;
+    if(!m||m.type!=='voice'||typeof m.src!=='string'||!m.src.startsWith('data:'))continue;
+    if(await moveMedia(m))n++;
+  }
+  if(n)setTimeout(()=>migrateVoice(),800);
+  return n;
 };
 window.voicePlay=id=>{
   const m=MSGS.find(x=>String(x.id)===String(id));if(!m||!m.src)return;
@@ -8814,16 +10719,25 @@ window.voicePlay=id=>{
   SV=new Audio(url);SVPLAY=String(id);
   SV.onended=()=>{SVPLAY=null;render()};
   SV.onerror=()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))};
+  /* v18.109 — real envelope (cached) + live bar progress while it plays. */
+  genWave(m);
+  SV.ontimeupdate=waveProgress;
   const p=SV.play();
   if(p&&p.catch)p.catch(()=>{SVPLAY=null;render();toast(t('Could not play this voice message'))});
   render();
 };
 /* The voice bubble — used by BOTH the student thread and the coach inbox. */
-function msgVoice(m){
+function msgVoice(m,align){
   const playing=SVPLAY===String(m.id);
-  return `<div class="voice">
+  /* v18.102 — .voice carries max-width:78%. Wrapped in a shrink-to-fit div that
+     percentage resolved against the WRAPPER (78% of 167 = 130) while the content
+     needs 167, so it overflowed. As a direct child of .chatbody it resolves
+     against the thread (78% of 310 = 242) like the mockup — hence align goes on
+     the bubble itself instead of a wrapper. */
+  const hs=(m&&VWAVE[String(m.id)])||WAVE_BASE;
+  return `<div class="voice"${align?` style="align-self:${align}"`:''} data-vid="${esc(m&&m.id)}">
     <button class="play" data-act="voice-play" data-id="${esc(m.id)}" aria-label="${t('Play')}" title="${t('Play')}">${playing?ic('square',12):ic('play',13)}</button>
-    <span class="wave">${[8,15,21,12,18,9,16,22,11,7,14,19].map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
+    <span class="wave" data-h="${hs.join(',')}">${hs.map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
     <span class="dur">${fmtMS(m.dur||0)}</span>
   </div>`;
 }
@@ -8833,8 +10747,11 @@ document.addEventListener('click',e=>{
   document.querySelectorAll('.mwrap.open').forEach(m=>{if(!m.contains(e.target))m.classList.remove('open')});
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act,mw=el.closest('[data-mw]');
+  /* v19.19 — a Jump item runs its action AND closes the palette in the same
+     pass, so the destination never renders underneath an open overlay. */
+  if(el.hasAttribute('data-mjump')&&S.mjump)S.mjump=false;
   switch(a){
-    case 'lang':lang=lang==='en'?'fa':'en';applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English');break;
+    case 'lang':break; /* v18.116 — language switcher removed */
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed)
@@ -8929,6 +10846,95 @@ document.addEventListener('click',e=>{
     case 'bill-request':billRequest(el.dataset.p);break;
     case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
     case 'signin':S.role='coach';S.view='dash';render();toast('Welcome back, Coach');cloudEnsure();break;
+    /* v19.8 — ATHLETICS §11 dashboard filters */
+    case 'ath-f':{const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+      F[el.dataset.k]=el.dataset.v;render();break;}
+    case 'ath-reset':S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'};render();break;
+    /* v19.9 — ATHLETICS §12. No OAuth is configured in this deployment, so
+       connecting cannot be faked: the button says exactly what is missing. */
+    case 'wear-connect':toast(t('Strava OAuth is not configured here — a Strava application (client id and secret) is needed before an athlete can authorize.'));break;
+    /* v19.6 — ATHLETICS §6 training load */
+    case 'load-pick':S.loadCid=el.dataset.cid;render();break;
+    case 'load-met':S.loadMet=el.dataset.v;render();break;
+    case 'load-del':{const i=TLOG.findIndex(x=>String(x.id)===String(el.dataset.id));
+      /* markDead before splice, exactly as run-del/ph-del/race-del do — without
+         it cloudMerge would resurrect the session on the next sync. */
+      if(i>-1){markDead('TLOG',TLOG[i].id);TLOG.splice(i,1);saveData();render();toast(t('Session removed'))}break;}
+    case 'load-new':tlogEditor();break;
+    case 'load-save':{const g=k=>{const e2=$('tl-'+k);return e2?e2.value:''};
+      const km=parseFloat(g('km')),mn=parseInt(g('min')),rp=parseInt(g('rpe'));
+      if(!g('name').trim()||isNaN(mn)){toast(t('Name and duration are required'));break}
+      const weeks=TLOG.map(x=>x.w);const w=weeks.length?Math.max.apply(null,weeks):0;
+      TLOG.push({id:'tl'+Date.now(),cid:S.loadCid&&S.loadCid!=='all'?S.loadCid:1,
+        w:w,date:new Date().toISOString().slice(0,10),name:g('name').trim(),
+        kind:g('kind')||'easy',km:isNaN(km)?0:+km.toFixed(1),min:mn,
+        rpe:isNaN(rp)?5:Math.max(1,Math.min(10,rp))});
+      closeModal();saveData();render();toast(t('Session logged'));break;}
+    /* v19.5 — ATHLETICS §4 block builder */
+    case 'run-new':runEditor(null);break;
+    case 'run-edit':runEditor(el.dataset.id);break;
+    case 'run-del':{const i=RUNW.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){markDead('RUNW',RUNW[i].id);RUNW.splice(i,1);saveData();render();toast(t('Workout deleted'))}break;}
+    case 'run-block-add':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.blocks=d.blocks||[];d.blocks.push({t:'main',name:t('Main set')});
+      renderRunEditor();break;}
+    case 'run-block-del':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.blocks.splice(+el.dataset.i,1);renderRunEditor();break;}
+    case 'run-save':{runReadAll();const d=S.runDraft;if(!d)break;
+      d.name=(d.name||'').trim();
+      if(!d.name){toast(t('Workout name is required'));break}
+      const i=RUNW.findIndex(x=>String(x.id)===String(d.id));
+      if(i<0)RUNW.push(d);else RUNW[i]=d;
+      closeModal();saveData();render();toast(t('Workout saved'));break;}
+    /* v19.4 — ATHLETICS §7 phases */
+    case 'ph-new':S.phDraft=null;phEditor();break;
+    case 'ph-save':{const g=k=>{const e2=$('ph-'+k);return e2?e2.value:''};
+      const p={id:'ph'+Date.now(),name:g('name').trim(),weeks:g('weeks').trim(),
+        focus:g('focus').trim(),load:Math.max(0,Math.min(100,parseInt(g('load'))||0)),now:false};
+      if(!p.name){toast(t('Phase name is required'));break}
+      PHASES.push(p);closeModal();saveData();render();toast(t('Phase added'));break;}
+    case 'ph-now':{const i=PHASES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){PHASES.forEach((x,j)=>{x.now=(j===i)});saveData();render();toast(t('Current phase set'))}break;}
+    case 'ph-del':{const i=PHASES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){const was=!!PHASES[i].now;markDead('PHASES',PHASES[i].id);PHASES.splice(i,1);
+        if(was&&PHASES[0])PHASES[0].now=true;saveData();render();toast(t('Phase removed'))}break;}
+    /* v19.3 → v19.12 — §3 profile lives in the client's own page now: the
+       athlete comes from the button's data-cid, so ap-pick and S.apCid are gone. */
+    case 'ap-save':{const cid=+el.dataset.cid||el.dataset.cid;if(!cid)break;
+      const g=k=>{const e2=$('ap-'+k);return e2?e2.value.trim():''};
+      const rec={id:'ap'+cid,cid:cid,disc:g('disc'),event:g('event'),dist:g('dist'),
+        level:g('level'),age:g('age'),pb:g('pb'),target:g('target'),targetDate:g('targetDate'),
+        avail:g('avail'),freq:g('freq'),mileage:g('mileage'),history:g('history'),
+        injury:g('injury'),notes:g('notes')};
+      const i=APROF.findIndex(x=>String(x.id)===String(rec.id));
+      if(i<0)APROF.push(rec);else APROF[i]=rec;
+      saveData();render();toast(t('Profile saved'));break;}
+    /* v19.2 — ATHLETICS §8 races */
+    case 'race-new':raceEditor(null);break;
+    case 'race-edit':raceEditor(el.dataset.id);break;
+    case 'race-del':{const i=RACES.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){markDead('RACES',RACES[i].id);RACES.splice(i,1);}
+      closeModal();saveData();render();toast(t('Race deleted'));break;}
+    case 'race-save':{const d=S.raceDraft;if(!d)break;
+      ['name','event','dist','date','loc','target','goal','notes','ath'].forEach(k=>{const e2=$('rc-'+k);if(e2)d[k]=e2.value.trim()});
+      if(!d.name){toast(t('Race name is required'));break}
+      const i=RACES.findIndex(x=>String(x.id)===String(d.id));
+      if(i<0)RACES.push(d);else RACES[i]=d;
+      closeModal();saveData();render();toast(t('Race saved'));break;}
+    case 'race-result':raceResult(el.dataset.id);break;
+    case 'result-save':{const r=RACES.find(x=>String(x.id)===String(el.dataset.id));
+      if(r){const g=id=>{const e2=$(id);return e2?e2.value:''};
+        r.result={time:g('rs-time').trim(),pos:g('rs-pos').trim(),
+          pb:!!($('rs-pb')||{}).checked,notes:g('rs-notes').trim()};}
+      closeModal();saveData();render();toast(t('Result saved'));break;}
+    /* v19.2 — ATHLETICS §9 personal bests */
+    case 'pb-new':pbEditor();break;
+    case 'pb-save':{const g=id=>{const e2=$(id);return e2?e2.value:''};
+      const p={id:'pb'+Date.now(),ev:g('pb-ev').trim(),val:g('pb-val').trim(),
+        prev:g('pb-prev').trim(),date:g('pb-date')||isoToday(),
+        src:g('pb-src')||'Manual',notes:g('pb-notes').trim()};
+      if(!p.ev||!p.val){toast(t('Event and mark are required'));break}
+      PBSD.unshift(p);closeModal();saveData();render();toast(t('Mark recorded'));break;}
     case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
     case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();S.calOff=0;
       if(isNarrow()){S.mClient=+el.dataset.cid;S.mview='client'}else{S.view='wspace';S.cid=+el.dataset.cid}
@@ -9225,12 +11231,17 @@ document.addEventListener('click',e=>{
     case 'na-send':naSend();break;
     case 'na-quick':naSend(el.dataset.q);break;
     case 'na-photo':{
+      closeModal(); /* the + sheet may have opened us — don't leave it behind */
       const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
       /* v18.75 — plan 1ه: "Snap a photo" opens the CAMERA on a phone (desktop
          ignores capture and still shows the normal picker). */
       try{inp.setAttribute('capture','environment')}catch(e){}
       inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
-        resizeImage(f,src=>{NA_PIC=src;render();toast(t('Photo attached — describe your meal'))})};
+        /* v18.95 — since v18.94 the assistant left the Nutrition tab, so a photo
+           taken from the quick-log hero would attach to a screen nobody sees.
+           Land on the assistant screen with it (the in-chat buttons are already there). */
+        resizeImage(f,src=>{if(!src){toast(t('Could not read the picture'));return}
+          NA_PIC=src;if(S.ptab!=='assistant')S.ptab='assistant';render();toast(t('Photo attached — describe your meal'))})};
       inp.click();break}
     case 'na-confirm':{
       const m=NCHAT.find(x=>String(x.id)===el.dataset.id);
@@ -9265,12 +11276,12 @@ document.addEventListener('click',e=>{
       if(!it){toast(t('I could not find')+': '+el.dataset.n);break}
       NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:t('Quick log'),items:[it],kcal:it.kcal,p:it.p,c:it.c,f:it.f,src:'qfav',at:Date.now()});
       saveData();render();toast(`✓ ${nf(it.kcal)} kcal · ${t('Logged')}`);break}
-    /* Jump the .capp scroller (smooth scrollIntoView is unreliable in it). */
-    case 'na-focus':{const el2=$('na-inp');if(!el2)break;
-      const sc=document.querySelector('#app .capp')||document.querySelector('.capp');
-      const card=el2.closest('.ccard');
-      if(sc&&card){const r=card.getBoundingClientRect(),sr=sc.getBoundingClientRect();sc.scrollTop+=r.top-sr.top-30}
-      el2.focus({preventScroll:true});break}
+    /* v18.94 — the assistant lives on its OWN screen now (mockup 05): both quick-log
+       tiles ("Type text" and "Assistant") navigate there, then focus the composer. */
+    case 'na-focus':{S.ptab='assistant';render();
+      const el2=$('na-inp');
+      if(el2)el2.focus({preventScroll:true});
+      break}
     case 'jump-flog':{const _sc=document.querySelector('#app .capp')||document.querySelector('.capp');
       const _el=document.getElementById('flog');
       if(_sc&&_el){const r=_el.getBoundingClientRect(),sr=_sc.getBoundingClientRect();_sc.scrollTop+=r.top-sr.top-60}
@@ -9295,12 +11306,32 @@ document.addEventListener('click',e=>{
     case 'nprof-open':nprofModal();break;
     /* v18.71 plan 1ب — barcode → OpenFoodFacts lookup → real macros per100 g. */
     case 'nbar-open':nbarModal();break;
+    /* v18.95 — Type text: parse → preview → one-tap log. No chat involved. */
+    case 'ntext-open':ntextModal();break;
+    /* v18.97 — composer "+" sheet: mockup05's note says the + holds عکس/بارکد. */
+    case 'na-plus':openModal(`
+      <div class="modal-h"><h3>${t('Add')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+      <div class="modal-b">
+        <div class="row" style="gap:8px">
+          <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="na-photo">${ic('camera',15)} ${t('Photo')}</button>
+          <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="nbar-open">${ic('barcode',15)} ${t('Barcode')}</button>
+        </div>
+      </div>`);break;
+    case 'nt-go':{const i=$('nt-inp');ntParse(i?i.value:'');break}
+    case 'nt-log':{
+      const c=client(S.cid);const nt=S.nt;
+      if(!c||!nt||!nt.items||!nt.items.length)break;
+      NLOGS.unshift({id:uid(),client:c.name,d:isoToday(),meal:nt.meal,items:nt.items.map(x=>({...x})),kcal:nt.kcal,p:nt.p,c:nt.c,f:nt.f,src:'text',at:Date.now()});
+      S.nt=null;saveData();closeModal();render();toast(`✓ ${nf(nt.kcal)} kcal · ${t('Logged')}`);break}
+    case 'nt-to-chat':{closeModal();S.ptab='assistant';render();const i=$('na-inp');if(i)i.focus({preventScroll:true});break}
     /* Today summary — deterministic chat answer from the real engine. */
     case 'na-summary':{const c=client(S.cid);if(!c)break;
       const tg=NEng.targets(c),co=NEng.consumed(c,isoToday());
       const w=NEng.waterOf(c,isoToday()),wt=NEng.waterT(c),meals=NEng.mealsLogged(c,isoToday());
-      const line=tg?`📊 ${nf(co.kcal)} / ${nf(tg.kcal)} kcal · P${nf(co.p)} C${nf(co.c)} F${nf(co.f)} · ${t('Water')} ${nf(w)}/${nf(wt)} L · ${nf(meals)} ${t('meals')}`
-        :`📊 ${t('No targets yet — set your profile or ask your coach for a plan.')}`;
+      /* v18.109 — no 📊: this is plain chat TEXT, so an icon can't ride along,
+         and every other bubble in the thread carries none. */
+      const line=tg?`${nf(co.kcal)} / ${nf(tg.kcal)} kcal · P${nf(co.p)} C${nf(co.c)} F${nf(co.f)} · ${t('Water')} ${nf(w)}/${nf(wt)} L · ${nf(meals)} ${t('meals')}`
+        :`${t('No targets yet — set your profile or ask your coach for a plan.')}`;
       NCHAT.push({id:uid(),client:c.name,role:'assistant',body:line,d:isoToday(),at:Date.now()});
       saveData();render();break}
     case 'nbar-go':{nbarLookup($('nb-inp')?.value);break}
@@ -9333,18 +11364,29 @@ document.addEventListener('click',e=>{
     case 'msg-note':{const m=MSGS.find(x=>x.id===+el.dataset.id);if(!m||m.noted)break;
       NOTES.unshift({id:uid(),client:m.client,from:'coach',shared:false,type:'General',title:`${t('From chat')} — ${t(m.client)}`,date:'Just now',body:m.body,pin:false,arch:false});
       m.noted=true;render();toast('Saved as note');break}
-    case 'cform':{const c=client(S.cid);
+    case 'cform':{const c=client(S.cid);closeModal(); /* may have come from the + sheet */
       const w=todaysPlan(c.id).w; // v18.62 — reference today's planned workout
       const ctx=w?`${w.name} · ${t(EXERCISES[w.exercises[0].ex].n)} · ${t('Set')} 2`:`${t("Today's Workout")} · ${t('Set')} 2`;
       MSGS.push({id:uid(),client:c.name,from:'client',type:'form',body:t('Please check my form on this set'),ctx,time:'Just now',read:false,dur:'0:12'});
       NOTIFS.unshift({t:`🎥 ${t(c.name)} — ${t('Form check')}`,d:'Just now',un:true});
       render();toast('Form check sent');break}
     case 'ck':S[el.dataset.k]=el.dataset.v;render();break;
+    /* v18.102 — composer "+" sheet. The two chips mockup 07 does not have
+       (Record form check / Attach file) moved here, so neither action became
+       unreachable when they were removed from the chip row. */
+    case 'chat-plus':openModal(`
+      <div class="modal-h"><h3>${t('Add')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+      <div class="modal-b"><div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="cattach">${ic('camera',15)} ${t('Send progress photo')}</button>
+        <button class="btn btn-outline" style="flex:1;justify-content:center" data-act="cform">${ic('video',15)} ${t('Record form check')}</button>
+      </div></div>`);break;
     case 'cattach':{
+      closeModal(); /* the + sheet may have opened us */
       const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
       inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
         const c=client(S.cid);
         resizeImage(f,src=>{
+          if(!src){toast(t('Could not read the picture'));return}
           MSGS.push({id:uid(),client:c.name,from:'client',type:'file',body:`📎 ${f.name}`,src,time:'Just now',read:false});
           NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
           saveData();render();toast(t('Photo attached'))});
@@ -9358,7 +11400,7 @@ document.addEventListener('click',e=>{
       MSGS.push({id:uid(),client:c.name,from:'client',type:'checkin',body,time:'Just now',read:false});
       gamAward(c,'checkin'); // v18.38 — +3 pts, badge checks
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
-      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      S.cEnergy=S.cSore=S.cSleep=null;render();toast('Check-in sent to your coach');break}
     /* ===== v17.5 — competitor-parity actions ===== */
     case 'photo-add':pickPhoto('coach');break;
     case 'photo-add-client':pickPhoto('client');break;
@@ -9412,8 +11454,10 @@ document.addEventListener('click',e=>{
       else{try{navigator.clipboard.writeText(tp.body)}catch(e){}closeModal();toast(t('Copied ✓'))}break}
     case 'print-workout':printWorkout();break;
     case 'print-nutrition':printNutrition();break;
-    /* v18.38 — gamification + reminders + PDF export */
-    case 'gam-open':gamModal();break;
+    /* v18.38 — reminders + PDF export. v18.113: the `gam-open` case and its
+       Achievements modal are gone; the case is kept as a no-op so a stale
+       data-act in an old tab can never throw a ReferenceError. */
+    case 'gam-open':break;
     /* v18.39 — challenges */
     case 'chal-new':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(null);break}
     case 'chal-edit':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}chalEditor(el.dataset.id);break}
@@ -9495,8 +11539,8 @@ document.addEventListener('click',e=>{
     case 'chal-log':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));const c=client(S.cid);if(!ch||!c)break;
       ch.prog=ch.prog||{};ch.prog[c.id]=(ch.prog[c.id]||0)+1;
       const dc=chalEvalClient(c);saveData();render();
-      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({e:(x.reward&&x.reward.be)||x.emoji||'🏆',n:(x.reward&&x.reward.bn)||x.name})),dc.reduce((a,x)=>a+((x.reward&&x.reward.pts)||50),0));
-      else toast('⭐ +1 '+t('Points'));break}
+      if(dc.length&&S.role==='client')badgeModal(dc.map(x=>({n:(x.reward&&x.reward.bn)||x.name})));
+      else toast(t('Progress logged'));break}
     /* v18.71 — Habits checklist: collapse / tick (number entry lives in
        habNum(), bound from the shared `change` listener via data-change). */
     /* Protect → jump the scroll container to the habits checklist (plain
@@ -9520,7 +11564,6 @@ document.addEventListener('click',e=>{
       if(hh.type==='count')hd[hh.id]=on?+(hh.target||1):0;
       else hd[hh.id]=on;
       if(on)gamAward(hc,'habit');
-      else gamRevoke(hc,'habit');
       saveData();render();break}
     /* v18.75 — plan 1د part 2: the COACH's habit builder. */
     case 'hab-open':{if(S.role!=='coach'){toast(t('Only the coach can manage habits'));break}S.habEdit=null;habCoachModal();break}
@@ -9571,7 +11614,7 @@ document.addEventListener('click',e=>{
       const hi2=isoToday(),hl2=hlogOf(hc2),hd2=hl2[hi2]||(hl2[hi2]={});
       const on2=!(hd2[hh2.id]===true||hd2[hh2.id]===1);
       hd2[hh2.id]=on2;
-      if(on2)gamAward(hc2,'habit');else gamRevoke(hc2,'habit');
+      if(on2)gamAward(hc2,'habit');
       saveData();render();habCoachModal();break}
     case 'rem-dismiss':{const m=MSGS.find(x=>String(x.id)===String(el.dataset.id));if(m){m.read=true;saveData()}render();break}
     case 'export-pdf':exportPdf(el.dataset.kind||'week',el.dataset.c);break;
@@ -9661,12 +11704,14 @@ document.addEventListener('click',e=>{
       /* v18.38 — gamification: consecutive-day streak, points, badges. */
       const __today=ymdOf(new Date()),__yst=ymdOf(new Date(Date.now()-864e5));
       if(cNow.lastDone!==__today){cNow.dayStreak=cNow.lastDone===__yst?(cNow.dayStreak||0)+1:1;cNow.lastDone=__today}
-      const __before=cNow.pts||0;
       gamAward(cNow,'workout');
       const cn=t(cNow.name);
       ACTIVITY.unshift({w:'Just now',i:'check',h:lang==='fa'?`<b>${cn}</b> <b>${esc(w.name)}</b> را تکمیل کرد`:`<b>${cn}</b> completed <b>${esc(w.name)}</b>`});
       clearInterval(restIv);S.player=null;restClear();S.ptab='today';render();
-      toast(`💪 ${t('Workout completed')} · ⭐ +${nf((cNow.pts||0)-__before)} ${t('Points')} · 🔥 ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
+      /* v18.113 — was "💪 Workout completed · ⭐ +10 Points · 🔥 12 day streak".
+         Points are no longer surfaced anywhere; the toast reports the streak,
+         which is the number a trainee actually cares about. */
+      toast(`${t('Workout completed')} · ${nf(cNow.dayStreak||0)} ${t('day streak')}`);break}
     case 'add-client':addClientModal();break;
     case 'save-client':{if(billGuard('client'))break;
       // Names are inserted into HTML all over the app and into quoted
@@ -9686,6 +11731,10 @@ document.addEventListener('click',e=>{
     case 'qr-open':qrModal(el.dataset.name||'',el.dataset.code||'');break;
     case 'modal-x':closeModal();if(el.dataset.msg)toast(el.dataset.msg);break;
     case 'ovl-x':if(e.target===el)closeModal();break;
+    /* v18.120 — the bottom-sheet ✕ (Coach Toolbox + Stopwatch) had a data-act
+       with NO case, so clicking it did nothing and the sheet was only
+       dismissable via the backdrop. Same closeModal() the other two use. */
+    case 'sheet-x':closeModal();break;
     /* v18.36/37 — coach toolbox FAB (mobile): toggle orbital tools */
     case 'tbx-toggle':{const w=$('tbxWrap');if(w)w.classList.toggle('open');break}
     case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');stopwatchSheet();break}
@@ -9892,6 +11941,13 @@ document.addEventListener('click',e=>{
     /* v18.61 — client weekly check-in: save the measurement, then send the
        coach a check-in message + notification (same path send-checkin uses). */
     case 'cmeas-open':clientMeasModal();break;
+    /* v18.105 — header gear: Settings are a section of this screen, not a route. */
+    case 'pf-gear':{
+      const sc=document.querySelector('#capp');
+      const row=[...document.querySelectorAll('.cbody .sec')]
+        .find(s=>/Settings/.test((s.querySelector('.sec-t')||{}).textContent||''));
+      if(sc&&row)sc.scrollTop+=row.getBoundingClientRect().top-sc.getBoundingClientRect().top-40;
+      break}
     case 'cmeas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       const lm=lastM(c.id);
       const bits=[`${t('Weight')} ${uwS(lm&&lm.w)}`];
@@ -9904,7 +11960,7 @@ document.addEventListener('click',e=>{
       gamAward(c,'checkin');
       NOTIFS.unshift({t:`${t(c.name)} ${t('sent you a message')}`,d:'Just now',un:true});
       closeModal();render();
-      toast(t('Check-in saved — your coach was notified')+' · ⭐ +'+nf(GAM.PTS.checkin)+' '+t('Points'));break}
+      toast(t('Check-in saved — your coach was notified'));break}
     case 'meas-save':{const c=saveMeasurementFromModal(true);if(!c)break;
       closeModal();
       if(isNarrow()){S.mClient=c.id;if(S.mview!=='client')S.mview='client'}
@@ -9979,8 +12035,7 @@ document.addEventListener('click',e=>{
     case 'theme-toggle':{PREFS.theme=(PREFS.theme||'Dark')==='Light'?'Dark':'Light';savePrefs();applyTheme();render();toast(PREFS.theme==='Dark'?'Dark theme':'Light theme');break}
     case 'cwfilter':{S.cwfilter=el.dataset.v;render();break}
     case 'cm-filter':{S.cfilter=el.dataset.v;render();break}
-    case 'prg-range':{S.prgRange=el.dataset.r;render();break}
-    case 'wt-range':{S.wtRange=el.dataset.r;render();break}
+    case 'wt-range':{S.wtRange=el.dataset.r;PREFS.wtRange=S.wtRange;savePrefs();render();break}
     /* Profile settings (mockup 08): units toggle + explicit language pick. */
     case 'units-tog':{PREFS.units=PREFS.units==='Imperial'?'Metric':'Imperial';savePrefs();render();
       toast(t('Units')+': '+(PREFS.units==='Imperial'?'lb · in':'kg · cm'));break}
@@ -10034,7 +12089,67 @@ document.addEventListener('click',e=>{
     case 'mclient':{S.mClient=+el.dataset.cid;S.mview='client';loadClientProgram(S.mClient);render();break}
     case 'mmsg':{S.msgThread=el.dataset.c;MSGS.forEach(m=>{if(m.client===S.msgThread&&m.from==='client')m.read=true});
       S.mview='tabs';S.mtab='messages';render();break}
-    case 'mhome':S.mview='tabs';render();break;
+    /* v19.12 — Back from §3 returns to the athlete it belongs to, not to the
+       More tab it no longer appears in. Every other sport screen keeps 'tabs'. */
+    case 'mhome':S.mview=(S.mview==='aprof')?'client':(S.mview==='live'?(S.mLiveFrom||'tabs'):'tabs');render();break;
+    /* v19.3 — sport sections from the mobile More menu */
+    case 'mnav':S.mview=el.dataset.v;render();window.scrollTo({top:0});break;
+    /* ═══════ v19.19 — MOBILE FLOOR wiring ═══════
+       Every action below reaches a real store write; nothing here is a stub.
+       The timer is anchored to `startedAt` inside liveSec(), so none of these   handlers need to run on an interval — only the Live screen repaints, and
+       only its clock node, once a second (liveTick). */
+    case 'live-start':{
+      const cid=+el.dataset.cid||(CLIENTS.find(c=>c.status!=='Archived')||{}).id;
+      if(!cid){toast(t('Add a client first'));break}
+      S.mLiveFrom=(S.mview==='client')?'client':'tabs';
+      if(liveRec())liveEnd();               /* one session at a time */
+      liveStart(cid,el.dataset.eid?+el.dataset.eid:null);
+      S.mClient=cid;S.mview='live';render();window.scrollTo({top:0});break}
+    case 'live-open':{
+      const r=liveRec();if(!r)break;
+      S.mLiveFrom=(S.mview==='client')?'client':'tabs';
+      S.mClient=r.cid;S.mview='live';render();window.scrollTo({top:0});break}
+    case 'live-set':liveSet(+el.dataset.d);render();break;
+    case 'live-rpe':liveRpe(+el.dataset.v);render();break;
+    case 'live-pause':livePause();render();break;
+    case 'live-rest':{const r=liveRec();if(r){liveRest((+r.restSec||90)===90?60:90);render();toast(t('Rest')+' '+nf(liveRec().restSec)+'s')}break}
+    case 'live-note':{
+      openModal(`<div class="card-t" style="margin-bottom:8px">${t('Session note')}</div>
+        <textarea class="ta" id="live-note-in" rows="3" style="width:100%" placeholder="${t('What did you see?')}"></textarea>
+        <div class="row" style="gap:8px;margin-top:12px">
+          <button class="btn btn-primary" style="flex:1;justify-content:center" data-act="live-note-save">${ic('check',15)} ${t('Save')}</button>
+          <button class="btn btn-outline" data-act="ovl-x">${t('Cancel')}</button></div>`);
+      break}
+    case 'live-note-save':{
+      const v=(document.getElementById('live-note-in')||{}).value;
+      if(liveNote(v)){closeModal();render();toast(t('Note added'))}else toast(t('Write something first'));
+      break}
+    case 'live-photo':{const r=liveRec();
+      if(!r){toast(t('Start a session first'));break}
+      formCheckModal(r.name);break}
+    case 'live-end':{
+      const out=liveEnd();if(!out)break;
+      toast(`${t('Session logged')} · ${nf(out.min)} ${t('min')}${out.rpe?` · RPE ${nf(out.rpe)}`:''}`);
+      S.mview=(S.mLiveFrom==='client')?'client':'tabs';
+      if(S.mview==='tabs')S.mtab='today';
+      render();window.scrollTo({top:0});break}
+    /* ── Jump palette ── */
+    case 'mjump':S.mjump=true;render();
+      {const q=document.getElementById('mjump-q');if(q)q.focus()}break;
+    case 'mjump-close':S.mjump=false;render();break;
+    /* ── log sheet ── */
+    case 'msheet':S.mlogCid=+el.dataset.cid||S.mClient||null;S.msheet=true;render();break;
+    case 'msheet-close':S.msheet=false;render();break;
+    case 'msheet-save':mLogSave();break;
+    case 'msheet-kind':case 'msheet-rpe':{
+      /* toggle in the DOM only — a re-render would wipe the typed distance and
+         duration the coach already entered */
+      const box=el.parentElement;
+      box.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');break}
+    /* ── roster filter + accordions ── */
+    case 'mc-filter':S.mcf=el.dataset.f;render();break;
+    case 'macc':{const k=el.dataset.k;S.macc=S.macc||{};S.macc[k]=!S.macc[k];render();break}
     case 'mworkout':if(S.mClient!=null)S.cid=S.mClient;S.mview='builder';loadClientProgram(S.cid);render();break;
     case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
     case 'msettings':S.mview='settings';render();break;
@@ -10047,6 +12162,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{
   if(e.target.matches('.exb [data-bf]')){render();return}
   const el=e.target.closest('[data-change]');if(!el)return;
+  if(el.dataset.change==='run-btype'){runReadAll();const d=S.runDraft;
+    if(d&&d.blocks&&d.blocks[+el.dataset.i]){d.blocks[+el.dataset.i].t=el.value;renderRunEditor()}return}
   if(el.dataset.change==='chal-draft'){const d=S.chalDraft;if(d){d[el.dataset.k]=el.value;renderChalEditor()}return}
   if(el.dataset.change==='client'){S.cid=+el.value;loadClientProgram(S.cid);render()}
   /* v18.71 — count habit (steps/mins): shared numeric entry. */
@@ -10065,6 +12182,21 @@ document.addEventListener('change',e=>{
     savePrefs();render();toast(t('Working hours updated'))}
   /* calendar type — Jalali (Shamsi) / Gregorian / auto */
   if(el.dataset.change==='caltype'){PREFS.cal.type=el.value;savePrefs();render();toast(t('Calendar type updated'))}
+  /* v19.8 — ATHLETICS §11 dashboard filters (Event · Athlete · Phase · Date · Status) */
+  if(el.dataset.change==='athf'){const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
+    F[el.dataset.k]=el.value;render()}
+  /* v19.14 — change the sport AFTER setup (Settings › Profile). Same writer the
+     wizard commits to; no view state is reset because every gate reads
+     ONBOARD.sport at render time. Switching away from an athletics sport leaves
+     its data in the payload on purpose — switch back and it is all still there. */
+  if(el.dataset.change==='osport'){
+    const v=el.value||'';
+    if(v!==(ONBOARD.sport||'')){
+      /* v19.17 — stamp `at`: without it the local pick looked OLDER than the
+         remote copy and the next cloudPull/cloudPush reverted it. */
+      ONBOARD.sport=v;ONBOARD.at=Date.now();saveData();render();
+      toast(`${t('Sport updated')}: ${v?t(v):t('None (base workspace)')}`)}
+  }
 });
 document.addEventListener('input',e=>{
   if(e.target.matches('.exb [data-bf]')){

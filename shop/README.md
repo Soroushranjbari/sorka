@@ -39,8 +39,8 @@ body: { planId, email }
 پاسخ موفق: { ok: true, coupons: ["PRO-XXXXXXXXXX", …] }
 ```
 - **فرانت فروشگاه هرگز کلید `ADMIN_API_KEY` را ندارد** — صدور کوپن فقط در
-  `shop/api/checkout.mjs` (سمت سرور) انجام می‌شود.
-- درگاه واقعی (زرین‌پال/…) فقط داخل `shop/api/checkout.mjs` وصل می‌شود:
+  `backend/handlers/shop-checkout.mjs` (سمت سرور) انجام می‌شود.
+- درگاه واقعی (زرین‌پال/…) فقط داخل `backend/handlers/shop-checkout.mjs` وصل می‌شود:
   تابع `simulatePayment()` را با verify درگاه جایگزین کنید. فرانت و اپ
   هیچ تغییری نمی‌خواهند.
 - پاسخ باید همیشه `coupons` (آرایه) بدهد؛ فرانت اولین عضو را نمایش می‌دهد.
@@ -119,8 +119,8 @@ body: { name, email, password, coupon? }   // coupon اختیاری
 - عکس‌ها و لوگو در `assets/`
 - افزودن صفحات جدید (بلاگ، تماس، FAQ…)
 - تغییر قیمت‌های نمایشی — فقط با قیمت واقعی بک‌اند هماهنگ نگه دارید
-  (`netlify/lib/billing.mjs` فقط سقف شاگردان را می‌داند؛ مبلغ در
-  `shop/api/checkout.mjs` → `PRICES` است)
+  (`backend/lib/billing.mjs` فقط سقف شاگردان را می‌داند؛ مبلغ در
+  `backend/handlers/shop-checkout.mjs` → `PRICES` است)
 
 ## 🧪 تست بعد از هر تغییر فروشگاه (۲ دقیقه)
 1. `/shop` باز می‌شود؟

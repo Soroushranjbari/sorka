@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v19-19';
+const CACHE = 'co-os-v19-20';
 
 /* v18.22 — Web Push: show the OS notification and focus/open the app. */
 self.addEventListener('push', e => {
@@ -21,7 +21,11 @@ self.addEventListener('notificationclick', e => {
     return self.clients.openWindow(url);
   }));
 });
-const ASSETS = ['./', './index.html', './manifest.json', './vendor/lucide/lucide.min.js'];
+// app.js is the extracted app bundle (was a ~1MB inline <script> in
+// index.html). It must be precached or an offline first load gets a shell
+// with no logic. Same-origin assets are cache-first, so it also stops being
+// re-downloaded on every navigation.
+const ASSETS = ['./', './index.html', './app.js', './manifest.json', './vendor/lucide/lucide.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));

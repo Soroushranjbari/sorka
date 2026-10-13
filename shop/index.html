@@ -716,6 +716,80 @@ footer{background:#050607;border-top:1px solid var(--line);padding:70px 0 34px;p
 @media(max-width:860px){.f-grid{grid-template-columns:1fr 1fr}}
 html.fx-fallback #loader{display:none!important}
 html.fx-fallback body{overflow:auto!important;height:auto!important}
+/* ═══════════════════════════════════════════════════════════════════
+   v19.19 — scenes 11 & 12: the floor app and the endurance module.
+   Both use the plain .wrap + [data-reveal] pattern (s13), so the scroll
+   engine picks them up with no new JS — section[data-scene] is collected
+   by id at runtime. Every colour is an existing shop token.
+   ═══════════════════════════════════════════════════════════════════ */
+.feat2{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:clamp(22px,3vw,52px);align-items:center;width:100%;margin-top:clamp(26px,4vw,54px)}
+@media(max-width:900px){.feat2{grid-template-columns:1fr}}
+.ma-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.ma-grid{grid-template-columns:1fr}}
+.ma-card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.022);
+  padding:18px 16px;transition:border-color .35s var(--e),transform .35s var(--e)}
+@media(hover:hover){.ma-card:hover{border-color:var(--acc-line);transform:translateY(-3px)}}
+.ma-card .mi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:var(--acc-dim);color:var(--acc);margin-bottom:12px}
+.ma-card .mi svg{width:17px;height:17px}
+.ma-card h4{font-size:15px;margin:0 0 7px;letter-spacing:-.01em}
+.ma-card p{font-size:13px;line-height:1.62;color:var(--mut);margin:0}
+/* the phone mock mirrors the app's LIGHT UI, like every other mock on this page */
+.ma-phone{width:min(300px,100%);margin:0 auto;background:var(--ui-bg);color:var(--ui-txt);
+  border:1px solid var(--line2);border-radius:30px;padding:16px 14px 18px;
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.85)}
+.ma-ph{display:flex;justify-content:space-between;align-items:center;font-size:12px;
+  font-weight:600;margin-bottom:12px}
+.ma-rec{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.12em;
+  color:var(--lime-dk);font-weight:700}
+.ma-rec i{width:7px;height:7px;border-radius:50%;background:var(--acc);
+  animation:maPulse 1.6s ease-in-out infinite}
+@keyframes maPulse{0%,100%{opacity:1}50%{opacity:.2}}
+.ma-ring{position:relative;width:184px;height:184px;margin:2px auto 14px}
+.ma-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ma-ring .tr{fill:none;stroke:#e6e6df;stroke-width:11}
+.ma-ring .pg{fill:none;stroke:var(--lime-dk);stroke-width:11;stroke-linecap:round}
+.ma-fc{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:5px}
+.ma-fc span{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ui-mut)}
+.ma-fc b{font-family:var(--disp);font-weight:700;font-size:38px;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.ma-fc em{font-style:normal;font-size:11px;font-weight:600;color:var(--lime-dk)}
+.ma-step{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:9px;align-items:center;
+  background:#fff;border:1px solid var(--ui-line);border-radius:14px;padding:11px}
+.ma-sb{height:44px;border-radius:11px;background:var(--ui-bg);display:grid;place-items:center;
+  font-size:19px;font-weight:600;color:var(--ui-mut)}
+.ma-sb.go{background:var(--acc);color:var(--acc-ink)}
+.ma-step .mid{text-align:center;min-width:0}
+.ma-step .mid b{font-family:var(--disp);font-weight:700;font-size:25px;line-height:1;
+  font-variant-numeric:tabular-nums}
+.ma-step .mid b small{font-size:13px;color:var(--ui-mut)}
+.ma-step .mid i{display:block;font-style:normal;font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ui-mut);margin-top:6px}
+.ma-segs{grid-column:1/-1;display:flex;gap:5px}
+.ma-segs i{flex:1;height:5px;border-radius:99px;background:#e6e6df}
+.ma-segs i.on{background:var(--acc)}
+.ma-rpe{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:9px}
+.ma-rpe span{height:36px;border-radius:9px;background:#fff;border:1px solid var(--ui-line);
+  display:grid;place-items:center;font-family:var(--disp);font-weight:600;font-size:12px;
+  color:var(--ui-mut)}
+.ma-rpe span.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+/* the endurance module map */
+.ma-map{display:flex;flex-direction:column;gap:9px}
+.ma-row{display:flex;gap:13px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);
+  border-radius:13px;background:rgba(255,255,255,.022);transition:border-color .35s var(--e)}
+@media(hover:hover){.ma-row:hover{border-color:var(--acc-line)}}
+.ma-row .n{font-family:var(--disp);font-weight:600;font-size:10px;line-height:1;
+  letter-spacing:.1em;color:var(--acc);border:1px solid var(--acc-line);border-radius:7px;
+  padding:6px 7px;flex:none}
+.ma-row .rd{min-width:0}
+.ma-row b{display:block;font-size:14px;margin-bottom:4px}
+.ma-row p{font-size:12.5px;line-height:1.6;color:var(--mut);margin:0}
+.ma-note{margin-top:16px;display:flex;gap:11px;align-items:flex-start;padding:14px 16px;
+  border:1px dashed var(--acc-line);border-radius:13px;background:var(--acc-dim)}
+.ma-note svg{width:16px;height:16px;color:var(--acc);flex:none;margin-top:2px}
+.ma-note p{margin:0;font-size:12.5px;line-height:1.65;color:var(--txt)}
+@media (prefers-reduced-motion:reduce){.ma-rec i{animation:none}}
 html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.callout,.tool-chip,#probFreeze,.mtc,#macroPanel,.st-chip,.pr-chip,#dupToast,[data-reveal],.fx-in,.bodymap .hs){opacity:1!important;transform:none!important}
 </style>
 </head>
@@ -756,6 +830,10 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
+<symbol id="i-watch" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 10v2l1.5 1.5"/><path d="m16.5 17.4-.4 3.8a2 2 0 0 1-2 1.8H9.9a2 2 0 0 1-2-1.8l-.4-3.8"/><path d="m17.5 6.6.4-3.8A2 2 0 0 0 15.9 1H9.9a2 2 0 0 0-2 1.8l.4 3.8"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
 </defs></svg>
 
 <script>
@@ -821,12 +899,46 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     'Create and manage nutrition plans for your clients.':'برنامه‌های تغذیه مشتری‌ها را بسازید و مدیریت کنید.','Templates':'قالب‌ها','Create Nutrition Plan':'ساخت برنامه تغذیه','Overview':'نمای کلی','Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب‌های وعده','Plan Templates':'قالب‌های برنامه','History':'تاریخچه','Active Plans':'برنامه‌های فعال','Plans Created':'برنامه‌های ساخته‌شده','Clients With Nutrition Plans':'مشتری‌های دارای برنامه تغذیه','Plans Needing Review':'برنامه‌های نیازمند بررسی','Average Daily Calories':'میانگین کالری روزانه','Search clients…':'جست‌وجوی مشتری‌ها…','All':'همه','Active':'فعال','Paused':'متوقف','Archived':'بایگانی‌شده','Client':'مشتری','Goal':'هدف','Current Plan':'برنامه فعلی','Phase':'فاز','Phase 1':'فاز ۱','Phase 2':'فاز ۲','Last Updated':'آخرین به‌روزرسانی','Status':'وضعیت','Actions':'عملیات','Open Plan':'باز کردن برنامه','42 Active Clients · 8 shown in this workspace':'۴۲ مشتری فعال · ۸ مورد در این فضای کاری نمایش داده شده','Filter':'فیلتر','Sort':'مرتب‌سازی','Add Client':'افزودن مشتری','Weight':'وزن','Program':'برنامه','Next Session':'جلسه بعدی','Streak':'تداوم','Today · 09:00':'امروز · ۰۹:۰۰','Today · 11:00':'امروز · ۱۱:۰۰','Today · 14:30':'امروز · ۱۴:۳۰','Tomorrow · 17:00':'فردا · ۱۷:۰۰','Thu · 09:30':'پنج‌شنبه · ۰۹:۳۰','Fri · 18:00':'جمعه · ۱۸:۰۰','Open Workspace':'باز کردن فضای کاری','Pending':'در انتظار','On Hold':'در حالت تعلیق','Inactive':'غیرفعال','3 need your reply · Async — no pressure':'۳ پیام منتظر پاسخ شما · پاسخ‌گویی با آرامش','Needs your reply':'منتظر پاسخ شما','1 New message':'۱ پیام جدید','New message':'پیام جدید','Form check':'بررسی فرم','All conversations':'همه گفت‌وگوها','You: Yes — replace lunges with box split squats at 3×10, …':'شما: بله؛ لانج را با اسکوات اسپلیت جعبه‌ای ۳×۱۰ جایگزین کن، …','Is my back neutral enough on the last reps?':'آیا در تکرارهای آخر کمرم به‌اندازه کافی خنثی است؟','Can I swap Thursday Pull A to Friday? I have a work …':'می‌توانم پول A پنج‌شنبه را به جمعه منتقل کنم؟ جلسه کاری دارم …','Check-in · Energy: Low · Soreness: Some · Sleep: Poo…':'گزارش وضعیت · انرژی: کم · کوفتگی: متوسط · خواب: ضعی…','25 min ago':'۲۵ دقیقه پیش','2 h ago':'۲ ساعت پیش','Yesterday':'دیروز','3 days ago':'۳ روز پیش','Session':'جلسه','Assessment':'ارزیابی','Measurement':'اندازه‌گیری','Appointment':'قرار ملاقات','Drag events between days to reschedule':'برای تغییر زمان، رویدادها را بین روزها جابه‌جا کنید','Pull Workout':'تمرین کششی','Mobility Prep':'آماده‌سازی حرکتی','Push Workout':'تمرین فشاری','Leg Day':'روز پا','Physio appointment':'قرار فیزیوتراپی','Training Session':'جلسه تمرین','Push B':'پوش B','You':'شما',
     '07 — Progress':'۰۷ — پیشرفت','See progress.':'پیشرفت را ببینید.','Not just numbers.':'نه فقط اعداد.','08 — Measurements':'۰۸ — اندازه‌گیری‌ها','Every number.':'هر عدد.','One place.':'در یک مکان.',
     'Body metrics & progress photos — right next to the plan they belong to. Ali Rezaei · 12 weeks in.':'شاخص‌های بدنی و عکس‌های پیشرفت، درست کنار برنامه مربوط به آن‌ها. علی رضایی · هفته دوازدهم.',
-    '09 — The system':'۰۹ — سیستم','Everything connected.':'همه چیز متصل.','Nothing lost.':'هیچ چیز گم نمی‌شود.','10 — Files':'۱۰ — فایل‌ها','11 — How it works':'۱۱ — نحوه کار',
-    'Built for modern coaches.':'ساخته‌شده برای مربی‌های امروزی.','14 — Pricing':'۱۴ — قیمت‌گذاری','Simple pricing.':'قیمت‌گذاری ساده.','No surprises.':'بدون غافلگیری.',
+    '09 — The system':'۰۹ — سیستم','Everything connected.':'همه چیز متصل.','Nothing lost.':'هیچ چیز گم نمی‌شود.','10 — Templates':'۱۰ — قالب‌ها','13 — How it works':'۱۳ — نحوه کار',
+    'Built for modern coaches.':'ساخته‌شده برای مربی‌های امروزی.','16 — Pricing':'۱۶ — قیمت‌گذاری','14 — The coach':'۱۴ — مربی','15 — Social proof':'۱۵ — بازخورد اجتماعی','Simple pricing.':'قیمت‌گذاری ساده.','No surprises.':'بدون غافلگیری.',
     'Billed monthly. Cancel anytime.':'پرداخت ماهانه. هر زمان خواستید لغو کنید.','Billed yearly — 2 months free.':'پرداخت سالانه؛ دو ماه رایگان.','Prices shown are launch placeholders — final pricing to be confirmed.':'قیمت‌های نمایش‌داده‌شده اولیه هستند و قیمت نهایی متعاقباً اعلام می‌شود.',
     'Company':'شرکت','Manifesto':'بیانیه','Careers':'فرصت‌های شغلی','Contact':'تماس','Legal':'حقوقی','Privacy':'حریم خصوصی','Terms':'شرایط استفاده','Imprint':'اطلاعات حقوقی',
     'The operating system for fitness coaches and gyms. One coach. One workspace.':'سیستم‌عامل مربی‌ها و باشگاه‌های ورزشی. یک مربی. یک فضای کاری.',
-    'Made for coaches who mean business.':'برای مربی‌هایی که جدی کار می‌کنند.','All rights reserved.':'تمامی حقوق محفوظ است.'
+    'Made for coaches who mean business.':'برای مربی‌هایی که جدی کار می‌کنند.','All rights reserved.':'تمامی حقوق محفوظ است.',
+    /* ── v19.19 — scenes 11 & 12: the floor app and the endurance module ──
+       The walker translates ONE TEXT NODE at a time, so every node needs its
+       own key. Keys that end in a period work whether or not stripTerminal   Periods() has already run (see translations[key+'.''] fallback). */
+    '11 — On the floor':'۱۱ — روی زمین باشگاه','Coach from':'مربیگری از','the gym floor.':'روی زمین باشگاه.',
+    'The whole workspace on your phone — built for one thumb, between sets.':'کل فضای کاری در گوشی شما؛ طراحی‌شده برای یک شست، میان ست‌ها.',
+    'Live session':'جلسه زنده','REC':'زنده','Rest':'استراحت','2 of 4 sets':'۲ از ۴ ست',
+    'Goblet squat · 12 reps':'اسکات گابلت · ۱۲ تکرار',
+    'Rest timer, set counter and RPE on one screen. The clock is anchored to the start, so locking the phone never loses a second.':'تایمر استراحت، شمارش ست و RPE در یک صفحه؛ ساعت به لحظه شروع گره خورده، پس قفل شدن گوشی حتی یک ثانیه را از دست نمی‌دهد.',
+    'Signals':'سیگنال‌ها',
+    'Your own data read back to you — unanswered messages, sessions awaiting the client, missed days, and RPE drift computed from the training log.':'داده‌های خودتان که به شما بازخوانده می‌شوند — پیام‌های بی‌پاسخ، جلسه‌های منتظر مشتری، روزهای بدون تمرین، و انحراف RPE که از گزارش تمرین محاسبه می‌شود.',
+    'One-tap log':'ثبت با یک ضربه',
+    'Log a session in seconds. It writes to the same log the athlete sees, so the two views can never disagree.':'جلسه‌ای را در چند ثانیه ثبت کنید؛ در همان گزارشی نوشته می‌شود که ورزشکار می‌بیند، پس هرگز تضادی پیش نمی‌آید.',
+    'Jump':'پرش','Every screen, every athlete, every action — two taps from wherever you are.':'هر صفحه، هر ورزشکار، هر عملیات — با دو ضربه از هر جا.',
+    'Squad pulse':'نبض تیم','A ring per athlete, drawn from their real attendance — never from a guess.':'یک حلقه برای هر ورزشکار، از حضور و غیاب واقعی او — هرگز حدسی.',
+    'Nothing hidden':'چیزی پنهان نیست','The complete index under More: twenty screens, grouped. Nothing is buried.':'فهرست کامل در More: بیست صفحه، دسته‌بندی‌شده. هیچ‌چیز دفن نشده.',
+    '12 — Built for endurance':'۱۲ — ساخته‌شده برای استقامت',
+    "A running coach's":'برای مربی دوندگی','own workspace.':'فضای کاریِ خودش.',
+    'Choose Running & Endurance during setup and the module appears — races, phases, load, personal bests and wearables. Choose anything else and it stays out of the way.':'در زمان راه‌اندازی Running & Endurance را انتخاب کنید تا ماژول ظاهر شود — مسابقات، فازها، بار تمرینی، رکوردها و دستگاه‌های پوشیدنی. هر گزینه دیگری را بزنید، ماژول کنار می‌رود.',
+    'Sport-gated':'وابسته به ورزش',
+    'Sections belong to a sport. Pick Running and the athletics rail appears; pick anything else and it goes away. The next sport is a single row in a table.':'بخش‌ها متعلق به یک ورزش‌اند. دوندگی را بزنید نوار دویدن می‌آید؛ هر ورزش دیگری را بزنید می‌رود. ورزش بعدی فقط یک ردیف در یک جدول است.',
+    'Run builder':'سازنده دویدن',
+    'Block workouts with warm-up, main set, drills, recovery and cool-down — target pace, surface and rest on every block.':'بلوک‌های تمرین با گرم‌کردن، ست اصلی، دریل، بازیابی و سردکردن — هدف سرعت، سطح و استراحت در هر بلوک.',
+    'Training load':'بار تمرینی',
+    'Session-RPE load per week: distance, duration, intensity, long runs and recovery. It is reported as training load, never as a medical score.':'بار تمرینی هفتگی بر پایه RPE جلسه: مسافت، مدت، شدت، دوهای بلند و بازیابی. به‌عنوان بار تمرینی گزارش می‌شود، هرگز به‌عنوان امتیاز پزشکی.',
+    'Phases, races and PBs':'فازها، مسابقات و رکوردها',
+    'Weekly phase ranges, a race calendar with countdowns, and personal bests per athlete.':'بازه هفتگی فازها، تقویم مسابقات با شمارش معکوس، و بهترین رکوردهای هر ورزشکار.',
+    'Athletics dashboard':'داشبورد دویدن',
+    'Filter by event, athlete, phase, date or status — all five backed by real data.':'فیلتر بر اساس ماده، ورزشکار، فاز، تاریخ یا وضعیت — هر پنج تا بر داده واقعی سوارند.',
+    'Planned vs actual':'برنامه در برابر اجرا',
+    'Plan and log side by side, session by session — pace, distance and duration deltas.':'برنامه و گزارش کنار هم، جلسه به جلسه — اختلاف سرعت، مسافت و مدت.',
+    "Athlete's own view":'نمای خودِ ورزشکار',
+    'Their week, their next race with a live countdown, their personal bests and their optional metrics — on their phone too.':'هفته‌شان، مسابقه بعدی با شمارش زنده، بهترین رکوردها و شاخص‌های اختیاری — روی گوشی خودشان هم.',
+    'Wearables say "not connected" until they are.':'دستگاه‌های پوشیدنی تا وقتی وصل نشده‌اند می‌گویند «متصل نیست».',
+    'No invented sync timestamps and no fabricated activity rows — the page shows what is actually configured.':'نه زمان همگام‌سازی اختراعی، نه ردیف فعالیت ساختگی — صفحه همان چیزی را نشان می‌دهد که واقعاً پیکربندی شده.'
   };
   var original=new WeakMap();
   function normalize(value){return value.replace(/\s+/g,' ').trim();}
@@ -1635,10 +1747,88 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   </div>
 </section>
 
+<section class="scene" id="s12m" data-scene>
+  <div class="wrap">
+    <div data-reveal><span class="eyebrow">11 — On the floor</span></div>
+    <div data-reveal style="display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;margin-top:14px">
+      <h2 class="display" style="font-size:clamp(30px,4.6vw,64px)">Coach from<br>the gym floor.</h2>
+      <p class="sub" style="text-align:center;max-width:680px">The whole workspace on your phone — built for one thumb, between sets.</p>
+    </div>
+    <div class="feat2" data-reveal>
+      <div class="ma-phone">
+        <div class="ma-ph"><span>Live session</span><span class="ma-rec"><i></i>REC</span></div>
+        <div class="ma-ring">
+          <svg viewBox="0 0 184 184" aria-hidden="true">
+            <circle class="tr" cx="92" cy="92" r="86"/>
+            <circle class="pg" cx="92" cy="92" r="86" stroke-dasharray="540.35" stroke-dashoffset="150"/>
+          </svg>
+          <div class="ma-fc"><span>Rest</span><b>0:45</b><em>2 of 4 sets</em></div>
+        </div>
+        <div class="ma-step">
+          <span class="ma-sb">–</span>
+          <div class="mid"><b>3<small>/4</small></b><i>Goblet squat · 12 reps</i></div>
+          <span class="ma-sb go">+</span>
+          <div class="ma-segs" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+        </div>
+        <div class="ma-rpe" aria-hidden="true"><span>6</span><span>7</span><span class="on">8</span><span>9</span><span>10</span></div>
+      </div>
+      <div class="ma-grid">
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-timer"/></svg></div>
+          <h4>Live session</h4><p>Rest timer, set counter and RPE on one screen. The clock is anchored to the start, so locking the phone never loses a second.</p></div>
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-bell"/></svg></div>
+          <h4>Signals</h4><p>Your own data read back to you — unanswered messages, sessions awaiting the client, missed days, and RPE drift computed from the training log.</p></div>
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-plus"/></svg></div>
+          <h4>One-tap log</h4><p>Log a session in seconds. It writes to the same log the athlete sees, so the two views can never disagree.</p></div>
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-search"/></svg></div>
+          <h4>Jump</h4><p>Every screen, every athlete, every action — two taps from wherever you are.</p></div>
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-users"/></svg></div>
+          <h4>Squad pulse</h4><p>A ring per athlete, drawn from their real attendance — never from a guess.</p></div>
+        <div class="ma-card"><div class="mi"><svg class="ic"><use href="#i-grid"/></svg></div>
+          <h4>Nothing hidden</h4><p>The complete index under More: twenty screens, grouped. Nothing is buried.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s12a" data-scene>
+  <div class="wrap">
+    <div data-reveal><span class="eyebrow">12 — Built for endurance</span></div>
+    <div data-reveal style="display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;margin-top:14px">
+      <h2 class="display" style="font-size:clamp(30px,4.6vw,64px)">A running coach's<br>own workspace.</h2>
+      <p class="sub" style="text-align:center;max-width:740px">Choose Running &amp; Endurance during setup and the module appears — races, phases, load, personal bests and wearables. Choose anything else and it stays out of the way.</p>
+    </div>
+    <div class="feat2" data-reveal style="grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)">
+      <div class="ma-map">
+        <div class="ma-row"><span class="n">01</span><div class="rd"><b>Sport-gated</b>
+          <p>Sections belong to a sport. Pick Running and the athletics rail appears; pick anything else and it goes away. The next sport is a single row in a table.</p></div></div>
+        <div class="ma-row"><span class="n">02</span><div class="rd"><b>Run builder</b>
+          <p>Block workouts with warm-up, main set, drills, recovery and cool-down — target pace, surface and rest on every block.</p></div></div>
+        <div class="ma-row"><span class="n">03</span><div class="rd"><b>Training load</b>
+          <p>Session-RPE load per week: distance, duration, intensity, long runs and recovery. It is reported as training load, never as a medical score.</p></div></div>
+        <div class="ma-row"><span class="n">04</span><div class="rd"><b>Phases, races and PBs</b>
+          <p>Weekly phase ranges, a race calendar with countdowns, and personal bests per athlete.</p></div></div>
+        <div class="ma-row"><span class="n">05</span><div class="rd"><b>Athletics dashboard</b>
+          <p>Filter by event, athlete, phase, date or status — all five backed by real data.</p></div></div>
+        <div class="ma-row"><span class="n">06</span><div class="rd"><b>Planned vs actual</b>
+          <p>Plan and log side by side, session by session — pace, distance and duration deltas.</p></div></div>
+      </div>
+      <div>
+        <div class="ma-card" style="margin-bottom:12px">
+          <div class="mi"><svg class="ic"><use href="#i-pulse"/></svg></div>
+          <h4>Athlete's own view</h4>
+          <p>Their week, their next race with a live countdown, their personal bests and their optional metrics — on their phone too.</p>
+        </div>
+        <div class="ma-note"><svg class="ic"><use href="#i-watch"/></svg>
+          <p><b>Wearables say "not connected" until they are.</b><br>No invented sync timestamps and no fabricated activity rows — the page shows what is actually configured.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="scene" id="s13" data-scene>
   <a id="how" style="position:absolute;top:0"></a>
   <div class="wrap">
-    <div data-reveal><span class="eyebrow">11 — How it works</span></div>
+    <div data-reveal><span class="eyebrow">13 — How it works</span></div>
     <div class="steps">
       <div class="step" data-reveal><i>Step</i><div class="num">01</div><h3>Add your clients</h3><p>Import profiles, set goals, and invite clients with a single link. Everything starts in one place.</p></div>
       <div class="step" data-reveal style="transition-delay:.12s"><i>Step</i><div class="num">02</div><h3>Build your programs</h3><p>Workouts, nutrition, templates. Build once — reuse, duplicate, and adapt whenever you need.</p></div>
@@ -1649,7 +1839,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 
 <section class="scene" id="s14" data-scene>
   <div class="inner wrap">
-    <span class="eyebrow" data-reveal>12 — The coach</span>
+    <span class="eyebrow" data-reveal>14 — The coach</span>
     <h2 class="display" data-reveal>You coach.<br><span class="l2">We organize the work.</span></h2>
     <blockquote data-reveal>"CoachMint gives you the workspace. You bring the expertise."</blockquote>
     <div class="values" data-reveal><span>Focus</span><span>Professionalism</span><span>Control</span><span>Time</span><span>Growth</span></div>
@@ -1658,7 +1848,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 
 <section class="scene" id="s15" data-scene>
   <div class="wrap">
-    <div data-reveal><span class="eyebrow">13 — Social proof</span>
+    <div data-reveal><span class="eyebrow">15 — Social proof</span>
       <h2 class="display" style="font-size:clamp(30px,4.2vw,58px);margin-top:18px">Built for modern coaches.</h2></div>
     <div class="tgrid">
       <div class="tcard" data-reveal>
@@ -1684,7 +1874,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <section class="scene" id="s16" data-scene>
   <a id="pricing" style="position:absolute;top:0"></a>
   <div class="wrap">
-    <div data-reveal><span class="eyebrow">14 — Pricing</span>
+    <div data-reveal><span class="eyebrow">16 — Pricing</span>
       <h2 class="display" style="font-size:clamp(30px,4.2vw,58px);margin-top:18px">Simple pricing.<br>No surprises.</h2>
       <div class="bill-toggle"><button class="bill on" data-bill="m">Monthly</button><button class="bill" data-bill="y">Yearly</button></div>
       <div class="bill-note">Billed monthly. Cancel anytime.</div>

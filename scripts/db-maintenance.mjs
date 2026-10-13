@@ -23,7 +23,7 @@
 //
 // Exit codes: 0 ok, 1 nothing done / error.
 import { readFileSync, existsSync, mkdirSync, copyFileSync, readdirSync, statSync, unlinkSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -41,8 +41,12 @@ try {
     if (m) SQLITE_PATH = m[1].trim().replace(/^["']|["']$/g, '');
   }
 } catch {}
-const DB_PATH = join(ROOT, SQLITE_PATH || 'data/sqlite.db');
-const BACKUP_DIR = join(ROOT, 'data/backups');
+// An absolute SQLITE_PATH (recommended: outside OneDrive so password hashes
+// and session tokens are never synced to a personal cloud) must be used as-is —
+// path.join(ROOT, 'C:\\...') mangles it into ROOT + 'C:\...'. Backups sit next
+// to the DB, exactly where server.mjs puts them.
+const DB_PATH = SQLITE_PATH && isAbsolute(SQLITE_PATH) ? SQLITE_PATH : join(ROOT, SQLITE_PATH || 'data/sqlite.db');
+const BACKUP_DIR = join(dirname(DB_PATH), 'backups');
 
 if (!existsSync(DB_PATH)) {
   console.error(`[db-maintenance] database not found: ${DB_PATH}`);
