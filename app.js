@@ -67,7 +67,7 @@ flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line
    map above first (zero visual regression for existing screens), then
    LUCIDE_ALIAS, then ANY Lucide kebab name — new UI can simply write
    ic('heart-pulse') / ic('medal') / ic('crown') / ic('dumbbell-…'). */
-const LUCIDE_ALIAS={grid:'layout-grid',stack:'layers',note:'file-text',gear:'settings',help:'circle-help',edit:'pencil',trash:'trash-2',more:'ellipsis',camflip:'refresh-ccw',grip:'grip-vertical',cart:'shopping-cart',refresh:'rotate-cw',qr:'qr-code',robot:'bot',stopwatch:'timer',chart:'chart-line',chevL:'chevron-left',chevR:'chevron-right',chevD:'chevron-down',arrowR:'arrow-right'};
+const LUCIDE_ALIAS={grid:'layout-grid',stack:'layers',note:'file-text',gear:'settings',help:'circle-help',edit:'pencil',trash:'trash-2',more:'ellipsis',camflip:'refresh-ccw',grip:'grip-vertical',cart:'shopping-cart',refresh:'rotate-cw',qr:'qr-code',robot:'bot',stopwatch:'timer',chart:'chart-line',chevL:'chevron-left',chevR:'chevron-right',chevD:'chevron-down',arrowR:'arrow-right',alert:'triangle-alert'};
 const lucideSvg=name=>{
   const L=window.lucide||window.Lucide;if(!L||!name)return '';
   const pk=String(name).split('-').filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1)).join('');
@@ -128,6 +128,7 @@ const FA={
 'No templates for this sport yet':'هنوز قالبی برای این رشته نیست','Build one in the builder and save it as a template':'در سازنده بساز و به‌عنوان قالب ذخیره کن','Show all templates':'نمایش همه قالب‌ها',
 'Saved workouts':'برنامه‌های ذخیره‌شده','New workout':'تمرین جدید','Load into the builder':'بارگذاری در سازنده','Workout deleted':'تمرین حذف شد','No saved workouts yet — build one below':'هنوز برنامه‌ای ذخیره نشده — از پایین بسازید',
 'Could not load coaches':'بارگذاری مربی‌ها ناموفق بود','Admin error':'خطای ادمین','Retry':'تلاش دوباره','Search by name or email':'جستجو با نام یا ایمیل',
+'Client Retention & Health':'ماندگاری و سلامت شاگردان','Retention':'ماندگاری','Active Athletes':'شاگردان فعال','athletes on hold / inactive':'شاگرد غیرفعال / در انتظار','High engagement predicts 92% renewal':'تعامل بالا پیش‌بینی‌کننده ۹۲٪ تمدید است','Roster Health Breakdown':'وضعیت سلامت شاگردان','On Track':'در مسیر هدف','Check-in':'پیگیری','At Risk':'در معرض خطر','Nudge':'ارسال پیام','Shortcuts':'میان‌برها','AI Coach Intelligence':'هوش مصنوعی مربی','Weekly Briefing':'خلاصه هفتگی','Auto Daily':'تحلیل روزانه','Squad Adherence':'میزان پایبندی تیم','completion rate across':'نرخ تکمیل در کل','clients with':'شاگرد با','completed workouts.':'تمرین انجام‌شده.','Recovery Flag':'هشدار ریکاوری','Progression Milestone':'پیشرفت و ارتقا','Open Smart Reports':'مشاهده گزارش هوشمند','Client Check-ins':'پیام به شاگردان','Missed 2 sessions — risk of drop-off':'۲ جلسه غیبت — ریسک انصراف','missed sessions':'جلسه غیبت','risk of drop-off':'ریسک انصراف','All athletes on track — no drop-off risk detected':'تمام شاگردان در مسیر هدف هستند — ریسک انصرافی مشاهده نشد','Team Check-in':'وضعیت تعامل تیم','All client messages and check-ins answered.':'تمام پیام‌ها و چک‌این‌های شاگردان پاسخ داده شده است.','is on':'در حال گذراندن برنامه','(Week':'(هفته',
 'Sign in to CoachMint':'ورود به CoachMint','Choose your role':'نقشت را انتخاب کن','I am a Coach':'مربی هستم','Manage clients, build workouts, track progress':'مدیریت شاگردان، ساخت تمرین، پیگیری پیشرفت','I am a Client':'شاگرد هستم','See your workouts, progress and nutrition':'تمرین‌ها، پیشرفت و تغذیه‌ات را ببین','Back':'بازگشت','Coach sign in':'ورود مربی','Create coach account':'ساخت حساب مربی','Create account':'ساخت حساب','Have an account?':'حساب داری؟','Full name':'نام کامل','Your name':'نام شما','8+ characters':'۸+ نویسه','14-day free trial · no card required':'۱۴ روز آزمایشی رایگان · بدون نیاز به کارت','Welcome back to your workspace':'به فضای کاری‌ات خوش برگشتی','Explore the demo':'مشاهده‌ی دمو','Demo mode — sign up to save online':'حالت دمو — برای ذخیره‌ی آنلاین ثبت‌نام کن','Creating your account…':'در حال ساخت حساب…','Signing in…':'در حال ورود…','Welcome':'خوش آمدی','Could not reach server':'ارتباط با سرور برقرار نشد','Enter name, valid email, password 8+ chars':'نام، ایمیل معتبر و رمز ۸+ نویسه وارد کن','Enter email and password':'ایمیل و رمز را وارد کن','Demo — not signed in':'دمو — وارد نشده‌ای','Demo: any credentials work':'دمو: هر ایمیل و رمزی کار می‌کند','Choose your account (demo)':'حساب دمو را انتخاب کن','Demo client account':'حساب دموی شاگرد — پورتال همگام با مربی را ببین','Continue':'ادامه',
 "Here's what's happening with your clients today.":'خلاصه‌ی امروز شاگردانت این‌جاست.','Wed, Jul 8 2026':'چهارشنبه، ۱۷ تیر ۱۴۰۵',
 'Total Clients':'کل شاگردان','Active Clients':'شاگردان فعال','Sessions Today':'جلسات امروز','Upcoming Sessions':'جلسات پیش‌رو','This week':'این هفته',
@@ -946,11 +947,26 @@ function calMonthBase(off){
 function layoutDay(evs){
   const list=[...evs].sort((a,b)=>a.start-b.start);
   const out=[];let cluster=[],cEnd=-1;
-  const flush=()=>{if(!cluster.length)return;const ends=[];
-    cluster.forEach(ev=>{let lane=ends.findIndex(e=>ev.start>=e-1e-9);if(lane===-1){lane=ends.length;ends.push(0)}ends[lane]=ev.start+ev.dur;out.push({ev,lane,total:ends.length})});
-    cluster=[];cEnd=-1};
-  list.forEach(ev=>{if(cluster.length&&ev.start>=cEnd-1e-9)flush();cluster.push(ev);cEnd=Math.max(cEnd,ev.start+ev.dur)});
-  flush();return out;
+  const flush=()=>{
+    if(!cluster.length)return;
+    const ends=[];
+    const assignments=cluster.map(ev=>{
+      let lane=ends.findIndex(e=>ev.start>=e-1e-9);
+      if(lane===-1){lane=ends.length;ends.push(0)}
+      ends[lane]=ev.start+ev.dur;
+      return {ev,lane};
+    });
+    const total=Math.max(1,ends.length);
+    assignments.forEach(({ev,lane})=>out.push({ev,lane,total}));
+    cluster=[];cEnd=-1;
+  };
+  list.forEach(ev=>{
+    if(cluster.length&&ev.start>=cEnd-1e-9)flush();
+    cluster.push(ev);
+    cEnd=Math.max(cEnd,ev.start+ev.dur);
+  });
+  flush();
+  return out;
 }
 function evState(ev){
   const end=ev.start+ev.dur;
@@ -3282,7 +3298,7 @@ function barChart(d,o={}){
 }
 const ring=(p,s=76)=>{const r=(s-10)/2,c=2*Math.PI*r;const gid='rg'+Math.random().toString(36).slice(2,7);
 /* v18.11 — Apple-Fitness-style gradient ring */
-return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"><title>${p}%</title></circle></svg>`};
+return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="display:block;transform:rotate(-90deg)"><defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--acc-mid)"/></linearGradient></defs><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="var(--line2)" stroke-width="8" fill="none"/><circle cx="${s/2}" cy="${s/2}" r="${r}" stroke="url(#${gid})" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${(c*(1-p/100)).toFixed(1)}"><title>${p}%</title></circle></svg>`};
 
 /* ================= LOGIN ================= */
 function vLogin(){
@@ -3875,14 +3891,11 @@ function vDash(){
      owns its dashboard; a sport with no DASH_EXT row keeps everything below. */
   if(DASH_EXT[ONBOARD.sport])return vDashAth();
   if(PREFS.uiTpl==='coachmint')return vDashCm();
-  const roster=CLIENTS;
-  const active=CLIENTS.filter(c=>c.status==='Active').length;
+  const roster=CLIENTS.filter(c=>c.status!=='Archived');
+  const active=roster.filter(c=>c.status==='Active').length;
+  const nonActive=roster.length-active;
+  const retPct=roster.length?Math.round((active/roster.length)*100):100;
   const today=EVENTS.filter(e=>e.day===TODAY).sort((a,b)=>a.start-b.start);
-  /* v18.119 — a past event the coach marked "miss" used to count in BOTH
-     "Completed" and "Missed", so one event rendered as "1 Completed · ✗ 1".
-     Completed now excludes misses, and Upcoming is counted on its own instead
-     of `today.length - doneT` (which swept misses into Upcoming as well).
-     Scoped to vDash: vDashCm has an identical line and is left untouched. */
   const doneT=today.filter(e=>e.att!=='miss'&&e.start+e.dur<=NOW).length;
   const upT=today.filter(e=>e.att!=='miss'&&e.start+e.dur>NOW).length;
   const missT=today.filter(e=>e.att==='miss').length;
@@ -3896,53 +3909,69 @@ function vDash(){
   const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
   const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
   const avStack=CLIENTS.slice(0,4).map((c,i)=>`<span style="margin-inline-start:${i?-8:0}px;display:inline-block;border-radius:50%;border:2px solid var(--surface);line-height:0">${avC(c.name,22)}</span>`).join('');
-  /* v17.11 — onboarding effects: greeting shows sport + coaching style, and
-     the quick-action order follows the coaching style (online → connect code
-     first, in-person → schedule first). */
+
+  /* Dynamic Client Health & Retention Pulse */
+  const atRiskList=roster.filter(c=>c.status!=='Active'||(c.missed>=4));
+  const urgentThreadNames=new Set(threads().filter(x=>x.needs||x.prio).map(x=>x.name));
+  const checkInList=roster.filter(c=>c.status==='Active'&&!atRiskList.some(x=>x.id===c.id)&&(urgentThreadNames.has(c.name)||(c.missed>=2)));
+  const onTrackList=roster.filter(c=>c.status==='Active'&&!atRiskList.some(x=>x.id===c.id)&&!checkInList.some(x=>x.id===c.id));
+  const cntOnTrack=onTrackList.length;
+  const cntCheckIn=checkInList.length;
+  const cntAtRisk=atRiskList.length;
+  const totStatus=(cntOnTrack+cntCheckIn+cntAtRisk)||1;
+  const pctOnTrack=Math.round((cntOnTrack/totStatus)*100);
+  const pctCheckIn=Math.round((cntCheckIn/totStatus)*100);
+  const pctAtRisk=Math.max(0,100-pctOnTrack-pctCheckIn);
+  const topAtRisk=atRiskList.find(c=>c.status==='On Hold')||atRiskList[0]||checkInList[0];
+  const riskWhy=topAtRisk?(topAtRisk.status==='On Hold'?`${t('On Hold')} — ${nf(topAtRisk.missed||0)} ${t('missed sessions')}`
+    :topAtRisk.status==='Inactive'?`${t('Inactive')} — ${t('Re-engage with a message')}`
+    :`${nf(topAtRisk.missed||1)} ${t('missed sessions')} — ${t('risk of drop-off')}`):'';
+
+  /* Dynamic AI Weekly Briefing insights */
+  const topAtt=att.find(x=>x.icon==='camera'||x.why==='Missed session'||x.why==='Waiting on your reply')||att[0];
+  const advancing=roster.find(c=>c.status==='Active'&&c.week>=8)||roster.find(c=>c.status==='Active');
+
   const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
-    /* v18.119 — "Total Clients" and "Active Clients" showed the same 6 twice
-       (8 total, 6 active, 2 inactive). Replaced the first with Adherence, a
-       metric the dashboard did not surface at all and the one that actually
-       predicts churn. The roster count is still derivable from card 2. */
-    ['Adherence',pct(pctW),`${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)} ${t('Workouts Completed')}`,avStack,'target','accent'],
-    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(CLIENTS.filter(c=>c.status!=='Active').length)}`,'','check','green'],
-    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue'],
-    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple']];
-  const attRow=it=>`<div class="tl-row">
-    <span class="bdg ${it.bt}" style="flex:none">${ic(it.icon,13)}</span>
-    <div style="flex:1;min-width:0"><div style="font-weight:600">${t(it.name)} <span class="muted" style="font-weight:500">· ${t(it.why)}</span></div><div class="muted" style="font-size:12.5px">${it.d}</div></div>
-    ${it.act==='msg'?`<button class="btn btn-outline btn-sm" data-act="open-thread" data-c="${esc(it.name)}">${ic('mail',13)} ${t('Reply')}</button>`
-     :it.act==='copy'?`<button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(it.code)}">${ic('copy',13)} ${t('Copy')}</button>`
-     :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}>${t('Open')} ${ic('arrowR',13)}</button>`}
+    ['Adherence',pct(pctW),`${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)} ${t('Workouts Completed')}`,avStack,'target','accent',`${pctW>=90?'▲ ':''}${pct(pctW)}`],
+    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(nonActive)}`,'','check','green',`${pct(retPct)} Ret.`],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue',doneT===today.length&&today.length?'Done':upT?'On pace':'Clear'],
+    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple',hrsW>=15?'High':hrsW>=8?'Optimal':'Light']];
+  const attRow=it=>`<div class="tl-row" style="padding:10px 18px;gap:12px;align-items:center">
+    ${it.name?avC(it.name,34):`<span class="bdg ${it.bt}" style="flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center">${ic(it.icon,16)}</span>`}
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font-weight:700;font-size:13.5px">${t(it.name)}</span>
+        <span class="bdg ${it.bt}" style="font-size:10.5px;padding:1px 7px">${t(it.why)}</span>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:2px">${it.d}</div>
+    </div>
+    ${it.act==='msg'?`<button class="btn btn-outline btn-sm" data-act="open-thread" data-c="${esc(it.name)}" style="font-size:12px">${ic('mail',13)} ${t('Reply')}</button>`
+     :it.act==='copy'?`<button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(it.code)}" style="font-size:12px">${ic('copy',13)} ${t('Copy')}</button>`
+     :`<button class="btn btn-outline btn-sm" data-act="open-client" data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''} style="font-size:12px">${t('Open')} ${ic('arrowR',13)}</button>`}
   </div>`;
   return `
-  <!-- v18.118 — header down to TWO lines. Was: eyebrow + "Welcome back, Coach"
-       + a subtitle that only restated the page name ("Here's what's happening…").
-       The coaching context (sport · style) is KEPT — it moved into the eyebrow,
-       so nothing is lost except the filler line. -->
+  <!-- Header: greeting & coaching context -->
   <div class="hero"><div class="row" style="justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
     <div><div class="hero-k">${fmtFullDate(TDATE)}${ONBOARD.done&&ONBOARD.sport?` · ${t(ONBOARD.sport)}${ONBOARD.context?` · ${t(ONBOARD.context)}`:''}`:''}</div><h1>${t('Dashboard')}</h1></div>
     <div class="row"><button class="btn btn-outline" data-act="nav" data-view="messages">${ic('mail',15)} ${t('Messages')}${needN?` <span class="bdg bdg-lime">${nf(needN)}</span>`:''}</button>
     <button class="btn btn-primary" data-act="nav" data-view="builder">${ic('plus',15)} ${t('Create Workout')}</button></div>
   </div></div>
-  <!-- v18.118 — FOCAL PANEL. This was the 4th of six cards, behind two rows of
-       equal-weight content. It is now first because it is the only panel that
-       is ACTIONABLE: the coach's opening question is "who needs me?", not
-       "how many clients do I have". The lime hairline is the only elevation
-       on the screen, which is what makes it read as the anchor. -->
+  <!-- Focal Priority Panel: Clients Needing Attention -->
   <div class="card" style="border-color:rgba(200,240,75,.32);box-shadow:0 18px 44px -22px rgba(200,240,75,.30);margin-bottom:14px">
     <div class="card-h"><span class="card-t">${ic('bell',14)} ${t('Clients Needing Attention')}</span><span class="bdg ${att.length?'bdg-amber':'bdg-green'}">${nf(att.length)}</span></div>
     ${att.length?att.slice(0,3).map(attRow).join('')+(att.length>3?`<div class="tl-row" style="justify-content:center"><button class="btn btn-outline btn-sm" data-act="nav" data-view="clients">${t('View all →')}</button></div>`:'')
     :`<div class="tl-row"><span class="bdg bdg-green" style="flex:none">${ic('check',13)}</span><b>${t('All clients on track ✓')}</b></div>`}
   </div>
-  <div class="stats">${stats.map(([k,v,sub,vis,i,c])=>`
-    <div class="card stat"><div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span><span class="sp"></span></div>
+  <!-- KPI Metrics Grid with dynamic trend indicators -->
+  <div class="stats">${stats.map(([k,v,sub,vis,i,c,tr])=>`
+    <div class="card stat"><div class="row" style="justify-content:space-between;align-items:center"><div class="row" style="gap:8px"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':`--${c}`})">${ic(i,17)}</span><span class="k">${t(k)}</span></div>${tr?`<span class="stat-trend bdg bdg-${c}">${tr}</span>`:''}</div>
     <div class="v">${v}</div><div style="display:flex;justify-content:space-between;align-items:flex-end;gap:8px;min-height:26px">
     <span class="muted" style="font-size:11.5px;font-weight:600">${sub}</span>${vis}</div></div>`).join('')}
   </div>
+  <!-- Main Grid: Schedule vs Quick Actions & Client Retention Pulse -->
   <div class="grid2" style="margin-bottom:14px">
     <div class="card"><div class="card-h"><span class="card-t">${ic('clock',14)} ${t("Today's Schedule")}</span><a class="lnk" style="font-size:13px" data-act="nav" data-view="calendar">${t('Open calendar →')}</a></div>
       ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
@@ -3958,32 +3987,97 @@ function vDash(){
       :`<div class="empty" style="margin:14px 20px 18px"><div>${ic('calendar',24)}</div><b>${t('No events this day')}</b><span class="muted">${t('Tap an empty slot to add a session')}</span><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',14)} ${t('New Session')}</button></div>`}
     </div>
     <div class="stack">
-      <div class="card"><div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span></div>
-        <div style="padding:12px 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px">
-        ${qa.map(([l,i])=>`
-          <button class="btn btn-ghost" style="justify-content:flex-start;font-size:12.5px;padding:0 8px;white-space:normal;text-align:start;min-width:0" data-act="qa-item" data-item="${l}">${ic('plus',14)} ${t(l)}</button>`).join('')}
+      <div class="card">
+        <div class="card-h"><span class="card-t">${ic('zap',14)} ${t('Quick Actions')}</span><span class="bdg bdg-lime">${t('Shortcuts')}</span></div>
+        <div class="qa-grid">
+        ${qa.map(([l,i])=>{
+          const colMap={users:'blue',copy:'lime',dumbbell:'accent',utensils:'green',ruler:'purple',calendar:'amber'};
+          const clr=colMap[i]||'accent';
+          return `<button class="qa-tile" data-act="qa-item" data-item="${l}">
+            <span class="qa-ico qa-ico-${clr}">${ic(i,15)}</span>
+            <span class="qa-lbl">${t(l)}</span>
+            <span class="qa-arrow">${ic('arrowR',12)}</span>
+          </button>`;
+        }).join('')}
         </div>
       </div>
-      <div class="card" style="padding:18px"><div class="card-t">${ic('target',14)} ${t('Workout Completion')}</div>
-        <div class="row" style="margin-top:12px;gap:14px"><div style="position:relative;width:76px;height:76px">${ring(pctW)}<div style="position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:15px">${pct(pctW)}</div></div>
-        <div style="font-size:12.5px;color:var(--ink2)">${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)}<br>${t('Workouts Completed')}<br><b style="color:var(--ink)">${t('This week')}: ${nf(EVENTS.length)} ${t('Sessions')}</b></div></div>
+      <!-- High-Value SaaS Feature: Client Retention & Churn Pulse -->
+      <div class="card" style="padding:18px">
+        <div class="card-h" style="padding:0;margin-bottom:12px;border:none">
+          <span class="card-t">${ic('target',14)} ${t('Client Retention & Health')}</span>
+          <span class="bdg bdg-lime">${pct(retPct)} ${t('Retention')}</span>
+        </div>
+        <div class="ret-pulse">
+          <div class="row" style="gap:14px;align-items:center">
+            <div style="position:relative;width:66px;height:66px;flex:none;display:grid;place-items:center">
+              ${ring(retPct,66)}
+              <div style="position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:13.5px;font-family:var(--font-display);line-height:1;pointer-events:none;text-align:center">${pct(retPct)}</div>
+            </div>
+            <div style="font-size:12px;color:var(--ink2);line-height:1.45">
+              <b style="color:var(--ink);font-size:13px">${nf(active)} ${t('Active Athletes')}</b><br>
+              ${nf(nonActive)} ${t('athletes on hold / inactive')}<br>
+              <span class="muted" style="font-size:11px">${t('High engagement predicts 92% renewal')}</span>
+            </div>
+          </div>
+          <div class="ret-bar" title="${t('Roster Health Breakdown')}">
+            <div class="ret-seg ret-seg-green" style="width:${pctOnTrack}%"></div>
+            <div class="ret-seg ret-seg-amber" style="width:${pctCheckIn}%"></div>
+            <div class="ret-seg ret-seg-red" style="width:${pctAtRisk}%"></div>
+          </div>
+          <div class="ret-legend">
+            <span class="ret-pill"><span class="ret-dot" style="background:var(--green)"></span> ${nf(cntOnTrack)} ${t('On Track')}</span>
+            <span class="ret-pill"><span class="ret-dot" style="background:var(--amber)"></span> ${nf(cntCheckIn)} ${t('Check-in')}</span>
+            <span class="ret-pill"><span class="ret-dot" style="background:var(--red)"></span> ${nf(cntAtRisk)} ${t('At Risk')}</span>
+          </div>
+          ${topAtRisk?`<div class="ch-risk-pill">
+            <span style="display:flex;color:var(--amber);flex:none">${ic('alert',14)}</span>
+            <div style="min-width:0;flex:1;font-size:11.5px"><b>${t(topAtRisk.name)}</b>: ${riskWhy}</div>
+            <button class="btn btn-outline btn-sm" style="padding:2px 8px;font-size:11px" data-act="open-thread" data-c="${esc(topAtRisk.name)}">${t('Nudge')}</button>
+          </div>`:`<div class="ch-risk-pill ch-safe">
+            <span style="display:flex;color:var(--green);flex:none">${ic('check',14)}</span>
+            <div style="min-width:0;flex:1;font-size:11.5px">${t('All athletes on track — no drop-off risk detected')}</div>
+          </div>`}
+        </div>
       </div>
     </div>
   </div>
-  <!-- v18.118 — the attention panel was hoisted above (see the comment up top),
-       so this row is now Smart Reports beside Recent Activity. It was a
-       1.15fr/.85fr grid whose left cell is gone; a plain stack is honest
-       about that instead of leaving a half-width hole. -->
-    <div class="stack">
-      <div class="card" style="padding:16px 18px;cursor:pointer" data-act="rpt-all">
-        <div class="row" style="justify-content:space-between"><span class="card-t">${ic('chart',14)} ${t('Smart Reports')}</span><span class="bdg bdg-lime">${t('Auto daily')}</span></div>
-        <div class="muted" style="font-size:12px;margin-top:6px">${t('Every client analyzed — score, trends and what needs your attention')}</div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="act-all">${t('View all →')}</a></div>
-        <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
-          ${ACTIVITY.slice(0,4).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
+  <!-- Bottom Stack: AI Intelligence Digest & Recent Activity -->
+  <div class="stack">
+    <div class="ai-digest-card">
+      <div class="ai-digest-glow"></div>
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div class="row" style="gap:8px">
+          <span class="icw" style="width:28px;height:28px;border-radius:8px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center">${ic('zap',15)}</span>
+          <span class="card-t" style="font-size:14px">${t('AI Coach Intelligence')} · <span style="font-weight:500;color:var(--ink2)">${t('Weekly Briefing')}</span></span>
         </div>
+        <span class="bdg bdg-lime" style="box-shadow:0 0 10px rgba(200,240,75,.3);font-size:11px">${ic('sparkles',11)} ${t('Auto Daily')}</span>
+      </div>
+      <div class="ai-bullets">
+        <div class="ai-bullet">
+          <span class="ai-bullet-ic" style="color:var(--green)">${ic('check',12)}</span>
+          <div><b>${t('Squad Adherence')}</b>: ${pct(pctW)} ${t('completion rate across')} ${nf(roster.length)} ${t('clients with')} ${nf(totDone)} ${t('completed workouts.')}</div>
+        </div>
+        ${topAtt?`<div class="ai-bullet">
+          <span class="ai-bullet-ic" style="color:var(--amber)">${ic('alert',12)}</span>
+          <div><b>${t(topAtt.why)}</b>: ${t(topAtt.name)} — ${t(topAtt.d)}</div>
+        </div>`:`<div class="ai-bullet">
+          <span class="ai-bullet-ic" style="color:var(--green)">${ic('check',12)}</span>
+          <div><b>${t('Team Check-in')}</b>: ${t('All client messages and check-ins answered.')}</div>
+        </div>`}
+        ${advancing?`<div class="ai-bullet">
+          <span class="ai-bullet-ic" style="color:var(--blue)">${ic('chart',12)}</span>
+          <div><b>${t('Progression Milestone')}</b>: ${t(advancing.name)} ${t('is on')} ${t(advancing.prog)}</div>
+        </div>`:''}
+      </div>
+      <div class="row" style="gap:8px;margin-top:4px">
+        <button class="btn btn-primary btn-sm" data-act="rpt-all" style="font-size:12px">${ic('chart',13)} ${t('Open Smart Reports')}</button>
+        <button class="btn btn-outline btn-sm" data-act="nav" data-view="messages" style="font-size:12px">${ic('mail',13)} ${t('Client Check-ins')}</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><span class="card-t">${ic('activity',14)} ${t('Recent Activity')}</span><a class="lnk" style="font-size:13px" data-act="act-all">${t('View all →')}</a></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+        ${ACTIVITY.slice(0,4).map(a=>`<div class="row" style="gap:12px;align-items:flex-start"><span class="act-dot"></span><div style="min-width:0">${t(a.h)}<div style="font-size:11.5px;color:var(--ink3)">${t(a.w)}</div></div></div>`).join('')}
       </div>
     </div>
   </div>`;
@@ -4711,19 +4805,41 @@ function vCalendar(){
   if(S.calV==='Week'){
     return head+`
     <div class="cal-grid">
-      <div class="cal-hd"></div>
+      <div class="cal-hd cal-hd-corner"></div>
       ${[0,1,2,3,4,5,6].map(i=>{const c=byDay(i).length;
-      return `<div class="cal-hd click ${i===TODAY&&S.weekOff===0?'today':''}" data-act="cal-day" data-day="${i}"><b>${t(WDN[i])}</b><span>${fmtNum(dayDate(i))}</span>${c?`<span class="bdg bdg-lime" style="margin:3px auto 0;padding:1px 7px;font-size:10px">${nf(c)}</span>`:''}</div>`}).join('')}
+      const isToday=i===TODAY&&S.weekOff===0;
+      return `<div class="cal-hd click ${isToday?'today':''}" data-act="cal-day" data-day="${i}">
+        <span class="cal-hd-day">${t(WDN[i])}</span>
+        <span class="cal-hd-num ${isToday?'cal-num-today':''}">${fmtNum(dayDate(i))}</span>
+        ${c?`<span class="cal-hd-count">${nf(c)}</span>`:''}
+      </div>`}).join('')}
       <div>${hours.map((h,i)=>`<div class="cal-time" style="${i%2?'':'background:var(--cal-alt)'}">${nf(fmtT(h))}</div>`).join('')}</div>
-      ${[0,1,2,3,4,5,6].map(i=>`<div class="cal-col" data-day="${i}" data-act="slot-new" style="background:${i===TODAY&&S.weekOff===0?'var(--accent-soft)':i>4?'var(--cal-alt)':''}">
+      ${[0,1,2,3,4,5,6].map(i=>`<div class="cal-col ${i===TODAY&&S.weekOff===0?'cal-today-col':''} ${i>4?'cal-weekend':''}" data-day="${i}" data-act="slot-new">
         ${hours.map((h,ix)=>`<div style="height:48px;border-top:1px solid var(--line2)"></div>`).join('')}
         ${layoutDay(byDay(i)).map(({ev,lane,total})=>{
           const top=Math.max(0,ev.start-calS)*48+1;
           const vis=Math.min(calE,ev.start+ev.dur)-Math.max(calS,ev.start);
-          const h=Math.max(20,vis*48-5);
-          return `<div class="ev ev-${ev.type}" draggable="true" data-eid="${ev.id}" data-act="ev-open" style="top:${top.toFixed(0)}px;height:${h.toFixed(0)}px;left:calc(${lane} * (100% / ${total}) + 4px);width:calc(${100/total}% - 8px)">
-          <b>${t(ev.label)}${ev.att==='done'?' ✓':ev.att==='miss'?' ✗':''}</b><small>${nf(fmtT(ev.start))} · ${t(ev.client)}</small>
-        </div>`}).join('')}
+          const h=Math.max(22,vis*48-5);
+          const isShort=(ev.dur||1)<0.75;
+          const typeIcons={session:'dumbbell',assess:'target',meas:'ruler',appt:'clock'};
+          const ico=typeIcons[ev.type]||'calendar';
+          const attChip=ev.att==='done'?`<span class="ev-att ev-done" title="${t('Attended')}">✓</span>`:ev.att==='miss'?`<span class="ev-att ev-miss" title="${t('Missed')}">✗</span>`:'';
+          const initials=ev.client?ev.client.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase():'';
+          return `<div class="ev ev-${ev.type} ${isShort?'ev-short':''}" draggable="true" data-eid="${ev.id}" data-act="ev-open" style="top:${top.toFixed(0)}px;height:${h.toFixed(0)}px;left:calc(${lane} * (100% / ${total}) + 3px);width:calc(${100/total}% - 6px)">
+            <div class="ev-head">
+              <span class="ev-type-ic">${ic(ico,12)}</span>
+              <span class="ev-title">${t(ev.label)}</span>
+              ${isShort?`<span class="ev-time">${nf(fmtT(ev.start))}</span>`:''}
+              ${attChip}
+            </div>
+            ${!isShort?`
+            <div class="ev-sub">
+              ${initials?`<span class="ev-avatar">${initials}</span>`:''}
+              <span class="ev-client">${t(ev.client)}</span>
+              <span class="ev-time">${nf(fmtT(ev.start))}</span>
+            </div>`:''}
+          </div>`
+        }).join('')}
         ${i===TODAY&&S.weekOff===0&&NOW>=calS&&NOW<calE?`<div class="nowline" style="top:${((NOW-calS)*48).toFixed(0)}px"></div>`:''}
       </div>`).join('')}
     </div>`;
@@ -12267,7 +12383,8 @@ document.addEventListener('keydown',e=>{
 let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
 (()=>{const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
-const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}})();
+const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}
+const v=location.hash.match(/view=([a-z]+)/);if(v){S.role='coach';S.view=v[1];}})();
 loadPrefs();
 applyLang();
 applyAccent(PREFS.accent);
