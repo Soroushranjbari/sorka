@@ -2236,7 +2236,15 @@ function cloudMerge(d,adopt){
   }
   Object.keys(d.DB||{}).forEach(cid=>{
     const L=DB[cid],R=d.DB[cid];if(!R)return;
-    if(!L){DB[cid]=R;ch=true;return}
+    if(!L){
+      /* Wholesale bucket adopt still respects tombstones — this runs on boot
+         right after the module-level demo seeds wiped the real bucket, so an
+         unfiltered adopt here re-imported deleted workouts on every reload. */
+      const dead0=deadSets.WORKOUTS;
+      DB[cid]=(dead0&&dead0.size&&Array.isArray(R.workouts))
+        ? {...R,workouts:R.workouts.filter(w=>w&&!dead0.has(String(w.id)))}
+        : R;
+      ch=true;return}
     const widx={};(L.workouts||[]).forEach((w,i)=>{if(w&&w.id!=null)widx[w.id]=i});
     (R.workouts||[]).forEach(w=>{
       if(!w||w.id==null)return;
