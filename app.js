@@ -2226,6 +2226,14 @@ function cloudMerge(d,adopt){
     if(rt!==(PREFS.uiTpl||'default')){PREFS.uiTpl=rt;savePrefs();applyTpl();applyAccent(PREFS.accent);applyTheme();ch=true}
   }
   // DB — per client
+  /* Purge LOCAL copies of tombstoned workouts first (same rule the top-level
+     arrays use): union-merge never deletes, so a device that still holds the
+     row would keep re-pushing it and the delete resurrected server-side. */
+  if(deadSets.WORKOUTS&&deadSets.WORKOUTS.size){
+    Object.keys(DB).forEach(cid=>{const b=DB[cid];
+      if(b&&Array.isArray(b.workouts)&&b.workouts.some(w=>w&&deadSets.WORKOUTS.has(String(w.id)))){
+        b.workouts=b.workouts.filter(w=>w&&!deadSets.WORKOUTS.has(String(w.id)));ch=true}});
+  }
   Object.keys(d.DB||{}).forEach(cid=>{
     const L=DB[cid],R=d.DB[cid];if(!R)return;
     if(!L){DB[cid]=R;ch=true;return}
@@ -2598,7 +2606,17 @@ const client=id=>{
    bucket whose client was deleted are memory-only — never serialized. */
 const packDB=()=>{
   const ids=new Set(CLIENTS.map(c=>String(c.id)));
-  const out={};Object.keys(DB).forEach(k=>{if(ids.has(k))out[k]=DB[k]});
+  /* Tombstone belt: never ship a deleted workout, whatever state this device's
+     merge cycle is in — a local copy that outlived its deletion must not
+     overwrite the server (that is how deletes kept resurrecting). */
+  const deadW=new Set((DEAD.WORKOUTS||[]).map(String));
+  const out={};Object.keys(DB).forEach(k=>{
+    if(!ids.has(k))return;
+    const b=DB[k];
+    out[k]=(deadW.size&&b&&Array.isArray(b.workouts)&&b.workouts.some(w=>w&&deadW.has(String(w.id))))
+      ? {...b,workouts:b.workouts.filter(w=>w&&!deadW.has(String(w.id)))}
+      : b;
+  });
   return out;
 };
 /* Client ids. A plain max+1 sequence collides across devices: two offline
