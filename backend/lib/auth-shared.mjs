@@ -14,7 +14,7 @@ import { sendMail, welcomeMail } from './mail.mjs';
 export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 export const publicCoach = (a) =>
-  a ? { id: a.id, email: a.email, name: a.name, plan: a.plan || 'trial', role: a.role || 'coach' } : null;
+  a ? { id: a.id, email: a.email, name: a.name, plan: a.plan || 'trial', role: a.role || 'coach', phone: a.phone || '', bio: a.bio || '' } : null;
 
 export const publicWs = (w) =>
   w ? { id: w.id, code: w.code, plan: w.plan || 'trial', status: w.status || 'trial' } : null;

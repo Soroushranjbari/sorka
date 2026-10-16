@@ -38,7 +38,7 @@ async function me(req, st) {
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
   const ws = acct.workspaceId ? await st.get(`ws:${acct.workspaceId}`, { type: 'json' }) : null;
-  return j(200, { ok: true, coach: acct && { id: acct.id, email: acct.email, name: acct.name, plan: acct.plan || 'trial', role: acct.role || 'coach' }, workspace: publicWs(ws), access: accessOf(acct) });
+  return j(200, { ok: true, coach: acct && { id: acct.id, email: acct.email, name: acct.name, plan: acct.plan || 'trial', role: acct.role || 'coach', phone: acct.phone || '', bio: acct.bio || '' }, workspace: publicWs(ws), access: accessOf(acct) });
 }
 
 async function logout(req, st) {
@@ -86,9 +86,10 @@ async function logoutOthers(req, st) {
   return j(200, { ok: true, message: 'Signed out of all other devices' });
 }
 
-/** POST /api/auth/profile {name} — rename the signed-in coach. The app's
- *  profile form used to be display-only while every screen hardcoded a demo
- *  persona, so the signup name never showed anywhere. */
+/** POST /api/auth/profile {name, phone?, bio?} — update the signed-in coach's
+ *  profile. The app's profile form used to be display-only while every screen
+ *  hardcoded a demo persona, so the signup name never showed anywhere. phone
+ *  and bio are optional; only real strings are written (empty clears). */
 async function profile(req, st) {
   const s = await sessionOf(st, bearerOf(req));
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
@@ -102,10 +103,12 @@ async function profile(req, st) {
   return withLock(`acct:${acct.email}`, async () => {
     const cur = (await st.get(`acct:${acct.email}`, { type: 'json' })) || acct;
     cur.name = name;
+    if (typeof body?.phone === 'string') cur.phone = body.phone.trim().slice(0, 40) || null;
+    if (typeof body?.bio === 'string') cur.bio = body.bio.trim().slice(0, 600) || null;
     await st.setJSON(`acct:${cur.email}`, cur);
     return j(200, {
       ok: true,
-      coach: { id: cur.id, email: cur.email, name: cur.name, plan: cur.plan || 'trial', role: cur.role || 'coach' }
+      coach: { id: cur.id, email: cur.email, name: cur.name, plan: cur.plan || 'trial', role: cur.role || 'coach', phone: cur.phone || '', bio: cur.bio || '' }
     });
   });
 }

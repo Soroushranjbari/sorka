@@ -172,7 +172,7 @@ const FA={
     'Scan the package barcode or type its number.':'بارکد بسته را اسکن کن یا شماره‌اش را بنویس.','Enter the barcode number':'شماره بارکد را وارد کن',
     'Nothing to undo':'چیزی برای واگردانی نیست','Water entry removed':'ثبت آب حذف شد','Fuel Plan':'برنامه سوخت','Scanned product':'محصول اسکن‌شده',
     'Health grade':'امتیاز سلامت','Strong week':'هفته قوی','Solid week':'هفته خوب','Keep building':'ادامه بده','protein hit':'پروتئین در هدف',
-    'Personal records':'رکوردهای شخصی','Progress photos':'عکس‌های پیشرفت','Drag to compare':'برای مقایسه بکش','Earlier':'قبلی','Latest':'جدیدترین',
+    'Personal records':'رکوردهای شخصی','No personal records yet':'هنوز رکوردی ثبت نشده','Progress photos':'عکس‌های پیشرفت','Drag to compare':'برای مقایسه بکش','Earlier':'قبلی','Latest':'جدیدترین',
     'Session pack':'بسته جلسات','Used':'استفاده‌شده','My join code':'کد اتصال من','Since':'از تاریخ',
     'Scan to connect this device · re-share anytime':'اسکن کن تا این دستگاه وصل شود — هر وقت خواستی دوباره بفرست','Show fullscreen':'نمایش تمام‌صفحه',
     'Daily check-in sent':'چک‌این روزانه ارسال شد','Done for today':'امروز تموم شد','Send progress photo':'ارسال عکس پیشرفت','Ask a question':'سوالی دارم',
@@ -236,7 +236,7 @@ const FA={
 'Drop files here':'فایل‌ها را اینجا رها کن','or click to browse — PDF, images, documents':'یا کلیک کن — PDF، تصویر، سند','File':'فایل','Type':'نوع','Date':'تاریخ','Size':'حجم','Actions':'عملیات',
 'Document':'سند','Archive':'آرشیو','Image':'تصویر','Preview':'پیش‌نمایش','File deleted':'فایل حذف شد',
 'Manage your workspace':'مدیریت فضای کاری','Profile':'پروفایل','Account':'حساب','Notifications':'اعلان‌ها','Appearance':'ظاهر','Workout Settings':'تنظیمات تمرین','Units':'واحدها','Privacy':'حریم خصوصی','Security':'امنیت',
-'Soroush Karimi':'سروش کریمی','Certified Strength & Conditioning Coach':'مربی رسمی قدرت و آمادگی جسمانی','Bio':'بیوگرافی','Save Changes':'ذخیره تغییرات','Profile saved':'پروفایل ذخیره شد',
+'Soroush Karimi':'سروش کریمی','Certified Strength & Conditioning Coach':'مربی رسمی قدرت و آمادگی جسمانی','Bio':'بیوگرافی','Tell clients about your coaching experience':'درباره تجربه مربیگری‌تان برای شاگردان بنویسید','Save Changes':'ذخیره تغییرات','Profile saved':'پروفایل ذخیره شد',
 'Plan':'طرح','CoachMint Pro · Unlimited clients':'CoachMint Pro · شاگرد نامحدود','Language':'زبان','Timezone':'منطقه زمانی','Response time':'زمان پاسخ','Shown to clients in chat':'در چت به شاگردها نمایش داده می‌شود',
 'Session reminders':'یادآوری جلسات','Push + email 24 h before each session':'پوش و ایمیل ۲۴ ساعت قبل از هر جلسه','Client completes workout':'تکمیل تمرین توسط شاگرد','Notify when a workout is logged':'وقتی تمرینی ثبت شد اطلاع بده','Missed sessions':'جلسات غایب','Alert when a client misses a session':'وقتی شاگردی غیبت کرد هشدار بده','New client message':'پیام جدید شاگرد','Push when a client sends a message':'وقتی شاگرد پیامی فرستاد پوش بگیر','Measurement reminders':'یادآوری اندازه‌گیری','Weekly digest of due measurements':'خلاصه هفتگی اندازه‌گیری‌های سررسید','New PR achieved':'رکورد جدید','Celebrate personal records instantly':'رکوردها را فوراً جشن بگیر','Weekly report':'گزارش هفتگی','Summary every Sunday evening':'خلاصه هر یکشنبه عصر','Setting saved':'تنظیمات ذخیره شد',
 'Theme':'پوسته','Light':'روشن','System':'سیستم','Dark':'تیره','Accent Color':'رنگ اکسنت','Accent color updated':'رنگ اکسنت به‌روز شد','Theme applied':'پوسته اعمال شد','Design Template':'تمپلت طراحی','Default':'پیش‌فرض','CoachMint':'کوچ‌مینت','Live Telemetry':'تله‌متری زنده','Squad Readiness':'آمادگی تیم','Priority Queue':'صف اولویت','Quick Prescribe':'تجویز سریع','Optimal':'بهینه','Attention':'نیاز به توجه','Roster':'فهرست شاگردها','Performance Analytics':'تحلیل عملکرد','Adherence':'پایبندی','Workouts Done':'تمرین‌های انجام‌شده','Scheduling':'زمان‌بندی','Movement Bank':'بانک حرکات','Dispatch':'ارتباطات','Encrypted':'رمزگذاری‌شده','Completed':'انجام‌شده','Coach Toolbox':'جعبه‌ابزار مربی','Stopwatch':'کرنومتر','Interval timer for sets and rest':'تایمر بازه‌ای برای ست‌ها و استراحت','Start':'شروع','Pause':'توقف',
@@ -266,7 +266,7 @@ const FA={
 'Active Plans':'برنامه‌های فعال','Plans Created':'برنامه‌های ساخته‌شده','Clients With Nutrition Plans':'شاگردان دارای برنامه تغذیه','Plans Needing Review':'برنامه‌های نیازمند بازبینی','Average Daily Calories':'میانگین کالری روزانه',
 'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
 'Plan Name':'نام برنامه','Start Date':'تاریخ شروع','Plan Type':'نوع برنامه','Standard':'استاندارد','Training Day / Rest Day':'روز تمرین / روز استراحت','Target Macros':'ماکروهای هدف',
-'Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب وعده‌ها','Plan Templates':'قالب برنامه‌ها','History':'تاریخچه',
+'Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب وعده‌ها','Plan Templates':'قالب برنامه‌ها','History':'تاریخچه','Jump to the food log below':'رفتن به لاگ غذا در پایین',
 'Search food…':'جستجوی غذا…','Per 100g':'هر ۱۰۰ گرم','Custom Food':'غذای سفارشی','Food name':'نام غذا','Custom food added':'غذای سفارشی اضافه شد','Add Food':'افزودن غذا','added to meal':'به وعده اضافه شد','Category':'دسته',
 'Alternatives':'جایگزین‌ها','Add Alternative':'افزودن جایگزین','Defined manually by the coach — no automation':'به‌صورت دستی توسط مربی تعریف می‌شود — بدون اتوماسیون',
 'Daily Target':'هدف روزانه','Planned':'برنامه‌ریزی‌شده','On target':'در حد هدف','Above target':'بالای هدف','Below target':'زیر هدف','Calculations only — the coach decides':'فقط محاسبه — تصمیم با مربی است',
@@ -346,7 +346,7 @@ const defPrefs=()=>({units:'Metric',accent:0,theme:'Dark',resp:'~4 h',favs:[],ph
      stored value is undefined until the user toggles it). */
   wk:{rpe:true,adv:true,dup:true,rest:'120',snd:true,vib:true,autoNext:true},
   priv:{own:true,photos:true,others:false,consent:true},
-  sec:{tfa:true},
+  sec:{tfa:false},
   cal:{start:7,end:21,type:'auto'}});
 let PREFS=defPrefs();
 function loadPrefs(){
@@ -687,8 +687,10 @@ function avgRpe(cid,days=28){
     (l.sets||[]).forEach(x=>{const r=+x.rpe;if(r){s+=r;n++}})});
   return n?Math.round(s/n*10)/10:null;
 }
-/* Honest empty state instead of fake chart data. */
-const chartEmpty=msg=>`<div class="empty">${ic('chart',22)}<b>${t('No workout history yet')}</b><span class="muted">${msg||t('Complete a workout — your progress charts will build themselves')}</span></div>`;
+/* Honest empty state instead of fake chart data. `title` lets a card whose
+   data DID happen (e.g. PRs need a 2nd session) stop claiming there is no
+   history at all. */
+const chartEmpty=(msg,title)=>`<div class="empty">${ic('chart',22)}<b>${t(title||'No workout history yet')}</b><span class="muted">${msg||t('Complete a workout — your progress charts will build themselves')}</span></div>`;
 /* ================= v18.62 — WEEK SPLIT (برنامه هفتگی به تفکیک روزها) =================
    DB[cid].split = 7 slots, index = weekday 0=Mon … 6=Sun (same indexing as
    TODAY / dayDate / WDN, so "today" is always split[TODAY]).
@@ -988,7 +990,7 @@ function wChart(cid,h,range){
   let ms=((DB[cid]||{}).measures||[]).filter(m=>m&&m.w!=null);
   if(range){const lim={'7D':7,'30D':30,'3M':90,'6M':180,'1Y':365}[range];
     if(lim){const f=ms.filter(m=>daysSince(m.d)<=lim);if(f.length>=2)ms=f}}
-  if(ms.length<2)return `<div style="min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
+  if(ms.length<2)return `<div data-act="cmeas-open" style="cursor:pointer;min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
   const conv=v=>PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v;
   const labs=[fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)];
   /* v18.98 — lineChart() emits height:auto with a 640-wide viewBox, so h=90
@@ -1755,10 +1757,13 @@ async function authProfile(){
   const fn=($('pf-fn')?.value||'').trim(),ln=($('pf-ln')?.value||'').trim();
   const name=(fn+' '+ln).trim().slice(0,80);
   if(name.length<2){toast(t('Enter your name'));return}
+  // Phone/bio belong to the signed-in coach and persist server-side — the form
+  // used to render demo values that Save Changes quietly threw away.
+  const phone=($('pf-phone')?.value||'').trim().slice(0,40),bio=($('pf-bio')?.value||'').trim().slice(0,600);
   try{
-    const {ok,d}=await authApi('/api/auth/profile',{method:'POST',body:JSON.stringify({name})});
+    const {ok,d}=await authApi('/api/auth/profile',{method:'POST',body:JSON.stringify({name,phone,bio})});
     if(!ok||!d||!d.ok){toast(t(authErrMsg(d,0)));return}
-    if(AUTH.coach)AUTH.coach.name=d.coach.name;
+    if(AUTH.coach){AUTH.coach.name=d.coach.name;if(typeof d.coach.phone==='string')AUTH.coach.phone=d.coach.phone;if(typeof d.coach.bio==='string')AUTH.coach.bio=d.coach.bio}
     render();toast(t('Profile saved'));
   }catch(e){toast(t('Could not reach server'))}
 }
@@ -4408,7 +4413,7 @@ function vCProgress(){
     <div class="card" style="padding:18px"><div class="card-t">${ic('zap',14)} ${t(p.n)}</div>
     <div class="row" style="gap:12px;margin-top:10px;flex-wrap:wrap"><span style="font-size:22px;font-weight:800;color:var(--ink3)">${nf(p.f)}</span><span style="color:var(--accent-deep)">${ic('arrowR',18)}</span><span style="font-size:26px;font-weight:800">${nf(p.t)}</span></div>
     <div class="row" style="margin-top:8px"><span class="bdg bdg-lime">${nf(p.g)}</span><span class="muted" style="font-size:12px">PR · ${t(p.d)}</span></div></div>`).join('')}</div>`
-   :`<div class="card" style="padding:18px">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}`;
+   :`<div class="card" style="padding:18px">${chartEmpty(t('Beat your first logged set to set a PR'),'No personal records yet')}</div>`}`;
 }
 function vMeasure(){
   const c=client(S.cid);
@@ -4862,8 +4867,8 @@ function vSettings(){
   const panels={
   profile:`<div class="card" style="padding:22px"><div class="row" style="margin-bottom:18px"><button class="btn btn-ghost" style="padding:0;border-radius:50%" data-act="pf-pic" title="${t(COACH_PIC?'Change photo':'Add photo')}">${avPlus(coachName(),56,3,!!COACH_PIC)}</button><div><b style="font-size:16px">${esc(coachName())}</b><div class="muted" style="font-size:12.5px">${AUTH.coach?esc(AUTH.coach.email):t('Certified Strength & Conditioning Coach')}</div>${COACH_PIC?`<button class="btn btn-ghost btn-sm" style="color:var(--red);padding:2px 6px;font-size:11.5px" data-act="pf-pic-del">${t('Remove photo')}</button>`:''}</div></div>
     <div class="fgrid"><div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="pf-fn" value="${esc(coachFirst())}"></div><div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="pf-ln" value="${esc(coachName().split(/\s+/).slice(1).join(' '))}"></div>
-    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" value="+98 912 000 0000"></div></div>
-    <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta">${t('12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.')}</textarea></div>
+    <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" value="${esc(coachEmail())}"${AUTH.coach?' readonly style="opacity:.7"':''}></div><div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" id="pf-phone" value="${esc((AUTH.coach&&AUTH.coach.phone)||'')}" placeholder="+98 …"></div></div>
+    <div class="field"><label class="lbl">${t('Bio')}</label><textarea class="ta" id="pf-bio" placeholder="${t('Tell clients about your coaching experience')}">${esc((AUTH.coach&&AUTH.coach.bio)||'')}</textarea></div>
     <!-- v19.14 — the sport used to be writable ONLY by the wizard, so a wrong   pick meant redoing all four steps just to change one value. This writes the
        same ONBOARD.sport the wizard commits, and nothing downstream needs a reset:   SPORT_EXT / DASH_EXT / sportSections / isAthletics all read it at render time,
        so the rail, dashboard, tabs and Clients badge re-derive on their own. -->
@@ -7834,7 +7839,7 @@ function vClient(){
   const monthYr=TDATE.toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{month:'long',year:'numeric'});
   const headFull=`<span class="chead-streak" title="${t('day streak')}">${ic('flame',13)}${nf(c.dayStreak||0)}</span>
             <button class="chead-bell" data-act="cnav" data-t="sessions" aria-label="${t('Calendar')}" title="${t('Calendar')}">${ic('calendar',17)}</button>
-            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Notifications')}" title="${t('Notifications')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
+            <button class="chead-bell" data-act="cnav" data-t="chat" aria-label="${t('Messages')}" title="${t('Messages')}">${ic('bell',17)}${cunread?'<span class="cdot"></span>':''}</button>
             <span class="chead-av" data-act="cnav" data-t="profile" role="button" tabindex="0" title="${t('My Profile')}" style="cursor:pointer">${av(t(c.name),34,c.id-1)}</span>`;
   const headA={today:headFull,chat:headFull,
     /* v18.105 — mockup 08: a gear in the header. Settings live inline on this
@@ -8372,7 +8377,7 @@ function cProgress(){
     <div class="sec"><span class="sec-t">${ic('trophy',15)} ${t('Personal records')}</span><span class="sec-c">${nf(prs.length)}</span></div>
     ${prs.length?`<div class="cc tight prs">
       ${prs.map(p=>`<div class="pr"><span class="ic">${ic('dumbbell',17)}</span><div class="t"><b>${t(p.n)}</b><span>${p.d} · ${p.g}</span></div><span class="v">${p.t}</span></div>`).join('')}
-    </div>`:`<div class="cc tight">${chartEmpty(t('Beat your first logged set to set a PR'))}</div>`}
+    </div>`:`<div class="cc tight">${chartEmpty(t('Beat your first logged set to set a PR'),'No personal records yet')}</div>`}
     ${PREFS.priv.photos?`
     <div class="sec"><span class="sec-t">${ic('camera',15)} ${t('Progress photos')}</span><span class="sec-c muted">${t('Drag to compare')}</span></div>
     <div class="cc tight">
@@ -8502,7 +8507,7 @@ function cNutrition(){
       <div class="opt"><span>${sug.options[0].items.map(x=>`${foodName(x.n)} ${nf(x.g)}g`).join(' + ')}</span><i>P${nf(sug.options[0].p)} C${nf(sug.options[0].c)} F${nf(sug.options[0].f)}</i></div>
       <button class="btn btn-lime" style="width:100%;padding:9px 0;margin-top:10px" data-act="na-log-sug" data-i="0">${t('Log this meal')}</button>
     </div>`:''}
-    <div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Quick log')}</span><span class="lnk" style="font-size:11.5px;color:var(--accent);cursor:pointer" data-act="jump-flog">${t('History')} →</span></div>
+    <div class="sec"><span class="sec-t">${ic('zap',15)} ${t('Quick log')}</span><span class="lnk" style="font-size:11.5px;color:var(--accent);cursor:pointer" data-act="jump-flog" title="${t('Jump to the food log below')}">${t('History')} ↓</span></div>
     <div class="cc" style="padding:13px">
       <button class="ql-hero" data-act="na-photo">
         <span class="qi">${ic('camera',21)}</span>
@@ -10325,26 +10330,26 @@ function addClientModal(){openModal(`
     <div class="fs"><div class="fs-t">${t('Personal Information')}</div><div class="fgrid">
       <div class="field"><label class="lbl">${t('First Name')}</label><input class="inp" id="nc-fn"></div>
       <div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="nc-ln"></div>
-      <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" type="email" placeholder="client@mail.com"></div>
+      <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" id="nc-email" type="email" placeholder="client@mail.com"></div>
       <div class="field"><label class="lbl">${t('National ID')} <span class="muted" style="font-weight:400;font-size:10.5px">· ${t('For contract & insurance')}</span></label><input class="inp" id="nc-nid" inputmode="numeric" autocomplete="off" placeholder="—"></div>
-      <div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" placeholder="+98 …"></div>
-      <div class="field"><label class="lbl">${t('Date of Birth')}</label><input class="inp" type="date"></div>
-      <div class="field"><label class="lbl">${t('Gender')}</label><select class="sel"><option>${t('Prefer not to say')}</option><option>${t('Male')}</option><option>${t('Female')}</option></select></div></div></div>
+      <div class="field"><label class="lbl">${t('Phone')}</label><input class="inp" id="nc-phone" placeholder="+98 …"></div>
+      <div class="field"><label class="lbl">${t('Date of Birth')}</label><input class="inp" id="nc-dob" type="date"></div>
+      <div class="field"><label class="lbl">${t('Gender')}</label><select class="sel" id="nc-gender"><option value="">${t('Prefer not to say')}</option><option value="Male">${t('Male')}</option><option value="Female">${t('Female')}</option></select></div></div></div>
     <div class="fs"><div class="fs-t">${t('Physical Information')}</div><div class="fgrid">
-      <div class="field"><label class="lbl">${t('Height (cm)')}</label><input class="inp" type="number" placeholder="175"></div>
-      <div class="field"><label class="lbl">${t('Weight (kg)')}</label><input class="inp" type="number" placeholder="72.5"></div>
-      <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" type="number" placeholder="18"></div>
-      <div class="field"><label class="lbl">${t('Activity Level')}</label><select class="sel"><option>${t('Sedentary')}</option><option selected>${t('Lightly active')}</option><option>${t('Moderately active')}</option><option>${t('Very active')}</option></select></div></div></div>
+      <div class="field"><label class="lbl">${t('Height (cm)')}</label><input class="inp" id="nc-h" type="number" placeholder="175"></div>
+      <div class="field"><label class="lbl">${t('Weight (kg)')}</label><input class="inp" id="nc-w" type="number" placeholder="72.5"></div>
+      <div class="field"><label class="lbl">${t('Body Fat (%)')}</label><input class="inp" id="nc-bf" type="number" placeholder="18"></div>
+      <div class="field"><label class="lbl">${t('Activity Level')}</label><select class="sel" id="nc-act"><option value="Sedentary">${t('Sedentary')}</option><option value="Lightly active" selected>${t('Lightly active')}</option><option value="Moderately active">${t('Moderately active')}</option><option value="Very active">${t('Very active')}</option></select></div></div></div>
     <div class="fs"><div class="fs-t">${t('Training Information')}</div><div class="fgrid">
-      <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel"><option>${t('Beginner')}</option><option selected>${t('Intermediate')}</option><option>${t('Advanced')}</option></select></div>
-      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option>${t(g)}</option>`).join('')}</select></div>
-      <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel">${['2x / week','3x / week','4x / week','5x / week'].map(f=>`<option ${f==='3x / week'?'selected':''}>${t(f)}</option>`).join('')}</select></div>
-      <div class="field"><label class="lbl">${t('Preferred Days')}</label><input class="inp" placeholder="Mon · Wed · Fri"></div>
-      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Available Equipment')}</label><input class="inp" placeholder="${t('Full gym · Dumbbells at home')}"></div></div></div>
+      <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel" id="nc-exp"><option value="Beginner">${t('Beginner')}</option><option value="Intermediate" selected>${t('Intermediate')}</option><option value="Advanced">${t('Advanced')}</option></select></div>
+      <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="nc-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option value="${g}">${t(g)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel" id="nc-freq">${['2x / week','3x / week','4x / week','5x / week'].map(f=>`<option value="${f}" ${f==='3x / week'?'selected':''}>${t(f)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Preferred Days')}</label><input class="inp" id="nc-days" placeholder="Mon · Wed · Fri"></div>
+      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Available Equipment')}</label><input class="inp" id="nc-equip" placeholder="${t('Full gym · Dumbbells at home')}"></div></div></div>
     <div class="fs" style="margin-bottom:0"><div class="fs-t">${t('Health / Limitations')}</div><div class="fgrid">
-      <div class="field"><label class="lbl">${t('Injuries')}</label><input class="inp"></div>
-      <div class="field"><label class="lbl">${t('Movement Restrictions')}</label><input class="inp"></div>
-      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Important Notes')}</label><textarea class="ta"></textarea></div></div></div>
+      <div class="field"><label class="lbl">${t('Injuries')}</label><input class="inp" id="nc-inj"></div>
+      <div class="field"><label class="lbl">${t('Movement Restrictions')}</label><input class="inp" id="nc-restr"></div>
+      <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Important Notes')}</label><textarea class="ta" id="nc-notes"></textarea></div></div></div>
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="save-client">${ic('check',15)} ${t('Save Client')}</button></div>`)}
 function pickerModal(){
@@ -11720,7 +11725,20 @@ document.addEventListener('click',e=>{
       // v16.3 — every client gets a PERSONAL connection code at creation; the
       // coach shares it and the student's device binds straight to this profile.
       // nid = optional national ID (contract/insurance paperwork only).
-      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:'Muscle Gain',weight:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:175,bf:18,email:'new@mail.com',nid:($('nc-nid')?.value.trim()||undefined),since:isoToday()};
+      /* Every field the modal SHOWS is a field it SAVES — it used to hardcode
+         email/weight/height/bf/goal, silently dropping whatever was typed.
+         Empty numbers keep the placeholder defaults; an empty email stays
+         unset (profile rows render '—'). Selects carry canonical EN values so
+         a Persian UI never bakes translated labels into the stored data. */
+      const ncV=id=>{const el=$(id);return el?String(el.value||'').trim():''};
+      const ncN=id=>{const n=parseFloat(ncV(id));return Number.isFinite(n)?n:undefined};
+      const ncH=ncN('nc-h'),ncW=ncN('nc-w'),ncBF=ncN('nc-bf');
+      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:ncV('nc-goal')||'Muscle Gain',weight:ncW!=null?ncW:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:ncV('nc-freq')||'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:ncH!=null?ncH:175,bf:ncBF!=null?ncBF:18,
+        email:ncV('nc-email')||undefined,phone:ncV('nc-phone')||undefined,dob:ncV('nc-dob')||undefined,
+        gender:ncV('nc-gender')||undefined,actLvl:ncV('nc-act')||undefined,expLvl:ncV('nc-exp')||undefined,
+        prefDays:ncV('nc-days')||undefined,equip:ncV('nc-equip')||undefined,inj:ncV('nc-inj')||undefined,
+        restr:ncV('nc-restr')||undefined,notes:ncV('nc-notes')||undefined,
+        nid:ncV('nc-nid')||undefined,since:isoToday()};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
       closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
@@ -11764,10 +11782,19 @@ document.addEventListener('click',e=>{
       let nid;
       if(ed){ed.name=wn;ed.day=S.wday;ed.dur=S.wdur||'60 min';ed.note=S.wnote||'';ed.exercises=BUILDER.map(b=>({...b}));nid=ed.id;
         dbS.split.forEach((s,j)=>{if(s&&s.t==='w'&&String(s.w)===String(nid))dbS.split[j]=null})}
-      else{nid='w'+Date.now();
-        dbS.workouts.unshift({id:nid,name:wn,day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:BUILDER.map(b=>({...b})),status:'assigned'})}
+      else{
+        /* Re-saving an UNCHANGED draft used to duplicate it: the builder
+           auto-prefills from the newest workout with wEdit=null, so Save →
+           Save again silently stacked identical rows. Same name + day +
+           exercises IS the same workout — update it in place. */
+        const ex=BUILDER.map(b=>({...b}));
+        const same=(dbS.workouts||[]).find(x=>x&&x.name===wn&&x.day===S.wday&&JSON.stringify(x.exercises||[])===JSON.stringify(ex));
+        if(same){same.dur=S.wdur||'60 min';same.note=S.wnote||'';same.exercises=ex;nid=same.id}
+        else{nid='w'+Date.now();
+          dbS.workouts.unshift({id:nid,name:wn,day:S.wday,dur:S.wdur||'60 min',note:S.wnote||'',exercises:ex,status:'assigned'})}
+      }
       if(di>=0)dbS.split[di]={t:'w',w:nid};
-      S.wEdit=null;
+      S.wEdit=nid; /* re-save in the same session updates this workout, not a copy */
       /* v18.63 — if this save came from the calendar's "New workout for this
          day", land back on the calendar so the coach sees the new assignment. */
       if(isNarrow()){S.mview='client';S.mClient=S.cid}
