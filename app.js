@@ -10351,7 +10351,18 @@ function renderInner(){
   if(S.view==='messages'&&S.msgThread)requestAnimationFrame(()=>{const el=$('thrbody');if(el)el.scrollTop=el.scrollHeight});
   document.body.classList.remove('sb-c');
 }
-function render(){renderInner();saveData()}
+function render(){
+  /* S.cid / S.pickCid default to 1 (the demo roster id). READS hide a phantom
+     value through client()'s fallback — every header still shows the real
+     client — but WRITES don't: b-save built DB[S.cid] raw, so a fresh session
+     published into an orphan bucket that packDB drops from every push. The
+     toast said "Published ✓" while the server and the client's portal never
+     saw the workout. Normalize on every render so state can't drift. */
+  if(S.role!=='client'&&CLIENTS.length){
+    if(!CLIENTS.some(c=>c.id===S.cid))S.cid=CLIENTS[0].id;
+    if(S.pickCid&&!CLIENTS.some(c=>c.id===S.pickCid))S.pickCid=S.cid;
+  }
+  renderInner();saveData()}
 
 /* ================= v18.26 — SCROLL REVEAL (calm motion) =================
    Observes the client app's cards and adds .fx-in (fade+rise, .9s) as each
@@ -11887,7 +11898,13 @@ document.addEventListener('click',e=>{
       /* v18.64 — never publish a nameless workout: an empty name rendered an
          INVISIBLE cell on the calendar ("nothing gets registered"). */
       const wn=((S.wname.split(' — ')[0])||'').trim()||'New workout';
-      const dbS=DB[S.cid]||(DB[S.cid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()});
+      const du=$('w-dur');if(du)S.wdur=du.value;
+      /* Belt for the render-time normalization above: never write into a
+         bucket whose id is not a real client (packDB would drop it). */
+      const cidW=(CLIENTS.find(x=>x.id===S.cid)||CLIENTS[0]||{}).id;
+      const dbCid=cidW!=null?cidW:S.cid;
+      if(cidW!=null&&S.cid!==cidW)S.cid=cidW;
+      const dbS=DB[dbCid]||(DB[dbCid]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()});
       if(!Array.isArray(dbS.split))dbS.split=splitFromWorkouts(dbS);
       const di=FULLDAYS.indexOf(S.wday);
       /* v18.64 — editing an existing workout (✎ in the saved list) UPDATES it
@@ -12351,6 +12368,12 @@ document.addEventListener('input',e=>{
       saveData();
     }
     return}
+  /* The builder's text fields sync LIVE. They used to be read only at save
+     time, so ANY re-render (day select, an exercise edit) rebuilt them from
+     the stale S snapshot and silently reverted the typed name/duration/note. */
+  if(e.target.id==='w-name'){S.wname=String(e.target.value).slice(0,120);return}
+  if(e.target.id==='w-dur'){S.wdur=String(e.target.value).slice(0,40);return}
+  if(e.target.id==='w-note'){S.wnote=String(e.target.value).slice(0,300);return}
   if(e.target.matches('[data-range-cut]')){S.cut=+e.target.value;
     const fig=e.target.closest('.card').querySelector('.photo');fig.style.setProperty('--cut',S.cut+'%');
     fig.querySelector('.photo.after').style.setProperty('--cut',S.cut+'%');fig.querySelector('.handle').style.setProperty('--cut',S.cut+'%')}
