@@ -116,7 +116,7 @@ const FA={
 'Intake form':'فرم ورود اطلاعات','Fill intake form':'تکمیل فرم','Intake form missing':'فرم ورود اطلاعات تکمیل نشده','Review the health questionnaire before the first session':'قبل از اولین جلسه پرسشنامه سلامت را ببین','Submitted':'ثبت شده','Missing':'ناقص','The client has not submitted the intake form yet':'شاگرد هنوز فرم را تکمیل نکرده است','Intake form saved ✓':'فرم ذخیره شد ✓','Answer all questions':'به همه سوالات پاسخ بده','Your coach needs your health background before the first session':'مربی‌ات قبل از اولین جلسه به سوابق سلامتی‌ات نیاز دارد','Emergency contact (name & phone)':'تماس اضطراری (نام و شماره)','Injuries or medical conditions':'آسیب‌ها یا بیماری‌ها','Current medications':'داروهای فعلی','Chest pain or dizziness during exercise?':'درد قفسه سینه یا سرگیجه هنگام تمرین؟','Heart condition diagnosed by a doctor?':'بیماری قلبی که پزشک تشخیص داده؟','Bone or joint problem that could worsen?':'مشکل استخوان یا مفصلی که ممکن است بدتر شود؟','Currently doing other training?':'در حال حاضر تمرین دیگری هم انجام می‌دهی؟','Main goal & expectations':'هدف اصلی و انتظارات','Yes':'بله','No':'خیر','Submit':'ارسال',
 'Photo added ✓':'عکس اضافه شد ✓','Photo sent — waiting for coach approval':'عکس ارسال شد — در انتظار تأیید مربی','Photo limit reached — delete an older photo first':'سقف عکس‌ها پر شده — اول یک عکس قدیمی را حذف کن','Photo storage is full — delete some photos first':'فضای عکس‌ها پر شده — چند عکس را حذف کن','Photo deleted':'عکس حذف شد','Approved ✓':'تأیید شد ✓','Pending approval':'در انتظار تأیید','Approve':'تأیید','No photos yet — add the first one':'هنوز عکسی نیست — اولین عکس را اضافه کن','My Photos':'عکس‌های من','Add photo':'افزودن عکس','photos':'عکس','Your coach will see this photo. Upload?':'مربی‌ات این عکس را می‌بیند. بارگذاری شود؟',
 'Weight Target':'وزن هدف','Target Weight':'وزن هدف','Target Date':'تاریخ هدف','Goal progress':'پیشرفت هدف','My Goal':'هدف من',
-'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
+'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Nothing to publish — add at least one exercise':'چیزی برای انتشار نیست — حداقل یک حرکت اضافه کن','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
 'Meat':'گوشت','Chicken':'مرغ','Fish':'ماهی','Eggs':'تخم‌مرغ','Dairy':'لبنیات','Rice & Grains':'برنج و غلات','Bread':'نان','Fruit':'میوه','Vegetables':'سبزیجات','Nuts':'آجیل','Oils':'روغن‌ها','Drinks':'نوشیدنی‌ها','Supplements':'مکمل‌ها','Other':'سایر',
 'Bodybuilding & Fitness':'بدنسازی و فیتنس','Powerlifting':'پاورلیفتینگ','Running & Endurance':'دویدن و استقامت','Team Sports':'ورزش‌های تیمی','General Fitness':'تناسب اندام عمومی',
 'Online coaching':'مربیگری آنلاین','In-person / gym':'حضوری / باشگاه','Hybrid':'ترکیبی',
@@ -1402,7 +1402,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[],WORKOUTS:[]};
 let __lastPack='';
 /* ================================================================ v19.19
    LIVE SESSION — the coach on the gym floor (mobile).
@@ -1714,6 +1714,9 @@ async function authLogout(){
   // Flush pending local edits BEFORE tearing down the sync target — a quick
   // add-client → sign-out otherwise loses them (cloudReset drops the dirty
   // flag and the next account's adoptAccount wipes the local bytes).
+  // A push that ALREADY started has consumed the dirty flag; await it too,
+  // or cloudReset below kills it mid-flight and that edit never lands.
+  try{if(CLOUD.inflight)await CLOUD.inflight}catch(e){}
   if(CLOUD.on&&CLOUD.dirty){try{await cloudPush()}catch(e){}}
   try{if(AUTH.token)await authApi('/api/auth/logout',{method:'POST'})}catch(e){}
   authSet('');AUTH.coach=null;AUTH.ws=null;AUTH.access=null;
@@ -1999,7 +2002,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
-const CLOUD={on:false,code:'',rev:0,dirty:false,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
+const CLOUD={on:false,code:'',rev:0,dirty:false,inflight:null,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
 const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
@@ -2229,6 +2232,8 @@ function cloudMerge(d,adopt){
     const widx={};(L.workouts||[]).forEach((w,i)=>{if(w&&w.id!=null)widx[w.id]=i});
     (R.workouts||[]).forEach(w=>{
       if(!w||w.id==null)return;
+      /* Deleted here or on another device: never re-import it (tombstone). */
+      if(deadSets.WORKOUTS&&deadSets.WORKOUTS.has(String(w.id)))return;
       const i=widx[w.id];
       if(i===undefined){L.workouts.push(w);widx[w.id]=L.workouts.length-1;ch=true}
       else if(take&&JSON.stringify(w)!==JSON.stringify(L.workouts[i])){L.workouts[i]=w;ch=true}
@@ -2296,7 +2301,11 @@ function adoptRemoteWorkspace(d){
   if(d.ONBOARD&&typeof d.ONBOARD==='object')ONBOARD=d.ONBOARD;
   if(typeof d.UI==='object'&&d.UI&&d.UI.tpl&&d.UI.tpl!==PREFS.uiTpl){PREFS.uiTpl=d.UI.tpl;applyTpl()}
   Object.keys(DB).forEach(k=>delete DB[k]);const src=d.DB||{};
-  Object.keys(src).forEach(cid=>{const b=src[cid];if(b&&typeof b==='object')DB[cid]={workouts:[],sessions:[],stats:{done:0,missed:0},measures:[],photos:[],log:[],split:splitBlank(),nutrition:null,...b}});
+  /* Apply remote tombstones while rebuilding: a workout deleted on another
+     device (or locally before the delete was pushed) must not come back. */
+  const deadW=new Set(((d.DEAD||{}).WORKOUTS||[]).map(String));
+  Object.keys(src).forEach(cid=>{const b=src[cid];if(b&&typeof b==='object'){DB[cid]={workouts:[],sessions:[],stats:{done:0,missed:0},measures:[],photos:[],log:[],split:splitBlank(),nutrition:null,...b};
+    if(Array.isArray(DB[cid].workouts)&&deadW.size)DB[cid].workouts=DB[cid].workouts.filter(w=>w&&!deadW.has(String(w.id)));}});
   /* Every adopted client needs a DB bucket even when the server payload had
      none for it (a workspace seeded before that client ever trained): the
      per-client views read DB[c.id].workouts unconditionally. Same defaults as
@@ -2361,11 +2370,18 @@ function cloudSchedule(ms){
 async function cloudPush(){
   if(!CLOUD.on||!CLOUD.dirty)return;
   CLOUD.dirty=false;
-  try{
-    const cur=await cloudFetch(CLOUD.code);
-    if(cur&&cur.ok){CLOUD.rev=cur.rev||0;cloudMerge(cur.data,false)}
-    if(!await cloudPut(cloudPack()))cloudSchedule(1500);
-  }catch(e){CLOUD.dirty=true}
+  const p=(async()=>{
+    try{
+      const cur=await cloudFetch(CLOUD.code);
+      if(cur&&cur.ok){CLOUD.rev=cur.rev||0;cloudMerge(cur.data,false)}
+      if(!await cloudPut(cloudPack()))cloudSchedule(1500);
+    }catch(e){CLOUD.dirty=true}
+  })();
+  /* In-flight handle: sign-out awaits this before cloudReset, otherwise the
+     reset kills a push whose dirty flag was already consumed and the last
+     edit never lands (observed: a just-deleted workout came back). */
+  CLOUD.inflight=p;
+  try{await p}finally{if(CLOUD.inflight===p)CLOUD.inflight=null}
 }
 function cloudStart(){
   if(CLOUD.started||!CLOUD.on)return;
@@ -11895,6 +11911,9 @@ document.addEventListener('click',e=>{
     case 'b-dn':{const i=+el.dataset.bi;if(i<BUILDER.length-1){[BUILDER[i+1],BUILDER[i]]=[BUILDER[i],BUILDER[i+1]];render()}break}
     case 'b-save':{const n=$('w-name');if(n)S.wname=n.value;const d=$('w-day');if(d)S.wday=d.value;
       const note=$('w-note');if(note)S.wnote=note.value;
+      /* Never publish an exercise-less workout (same rule as the v18.64
+         nameless guard): the client card would render a dead "0 sets" row. */
+      if(!BUILDER.length){toast(t('Nothing to publish — add at least one exercise'));break}
       /* v18.64 — never publish a nameless workout: an empty name rendered an
          INVISIBLE cell on the calendar ("nothing gets registered"). */
       const wn=((S.wname.split(' — ')[0])||'').trim()||'New workout';
@@ -11949,6 +11968,9 @@ document.addEventListener('click',e=>{
     case 'w-del':{const list=DB[S.cid].workouts||[];const w=list[+el.dataset.wi];if(!w)break;
       if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
       list.splice(+el.dataset.wi,1);
+      /* Tombstone: without it the NEXT push re-imports the row from the server
+         (cloudMerge unions by id) and the delete silently resurrects. */
+      markDead('WORKOUTS',String(w.id));
       /* v18.62 — a deleted workout must not leave a dangling split slot. */
       {const dbS=DB[S.cid];if(Array.isArray(dbS.split))dbS.split.forEach((s,i)=>{if(s&&s.t==='w'&&String(s.w)===String(w.id))dbS.split[i]=null})}
       render();toast(t('Workout deleted'));break}
