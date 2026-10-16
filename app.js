@@ -12132,12 +12132,16 @@ document.addEventListener('click',e=>{
       newSessionModal();break}
     case 'ev-open':eventModal(+el.dataset.eid);break;
     case 'ev-save':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
+      /* Block a conflicting edit — conflictInfo excludes THIS event by id. */
+      {const c=conflictInfo(+el.dataset.id);if(c.bad){toast(c.msg);break}}
       ev.label=$('ev-label').value.trim()||ev.label;
       ev.client=$('ev-client').value;ev.type=$('ev-type').value;
       ev.day=+$('ev-day').value;ev.start=parseFloat($('ev-time').value);ev.dur=parseFloat($('ev-dur').value);
       syncClientSessions(ev.client);
       closeModal();render();toast('Session updated ✓');break}
     case 'ev-del':{const i=EVENTS.findIndex(x=>x.id===+el.dataset.id);if(i<0)break;
+      /* Two-step confirm — same rule as every other destructive action. */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
       const cl=EVENTS[i].client;markDead('EVENTS',EVENTS[i].id);EVENTS.splice(i,1);syncClientSessions(cl);
       closeModal();render();toast('Event deleted');break}
     case 'ev-dup':{const ev=EVENTS.find(x=>x.id===+el.dataset.id);if(!ev)break;
@@ -12267,6 +12271,9 @@ document.addEventListener('click',e=>{
       const day=+$('ns-day').value,st=parseFloat($('ns-time').value),du=parseFloat($('ns-dur').value);
       const label=$('ns-label').value.trim()||({session:t('Training Session'),assess:t('Assessment'),meas:t('Measurement'),appt:t('Appointment')})[ty]||t('Training Session');
       const conf=conflictInfo(null);
+      /* Conflict now BLOCKS the save — the banner warned live and the old
+         behavior pushed the event anyway, only toasting the warning. */
+      if(conf.bad){toast(conf.msg);break}
       // uid() already encodes ms + a rolling counter; adding a random offset on
       // top could collide with a uid() minted microseconds later, and a
       // collision makes edit/delete/duplicate act on the wrong event (and makes
@@ -12274,7 +12281,7 @@ document.addEventListener('click',e=>{
       EVENTS.push({id:uid(),day,start:st,dur:du,client:cl,label,type:ty});
       syncClientSessions(cl);
       ACTIVITY.unshift({w:'Just now',i:'calendar',h:lang==='fa'?`<b>شما</b> <b>${esc(label)}</b> را برای <b>${t(cl)}</b> زمان‌بندی کردید`:`<b>You</b> scheduled <b>${esc(label)}</b> for <b>${t(cl)}</b>`});
-      closeModal();render();toast(conf.bad?conf.msg:'Session scheduled ✓');break}
+      closeModal();render();toast('Session scheduled ✓');break}
     case 'qn-open':quickNoteModal(el.dataset.c||null,el.dataset.nt||null);break;
     case 'qn-add':{const cl=$('qn-client').value;const ty=$('nt-type').value.replace(' Note','');
       const ti=$('nt-title').value.trim()||t('Untitled note');const b=$('nt-body').value.trim()||'—';
@@ -12460,7 +12467,12 @@ document.addEventListener('drop',e=>{
     const rect=col.getBoundingClientRect();
     const CH=calHours(),slots=Math.round((CH.end-CH.start)*2);
     const slot=Math.max(0,Math.min(slots-1,Math.floor((e.clientY-rect.top)/24)));
+    const pd=ev.day,pst=ev.start;
     ev.day=+col.dataset.day;ev.start=CH.start+slot*0.5;
+    /* Conflicting drops are rejected — same rule as create/edit. */
+    const cf=EVENTS.filter(x=>x.id!==ev.id&&x.day===ev.day&&x.start<ev.start+ev.dur-1e-9&&ev.start<x.start+x.dur-1e-9);
+    if(cf.length){ev.day=pd;ev.start=pst;render();
+      toast(cf.some(x=>x.client===ev.client)?t('⚠️ This client already has an event at this time'):t('⚠️ You already have another event at this time'));return}
     syncClientSessions(ev.client);
     render();toast(t('Rescheduled to')+' '+dayLbl(ev.day)+' · '+nf(fmtT(ev.start)));return}
   const wc=e.target.closest('.wcol');
