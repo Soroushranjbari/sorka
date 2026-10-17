@@ -265,7 +265,7 @@ const FA={
 'New Session':'جلسه جدید','Session type':'نوع جلسه','Time':'ساعت','30 min':'۳۰ دقیقه','90 min':'۹۰ دقیقه','Session scheduled ✓':'جلسه زمان‌بندی شد ✓',
 'Create and manage nutrition plans for your clients.':'ساخت و مدیریت برنامه‌های تغذیه شاگردانت.',
 'Active Plans':'برنامه‌های فعال','Plans Created':'برنامه‌های ساخته‌شده','Clients With Nutrition Plans':'شاگردان دارای برنامه تغذیه','Plans Needing Review':'برنامه‌های نیازمند بازبینی','Average Daily Calories':'میانگین کالری روزانه',
-'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
+'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan paused':'برنامه متوقف شد','Plan resumed':'برنامه ادامه یافت','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
 'Plan Name':'نام برنامه','Start Date':'تاریخ شروع','Plan Type':'نوع برنامه','Standard':'استاندارد','Training Day / Rest Day':'روز تمرین / روز استراحت','Target Macros':'ماکروهای هدف',
 'Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب وعده‌ها','Plan Templates':'قالب برنامه‌ها','History':'تاریخچه','Jump to the food log below':'رفتن به لاگ غذا در پایین',
 'Search food…':'جستجوی غذا…','Per 100g':'هر ۱۰۰ گرم','Custom Food':'غذای سفارشی','Food name':'نام غذا','Custom food added':'غذای سفارشی اضافه شد','Add Food':'افزودن غذا','added to meal':'به وعده اضافه شد','Category':'دسته',
@@ -2197,10 +2197,18 @@ function cloudMerge(d,adopt){
       if(!set.has(rc.n)){arr.push(rc);set.add(rc.n);ch=true}
     });
   });
-  // append-only logs — dedupe by JSON
+  /* v19.16 — dedupe by CANONICAL JSON (keys sorted): the server stores the
+     payload in Postgres jsonb, which reorders object keys on every round-trip,
+     so the exact-string compare below saw the SAME entry as new and appended
+     a copy once per entry — History doubled (8 rows/4 dups), Activity feed
+     13/25 duplicated, Notifications 3/7. The heal pass collapses copies that
+     earlier merges already introduced. */
+  const kjson=x=>JSON.stringify(x,(k,v)=>(v&&typeof v==='object'&&!Array.isArray(v))?Object.keys(v).sort().reduce((a,kk)=>(a[kk]=v[kk],a),{}):v);
   [['NHIST',NHIST],['ACTIVITY',ACTIVITY],['NOTIFS',NOTIFS]].forEach(([k,arr])=>{
-    const set=new Set(arr.map(x=>JSON.stringify(x)));
-    (d[k]||[]).forEach(x=>{const s=JSON.stringify(x);if(!set.has(s)){arr.push(x);set.add(s);ch=true}});
+    const kept=[],seen=new Set();
+    arr.forEach(x=>{const s=kjson(x);if(!seen.has(s)){seen.add(s);kept.push(x)}});
+    if(kept.length!==arr.length){arr.length=0;kept.forEach(x=>arr.push(x));ch=true}
+    (d[k]||[]).forEach(x=>{const s=kjson(x);if(!seen.has(s)){arr.push(x);seen.add(s);ch=true}});
   });
   /* v18.9 — these fields used to be PUSH-ONLY (cloudMerge never read them),
      so a second device never saw the video bank, the coach photo, the builder
@@ -2277,7 +2285,7 @@ function cloudMerge(d,adopt){
       if(deadSets.MEAS&&deadSets.MEAS.has(cid+':'+x.d))return;
       const i=dmap[x.d];
       if(i===undefined){(L.measures=L.measures||[]).push(x);dmap[x.d]=L.measures.length-1;ch=true}
-      else if(take&&JSON.stringify(x)!==JSON.stringify(L.measures[i])){L.measures[i]=x;ch=true}
+      else if(take&&kjson(x)!==kjson(L.measures[i])){L.measures[i]=x;ch=true} /* v19.16 — kjson: jsonb key order ≠ local order for the SAME row */
     });
     if(L.measures&&L.measures.length)L.measures.sort((a,b)=>a.d<b.d?-1:1);
     if(R.stats){if(!L.stats)L.stats={done:0,missed:0};['done','missed'].forEach(f=>{if((R.stats[f]||0)>(L.stats[f]||0)){L.stats[f]=R.stats[f];ch=true}})}
@@ -3123,9 +3131,18 @@ const NEng={
     if(!hasPlan)return {level:'ok',reasons:[]};
     const reasons=[];
     const ad=this.adherence(c,3);
-    if(ad.withTg&&ad.logged===0)reasons.push({sev:'alert',k:'logging',d:t('No food logs for 3 days')});
-    else if(ad.withTg>=2&&ad.protHits===0)reasons.push({sev:'warn',k:'protein',d:t('Protein below target the last 3 days')});
-    if(ad.withTg>=2&&ad.kcalHits===0&&ad.logged>0)reasons.push({sev:'warn',k:'kcal',d:t('Calories off target the last 3 days')});
+    /* v19.16 — windowed verdicts need real history: targets are looked back
+       retroactively, so a plan created TODAY made every brand-new client show
+       "No food logs for 3 days" (Action Required) on day one. Only clients
+       with >=3 days of history earn the 3-day verdicts; hydration ("today")
+       stays immediate. */
+    let mature=true;
+    if(c.since){const a=daysSince(c.since);mature=Number.isFinite(a)?a+1>=3:true}
+    if(mature){
+      if(ad.withTg&&ad.logged===0)reasons.push({sev:'alert',k:'logging',d:t('No food logs for 3 days')});
+      else if(ad.withTg>=2&&ad.protHits===0)reasons.push({sev:'warn',k:'protein',d:t('Protein below target the last 3 days')});
+      if(ad.withTg>=2&&ad.kcalHits===0&&ad.logged>0)reasons.push({sev:'warn',k:'kcal',d:t('Calories off target the last 3 days')});
+    }
     const w=this.waterOf(c,isoToday()),wt=this.waterT(c);
     if(w>0&&w<wt*0.4)reasons.push({sev:'info',k:'water',d:t('Hydration well below target today')});
     const level=reasons.some(r=>r.sev==='alert')?'alert':reasons.some(r=>r.sev==='warn')?'warn':'ok';
@@ -5343,6 +5360,7 @@ function nTabRows(rows){
     <td style="text-align:end;white-space:nowrap">
       <button class="btn btn-outline btn-sm" data-act="nopen" data-i="${i}">${t('Open Plan')}</button>
       <button class="btn btn-ghost btn-icon" title="${t('Duplicate')}" data-act="ndup" data-i="${i}">${ic('copy',15)}</button>
+      <button class="btn btn-ghost btn-icon" title="${p.status==='Paused'?t('Resume'):t('Pause')}" data-act="npause" data-i="${i}">${ic(p.status==='Paused'?'play':'pause',15)}</button>
       <button class="btn btn-ghost btn-icon" title="${t('Archive')}" data-act="narch" data-i="${i}" style="color:var(--red)">${ic('archive',15)}</button>
     </td>
   </tr>`}).join('');
@@ -5876,7 +5894,7 @@ function phaseModal(i){
     <div class="field"><label class="lbl">${t('Fat')} (g)</label><input class="inp" type="number" id="ph-f" value="${ph.fl}"></div>
     <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" id="ph-s" value="${esc(ph.start)}"></div>
   </div></div>
-  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="ph-save" data-i="${i==null?-1:i}">${ic('check',15)} ${t('Save')}</button></div>`)}
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="nph-save" data-i="${i==null?-1:i}">${ic('check',15)} ${t('Save')}</button></div>`)}
 /* v18.9 — meal/plan template EDIT (the pencil buttons used to be toast stubs).
    Meal templates edit in place with a working food list (grams + remove);
    renaming tombstones the old name so other devices drop the stale key. */
@@ -5888,7 +5906,7 @@ function mtEditModal(i){
   <div class="modal-b">
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('Meal name')}</label><input class="inp" id="mt-en" value="${esc(x.n)}"></div>
-      <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-ec">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option ${x.cat===c?'selected':''}>${t(c)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-ec">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option value="${c}" ${x.cat===c?'selected':''}>${t(c)}</option>`).join('')}</select></div>
     </div>
     <div class="fs-t">${t('Foods')}</div>
     <div id="mt-foods" style="display:flex;flex-direction:column;gap:6px"></div>
@@ -8665,7 +8683,12 @@ function cNutrition(){
         const firstUn=ms.findIndex(mm=>!isLogged(mm));
         return ms.map((m,mi)=>{const logged=isLogged(m),due=!logged&&mi===firstUn;
         const kcal=Math.round(mealKcal(m));
-        const open=(S.macc!=null)?S.macc.includes(mi):logged;
+        /* v19.16 — S.macc is SHARED with the coach collapsibles and starts as
+           {} (an object): the old `S.macc!=null` guard still called
+           .includes() on it and threw on every render — the client's Nutrition
+           tab never opened. Array.isArray picks the accordion's array state and
+           falls back to "logged meals open" otherwise. */
+        const open=Array.isArray(S.macc)?S.macc.includes(mi):logged;
         const nm=(m.name||'').toLowerCase();
         const mic=nm.includes('break')||nm.includes('صبح')?['egg','#F0B457','rgba(229,169,60,.15)']
           :nm.includes('lunch')||nm.includes('ناهار')?['salad','#7EA0FF','rgba(77,124,254,.15)']
@@ -11299,6 +11322,9 @@ document.addEventListener('click',e=>{
     case 'nopen':S.nplan=+el.dataset.i;S.nview='planner';S.nday=0;S.view='nutrition';S.mview='nutrition';render();window.scrollTo({top:0});break;
     case 'ndup':{const p=NPLANS[+el.dataset.i];const cp=JSON.parse(JSON.stringify(p));cp.name=p.name+' (Copy)';cp.updated='Just now';NPLANS.splice(+el.dataset.i+1,0,cp);render();toast('Plan duplicated');break}
     case 'narch':{NPLANS[+el.dataset.i].status='Archived';render();toast('Plan archived');break}
+    /* v19.16 — Paused used to be an unreachable status (the filter chip existed
+       but no action ever set it). Pause/Resume toggles it from the row. */
+    case 'npause':{const p=NPLANS[+el.dataset.i];if(!p)break;p.status=p.status==='Paused'?'Active':'Paused';p.updated='Just now';saveData();render();toast(t(p.status==='Paused'?'Plan paused':'Plan resumed'));break}
     case 'np-new':newPlanModal(el.dataset.c||null);break;
     /* ===== v18.48 — coach nutrition monitoring ===== */
     case 'nrules-open':nrulesModal();break;
@@ -11356,19 +11382,26 @@ document.addEventListener('click',e=>{
     case 'mealup':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;if(i>0){[ms[i-1],ms[i]]=[ms[i],ms[i-1]];render()}break}
     case 'mealdn':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;if(i<ms.length-1){[ms[i+1],ms[i]]=[ms[i],ms[i+1]];render()}break}
     case 'mdup':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;ms.splice(i+1,0,JSON.parse(JSON.stringify(ms[i])));render();toast('Meal duplicated');break}
-    case 'mdel':{const ms=NPLANS[S.nplan].days[S.nday].meals;ms.splice(+el.dataset.mi,1);render();toast('Meal deleted');break}
+    case 'mdel':{const ms=NPLANS[S.nplan].days[S.nday].meals;const i=+el.dataset.mi;
+      /* Two-step confirm — one stray tap used to silently drop a whole meal. */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
+      ms.splice(i,1);render();toast(t('Meal deleted'));break}
     case 'medit':mealEditModal(+el.dataset.mi);break;
     case 'medit-save':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.time=$('me-time').value;m.name=$('me-name').value.trim()||m.name;closeModal();render();toast('Meal updated ✓');break}
     case 'mnote':mealNoteModal(+el.dataset.mi);break;
     case 'mnote-save':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.note=$('mn-note').value.trim();closeModal();render();toast('Meal note saved');break}
     case 'fdel':{const m=NPLANS[S.nplan].days[S.nday].meals[+el.dataset.mi];m.foods.splice(+el.dataset.xi,1);render();break}
-    case 'madd':{const ms=NPLANS[S.nplan].days[S.nday].meals;ms.push({time:'12:00',name:t('New Meal'),foods:[],note:''});render();toast('Meal added ✓');break}
+    case 'madd':{const ms=NPLANS[S.nplan].days[S.nday].meals;ms.push({time:'12:00',name:'New Meal',foods:[],note:''});render();toast('Meal added ✓');break}
     case 'wcopy':{S.nclip=JSON.parse(JSON.stringify(NPLANS[S.nplan].days[S.nday].meals));toast('Day copied');break}
     case 'wpaste':{if(!S.nclip)break;NPLANS[S.nplan].days[S.nday].meals=JSON.parse(JSON.stringify(S.nclip));render();toast('Pasted ✓');break}
     case 'wapply':{const src=JSON.parse(JSON.stringify(NPLANS[S.nplan].days[S.nday].meals));NPLANS[S.nplan].days.forEach(d=>d.meals=JSON.parse(JSON.stringify(src)));render();toast('Applied to week ✓');break}
     case 'ph-add':phaseModal(null);break;
     case 'ph-edit':phaseModal(+el.dataset.i);break;
-    case 'ph-save':{const p=NPLANS[S.nplan];const ph={n:$('ph-n').value.trim()||'Phase',weeks:$('ph-w').value,kcal:+$('ph-k').value,p:+$('ph-p').value,c:+$('ph-c').value,fl:+$('ph-f').value,start:$('ph-s').value,status:'Upcoming'};
+    /* v19.16 — RENAMED from ph-save: the athletics editor's `case 'ph-save'`
+       sits EARLIER in the same switch and won every time, reading fields
+       (ph-name) this nutrition modal never had — "Phase name is required"
+       forever; Add/Edit Phase here was dead code. */
+    case 'nph-save':{const p=NPLANS[S.nplan];const ph={n:$('ph-n').value.trim()||'Phase',weeks:$('ph-w').value,kcal:+$('ph-k').value,p:+$('ph-p').value,c:+$('ph-c').value,fl:+$('ph-f').value,start:$('ph-s').value,status:'Upcoming'};
       const i=+el.dataset.i;if(i>=0)p.phases[i]=ph;else p.phases.push(ph);
       closeModal();render();toast('Phase saved ✓');break}
     case 'mtcat':S.mtcat=el.dataset.c;render();break;
@@ -11377,17 +11410,20 @@ document.addEventListener('click',e=>{
       NPLANS[S.nplan].days[S.nday].meals.push({time:def[x.cat]||'12:00',name:x.n,foods:JSON.parse(JSON.stringify(x.foods)),note:''});
       S.nview='planner';render();toast(t(x.n)+' '+t('added to meal'));break}
     case 'mt-dup':{const x=MTPL[+el.dataset.i];MTPL.splice(+el.dataset.i+1,0,{...x,n:x.n+' (Copy)'});render();toast('Template duplicated');break}
-    case 'mt-arch':{const x=MTPL[+el.dataset.i];if(!x)break;markDead('MTPL',x.n);MTPL.splice(+el.dataset.i,1);render();toast('Template archived');break}
+    case 'mt-arch':{const x=MTPL[+el.dataset.i];if(!x)break;
+      /* Two-step: archive is permanent (markDead + splice, no archive list). */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
+      markDead('MTPL',x.n);MTPL.splice(+el.dataset.i,1);render();toast(t('Template archived'));break}
     case 'mt-add':openModal(`
       <div class="modal-h"><h3>${t('Create Meal Template')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
       <div class="modal-b"><div class="fgrid">
         <div class="field"><label class="lbl">${t('Meal name')}</label><input class="inp" id="mt-n"></div>
-        <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-c">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option>${t(c)}</option>`).join('')}</select></div>
+        <div class="field"><label class="lbl">${t('Category')}</label><select class="sel" id="mt-c">${['Breakfast','Snack','Lunch','Dinner','Pre-Workout','Post-Workout'].map(c=>`<option value="${c}">${t(c)}</option>`).join('')}</select></div>
         <div class="field"><label class="lbl">${t('Calories')}</label><input class="inp" type="number" id="mt-k" value="500"></div>
         <div class="field"><label class="lbl">${t('Protein')} (g)</label><input class="inp" type="number" id="mt-p" value="35"></div>
       </div></div>
       <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="mt-addsave">${ic('check',15)} ${t('Save')}</button></div>`);break;
-    case 'mt-addsave':{MTPL.unshift({n:$('mt-n').value.trim()||t('New Meal'),cat:$('mt-c').value,foods:[],mk:{kcal:+$('mt-k').value||500,p:+$('mt-p').value||35}});
+    case 'mt-addsave':{MTPL.unshift({n:$('mt-n').value.trim()||'New Meal',cat:$('mt-c').value,foods:[],mk:{kcal:+$('mt-k').value||500,p:+$('mt-p').value||35}});
       closeModal();render();toast('Meal template created ✓');break}
     case 'mt-edit':mtEditModal(+el.dataset.i);break;
     case 'mtf-del':{if(S.mtEdit){S.mtEdit.foods.splice(+el.dataset.xi,1);mtFoods()}break}
@@ -11419,7 +11455,9 @@ document.addEventListener('click',e=>{
       if(isNarrow()){S.mview='nutrition'}else S.view='nutrition';
       render();toast('Plan created ✓');break}
     case 'pt-dup':{const tp=PTPL[+el.dataset.i];PTPL.splice(+el.dataset.i+1,0,{...tp,n:tp.n+' (Copy)'});render();toast('Template duplicated');break}
-    case 'pt-arch':{const x=PTPL[+el.dataset.i];if(!x)break;markDead('PTPL',x.n);PTPL.splice(+el.dataset.i,1);render();toast('Template archived');break}
+    case 'pt-arch':{const x=PTPL[+el.dataset.i];if(!x)break;
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
+      markDead('PTPL',x.n);PTPL.splice(+el.dataset.i,1);render();toast(t('Template archived'));break}
     case 'nn-plantpl':S.nview='plantpl';render();break;
     case 'cnav':S.ptab=el.dataset.t;
       if(S.ptab==='sessions')S.calOff=0; // client calendar always opens on this month
@@ -11494,7 +11532,7 @@ document.addEventListener('click',e=>{
       const isL=m=>lg.some(l=>l.meal===m.name&&Math.abs(l.kcal-Math.round(mealKcal(m)))<5);
       const ms=pp.days[TODAY].meals||[];
       const def=ms.map((m,mi)=>isL(m)?mi:-1).filter(i=>i>=0);
-      const set=new Set(S.macc!=null?S.macc:def);
+      const set=new Set(Array.isArray(S.macc)?S.macc:def); /* v19.16 — new Set({}) threw while S.macc held the coach-object */
       const ii=+el.dataset.i;set.has(ii)?set.delete(ii):set.add(ii);
       S.macc=[...set];render();break}
     /* One-tap favorite — REAL macro from the library (never invented). */
@@ -11528,6 +11566,8 @@ document.addEventListener('click',e=>{
       saveData();render();toast(t('Meal logged ✓'));break}
     case 'nlog-del':{
       const id=el.dataset.id;const i=NLOGS.findIndex(l=>String(l.id)===id);if(i<0)break;
+      /* Two-step confirm — one stray tap used to erase a diary entry. */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
       DEAD.NLOGS.push(String(NLOGS[i].id));NLOGS.splice(i,1);
       saveData();render();toast(t('Entry removed'));break}
     case 'nprof-open':nprofModal();break;
