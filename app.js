@@ -228,7 +228,7 @@ const FA={
 'Weight Progress':'روند وزن','Strength Progression':'روند قدرت','Bench':'پرس سینه','Squat':'اسکوات','Deadlift':'ددلیفت','Workout Completion':'تکمیل تمرین','weekly %':'٪ هفتگی','Training Volume':'حجم تمرین','tonnage (t / week)':'تناژ (تن / هفته)','t':'تن','Start':'شروع','Mid':'میانه','Now':'الان',
 'No workout history yet':'هنوز تاریخچه تمرینی نیست','Session history':'تاریخچه جلسات','Complete a workout — your progress charts will build themselves':'تمرین را تمام کن — نمودارهای پیشرفت خودشان ساخته می‌شوند','Log a Bench, Squat or Deadlift session to see your progression':'یک جلسه پرس سینه، اسکوات یا ددلیفت ثبت کن تا روندت را ببینی','Beat your first logged set to set a PR':'اولین ست ثبت‌شده‌ات را بزن تا رکورد بزنی','Complete a workout to fill this chart':'برای پر شدن این نمودار یک تمرین تمام کن','Weekly check-in':'چک‌این هفتگی','Log weight & measurements':'ثبت وزن و اندازه‌گیری‌ها','your coach sees it instantly':'مربی‌ات همان لحظه می‌بیند','Save check-in':'ذخیره چک‌این','Check-in saved — your coach was notified':'چک‌این ذخیره شد — به مربی‌ات اطلاع داده شد',
 'Body metrics & progress photos':'شاخص‌های بدنی و عکس‌های پیشرفت','Add Progress Photos':'افزودن عکس پیشرفت','Waist':'کمر','Hips':'باسن','Arm (R)':'بازو (راست)','Thigh':'ران','prev':'قبلی','Last':'آخرین',
-'Weight History':'تاریخچه وزن','Measurement history':'تاریخچه اندازه‌گیری‌ها','Entry deleted':'ردیف حذف شد','Last measurement':'آخرین اندازه‌گیری','No measurements yet':'هنوز اندازه‌گیری‌ای ثبت نشده','Weight is required':'وزن الزامی است','At least two measurements needed for the trend':'برای دیدن روند، حداقل دو اندازه‌گیری لازم است',
+'Weight History':'تاریخچه وزن','Measurement history':'تاریخچه اندازه‌گیری‌ها','Entry deleted':'ردیف حذف شد','Last measurement':'آخرین اندازه‌گیری','No measurements yet':'هنوز اندازه‌گیری‌ای ثبت نشده','Weight is required':'وزن الزامی است','At least two measurements needed for the trend':'برای دیدن روند، حداقل دو اندازه‌گیری لازم است','Not enough history for a trend yet':'تاریخچه برای نمایش روند کافی نیست','No data in this range — showing all time':'داده‌ای در این بازه نیست — همه‌ی داده‌ها نمایش داده شد',
 '12 weeks':'۱۲ هفته','Progress Photos':'عکس‌های پیشرفت','Front':'روبه‌رو','Side':'نیم‌رخ','Drag the slider to compare':'اسلایدر را برای مقایسه بکش','Measurement saved — charts updated':'اندازه‌گیری ثبت شد — نمودارها به‌روز شد','Save Measurement':'ذخیره اندازه‌گیری','Chest (cm)':'سینه (سانتی‌متر)','Waist (cm)':'کمر (سانتی‌متر)','Hips (cm)':'باسن (سانتی‌متر)','Arm (cm)':'بازو (سانتی‌متر)','Thigh (cm)':'ران (سانتی‌متر)','Calf (cm)':'ساق (سانتی‌متر)','Date':'تاریخ',
 'Calories':'کالری','Protein':'پروتئین','Carbs':'کربوهیدرات','Fat':'چربی','% of kcal':'٪ کالری','Daily Meals':'وعده‌های روزانه','Water':'آب','L/day':'لیتر/روز',
 'Breakfast':'صبحانه','Snack':'میان‌وعده','Lunch':'ناهار','Dinner':'شام','Pre-Workout':'پیش از تمرین','Post-Workout':'پس از تمرین','Before Bed':'قبل از خواب',
@@ -1004,15 +1004,20 @@ const wtBadge=cid=>{const d=mDelta(cid,'w');if(d==null)return '';
   return `<span class="bdg ${good?'bdg-green':'bdg-red'}">${dd>0?'▲':'▼'} ${nf(Math.abs(dd))}${PREFS.units==='Imperial'?' lb':' kg'}</span>`};
 function wChart(cid,h,range){
   let ms=((DB[cid]||{}).measures||[]).filter(m=>m&&m.w!=null);
+  let fell=false;
   if(range){const lim={'7D':7,'30D':30,'3M':90,'6M':180,'1Y':365}[range];
-    if(lim){const f=ms.filter(m=>daysSince(m.d)<=lim);if(f.length>=2)ms=f}}
+    if(lim){const f=ms.filter(m=>daysSince(m.d)<=lim);
+      if(f.length>=2)ms=f;else fell=ms.length>=2}}
   if(ms.length<2)return `<div data-act="cmeas-open" style="cursor:pointer;min-height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink2);border:1px dashed var(--line);border-radius:12px;text-align:center;padding:12px"><b style="font-size:13px">${t('Add Measurement')}</b><span class="muted" style="font-size:12px">${t('At least two measurements needed for the trend')}</span></div>`;
   const conv=v=>PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v;
-  const labs=[fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)];
-  /* v18.98 — lineChart() emits height:auto with a 640-wide viewBox, so h=90
-     rendered as 39px in a 280px container (aspect scaling). Force the element
-     height AND match the mockup's 300x90 viewBox so the drawing fills it. */
-  return lineChart(ms.map(m=>conv(m.w)),{h,w:300,labels:labs}).replace('height:auto',`height:${h}px`);
+  /* v19.15 — with exactly two points the middle index floor((2-1)/2)=0 IS the
+     first point, so the same date printed twice ("10/16 … 10/16 … 10/17").
+     Dedupe keeps first/mid/last for 3+ points and collapses to first/last for 2. */
+  const labs=[...new Set([fmtD(ms[0].d),fmtD(ms[Math.floor((ms.length-1)/2)].d),fmtD(ms[ms.length-1].d)])];
+  const chart=lineChart(ms.map(m=>conv(m.w)),{h,w:300,labels:labs}).replace('height:auto',`height:${h}px`);
+  /* v19.15 — a range pick matching <2 points silently fell back to ALL data (a
+     line needs two points), so the chip looked broken. Say what happened. */
+  return fell?chart+`<div class="muted" style="font-size:11px;margin-top:6px;text-align:center">${t('No data in this range — showing all time')}</div>`:chart;
 }
 function attentionList(){
   const items=[];
@@ -3363,7 +3368,10 @@ function lineChart(d,o={}){
   let g='';for(let i=1;i<=3;i++){const y=(p+(h-2*p)*i/4).toFixed(1);g+=`<line x1="${p}" x2="${w-p}" y1="${y}" y2="${y}" stroke="var(--line2)"/>`}
   const gid='g'+Math.random().toString(36).slice(2,8);const last=d.length-1;
   const area=`M${X(0).toFixed(1)},${h-p} L`+pts.join(' L ')+` L${X(last).toFixed(1)},${h-p} Z`;
-  const labs=(o.labels||[]).map((l,i)=>`<text x="${X(i*(d.length-1)/(o.labels.length-1)).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10.5" fill="var(--ink3)">${l}</text>`).join('');
+  /* v19.15 — a deduped label set can be 1 (two same-dated points); the old
+     i/(len-1) position divided by zero → NaN x and the label vanished. */
+  const ln=(o.labels||[]).length;
+  const labs=(o.labels||[]).map((l,i)=>`<text x="${(ln>1?i*(d.length-1)/(ln-1):(d.length-1)/2).toFixed(1)}" y="${h-5}" text-anchor="middle" font-size="10.5" fill="var(--ink3)">${l}</text>`).join('');
   return `<svg viewBox="0 0 ${w} ${h}" style="color:var(--accent-deep);width:100%;height:auto;display:block"><defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".2"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>${g}<path d="${area}" fill="url(#${gid})"/><path d="M${pts.join(' L ')}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="${X(last).toFixed(1)}" cy="${Y(d[last]).toFixed(1)}" r="4" fill="currentColor" stroke="var(--surface)" stroke-width="2"/>${labs}</svg>`;
 }
 function multiChart(series){
@@ -4576,7 +4584,7 @@ function vCProgress(){
     <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Weight Progress')}</b>${wtBadge(S.cid)}</div>${wChart(S.cid,210,S.range)}</div>
     <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Strength Progression')}</b>
       <span class="row" style="gap:10px;font-size:11.5px;font-weight:600;flex-wrap:wrap">${strSeries.map(s=>`<span style="color:${s.c}">● ${t(s.l)}</span>`).join('')}</span></div>
-      ${strSeries.length?multiChart(strSeries.map(({d,c})=>({d,c}))):chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'))}</div>
+      ${strSeries.length?multiChart(strSeries.map(({d,c})=>({d,c}))):chartEmpty(t('Log a Bench, Squat or Deadlift session to see your progression'),wlogOf(cid).length?t('Not enough history for a trend yet'):null)}</div>
   </div>
   <div class="grid2b" style="margin-bottom:14px">
     <div class="card" style="padding:18px"><div class="row" style="justify-content:space-between;margin-bottom:8px"><b>${t('Workout Completion')}</b><span class="muted" style="font-size:12px">${t('% completed')}</span></div>${cons?barChart(cons,{h:190,labels:['W1','W3','W5','W7','W9','W11']}):chartEmpty()}</div>
@@ -11909,6 +11917,12 @@ document.addEventListener('click',e=>{
     case 'finish-workout':{
       const w=DB[S.cid].workouts.find(x=>x.id===S.player?.wid);if(!w)break;
       const total=w.exercises.reduce((a,e)=>a+e.sets,0);
+      /* v19.15 — two-step when finishing with unchecked sets: one stray tap
+         used to mark the workout completed and silently drop every set the
+         client never logged. A full workout finishes on the first click. */
+      if(S.player.checked.size<total){
+        if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(`${S.player.checked.size}/${total} — `+t('Are you sure? Click again'));break}
+      }
       w.status='completed';w.setsDone=`${S.player.checked.size}/${total}`;
       w.doneAt=new Date().toISOString(); // v18.38 — the day-streak engine needs the completion date
       /* v18.61 — THE REAL HISTORY: record every checked set with the weight,
