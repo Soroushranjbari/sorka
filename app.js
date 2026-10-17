@@ -2090,7 +2090,14 @@ const cloudPut=async data=>{
 };
 function cloudMerge(d,adopt){
   if(!d||typeof d!=='object')return false;
-  let ch=false;const take=!!adopt&&!CLOUD.dirty;let __cexChanged=false;
+  let ch=false;
+  /* take (remote-overwrites-local on pull) is blocked while dirty AND while a
+     push is in flight: cloudPush clears dirty at entry, so a pull racing that
+     window used to adopt the STALE remote over unsynced local edits — and the
+     in-flight push then packed the reverted state (observed: a same-day
+     measurement heal was silently rolled back to the server's old copy). */
+  const take=!!adopt&&!CLOUD.dirty&&!CLOUD.inflight;
+  let __cexChanged=false;
   // The coach's display name rides the payload so CLIENT devices can greet
   // the right coach (they have no account of their own).
   /* v18.57 — WS_OWNER MIRRORS the remote payload exactly (including clearing):
