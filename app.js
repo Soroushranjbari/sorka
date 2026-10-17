@@ -1506,7 +1506,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES:packChals(),RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -2008,7 +2008,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,inflight:null,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES:packChals(),RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -2176,6 +2176,12 @@ function cloudMerge(d,adopt){
      client, done = union, ended wins) so a client device logging progress is
      seen by the coach's device on the next pull. */
   if(Array.isArray(d.CHALLENGES)){
+    /* v19.17 — a tombstone arriving from ANOTHER device must REMOVE a row this
+       device already holds. The add-skip below only prevented re-adding, so a
+       challenge deleted by the coach kept showing (and re-pushing) on the
+       client forever — the server carried the dead row and its tombstone side
+       by side, and a fresh adopt would re-add it. */
+    for(let i=CHALLENGES.length-1;i>=0;i--){const x=CHALLENGES[i];if(x&&x.id!=null&&deadSets.CHALLENGES.has(String(x.id))){CHALLENGES.splice(i,1);ch=true}}
     const cidx={};CHALLENGES.forEach((x,i)=>{if(x&&x.id!=null)cidx[String(x.id)]=i});
     d.CHALLENGES.forEach(rc=>{
       if(!rc||rc.id==null||deadSets.CHALLENGES.has(String(rc.id)))return;
@@ -2337,7 +2343,12 @@ function adoptRemoteWorkspace(d){
   repl(NLOGS,d.NLOGS);repl(NCHAT,d.NCHAT);repl(NINS,d.NINS);
   NRULES.length=0;(Array.isArray(d.NRULES)&&d.NRULES.length?d.NRULES:defaultNrules()).forEach(r=>NRULES.push(r));
   repl(ACTIVITY,d.ACTIVITY);repl(NOTIFS,d.NOTIFS);repl(PACKS,d.PACKS);repl(MSGTPL,d.MSGTPL);
-  repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);repl(CHALLENGES,d.CHALLENGES);syncCustomEx();
+  repl(CEXS,d.CEXS);repl(FORMS,d.FORMS);
+  /* v19.17 — adopt must not re-add challenges the payload itself marks dead
+     (same belt workouts/photos already have at lines below). */
+  {const dc=new Set(((d.DEAD||{}).CHALLENGES||[]).map(String));
+   repl(CHALLENGES,(d.CHALLENGES||[]).filter(x=>x&&!dc.has(String(x.id))));}
+  syncCustomEx();
   if(Array.isArray(d.FOODS)&&d.FOODS.length){repl(FOODS,d.FOODS)} // else keep the seed — empty = broken
   if(d.EXVID&&typeof d.EXVID==='object')EXVID=d.EXVID;
   if(typeof d.COACH_PIC==='string')COACH_PIC=d.COACH_PIC;
@@ -2639,6 +2650,8 @@ const client=id=>{
   if(!DB[0])DB[0]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
   return NO_CLIENT;
 };
+/* v19.17 — pack-time belt for challenges: never ship a row whose tombstone is   set (the mirror of packDB's workout/photo belt). */
+const packChals=()=>{const d=new Set((DEAD.CHALLENGES||[]).map(String));return d.size?CHALLENGES.filter(c=>c&&!d.has(String(c.id))):CHALLENGES};
 /* DB buckets are keyed by client id. The placeholder bucket (id 0) and any
    bucket whose client was deleted are memory-only — never serialized. */
 const packDB=()=>{
@@ -11798,6 +11811,9 @@ document.addEventListener('click',e=>{
       S.chalDraft=null;saveData();closeModal();render();toast(t('Challenge saved ✓'));break}
     case 'chal-end':{const ch=CHALLENGES.find(x=>String(x.id)===String(el.dataset.id));if(!ch)break;
       if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
+      /* v19.17 — two-step confirm: ending is one-way in the UI (no un-end) and
+         closes the challenge for every participant at once. */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
       ch.status='ended';saveData();render();toast(t('Challenge ended'));break}
     case 'chal-del':{if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
       if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';toast(t('Are you sure? Click again'));break}
