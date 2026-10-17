@@ -1501,7 +1501,7 @@ function adoptAccount(acct){
 function saveData(){
   let payload='';
   try{
-    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+    payload=JSON.stringify({v:13,owner:DATA_OWNER,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
     localStorage.setItem(STORE_KEY,payload);
   }catch(e){}
   // render() runs on EVERY interaction, so without this comparison even a pure
@@ -2003,7 +2003,7 @@ const syncPausedMsg=()=>'Sync paused — this workspace is full. Your saved data
 /* ============ CLOUD SYNC (API + SQLite/Postgres KV) ============ */
 /* یک کد = یک فضای کاری مشترک. دستگاه مربی هنگام ورود می‌سازد؛ شاگرد با همان کد وصل می‌شود. */
 const CLOUD={on:false,code:'',rev:0,dirty:false,inflight:null,pushT:null,pollT:null,started:false,rej402:0,adopting402:false,rej413:0,over413:false,warned413:false,storageDown:0,sse:null};
-const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD,UI:{tpl:PREFS.uiTpl||'default'}});
+const cloudPack=()=>({v:13,ownerName:wsOwnerName(),CLIENTS,EVENTS,NOTES,MSGS,TEMPLATES,FILES,BUILDER,NPLANS,MTPL,PTPL,NHIST,ACTIVITY,NOTIFS,FOODS,PACKS,MSGTPL,EXVID,COACH_PIC,ONBOARD,CEXS,FORMS,CHALLENGES,RACES,PBSD,APROF,PHASES,RUNW,TLOG,LIVE,NLOGS,NCHAT,NINS,NRULES,DB:packDB(),DEAD:packDead(),UI:{tpl:PREFS.uiTpl||'default'}});
 const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
@@ -2644,6 +2644,25 @@ const packDB=()=>{
     out[k]=nb;
   });
   return out;
+};
+/* Contradiction strip for the DEAD map AT PACK TIME: a tombstone whose row is
+   LIVE in this same payload is stale (the row was re-added after its delete —
+   e.g. a same-day measurement re-save). cloudPush's own pre-put merge re-imports
+   the remote's old tombstone into local DEAD, which used to re-ship it and undo
+   the lift forever. Live row wins: ship the row, drop the tombstone, and the
+   server converges to the live state on the very next push. */
+const packDead=()=>{
+  const d={};Object.keys(DEAD).forEach(k=>{d[k]=DEAD[k]});
+  const liveM=new Set(),liveW=new Set(),liveP=new Set();
+  Object.keys(DB).forEach(cid=>{const b=DB[cid];if(!b)return;
+    if(Array.isArray(b.measures))b.measures.forEach(m=>{if(m&&m.d!=null)liveM.add(cid+':'+m.d)});
+    (b.workouts||[]).forEach(w=>{if(w&&w.id!=null)liveW.add(String(w.id))});
+    (b.photos||[]).forEach(p=>{if(p&&p.id!=null)liveP.add(String(p.id))});
+  });
+  if(Array.isArray(d.MEAS)&&d.MEAS.length)d.MEAS=d.MEAS.filter(x=>!liveM.has(String(x)));
+  if(Array.isArray(d.WORKOUTS)&&d.WORKOUTS.length)d.WORKOUTS=d.WORKOUTS.filter(x=>!liveW.has(String(x)));
+  if(Array.isArray(d.PHOTOS)&&d.PHOTOS.length)d.PHOTOS=d.PHOTOS.filter(x=>!liveP.has(String(x)));
+  return d;
 };
 /* Client ids. A plain max+1 sequence collides across devices: two offline
    devices each adding a client to the same 8-client roster both produce id 9,
