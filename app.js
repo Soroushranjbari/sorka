@@ -114,7 +114,7 @@ const FA={
 'Announce':'اعلامیه','New announcement':'اعلامیه جدید','Write the announcement…':'متن اعلامیه را بنویس…','Send to all clients':'ارسال به همه شاگردها','Announcement sent':'اعلامیه ارسال شد','Goes to every active client as a direct message':'برای همه شاگردهای فعال به‌صورت پیام مستقیم ارسال می‌شود','Schedule change next week':'تغییر برنامه هفته آینده','Message templates':'قالب پیام','New template':'قالب جدید','Template name':'نام قالب','Template text':'متن قالب','Template saved ✓':'قالب ذخیره شد ✓','A template with this name exists':'قالبی با این نام وجود دارد','Inserted into the composer':'در کادر نوشتن پیام قرار گرفت','Template name and text are required':'نام و متن قالب الزامی است','No templates yet':'هنوز قالبی نیست',
 'Session packages':'بسته‌های جلسه','Packages':'بسته‌ها','Sessions almost used':'جلسات در حال اتمام','Add pack':'افزودن بسته','Pack name':'نام بسته','Pack added ✓':'بسته اضافه شد ✓','Pack deleted':'بسته حذف شد','Used':'مصرف‌شده','left':'باقی‌مانده','Sessions remaining':'جلسات باقی‌مانده','No packages yet — sell sessions as a pack and CoachMint counts them down automatically':'هنوز بسته‌ای نیست — جلسات را به‌صورت بسته بفروش؛ CoachMint خودش می‌شمارد','remaining — offer a new pack':'باقی‌مانده — پیشنهاد بسته جدید بده',
 'Intake form':'فرم ورود اطلاعات','Fill intake form':'تکمیل فرم','Intake form missing':'فرم ورود اطلاعات تکمیل نشده','Review the health questionnaire before the first session':'قبل از اولین جلسه پرسشنامه سلامت را ببین','Submitted':'ثبت شده','Missing':'ناقص','The client has not submitted the intake form yet':'شاگرد هنوز فرم را تکمیل نکرده است','Intake form saved ✓':'فرم ذخیره شد ✓','Answer all questions':'به همه سوالات پاسخ بده','Your coach needs your health background before the first session':'مربی‌ات قبل از اولین جلسه به سوابق سلامتی‌ات نیاز دارد','Emergency contact (name & phone)':'تماس اضطراری (نام و شماره)','Injuries or medical conditions':'آسیب‌ها یا بیماری‌ها','Current medications':'داروهای فعلی','Chest pain or dizziness during exercise?':'درد قفسه سینه یا سرگیجه هنگام تمرین؟','Heart condition diagnosed by a doctor?':'بیماری قلبی که پزشک تشخیص داده؟','Bone or joint problem that could worsen?':'مشکل استخوان یا مفصلی که ممکن است بدتر شود؟','Currently doing other training?':'در حال حاضر تمرین دیگری هم انجام می‌دهی؟','Main goal & expectations':'هدف اصلی و انتظارات','Yes':'بله','No':'خیر','Submit':'ارسال',
-'Photo added ✓':'عکس اضافه شد ✓','Photo sent — waiting for coach approval':'عکس ارسال شد — در انتظار تأیید مربی','Photo limit reached — delete an older photo first':'سقف عکس‌ها پر شده — اول یک عکس قدیمی را حذف کن','Photo storage is full — delete some photos first':'فضای عکس‌ها پر شده — چند عکس را حذف کن','Photo deleted':'عکس حذف شد','Approved ✓':'تأیید شد ✓','Pending approval':'در انتظار تأیید','Approve':'تأیید','No photos yet — add the first one':'هنوز عکسی نیست — اولین عکس را اضافه کن','My Photos':'عکس‌های من','Add photo':'افزودن عکس','photos':'عکس','Your coach will see this photo. Upload?':'مربی‌ات این عکس را می‌بیند. بارگذاری شود؟',
+'Photo added ✓':'عکس اضافه شد ✓','Add one more photo to compare':'برای مقایسه یک عکس دیگر اضافه کن','Template deleted':'قالب حذف شد','Photo sent — waiting for coach approval':'عکس ارسال شد — در انتظار تأیید مربی','Photo limit reached — delete an older photo first':'سقف عکس‌ها پر شده — اول یک عکس قدیمی را حذف کن','Photo storage is full — delete some photos first':'فضای عکس‌ها پر شده — چند عکس را حذف کن','Photo deleted':'عکس حذف شد','Approved ✓':'تأیید شد ✓','Pending approval':'در انتظار تأیید','Approve':'تأیید','No photos yet — add the first one':'هنوز عکسی نیست — اولین عکس را اضافه کن','My Photos':'عکس‌های من','Add photo':'افزودن عکس','photos':'عکس','Your coach will see this photo. Upload?':'مربی‌ات این عکس را می‌بیند. بارگذاری شود؟',
 'Weight Target':'وزن هدف','Target Weight':'وزن هدف','Target Date':'تاریخ هدف','Goal progress':'پیشرفت هدف','My Goal':'هدف من',
 'Print / PDF':'چاپ / PDF','Allow pop-ups to print':'برای چاپ، پاپ‌آپ را مجاز کن','Nothing to print — the builder is empty':'چیزی برای چاپ نیست — بیلدر خالی است','Nothing to publish — add at least one exercise':'چیزی برای انتشار نیست — حداقل یک حرکت اضافه کن','Exercise':'حرکت','Sets × Reps':'ست × تکرار','Load':'وزنه','Rest':'استراحت','Notes':'یادداشت‌ها','Foods':'غذاها','Calories':'کالری','Meal time':'ساعت وعده','Close':'بستن',
 'Meat':'گوشت','Chicken':'مرغ','Fish':'ماهی','Eggs':'تخم‌مرغ','Dairy':'لبنیات','Rice & Grains':'برنج و غلات','Bread':'نان','Fruit':'میوه','Vegetables':'سبزیجات','Nuts':'آجیل','Oils':'روغن‌ها','Drinks':'نوشیدنی‌ها','Supplements':'مکمل‌ها','Other':'سایر',
@@ -1402,7 +1402,7 @@ const FEEDBACK_MAIL='';
 let __uid=0;
 const uid=()=>Date.now()*1000+(__uid=(__uid+1)%1000);
 /* Tombstones for cloud merge — deleted ids are remembered so a sync never resurrects them */
-const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[],WORKOUTS:[]};
+const DEAD={CLIENTS:[],EVENTS:[],MSGS:[],NOTES:[],NPLANS:[],TEMPLATES:[],MTPL:[],PTPL:[],FOODS:[],FILES:[],MEAS:[],PACKS:[],MSGTPL:[],CEXS:[],FORMS:[],CHALLENGES:[],RACES:[],PBSD:[],APROF:[],PHASES:[],RUNW:[],TLOG:[],LIVE:[],NLOGS:[],NCHAT:[],NINS:[],NRULES:[],WORKOUTS:[],PHOTOS:[]};
 let __lastPack='';
 /* ================================================================ v19.19
    LIVE SESSION — the coach on the gym floor (mobile).
@@ -2234,6 +2234,11 @@ function cloudMerge(d,adopt){
       if(b&&Array.isArray(b.workouts)&&b.workouts.some(w=>w&&deadSets.WORKOUTS.has(String(w.id)))){
         b.workouts=b.workouts.filter(w=>w&&!deadSets.WORKOUTS.has(String(w.id)));ch=true}});
   }
+  if(deadSets.PHOTOS&&deadSets.PHOTOS.size){
+    Object.keys(DB).forEach(cid=>{const b=DB[cid];
+      if(b&&Array.isArray(b.photos)&&b.photos.some(p=>p&&deadSets.PHOTOS.has(String(p.id)))){
+        b.photos=b.photos.filter(p=>p&&!deadSets.PHOTOS.has(String(p.id)));ch=true}});
+  }
   Object.keys(d.DB||{}).forEach(cid=>{
     const L=DB[cid],R=d.DB[cid];if(!R)return;
     if(!L){
@@ -2276,6 +2281,8 @@ function cloudMerge(d,adopt){
       const pidx={};L.photos.forEach((p,i)=>{if(p&&p.id!=null)pidx[p.id]=i});
       R.photos.forEach(p=>{
         if(!p||p.id==null)return;
+        /* Deleted on this or another device: never re-import it (tombstone). */
+        if(deadSets.PHOTOS&&deadSets.PHOTOS.has(String(p.id)))return;
         const i=pidx[p.id];
         if(i===undefined){L.photos.push(p);pidx[p.id]=L.photos.length-1;ch=true}
         else if(take&&p.ok&&!L.photos[i].ok){L.photos[i].ok=true;ch=true}
@@ -2320,8 +2327,10 @@ function adoptRemoteWorkspace(d){
   /* Apply remote tombstones while rebuilding: a workout deleted on another
      device (or locally before the delete was pushed) must not come back. */
   const deadW=new Set(((d.DEAD||{}).WORKOUTS||[]).map(String));
+  const deadP=new Set(((d.DEAD||{}).PHOTOS||[]).map(String));
   Object.keys(src).forEach(cid=>{const b=src[cid];if(b&&typeof b==='object'){DB[cid]={workouts:[],sessions:[],stats:{done:0,missed:0},measures:[],photos:[],log:[],split:splitBlank(),nutrition:null,...b};
-    if(Array.isArray(DB[cid].workouts)&&deadW.size)DB[cid].workouts=DB[cid].workouts.filter(w=>w&&!deadW.has(String(w.id)));}});
+    if(Array.isArray(DB[cid].workouts)&&deadW.size)DB[cid].workouts=DB[cid].workouts.filter(w=>w&&!deadW.has(String(w.id)));
+    if(Array.isArray(DB[cid].photos)&&deadP.size)DB[cid].photos=DB[cid].photos.filter(p=>p&&!deadP.has(String(p.id)));}});
   /* Every adopted client needs a DB bucket even when the server payload had
      none for it (a workspace seeded before that client ever trained): the
      per-client views read DB[c.id].workouts unconditionally. Same defaults as
@@ -2618,12 +2627,14 @@ const packDB=()=>{
      merge cycle is in — a local copy that outlived its deletion must not
      overwrite the server (that is how deletes kept resurrecting). */
   const deadW=new Set((DEAD.WORKOUTS||[]).map(String));
+  const deadP=new Set((DEAD.PHOTOS||[]).map(String));
   const out={};Object.keys(DB).forEach(k=>{
     if(!ids.has(k))return;
-    const b=DB[k];
-    out[k]=(deadW.size&&b&&Array.isArray(b.workouts)&&b.workouts.some(w=>w&&deadW.has(String(w.id))))
-      ? {...b,workouts:b.workouts.filter(w=>w&&!deadW.has(String(w.id)))}
-      : b;
+    const b=DB[k];if(!b){out[k]=b;return}
+    let nb=b;
+    if(deadW.size&&Array.isArray(b.workouts)&&b.workouts.some(w=>w&&deadW.has(String(w.id))))nb={...nb,workouts:b.workouts.filter(w=>w&&!deadW.has(String(w.id)))};
+    if(deadP.size&&Array.isArray(b.photos)&&b.photos.some(p=>p&&deadP.has(String(p.id))))nb={...nb,photos:b.photos.filter(p=>p&&!deadP.has(String(p.id)))};
+    out[k]=nb;
   });
   return out;
 };
@@ -4594,7 +4605,7 @@ function vMeasure(){
           ${img(A)}
           <div class="photo after" style="--cut:${S.cut}%">${img(B,1)}</div>
           <div class="handle" style="--cut:${S.cut}%"></div>
-          <figcaption>${inPose.length>=2?t('Drag the slider to compare'):t('No photos yet — add the first one')}</figcaption>
+          <figcaption>${inPose.length>=2?t('Drag the slider to compare'):inPose.length===1?t('Add one more photo to compare'):t('No photos yet — add the first one')}</figcaption>
         </figure>`})()}
         <input type="range" min="0" max="100" value="${S.cut}" data-range-cut style="width:100%;margin-top:12px;accent-color:var(--accent-deep)">
         <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">${photos.length?[...photos].sort((a,b)=>b.id-a.id).map(p=>`
@@ -8554,7 +8565,7 @@ function cProgress(){
         <div class="ghost">${ic('camera',34)}</div>
         <input type="range" min="8" max="92" value="52" id="cmpRange" aria-label="${t('Drag to compare')}" oninput="document.getElementById('cmpTop').style.width=this.value+'%'">
       </div>
-      <div class="muted" style="font-size:11.5px;text-align:center;margin-top:7px">${t('No photos yet — add the first one')}</div>`}
+      <div class="muted" style="font-size:11.5px;text-align:center;margin-top:7px">${sorted.length===1?t('Add one more photo to compare'):t('No photos yet — add the first one')}</div>`}
       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:9px" data-act="photo-add-client">${ic('camera',13)} ${t('Add photo')}</button>
     </div>`:''}
   </div>`;
@@ -10578,8 +10589,16 @@ function saveMeasurementFromModal(requireWeight){
   const e={d,w:cvt('w'),ht:cvt('ht'),bf:cvt('bf'),ch:cvt('ch'),wa:cvt('wa'),hi:cvt('hi'),ar:cvt('ar'),th:cvt('th'),ca:cvt('ca')};
   if(e.w==null){if(requireWeight)toast('Weight is required');return null}
   DB[cid].measures=DB[cid].measures||[];
+  /* One entry per DATE — the model is date-keyed everywhere (dmap in merge,
+     prev-delta in the tiles). Always-push created duplicates on a same-day
+     re-save (the chart showed the date twice) — replace instead, which also
+     heals duplicates already sitting in the array. */
+  DB[cid].measures=DB[cid].measures.filter(x=>!(x&&x.d===e.d));
   DB[cid].measures.push(e);
   DB[cid].measures.sort((x,y)=>x.d<y.d?-1:1);
+  /* Re-adding a deleted date must lift its tombstone, or every other device
+     drops the fresh row on pull forever. */
+  if(DEAD.MEAS&&DEAD.MEAS.length){const mk=cid+':'+e.d;let mj;while((mj=DEAD.MEAS.indexOf(mk))>=0)DEAD.MEAS.splice(mj,1)}
   if(e.w!=null)c.weight=e.w;
   if(e.bf!=null)c.bf=e.bf;
   if(e.ht!=null)c.h=e.ht;
@@ -11579,7 +11598,12 @@ document.addEventListener('click',e=>{
     case 'photo-add':pickPhoto('coach');break;
     case 'photo-add-client':pickPhoto('client');break;
     case 'photo-del':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
-      if(pdb&&pdb.photos){const i=pdb.photos.findIndex(p=>p.id===pid);if(i>=0){pdb.photos.splice(i,1);saveData();render();toast(t('Photo deleted'))}}break}
+      if(pdb&&pdb.photos){const i=pdb.photos.findIndex(p=>p.id===pid);if(i>=0){
+        /* Two-step confirm + tombstone: without markDead the next push's
+           cloudMerge union resurrected the photo instantly and packDB kept
+           shipping it — "Photo deleted" never stuck. */
+        if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
+        pdb.photos.splice(i,1);markDead('PHOTOS',String(pid));saveData();render();toast(t('Photo deleted'))}}break}
     case 'photo-ok':{const pdb=DB[el.dataset.cid];const pid=+el.dataset.id;
       if(pdb&&pdb.photos){const p=pdb.photos.find(x=>x.id===pid);if(p){p.ok=true;saveData();render();toast(t('Approved ✓'))}}break}
     case 'intake-open':intakeModal();break;
@@ -11621,7 +11645,10 @@ document.addEventListener('click',e=>{
       if(MSGTPL.some(x=>x.n===tn)){toast(t('A template with this name exists'));break}
       MSGTPL.push({n:tn,body:tb});saveData();render();msgtplModal();toast(t('Template saved ✓'));break}
     case 'msgtpl-del':{const i=MSGTPL.findIndex(x=>x.n===el.dataset.n);
-      if(i>=0){markDead('MSGTPL',el.dataset.n);MSGTPL.splice(i,1);saveData();render();msgtplModal()}break}
+      if(i>=0){
+        /* Two-step confirm — a single stray click used to delete the template. */
+        if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
+        markDead('MSGTPL',el.dataset.n);MSGTPL.splice(i,1);saveData();render();msgtplModal();toast(t('Template deleted'))}break}
     case 'msgtpl-use':{const tp=MSGTPL.find(x=>x.n===el.dataset.n);if(!tp)break;
       const inp=$('msg-inp');
       if(inp){inp.value=tp.body;closeModal();inp.focus();toast(t('Inserted into the composer'))}
@@ -12192,6 +12219,8 @@ document.addEventListener('click',e=>{
       aiAnalyze(target);break}
     case 'meas-del':{const cid=+el.dataset.cid;const i=+el.dataset.i;
       if(!DB[cid]||!DB[cid].measures||!DB[cid].measures[i])break;
+      /* Two-step confirm — same rule as every other destructive action. */
+      if(el.dataset.arm!=='1'){el.dataset.arm='1';el.style.color='var(--red)';el.style.borderColor='var(--red)';toast(t('Are you sure? Click again'));break}
       const gone=DB[cid].measures[i];if(gone&&gone.d!=null)markDead('MEAS',cid+':'+gone.d);
       DB[cid].measures.splice(i,1);
       render();toast('Entry deleted');break}
