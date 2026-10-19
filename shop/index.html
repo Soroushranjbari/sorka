@@ -103,8 +103,132 @@ section[id]{scroll-margin-top:70px}
 .nav-links a:hover{color:var(--txt)}
 .nav-cta{display:flex;align-items:center;gap:14px}
 .nav-cta .btn{padding:11px 18px}
-#langToggle{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;color:var(--mut);font-size:11px;font-weight:700;letter-spacing:.08em;transition:color .3s,background .3s,border-color .3s}
-#langToggle:hover{color:var(--txt);background:rgba(255,255,255,.06);border-color:var(--acc-line)}
+
+/* ====== INNOVATIVE FLOATING LANGUAGE PICKER ====== */
+.lang-picker{position:relative;display:inline-block;z-index:90}
+.lang-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line2);border-radius:999px;
+  padding:7px 12px 7px 10px;color:var(--txt);
+  font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.02em;
+  background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  cursor:pointer;transition:all .22s cubic-bezier(.16,1,.3,1);
+  user-select:none;
+}
+.lang-btn:hover, .lang-picker.open .lang-btn{
+  color:#fff;background:rgba(255,255,255,.07);border-color:rgba(198,241,78,.45);
+  box-shadow:0 0 20px rgba(198,241,78,.14);
+}
+.lang-btn .globe-ic{
+  width:14px;height:14px;color:var(--acc);opacity:.9;flex-shrink:0;
+}
+.lang-btn .cur-lang-name{
+  font-weight:600;letter-spacing:.01em;color:#fff;
+}
+.lang-btn .chev-ic{
+  width:11px;height:11px;color:var(--mut);transition:transform .25s cubic-bezier(.16,1,.3,1);
+  flex-shrink:0;
+}
+.lang-picker.open .lang-btn .chev-ic{
+  transform:rotate(180deg);color:var(--acc);
+}
+
+.lang-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  width:236px;padding:8px;
+  background:rgba(13,16,21,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 45px -8px rgba(0,0,0,.75), 0 0 0 1px rgba(198,241,78,.12);
+  border-radius:16px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(-8px) scale(.97);
+  transform-origin:top right;
+  transition:opacity .2s cubic-bezier(.16,1,.3,1), transform .2s cubic-bezier(.16,1,.3,1), visibility .2s;
+}
+html[dir="rtl"] .lang-menu{
+  right:auto;left:0;transform-origin:top left;
+}
+.lang-picker.open .lang-menu{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+.lang-menu-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 8px 8px;margin-bottom:4px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.lang-menu-title{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+}
+.lang-menu-badge{
+  font-size:9.5px;font-weight:700;color:var(--acc);background:rgba(198,241,78,.12);
+  padding:2px 6px;border-radius:999px;border:1px solid rgba(198,241,78,.25);
+}
+.lang-opt{
+  display:flex;align-items:center;gap:11px;
+  width:100%;padding:9px 10px;
+  border:1px solid transparent;border-radius:10px;
+  background:transparent;color:var(--txt);
+  cursor:pointer;text-align:left;
+  transition:all .18s ease;font-family:inherit;
+}
+html[dir="rtl"] .lang-opt{
+  text-align:right;
+}
+.lang-opt:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.08);
+}
+.lang-opt.active{
+  background:rgba(198,241,78,.09);
+  border-color:rgba(198,241,78,.28);
+}
+.lang-flag-pill{
+  width:28px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp, sans-serif);font-size:10px;font-weight:800;
+  letter-spacing:.05em;
+  background:rgba(255,255,255,.08);color:var(--txt);
+  border:1px solid rgba(255,255,255,.1);
+  flex-shrink:0;transition:all .18s ease;
+}
+.lang-opt.active .lang-flag-pill{
+  background:var(--acc);color:#0e1117;border-color:var(--acc);
+}
+.lang-text{
+  display:flex;flex-direction:column;gap:1px;flex:1;min-width:0;
+}
+.lang-name{
+  font-size:12.5px;font-weight:600;color:#fff;
+}
+.lang-sub{
+  font-size:10px;color:var(--mut);letter-spacing:.02em;
+}
+.lang-check{
+  width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  color:var(--acc);opacity:0;transform:scale(.6);transition:all .2s ease;flex-shrink:0;
+}
+.lang-opt.active .lang-check{
+  opacity:1;transform:scale(1);
+}
+
+/* Mobile Menu Language Selector */
+.menu-lang-box{
+  margin-top:14px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;width:min(320px,90vw);
+}
+.menu-lang-head{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:8px;text-align:center}
+.menu-lang-pills{display:flex;gap:6px}
+.menu-lang-pill{
+  flex:1;padding:8px 0;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);color:var(--mut);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .2s ease;text-align:center;font-family:inherit;
+}
+.menu-lang-pill.active{
+  background:var(--acc);color:#0a0c10;border-color:var(--acc);font-weight:700;
+}
+
 html[dir="rtl"] body{font-family:"Vazirmatn","Segoe UI",Tahoma,var(--body);}
 html[dir="rtl"] .display,html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3,html[dir="rtl"] h4,html[dir="rtl"] .btn,html[dir="rtl"] .nav-links,html[dir="rtl"] #menu a{font-family:"Vazirmatn","Segoe UI",Tahoma,sans-serif;}
 html[dir="rtl"] .display{font-weight:700;line-height:1.15;}
@@ -876,6 +1000,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 
 <script>
 (function(){
+  var translationsTR={"Product":"Ürün","How it works":"Nasıl Çalışır","Pricing":"Fiyatlandırma","Start Free":"Ücretsiz Başla","Menu":"Menü","Account":"Hesap","ONE COACH. ONE WORKSPACE.":"TEK ANTRENÖR. TEK ÇALIŞMA ALANI.","INITIALIZING WORKSPACE":"ÇALIŞMA ALANI HAZIRLANIYOR","CoachMint — The operating system for coaches & gyms":"CoachMint — Antrenörler ve Spor Salonları İçin İşletim Sistemi","Everything your":"Antrenörlük işinizin","coaching business needs.":"ihtiyaç duyduğu her şey.","In one workspace.":"Tek bir çalışma alanında.","Clients, workouts, nutrition, progress, schedules — monitor everything your athletes do, without switching between five different tools.":"Danışanlar, antrenmanlar, beslenme, ilerleme ve takvim; sporcularınızın yaptığı her şeyi beş farklı uygulama arasında kaybolmadan tek ekrandan yönetin.","Explore CoachMint":"CoachMint’i Keşfedin","Scroll":"Kaydırın","01 — The problem":"01 — Sorun","Your coaching business":"Antrenörlük işiniz","shouldn't live in five different apps.":"beş farklı uygulamaya dağılmamalı.","Messages":"Mesajlar","Spreadsheet":"Tablolar (Excel)","PDF":"PDF","Calendar":"Takvim","Photos":"Fotoğraflar","Notes":"Notlar","Too many tools.":"Çok fazla araç.","Too much friction.":"Çok fazla karmaşa.","One workspace.":"Tek çalışma alanı.","Everything":"Her şey","under control.":"kontrol altında.","02 — The product":"02 — Ürün","Meet your new":"Yeni işletim sisteminizle","operating system.":"tanışın.","One workspace. Every part of your business — clients, programs, nutrition, progress, schedule.":"Tek bir çalışma alanı. İşinizin her parçası — danışanlar, programlar, beslenme, ilerleme, takvim.","Dashboard":"Panel","Workouts":"Antrenmanlar","Nutrition":"Beslenme","Progress":"İlerleme","Clients":"Danışanlar","03 — Client workspace":"03 — Danışan Alanı","One athlete. One":"Tek bir sporcu. Tek bir","complete performance view.":"eksiksiz performans görünümü.","Profile, program, nutrition, progress, messages — monitor the whole journey of the person you coach.":"Profil, program, beslenme, gelişim ve mesajlar — koçluk yaptığınız kişinin tüm yolculuğunu yakından takip edin.","04 — Workout builder":"04 — Antrenman Oluşturucu","Build programs. Faster.":"Programları daha hızlı yazın.","Sets, reps, weight, rest, RPE, tempo — drag, drop, publish straight to the client.":"Set, tekrar, kilo, dinlenme, RPE ve tempo — sürükleyin, bırakın, doğrudan danışanın telefonuna yayınlayın.","ACTIVE ATHLETE":"AKTİF SPORCU","WEEK 06":"06. HAFTA","Ali Rezaei":"Ali Yılmaz","Current program":"Mevcut Program","Hypertrophy — Week 6":"Hipertrofi — 6. Hafta","Next session":"Sonraki Seans","Today · 09:00 — Push A":"Bugün · 09:00 — Push A","Readiness":"Hazırlık Durumu","Sessions":"Seanslar","12/14":"12/14","Week 6":"6. Hafta","9 wk streak 🔥":"9 haftalık seri 🔥","9 wk":"9 hf","76.4 kg · ▼ 0.5":"76.4 kg · ▼ 0.5","Weight 76.4 kg · ▼ 0.5 this week":"Kilo 76.4 kg · Bu hafta ▼ 0.5","198 g protein · On target":"198 g protein · Hedefte","needs your reply":"yanıtınızı bekliyor","2 h ago · needs your reply":"2 sa önce · yanıtınızı bekliyor","Coach notes":"Antrenör Notları","Prioritize protein at breakfast. Water: 3 L minimum on training days.":"Kahvaltıda proteine öncelik verin. Antrenman günlerinde minimum 3 L su.","\"Prioritize protein at breakfast. Water: 3 L minimum on training days.\"":"\"Kahvaltıda proteine öncelik verin. Antrenman günlerinde minimum 3 L su.\"","Push Workout":"Push Antrenmanı","— Push Workout":"— Push Antrenmanı","86%":"%86","101.5 cm":"101.5 cm","79.2 cm":"79.2 cm","36.8 cm":"36.8 cm","2,853 / 2,850 kcal":"2.853 / 2.850 kcal","Measurements":"Ölçümler","Waist":"Bel","Arm (R)":"Sağ Kol","Workout program":"Antrenman Programı","Push A · Monday":"Push A · Pazartesi","4 exercises":"4 egzersiz","60 min":"60 dk","Next: Today · 09:00":"Sonraki: Bugün · 09:00","\"Can I swap Thursday Pull A to Friday? I have a work…\"":"\"Perşembe günkü Pull A antrenmanını Cumaya alabilir miyim? İşim çıktı da…\"","Progressive overload":"Kademeli Aşırı Yükleme","Sets, reps and load evolve with the athlete.":"Setler, tekrarlar ve yükler sporcuyla birlikte gelişir.","Exercise library":"Egzersiz Kütüphanesi","Build sessions from a focused movement library.":"Zengin ve odaklanmış bir hareket kütüphanesinden seanslar oluşturun.","Tempo + rest":"Tempo + Dinlenme","Every detail stays attached to the set.":"Her ayrıntı ilgili sete bağlı kalır.","Publish to client":"Danışana Yayınla","One click. The next session is ready.":"Tek tıklama. Bir sonraki seans hazır.","Push A / Week 06":"Push A / 06. Hafta","Hypertrophy phase · Monday":"Hipertrofi Fazı · Pazartesi","Exercises":"Egzersizler","Volume":"Hacim","Duration":"Süre","Ready to publish":"Yayınlanmaya hazır","Workout Name":"Antrenman Adı","Push A — Ali Rezaei":"Push A — Ali Yılmaz","Monday ▾":"Pazartesi ▾","Save Workout → Published to":"Antrenmanı Kaydet → Yayınlandı:","Visible to client":"Danışana görünür","Barbell Bench Press":"Barbell Bench Press","Incline Dumbbell Press":"Incline Dumbbell Press","Overhead Press":"Overhead Press","Seated Cable Row":"Seated Cable Row","Chest":"Göğüs","Shoulders":"Omuz","Back":"Sırt","Sets":"Setler","Reps":"Tekrarlar","Weight (kg)":"Kilo (kg)","Rest (sec)":"Dinlenme (sn)","Elbows ~45°; full ROM":"Dirsekler ~45°; tam hareket açısı","Pause at bottom":"Dip noktada bekle","Brace before each rep":"Her tekrardan önce core bölgesini sık","Squeeze at contraction":"Tepe noktada kası sıkıştır","Add exercise from library":"Kütüphaneden egzersiz ekle","Program — Week 6/12":"Program — Hafta 6/12","Current":"Mevcut","Week 1":"1. Hafta","Week 2":"2. Hafta","Week 3":"3. Hafta","Week 4":"4. Hafta","Week 5":"5. Hafta","Week 7":"7. Hafta","Week 8":"8. Hafta","Week 9":"9. Hafta","Week 10":"10. Hafta","Week 11":"11. Hafta","Week 12":"12. Hafta","RPE 8":"RPE 8","RPE 7":"RPE 7","RIR 2":"RIR 2","RIR 3":"RIR 3","05 — Nutrition":"05 — Beslenme","Plan nutrition.":"Beslenmeyi planlayın.","Without spreadsheets.":"Excel tabloları olmadan.","Every plan is built by you — the coach. CoachMint calculates; you decide.":"Her planı siz, yani antrenör hazırlarsınız. CoachMint hesaplar; kararı siz verirsiniz.","06 — Every tool, side by side":"06 — Tüm Araçlar Yan Yana","Every tool. One system.":"Tüm araçlar. Tek sistem.","Plans, clients, messages and your week — keep scrolling, the workspace slides sideways.":"Planlar, danışanlar, mesajlar ve haftanız — kaydırmaya devam edin, çalışma alanı yatay aksın.","Hypertrophy Phase 1 — Week 1":"Hipertrofi 1. Faz — 1. Hafta","Training Day":"Antrenman Günü","Rest Day":"Dinlenme Günü","Muscle Gain":"Kas Kazanımı","Fat Loss":"Yağ Yakımı","Strength":"Güç","Mobility":"Mobilite","Endurance":"Dayanıklılık","Target Macros":"Hedef Makrolar","Protein 180g":"Protein 180g","Carbs 320g":"Karbonhidrat 320g","Fat 85g":"Yağ 85g","Mon 6":"Pzt 6","Tue 7":"Sal 7","Wed 8":"Çar 8","Thu 9":"Per 9","Fri 10":"Cum 10","Sat 11":"Cmt 11","Sun 12":"Paz 12","Breakfast":"Kahvaltı","Snack":"Ara Öğün","Lunch":"Öğle Yemeği","Dinner":"Akşam Yemeği","Whole Eggs":"Bütün Yumurta","2 whole eggs":"2 tam yumurta","Whole Wheat Bread":"Tam Buğday Ekmeği","Greek Yogurt":"Süzme Yoğurt","Add Food":"Besin Ekle","Meal Total:":"Öğün Toplamı:","Daily target":"Günlük Hedef","Planned / Daily Target":"Planlanan / Günlük Hedef","Calories":"Kalori","On target":"Hedefte","Above target":"Hedefin üstünde","Calculations only — the coach decides":"Sadece hesaplamalar — karar antrenöründür","Apple":"Elma","Almonds":"Badem","Chicken Breast":"Tavuk Göğsü","Rice":"Pirinç","80 g dry":"80 g çiğ","Vegetables":"Sebzeler","Fish":"Balık","Potatoes":"Patates","Salad":"Salata","1 bowl":"1 kase","Every plan is":"Her planı ","built by you — the coach":"siz kurarsınız — antrenör sizsiniz","you":"siz","Create and manage nutrition plans for your clients.":"Danışanlarınız için beslenme planları oluşturun ve yönetin.","Templates":"Şablonlar","Create Nutrition Plan":"Beslenme Planı Oluştur","Overview":"Genel Bakış","Meal Planner":"Öğün Planlayıcı","Weekly":"Haftalık","Phases":"Fazlar","Meal Templates":"Öğün Şablonları","Plan Templates":"Plan Şablonları","History":"Geçmiş","Active Plans":"Aktif Planlar","Plans Created":"Oluşturulan Planlar","Clients With Nutrition Plans":"Beslenme Planı Olan Danışanlar","Plans Needing Review":"İnceleme Bekleyen Planlar","Average Daily Calories":"Günlük Ortalama Kalori","Search clients…":"Danışan ara…","All":"Tümü","Active":"Aktif","Paused":"Duraklatıldı","Archived":"Arşivlendi","Client":"Danışan","Goal":"Hedef","Current Plan":"Mevcut Plan","Phase":"Faz","Phase 1":"1. Faz","Phase 2":"2. Faz","Last Updated":"Son Güncelleme","Status":"Durum","Actions":"İşlemler","Open Plan":"Planı Aç","42 Active Clients · 8 shown in this workspace":"42 Aktif Danışan · Bu alanda 8 tanesi gösteriliyor","Filter":"Filtrele","Sort":"Sırala","Add Client":"Danışan Ekle","Weight":"Kilo","Program":"Program","Next Session":"Sonraki Seans","Streak":"Seri","Today · 09:00":"Bugün · 09:00","Today · 11:00":"Bugün · 11:00","Today · 14:30":"Bugün · 14:30","Tomorrow · 17:00":"Yarın · 17:00","Thu · 09:30":"Per · 09:30","Fri · 18:00":"Cum · 18:00","Open Workspace":"Çalışma Alanını Aç","Pending":"Beklemede","On Hold":"Donduruldu","Inactive":"İnaktif","3 need your reply · Async — no pressure":"3 mesaj yanıt bekliyor · Asenkron — baskı yok","Needs your reply":"Yanıtınız gerekiyor","1 New message":"1 Yeni Mesaj","New message":"Yeni Mesaj","Form check":"Form Kontrolü","All conversations":"Tüm Sohbetler","You: Yes — replace lunges with box split squats at 3×10, …":"Siz: Evet — lunge yerine 3×10 box split squat yapabilirsin, …","Is my back neutral enough on the last reps?":"Son tekrarlarda sırtım yeterince düz müydü?","Can I swap Thursday Pull A to Friday? I have a work …":"Perşembe günkü Pull A’yı Cumaya kaydırabilir miyiz? İşim çıktı da…","Check-in · Energy: Low · Soreness: Some · Sleep: Poo…":"Check-in · Enerji: Düşük · Ağrı: Biraz · Uyku: Kötü…","25 min ago":"25 dk önce","2 h ago":"2 sa önce","Yesterday":"Dün","3 days ago":"3 gün önce","Session":"Seans","Assessment":"Değerlendirme","Measurement":"Ölçüm","Appointment":"Randevu","Drag events between days to reschedule":"Yeniden planlamak için günlere sürükleyin","Pull Workout":"Çekiş (Pull) Antrenmanı","Mobility Prep":"Mobilite Hazırlığı","Leg Day":"Bacak Günü","Physio appointment":"Fizyoterapi Randevusu","Training Session":"Antrenman Seansı","Push B":"Push B","You":"Siz","07 — Progress":"07 — İlerleme","See progress.":"İlerlemeyi görün.","Not just numbers.":"Sadece sayılardan ibaret değil.","08 — Measurements":"08 — Ölçümler","Every number.":"Her ölçüm.","One place.":"Tek bir yerde.","Body metrics & progress photos — right next to the plan they belong to. Ali Rezaei · 12 weeks in.":"Vücut metrikleri ve ilerleme fotoğrafları — ait oldukları planın hemen yanında. Ali Yılmaz · 12. haftada.","09 — The system":"09 — Sistem","Everything connected.":"Her şey birbiriyle bağlantılı.","Nothing lost.":"Hiçbir veri kaybolmaz.","10 — Templates":"10 — Şablonlar","13 — How it works":"13 — Nasıl Çalışır","Built for modern coaches.":"Modern antrenörler için tasarlandı.","16 — Pricing":"16 — Fiyatlandırma","14 — The coach":"14 — Antrenör","15 — Social proof":"15 — Kullanıcı Yorumları","Simple pricing.":"Basit ve şeffaf fiyatlandırma.","No surprises.":"Sürpriz yok.","Billed monthly. Cancel anytime.":"Aylık faturalandırılır. İstediğiniz an iptal edin.","Billed yearly — 2 months free.":"Yıllık ödemede 2 ay ücretsiz.","Prices shown are launch placeholders — final pricing to be confirmed.":"Fiyatlar lansman öncesi taslaktır — nihai fiyatlar yakında duyurulacaktır.","Company":"Şirket","Manifesto":"Manifesto","Careers":"Kariyer","Contact":"İletişim","Legal":"Yasal","Privacy":"Gizlilik Politikası","Terms":"Kullanım Koşulları","Imprint":"Künye","The operating system for fitness coaches and gyms. One coach. One workspace.":"Fitness koçları ve spor salonları için işletim sistemi. Tek antrenör. Tek çalışma alanı.","Made for coaches who mean business.":"İşini ciddiyetle yapan profesyonel antrenörler için geliştirildi.","All rights reserved.":"Tüm hakları saklıdır.","11 — On the floor":"11 — Sahada","Coach from":"Antrenörlük","the gym floor.":"doğrudan salondan.","The whole workspace on your phone — built for one thumb, between sets.":"Tüm çalışma alanı telefonunuzda — setler arasında tek başparmakla kullanım için tasarlandı.","Live session":"Canlı Seans","REC":"CANLI","Rest":"Dinlenme","2 of 4 sets":"4 setin 2.’si","Goblet squat · 12 reps":"Goblet squat · 12 tekrar","Rest timer, set counter and RPE on one screen. The clock is anchored to the start, so locking the phone never loses a second.":"Dinlenme sayacı, set sayacı ve RPE tek ekranda. Zamanlayıcı başlangıç anına sabitlenir, telefon kilitlense bile tek bir saniye kaybolmaz.","Signals":"Sinyaller","Your own data read back to you — unanswered messages, sessions awaiting the client, missed days, and RPE drift computed from the training log.":"Kendi verileriniz size rehberlik eder — yanıtsız mesajlar, danışan bekleyen seanslar, kaçırılan günler ve antrenman günlüğünden hesaplanan RPE kayması.","One-tap log":"Tek Dokunuşla Kayıt","Log a session in seconds. It writes to the same log the athlete sees, so the two views can never disagree.":"Saniyeler içinde seans kaydedin. Sporcunun gördüğü aynı günlüğe yazılır, böylece iki görünüm asla çelişmez.","Jump":"Hızlı Geçiş","Every screen, every athlete, every action — two taps from wherever you are.":"Nerede olursanız olun — her ekran, her sporcu, her işlem yalnızca iki dokunuş uzaklıkta.","Squad pulse":"Takım Nabzı","A ring per athlete, drawn from their real attendance — never from a guess.":"Her sporcu için gerçek katılımlarından oluşturulan bir halka — asla tahmine dayanmaz.","Nothing hidden":"Hiçbir Şey Gizli Değil","The complete index under More: twenty screens, grouped. Nothing is buried.":"Daha Fazla altında tam fihrist: yirmi ekran, gruplandırılmış. Hiçbir şey derinlere gömülü değildir.","12 — Built for endurance":"12 — Dayanıklılık İçin Tasarlandı","A running coach's":"Bir koşu antrenörünün","own workspace.":"kendi çalışma alanı.","Choose Running & Endurance during setup and the module appears — races, phases, load, personal bests and wearables. Choose anything else and it stays out of the way.":"Kurulumda Koşu ve Dayanıklılık’ı seçin, modül açılsın — yarışlar, fazlar, yük, en iyi dereceler ve giyilebilir cihazlar. Başka bir şey seçerseniz gözünüzün önünden kalkar.","Sport-gated":"Branşa Özel","Sections belong to a sport. Pick Running and the athletics rail appears; pick anything else and it goes away. The next sport is a single row in a table.":"Bölümler spor branşına aittir. Koşuyu seçin atletizm çubuğu gelsin; başka branş seçin gitsin. Sıradaki spor sadece bir tablodaki tek bir satırdır.","Run builder":"Koşu Oluşturucu","Block workouts with warm-up, main set, drills, recovery and cool-down — target pace, surface and rest on every block.":"Isınma, ana set, driller, toparlanma ve soğuma blokları — her blokta hedef tempo, zemin ve dinlenme.","Training load":"Antrenman Yükü","Session-RPE load per week: distance, duration, intensity, long runs and recovery. It is reported as training load, never as a medical score.":"Haftalık seans-RPE yükü: mesafe, süre, şiddet, uzun koşular ve toparlanma. Tıbbi skor olarak değil, antrenman yükü olarak raporlanır.","Phases, races and PBs":"Fazlar, Yarışlar ve Kişisel Rekorlar","Weekly phase ranges, a race calendar with countdowns, and personal bests per athlete.":"Haftalık faz aralıkları, geri sayımlı yarış takvimi ve sporcu başına kişisel en iyi dereceler.","Athletics dashboard":"Atletizm Paneli","Filter by event, athlete, phase, date or status — all five backed by real data.":"Branşa, sporcuya, faza, tarihe veya duruma göre filtreleyin — beşi de gerçek verilerle desteklenir.","Planned vs actual":"Planlanan ve Gerçekleşen","Plan and log side by side, session by session — pace, distance and duration deltas.":"Yan yana planlayın ve kaydedin, seans seans — tempo, mesafe ve süre farkları.","Athlete's own view":"Sporcunun Kendi Ekranı","Their week, their next race with a live countdown, their personal bests and their optional metrics — on their phone too.":"Haftaları, canlı geri sayımla sıradaki yarışları, kişisel rekorları ve isteğe bağlı metrikleri — kendi telefonlarında.","Wearables say \"not connected\" until they are.":"Giyilebilir cihazlar bağlanana kadar \"bağlı değil\" der.","No invented sync timestamps and no fabricated activity rows — the page shows what is actually configured.":"Uydurma senkronizasyon saatleri veya sahte aktivite satırları yok — sayfa yalnızca gerçekten yapılandırılmış olanı gösterir."};
   var translations={
     'Product':'محصول','How it works':'نحوه کار','Pricing':'قیمت‌گذاری','Start Free':'شروع رایگان','Menu':'منو','Account':'حساب کاربری',
     'ONE COACH. ONE WORKSPACE.':'یک مربی. یک فضای کاری.','INITIALIZING WORKSPACE':'در حال آماده‌سازی فضای کاری',
@@ -945,39 +1070,127 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   function stripTerminalPeriods(){
     var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
     while(node=walker.nextNode()){
-      if(node.parentElement.closest('script,style'))continue;
+      if(node.parentElement.closest('script,style,[data-no-translate]'))continue;
       var cleaned=node.nodeValue.replace(/\.(?=\s*$)/,'');
       if(cleaned!==node.nodeValue)node.nodeValue=cleaned;
     }
   }
+  function updateLangUI(locale){
+    var isTr = locale==='tr';
+    var name = isTr ? 'Türkçe' : 'English';
+    var title = isTr ? 'Dil Seçimi' : 'Select Language';
+
+    document.querySelectorAll('.cur-lang-name').forEach(function(el){ el.textContent = name; });
+    document.querySelectorAll('.lang-menu-title').forEach(function(el){ el.textContent = title; });
+
+    document.querySelectorAll('.lang-opt').forEach(function(btn){
+      var match = btn.getAttribute('data-lang') === (isTr ? 'tr' : 'en');
+      btn.classList.toggle('active', match);
+      btn.setAttribute('aria-selected', match ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.menu-lang-pill').forEach(function(pill){
+      pill.classList.toggle('active', pill.getAttribute('data-lang') === (isTr ? 'tr' : 'en'));
+    });
+  }
+
+  function setupLangPickers(){
+    document.querySelectorAll('.lang-picker').forEach(function(picker){
+      var btn = picker.querySelector('.lang-btn');
+      if(!btn) return;
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var isOpen = picker.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        document.querySelectorAll('.lang-picker').forEach(function(other){
+          if(other !== picker) {
+            other.classList.remove('open');
+            var ob = other.querySelector('.lang-btn');
+            if(ob) ob.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+
+    document.querySelectorAll('.lang-opt').forEach(function(opt){
+      opt.addEventListener('click', function(e){
+        e.stopPropagation();
+        var target = opt.getAttribute('data-lang');
+        translate(target);
+        document.querySelectorAll('.lang-picker').forEach(function(p){
+          p.classList.remove('open');
+          var b = p.querySelector('.lang-btn');
+          if(b) b.setAttribute('aria-expanded', 'false');
+        });
+      });
+    });
+
+    document.querySelectorAll('.menu-lang-pill').forEach(function(pill){
+      pill.addEventListener('click', function(e){
+        e.stopPropagation();
+        var target = pill.getAttribute('data-lang');
+        translate(target);
+        var menu = document.getElementById('menu');
+        if(menu) menu.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', function(e){
+      document.querySelectorAll('.lang-picker').forEach(function(p){
+        if(!p.contains(e.target)){
+          p.classList.remove('open');
+          var b = p.querySelector('.lang-btn');
+          if(b) b.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        document.querySelectorAll('.lang-picker').forEach(function(p){
+          p.classList.remove('open');
+          var b = p.querySelector('.lang-btn');
+          if(b) b.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+
   function translate(locale){
+    if (locale !== 'tr') locale = 'en';
     var root=document.documentElement;
-    var fa=locale==='fa';
-    root.lang=fa?'fa':'en';root.dir=fa?'rtl':'ltr';
-    document.title=fa?'CoachMint — سیستم‌عامل مربی‌ها و باشگاه‌ها':'CoachMint — The Operating System for Fitness Coaches & Gyms';
-    document.querySelector('meta[name="description"]').setAttribute('content',fa?'یک فضای کاری برای مدیریت مشتری‌ها، تمرین‌ها، تغذیه و پیشرفت.':'One coach. One workspace. Monitor clients, workouts, nutrition, measurements, progress and your calendar — without switching tools.');
+    var tr=locale==='tr';
+    root.lang=locale;root.dir='ltr';
+    document.title=tr?'CoachMint — Antrenör ve Salonlar İçin İşletim Sistemi':'CoachMint — The Operating System for Fitness Coaches & Gyms';
+    var metaDesc=document.querySelector('meta[name="description"]');
+    if(metaDesc){
+      metaDesc.setAttribute('content',tr?'Danışanları, antrenmanları, beslenmeyi ve gelişimi yönetmek için tek çalışma alanı.':'One coach. One workspace. Monitor clients, workouts, nutrition, measurements, progress and your calendar — without switching tools.');
+    }
     var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
     var node;
     while(node=walker.nextNode()){
-      if(node.parentElement.closest('script,style'))continue;
+      if(node.parentElement.closest('script,style,[data-no-translate]'))continue;
       var key=original.get(node)||normalize(node.nodeValue);
       if(!original.has(node))original.set(node,key);
-      var translated=translations[key]||translations[key+'.'];
-      if(fa&&translated)node.nodeValue=node.nodeValue.replace(normalize(node.nodeValue),translated);
-      if(!fa)node.nodeValue=node.nodeValue.replace(normalize(node.nodeValue),key);
+      var dict=tr?translationsTR:null;
+      var translated=dict?(dict[key]||dict[key+'.']):null;
+      if(dict&&translated)node.nodeValue=node.nodeValue.replace(normalize(node.nodeValue),translated);
+      if(!dict)node.nodeValue=node.nodeValue.replace(normalize(node.nodeValue),key);
     }
-    var toggle=document.getElementById('langToggle');
-    if(toggle){toggle.textContent=fa?'EN':'FA';toggle.setAttribute('aria-label',fa?'Switch to English':'Switch to Persian');}
+    updateLangUI(locale);
     stripTerminalPeriods();
     try{localStorage.setItem('coach-os-locale',locale);}catch(e){}
   }
   window.__setLanguage=translate;
   document.addEventListener('DOMContentLoaded',function(){
-    var toggle=document.getElementById('langToggle');
     var locale='en';try{locale=localStorage.getItem('coach-os-locale')||'en';}catch(e){}
-    if(toggle)toggle.addEventListener('click',function(){translate(document.documentElement.lang==='fa'?'en':'fa');});
-    if(locale==='fa')translate('fa');
-    else stripTerminalPeriods();
+    if (locale !== 'tr') locale = 'en';
+    setupLangPickers();
+    if(locale==='tr')translate('tr');
+    else {
+      updateLangUI('en');
+      stripTerminalPeriods();
+    }
     new MutationObserver(stripTerminalPeriods).observe(document.body,{subtree:true,childList:true,characterData:true});
   });
 })();
@@ -1005,7 +1218,36 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
   <nav class="nav-links"><a href="#product">Product</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/shop/account.html">Account</a></nav>
   <div class="nav-cta">
-    <button id="langToggle" type="button" aria-label="Switch to Persian">FA</button>
+    
+    <div class="lang-picker" data-no-translate="true">
+      <button id="langToggle" class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <svg class="globe-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg>
+        <span class="cur-lang-name">English</span>
+        <svg class="chev-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" role="menu">
+        <div class="lang-menu-head">
+          <span class="lang-menu-title">Select Language</span>
+          <span class="lang-menu-badge">2</span>
+        </div>
+        <button class="lang-opt" type="button" data-lang="en" role="menuitem">
+          <span class="lang-flag-pill">EN</span>
+          <span class="lang-text">
+            <span class="lang-name">English</span>
+            <span class="lang-sub">English</span>
+          </span>
+          <svg class="lang-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+        <button class="lang-opt" type="button" data-lang="tr" role="menuitem">
+          <span class="lang-flag-pill">TR</span>
+          <span class="lang-text">
+            <span class="lang-name">Türkçe</span>
+            <span class="lang-sub">Turkey</span>
+          </span>
+          <svg class="lang-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    </div>
     <a class="btn acc" href="#pricing">Start Free</a>
     <button id="menuBtn" aria-label="Menu"><svg class="ic" style="width:22px;height:22px"><use href="#i-menu"/></svg></button>
   </div>

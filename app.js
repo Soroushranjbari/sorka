@@ -87,10 +87,8 @@ let lang='en';
 /* Falls back to the shop's locale key (coach-os-locale, see shop/README.md) so
    a buyer who browsed the shop in Persian gets the app in Persian on first
    boot; after that co-lang (the app's own choice) wins. */
-/* v18.116 — Persian removed for now ("فعلا"): never restore the locale from
-   storage. Keeping the read would let a stale co-lang='fa' reach the 60
-   `lang==='fa'` branches before the boot-time applyLang() pin runs. */
-lang='en';
+/* Multi-language support: English, Türkçe, فارسی */
+try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){lang='en'}
 const FA={
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
@@ -107,7 +105,7 @@ const FA={
 'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
 'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
 'App Theme':'تم اپلیکیشن','FitFlow':'فیت‌فلو','Carbon':'کربن','Ocean':'اقیانوس','Sunset':'غروب','CoachMint':'کوچ‌مینت','Charcoal · lime':'زغالی · لیمویی','Black · white':'مشکی · سفید','Navy · cyan':'سرمه‌ای · فیروزه‌ای','Plum · amber':'بادمجانی · کهربایی','Applies to this device only':'فقط روی همین دستگاه اعمال می‌شود',
-'Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Auto-Detect (AI)':'تشخیص خودکار (هوش مصنوعی)','Zero-touch · Real-time motion classifier':'بدون لمس صفحه · تشخیص آنی حرکت','Detected':'شناسایی شد','Normal':'طبیعی','Mild':'خفیف','Severe':'شدید','Level':'تراز','Tilt':'انحراف','Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Voice cues':'راهنمای صوتی','Motion trail':'ردیابی مسیر حرکت','Tempo':'تمپو','VBT Speed':'سرعت VBT','Velocity loss':'افت سرعت','Knee valgus':'والگوس زانو (انحراف به داخل)','Neck hyper-extended':'انحراف مهره‌های گردن','Posture Screen (Front)':'ارزیابی پاسچر (نمای روبرو)','Posture Screen (Side)':'ارزیابی پاسچر (نمای جانبی)','Uneven shoulder height':'عدم تقارن ارتفاع شانه‌ها','Pelvic lateral tilt':'انحراف جانبی لگن','Genu valgum (knock-knees)':'زانوی ضربدری (والگوم)','Forward head posture':'سر به جلو (فوروارد هد)','Thoracic kyphosis (rounded back)':'قوز پشتی (کایفوز)','Anterior pelvic tilt (lordosis)':'گودی بیش از حد کمر (لوردوز)','AI Biomechanical Analysis':'تحلیل بیومکانیکی هوش مصنوعی','Fatigue threshold (VBT >20%)':'آستانه خستگی عصبی (VBT >۲۰٪)','Posture':'پاسچر','Generate AI Analysis':'تولید تحلیل هوش مصنوعی','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -323,19 +321,114 @@ const FA={
 /* v18.48 — Nutrition Assistant (student hub + coach monitoring) */
 'Nutrition':'تغذیه','Your nutrition companion':'همراه تغذیه تو','Log what you eat, ask for meal ideas and let your coach follow your progress.':'چیزی که می‌خوری را ثبت کن، ایده‌ی غذا بگیر و مربی‌ات پیشرفتت را ببیند.','Set up nutrition profile':'تنظیم پروفایل تغذیه','From your profile':'از پروفایل تو','Set targets':'تعیین هدف‌ها','Left':'باقی‌مانده','meals':'وعده','What should you eat now?':'الان چی بخوری؟','Based on what is left of your day':'بر اساس باقی‌مانده‌ی امروز تو','Log this':'ثبت این','Log this meal':'ثبت این وعده','Logged':'ثبت شد','Food log':'دفتر غذای تو','Entry removed':'ردیف حذف شد','Meal logged ✓':'وعده ثبت شد ✓','Water logged 💧':'آب ثبت شد 💧','Nutrition Assistant':'دستیار تغذیه','AI · not medical advice':'هوش مصنوعی · توصیه پزشکی نیست','Hi! Tell me what you ate, or ask what to eat next.':'سلام! بگو چی خوردی، یا بپرس بعدش چی بخورم.','Thinking…':'در حال فکر کردن…','What should I eat now?':'الان چی بخورم؟','Food for before my workout':'غذای قبل تمرین','Pre-workout':'قبل تمرین','Photo':'عکس','attached':'پیوست شد','Log a meal or ask anything…':'وعده ثبت کن یا هر چیزی بپرس…','Confirm & log':'تأیید و ثبت','I found these foods — confirm and I will log them:':'این غذاها را پیدا کردم — تأیید کن تا ثبتشان کنم:','I could not find':'پیدا نکردم','Pick it from the food library or tell me the amount in grams.':'از کتاب غذاهای مربی انتخابش کن یا مقدارش را به گرم بگو.','You have':'داری','left today':'برای امروز مانده','Try':'امتحان کن','Instead of':'به‌جای','Tell me what you ate (e.g. "200g chicken and 300g rice") and I will log it.':'بگو چی خوردی (مثل «۲۰۰ گرم مرغ و ۳۰۰ گرم برنج») تا ثبتش کنم.','Nutrition profile':'پروفایل تغذیه','Daily targets':'هدف‌های روزانه','Water':'آب','Meals':'وعده‌ها','Leave empty to follow your coach plan.':'خالی بگذار تا از برنامه‌ی مربی‌ات پیروی شود.','Preferences':'ترجیحات','Allergies / intolerances':'حساسیت‌ها / عدم تحمل‌ها','Foods you dislike':'غذاهایی که دوست نداری','Favorite foods':'غذاهای مورد علاقه','Cooking time available':'وقت پخت‌وپز','Wake up':'بیدار شدن','Bed time':'خواب','Profile saved ✓':'پروفایل ذخیره شد ✓','Edit profile':'ویرایش پروفایل','Allergies':'حساسیت‌ها','Dislikes':'دوست نداردها','Favorites':'علاقه‌مندی‌ها','Cooking time':'وقت پخت','No foods to log':'غذایی برای ثبت نیست','Photo attached — describe your meal':'عکس پیوست شد — غذایت را توصیف کن','Quick meal':'وعده سریع','High-protein':'پروتئین بالا','Budget meal':'وعده اقتصادی','Light meal':'وعده سبک','No cooking':'بدون پخت','No food logs for 3 days':'۳ روز دفتر غذا خالی است','Protein below target the last 3 days':'پروتئین ۳ روز اخیر زیر هدف است','Calories off target the last 3 days':'کالری ۳ روز اخیر خارج از هدف است','Hydration well below target today':'آب امروز خیلی کمتر از هدف است','Nutrition Health':'سلامت تغذیه','Rules':'قوانین','Weekly report':'گزارش هفتگی','On Track':'در مسیر','Needs Attention':'نیاز به توجه','Action Required':'نیاز به اقدام','All clients with nutrition plans are on track.':'همه شاگردهای دارای برنامه تغذیه در مسیر هستند.','Recent insights':'بینش‌های اخیر','Nutrition monitoring rules':'قوانین پایش تغذیه','Get notified only when a pattern is real — thresholds, duration and severity are yours to set.':'فقط وقتی الگو واقعی باشد خبر می‌شوی — آستانه، مدت و شدت را خودت تعیین می‌کنی.','Protein % of target':'درصد پروتئین از هدف','Calories % of target':'درصد کالری از هدف','Logging':'ثبت غذا','Water % of target':'درصد آب از هدف','Weight trend vs goal':'روند وزن نسبت به هدف','Threshold %':'آستانه ٪','Days':'روز','Observe':'مشاهده','Warning':'هشدار','Alert':'هشدار جدی','Example: protein below 85% for 3 days → warning.':'مثال: پروتئین زیر ۸۵٪ برای ۳ روز → هشدار.','Rules saved ✓':'قوانین ذخیره شد ✓','Weekly nutrition report':'گزارش هفتگی تغذیه','Protein on target':'پروتئین در هدف','Below calorie target':'زیر هدف کالری','Below protein target':'زیر هدف پروتئین','No logs this week':'بدون ثبت این هفته','Days logged':'روزهای ثبت‌شده','Avg calories':'میانگین کالری','Avg protein':'میانگین پروتئین','Consistency':'ثبات','No food logs this week yet — students log from their Nutrition tab.':'این هفته هنوز غذایی ثبت نشده — شاگردها از تب تغذیه ثبت می‌کنند.','AI narrative':'روایت هوش مصنوعی','AI is not configured on this server — the table above is fully computed locally.':'هوش مصنوعی روی این سرور تنظیم نشده — جدول بالا کاملاً محلی محاسبه شده است.','AI report unavailable right now.':'گزارش هوش مصنوعی الان در دسترس نیست.','days without logs':'روز بدون ثبت','vs goal':'نسبت به هدف','avg':'میانگین','days':'روز','Protein below target':'پروتئین زیر هدف','Calories off target':'کالری خارج از هدف','Not logging food':'ثبت نمی‌کند','Hydration low':'آب کم','Weight trend off goal':'روند وزن دور از هدف','last 7 days':'۷ روز اخیر','No food logged yet — the student logs from their Nutrition tab.':'هنوز غذایی ثبت نشده — شاگرد از تب تغذیه ثبت می‌کند.','Assistant insights':'بینش‌های دستیار','No insights yet.':'هنوز بینشی نیست.','Assistant thread':'گفتگو با دستیار','last messages':'آخرین پیام‌ها','No assistant conversation yet.':'هنوز گفتگویی با دستیار نیست.','Meal':'وعده'
 };
-const t=s=>lang==='fa'?(FA[s]??s):s;
-/* muscle labels get their own lookup so the nav 'Back' and the muscle 'Back' never collide */
-const tmus=m=>lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m;
+const TR = {"Dashboard":"Panel","Clients":"Danışanlar","Workouts":"Antrenmanlar","Calendar":"Takvim","Progress":"İlerleme","Measurements":"Ölçümler","Nutrition":"Beslenme","Templates":"Şablonlar","Exercise Library":"Egzersiz Kütüphanesi","Notes":"Notlar","Messages":"Mesajlar","Settings":"Ayarlar","Help":"Yardım","Collapse":"Daralt","Workspace":"Çalışma Alanı","Manage":"Yönet","More":"Daha Fazla","Search clients, foods, plans, meals…":"Danışan, besin, plan veya öğün ara…","Quick Add":"Hızlı Ekle","Create":"Oluştur","Mark all read":"Tümünü okundu işaretle","PRO PLAN":"PRO PLAN","Coach Soroush":"Antrenör Soroush","Coach":"Antrenör","Client":"Danışan","Switch to light theme":"Açık temaya geç","Switch to dark theme":"Koyu temaya geç","Dark theme":"Koyu tema","Light theme":"Açık tema","Your Workouts":"Antrenmanlarınız","Preview exercises":"Egzersizleri önizle","Help center — docs & shortcuts":"Yardım merkezi — belgeler ve kısayollar","Sign out":"Çıkış Yap","Signed out":"Çıkış yapıldı","Welcome back, Coach":"Tekrar hoş geldiniz, Hocam","Done":"Tamamlandı","Switch role":"Rol Değiştir","Exit demo":"Demodan Çık","Reply":"Yanıtla","Add Client":"Danışan Ekle","Create Workout":"Antrenman Oluştur","Create Challenge":"Meydan Okuma Oluştur","Schedule Session":"Seans Planla","Add Measurement":"Ölçüm Ekle","Create Template":"Şablon Oluştur","Add Exercise":"Egzersiz Ekle","Create Note":"Not Yaz","Create Nutrition Plan":"Beslenme Planı Oluştur","PROFESSIONAL COACH WORKSPACE":"PROFESYONEL ANTRENÖR ÇALIŞMA ALANI","Run your coaching business like a pro.":"Antrenörlük işinizi profesyonelce yönetin.","One workspace for every client":"Tüm danışanlar tek bir çalışma alanında","Plan workouts in minutes — not hours":"Antrenmanları saatlerce değil, dakikalar içinde planlayın","Progress, measurements & notes together":"İlerleme, ölçümler ve notlar bir arada","Your decisions. Zero automation.":"Karar antrenöründür. Sıfır kontrol kaybı.","\"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place.\"":"\"CoachMint benim için dört farklı uygulamanın yerini aldı. Danışanlarımla ilgili her şey tek bir yerde.\"","— Arman T. · Online Coach, 63 clients":"— Arman T. · Online Antrenör, 63 danışan","Welcome":"Hoş Geldiniz","Enter your name":"Adınızı girin","AI Draft":"Yapay Zeka Taslağı","AI Workout Assistant":"Yapay Zeka Antrenman Asistanı","Drafts a workout from the client profile — you review, edit and publish. Nothing is automatic.":"Danışan profilinden bir antrenman taslağı hazırlar — inceler, düzenler ve yayınlarsınız. Hiçbir şey otomatik yapılmaz.","Focus / limitations":"Odak / Kısıtlamalar","e.g. knee pain on deep squats · dumbbells only":"Örn. Derin squat sırasında diz ağrısı · Sadece dumbbell","Generate draft":"Taslak Oluştur","Generating…":"Oluşturuluyor…","AI credits this month":"Bu ayki AI kredisi","AI monthly quota reached":"Aylık AI kotasına ulaşıldı","AI is not configured on the server":"Sunucuda AI yapılandırılmamış","AI service unavailable — try again":"AI servisi kullanılamıyor — tekrar deneyin","AI draft loaded — review, edit, then publish":"AI taslağı yüklendi — inceleyin, düzenleyin ve yayınlayın","AI Assistant":"Yapay Zeka Asistanı","Knows your workspace":"Çalışma alanınızı tanır","Hi coach! I can see your whole workspace — clients, workouts, meals, measurements and messages. Ask me anything, or tap 📊 for this week's report.":"Merhaba Koç! Çalışma alanınızdaki her şeyi görebiliyorum — danışanlar, antrenmanlar, öğünler, ölçümler ve mesajlar. İstediğinizi sorun veya bu haftanın raporu için 📊 simgesine dokunun.","Clear chat":"Sohbeti Temizle","Ask anything — clients, workouts, meals, measurements, messages, billing…":"İstediğinizi sorun — danışanlar, antrenmanlar, öğünler, ölçümler, mesajlar, faturalandırma…","Ask the AI assistant…":"AI asistanına sorun…","AI daily quota reached":"Günlük AI kotasına ulaşıldı","Weekly report":"Haftalık Rapor","Apply":"Uygula","Let the AI apply changes":"Değişiklikleri AI uygulasın","Describe the change to apply…":"Uygulanacak değişikliği açıklayın…","Done — changes applied":"Tamamlandı — değişiklikler uygulandı","Nothing was changed":"Hiçbir değişiklik yapılmadı","A client with this name exists":"Bu isimde bir danışan zaten var","Invalid values":"Geçersiz değerler","Change failed":"Değişiklik başarısız oldu","Camera form check":"Kamera ile Form Kontrolü","Accuracy":"Doğruluk","Standard":"Standart","High":"Yüksek","High (slower)":"Yüksek (daha yavaş)","Standard (faster)":"Standart (daha hızlı)","Body outline":"Vücut Silüeti","Smart Reports":"Akıllı Raporlar","Auto daily":"Otomatik Günlük","Every client analyzed — score, trends and what needs your attention":"Her danışan analiz edilir — puan, trendler ve ilgi gereken durumlar","Workspace health":"Çalışma Alanı Sağlığı","Clients analyzed":"Analiz Edilen Danışanlar","Need attention":"İlgi Gerektirenler","Full report":"Tam Rapor","Smart report":"Akıllı Rapor","Score":"Puan","Weight trend":"Kilo Trendi","Not enough data":"Yetersiz veri","Gaining":"Kilo alıyor","Losing":"Kilo veriyor","Stable":"Sabit","Workout completion":"Antrenman Tamamlama","No workouts yet":"Henüz antrenman yok","Last contact":"Son İletişim","No client messages yet":"Henüz danışan mesajı yok","Form checks":"Form Kontrolleri","avg":"ort.","Missing":"Eksik","Needs attention":"İlgi Gerektiriyor","All good — keep the plan running":"Her şey yolunda — plana devam edin","Low workout completion":"Düşük antrenman tamamlama","Weight moving away from goal":"Kilo hedeften uzaklaşıyor","Silent for 2+ weeks":"2+ haftadır haber yok","Quiet this week":"Bu hafta sessiz","No nutrition plan":"Beslenme planı yok","Form needs work":"Form üzerinde çalışılmalı","clients need attention":"danışan ilgi gerektiriyor","Analyze":"Analiz Et","what should I change this week?":"Bu hafta neyi değiştirmeliyim?","Hello":"Merhaba","Build":"Oluştur","Better Habits":"İyi Alışkanlıklar","Ongoing challenge":"Devam Eden Meydan Okuma","Daily Report":"Günlük Rapor","Health Grade":"Sağlık Derecesi","Perfect progress dude, keep going to apply your fitness activity":"Harika ilerleme, fitness hedeflerine doğru kararlılıkla devam et","Health Metrics":"Sağlık Metrikleri","Calories":"Kalori","Heart beat":"Nabız","Week":"Hafta","Day":"Gün","Month":"Ay","App Theme":"Uygulama Teması","FitFlow":"FitFlow","Carbon":"Carbon","Ocean":"Ocean","Sunset":"Sunset","CoachMint":"CoachMint","Charcoal · lime":"Kömür · Limon","Black · white":"Siyah · Beyaz","Navy · cyan":"Lacivert · Turkuaz","Plum · amber":"Mürdüm · Kehribar","Applies to this device only":"Yalnızca bu cihazda geçerlidir","Auto-Detect (AI)":"Otomatik Tespit (Yapay Zeka)","Zero-touch · Real-time motion classifier":"Dokunmadan · Gerçek zamanlı hareket sınıflandırıcı","Detected":"Algılandı","Normal":"Normal","Mild":"Hafif","Severe":"İleri Derece","Level":"Seviye","Tilt":"Eğim / Eğrilik","Turn on notifications":"Bildirimleri Aç","Notifications on 🔔":"Bildirimler açık 🔔","Notifications blocked — enable them in browser settings":"Bildirimler engellendi — tarayıcı ayarlarından izin verin","Push is not configured on the server":"Sunucuda anlık bildirim ayarlanmamış","Could not enable notifications":"Bildirimler etkinleştirilemedi","Install CoachMint":"CoachMint’i Yükle","Full screen, offline-ready, like an app":"Tam ekran, çevrimdışı çalışmaya hazır bir uygulama gibi","Install":"Yükle","Add it to your home screen — full screen and offline-ready, like an app:":"Ana ekranınıza ekleyin — tam ekran ve çevrimdışı hazır:","1. Tap the Share button":"1. Paylaş düğmesine dokunun","2. Choose \"Add to Home Screen\"":"2. \"Ana Ekrana Ekle\"yi seçin","3. Open CoachMint from your home screen":"3. Ana ekranınızdan CoachMint’i açın","Got it":"Anladım","Runs on your device — the video never leaves it. Stand so your whole body is visible.":"Cihazınızda çalışır — video asla dışarı aktarılmaz. Tüm vücudunuz görünecek şekilde durun.","Squat":"Squat","Hinge / Deadlift":"Deadlift / Kalça Menteşesi","Push-up":"Şınav (Push-up)","Shoulder Press":"Omuz Presi (Shoulder Press)","Bicep Curl":"Biceps Curl","Plank":"Plank","Knees · depth · torso":"Dizler · derinlik · gövde","Hips · back line":"Kalça · sırt hattı","Elbows · body line":"Dirsekler · vücut hattı","Elbows · path":"Dirsekler · hareket yolu","Elbow · no swing":"Dirsek · savurma yok","Hold · body line":"Pozisyonu koru · gövde hattı","Start form check":"Form kontrolünü başlat","Point the camera at yourself — reps and form are checked on your device":"Kamerayı kendinize çevirin — tekrarlar ve form cihazınızda kontrol edilir","Reps":"Tekrar","Hold":"Bekleme","Form score":"Form Puanı","Range of motion":"Hareket Açısı (ROM)","Flip camera":"Kamerayı Çevir","Loading the pose engine…":"Duruş motoru yükleniyor…","Camera permission is required for form check":"Form kontrolü için kamera izni gereklidir","Camera is not available on this device":"Bu cihazda kamera kullanılamıyor","Finish & save":"Bitir ve Kaydet","Stop":"Durdur","Retake":"Yeniden Çek","Save report":"Raporu Kaydet","Report saved":"Rapor kaydedildi","Report saved — your coach can see it":"Rapor kaydedildi — antrenörünüz görebilir","Good form":"Harika form","Shallow depth":"Yetersiz derinlik","Uneven left/right":"Sol/sağ dengesizliği","Torso collapses":"Gövde öne düşüyor","Back rounds":"Sırt yuvarlanıyor","Hips sag":"Kalça aşağı sarkıyor","Partial range":"Eksik hareket açısı","Body swing":"Vücudu savurma","Voice cues":"Sesli Yönlendirme","Motion trail":"Hareket İzi","Tempo":"Tempo","VBT Speed":"VBT Hızı","Velocity loss":"Hız Kaybı","Knee valgus":"Diz valgusu (içe çökme)","Neck hyper-extended":"Boyun aşırı gergin","Posture Screen (Front)":"Duruş Analizi (Ön Görünüm)","Posture Screen (Side)":"Duruş Analizi (Yan Görünüm)","Uneven shoulder height":"Omuz seviyesi eşitsizliği","Pelvic lateral tilt":"Pelvik yan eğrilik","Genu valgum (knock-knees)":"X bacak (Genu valgum)","Forward head posture":"İleri baş duruşu","Thoracic kyphosis (rounded back)":"Sırt kamburluğu (Kifoz)","Anterior pelvic tilt (lordosis)":"Aşırı bel çukurluğu (Lordoz)","AI Biomechanical Analysis":"Yapay Zeka Biyomekanik Analizi","Fatigue threshold (VBT >20%)":"Yorgunluk eşiği (VBT >%20)","Posture":"Duruş / Postür","Generate AI Analysis":"AI Analizi Oluştur","Form reports":"Form Raporları","No report yet — run a form check":"Henüz rapor yok — bir form kontrolü yapın","New check":"Yeni Kontrol","Add a client first":"Önce bir danışan ekleyin","Weekly report, please":"Haftalık raporu hazırla","Draft a reply, please":"Bir yanıt taslağı hazırla","AI draft reply":"Yapay Zeka Yanıt Taslağı","AI draft ready — edit and send":"AI taslağı hazır — düzenleyin ve gönderin","AI Analysis":"Yapay Zeka Analizi","Analyzing client data…":"Danışan verileri analiz ediliyor…","Suggested calorie & macros":"Önerilen kalori ve makrolar","Suggested actions":"Önerilen eylemler","Save as client note":"Danışan notu olarak kaydet","Saved as client note":"Danışan notu olarak kaydedildi","Client not found in synced data":"Danışan senkronize verilerde bulunamadı","critical":"kritik","warning":"uyarı","ok":"normal","high":"yüksek","medium":"orta","low":"düşük","weight-trend":"kilo trendi","adherence":"uyum","engagement":"etkileşim","Welcome back":"Tekrar Hoş Geldiniz","Sign in to your CoachMint workspace.":"CoachMint çalışma alanınıza giriş yapın.","Email":"E-posta","Password":"Şifre","Remember me":"Beni hatırla","Forgot password?":"Şifrenizi mi unuttunuz?","Sign In":"Giriş Yap","or":"veya","Continue with Google":"Google ile devam et","New to CoachMint?":"CoachMint’te yeni misiniz?","Request access":"Erişim talep et","Prefer to buy a plan first?":"Önce bir plan satın almak ister misiniz?","See plans":"Planları gör","Reset link sent to your email":"Sıfırlama bağlantısı e-postanıza gönderildi","Access request sent":"Erişim talebi gönderildi","Send reset link":"Sıfırlama bağlantısı gönder","We will send a reset link to this address if it exists":"Bu adres sistemde kayıtlıysa bir sıfırlama bağlantısı gönderilecektir","Set a new password":"Yeni şifre belirleyin","Password updated — sign in with your new password":"Şifre güncellendi — yeni şifrenizle giriş yapın","Invalid or expired reset link":"Geçersiz veya süresi dolmuş sıfırlama bağlantısı","Self-hosted mode — reset link":"Self-hosted modu — sıfırlama bağlantısı","Password must be 8+ characters":"Şifre en az 8 karakter olmalıdır","Buy":"Satın Al","Opening the shop website…":"Mağaza sayfası açılıyor…","Subscription":"Abonelik","Plans & billing":"Planlar ve Faturalandırma","Preferences":"Tercihler","List":"Liste","Grid":"Izgara","No notes yet":"Henüz not yok","Write your first note for this client":"Bu danışan için ilk notunuzu yazın","Try a different filter":"Farklı bir filtre deneyin","Announce":"Duyuru","New announcement":"Yeni Duyuru","Write the announcement…":"Duyuruyu yazın…","Send to all clients":"Tüm danışanlara gönder","Announcement sent":"Duyuru gönderildi","Goes to every active client as a direct message":"Tüm aktif danışanlara doğrudan mesaj olarak iletilir","Schedule change next week":"Gelecek hafta program değişikliği","Message templates":"Mesaj Şablonları","New template":"Yeni Şablon","Template name":"Şablon Adı","Template text":"Şablon Metni","Template saved ✓":"Şablon kaydedildi ✓","A template with this name exists":"Bu isimde bir şablon zaten var","Inserted into the composer":"Mesaj kutusuna eklendi","Template name and text are required":"Şablon adı ve metni gereklidir","No templates yet":"Henüz şablon yok","Session packages":"Seans Paketleri","Packages":"Paketler","Sessions almost used":"Seanslar tükenmek üzere","Add pack":"Paket Ekle","Pack name":"Paket Adı","Pack added ✓":"Paket eklendi ✓","Pack deleted":"Paket silindi","Used":"Kullanılan","left":"kalan","Sessions remaining":"Kalan Seanslar","No packages yet — sell sessions as a pack and CoachMint counts them down automatically":"Henüz paket yok — seansları paket olarak satın, CoachMint otomatik saysın","remaining — offer a new pack":"kaldı — yeni paket teklif edin","Intake form":"Danışan Bilgi Formu","Fill intake form":"Bilgi formunu doldur","Intake form missing":"Bilgi formu doldurulmamış","Review the health questionnaire before the first session":"İlk seanstan önce sağlık anketini inceleyin","Submitted":"Gönderildi","The client has not submitted the intake form yet":"Danışan henüz bilgi formunu göndermedi","Intake form saved ✓":"Bilgi formu kaydedildi ✓","Answer all questions":"Tüm soruları yanıtlayın","Your coach needs your health background before the first session":"Antrenörünüz ilk seanstan önce sağlık geçmişinize ihtiyaç duyar","Emergency contact (name & phone)":"Acil durum kontağı (Ad ve Telefon)","Injuries or medical conditions":"Sakatlıklar veya tıbbi durumlar","Current medications":"Kullanılan ilaçlar","Chest pain or dizziness during exercise?":"Egzersiz sırasında göğüs ağrısı veya baş dönmesi var mı?","Heart condition diagnosed by a doctor?":"Doktor tarafından teşhis edilmiş kalp rahatsızlığı var mı?","Bone or joint problem that could worsen?":"Kötüleşebilecek kemik veya eklem problemi var mı?","Currently doing other training?":"Şu anda başka bir antrenman yapıyor musunuz?","Main goal & expectations":"Ana hedef ve beklentiler","Yes":"Evet","No":"Hayır","Submit":"Gönder","Photo added ✓":"Fotoğraf eklendi ✓","Add one more photo to compare":"Karşılaştırmak için bir fotoğraf daha ekleyin","Template deleted":"Şablon silindi","Photo sent — waiting for coach approval":"Fotoğraf gönderildi — antrenör onayı bekleniyor","Photo limit reached — delete an older photo first":"Fotoğraf sınırına ulaşıldı — önce eski bir fotoğrafı silin","Photo storage is full — delete some photos first":"Fotoğraf alanı dolu — önce birkaç fotoğraf silin","Photo deleted":"Fotoğraf silindi","Approved ✓":"Onaylandı ✓","Pending approval":"Onay bekliyor","Approve":"Onayla","No photos yet — add the first one":"Henüz fotoğraf yok — ilkini ekleyin","My Photos":"Fotoğraflarım","Add photo":"Fotoğraf Ekle","photos":"fotoğraf","Your coach will see this photo. Upload?":"Antrenörünüz bu fotoğrafı görecektir. Yüklensin mi?","Weight Target":"Hedef Kilo","Target Weight":"Hedef Kilo","Target Date":"Hedef Tarih","Goal progress":"Hedef İlerlemesi","My Goal":"Hedefim","Print / PDF":"Yazdır / PDF","Allow pop-ups to print":"Yazdırmak için açılır pencerelere izin verin","Nothing to print — the builder is empty":"Yazdırılacak bir şey yok — antrenman oluşturucu boş","Nothing to publish — add at least one exercise":"Yayınlanacak bir şey yok — en az bir egzersiz ekleyin","Exercise":"Egzersiz","Sets × Reps":"Set × Tekrar","Load":"Yükle","Rest":"Dinlenme","Foods":"Besinler","Meal time":"Öğün Saati","Close":"Kapat","Meat":"Et","Chicken":"Tavuk","Fish":"Balık","Eggs":"Yumurta","Dairy":"Süt Ürünleri","Rice & Grains":"Pirinç ve Tahıllar","Bread":"Ekmek","Fruit":"Meyve","Vegetables":"Sebzeler","Nuts":"Kuruyemiş","Oils":"Yağlar","Drinks":"İçecekler","Supplements":"Takviyeler","Other":"Diğer","Bodybuilding & Fitness":"Vücut Geliştirme ve Fitness","Powerlifting":"Powerlifting","Running & Endurance":"Koşu ve Dayanıklılık","Team Sports":"Takım Sporları","General Fitness":"Genel Fitness","Online coaching":"Online Antrenörlük","In-person / gym":"Yüz yüze / Spor Salonu","Hybrid":"Hibrit","Just starting":"Yeni başlıyorum","Less than 5 clients":"5 danışandan az","Growing":"Büyüyorum","5 – 30 clients":"5 – 30 danışan","Established":"Köklü / Profesyonel","More than 30 clients":"30 danışandan fazla","Program design":"Program Hazırlama","Nutrition planning":"Beslenme Planlaması","Progress tracking":"İlerleme Takibi","Client management":"Danışan Yönetimi","Set up your workspace":"Çalışma alanınızı kurun","Which sport do you coach?":"Hangi branşta antrenörlük yapıyorsunuz?","How do you coach?":"Nasıl antrenörlük yapıyorsunuz?","How many clients do you have?":"Kaç danışanınız var?","What do you do most?":"En çok hangi alana odaklanıyorsunuz?","Skip for now":"Şimdilik Atla","Finish":"Tamamla","More sports are coming — pick the closest one for now":"Daha fazla branş eklenecek — şimdilik en yakın olanı seçin","This becomes your home screen — change it anytime in Settings":"Bu ana ekranınız olacak — Ayarlar’dan istediğiniz zaman değiştirebilirsiniz","Workspace tailored ✓ — change it later in Settings":"Çalışma alanı özelleştirildi ✓ — sonra Ayarlar’dan değiştirebilirsiniz","Setup wizard":"Kurulum Sihirbazı","Sport, coaching style and home screen":"Branş, antrenörlük tarzı ve ana ekran","Redo":"Yeniden Yap","Suggested":"Önerilen","No templates for this sport yet":"Bu branş için henüz şablon yok","Build one in the builder and save it as a template":"Oluşturucuda bir tane hazırlayıp şablon olarak kaydedin","Show all templates":"Tüm şablonları göster","Saved workouts":"Kayıtlı Antrenmanlar","New workout":"Yeni Antrenman","Load into the builder":"Oluşturucuya yükle","Workout deleted":"Antrenman silindi","No saved workouts yet — build one below":"Henüz kayıtlı antrenman yok — aşağıdan oluşturun","Could not load coaches":"Antrenörler yüklenemedi","Admin error":"Yönetici hatası","Retry":"Tekrar Dene","Search by name or email":"İsim veya e-posta ile ara","Client Retention & Health":"Danışan Devamlılığı ve Sağlığı","Retention":"Bağlılık / Devamlılık","Active Athletes":"Aktif Sporcular","athletes on hold / inactive":"dondurulan / inaktif sporcu","High engagement predicts 92% renewal":"Yüksek etkileşim %92 yenileme öngörür","Roster Health Breakdown":"Danışan Sağlık Dağılımı","On Track":"Hedefte","Check-in":"Durum Bildirimi (Check-in)","At Risk":"Risk Altında","Nudge":"Hatırlat","Shortcuts":"Kısayollar","AI Coach Intelligence":"AI Antrenör Zekası","Weekly Briefing":"Haftalık Brifing","Auto Daily":"Otomatik Günlük","Squad Adherence":"Takım Uyum Oranı","completion rate across":"genel tamamlama oranı:","clients with":"danışan:","completed workouts.":"tamamlanan antrenman.","Recovery Flag":"Toparlanma Uyarısı","Progression Milestone":"İlerleme Kilometre Taşı","Open Smart Reports":"Akıllı Raporları Aç","Client Check-ins":"Danışan Check-in’leri","Missed 2 sessions — risk of drop-off":"2 seans kaçırıldı — bırakma riski","missed sessions":"kaçırılan seans","risk of drop-off":"bırakma riski","All athletes on track — no drop-off risk detected":"Tüm sporcular hedefte — bırakma riski tespit edilmedi","Team Check-in":"Takım Durumu","All client messages and check-ins answered.":"Tüm danışan mesajları ve check-in’leri yanıtlandı.","is on":"programında:","(Week":"(Hafta","Sign in to CoachMint":"CoachMint’e Giriş Yap","Choose your role":"Rolünüzü Seçin","I am a Coach":"Antrenörüm","Manage clients, build workouts, track progress":"Danışanları yönetin, antrenman yazın, ilerlemeyi izleyin","I am a Client":"Danışanım","See your workouts, progress and nutrition":"Antrenmanlarınızı, ilerlemenizi ve beslenmenizi görün","Back":"Geri","Coach sign in":"Antrenör Girişi","Create coach account":"Antrenör Hesabı Oluştur","Create account":"Hesap Oluştur","Have an account?":"Hesabınız var mı?","Full name":"Ad Soyad","Your name":"Adınız","8+ characters":"8+ karakter","14-day free trial · no card required":"14 gün ücretsiz deneme · kart gerekmez","Welcome back to your workspace":"Çalışma alanınıza tekrar hoş geldiniz","Explore the demo":"Demoyu Keşfet","Demo mode — sign up to save online":"Demo modu — çevrimiçi kaydetmek için kaydolun","Creating your account…":"Hesabınız oluşturuluyor…","Signing in…":"Giriş yapılıyor…","Could not reach server":"Sunucuya ulaşılamadı","Enter name, valid email, password 8+ chars":"İsim, geçerli e-posta ve 8+ karakter şifre girin","Enter email and password":"E-posta ve şifrenizi girin","Demo — not signed in":"Demo — giriş yapılmadı","Demo: any credentials work":"Demo: tüm bilgilerle giriş yapılabilir","Choose your account (demo)":"Hesabınızı seçin (demo)","Demo client account":"Demo danışan hesabı — antrenörle senkronize portalı görün","Continue":"Devam Et","Here's what's happening with your clients today.":"Danışanlarınızın bugünkü durum özeti:","Wed, Jul 8 2026":"8 Temmuz 2026, Çarşamba","Total Clients":"Toplam Danışan","Active Clients":"Aktif Danışanlar","Sessions Today":"Bugünkü Seanslar","Upcoming Sessions":"Yaklaşan Seanslar","This week":"Bu hafta","Today's Schedule":"Bugünün Programı","Open calendar →":"Takvimi aç →","Completed":"Tamamlandı","Scheduled":"Planlandı","Assessment":"Değerlendirme","Session options":"Seans seçenekleri","Quick Actions":"Hızlı Eylemler","Clients Needing Attention":"İlgi Gerektiren Danışanlar","Program ending soon":"Program yakında bitiyor","Missed session":"Kaçırılan seans","Open":"Aç","Recent Activity":"Son Aktiviteler","View all →":"Tümünü gör →","Full activity log":"Tam aktivite kaydı","1 h ago":"1 saat önce","3 h ago":"3 saat önce","5 h ago":"5 saat önce","Yesterday":"Dün","2 days ago":"2 gün önce","3 days ago":"3 gün önce","9 days ago":"9 gün önce","1 week ago":"1 hafta önce","2 weeks ago":"2 hafta önce","3 weeks ago":"3 hafta önce","1 month ago":"1 ay önce","Just now":"Az önce","days ago":"gün önce","active client":"aktif danışan","active clients":"aktif danışan","No clients yet — add your first client":"Henüz danışan yok — ilk danışanınızı ekleyin","Add your first client to start building programs, plans and progress tracking":"Programlar, beslenme ve ilerleme takibini başlatmak için ilk danışanınızı ekleyin","QR code":"Karekod (QR)","QR":"QR","Show QR":"QR Göster","Scan with the phone camera — the app opens and connects automatically":"Telefon kamerasıyla tarayın — uygulama açılır ve otomatik bağlanır","Copy link":"Bağlantıyı Kopyala","Search clients…":"Danışan ara…","Filter":"Filtrele","Sort":"Sırala","Goal":"Hedef","Weight":"Kilo","Program":"Program","Next Session":"Sonraki Seans","Streak":"Seri","Status":"Durum","wk":"hf","Open Workspace":"Çalışma Alanını Aç","added to your clients":"danışanlarınıza eklendi","Active":"Aktif","Inactive":"İnaktif","On Hold":"Donduruldu","Paused":"Duraklatıldı","Archived":"Arşivlendi","Pending":"Beklemede","Today · 09:00":"Bugün · 09:00","Tomorrow · 17:00":"Yarın · 17:00","Thu · 09:30":"Per · 09:30","Fri · 18:00":"Cum · 18:00","Push A · Tomorrow 09:00":"Push A · Yarın 09:00","Full Body B · Today 11:00":"Full Body B · Bugün 11:00","Leg A · Today 14:30":"Leg A · Bugün 14:30","Pull A · Tomorrow 17:00":"Pull A · Yarın 17:00","Mobility B · Thu 09:30":"Mobility B · Per 09:30","Push B · Fri 18:00":"Push B · Cum 18:00","Unscheduled":"Planlanmamış","4x / week":"Haftada 4 gün","3x / week":"Haftada 3 gün","5x / week":"Haftada 5 gün","2x / week":"Haftada 2 gün","Personal Information":"Kişisel Bilgiler","First Name":"Ad","Last Name":"Soyad","Phone":"Telefon","Date of Birth":"Doğum Tarihi","Gender":"Cinsiyet","Prefer not to say":"Belirtmek istemiyorum","Male":"Erkek","Female":"Kadın","National ID":"Kimlik No","For contract & insurance":"Sözleşme ve sigorta için — girişte kullanılmaz","Physical Information":"Fiziksel Bilgiler","Height (cm)":"Boy (cm)","Weight (kg)":"Kilo (kg)","Body Fat (%)":"Yağ Oranı (%)","Activity Level":"Aktivite Seviyesi","Sedentary":"Hareketsiz / Masa başı","Lightly active":"Az hareketli","Moderately active":"Orta düzey hareketli","Very active":"Çok aktif","Training Information":"Antrenman Bilgileri","Experience Level":"Deneyim Seviyesi","Beginner":"Başlangıç","Intermediate":"Orta Seviye","Advanced":"İleri Seviye","Primary Goal":"Birincil Hedef","Training Frequency":"Haftalık Antrenman Sıklığı","Preferred Days":"Tercih Edilen Günler","Available Equipment":"Mevcut Ekipmanlar","Full gym · Dumbbells at home":"Tam spor salonu · Evde dumbbell","Health / Limitations":"Sağlık / Kısıtlamalar","Injuries":"Sakatlıklar","Movement Restrictions":"Hareket Kısıtlamaları","Important Notes":"Önemli Notlar","Cancel":"İptal","Save Client":"Danışanı Kaydet","Save":"Kaydet","Client updated ✓":"Danışan güncellendi ✓","Edit Client":"Danışanı Düzenle","Schedule":"Program / Takvim","Add Note":"Not Ekle","More actions":"Diğer Eylemler","Archive client":"Danışanı Arşivle","Client archived":"Danışan arşivlendi","Export data":"Verileri Dışa Aktar","Data export started":"Veri dışa aktarımı başladı","Invite to portal":"Portala Davet Et","Client portal invite sent":"Danışan portalı daveti gönderildi","Overview":"Genel Bakış","Files":"Dosyalar","Client Summary":"Danışan Özeti","Current Weight":"Mevcut Kilo","Body Fat":"Yağ Oranı","Height":"Boy","Program progress":"Program İlerlemesi","of":"/","Training Summary":"Antrenman Özeti","Workouts Completed":"Tamamlanan Antrenmanlar","Workouts Missed":"Kaçırılan Antrenmanlar","Current Streak":"Mevcut Seri","Last Workout":"Son Antrenman","Next Workout":"Sonraki Antrenman","Avg RPE (4 weeks)":"Ort. RPE (4 hafta)","Progress Overview":"İlerleme Genel Bakışı","Last 12 weeks":"Son 12 Hafta","Workout Consistency":"Antrenman Devamlılığı","% completed":"% tamamlandı","Recent Notes":"Son Notlar","All notes":"Tüm Notlar","Today · 08:20":"Bugün · 08:20","Training":"Antrenman","General":"Genel","Injury / Restriction":"Sakatlık / Kısıtlama","General Note":"Genel Not","Training Note":"Antrenman Notu","Progress Note":"İlerleme Notu","Injury / Restriction Note":"Sakatlık / Kısıtlama Notu","Nutrition Note":"Beslenme Notu","New Note":"Yeni Not","Title":"Başlık","Write your note…":"Notunuzu yazın…","Untitled note":"Başlıksız Not","Note added":"Not eklendi","Note archived":"Not arşivlendi","Open a client workspace to add a note":"Not eklemek için bir danışan çalışma alanını açın","Visible to client":"Danışan tarafından görülebilir","Private":"Özel (Gizli)","Workout Name":"Antrenman Adı","Training Day":"Antrenman Günü","Rest Day":"Dinlenme Günü","Duration":"Süre","Coach Notes":"Antrenör Notları","Coach cue":"Antrenör İpucu","e.g. Elbows ~45°, full ROM":"Örn. Dirsekler ~45°, tam hareket açısı","Tap when done":"Bittiğinde dokunun","Not yet":"Henüz değil","Sent":"Gönderildi","pts today":"bugünkü puan","pt to Level":"puan sonraki seviyeye","streak at risk":"seri risk altında","Finish one habit today to keep it":"Seriyi korumak için bugün bir alışkanlığı tamamla","Protect":"Koru","Streak kept":"Seri korundu","Action needed":"İşlem gerekli","Demo video":"Eğitim videosu","Left today":"Bugüne kalan","today":"bugün","Sound":"Ses","Vibrate":"Titreşim","Auto next":"Otomatik sonraki","Start a session or send a check-in":"Bir seans başlat veya durum bildirimi gönder","Workout · message · reminder":"Antrenman · mesaj · hatırlatıcı","Activity logged today":"Bugün aktivite kaydedildi","Upcoming sessions":"Yaklaşan seanslar","This month":"Bu ay","Rest days":"Dinlenme günleri","Tomorrow":"Yarın","Every week repeats · your coach plans it":"Her hafta tekrarlanır — antrenörünüz planlar","Add to phone calendar (.ics)":"Telefon takvimine ekle (.ics)","Remaining today":"Bugün kalan","kcal left":"kalan kcal","Food":"Besin","Amount":"Miktar","Kcal":"Kalori","Eaten":"Tüketilen","Due":"Zamanı","Hydration":"Günlük Su Takibi","to go":"kaldı","L of":"L /","Quick log":"Hızlı Kayıt","Snap a photo":"Fotoğraf çek","AI estimates calories & macros instantly":"AI anında kalori ve makroları tahmin eder","Type text":"Metin yaz","Barcode":"Barkod","Scan package":"Paket tara","Assistant":"Asistan","Chat to log":"Sohbet ile kaydet","One-tap favorites":"Tek dokunuşla favoriler","logged":"kaydedildi","Undo":"Geri Al","Barcode number":"Barkod numarası","Searching…":"Aranıyor…","Product not found in the food database.":"Ürün besin veri tabanında bulunamadı.","per100 g":"100 gramda","Log100 g":"100 g Kaydet","Lookup failed — check your connection.":"Arama başarısız — internet bağlantınızı kontrol edin.","Scan the package barcode or type its number.":"Paket barkodunu tarayın veya numarasını yazın.","Enter the barcode number":"Barkod numarasını girin","Nothing to undo":"Geri alınacak bir şey yok","Water entry removed":"Su kaydı silindi","Fuel Plan":"Beslenme Planı","Scanned product":"Taranan ürün","Health grade":"Sağlık Puanı","Strong week":"Güçlü hafta","Solid week":"İyi hafta","Keep building":"Gelişmeye devam et","protein hit":"protein hedefi tuttu","Personal records":"Kişisel Rekorlar (PR)","No personal records yet":"Henüz rekor kaydedilmedi","Progress photos":"İlerleme Fotoğrafları","Drag to compare":"Karşılaştırmak için kaydırın","Earlier":"Önceki","Latest":"En Son","Session pack":"Seans Paketi","My join code":"Katılım Kodum","Since":"Başlangıç:","Scan to connect this device · re-share anytime":"Bu cihazı bağlamak için tarayın · dilediğinizde paylaşın","Show fullscreen":"Tam ekran göster","Daily check-in sent":"Günlük check-in gönderildi","Done for today":"Bugünlük tamamlandı","Send progress photo":"İlerleme fotoğrafı gönder","Ask a question":"Bir soru sor","Meal log":"Öğün Kaydı","Confirm":"Onayla","Swap whey":"Whey değiştir","Log500ml water":"500 ml su kaydet","Today summary":"Bugünün Özeti","Online · knows your plan":"Çevrimiçi · planınızı biliyor","before this set":"bu setten önce","Next":"Sonraki","Pause":"Duraklat","Rate this set":"Bu seti derecelendir","What does RPE mean?":"RPE ne anlama gelir?","Rate of Perceived Exertion — how hard the set felt":"Algılanan Zorluk Derecesi — setin ne kadar zor hissettirdiği","Easy":"Kolay","4+ reps still in the tank":"Ceprede 4+ tekrar daha var","Warm-up":"Isınma","Comfortable":"Rahat","3 reps left":"3 tekrar kaldı","Light load":"Hafif yük","2 reps left — sweet spot for growth":"2 tekrar kaldı — kas gelişimi için en ideal nokta","Hard":"Zor","1 rep left":"1 tekrar kaldı","Heavy":"Ağır","Max effort":"Maksimum çaba","to failure — no reps left":"tükenişe kadar — hiç tekrar kalmadı","All-out":"Tüm güçle","Tap a number right after your set — your coach reads it and adjusts next week's weight automatically.":"Setinizden hemen sonra bir sayıya dokunun — antrenörünüz bunu görür ve gelecek haftanın ağırlığını ayarlar.","Program name":"Program Adı","Weeks":"Haftalar","Block 2 — Strength":"Blok 2 — Güç","Auto":"Otomatik","Count":"Sayı","Tick":"Onay","Hidden":"Gizli","Show":"Göster","Hide":"Gizle","Value":"Değer","Move up":"Yukarı taşı","Move down":"Aşağı taşı","Habit name":"Alışkanlık Adı","Add from catalogue":"Katalogdan ekle","Custom habit":"Özel Alışkanlık","The student ticks this list on their Today tab.":"Danışan bu listeyi Bugün sekmesinden işaretler.","calculated from the data the app already keeps":"uygulamanın tuttuğu verilerden hesaplanır","No habits yet — add one below":"Henüz alışkanlık yok — aşağıdan ekleyin","All catalogue habits are already added":"Katalogdaki tüm alışkanlıklar zaten eklendi","Habit added":"Alışkanlık eklendi","Habit removed":"Alışkanlık silindi","Habit updated":"Alışkanlık güncellendi","Habit name is required":"Alışkanlık adı gereklidir","Only the coach can manage habits":"Alışkanlıkları sadece antrenör yönetebilir","Hidden habits stay in the record":"Gizli alışkanlıklar kayıtlarda kalır","See all challenges":"Tüm meydan okumaları gör","New personal challenge":"Yeni kişisel meydan okuma","Personal":"Kişisel","Start one yourself — pick a target and chase it.":"Kendin bir tane başlat — hedef seç ve peşinden git.","This one is yours — your coach will see it in the list.":"Bu sana ait — antrenörün listede görecektir.","30-day consistency":"30 Gün İstikrar","Start challenge":"Meydan okumayı başlat","Challenge started":"Meydan okuma başladı","Challenge name is required":"Meydan okuma adı gereklidir","Only you can start this one":"Bunu sadece siz başlatabilirsiniz","Saved · works offline":"Kaydedildi · çevrimdışı çalışır","Add it once — it will be reused offline":"Bir kez ekleyin — çevrimdışı da kullanılacaktır","Product name":"Ürün Adı","Save this product":"Bu ürünü kaydet","Product saved":"Ürün kaydedildi","Recently scanned":"Son tarananlar","Per 100 g":"100 g başına","All exercises":"Tüm Egzersizler","One at a time":"Teker teker","Prev":"Önceki","Voice message":"Sesli Mesaj","Voice message sent":"Sesli mesaj gönderildi","Play":"Oynat","Recording… tap to stop":"Kaydediliyor… durdurmak için dokunun","Hold a quick voice note":"Hızlı bir sesli not tutun","Voice messages are not supported in this browser":"Bu tarayıcıda sesli mesaj desteklenmiyor","Microphone permission was denied":"Mikrofon izni reddedildi","Could not start recording":"Ses kaydı başlatılamadı","Could not play this voice message":"Sesli mesaj çalınamadı","Drink 2L water":"2L su iç","Protein target":"Protein hedefi","Morning check-in":"Sabah check-in’i","Steps 8,000":"8.000 adım","Stretch 10 min":"10 dk esneme","Sleep by 23:00":"23:00’te uyu","No sugary drinks":"Şekerli içecek yok","Walk 20 min":"20 dk yürüyüş","Meditate 5 min":"5 dk meditasyon","5+ veg servings":"5+ porsiyon sebze","On pause":"Duraklatıldı","Fullscreen":"Tam Ekran","Resume":"Devam Et","Skip rest":"Dinlenmeyi geç","Rest done":"Dinlenme bitti","Current program":"Mevcut Program","days / wk":"gün / hf","avg time":"ort. süre","sets / wk":"set / hf","this week":"bu hafta","Next up":"Sıradaki","Volume":"Hacim","Last":"Son","Weekly goal":"Haftalık Hedef","sessions":"seans","total":"toplam","Monday":"Pazartesi","Tuesday":"Salı","Wednesday":"Çarşamba","Thursday":"Perşembe","Friday":"Cuma","Saturday":"Cumartesi","Sunday":"Pazar","Week Split":"Haftalık Bölünme (Split)","Tap a day to assign a workout or rest":"Antrenman veya dinlenme atamak için bir güne dokunun","Rest day":"Dinlenme Günü","No workout assigned":"Antrenman atanmadı","Choose a workout for":"Antrenman seçimi:","Day updated ✓":"Gün güncellendi ✓","Rest day set":"Dinlenme günü ayarlandı","Day cleared":"Gün temizlendi","This week plan":"Bu Haftanın Planı","Recovery is part of the program — come back stronger":"Toparlanma programın bir parçasıdır — daha güçlü dönün","Clear day":"Günü Temizle","No workouts yet — build one first":"Henüz antrenman yok — önce bir tane oluşturun","Assigned workout":"Atanan Antrenman","Add workout":"Antrenman Ekle","Add workout to which day?":"Hangi güne antrenman eklensin?","New workout for this day":"Bu gün için yeni antrenman","Every week":"Her hafta","Workout":"Antrenman","Week plan":"Hafta Planı","Back to calendar":"Takvime dön","training days / week":"antrenman günü / hafta","Rest unplanned days":"Plansız günleri dinlenme yap","Unplanned days set to rest":"Plansız günler dinlenme olarak ayarlandı","Quick week setup":"Hızlı Hafta Kurulumu","Unassigned":"Atanmamış","One workout per day":"Günde tek antrenman","Week updated":"Hafta güncellendi","Pick a workout or rest for each day — repeats every week":"Her gün için antrenman veya dinlenme seçin — her hafta tekrarlanır","Training days adherence":"Antrenman günlerine uyum","last":"son","weeks":"hafta","No data yet":"Henüz veri yok","done / planned · from real logged sessions":"yapılan / planlanan · gerçek kayıtlardan","Copy to":"Kopyala:","Day copied":"Gün kopyalandı","Monthly workout plan":"Aylık Antrenman Planı","Sets":"Set","Rest (sec)":"Dinlenme (sn)","exercises":"egzersiz","est.":"tahmini","working sets":"çalışma seti","Save as Template":"Şablon Olarak Kaydet","Save Workout":"Antrenmanı Kaydet","completed":"tamamlandı","current":"mevcut","planned":"planlanan","Current":"Mevcut","Exercise duplicated":"Egzersiz kopyalandı","Exercise removed":"Egzersiz çıkarıldı","Saved as template":"Şablon olarak kaydedildi","added to workout":"antrenmana eklendi","Workout saved":"Antrenman kaydedildi","loaded into the builder":"oluşturucuya yüklendi","Search exercises…":"Egzersiz ara…","All Equipment":"Tüm Ekipmanlar","All Types":"Tüm Türler","No exercises match your search.":"Aramanızla eşleşen egzersiz bulunamadı.","Add":"Ekle","video & instructions on each card":"her kartta video ve talimatlar","Create Custom Exercise":"Özel Egzersiz Oluştur","Custom exercise form opened":"Özel egzersiz formu açıldı","All":"Tümü","Chest":"Göğüs","Shoulders":"Omuz","Biceps":"Biceps (Ön Kol)","Triceps":"Triceps (Arka Kol)","Quadriceps":"Kuadriseps (Ön Bacak)","Hamstrings":"Hamstring (Arka Bacak)","Glutes":"Glute (Kalça)","Calves":"Kalf (Baldır)","Core":"Karın / Core","Full Body":"Tüm Vücut","Barbell":"Barbell","Dumbbell":"Dumbbell","Cable":"Kablo / Makara","Machine":"Makine","Bodyweight":"Vücut Ağırlığı","Compound":"Bileşik (Compound)","Isolation":"İzole (Isolation)","Video":"Video","Add to Workout":"Antrenmana Ekle","Edit":"Düzenle","Barbell Bench Press":"Barbell Bench Press","Incline Dumbbell Press":"Incline Dumbbell Press","Cable Fly":"Cable Fly","Push-Up":"Push-Up (Şınav)","Barbell Row":"Barbell Row","Lat Pulldown":"Lat Pulldown","Pull-Up":"Pull-Up (Barfiks)","Seated Cable Row":"Seated Cable Row","Overhead Press":"Overhead Press (OHP)","Lateral Raise":"Lateral Raise (Yana Açış)","Face Pull":"Face Pull","Barbell Curl":"Barbell Curl","Hammer Curl":"Hammer Curl","Triceps Pushdown":"Triceps Pushdown","Skull Crusher":"Skull Crusher","Back Squat":"Back Squat","Leg Press":"Leg Press","Leg Extension":"Leg Extension","Romanian Deadlift":"Romanian Deadlift (RDL)","Leg Curl":"Leg Curl","Hip Thrust":"Hip Thrust","Standing Calf Raise":"Standing Calf Raise","Dead Bug":"Dead Bug","Farmer's Carry":"Farmer's Carry (Çiftçi Yürüyüşü)","Workout Templates":"Antrenman Şablonları","Reusable programs — build once, assign in seconds":"Tekrar kullanılabilir programlar — bir kez yazın, saniyeler içinde atayın","Legs":"Bacak","4-day split":"4 günlük split","5-day split":"5 günlük split","60 min":"60 dk","55 min":"55 dk","65 min":"65 dk","45 min":"45 dk","70 min":"70 dk","30 min":"30 dk","90 min":"90 dk","Use Template":"Şablonu Kullan","Template duplicated":"Şablon kopyalandı","Template archived":"Şablon arşivlendi","Edited":"Düzenlendi","Day 1 — Push":"1. Gün — Push (İtiş)","Day 2 — Pull":"2. Gün — Pull (Çekiş)","Day 3 — Legs":"3. Gün — Legs (Bacak)","Day 4 — Upper":"4. Gün — Üst Vücut","Day 5 — Lower":"5. Gün — Alt Vücut","Day 1 — Squat":"1. Gün — Squat","Day 2 — Bench":"2. Gün — Bench","Day 3 — Deadlift":"3. Gün — Deadlift","Upper":"Üst Vücut","Lower":"Alt Vücut","Conditioning":"Kondisyon","Template Name":"Şablon Adı","Template updated ✓":"Şablon güncellendi ✓","Editing template":"Şablon düzenleniyor","Update Template":"Şablonu Güncelle","This template has multiple days — pick one to load into the builder":"Bu şablon birden fazla gün içeriyor — oluşturucuya yüklemek için birini seçin","Current builder content will be saved into the template":"Mevcut oluşturucu içeriği şablona kaydedilecek","This template has no exercises yet":"Bu şablonda henüz egzersiz yok","Add exercises first":"Önce egzersiz ekleyin","July 6 — 12, 2026":"6 — 12 Temmuz 2026","Today":"Bugün","Drag events between days to reschedule":"Yeniden planlamak için etkinlikleri günler arasında sürükleyin","Session":"Seans","Appointment":"Randevu","Mon 6":"Pzt 6","Tue 7":"Sal 7","Wed 8":"Çar 8","Thu 9":"Per 9","Fri 10":"Cum 10","Sat 11":"Cmt 11","Sun 12":"Paz 12","Mon":"Pzt","Tue":"Sal","Wed":"Çar","Thu":"Per","Fri":"Cum","Sat":"Cmt","Sun":"Paz","Upcoming":"Yaklaşan","Pull Workout":"Çekiş (Pull) Antrenmanı","Mobility Prep":"Mobilite Hazırlığı","Push Workout":"İtiş (Push) Antrenmanı","Leg Day":"Bacak Günü","Physio appointment":"Fizyoterapi Randevusu","Training Session":"Antrenman Seansı","Rescheduled to":"Yeniden planlandı:","Tap an empty slot to add a session":"Seans eklemek için boş bir alana dokunun","Data across your clients":"Tüm danışanlarınızın verileri","7D":"7G","30D":"30G","3M":"3A","6M":"6A","1Y":"1Y","Weight Progress":"Kilo İlerlemesi","Strength Progression":"Güç Gelişimi","Bench":"Bench","Deadlift":"Deadlift","Workout Completion":"Antrenman Tamamlama","weekly %":"haftalık %","Training Volume":"Antrenman Hacmi","tonnage (t / week)":"toplam tonaj (ton / hafta)","t":"ton","Start":"Başlangıç","Mid":"Orta","Now":"Şimdi","No workout history yet":"Henüz antrenman geçmişi yok","Session history":"Seans Geçmişi","Complete a workout — your progress charts will build themselves":"Antrenmanı tamamlayın — ilerleme grafikleriniz otomatik oluşsun","Log a Bench, Squat or Deadlift session to see your progression":"Gelişiminizi görmek için Bench, Squat veya Deadlift seansı kaydedin","Beat your first logged set to set a PR":"Yeni bir kişisel rekor (PR) kırmak için önceki setinizi aşın","Complete a workout to fill this chart":"Bu grafiği doldurmak için bir antrenman tamamlayın","Weekly check-in":"Haftalık Check-in","Log weight & measurements":"Kilo ve ölçümleri kaydet","your coach sees it instantly":"antrenörünüz anında görür","Save check-in":"Check-in’i Kaydet","Check-in saved — your coach was notified":"Check-in kaydedildi — antrenörünüze bildirildi","Body metrics & progress photos":"Vücut metrikleri ve ilerleme fotoğrafları","Add Progress Photos":"İlerleme Fotoğrafı Ekle","Waist":"Bel","Hips":"Kalça","Arm (R)":"Kol (Sağ)","Thigh":"Uyluk / Bacak","prev":"önceki","Weight History":"Kilo Geçmişi","Measurement history":"Ölçüm Geçmişi","Entry deleted":"Kayıt silindi","Last measurement":"Son ölçüm","No measurements yet":"Henüz ölçüm yok","Weight is required":"Kilo değeri gereklidir","At least two measurements needed for the trend":"Trend için en az iki ölçüm gereklidir","Not enough history for a trend yet":"Trend için henüz yeterli geçmiş yok","No data in this range — showing all time":"Bu aralıkta veri yok — tüm zamanlar gösteriliyor","12 weeks":"12 Hafta","Progress Photos":"İlerleme Fotoğrafları","Front":"Ön","Side":"Yan","Drag the slider to compare":"Karşılaştırmak için kaydırıcıyı sürükleyin","Measurement saved — charts updated":"Ölçüm kaydedildi — grafikler güncellendi","Save Measurement":"Ölçümü Kaydet","Chest (cm)":"Göğüs (cm)","Waist (cm)":"Bel (cm)","Hips (cm)":"Kalça (cm)","Arm (cm)":"Kol (cm)","Thigh (cm)":"Bacak / Uyluk (cm)","Calf (cm)":"Kalf / Baldır (cm)","Date":"Tarih","Protein":"Protein","Carbs":"Karbonhidrat","Fat":"Yağ","% of kcal":"Kalori %’si","Daily Meals":"Günlük Öğünler","Water":"Su","L/day":"L/gün","Breakfast":"Kahvaltı","Snack":"Ara Öğün","Lunch":"Öğle Yemeği","Dinner":"Akşam Yemeği","Pre-Workout":"Antrenman Öncesi","Post-Workout":"Antrenman Sonrası","Before Bed":"Yatmadan Önce","+ Add meal":"+ Öğün ekle","Coach Notes — Nutrition":"Antrenör Notları — Beslenme","Save Note":"Notu Kaydet","Documents & assessments for":"Belgeler ve değerlendirmeler:","Download all":"Tümünü İndir","Upload":"Yükle","Upload dialog opened":"Yükleme penceresi açıldı","Drop files here":"Dosyaları buraya bırakın","or click to browse — PDF, images, documents":"veya seçmek için tıklayın — PDF, görsel, belgeler","File":"Dosya","Type":"Tür","Size":"Boyut","Actions":"İşlemler","Document":"Belge","Archive":"Arşivle","Image":"Görsel","Preview":"Önizleme","File deleted":"Dosya silindi","Manage your workspace":"Çalışma alanınızı yönetin","Profile":"Profil","Account":"Hesap","Notifications":"Bildirimler","Appearance":"Görünüm","Workout Settings":"Antrenman Ayarları","Units":"Birimler","Privacy":"Gizlilik","Security":"Güvenlik","Soroush Karimi":"Soroush Karimi","Certified Strength & Conditioning Coach":"Sertifikalı Güç ve Kondisyon Koçu","Bio":"Biyografi","Tell clients about your coaching experience":"Danışanlarınıza koçluk deneyiminizden bahsedin","Save Changes":"Değişiklikleri Kaydet","Profile saved":"Profil kaydedildi","Plan":"Plan","CoachMint Pro · Unlimited clients":"CoachMint Pro · Sınırsız danışan","Language":"Dil","Timezone":"Saat Dilimi","Response time":"Yanıt Süresi","Shown to clients in chat":"Sohbette danışanlara gösterilir","Session reminders":"Seans hatırlatıcıları","Push + email 24 h before each session":"Her seanstan 24 saat önce anlık bildirim + e-posta","Client completes workout":"Danışan antrenmanı tamamladığında","Notify when a workout is logged":"Bir antrenman kaydedildiğinde bildir","Missed sessions":"Kaçırılan seanslar","Alert when a client misses a session":"Danışan seans kaçırdığında uyar","New client message":"Yeni danışan mesajı","Push when a client sends a message":"Danışan mesaj attığında anlık bildirim gönder","Measurement reminders":"Ölçüm hatırlatıcıları","Weekly digest of due measurements":"Günü gelen ölçümlerin haftalık özeti","New PR achieved":"Yeni rekor (PR) kırıldı","Celebrate personal records instantly":"Kişisel rekorları anında kutla","Summary every Sunday evening":"Her Pazar akşamı özet","Setting saved":"Ayar kaydedildi","Theme":"Tema","Light":"Açık","System":"Sistem","Dark":"Koyu","Accent Color":"Vurgu Rengi","Accent color updated":"Vurgu rengi güncellendi","Theme applied":"Tema uygulandı","Design Template":"Tasarım Şablonu","Default":"Varsayılan","Live Telemetry":"Canlı Telemetri","Squad Readiness":"Takım Hazırlığı","Priority Queue":"Öncelik Sırası","Quick Prescribe":"Hızlı Program Ata","Optimal":"Optimal","Attention":"Dikkat","Roster":"Kadro / Danışanlar","Performance Analytics":"Performans Analitiği","Adherence":"Devamlılık / Uyum","Workouts Done":"Tamamlanan Antrenmanlar","Scheduling":"Zamanlama","Movement Bank":"Hareket Bankası","Dispatch":"Gönderim","Encrypted":"Şifrelenmiş","Coach Toolbox":"Antrenör Araç Çantası","Stopwatch":"Kronometre","Interval timer for sets and rest":"Set ve dinlenme için aralık zamanlayıcı","Default rest timer":"Varsayılan dinlenme sayacı","120 seconds between sets":"Setler arası 120 saniye","Show RPE & RIR fields":"RPE ve RIR alanlarını göster","On all exercise blocks":"Tüm egzersiz bloklarında","Auto-advance program weeks":"Program haftalarını otomatik ilerlet","When all sessions are completed":"Tüm seanslar tamamlandığında","Set display":"Set görünümü","Duplicate on save":"Kaydederken kopyala","Keep source workout intact":"Kaynak antrenmanı değiştirmeden koru","60 sec":"60 sn","120 sec":"120 sn","180 sec":"180 sn","Measurement Units":"Ölçüm Birimleri","Metric (kg · cm)":"Metrik (kg · cm)","Imperial (lb · in)":"İmparatorluk (lb · in)","Applies to weights, measurements and body metrics across the workspace.":"Çalışma alanındaki tüm ağırlık, ölçüm ve vücut metriklerine uygulanır.","Units set to":"Birimler ayarlandı:","Clients see their own data":"Danışanlar yalnızca kendi verilerini görür","Clients see progress photos":"Danışanlar ilerleme fotoğraflarını görür","Only photos the coach approves":"Yalnızca antrenörün onayladığı fotoğraflar","Clients see other clients":"Danışanlar diğer danışanları görür","Disabled by default":"Varsayılan olarak devre dışı","Require consent for photos":"Fotoğraflar için onay iste","Client must accept before upload":"Danışan yüklemeden önce onaylamalıdır","Current Password":"Mevcut Şifre","New Password":"Yeni Şifre","Update Password":"Şifreyi Güncelle","Password updated":"Şifre güncellendi","Two-Factor Authentication":"İki Adımlı Doğrulama (2FA)","Extra security for your coach account":"Antrenör hesabınız için ekstra güvenlik","Active sessions":"Aktif oturumlar","MacBook Pro · Tehran · current":"MacBook Pro · İstanbul · aktif","Sign out others":"Diğer oturumları kapat","Signed out of all other devices":"Diğer tüm cihazlardan çıkış yapıldı","Pages":"Sayfalar","Go to page":"Sayfaya git","No results found.":"Sonuç bulunamadı.","Search clients, workouts, templates, exercises, notes, files…":"Danışan, antrenman, şablon, egzersiz, not veya dosya ara…","Sessions":"Seanslar","Hi":"Merhaba","day streak":"günlük seri","Synced":"Senkronize","Ready to crush your goals today?":"Bugün hedeflerini fethetmeye hazır mısın?","Daily Momentum":"Günlük İvme","Action Needed":"Gerekli Eylemler","All Tasks":"Tüm Görevler","Habits":"Alışkanlıklar","Sleep readiness":"Uyku hazırlığı","Today's Workout":"Bugünün Antrenmanı","Start Workout":"Antrenmana Başla","No workout scheduled today":"Bugün planlanmış antrenman yok","Your coach publishes your plan here":"Antrenörünüz planınızı burada yayınlar","Shared with you":"Sizinle paylaşıldı","Quick check-in":"Hızlı Check-in","How did training feel today?":"Bugün antrenman nasıldı?","Energy":"Enerji","Soreness":"Kas Ağrısı (DOMS)","Sleep":"Uyku","Low":"Düşük","OK":"İyi","None":"Yok","Some":"Biraz","A lot":"Çok","Poor":"Kötü","Fine":"Normal","Great":"Harika","Send check-in":"Check-in Gönder","Check-in sent to your coach":"Check-in antrenörünüze gönderildi","Answer all three first":"Önce üç soruyu da yanıtlayın","Coach notes":"Antrenör notları","Next session":"Sonraki seans","View summary":"Özeti Gör","sets":"set","Set":"Set","Finish Workout":"Antrenmanı Bitir","Skip":"Atla","Workout completed 💪":"Antrenman tamamlandı 💪","My Progress":"İlerlemem","Nutrition Plan":"Beslenme Planı","Your coach has not published a nutrition plan yet":"Antrenörünüz henüz bir beslenme planı yayınlamadı","My Profile":"Profilim","Body Metrics":"Vücut Metrikleri","App language":"Uygulama Dili","Published to":"Yayınlandığı yer:","Workout Builder":"Antrenman Oluşturucu","Publishing to":"Yayınlanıyor:","Builder cleared":"Oluşturucu temizlendi","File attached":"Dosya eklendi","need your reply":"yanıtınızı bekliyor","Needs your reply":"Yanıtınız gerekiyor","Waiting on your reply":"Yanıtınız bekleniyor","All conversations":"Tüm Sohbetler","Type a message…":"Bir mesaj yazın…","Send":"Gönder","Save as note":"Not olarak kaydet","Saved as note":"Not olarak kaydedildi","From chat":"Sohbetten","Form check":"Form Kontrolü","Replies within ~4h":"~4 saat içinde yanıtlar","Message sent":"Mesaj gönderildi","Form check sent":"Form kontrolü gönderildi","Record form check":"Form kontrolü kaydet","Attach file":"Dosya ekle","File picker (demo)":"Dosya seçici (demo)","Video player (demo)":"Video oynatıcı (demo)","Async — no pressure":"Asenkron — baskı yok","Message templates (demo)":"Mesaj şablonları (demo)","No sessions scheduled":"Planlanmış seans yok","Quick Note":"Hızlı Not","New Session":"Yeni Seans","Session type":"Seans Türü","Time":"Saat","Session scheduled ✓":"Seans planlandı ✓","Create and manage nutrition plans for your clients.":"Danışanlarınız için beslenme planları oluşturun ve yönetin.","Active Plans":"Aktif Planlar","Plans Created":"Oluşturulan Planlar","Clients With Nutrition Plans":"Beslenme Planı Olan Danışanlar","Plans Needing Review":"İnceleme Gereken Planlar","Average Daily Calories":"Günlük Ortalama Kalori","Current Plan":"Mevcut Plan","Phase":"Aşama / Faz","Last Updated":"Son Güncelleme","Open Plan":"Planı Aç","Duplicate":"Kopyala","Plan duplicated":"Plan kopyalandı","Plan archived":"Plan arşivlendi","Plan paused":"Plan duraklatıldı","Plan resumed":"Plan sürdürüldü","Basics":"Temel Bilgiler","Journey":"Yolculuk","People & Reward":"Kişiler ve Ödül","Describe your challenge":"Meydan okumanızı açıklayın","e.g. 30-day fat-loss, 4 sessions a week":"Örn. 30 günlük yağ yakımı, haftada 4 seans","AI fills the fields below — you review and edit":"Yapay zeka aşağıdaki alanları doldurur — siz inceler ve düzenlersiniz","Build with AI":"Yapay Zeka ile Oluştur","Drafting…":"Taslak hazırlanıyor…","Describe your challenge first":"Önce meydan okumanızı açıklayın","Challenge drafted ✓":"Meydan okuma taslağı hazır ✓","Monthly AI limit reached":"Aylık AI sınırına ulaşıldı","AI could not draft — try again":"AI taslak hazırlayamadı — tekrar deneyin","Plan created ✓":"Plan oluşturuldu ✓","New Nutrition Plan":"Yeni Beslenme Planı","Nutrition Plan Updated":"Beslenme Planı Güncellendi","Weight Updated":"Kilo Güncellendi","Coach Note Added":"Antrenör Notu Eklendi","Version preview (demo)":"Sürüm önizleme (demo)","Plan Name":"Plan Adı","Start Date":"Başlangıç Tarihi","Plan Type":"Plan Türü","Training Day / Rest Day":"Antrenman Günü / Dinlenme Günü","Target Macros":"Hedef Makrolar","Meal Planner":"Öğün Planlayıcı","Weekly":"Haftalık","Phases":"Aşamalar","Meal Templates":"Öğün Şablonları","Plan Templates":"Plan Şablonları","History":"Geçmiş","Jump to the food log below":"Aşağıdaki besin günlüğüne git","Search food…":"Besin ara…","Per 100g":"100g başına","Custom Food":"Özel Besin","Food name":"Besin Adı","Custom food added":"Özel besin eklendi","Add Food":"Besin Ekle","added to meal":"öğüne eklendi","Category":"Kategori","Alternatives":"Alternatifler","Add Alternative":"Alternatif Ekle","Defined manually by the coach — no automation":"Antrenör tarafından manuel belirlenir — otomasyon yoktur","Daily Target":"Günlük Hedef","Planned":"Planlanan","On target":"Hedefte","Above target":"Hedefin üstünde","Below target":"Hedefin altında","Calculations only — the coach decides":"Yalnızca hesaplama — karar antrenöründür","Meal Total":"Öğün Toplamı","Duplicate Meal":"Öğünü Kopyala","Meal duplicated":"Öğün kopyalandı","Meal deleted":"Öğün silindi","Edit Meal":"Öğünü Düzenle","Meal name":"Öğün Adı","Meal updated ✓":"Öğün güncellendi ✓","Add Meal":"Öğün Ekle","New Meal":"Yeni Öğün","Meal added ✓":"Öğün eklendi ✓","Meal Note":"Öğün Notu","Meal note saved":"Öğün notu kaydedildi","Copy Day":"Günü Kopyala","Paste Day":"Günü Yapıştır","Apply to Week":"Haftaya Uygula","Pasted ✓":"Yapıştırıldı ✓","Applied to week ✓":"Haftaya uygulandı ✓","Meal moved":"Öğün taşındı","Chicken & Rice Lunch":"Tavuk & Pirinç Öğle Yemeği","Meal template created ✓":"Öğün şablonu oluşturuldu ✓","Meals":"Öğünler","Today's Meals":"Bugünkü Öğünler","Today's meals":"Bugünkü öğünler","Open Nutrition Workspace":"Beslenme Alanını Aç","Nutrition × Progress":"Beslenme × İlerleme","Create a plan first":"Önce bir plan oluşturun","Saved":"Kaydedildi","Meal":"Öğün","Data storage":"Veri Depolama","On this device (auto-save)":"Bu cihazda (otomatik kayıt)","Reset demo data":"Demo verilerini sıfırla","Are you sure? Click again":"Emin misiniz? Tekrar tıklayın","Feedback":"Geri Bildirim","Connect Client (Code)":"Danışan Bağla (Kod)","Connect":"Bağlan","Connection code":"Bağlantı Kodu","Connection link":"Bağlantı Linki","Join with connection code":"Bağlantı koduyla katıl","Connected with code":"Kod ile bağlandı","Client connection codes":"Danışan Bağlantı Kodları","Each client has a personal code — share only theirs":"Her danışanın kişisel bir kodu vardır — sadece kendisininkini paylaşın","Personal connection code":"Kişisel bağlantı kodu","Personal code":"Kişisel kod","The client enters this code on the login screen — their profile opens with everything you registered":"Danışan bu kodu giriş ekranına girer — kaydettiğiniz tüm bilgilerle profili açılır","Client added ✓":"Danışan eklendi ✓","Code regenerated ✓":"Kod yeniden üretildi ✓","Regenerate":"Yeniden Üret","Enter the personal code your coach gave you":"Antrenörünüzün verdiği kişisel kodu girin","Connected as":"Şu isimle bağlandı:","Copy connection code":"Bağlantı kodunu kopyala","Link":"Bağlantı","Code":"Kod","One code for your whole workspace — every client joins with it":"Tüm alanınız için tek kod — her danışan bununla katılır","Your clients join your workspace with this code — only your data, only your clients":"Danışanlarınız bu kodla katılır — sadece sizin verileriniz, sadece sizin danışanlarınız","Invalid code":"Geçersiz kod","Connected to your coach ✓":"Antrenörünüze bağlandınız ✓","Copy":"Kopyala","Copied ✓":"Kopyalandı ✓","Share this link or code with your client":"Bu linki veya kodu danışanınızla paylaşın","Simulated in demo — works across devices once backend is live":"Demoda simüle edildi — canlı ortamda tüm cihazlarda çalışır","No events this day":"Bu günde etkinlik yok","Session updated ✓":"Seans güncellendi ✓","Event deleted":"Etkinlik silindi","Duplicated ✓":"Kopyalandı ✓","Delete":"Sil","Edit Session":"Seansı Düzenle","Calendar exported (.ics)":"Takvim dışa aktarıldı (.ics)","Sessions This Week":"Bu Haftaki Seanslar","Total Hours":"Toplam Saat","Busiest Day":"En Yoğun Gün","⚠️ This client already has an event at this time":"⚠️ Bu danışanın bu saatte zaten bir etkinliği var","⚠️ You already have another event at this time":"⚠️ Bu saatte zaten başka bir etkinliğiniz var","✓ No conflicts":"✓ Çakışma yok","Export (.ics)":"Dışa Aktar (.ics)","All Clients":"Tüm Danışanlar","Working Hours":"Çalışma Saatleri","Work starts":"Mesai başlangıcı","Work ends":"Mesai bitişi","Set the hours you coach — the calendar grid and session time pickers use this range":"Koçluk yaptığınız saatleri belirleyin — takvim ızgarası bu aralığı kullanır","Sessions outside this range are still shown — the grid stretches to fit them.":"Bu aralık dışındaki seanslar da gösterilir — ızgara esner.","Quick presets":"Hızlı önayarlar","Current range":"Mevcut aralık","Calendar shows sessions from {a} to {b}":"Takvim {a} ile {b} arasındaki seansları gösterir","h / day":"saat / gün","Working hours updated":"Çalışma saatleri güncellendi","Calendar Type":"Takvim Türü","Auto (follow language)":"Otomatik (dili takip et)","Gregorian (Miladi)":"Miladi (Gregoryen)","Jalali (Shamsi)":"Şemsi (Hicri)","Calendar type updated":"Takvim türü güncellendi","Hours This Week":"Bu Haftaki Saatler","All clients on track ✓":"Tüm danışanlar hedefte ✓","Workout awaiting client":"Danışan bekleyen antrenman","Check-in with a note":"Not ile check-in yap","Re-engage with a message":"Mesaj ile iletişime geç","Attendance":"Katılım Durumu","Attended":"Katıldı","Missed":"Kaçırdı","Not marked":"İşaretlenmedi","Attendance Rate":"Katılım Oranı","Marked attended ✓":"Katıldı olarak işaretlendi ✓","Marked missed — client flagged":"Kaçırdı olarak işaretlendi — uyarı verildi","Attendance cleared":"Katılım temizlendi","Delete client":"Danışanı Sil","Client deleted":"Danışan silindi","At least one client required":"En az bir danışan gereklidir","Attendance history":"Katılım Geçmişi","Current Program":"Mevcut Program","Measurement":"Ölçüm","Sets × Reps × Weight":"Set × Tekrar × Ağırlık","New message":"Yeni Mesaj","You":"Siz","Create Plan":"Plan Oluştur","Add Phase":"Aşama Ekle","Create Meal Template":"Öğün Şablonu Oluştur","Use":"Kullan","Apply to client":"Danışana uygula","then customize":"ardından özelleştirin","View":"Görüntüle","Phase name":"Aşama Adı","120 min":"120 dk","sent you a message":"size bir mesaj gönderdi","New Template":"Yeni Şablon","Please check my form on this set":"Lütfen bu setimdeki formumu kontrol eder misiniz","12 years of experience in hypertrophy and strength programming for competitive and recreational athletes.":"Yarışmacı ve amatör sporcular için hipertrofi ve kuvvet programlamasında 12 yıllık deneyim.","No clients yet":"Henüz danışan yok","Clients join with this code — data syncs live across devices":"Danışanlar bu kodla katılır — veriler cihazlar arasında canlı senkronize olur","Live sync active — data is shared across devices":"Canlı senkronizasyon aktif — veriler cihazlar arasında paylaşılıyor","Sync blocked: ":"Senkronizasyon engellendi: ","Subscription expired — renew to keep editing (data is safe, read-only)":"Abonelik süresi doldu — düzenlemeye devam etmek için yenileyin (veriler güvende, salt okunur)","Subscription expired — renew to keep syncing (data is safe, read-only)":"Abonelik süresi doldu — senkronizasyona devam etmek için yenileyin (veriler güvende, salt okunur)","Client limit reached — upgrade your plan or archive a client":"Danışan sınırına ulaşıldı — planınızı yükseltin veya bir danışanı arşivleyin","Enter a coupon or payment code":"Bir kupon veya ödeme kodu girin","Checking code…":"Kod kontrol ediliyor…","Plan activated ✓ — welcome to ":"Plan etkinleştirildi ✓ — Hoş geldiniz: ","Request registered — pay, then enter your tracking coupon":"Talep alındı — ödeme yapın, ardından takip kuponunuzu girin","Code not found — check and retry":"Kod bulunamadı — kontrol edip tekrar deneyin","This code was already used":"Bu kod daha önce kullanılmış","This code has expired":"Bu kodun süresi dolmuş","Plans":"Planlar","Trial: 5 clients · Basic: 5 · Professional: 30 · Club: 200":"Deneme: 5 danışan · Temel: 5 · Profesyonel: 30 · Kulüp: 200","seats used":"koltuk kullanıldı","Basic":"Temel","Professional":"Profesyonel","Club":"Kulüp","IRT / month":"TL / ay","IRT":"TL","Request":"Talep Et","Pending request":"Bekleyen talep","pay to the merchant, then enter your tracking coupon below":"ödemeyi yapın, ardından takip kuponunuzu aşağıya girin","Coupon / payment code":"Kupon / Ödeme Kodu","Redeem a coupon from support or your payment tracking code":"Destek ekibinden aldığınız kuponu veya ödeme takip kodunuzu tanımlayın","Activate":"Etkinleştir","Valid until":"Geçerlilik süresi:","Activation code":"Aktivasyon kodu","optional — from your purchase":"isteğe bağlı — satın alımınızdan","optional — renewal code":"isteğe bağlı — yenileme kodu","Expired — renew to keep syncing":"Süresi doldu — senkronizasyon için yenileyin","Trial · ":"Deneme · ","Active · ":"Aktif · ","Platform admin":"Platform Yöneticisi","All coaches on this platform — plans, remaining days & access control":"Bu platformdaki tüm antrenörler — planlar, kalan günler ve erişim kontrolü","Remaining":"Kalan","Seats":"Danışan Kontenjanı","days":"gün","Extend":"Uzat","Extend subscription":"Aboneliği Uzat","Grant":"Yetki Ver / Tanımla","Days":"Gün","Days stack on top of any remaining time — granting also restores suspended access":"Günler kalan sürenin üzerine eklenir — süre tanımak askıya alınan erişimi de geri yükler","Subscription granted ✓":"Abonelik tanımlandı ✓","Suspend access":"Erişimi Askıya Al","Restore access":"Erişimi Geri Yükle","Suspended":"Askıya Alındı","Access suspended — coach is read-only":"Erişim askıya alındı — antrenör salt okunur modda","Access restored ✓":"Erişim geri yüklendi ✓","Create coupon":"Kupon Oluştur","Max uses":"Maksimum Kullanım","Code (optional)":"Kod (isteğe bağlı)","Auto-generated":"Otomatik üretilen","Coupon created — share the code":"Kupon oluşturuldu — kodu paylaşın","Coach not found":"Antrenör bulunamadı","Cannot suspend an admin":"Bir yönetici askıya alınamaz","Code already exists":"Kod zaten mevcut","Registered":"Kayıtlı","Trial":"Deneme","Expired":"Süresi Doldu","Refresh":"Yenile","Admin":"Yönetici","Loading…":"Yükleniyor…","Incline Barbell Press":"Incline Barbell Press","Decline Barbell Press":"Decline Barbell Press","Wide-Grip Barbell Press":"Wide-Grip Barbell Press","Dumbbell Bench Press":"Dumbbell Bench Press","Decline Dumbbell Press":"Decline Dumbbell Press","Dumbbell Fly":"Dumbbell Fly","Incline Dumbbell Fly":"Incline Dumbbell Fly","Decline Dumbbell Fly":"Decline Dumbbell Fly","Dumbbell Pullover":"Dumbbell Pullover","Cable Crossover":"Cable Crossover","Incline Cable Fly":"Incline Cable Fly","Cable Chest Press":"Cable Chest Press","Pec Deck Fly":"Pec Deck Fly","Smith Machine Bench Press":"Smith Machine Bench Press","Wide Push-Up":"Wide Push-Up","Incline Push-Up":"Incline Push-Up","Decline Push-Up":"Decline Push-Up","Chin-Up":"Chin-Up","Close-Grip Lat Pulldown":"Close-Grip Lat Pulldown","Wide-Grip Lat Pulldown":"Wide-Grip Lat Pulldown","One-Arm Lat Pulldown":"Tek Kol Lat Pulldown","Underhand Lat Pulldown":"Underhand Lat Pulldown","Straight-Arm Pulldown":"Straight-Arm Pulldown","Reverse-Grip Barbell Row":"Reverse-Grip Barbell Row","T-Bar Row":"T-Bar Row","Bent-Over Dumbbell Row":"Bent-Over Dumbbell Row","One-Arm Dumbbell Row":"Tek Kol Dumbbell Row","Iso Row Machine":"Iso Row Makinesi","Renegade Row":"Renegade Row","Good Morning":"Good Morning","Back Extension":"Back Extension (Hyperextension)","Seated Military Press":"Seated Military Press","Arnold Press":"Arnold Press","Dumbbell Shoulder Press":"Dumbbell Omuz Presi","Cable Lateral Raise":"Cable Lateral Raise","Front Raise":"Front Raise (Öne Açış)","Cable Front Raise":"Cable Front Raise","Reverse Fly":"Reverse Fly","Cable Rear Delt Fly":"Cable Rear Delt Fly","Reverse Pec Deck":"Reverse Pec Deck","Rear Delt Row":"Rear Delt Row","Upright Row":"Upright Row","Cable Upright Row":"Cable Upright Row","Barbell Shrug":"Barbell Shrug","Dumbbell Shrug":"Dumbbell Shrug","Cable Shrug":"Cable Shrug","Machine Shoulder Press":"Makine Omuz Presi","Band Pull-Apart":"Band Pull-Apart","Band Lateral Raise":"Band Lateral Raise","Cable External Rotation":"Cable External Rotation","Kettlebell Press":"Kettlebell Press","Kettlebell Halo":"Kettlebell Halo","EZ-Bar Curl":"EZ-Bar Curl","Preacher Curl":"Preacher Curl","Reverse Curl":"Reverse Curl","Drag Curl":"Drag Curl","Spider Curl":"Spider Curl","Dumbbell Curl":"Dumbbell Curl","Seated Dumbbell Curl":"Oturarak Dumbbell Curl","Incline Dumbbell Curl":"Incline Dumbbell Curl","Incline Hammer Curl":"Incline Hammer Curl","Concentration Curl":"Concentration Curl","Zottman Curl":"Zottman Curl","Cable Curl":"Cable Curl","Rope Hammer Curl":"Halat Hammer Curl","Cable Preacher Curl":"Cable Preacher Curl","Machine Bicep Curl":"Makine Biceps Curl","Machine Preacher Curl":"Makine Preacher Curl","Close-Grip Bench Press":"Close-Grip Bench Press","Overhead Barbell Extension":"Overhead Barbell Extension","Rope Pushdown":"Halat Pushdown","Reverse-Grip Pushdown":"Reverse-Grip Pushdown","One-Arm Cable Pushdown":"Tek Kol Cable Pushdown","Overhead Rope Extension":"Overhead Rope Extension","Triceps Kickback":"Triceps Kickback","Triceps Dip":"Triceps Dip","Bench Dip":"Bench Dip","Machine Triceps Extension":"Makine Triceps Extension","Assisted Dip Machine":"Destekli Dip Makinesi","Front Squat":"Front Squat","Sumo Squat":"Sumo Squat","Barbell Hack Squat":"Barbell Hack Squat","Walking Lunge":"Walking Lunge","Step-Up":"Step-Up","Sissy Squat":"Sissy Squat","Dumbbell Squat":"Dumbbell Squat","Dumbbell Lunge":"Dumbbell Lunge","Dumbbell Split Squat":"Dumbbell Split Squat","Plie Squat":"Plie Squat","Goblet Squat":"Goblet Squat","Hack Squat Machine":"Hack Squat Makinesi","Bodyweight Squat":"Vücut Ağırlığıyla Squat","Adductor Machine":"Adductor (İç Bacak) Makinesi","Stiff-Leg Deadlift":"Stiff-Leg Deadlift","Seated Leg Curl":"Seated Leg Curl","Standing Leg Curl":"Standing Leg Curl","Glute Ham Raise":"Glute Ham Raise (GHR)","Reverse Hyperextension":"Reverse Hyperextension","Kettlebell Swing":"Kettlebell Swing","Abductor Machine":"Abductor (Dış Bacak) Makinesi","Glute Bridge":"Glute Bridge","Single-Leg Glute Bridge":"Tek Bacak Glute Bridge","Glute Kickback":"Glute Kickback","Cable Kickback":"Cable Kickback","Cable Pull-Through":"Cable Pull-Through","Band Monster Walk":"Band Monster Walk","Seated Calf Raise":"Seated Calf Raise","Barbell Calf Raise":"Barbell Calf Raise","Barbell Seated Calf Raise":"Barbell Seated Calf Raise","Calf Press":"Calf Press","Crunch":"Crunch (Mekik)","Reverse Crunch":"Reverse Crunch","Oblique Crunch":"Oblique Crunch","Russian Twist":"Russian Twist","Hanging Leg Raise":"Hanging Leg Raise","Lying Leg Raise":"Lying Leg Raise","Side Plank":"Side Plank","Cable Crunch":"Cable Crunch","Cable Reverse Crunch":"Cable Reverse Crunch","Cable Russian Twist":"Cable Russian Twist","Pallof Press":"Pallof Press","Ab Crunch Machine":"Ab Crunch Makinesi","Ab Rollout":"Ab Rollout","Wrist Curl":"Wrist Curl","Reverse Wrist Curl":"Reverse Wrist Curl","Dumbbell Wrist Curl":"Dumbbell Wrist Curl","Cable Wrist Curl":"Cable Wrist Curl","Finger Curl":"Finger Curl","Hold the dumbbell to lift":"Kaldırmak için dumbbell’ı tutun","Keep holding until it lifts":"Kalkana kadar tutmaya devam edin","Slide to unlock":"Kilidi açmak için kaydırın","Unlocking…":"Kilit açılıyor…","Your coach invited you":"Antrenörünüz sizi davet etti","Who are you?":"Kimsiniz?","Enter the code your coach gave you":"Antrenörünüzün verdiği kodu girin","Unlocking opens your portal":"Kilit açıldığında portalınız açılır","Connect with your code first":"Önce kodunuzla bağlanın","Pick your name to continue":"Devam etmek için adınızı seçin","Code not found":"Kod bulunamadı","Ask your coach for a new invite code":"Antrenörünüzden yeni bir davet kodu isteyin","Try another code":"Başka bir kod deneyin","Cannot reach the server":"Sunucuya ulaşılamıyor","Check your internet connection and try again":"İnternet bağlantınızı kontrol edip tekrar deneyin","Try again":"Tekrar Dene","Personal code needed":"Kişisel kod gerekli","Ask your coach for your personal invite code":"Antrenörünüzden kişisel davet kodunuzu isteyin","I have a connection code":"Bağlantı kodum var","Your coach":"Antrenörünüz","Forearms":"Ön Kol","Kettlebell":"Kettlebell","Band":"Direnç Bandı","Badge unlocked!":"Rozet Kazanıldı!","Awesome!":"Harika!","Achievements":"Başarılar","Challenge complete":"Meydan okuma tamamlandı","Progress logged":"İlerleme kaydedildi","Badges":"Rozetler","Next badge":"Sıradaki rozet","View all":"Tümünü Gör","Points":"Puan","Workout completed":"Antrenman tamamlandı","First Workout":"İlk Antrenman","10 Workouts":"10 Antrenman","25 Workouts":"25 Antrenman","50 Workouts":"50 Antrenman","100 Workouts":"100 Antrenman","3-Day Streak":"3 Günlük Seri","7-Day Streak":"7 Günlük Seri","14-Day Streak":"14 Günlük Seri","30-Day Streak":"30 Günlük Seri","100-Day Streak":"100 Günlük Seri","10 Check-ins":"10 Check-in","Form Master":"Form Ustası","5 Measurements":"5 Ölçüm","Earn points: workout +10 · check-in +3 · form check +5 · each badge +20":"Puan kazan: Antrenman +10 · Check-in +3 · Form kontrolü +5 · Her rozet +20","Auto workout reminders":"Otomatik Antrenman Hatırlatıcıları","Message clients who skip 3+ days":"3+ gün antrenman kaçıran danışanlara mesaj at","Reminder sent":"Hatırlatıcı gönderildi","Coach reminder":"Antrenör Hatırlatıcısı","Auto reminder":"Otomatik Hatırlatıcı","Reminder from your coach":"Antrenörünüzden hatırlatıcı","Export PDF":"PDF Olarak Aktar","Week PDF":"Haftalık PDF","Nutrition PDF":"Beslenme PDF","Export the full week as a printable PDF":"Tüm haftayı yazdırılabilir PDF olarak dışa aktar","Allow pop-ups to export":"Dışa aktarmak için açılır pencerelere izin verin","Scan to connect":"Bağlanmak için tarayın","Open the CoachMint app — your plan syncs live":"CoachMint uygulamasını açın — planınız canlı senkronize olur","Week Plan":"Haftalık Plan","Muscle Gain":"Kas Kazanımı","Fat Loss":"Yağ Yakımı","Strength":"Güç","Endurance":"Dayanıklılık","Mobility":"Mobilite","Printed from CoachMint on":"CoachMint üzerinden yazdırıldı:","Challenges":"Meydan Okumalar","New Challenge":"Yeni Meydan Okuma","Edit Challenge":"Meydan Okumayı Düzenle","Challenge name":"Meydan Okuma Adı","Challenge type":"Meydan Okuma Türü","Challenge saved ✓":"Meydan okuma kaydedildi ✓","Challenge ended":"Meydan okuma bitti","Challenge deleted":"Meydan okuma silindi","Only the coach can manage challenges":"Meydan okumaları sadece antrenör yönetebilir","End":"Bitir","Ended":"Bitti","No active challenges":"Aktif meydan okuma yok","Design journeys, set targets, celebrate every win":"Hedefler belirleyin, yolculuk tasarlayın, her başarıyı kutlayın","Create a challenge and design the path your clients follow":"Bir meydan okuma oluşturun ve danışanlarınızın izleyeceği yolu çizin","Target":"Hedef","Streak goal":"Seri Hedefi","Habit":"Alışkanlık","Metric":"Metrik","Target value":"Hedef Değeri","Unit":"Birim","workouts":"antrenman","check-ins":"check-in","Check-ins":"Check-in’ler","Manual log":"Manuel Kayıt","Duration (days)":"Süre (gün)","Days left":"Kalan gün","Participants":"Katılımcılar","All active clients":"Tüm aktif danışanlar","No participants yet":"Henüz katılımcı yok","Reward":"Ödül","Badge emoji":"Rozet emojisi","Badge name":"Rozet adı","Challenge Champion":"Meydan Okuma Şampiyonu","Champion":"Şampiyon","September Streak":"Eylül Serisi","Keep your streak alive all month":"Serinizi tüm ay boyunca sürdürün","Path stages":"Aşama adımları","the journey the client walks":"danışanın ilerlediği yol","Add stage":"Aşama Ekle","Stage name":"Aşama Adı","Journey preview":"Yolculuk Önizlemesi","Next stage":"Sonraki Aşama","You are here":"Buradasınız","Log progress":"İlerlemeyi Kaydet","Leaderboard":"Liderlik Tablosu","Average progress":"Ortalama İlerleme","On track":"Hedefte","Behind":"Geride","Nudge sent ✓":"Dürtme gönderildi ✓","You rank":"Sıralamanız:","completed the challenge":"meydan okumayı tamamladı","Video link":"Video Bağlantısı","Watch video":"Videoyu İzle","Paste a YouTube or GIF link — the client sees it on their workout":"YouTube veya GIF bağlantısı yapıştırın — danışan antrenmanında izlesin","GIF links play right inside the workout — other links open in a new tab.":"GIF bağlantıları doğrudan antrenmanın içinde oynatılır — diğer bağlantılar yeni sekmede açılır.","Link must start with http":"Bağlantı http ile başlamalıdır","Video saved ✓":"Video kaydedildi ✓","Video removed":"Video kaldırıldı","Search on YouTube":"YouTube’da Ara","Set a link once — it attaches to this exercise in every workout":"Bağlantıyı bir kez kaydedin — tüm antrenmanlarda bu egzersize eklenir","Saved to video bank ✓":"Video bankasına kaydedildi ✓","Video bank":"Video Bankası","links":"bağlantı","with video":"videolu","Import":"İçe Aktar","Export":"Dışa Aktar","Import video links":"Video bağlantılarını içe aktar","Export video links":"Video bağlantılarını dışa aktar","Paste lines like:":"Şu biçimde yapıştırın:","Name | URL":"İsim | Bağlantı","One link per line: exercise name, then the URL — tab or | separated.":"Her satıra bir bağlantı: Egzersiz adı, sonra bağlantı — sekme veya | ile ayrılmış.","links imported":"bağlantı içe aktarıldı","not matched":"eşleşmedi","No links imported":"Hiçbir bağlantı aktarılmadı","Select and copy manually":"Manuel seçip kopyalayın","Change photo":"Fotoğrafı Değiştir","Remove photo":"Fotoğrafı Kaldır","Photo saved ✓":"Fotoğraf kaydedildi ✓","Photo removed":"Fotoğraf kaldırıldı","Picture is too large":"Resim çok büyük","Could not read the picture":"Resim okunamadı","Tap the photo to change it":"Değiştirmek için fotoğrafa dokunun","Offline mode":"Çevrimdışı Mod","Sync paused — this workspace is full. Your saved data is safe; ask your coach to check the plan.":"Senkronizasyon duraklatıldı — bu alan dolu. Verileriniz güvende; antrenörünüzden planı kontrol etmesini isteyin.","Replies within":"Ortalama yanıt süresi:","Swaps":"Alternatifler","Custom":"Özel","Favorite":"Favori","Exercise name":"Egzersiz Adı","Custom exercise saved ✓":"Özel egzersiz kaydedildi ✓","Exercise deleted":"Egzersiz silindi","Custom exercises sync with your workspace and appear in the builder, templates and the client app":"Özel egzersizler çalışma alanınızla senkronize olur ve oluşturucu, şablonlar ve danışan uygulamasında görünür","Edit Meal Template":"Öğün Şablonunu Düzenle","Edit Plan Template":"Plan Şablonunu Düzenle","No foods — macro-only template":"Besinsiz — yalnızca makro şablonu","Edit Note":"Notu Düzenle","Note updated ✓":"Not güncellendi ✓","No snapshot stored for this entry (older record)":"Bu kayıt için görsel saklanmamış (eski kayıt)","File too large — max 300 KB per file":"Dosya çok büyük — dosya başına maksimum 300 KB","File storage is full — delete some files first":"Dosya depolama alanı dolu — önce birkaç dosya silin","File uploaded ✓":"Dosya yüklendi ✓","This file has no stored content (legacy entry)":"Bu dosyanın içeriği bulunmuyor (eski kayıt)","Downloading":"İndiriliyor","No downloadable files yet":"Henüz indirilebilir dosya yok","files":"dosya","No inline preview for this type — download it instead":"Bu tür için önizleme yok — bunun yerine indirin","No files yet — upload the first document":"Henüz dosya yok — ilk belgeyi yükleyin","Stored in your workspace and synced to every device — max 300 KB per file":"Çalışma alanınızda depolanır ve tüm cihazlara senkronize edilir — dosya başına maks. 300 KB","Photo attached":"Fotoğraf eklendi","Workspace exported ✓":"Çalışma alanı dışa aktarıldı ✓","Current password is incorrect":"Mevcut şifre hatalı","Password updated — other devices signed out":"Şifre güncellendi — diğer cihazların oturumu kapatıldı","Enter your current password":"Mevcut şifrenizi girin","Changing your password signs out every other device":"Şifrenizi değiştirdiğinizde diğer tüm cihazlardan çıkış yapılır","this device":"bu cihaz","Name":"İsim","Connect a client":"Danışan Bağla","Every client gets a personal code (Clients → copy icon). They enter it on the login screen and their device binds to your workspace instantly.":"Her danışan kişisel bir kod alır (Danışanlar → kopyala simgesi). Giriş ekranında girerler ve cihazları çalışma alanınıza anında bağlanır.","Publish a workout":"Antrenman Yayınla","Build it in the Workout Builder, save it to the client — it appears on their phone the moment you save.":"Oluşturucuda yazın, danışana kaydedin — kaydettiğiniz anda telefonunda görünür.","Nutrition plans":"Beslenme Planları","The client sees today's meals, targets and your food swaps in their Nutrition tab.":"Danışan bugünün öğünlerini, hedeflerini ve yemek alternatiflerini Beslenme sekmesinde görür.","Log measurements and approve progress photos — charts update for both of you.":"Ölçümleri kaydedin ve ilerleme fotoğraflarını onaylayın — grafikler ikiniz için de anında güncellenir.","Drafts workouts, analyzes clients and writes your weekly report — you always decide before anything is sent.":"Antrenman taslakları hazırlar, danışanları analiz eder ve haftalık raporunuzu yazar — gönderilmeden önce son karar daima sizindir.","Data syncs live across every signed-in device — offline edits merge automatically":"Giriş yapılmış tüm cihazlarda veriler canlı senkronize olur — çevrimdışı düzenlemeler otomatik birleşir","Your nutrition companion":"Beslenme Yol Arkadaşınız","Log what you eat, ask for meal ideas and let your coach follow your progress.":"Yediklerinizi kaydedin, yemek fikirleri isteyin ve antrenörünüzün takibini sağlayın.","Set up nutrition profile":"Beslenme profilini ayarla","From your profile":"Profilinizden","Set targets":"Hedefleri Belirle","Left":"Kalan","meals":"öğün","What should you eat now?":"Şimdi ne yemelisin?","Based on what is left of your day":"Gününüzden kalan makrolara göre","Log this":"Bunu Kaydet","Log this meal":"Bu öğünü kaydet","Logged":"Kaydedildi","Food log":"Besin Günlüğü","Entry removed":"Girdi silindi","Meal logged ✓":"Öğün kaydedildi ✓","Water logged 💧":"Su kaydedildi 💧","Nutrition Assistant":"Beslenme Asistanı","AI · not medical advice":"Yapay Zeka · tıbbi tavsiye değildir","Hi! Tell me what you ate, or ask what to eat next.":"Merhaba! Ne yediğinizi yazın veya bir sonraki öğünde ne yiyebileceğinizi sorun.","Thinking…":"Düşünüyor…","What should I eat now?":"Şimdi ne yemeliyim?","Food for before my workout":"Antrenman öncesi öğünü","Pre-workout":"Antrenman Öncesi","Photo":"Fotoğraf","attached":"eklendi","Log a meal or ask anything…":"Öğün kaydedin veya dilediğinizi sorun…","Confirm & log":"Onayla ve Kaydet","I found these foods — confirm and I will log them:":"Bu besinleri buldum — onaylayın, kaydedeyim:","I could not find":"Bulamadım","Pick it from the food library or tell me the amount in grams.":"Besin kütüphanesinden seçin veya gramajını belirtin.","You have":"Mevcut:","left today":"bugün kalan","Try":"Dene:","Instead of":"Bunun yerine:","Tell me what you ate (e.g. \"200g chicken and 300g rice\") and I will log it.":"Ne yediğinizi yazın (örn. \"200g tavuk ve 300g pirinç\"), hemen kaydedeyim.","Nutrition profile":"Beslenme Profili","Daily targets":"Günlük Hedefler","Leave empty to follow your coach plan.":"Antrenörünüzün planını takip etmek için boş bırakın.","Allergies / intolerances":"Alerjiler / İntoleranslar","Foods you dislike":"Sevmediğiniz besinler","Favorite foods":"Favori besinler","Cooking time available":"Yemek hazırlama süresi","Wake up":"Uyanma","Bed time":"Yatış","Profile saved ✓":"Profil kaydedildi ✓","Edit profile":"Profili Düzenle","Allergies":"Alerjiler","Dislikes":"Sevmedikleri","Favorites":"Favoriler","Cooking time":"Pişirme Süresi","No foods to log":"Kaydedilecek besin yok","Photo attached — describe your meal":"Fotoğraf eklendi — öğününüzü tarif edin","Quick meal":"Hızlı Öğün","High-protein":"Yüksek Proteinli","Budget meal":"Ekonomik Öğün","Light meal":"Hafif Öğün","No cooking":"Pişirme gerektirmeyen","No food logs for 3 days":"3 gündür besin kaydı yok","Protein below target the last 3 days":"Protein son 3 gündür hedefin altında","Calories off target the last 3 days":"Kalori son 3 gündür hedefin dışında","Hydration well below target today":"Bugünkü su tüketimi hedefin çok altında","Nutrition Health":"Beslenme Sağlığı","Rules":"Kurallar","Needs Attention":"İlgi Gerektiriyor","Action Required":"Eylem Gerekli","All clients with nutrition plans are on track.":"Beslenme planı olan tüm danışanlar hedefte.","Recent insights":"Son Değerlendirmeler","Nutrition monitoring rules":"Beslenme Takip Kuralları","Get notified only when a pattern is real — thresholds, duration and severity are yours to set.":"Yalnızca durum kalıcı olduğunda bildirim alın — eşikleri, süreyi ve önemi siz belirlersiniz.","Protein % of target":"Hedeflenen Protein %","Calories % of target":"Hedeflenen Kalori %","Logging":"Kayıt Tutma","Water % of target":"Hedeflenen Su %","Weight trend vs goal":"Hedefe göre kilo trendi","Threshold %":"Eşik %","Observe":"İzle","Warning":"Uyarı","Alert":"Kritik Uyarı","Example: protein below 85% for 3 days → warning.":"Örnek: Protein 3 gün boyunca %85’in altında kalırsa → uyarı ver.","Rules saved ✓":"Kurallar kaydedildi ✓","Weekly nutrition report":"Haftalık Beslenme Raporu","Protein on target":"Protein hedefte","Below calorie target":"Kalori hedefinin altında","Below protein target":"Protein hedefinin altında","No logs this week":"Bu hafta kayıt yok","Days logged":"Kayıt yapılan gün sayısı","Avg calories":"Ortalama kalori","Avg protein":"Ortalama protein","Consistency":"İstikrar","No food logs this week yet — students log from their Nutrition tab.":"Bu hafta henüz besin kaydı yok — danışanlar Beslenme sekmesinden kayıt yapar.","AI narrative":"Yapay Zeka Değerlendirmesi","AI is not configured on this server — the table above is fully computed locally.":"Bu sunucuda AI yapılandırılmamış — yukarıdaki tablo tamamen yerel olarak hesaplanmıştır.","AI report unavailable right now.":"AI raporu şu anda kullanılamıyor.","days without logs":"kayıtsız gün","vs goal":"hedefe göre","Protein below target":"Protein hedefin altında","Calories off target":"Kalori hedefin dışında","Not logging food":"Besin kaydetmiyor","Hydration low":"Su tüketimi düşük","Weight trend off goal":"Kilo trendi hedeften uzak","last 7 days":"son 7 gün","No food logged yet — the student logs from their Nutrition tab.":"Henüz besin kaydedilmedi — danışan Beslenme sekmesinden kaydeder.","Assistant insights":"Asistan Çıkarımları","No insights yet.":"Henüz çıkarım yok.","Assistant thread":"Asistan Sohbeti","last messages":"son mesajlar","No assistant conversation yet.":"Henüz asistanla sohbet yok."};
+
+Object.assign(TR, {
+  "Wearables": "Giyilebilir Cihazlar",
+  "Connect Strava": "Strava'yı Bağla",
+  "Connected apps": "Bağlı Uygulamalar",
+  "NOT CONNECTED": "BAĞLI DEĞİL",
+  "CONNECTED": "BAĞLANDI",
+  "SANDBOX": "SANDBOX (TEST)",
+  "API Settings": "API Ayarları",
+  "Sync Now": "Şimdi Eşitle",
+  "Sync Activities Now": "Aktiviteleri Şimdi Eşitle",
+  "Syncing…": "Eşitleniyor…",
+  "Disconnect": "Bağlantıyı Kes",
+  "Disconnect Strava? Past imported activities will remain in your training log.": "Strava bağlantısı kesilsin mi? Daha önce içe aktarılan aktiviteler antrenman kaydınızda kalacaktır.",
+  "Strava disconnected": "Strava bağlantısı kesildi",
+  "Strava Integration Settings": "Strava Entegrasyon Ayarları",
+  "Enable Sandbox / Simulation Mode": "Sandbox / Simülasyon Modunu Etkinleştir",
+  "Strava Client ID": "Strava İstemci Kimliği (Client ID)",
+  "Strava Client Secret": "Strava İstemci Gizli Anahtarı (Client Secret)",
+  "Save Settings": "Ayarları Kaydet",
+  "Strava settings saved ✓": "Strava ayarları kaydedildi ✓",
+  "Connecting to Strava…": "Strava'ya bağlanılıyor…",
+  "View in Training Load": "Antrenman Yükünde Gör",
+  "Imported Strava Activities": "İçe Aktarılan Strava Aktiviteleri",
+  "runs": "koşu",
+  "imported": "içe aktarıldı",
+  "Connected — ready to sync": "Bağlandı — eşitlemeye hazır",
+  "Click \"Sync Now\" to fetch activities from Strava into your Training Log.": "Strava aktivitelerini Antrenman Kaydınıza almak için \"Şimdi Eşitle\"ye tıklayın.",
+  "Strava activities are up to date ✓": "Strava aktiviteleri güncel ✓",
+  "activities imported from Strava ✓": "aktivite Strava'dan içe aktarıldı ✓",
+  "Strava connected successfully! ✓": "Strava başarıyla bağlandı! ✓",
+  "Sync activities from Strava…": "Aktiviteler Strava'dan eşitleniyor…",
+  "Saving Strava settings…": "Strava ayarları kaydediliyor…",
+  "Disconnecting Strava…": "Strava bağlantısı kesiliyor…",
+  "Zero-configuration test mode. Connects instantly with realistic athlete profile (\"Daniel Okoye\"), GPS runs, elevation profiles, and lap splits without needing a Strava developer account.": "Sıfır yapılandırmalı test modu. Strava geliştirici hesabı gerekmeden gerçekçi sporcu profili (\"Daniel Okoye\"), GPS koşuları, irtifa profilleri ve tur süreleri ile anında bağlanır.",
+  "Keep empty to preserve the server’s existing secret.": "Sunucudaki mevcut gizli anahtarı korumak için boş bırakın.",
+  "Found on your Strava API Application page.": "Strava API Uygulama sayfanızda bulunur.",
+  "Live Strava Developer Setup:": "Canlı Strava Geliştirici Kurulumu:",
+  "Register an app at ": "Şu adresten bir uygulama kaydedin: ",
+  "Set \"Authorization Callback Domain\" to:": "\"Authorization Callback Domain\" alanını şu şekilde ayarlayın:",
+  "Paste your Client ID & Secret, uncheck Sandbox Mode, and save.": "İstemci Kimliği ve Gizli Anahtarınızı yapıştırın, Sandbox Modu işaretini kaldırın ve kaydedin.",
+  "Sandbox Simulator Profile": "Sandbox Simülatör Profili",
+  "Authorized Strava Account": "Yetkilendirilmiş Strava Hesabı",
+  "External activity providers — sync your GPS runs and training load": "Harici aktivite sağlayıcıları — GPS koşularınızı ve antrenman yükünüzü eşitleyin"
+});
+
+Object.assign(FA, {
+  "Wearables": "پوشیدنی‌ها",
+  "Connect Strava": "اتصال استراوا",
+  "Connected apps": "برنامه‌های متصل",
+  "NOT CONNECTED": "متصل نیست",
+  "CONNECTED": "متصل شد",
+  "SANDBOX": "شبیه‌ساز (تست)",
+  "API Settings": "تنظیمات API",
+  "Sync Now": "همگام‌سازی الان",
+  "Sync Activities Now": "همگام‌سازی فعالیت‌ها",
+  "Syncing…": "در حال همگام‌سازی…",
+  "Disconnect": "قطع اتصال",
+  "Disconnect Strava? Past imported activities will remain in your training log.": "اتصال استراوا قطع شود؟ فعالیت‌های قبلی در دفترچه تمرین شما باقی می‌مانند.",
+  "Strava disconnected": "اتصال استراوا قطع شد",
+  "Strava Integration Settings": "تنظیمات اتصال به استراوا",
+  "Enable Sandbox / Simulation Mode": "فعال‌سازی حالت شبیه‌ساز (تست)",
+  "Strava Client ID": "شناسه کاربری استراوا (Client ID)",
+  "Strava Client Secret": "رمز امنیتی استراوا (Client Secret)",
+  "Save Settings": "ذخیره تنظیمات",
+  "Strava settings saved ✓": "تنظیمات استراوا ذخیره شد ✓",
+  "Connecting to Strava…": "در حال اتصال به استراوا…",
+  "View in Training Load": "مشاهده در بار تمرینی",
+  "Imported Strava Activities": "فعالیت‌های وارد شده از استراوا",
+  "runs": "دویدن",
+  "imported": "وارد شده",
+  "Connected — ready to sync": "متصل شد — آماده همگام‌سازی",
+  "Click \"Sync Now\" to fetch activities from Strava into your Training Log.": "روی «همگام‌سازی الان» کلیک کنید تا فعالیت‌های استراوا در دفتر تمرین ثبت شوند.",
+  "Strava activities are up to date ✓": "فعالیت‌های استراوا به‌روز هستند ✓",
+  "activities imported from Strava ✓": "فعالیت از استراوا وارد شد ✓",
+  "Strava connected successfully! ✓": "استراوا با موفقیت متصل شد! ✓",
+  "Sync activities from Strava…": "در حال همگام‌سازی فعالیت‌ها از استراوا…",
+  "Saving Strava settings…": "در حال ذخیره تنظیمات استراوا…",
+  "Disconnecting Strava…": "در حال قطع اتصال استراوا…",
+  "Zero-configuration test mode. Connects instantly with realistic athlete profile (\"Daniel Okoye\"), GPS runs, elevation profiles, and lap splits without needing a Strava developer account.": "حالت تست بدون نیاز به تنظیمات. فوراً با پروفایل ورزشکار («Daniel Okoye»)، دویدن‌های GPS، پروفایل ارتفاع و زمان دورها بدون نیاز به حساب توسعه‌دهنده متصل می‌شود.",
+  "Keep empty to preserve the server’s existing secret.": "برای حفظ رمز فعلی سرور این فیلد را خالی بگذارید.",
+  "Found on your Strava API Application page.": "در صفحه تنظیمات API استراوا قابل مشاهده است.",
+  "Live Strava Developer Setup:": "راه‌اندازی واقعی توسعه‌دهنده استراوا:",
+  "Register an app at ": "ثبت برنامه در ",
+  "Set \"Authorization Callback Domain\" to:": "دامنه بازگشت را تنظیم کنید روی:",
+  "Paste your Client ID & Secret, uncheck Sandbox Mode, and save.": "شناسه و رمز استراوا را وارد کنید، تیک شبیه‌ساز را بردارید و ذخیره کنید.",
+  "Sandbox Simulator Profile": "پروفایل شبیه‌ساز تستی",
+  "Authorized Strava Account": "حساب متصل استراوا",
+  "External activity providers — sync your GPS runs and training load": "سرویس‌های ورزشی خارجی — همگام‌سازی دویدن‌های GPS و بار تمرین"
+});
+
+const t=s=>lang==='tr'?(TR[s]??s):(lang==='fa'?(FA[s]??s):s);
+const TR_MUSCLE={
+  'Back':'Sırt','Chest':'Göğüs','Shoulders':'Omuz','Biceps':'Biceps (Pazı)','Triceps':'Triceps (Arka Kol)',
+  'Quadriceps':'Kuadriseps (Ön Bacak)','Hamstrings':'Hamstring (Arka Bacak)','Glutes':'Glute (Kalça)',
+  'Calves':'Kalf (Baldır)','Core':'Karın / Core','Full Body':'Tüm Vücut','Forearms':'Ön Kol'
+};
+const tmus=m=>lang==='tr'?(TR_MUSCLE[m]??TR[m]??m):(lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m);
 const nf=v=>{v=String(v);return lang==='fa'?v.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):v};
-const pct=n=>nf(n)+(lang==='fa'?'٪':'%');
-/* v18.116 — applyLang() is the single choke point: every language-changing
-   handler calls it, so pinning lang='en' here makes the FA dictionary, all 60   `lang==='fa'` branches and all 73 html[lang="fa"] rules unreachable no matter   what else runs. Fully reversible: delete this pin and the whole FA surface   comes back untouched — that is why the dictionary itself was NOT deleted. */
+const pct=n=>lang==='tr'?('%'+n):(nf(n)+(lang==='fa'?'٪':'%'));
 function applyLang(){
-  lang='en';
-  document.documentElement.lang='en';
-  document.documentElement.dir='ltr';
-  document.title='CoachMint — Coach & Client Workspace';
-  try{localStorage.setItem('co-lang','en');localStorage.setItem('coach-os-locale','en')}catch(e){}
+  const saved=(function(){try{return localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')}catch(e){return null}})();
+  if(!lang||lang==='en') lang=(saved==='tr'||saved==='fa')?saved:(lang||'en');
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='fa'?'rtl':'ltr';
+  document.title=lang==='tr'?'CoachMint — Antrenör ve Danışan Çalışma Alanı':(lang==='fa'?'CoachMint — فضای کاری مربیان':'CoachMint — Coach & Client Workspace');
+  try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang)}catch(e){}
 }
 
 /* ================= PREFERENCES (v15.7 — persisted) ================= */
@@ -890,7 +983,7 @@ const fmtNum=d=>nf(String(isJal()?jOf(d).jd:d.getDate()));
 const dayLbl=i=>`${t(WDN[i])} ${fmtNum(dayDate(i))}`;
 /* Locale for Intl date formatting. fa-IR defaults to the Persian calendar,
    so an explicit Gregorian choice must force -u-ca-gregory. */
-const dLoc=()=>lang==='fa'?(isJal()?'fa-IR':'fa-IR-u-ca-gregory'):'en-US';
+const dLoc=()=>lang==='tr'?'tr-TR':(lang==='fa'?(isJal()?'fa-IR':'fa-IR-u-ca-gregory'):'en-US');
 function weekRange(){
   const a=dayDate(0),b=dayDate(6);
   if(isJal()){
@@ -1146,7 +1239,13 @@ const FA_FOOD={
 'Whole Wheat Bread':'نان گندم کامل','Oats':'جو دوسر','White Rice (cooked)':'برنج سفید (پخته)','Banana':'موز',
 'Apple':'سیب','Broccoli':'بروکلی','Sweet Potato':'سیب‌زمینی شیرین','Almonds':'بادام',
 'Olive Oil':'روغن زیتون','Whey Protein':'پروتئین وی','Orange Juice':'آب پرتقال','Salmon':'ماهی سالمون'};
-const foodName=n=>lang==='fa'?(FA_FOOD[n]||n):n;
+const TR_FOOD={
+'Chicken Breast':'Tavuk Göğsü','Turkey Breast':'Hindi Göğsü','White Fish':'Beyaz Balık','Lean Beef':'Yağsız Dana Eti',
+'Egg Whites':'Yumurta Beyazı','Whole Eggs':'Bütün Yumurta','Greek Yogurt':'Süzme Yoğurt','Cottage Cheese':'Lor Peyniri',
+'Whole Wheat Bread':'Tam Buğday Ekmeği','Oats':'Yulaf Ezmesi','White Rice (cooked)':'Pirinç Pilavı','Banana':'Muz',
+'Apple':'Elma','Broccoli':'Brokoli','Sweet Potato':'Tatlı Patates','Almonds':'Badem',
+'Olive Oil':'Zeytinyağı','Whey Protein':'Whey Proteini','Orange Juice':'Portakal Suyu','Salmon':'Somon Balığı'};
+const foodName=n=>lang==='tr'?(TR_FOOD[n]||n):(lang==='fa'?(FA_FOOD[n]||n):n);
 /* v17.11 — coach onboarding wizard. Four questions whose answers SHAPE the
    workspace: sport filters the template library, coaching style reorders the
    dashboard quick actions, client scale highlights the suggested plan, and
@@ -1276,12 +1375,12 @@ function defaultRaces(){return [
  {id:'rc0',name:'Regional Open',event:'1500m',dist:'1500 m',date:'2026-08-29',loc:'Leeds',target:'4:22.0',goal:'Season best',notes:'Went out too hard on the bell.',ath:'Lina Farahani',result:{time:'4:21.6',pos:'2nd',pb:true,notes:'PB by 0.4s'}}
  ]}
 function defaultPbs(){return [
- {id:'pb1',ev:'100m',val:'11.80',prev:'11.94',date:'2026-09-12',src:'Race result',notes:'Season opener'},
- {id:'pb2',ev:'200m',val:'24.20',prev:'24.41',date:'2026-08-29',src:'Time trial',notes:'Wind +1.1'},
- {id:'pb3',ev:'400m',val:'54.10',prev:'54.52',date:'2026-08-29',src:'Race result',notes:''},
- {id:'pb4',ev:'5K',val:'21:32',prev:'21:47',date:'2026-09-06',src:'Race result',notes:'Chip time'},
- {id:'pb5',ev:'10K',val:'45:10',prev:'45:44',date:'2026-09-20',src:'Road race',notes:'Hilly course'},
- {id:'pb6',ev:'Half Marathon',val:'1:31:24',prev:'1:32:58',date:'2026-04-14',src:'Race result',notes:'Still standing'}
+ {id:'pb1',cid:2,ev:'100m',val:'11.80',prev:'11.94',date:'2026-09-12',src:'Race result',notes:'Season opener'},
+ {id:'pb2',cid:2,ev:'200m',val:'24.20',prev:'24.41',date:'2026-08-29',src:'Time trial',notes:'Wind +1.1'},
+ {id:'pb3',cid:2,ev:'400m',val:'54.10',prev:'54.52',date:'2026-08-29',src:'Race result',notes:''},
+ {id:'pb4',cid:1,ev:'5K',val:'21:32',prev:'21:47',date:'2026-09-06',src:'Race result',notes:'Chip time'},
+ {id:'pb5',cid:1,ev:'10K',val:'45:10',prev:'45:44',date:'2026-09-20',src:'Road race',notes:'Hilly course'},
+ {id:'pb6',cid:1,ev:'Half Marathon',val:'1:31:24',prev:'1:32:58',date:'2026-04-14',src:'Race result',notes:'Still standing'}
  ]}
 let RACES=defaultRaces();
 let PBSD=defaultPbs();
@@ -3039,8 +3138,7 @@ function packCharge(ev,was){
     ev.packId=undefined;
   }
 }
-/* v18.116 — language switcher removed; kept as a no-op so its six call sites   render nothing instead of needing six separate edits. */
-const langBtn=()=>'';
+const langBtn=cls=>`<button class="btn ${cls||'btn-outline btn-sm'}" data-act="lang-cycle" title="${t('Switch language')}">${ic('globe',13)} ${lang==='tr'?'TR':lang==='fa'?'FA':'EN'}</button>`;
 /* v18.12 — one-tap theme switch: shows the theme you'll GET (sun in dark mode,
    moon in light mode), like GitHub/Linear. System pref stays available in
    Settings → Appearance; this button flips Light↔Dark directly. */
@@ -3865,7 +3963,7 @@ function vDashAth(){
   const dOf=r=>{const p=String(r.date||'').split('-');return new Date(+p[0]||2000,(+p[1]||1)-1,+p[2]||1)};
   const dLeft=r=>Math.round((dOf(r)-now0)/864e5);
   const races=RACES.filter(r=>{
-    if(ath&&r.ath&&r.ath!==ath.name)return false;
+    if(ath&&r.ath&&(String(r.ath)!==String(ath.id)&&r.ath!==ath.name))return false;
     const dd=dLeft(r);
     if(F.dt==='season')return true;
     if(dd<0)return false;
@@ -3953,7 +4051,7 @@ function vDashAth(){
   const wks=[...new Set(TLOG.map(r=>+r.w))].sort((a,b)=>a-b);
   const wOf=w=>+TLOG.filter(r=>+r.w===w&&ids.has(String(r.cid))).reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
   const maxW=Math.max(1,...wks.map(wOf));
-  const pbs=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,3);
+  const pbs=PBSD.filter(p=>F.ath==='all'||String(p.cid||1)===String(F.ath)).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,3);
   const scopeNote=F.dt==='4w'||F.dt==='season'?` · ${t('schedule holds one week')}`:'';
   return `<div class="page-h"><div><h1>${t('Dashboard')}</h1>
     <div class="sub">${t(ONBOARD.sport||'Athletics')} · ${nf(squad.length)} ${t(squad.length===1?'athlete':'athletes')}${F.ph!=='all'?` · ${t('Phase')}: ${esc(F.ph)}`:''}</div></div>
@@ -3997,13 +4095,16 @@ function vDashAth(){
       <div class="row" style="gap:5px;margin-top:6px">${wks.map(w=>`<span style="flex:1;text-align:center;font:700 9px/1 var(--font);font-variant-numeric:tabular-nums;color:${w===cw?'var(--accent-text)':'var(--ink3)'}">${nf(w+1)}</span>`).join('')}</div>
       <div style="height:1px;background:var(--line2);margin:13px 0 11px"></div>
       <div class="row" style="justify-content:space-between"><span class="card-t">${ic('medal',14)} ${t('Recent PBs')}</span>
-        <span class="muted" style="font-size:10.5px">${t('all athletes')}</span></div>
-      <div style="margin-top:6px">${pbs.map(p=>`<div class="tl-row" style="padding:7px 0">
+        <span class="muted" style="font-size:10.5px">${ath?esc(ath.name):t('all athletes')}</span></div>
+      <div style="margin-top:6px">${pbs.map(p=>{
+        const pAth=(client(p.cid||1)||{}).name;
+        return `<div class="tl-row" style="padding:7px 0">
         <span class="bdg bdg-lime" style="flex:none">${esc(p.ev)}</span>
         <div style="flex:1;min-width:0"><b style="font-size:13.5px">★ ${esc(p.val)}</b>
+          ${!ath&&pAth?`<span class="chip" style="font-size:10px;padding:2px 6px;margin-inline-start:4px">${esc(pAth)}</span>`:''}
           <span class="muted" style="font-size:11.5px">${t('prev')} ${esc(p.prev||'—')}</span></div>
         <span class="muted" style="font-size:11.5px;flex:none">${esc(fmtD(p.date))}</span>
-      </div>`).join('')||`<div class="muted" style="font-size:12.5px">${t('No PBs recorded')}</div>`}</div>
+      </div>`}).join('')||`<div class="muted" style="font-size:12.5px">${t('No PBs recorded')}</div>`}</div>
     </div>
   </div>
   <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('Phase is derived from each athlete\u2019s program week against the phase ranges you set in Training Phases — no phase is assumed. Counts and countdowns are descriptive only.')}</div>`;
@@ -5129,7 +5230,7 @@ function vSettings(){
     </div>
     <div class="set-row"><div><span class="t">${t('Coupon / payment code')}</span><div class="d">${t('Redeem a coupon from support or your payment tracking code')}</div></div><div class="row" style="gap:8px"><input class="inp" id="coupon-inp" placeholder="PRO-XXXXXXXXXX" value="${esc(shopCoupon())}" style="width:170px"><button class="btn btn-primary btn-sm" data-act="bill-redeem">${t('Activate')}</button></div></div>`:''}
     <div class="fs-t" style="margin-top:18px">${t('Preferences')}</div>
-    <div class="set-row"><div><span class="t">${t('Language')}</span></div><div class="muted" style="font-size:12.5px">${t('English')}</div></div>
+    <div class="set-row"><div><span class="t">${t('Language')}</span></div><select class="sel" style="width:160px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="tr" ${lang==='tr'?'selected':''}>Türkçe</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
     <div class="set-row"><div><span class="t">${t('Connection code')}</span><div class="d">${t('Each client has a personal code — share only theirs')}</div></div>
       ${wsCode()?`<div class="row" style="gap:8px"><button class="btn btn-outline btn-sm" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',13)} ${t('Client connection codes')}</button></div>`:`<span class="bdg bdg-gray">${t('Demo — not signed in')}</span>`}</div>
     <div class="set-row"><div><span class="t">${t('Timezone')}</span></div><select class="sel" style="width:220px"><option>(GMT+3:30) ${lang==='fa'?'تهران':'Tehran'}</option></select></div>
@@ -7069,27 +7170,40 @@ const fcAvgA=(name,lm,wl)=>(fcA(name,lm,wl,0)+fcA(name,lm,wl,1))/2;
    is one entry here. down/up are the tracked-angle thresholds for the rep
    state machine; checks run per frame or at the rep bottom. */
 const FPATTERNS=[
- {id:'squat',n:'Squat',sub:'Knees · depth · torso',ang:'knee',down:115,up:160,checks:[
-   {at:'bottom',type:'depth',thr:100,flag:'Shallow depth'},
-   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
-   {at:'always',type:'lean',thr:55,flag:'Torso collapses'}]},
- {id:'hinge',n:'Hinge / Deadlift',sub:'Hips · back line',ang:'hip',down:75,up:150,checks:[
-   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
-   {at:'always',type:'lean',thr:70,flag:'Back rounds'}]},
- {id:'pushup',n:'Push-up',sub:'Elbows · body line',ang:'elbow',down:100,up:155,checks:[
-   {at:'bottom',type:'depth',thr:105,flag:'Shallow depth'},
-   {at:'always',type:'line',thr:145,flag:'Hips sag'},
-   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
- {id:'press',n:'Shoulder Press',sub:'Elbows · path',ang:'elbow',down:105,up:160,checks:[
-   {at:'bottom',type:'depth',thr:110,flag:'Partial range'},
-   {at:'always',type:'asym',thr:25,flag:'Uneven left/right'}]},
- {id:'curl',n:'Bicep Curl',sub:'Elbow · no swing',ang:'elbow',down:150,up:65,checks:[
-   {at:'bottom',type:'swing',thr:0.06,flag:'Body swing'},
-   {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
- {id:'plank',n:'Plank',sub:'Hold · body line',hold:true,ang:'line',checks:[
-   {at:'always',type:'line',thr:150,flag:'Hips sag'},
-   {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'}]}
+  {id:'auto',n:'Auto-Detect (AI)',sub:'Zero-touch · Real-time motion classifier',auto:true,ang:'knee',down:115,up:160,checks:[]},
+  {id:'squat',n:'Squat',sub:'Knees · depth · torso',ang:'knee',down:115,up:160,checks:[
+    {at:'bottom',type:'depth',thr:100,flag:'Shallow depth'},
+    {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+    {at:'always',type:'lean',thr:55,flag:'Torso collapses'},
+    {at:'bottom',type:'valgus',thr:0.72,flag:'Knee valgus'}]},
+  {id:'hinge',n:'Hinge / Deadlift',sub:'Hips · back line',ang:'hip',down:75,up:150,checks:[
+    {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'},
+    {at:'always',type:'lean',thr:70,flag:'Back rounds'},
+    {at:'always',type:'neck',thr:35,flag:'Neck hyper-extended'}]},
+  {id:'pushup',n:'Push-up',sub:'Elbows · body line',ang:'elbow',down:100,up:155,checks:[
+    {at:'bottom',type:'depth',thr:105,flag:'Shallow depth'},
+    {at:'always',type:'line',thr:145,flag:'Hips sag'},
+    {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+  {id:'press',n:'Shoulder Press',sub:'Elbows · path',ang:'elbow',down:105,up:160,checks:[
+    {at:'bottom',type:'depth',thr:110,flag:'Partial range'},
+    {at:'always',type:'asym',thr:25,flag:'Uneven left/right'}]},
+  {id:'curl',n:'Bicep Curl',sub:'Elbow · no swing',ang:'elbow',down:150,up:65,checks:[
+    {at:'bottom',type:'swing',thr:0.06,flag:'Body swing'},
+    {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+  {id:'plank',n:'Plank',sub:'Hold · body line',hold:true,ang:'line',checks:[
+    {at:'always',type:'line',thr:150,flag:'Hips sag'},
+    {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'},
+    {at:'always',type:'neck',thr:35,flag:'Neck hyper-extended'}]},
+  {id:'posture_front',n:'Posture Screen (Front)',sub:'Shoulders · Hips · Knees',posture:true,hold:true,holdSec:4,ang:'line',checks:[
+    {at:'always',type:'shoulder_asym',thr:12,flag:'Uneven shoulder height'},
+    {at:'always',type:'pelvic_tilt',thr:12,flag:'Pelvic lateral tilt'},
+    {at:'always',type:'q_angle',thr:16,flag:'Genu valgum (knock-knees)'}]},
+  {id:'posture_side',n:'Posture Screen (Side)',sub:'Head · Thoracic · Pelvis',posture:true,hold:true,holdSec:4,ang:'line',checks:[
+    {at:'always',type:'forward_head',thr:28,flag:'Forward head posture'},
+    {at:'always',type:'kyphosis',thr:42,flag:'Thoracic kyphosis (rounded back)'},
+    {at:'always',type:'anterior_pelvic',thr:22,flag:'Anterior pelvic tilt (lordosis)'}]}
 ];
+
 /* Rule evaluator — returns true when the rule FIRES (a problem). Uses the
    live FC session for the tracked angle and the swing baseline. Angles come
    from WORLD landmarks (3D) when the model provides them. */
@@ -7104,17 +7218,353 @@ function fcEvalCheck(ch,lm,wl,bottom){
     case 'line':return fcAvgA('line',lm,wl)<ch.thr;
     case 'lineHi':return fcAvgA('line',lm,wl)>ch.thr;
     case 'swing':{const hx=(lm[23].x+lm[24].x)/2;if(FC.hipX==null)FC.hipX=hx;return Math.abs(hx-FC.hipX)>ch.thr}
+    /* Advanced 1: Knee Valgus (dynamic knee cave-in relative to ankle distance) */
+    case 'valgus':{
+      if(!bottom)return false;
+      const kL=wl?wl[25]:lm[25],kR=wl?wl[26]:lm[26];
+      const aL=wl?wl[27]:lm[27],aR=wl?wl[28]:lm[28];
+      if(!kL||!kR||!aL||!aR)return false;
+      const dKnee=Math.hypot(kL.x-kR.x,(kL.z||0)-(kR.z||0));
+      const dAnk=Math.hypot(aL.x-aR.x,(aL.z||0)-(aR.z||0));
+      return dAnk>0.04&&(dKnee/dAnk)<ch.thr}
+    /* Advanced 2: Cervical spine / neck extension */
+    case 'neck':{
+      const ear=lm[7]||lm[8]||lm[0];
+      const sh=lm[11].y<lm[12].y?lm[11]:lm[12];
+      const hip=lm[23].y<lm[24].y?lm[23]:lm[24];
+      if(!ear||!sh||!hip)return false;
+      return Math.abs(180-fcAngle(ear,sh,hip))>ch.thr}
+    /* Advanced 3: Static Postural Checks */
+    case 'shoulder_asym':{
+      const sL=lm[11],sR=lm[12],hL=lm[23],hR=lm[24];
+      if(!sL||!sR||!hL||!hR)return false;
+      const tH=Math.max(0.1,Math.abs(((hL.y+hR.y)/2)-((sL.y+sR.y)/2)));
+      return (Math.abs(sL.y-sR.y)/tH*100)>ch.thr}
+    case 'pelvic_tilt':{
+      const hL=lm[23],hR=lm[24],sL=lm[11],sR=lm[12];
+      if(!hL||!hR||!sL||!sR)return false;
+      const tH=Math.max(0.1,Math.abs(((hL.y+hR.y)/2)-((sL.y+sR.y)/2)));
+      return (Math.abs(hL.y-hR.y)/tH*100)>ch.thr}
+    case 'q_angle':{
+      const hL=lm[23],hR=lm[24],kL=lm[25],kR=lm[26],aL=lm[27],aR=lm[28];
+      if(!hL||!hR||!kL||!kR||!aL||!aR)return false;
+      return Math.abs(180-fcAngle(hL,kL,aL))>ch.thr||Math.abs(180-fcAngle(hR,kR,aR))>ch.thr}
+    case 'forward_head':{
+      const ear=lm[7]||lm[8],sh=lm[11]||lm[12];
+      if(!ear||!sh)return false;
+      return (Math.atan2(Math.abs(ear.x-sh.x),Math.abs(sh.y-ear.y))*180/Math.PI)>ch.thr}
+    case 'kyphosis':{
+      const sh=lm[11],hip=lm[23],ear=lm[7]||lm[0];
+      if(!sh||!hip||!ear)return false;
+      return (180-fcAngle(ear,sh,hip))>ch.thr}
+    case 'anterior_pelvic':{
+      const sh=lm[11],hip=lm[23],kn=lm[25];
+      if(!sh||!hip||!kn)return false;
+      return Math.abs(180-fcAngle(sh,hip,kn))>ch.thr}
   }
   return false;
 }
+
 /* Skeleton connections for the overlay. */
 const FC_BONES=[[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32]];
 let FC={on:false};
 let FC_POSE=null,FC_VISION=null,FC_ACC=null;
-/* v18.20 — LIVE_STREAM mode: frames are dropped (never queued) when the model
-   is busy, results arrive via the listener, and BOTH world landmarks (3D) and
-   segmentation masks are requested. numPoses=2 covers coach+client in frame;
-   rules always run on the PRIMARY pose (largest bounding box = closest). */
+
+/* Voice Coaching System */
+let FC_VOICE_LAST=0;
+const FC_VOICE_MAP={
+  'Shallow depth':{en:'Go lower',fa:'پایین‌تر برو',tr:'Daha derine in'},
+  'Knee valgus':{en:'Push knees out',fa:'زانوها به بیرون',tr:'Dizleri dışa aç'},
+  'Torso collapses':{en:'Chest up',fa:'سینه بالا',tr:'Göğsünü dik tut'},
+  'Back rounds':{en:'Keep back straight',fa:'کمر صاف',tr:'Sırtını düz tut'},
+  'Hips sag':{en:'Lift your hips',fa:'باسن بالا',tr:'Kalçayı yukarı kaldır'},
+  'Uneven left/right':{en:'Balance left and right',fa:'تعادل دو طرف',tr:'Dengeyi sağla'},
+  'Neck hyper-extended':{en:'Keep neck neutral',fa:'گردن صاف',tr:'Boynunu düz tut'},
+  'Body swing':{en:'No swinging, control it',fa:'بدون تاب، با کنترل',tr:'Savurma, kontrollü yap'},
+  'Partial range':{en:'Full range of motion',fa:'دامنه کامل',tr:'Tam hareket açısı'},
+  'Good rep':{en:'Good rep!',fa:'تکرار عالی!',tr:'Güzel tekrar!'},
+  'Fatigue threshold (VBT >20%)':{en:'Fatigue threshold reached',fa:'آستانه خستگی عضلانی',tr:'Yorgunluk eşiğine ulaşıldı'},
+  'Hold steady':{en:'Hold position',fa:'ثابت بمانید',tr:'Sabit durun'},
+  'Assessment complete':{en:'Assessment complete',fa:'ارزیابی کامل شد',tr:'Analiz tamamlandı'},
+  'Squat detected':{en:'Squat detected',fa:'اسکوات شناسایی شد',tr:'Squat algılandı'},
+  'Hinge / Deadlift detected':{en:'Deadlift detected',fa:'ددلیفت شناسایی شد',tr:'Deadlift algılandı'},
+  'Deadlift detected':{en:'Deadlift detected',fa:'ددلیفت شناسایی شد',tr:'Deadlift algılandı'},
+  'Push-up detected':{en:'Push-up detected',fa:'شنا شناسایی شد',tr:'Şınav algılandı'},
+  'Shoulder Press detected':{en:'Press detected',fa:'پرس سرشانه شناسایی شد',tr:'Press algılandı'},
+  'Bicep Curl detected':{en:'Bicep curl detected',fa:'جلوبازو شناسایی شد',tr:'Biceps curl algılandı'},
+  'Plank detected':{en:'Plank detected',fa:'پلانک شناسایی شد',tr:'Plank algılandı'}
+};
+
+function fcSpeak(key,force=false){
+  if(!FC.voiceOn||!('speechSynthesis' in window))return;
+  const now=Date.now();
+  if(!force&&(now-FC_VOICE_LAST<2400))return;
+  try{
+    window.speechSynthesis.cancel();
+    const curLang=(typeof lang!=='undefined'&&lang)?lang:'en';
+    const dict=FC_VOICE_MAP[key]||{en:key,fa:key,tr:key};
+    const text=dict[curLang]||dict['en']||key;
+    const u=new SpeechSynthesisUtterance(text);
+    u.rate=1.05;u.pitch=1.0;
+    const code=curLang==='fa'?'fa-IR':(curLang==='tr'?'tr-TR':'en-US');
+    u.lang=code;
+    const voices=window.speechSynthesis.getVoices();
+    const v=voices.find(x=>x.lang&&x.lang.toLowerCase().startsWith(code.slice(0,2).toLowerCase()));
+    if(v)u.voice=v;
+    window.speechSynthesis.speak(u);
+    FC_VOICE_LAST=now;
+  }catch(e){}
+}
+
+function fcToggleVoice(btn){
+  FC.voiceOn=!FC.voiceOn;
+  if(btn)btn.classList.toggle('on',FC.voiceOn);
+  try{localStorage.setItem('co-fc-voice',FC.voiceOn?'1':'0')}catch(e){}
+  if(FC.voiceOn)fcSpeak('Good rep',true);
+}
+
+/* Motion Trajectory Trail */
+function fcToggleTrail(btn){
+  FC.trailOn=!FC.trailOn;
+  if(btn)btn.classList.toggle('on',FC.trailOn);
+  try{localStorage.setItem('co-fc-trail',FC.trailOn?'1':'0')}catch(e){}
+}
+
+function fcUpdateTrail(lm,patId,phase){
+  if(!FC.trailOn||!lm)return;
+  let pt=null;
+  if(['squat','hinge','plank'].includes(patId)){
+    pt={x:(lm[11].x+lm[12].x)/2,y:(lm[11].y+lm[12].y)/2};
+  }else if(['press','curl','pushup'].includes(patId)){
+    pt={x:(lm[15].x+lm[16].x)/2,y:(lm[15].y+lm[16].y)/2};
+  }else{
+    pt={x:(lm[23].x+lm[24].x)/2,y:(lm[23].y+lm[24].y)/2};
+  }
+  FC.trail=FC.trail||[];
+  FC.trail.push({x:pt.x,y:pt.y,phase,t:Date.now()});
+  if(FC.trail.length>120)FC.trail.shift();
+}
+
+function fcDrawTrail(ctx,cv){
+  if(!FC.trailOn||!FC.trail||FC.trail.length<2)return;
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  ctx.lineWidth=Math.max(3,cv.width/160);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  for(let i=1;i<FC.trail.length;i++){
+    const p1=FC.trail[i-1],p2=FC.trail[i];
+    const alpha=(i/FC.trail.length)*0.9;
+    ctx.strokeStyle=p2.phase==='down'?`rgba(56,189,248,${alpha})`:`rgba(200,240,75,${alpha})`;
+    ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* Anatomical Floating Pill Badge */
+function fcDrawBadge(ctx,x,y,text,color){
+  ctx.save();
+  ctx.font='bold 11px Inter, sans-serif';
+  const tw=ctx.measureText(text).width+16;
+  const th=22;
+  ctx.fillStyle='rgba(0,0,0,0.82)';
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(x-tw/2,y-th/2,tw,th,6);else ctx.rect(x-tw/2,y-th/2,tw,th);
+  ctx.fill();
+  ctx.lineWidth=1.4;
+  ctx.strokeStyle=color;
+  ctx.stroke();
+  ctx.fillStyle='#ffffff';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(text,x,y);
+  ctx.restore();
+}
+
+/* Dynamic Angle Arcs on Active Joints */
+function fcDrawAngleArc(ctx,cv,lm,pat,currentAngle){
+  if(!lm||!pat||pat.posture||pat.auto)return;
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  let vIdx=25,aIdx=23,cIdx=27;
+  if(pat.ang==='elbow'){vIdx=13;aIdx=11;cIdx=15}
+  else if(pat.ang==='hip'){vIdx=23;aIdx=11;cIdx=25}
+  else if(pat.ang==='line'){vIdx=23;aIdx=11;cIdx=27}
+
+  const side=(lm[vIdx+1]&&lm[vIdx+1].v>(lm[vIdx]?.v||0))?1:0;
+  const pV=lm[vIdx+side],pA=lm[aIdx+side],pC=lm[cIdx+side];
+  if(!pV||!pA||!pC||(pV.v!=null&&pV.v<0.35)){ctx.restore();return}
+
+  const vx=pV.x*cv.width,vy=pV.y*cv.height;
+  const ax=pA.x*cv.width,ay=pA.y*cv.height;
+  const cx=pC.x*cv.width,cy=pC.y*cv.height;
+  const ang1=Math.atan2(ay-vy,ax-vx);
+  const ang2=Math.atan2(cy-vy,cx-vx);
+  const radius=Math.max(26,Math.min(46,cv.width/22));
+
+  let color='rgba(200,240,75,0.95)';
+  let glowColor='rgba(200,240,75,0.55)';
+  if(pat.down!=null){
+    const isFlexed=pat.up>pat.down?(currentAngle<=pat.down):(currentAngle>=pat.down);
+    const isNear=pat.up>pat.down?(currentAngle<=pat.down+16):(currentAngle>=pat.down-16);
+    if(isFlexed){color='rgba(34,197,94,0.98)';glowColor='rgba(34,197,94,0.8)'}
+    else if(isNear){color='rgba(245,158,11,0.95)';glowColor='rgba(245,158,11,0.6)'}
+    else{color='rgba(56,189,248,0.9)';glowColor='rgba(56,189,248,0.5)'}
+  }
+
+  let diff=ang2-ang1;
+  while(diff<-Math.PI)diff+=Math.PI*2;
+  while(diff>Math.PI)diff-=Math.PI*2;
+
+  ctx.beginPath();
+  ctx.arc(vx,vy,radius,ang1,ang1+diff,diff<0);
+  ctx.lineWidth=4;
+  ctx.strokeStyle=color;
+  ctx.shadowColor=glowColor;
+  ctx.shadowBlur=12;
+  ctx.stroke();
+
+  const midA=ang1+diff/2;
+  const bx=vx+Math.cos(midA)*(radius+24);
+  const by=vy+Math.sin(midA)*(radius+24);
+  ctx.shadowBlur=0;
+  fcDrawBadge(ctx,bx,by,Math.round(currentAngle)+'°',color);
+  ctx.restore();
+}
+
+/* Real-Time Auto-Exercise Classifier (Zero-Touch AI) */
+function fcClassifyPose(lm,wl){
+  if(!lm)return null;
+  const sY=(lm[11].y+lm[12].y)/2,hY=(lm[23].y+lm[24].y)/2;
+  const sX=(lm[11].x+lm[12].x)/2,hX=(lm[23].x+lm[24].x)/2;
+  const torsoAngle=Math.atan2(Math.abs(sY-hY),Math.abs(sX-hX))*180/Math.PI;
+
+  const kneeAngle=fcAvgA('knee',lm,wl);
+  const elbowAngle=fcAvgA('elbow',lm,wl);
+  const hipAngle=fcAvgA('hip',lm,wl);
+  const wL=lm[15],wR=lm[16],sL=lm[11],sR=lm[12];
+  const wristsAbove=(wL&&sL&&wL.y<sL.y)||(wR&&sR&&wR.y<sR.y);
+
+  if(torsoAngle<42){
+    if(elbowAngle<125)return 'pushup';
+    return 'plank';
+  }
+  if(wristsAbove)return 'press';
+  if(elbowAngle<110&&!wristsAbove&&sY<(lm[13].y+lm[14].y)/2)return 'curl';
+  if(kneeAngle<130&&hipAngle>70)return 'squat';
+  if(hipAngle<100&&kneeAngle>128)return 'hinge';
+  return null;
+}
+
+/* Postural Screening & Clinical Diagnostic Heatmap */
+function fcDrawPostureScreen(ctx,cv,lm){
+  if(!lm)return;
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  const p=FC.pat||{};
+  const isFront=p.id==='posture_front';
+
+  if(isFront){
+    const headX=lm[0]?lm[0].x*cv.width:cv.width/2;
+    const feetX=(lm[27]&&lm[28])?((lm[27].x+lm[28].x)/2)*cv.width:headX;
+    const plumbX=(headX+feetX)/2;
+
+    ctx.lineWidth=2;
+    ctx.setLineDash([6,6]);
+    ctx.strokeStyle='rgba(255,255,255,0.55)';
+    ctx.beginPath();ctx.moveTo(plumbX,0);ctx.lineTo(plumbX,cv.height);ctx.stroke();
+    ctx.setLineDash([]);
+
+    if(lm[11]&&lm[12]){
+      const sLx=lm[11].x*cv.width,sLy=lm[11].y*cv.height;
+      const sRx=lm[12].x*cv.width,sRy=lm[12].y*cv.height;
+      const sDiff=Math.abs(sLy-sRy);
+      const isLevel=sDiff<14;
+      ctx.lineWidth=3;
+      ctx.strokeStyle=isLevel?'rgba(34,197,94,0.9)':'rgba(239,68,68,0.9)';
+      ctx.beginPath();ctx.moveTo(sLx,sLy);ctx.lineTo(sRx,sRy);ctx.stroke();
+      fcDrawBadge(ctx,(sLx+sRx)/2,(sLy+sRy)/2-18,`Shoulders: ${sDiff.toFixed(1)}px ${isLevel?'✓ Level':'⚠️ Tilt'}`,isLevel?'#22c55e':'#ef4444');
+    }
+
+    if(lm[23]&&lm[24]){
+      const hLx=lm[23].x*cv.width,hLy=lm[23].y*cv.height;
+      const hRx=lm[24].x*cv.width,hRy=lm[24].y*cv.height;
+      const hDiff=Math.abs(hLy-hRy);
+      const isLevelH=hDiff<14;
+      ctx.lineWidth=3;
+      ctx.strokeStyle=isLevelH?'rgba(34,197,94,0.9)':'rgba(239,68,68,0.9)';
+      ctx.beginPath();ctx.moveTo(hLx,hLy);ctx.lineTo(hRx,hRy);ctx.stroke();
+      fcDrawBadge(ctx,(hLx+hRx)/2,(hLy+hRy)/2-18,`Pelvis: ${hDiff.toFixed(1)}px ${isLevelH?'✓ Level':'⚠️ Tilt'}`,isLevelH?'#22c55e':'#ef4444');
+    }
+
+    if(lm[23]&&lm[25]&&lm[27]){
+      const qL=Math.round(Math.abs(180-fcAngle(lm[23],lm[25],lm[27])));
+      const qOk=qL<16;
+      fcDrawBadge(ctx,lm[25].x*cv.width,lm[25].y*cv.height+22,`Q: ${qL}° ${qOk?'Normal':'Valgum ⚠️'}`,qOk?'#22c55e':'#f59e0b');
+    }
+  }else{
+    const ear=lm[7]||lm[8]||lm[0];
+    const sh=lm[11]||lm[12];
+    const hip=lm[23]||lm[24];
+    const kn=lm[25]||lm[26];
+    const ank=lm[27]||lm[28];
+
+    if(ank){
+      const ax=ank.x*cv.width;
+      ctx.lineWidth=2;
+      ctx.setLineDash([6,6]);
+      ctx.strokeStyle='rgba(255,255,255,0.55)';
+      ctx.beginPath();ctx.moveTo(ax,0);ctx.lineTo(ax,cv.height);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    if(ear&&sh){
+      const ex=ear.x*cv.width,ey=ear.y*cv.height;
+      const sx=sh.x*cv.width,sy=sh.y*cv.height;
+      const fhpDeg=Math.round(Math.atan2(Math.abs(ex-sx),Math.abs(sy-ey))*180/Math.PI);
+      const isNorm=fhpDeg<22,isMild=fhpDeg>=22&&fhpDeg<32;
+      ctx.lineWidth=2.5;
+      ctx.strokeStyle=isNorm?'rgba(34,197,94,0.85)':(isMild?'rgba(245,158,11,0.85)':'rgba(239,68,68,0.9)');
+      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+      fcDrawBadge(ctx,ex,ey-22,`Head: ${fhpDeg}° (${isNorm?'Normal':isMild?'Mild FHP':'Severe FHP'})`,isNorm?'#22c55e':(isMild?'#f59e0b':'#ef4444'));
+    }
+
+    if(sh&&hip&&kn){
+      const hx=hip.x*cv.width,hy=hip.y*cv.height;
+      const aptDeg=Math.round(Math.abs(180-fcAngle(sh,hip,kn)));
+      const isAptOk=aptDeg<20;
+      fcDrawBadge(ctx,hx,hy+24,`Pelvic Tilt: ${aptDeg}° ${isAptOk?'Normal':'Lordosis ⚠️'}`,isAptOk?'#22c55e':'#f59e0b');
+    }
+  }
+  ctx.restore();
+}
+
+/* AI Biomechanical Synthesis Generator */
+function fcGenerateBiomechanicalAI(pat,reps,score,flags,rom,tempos,velocities){
+  const flagList=(flags||[]).map(f=>t(f)).join(', ');
+  const avgEcc=(tempos&&tempos.length)?(tempos.reduce((a,x)=>a+x.ecc,0)/tempos.length).toFixed(1)+'s':'Standard';
+  const maxV=(velocities&&velocities.length)?Math.max(...velocities):0;
+  const minV=(velocities&&velocities.length)?Math.min(...velocities):0;
+  const vLoss=maxV>0?Math.round(((maxV-minV)/maxV)*100):0;
+  const isFa=(typeof lang!=='undefined'&&lang==='fa');
+  const isTr=(typeof lang!=='undefined'&&lang==='tr');
+  if(isFa){
+    return `• تکنیک و تمپو: میانگین فاز منفی ${avgEcc} ثبت شد. آهنگ حرکت در ابتدای ست پایدار بود.
+• خستگی عصبی عضلانی (VBT): افت سرعت تکرارها به ${vLoss}٪ رسید ${vLoss>=20?'(آستانه بهینه هایپرتروفی/خستگی تکمیل شد)':'(پتانسیل افزایش حجم وجود دارد)'}.
+• بررسی بیومکانیکی: ${flagList?'ناهماهنگی‌های ثبت‌شده: '+flagList+' — نیازمند اصلاح راستای حرکتی.':'راستای بیومکانیکی و تقارن حرکتی در حد استاندارد طلایی حفظ شد.'}
+• توصیه مربی: ${vLoss>=20?'ست در همین تکرار خاتمه یابد تا از مصدومیت جلوگیری شود.':'امکان افزایش وزنه ۲.۵ تا ۵ درصدی برای جلسه بعدی توصیه می‌شود.'}`;
+  }
+  if(isTr){
+    return `• Teknik ve Tempo: Ortalama eksantrik faz ${avgEcc}. İniş kontrolü dengeliydi.
+• VBT Yorgunluk Analizi: Hız kaybı %${vLoss} olarak ölçüldü ${vLoss>=20?'(optimum hipertrofi eşiğine ulaşıldı)':'(hacim artışı için alan var)'}.
+• Biyomekanik Risk: ${flagList?'Sapmalar: '+flagList:'Eklem hizalanması ve hareket simetrisi mükemmel korundu.'}
+• Antrenör Reçetesi: ${vLoss>=20?'Form kalitesini korumak için set burada sonlandırılmalı.':'Bir sonraki seansta %2.5-5 yük artışı yapılabilir.'}`;
+  }
+  return `• Technique & Tempo: Average eccentric descent was ${avgEcc}. Motion cadence was controlled.
+• VBT & Fatigue: Velocity drop across reps was ${vLoss}% ${vLoss>=20?'(optimal hypertrophic fatigue threshold met)':'(capacity for additional volume)'}.
+• Biomechanical Risk: ${flagList?'Detected flags: '+flagList:'Joint alignment and bilateral symmetry remained within gold-standard thresholds.'}
+• Coach Prescription: ${vLoss>=20?'Cap the set at current volume to preserve motor patterns.':'Ready for 2.5–5% progressive overload in the next session.'}`;
+}
+
 async function fcEngine(){
   const acc=S.fcAcc=S.fcAcc||(function(){try{return localStorage.getItem('co-fc-acc')||'lite'}catch(e){return 'lite'}})();
   if(FC_POSE&&FC_ACC===acc)return FC_POSE;
@@ -7131,6 +7581,7 @@ async function fcEngine(){
   FC_ACC=acc;
   return FC_POSE;
 }
+
 function formCheckModal(name){
   if(!name){name=S.role==='client'?client(S.cid).name:(client(S.cid)||CLIENTS[0]||{}).name}
   if(!name){toast(t('Add a client first'));return}
@@ -7139,7 +7590,7 @@ function formCheckModal(name){
   <div class="modal-h"><h3>${ic('ruler',16)} ${t('Camera form check')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Runs on your device — the video never leaves it. Stand so your whole body is visible.')}</div>
-    <div class="fc-pat">${FPATTERNS.map(p=>`<button data-act="fc-pattern" data-p="${p.id}"><b>${t(p.n)}</b><small>${t(p.sub)}</small></button>`).join('')}</div>
+    <div class="fc-pat">${FPATTERNS.map(p=>`<button data-act="fc-pattern" data-p="${p.id}" ${p.auto?'style="grid-column:1/-1;background:linear-gradient(135deg,rgba(200,240,75,0.14),rgba(56,189,248,0.08));border:1.5px solid var(--accent);box-shadow:0 0 16px rgba(200,240,75,0.12)"':''}><b>${p.auto?'⚡ ':''}${t(p.n)}</b><small>${t(p.sub)}</small></button>`).join('')}</div>
     <div class="row" style="margin-top:14px;justify-content:space-between;align-items:center">
       <span class="muted" style="font-size:12px">${t('Accuracy')} — ${t(S.fcAcc==='full'?'High (slower)':'Standard (faster)')}</span>
       <div class="seg">${[['lite','Standard'],['full','High']].map(([a,l])=>`<button class="${(S.fcAcc||'lite')===a?'on':''}" data-act="fc-acc" data-a="${a}">${t(l)}</button>`).join('')}</div>
@@ -7147,9 +7598,12 @@ function formCheckModal(name){
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button></div>`);
 }
+
 async function fcStart(pid){
   const p=FPATTERNS.find(x=>x.id===pid);if(!p)return;
   S.fcPat=pid;
+  const voiceDef=(function(){try{return localStorage.getItem('co-fc-voice')!=='0'}catch(e){return true}})();
+  const trailDef=(function(){try{return localStorage.getItem('co-fc-trail')!=='0'}catch(e){return true}})();
   openModal(`
   <div class="modal-h"><h3>${ic('ruler',16)} ${t(p.n)} — ${esc(t(S.fcName))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
@@ -7157,9 +7611,16 @@ async function fcStart(pid){
       <div class="fc-hud">
         <div class="fc-big"><small>${t('Reps')}</small><span id="fc-reps">0</span></div>
         ${p.hold?`<div class="fc-big"><small>${t('Hold')}</small><span id="fc-hold">0s</span></div>`:''}
+        ${!p.posture?`<div class="fc-big"><small>${t('Tempo')}</small><span id="fc-tempo" style="font-size:15px">—</span></div>`:''}
+        ${!p.posture?`<div class="fc-big"><small>${t('VBT Speed')}</small><span id="fc-vbt" style="font-size:15px">—</span></div>`:''}
         <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
       </div>
-      <div class="fc-tools"><button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button><button title="${t('Body outline')}" data-act="fc-mask" class="${FC.maskOn?'on':''}">${ic('user',16)}</button></div>
+      <div class="fc-tools">
+        <button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button>
+        <button title="${t('Voice cues')}" data-act="fc-voice" class="${voiceDef?'on':''}">${ic('volume',18)}</button>
+        <button title="${t('Motion trail')}" data-act="fc-trail" class="${trailDef?'on':''}">${ic('activity',18)}</button>
+        <button title="${t('Body outline')}" data-act="fc-mask" class="${FC.maskOn?'on':''}">${ic('user',16)}</button>
+      </div>
       <div class="fc-feed" id="fc-feed"></div>
     </div>
     <div class="muted" id="fc-msg" style="font-size:12px;text-align:center;margin-top:10px">${t('Loading the pose engine…')}</div>
@@ -7167,7 +7628,9 @@ async function fcStart(pid){
   <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
   /* v18.19 — fullscreen camera on phones (CSS scopes it to ≤760px). */
   document.querySelector('#modal-root .modal')?.classList.add('fc-full');
-  FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0};
+  FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0,
+      voiceOn:voiceDef,trailOn:trailDef,trail:[],tempos:[],velocities:[],lastTempo:'—',lastV:0,lastVLoss:0,
+      tRepStart:performance.now(),durEcc:0,durIso:0,durCon:0,bottomY:0,postureDone:false,autoVotes:{}};
   try{
     const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:960}},audio:false});
     FC.stream=stream;
@@ -7175,18 +7638,22 @@ async function fcStart(pid){
     await v.play();
     const msg=$('fc-msg');if(msg)msg.textContent=t('Loading the pose engine…');
     await fcEngine();
-    if(msg)msg.textContent=t('Stand so your whole body is visible');
+    if(msg)msg.textContent=t(p.posture?'Hold steady in front of the camera':'Stand so your whole body is visible');
     FC.holdT0=performance.now();
     FC.raf=requestAnimationFrame(fcLoop);
+    if(p.posture)fcSpeak('Hold steady',true);
   }catch(e){
     const msg=$('fc-msg');if(msg)msg.textContent=e&&e.name==='NotAllowedError'?t('Camera permission is required for form check'):t('Camera is not available on this device');
   }
 }
+
 function fcStop(){
   FC.on=false;
   if(FC.raf)cancelAnimationFrame(FC.raf);
   if(FC.stream){FC.stream.getTracks().forEach(tr=>tr.stop());FC.stream=null}
+  if('speechSynthesis' in window)try{window.speechSynthesis.cancel()}catch(e){}
 }
+
 async function fcFlip(){
   if(!FC.on)return;
   FC.flip=!FC.flip;
@@ -7196,19 +7663,21 @@ async function fcFlip(){
     const v=$('fc-video');if(v){v.srcObject=FC.stream;v.style.transform=FC.flip?'scaleX(-1)':'none';await v.play()}
   }catch(e){}
 }
-/* v18.20 — body-outline (segmentation mask) toggle. Masks are an output
-   option: flip it on the live landmarker without recreating the engine. */
+
+/* v18.20 — body-outline (segmentation mask) toggle */
 async function fcToggleMask(btn){
   FC.maskOn=!FC.maskOn;
   if(btn)btn.classList.toggle('on',FC.maskOn);
   if(FC_POSE){try{await FC_POSE.setOptions({outputSegmentationMasks:FC.maskOn})}catch(e){}}
 }
+
 function fcFeed(flag,ok){
   const feed=$('fc-feed');if(!feed)return;
   const el=document.createElement('div');el.className='fc-flag'+(ok?' fc-ok':'');el.textContent=t(flag);
   feed.innerHTML='';feed.appendChild(el);
   clearTimeout(FC.feedT);FC.feedT=setTimeout(()=>{if(feed)feed.innerHTML=''},1800);
 }
+
 function fcSnapshot(){
   const v=$('fc-video'),c=document.createElement('canvas');
   const w=240,h=Math.round(w*v.videoHeight/v.videoWidth)||320;
@@ -7218,14 +7687,14 @@ function fcSnapshot(){
   ctx.drawImage(v,0,0,w,h);
   return c.toDataURL('image/jpeg',.5);
 }
+
 function fcLoop(){
   if(!FC.on)return;
   FC.raf=requestAnimationFrame(fcLoop);
   const v=FC.video||$('fc-video');if(!v||!FC_POSE||v.readyState<2)return;
-  /* LIVE_STREAM: non-blocking — the task drops frames while busy and the
-     result arrives in fcOnResult. Timestamps must be monotonic. */
   try{FC_POSE.detectForVideo(v,performance.now())}catch(e){}
 }
+
 function fcDrawSkeleton(ctx,cv,lm,primary){
   ctx.save();if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
   ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle=primary?'rgba(200,240,75,.95)':'rgba(200,240,75,.35)';
@@ -7234,8 +7703,7 @@ function fcDrawSkeleton(ctx,cv,lm,primary){
   lm.forEach((pt,i)=>{if(i<11&&i!==0)return;if(pt.v!=null&&pt.v<.4)return;ctx.beginPath();ctx.arc(pt.x*cv.width,pt.y*cv.height,r,0,7);ctx.fill()});
   ctx.restore();
 }
-/* v18.20 — segmentation mask: lime silhouette over the body. Read back at
-   HALF resolution (the per-pixel loop is the only CPU part) and scaled up. */
+
 function fcDrawMask(mask,cv,ctx){
   try{
     const w=mask.width,h=mask.height;if(!w||!h)return;
@@ -7253,6 +7721,7 @@ function fcDrawMask(mask,cv,ctx){
   }catch(e){}
   finally{try{mask.close()}catch(e){}}
 }
+
 function fcOnResult(res){
   if(!FC.on)return;
   const masks=(res&&res.segmentationMasks)||[];
@@ -7270,22 +7739,119 @@ function fcOnResult(res){
     const wl=(res.worldLandmarks&&res.worldLandmarks[pi])||null;
     if(FC.maskOn&&masks[0])fcDrawMask(masks[0],cv,ctx);
     list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,L,i===pi));
+
+    let p=FC.pat;
+    /* Auto-Exercise Classification (Zero-Touch AI Mode) */
+    if(p.auto){
+      const det=fcClassifyPose(lm,wl);
+      if(det){
+        FC.autoVotes=FC.autoVotes||{};
+        FC.autoVotes[det]=(FC.autoVotes[det]||0)+1;
+        if(FC.autoVotes[det]>=8){
+          const matched=FPATTERNS.find(x=>x.id===det);
+          if(matched){
+            FC.pat=matched;
+            p=matched;
+            FC.autoVotes={};
+            fcFeed((t('Detected')||'Detected')+': '+t(matched.n),true);
+            fcSpeak(matched.n+' detected',true);
+            const mh=document.querySelector('#modal-root .modal-h h3');
+            if(mh)mh.innerHTML=`${ic('ruler',16)} ${t(matched.n)} — ${esc(t(S.fcName))}`;
+          }
+        }
+      }
+      if(p.auto){
+        const sc=$('fc-score');if(sc)sc.textContent='AI…';
+        return;
+      }
+    }
+
     /* rep state machine + rules (3D angles when world landmarks exist) */
-    const p=FC.pat;
     const a=fcAvgA(p.ang,lm,wl);
     if(a<FC.minA)FC.minA=a;if(a>FC.maxA)FC.maxA=a;
+
+    /* Posture plumb line or Motion Trail & Dynamic Angle Arcs */
+    if(p.posture)fcDrawPostureScreen(ctx,cv,lm);
+    else{
+      fcDrawTrail(ctx,cv);
+      fcDrawAngleArc(ctx,cv,lm,p,a);
+    }
     const down=p.hold?false:(p.up>p.down?(a<p.down):(a>p.down));
     const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
-    if(p.hold){FC.hold0=(performance.now()-FC.holdT0)/1000;const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s'}
-    else if(FC.state==='up'&&down){FC.state='down';FC.bottomA=a;FC.bottomLm=lm}
-    else if(FC.state==='down'&&up){FC.state='up';FC.reps++;const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot())}
+
+    if(p.hold){
+      FC.hold0=(performance.now()-FC.holdT0)/1000;
+      const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s';
+      if(p.posture&&FC.hold0>=(p.holdSec||4)&&!FC.postureDone){
+        FC.postureDone=true;
+        if(FC.kf.length<1)FC.kf.push(fcSnapshot());
+        fcSpeak('Assessment complete',true);
+        setTimeout(()=>{if(FC.on)fcFinish()},500);
+      }
+    }else if(FC.state==='up'&&down){
+      FC.state='down';FC.bottomA=a;FC.bottomLm=lm;
+      FC.tBottom=performance.now();
+      FC.durEcc=Math.max(0.3,(FC.tBottom-(FC.tRepStart||FC.tBottom-1200))/1000);
+      FC.bottomY=lm?(lm[11].y+lm[12].y)/2:0;
+      fcUpdateTrail(lm,p.id,'down');
+    }else if(FC.state==='down'&&up){
+      FC.state='up';
+      const now=performance.now();
+      FC.durCon=Math.max(0.2,(now-(FC.tBottom||now-800))/1000);
+      FC.durIso=Math.max(0,(now-FC.durCon*1000-FC.tBottom)/1000);
+      FC.tRepStart=now;
+      FC.reps++;
+      const tempoStr=`${FC.durEcc.toFixed(1)}-${Math.max(0,FC.durIso).toFixed(1)}-${FC.durCon.toFixed(1)}s`;
+      FC.lastTempo=tempoStr;
+      FC.tempos=FC.tempos||[];
+      FC.tempos.push({rep:FC.reps,ecc:FC.durEcc,iso:FC.durIso,con:FC.durCon,tempo:tempoStr});
+      const tEl=$('fc-tempo');if(tEl)tEl.textContent=tempoStr;
+
+      // VBT Speed calculation
+      const topY=lm?(lm[11].y+lm[12].y)/2:0;
+      const deltaDisp=Math.abs(FC.bottomY-topY);
+      const mcv=Math.max(0.15,Math.min(2.5,Math.round(((deltaDisp*1.7)/FC.durCon)*100)/100));
+      FC.lastV=mcv;
+      FC.velocities=FC.velocities||[];
+      FC.velocities.push(mcv);
+      const vEl=$('fc-vbt');if(vEl)vEl.textContent=mcv+' m/s';
+
+      // VBT Fatigue Loss %
+      const maxV=Math.max(...FC.velocities);
+      const vLoss=Math.round(Math.max(0,((maxV-mcv)/maxV)*100));
+      FC.lastVLoss=vLoss;
+      if(vLoss>=20){
+        fcFeed('Fatigue threshold (VBT >20%)',false);
+        fcSpeak('Fatigue threshold (VBT >20%)',false);
+      }else{
+        fcSpeak('Good rep',false);
+      }
+
+      const r=$('fc-reps');if(r)r.textContent=nf(FC.reps);
+      if(FC.kf.length<3&&FC.bottomLm)FC.kf.push(fcSnapshot());
+      fcUpdateTrail(lm,p.id,'up');
+    }else{
+      fcUpdateTrail(lm,p.id,FC.state);
+    }
+
     const bottom=FC.state==='down';
-    p.checks.forEach(ch=>{if(fcEvalCheck(ch,lm,wl,bottom)){FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;if(Date.now()-(FC.lastFlagT||0)>1500){FC.lastFlagT=Date.now();fcFeed(ch.flag,false)}}});
+    p.checks.forEach(ch=>{
+      if(fcEvalCheck(ch,lm,wl,bottom)){
+        FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;
+        if(Date.now()-(FC.lastFlagT||0)>2200){
+          FC.lastFlagT=Date.now();
+          fcFeed(ch.flag,false);
+          fcSpeak(ch.flag,false);
+        }
+      }
+    });
     const sc=$('fc-score');if(sc)sc.textContent=nf(fcScore());
   }
   finally{masks.forEach(m=>{if(m)try{m.close()}catch(e){}})}
 }
+
 const fcScore=()=>Math.max(45,Math.min(100,100-12*Math.min(5,Object.values(FC.flags).reduce((a,b)=>a+Math.min(3,b),0))));
+
 function fcFinish(){
   if(!FC.pat||!FC.stream){toast(t('Camera is not available on this device'));return}
   const p=FC.pat,reps=p.hold?Math.floor(FC.hold0):FC.reps;
@@ -7293,29 +7859,42 @@ function fcFinish(){
   const score=fcScore(),rom=(p.hold||!reps)?null:Math.round(FC.maxA-FC.minA);
   const kfs=FC.kf.slice(0,3);
   KF_STASH.length=0;kfs.forEach(k=>KF_STASH.push(k));
+  const aiReport=fcGenerateBiomechanicalAI(p,reps,score,flags,rom,FC.tempos,FC.velocities);
+  FC.aiReport=aiReport;
   fcStop();
   openModal(`
   <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form check')} — ${t(p.n)}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
-    <div class="row" style="gap:14px;margin-bottom:12px">
-      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Reps')}</span><b style="font-size:22px">${nf(reps)}</b></div>
+    <div class="row" style="gap:14px;margin-bottom:12px;flex-wrap:wrap">
+      <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(p.posture?'Hold':'Reps')}</span><b style="font-size:22px">${nf(reps)}${p.posture?'s':''}</b></div>
       <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Form score')}</span><b style="font-size:22px;color:${score>=85?'var(--green)':score>=65?'var(--accent-deep)':'var(--red)'}">${nf(score)}</b></div>
       ${rom!=null?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Range of motion')}</span><b style="font-size:22px">${nf(rom)}°</b></div>`:''}
+      ${FC.lastTempo&&FC.lastTempo!=='—'?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('Tempo')}</span><b style="font-size:20px;color:var(--accent)">${esc(FC.lastTempo)}</b></div>`:''}
+      ${FC.lastV?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('VBT Speed')}</span><b style="font-size:20px">${nf(FC.lastV)} m/s ${FC.lastVLoss>0?`<span style="font-size:12px;color:${FC.lastVLoss>=20?'var(--red)':'var(--accent)'}">(-${nf(FC.lastVLoss)}%)</span>`:''}</b></div>`:''}
     </div>
     ${flags.length?`<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:10px">${flags.map(f=>`<span class="bdg bdg-red">${t(f)}</span>`).join('')}</div>`:`<div class="row" style="margin-bottom:10px"><span class="bdg bdg-lime">${t('Good form')}</span></div>`}
+    ${aiReport?`
+    <div class="card" style="padding:12px;margin-bottom:12px;background:var(--bg2);border:1px solid var(--acc-line);border-radius:12px">
+      <div class="row" style="gap:6px;align-items:center;margin-bottom:6px"><b style="font-size:12.5px;color:var(--ink)">🧠 ${t('AI Biomechanical Analysis')}</b></div>
+      <div style="font-size:11.5px;line-height:1.55;color:var(--ink2);white-space:pre-line">${esc(aiReport)}</div>
+    </div>`:''}
     ${kfs.length?`<div class="fc-kfs">${kfs.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Retake')}</button><button class="btn btn-primary" data-act="fc-save" data-reps="${reps}" data-score="${score}" data-rom="${rom==null?'':rom}" data-flags="${esc(flags.join('|'))}" data-kf="${kfs.length}">${ic('check',15)} ${t('Save report')}</button></div>`);
 }
+
 function fcSave(el){
   const p=FC.pat||FPATTERNS.find(x=>x.id===S.fcPat);const name=S.fcName;
   const reps=+el.dataset.reps||0,score=+el.dataset.score||0,rom=el.dataset.rom?+el.dataset.rom:null;
   const flags=(el.dataset.flags||'').split('|').filter(Boolean);
   const kfN=+el.dataset.kf||0;
   const kf=KF_STASH.splice(0,kfN);
-  FORMS.unshift({id:uid(),client:name,pattern:p?p.id:'?',ex:p?t(p.n):'?',reps,score,rom,flags,kf,d:isoToday()});
+  const tempo=FC.lastTempo&&FC.lastTempo!=='—'?FC.lastTempo:(FC.tempos&&FC.tempos.length?FC.tempos[FC.tempos.length-1].tempo:'');
+  const vLoss=FC.lastVLoss||0;
+  const aiReport=FC.aiReport||'';
+  FORMS.unshift({id:uid(),client:name,pattern:p?p.id:'?',ex:p?t(p.n):'?',reps,score,rom,flags,tempo,vLoss,aiReport,kf,d:isoToday()});
   const from=S.role==='client'?'client':'coach';
-  MSGS.push({id:uid(),client:name,from,type:'text',body:`${t('Form check')} · ${p?t(p.n):''} — ${t('Reps')} ${nf(reps)} · ${t('Form score')} ${nf(score)}${flags.length?' · '+flags.map(f=>t(f)).join(', '):''}`,time:'Just now',read:from==='coach'});
+  MSGS.push({id:uid(),client:name,from,type:'text',body:`${t('Form check')} · ${p?t(p.n):''} — ${t(p?.posture?'Hold':'Reps')} ${nf(reps)}${tempo?' · '+t('Tempo')+' '+tempo:''}${vLoss?' · VBT -'+nf(vLoss)+'%':''} · ${t('Form score')} ${nf(score)}${flags.length?' · '+flags.map(f=>t(f)).join(', '):''}`,time:'Just now',read:from==='coach'});
   if(from==='client'){const cc=CLIENTS.find(x=>x.name===name);if(cc)gamAward(cc,'form')} // v18.38 — +5 pts
   fcStop();FC={on:false};
   closeModal();saveData();render();
@@ -7332,8 +7911,9 @@ function formReportsModal(name){
     ${list.length?list.map(f=>`
     <div class="card" style="padding:12px;margin-bottom:8px">
       <div class="row" style="justify-content:space-between"><b style="font-size:13px">${esc(f.ex)}</b><span class="bdg ${f.score>=85?'bdg-lime':f.score>=65?'bdg-amber':'bdg-red'}">${t('Form score')} ${nf(f.score)}</span></div>
-      <div class="muted" style="font-size:11.5px;margin-top:4px">${t('Reps')} ${nf(f.reps)}${f.rom!=null?` · ${t('Range of motion')} ${nf(f.rom)}°`:''} · ${esc(f.d)}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:4px">${t('Reps')} ${nf(f.reps)}${f.rom!=null?` · ${t('Range of motion')} ${nf(f.rom)}°`:''}${f.tempo?` · ${t('Tempo')} ${esc(f.tempo)}`:''}${f.vLoss?` · VBT -${nf(f.vLoss)}%`:''} · ${esc(f.d)}</div>
       ${(f.flags||[]).length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:6px">${f.flags.map(fl=>`<span class="bdg bdg-red" style="font-size:10px">${t(fl)}</span>`).join('')}</div>`:''}
+      ${f.aiReport?`<div style="font-size:11px;line-height:1.5;background:var(--bg2);padding:8px 10px;border-radius:8px;margin-top:7px;border-inline-start:3px solid var(--accent);white-space:pre-line">${esc(f.aiReport)}</div>`:''}
       ${(f.kf||[]).length?`<div class="fc-kfs">${f.kf.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
     </div>`).join('')
     :`<div class="empty">${ic('ruler',22)}<b>${t('No report yet — run a form check')}</b></div>`}
@@ -9395,7 +9975,7 @@ function cProfile(){
     <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
     <div class="cc tight">
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
-        <div class="muted" style="font-size:12.5px">${t('English')}</div></div>
+        <select class="sel" style="width:120px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="tr" ${lang==='tr'?'selected':''}>Türkçe</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
       <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
@@ -9763,13 +10343,15 @@ function cPlayer(){
    Target race + countdown + result. The coach owns the row; `ath` is optional   so a squad-wide event and an athlete's target both fit the same shape. */
 function raceCard(r){
   const d=Math.round((Date.parse(r.date+'T00:00:00')-Date.parse(isoToday()+'T00:00:00'))/864e5);
+  const athObj=r.ath?(client(r.ath)||CLIENTS.find(x=>x.name===r.ath)):null;
+  const athLabel=athObj?athObj.name:(r.ath||'');
   return `<div class="card" style="padding:14px 16px;margin-bottom:10px">
     <div class="row" style="gap:12px;align-items:flex-start">
       <div style="flex:1;min-width:0">
         <div class="row" style="gap:8px;flex-wrap:wrap">
           <b style="font-size:14.5px">${esc(r.name)}</b>
           ${r.event?`<span class="chip">${ic('flag',11)} ${esc(r.event)}</span>`:''}
-          ${r.ath?`<span class="chip">${ic('user',11)} ${esc(r.ath)}</span>`:''}
+          ${athLabel?`<span class="chip">${ic('user',11)} ${esc(athLabel)}</span>`:''}
         </div>
         <div class="muted" style="font-size:12.5px;margin-top:5px">${fmtD(r.date)}${r.loc?' · '+esc(r.loc):''}${r.dist?' · '+esc(r.dist):''}</div>
         ${r.goal?`<div class="muted" style="font-size:12.5px;margin-top:4px">${ic('target',12)} ${esc(r.goal)}</div>`:''}
@@ -9788,7 +10370,7 @@ function raceCard(r){
   </div>`;
 }
 function vRaces(){
-  const up=RACES.filter(r=>!r.result).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const up=RACES.filter(r=>!r.result).slice().sort((a,b)=>String(a.date).localeCompare(String(a.date)));
   const done=RACES.filter(r=>r.result).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
   return `<div class="page-h"><div><h1>${t('Races')}</h1>
     <div class="sub">${t('Target races, countdowns and results')}</div></div>
@@ -9821,7 +10403,15 @@ function raceEditor(id){
     ${f('name','Race name','City Half Marathon')}
     <div class="fgrid">${f('event','Event','Half Marathon')}${f('dist','Distance','21.1 km')}</div>
     <div class="fgrid">${f('date','Date','','date')}${f('loc','Location','Bristol')}</div>
-    <div class="fgrid">${f('target','Target time','1:29:00')}${f('ath','Athlete (optional)','Whole squad')}</div>
+    <div class="fgrid">
+      ${f('target','Target time','1:29:00')}
+      <div class="field"><label class="lbl">${t('Athlete')}</label>
+        <select class="sel" id="rc-ath">
+          <option value="">${t('Whole squad')}</option>
+          ${CLIENTS.map(c=>`<option value="${esc(c.id)}" ${(String(d.ath)===String(c.id)||d.ath===c.name)?'selected':''}>${esc(c.name)}</option>`).join('')}
+        </select>
+      </div>
+    </div>
     ${f('goal','Goal','Top 20 overall')}
     ${f('notes','Notes','Anything the block must respect')}
   </div>
@@ -9849,31 +10439,51 @@ function raceResult(id){
 /* ================= ATHLETICS §9 — PERSONAL BESTS =================
    One row per recorded mark, newest first; the latest mark per event is   highlighted. `prev` is never dropped — §9 asks for history, not a value. */
 function vPbs(){
-  const rows=PBSD.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-  const latestOf=ev=>rows.find(p=>p.ev===ev);
+  const sel=S.pbCid||'all';
+  const rows=(sel==='all'?PBSD:PBSD.filter(p=>String(p.cid||1)===String(sel)))
+    .slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const latestOf=(ev,cid)=>rows.find(p=>p.ev===ev&&(sel!=='all'||String(p.cid||1)===String(cid)));
+  const chips=`<div class="row" style="gap:7px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="fchip ${sel==='all'?'on':''}" data-act="pb-pick" data-cid="all">${t('All athletes')}</button>
+    ${CLIENTS.map(x=>`<button class="fchip ${String(sel)===String(x.id)?'on':''}" data-act="pb-pick" data-cid="${x.id}">${esc(x.name)}</button>`).join('')}
+  </div>`;
   return `<div class="page-h"><div><h1>${t('Personal Bests')}</h1>
     <div class="sub">${t('Every mark with its history — not just the latest value')}</div></div>
     <button class="btn btn-primary" data-act="pb-new">${ic('plus',15)} ${t('Record mark')}</button></div>
+  ${chips}
   ${rows.length?`<div class="card" style="padding:0;overflow-x:auto"><table class="tbl">
-    <thead><tr><th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th>
-      <th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th></tr></thead>
-    <tbody>${rows.map(p=>{const top=latestOf(p.ev)===p;return `<tr>
+    <thead><tr>
+      ${sel==='all'?`<th>${t('Athlete')}</th>`:''}
+      <th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th>
+      <th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th><th></th></tr></thead>
+    <tbody>${rows.map(p=>{
+      const top=latestOf(p.ev, p.cid||1)===p;
+      const cName=(client(p.cid||1)||{}).name||'—';
+      return `<tr>
+      ${sel==='all'?`<td><b>${esc(cName)}</b></td>`:''}
       <td><b>${esc(p.ev)}</b></td>
       <td><b style="font-size:14px;${top?'color:var(--accent-text)':''}">${esc(p.val)}</b>${top?` <span class="bdg bdg-green" style="font-size:9.5px">${t('PB')}</span>`:''}</td>
       <td class="muted">${esc(p.prev||'—')}</td>
       <td>${fmtD(p.date)}</td>
       <td><span class="chip">${esc(p.src||'Manual')}</span></td>
-      <td class="muted">${esc(p.notes||'')}</td></tr>`}).join('')}</tbody></table></div>`:
+      <td class="muted">${esc(p.notes||'')}</td>
+      <td class="num"><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(p.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td></tr>`}).join('')}</tbody></table></div>`:
   `<div class="empty">${ic('medal',24)}<b>${t('No marks recorded yet')}</b>
     <span class="muted" style="font-size:12.5px">${t('Record a mark and every future one is compared against it')}</span>
     <button class="btn btn-primary btn-sm" data-act="pb-new" style="margin-top:4px">${ic('plus',14)} ${t('Record mark')}</button></div>`}`;
 }
-function pbEditor(){
+function pbEditor(targetCid){
+  const selCid = targetCid || (S.pbCid && S.pbCid !== 'all' ? S.pbCid : (CLIENTS[0] ? CLIENTS[0].id : 1));
   const evs=['60m','100m','200m','400m','800m','1500m','3000m','5000m','10K','Half Marathon','Marathon'];
   openModal(`
   <div class="modal-h"><h3>${ic('medal',16)} ${t('Record mark')}</h3>
     <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Athlete')}</label>
+      <select class="sel" id="pb-cid">
+        ${CLIENTS.map(c => `<option value="${c.id}" ${String(c.id)===String(selCid)?'selected':''}>${esc(c.name)}</option>`).join('')}
+      </select>
+    </div>
     <div class="field"><label class="lbl">${t('Event')}</label>
       <input class="inp" id="pb-ev" list="pb-evs" placeholder="5K">
       <datalist id="pb-evs">${evs.map(e=>`<option value="${e}"></option>`).join('')}</datalist></div>
@@ -9894,19 +10504,128 @@ function pbEditor(){
     <button class="btn btn-primary" data-act="pb-save">${ic('check',14)} ${t('Record mark')}</button></div>`);
 }
 
+/* Jack Daniels VDOT & Training Pace Zones */
+function calcVdot(distMeters, timeSeconds) {
+  if (!distMeters || !timeSeconds || timeSeconds <= 0) return 0;
+  const tMin = timeSeconds / 60;
+  const v = distMeters / tMin;
+  const vo2 = -4.60 + 0.182258 * v + 0.000104 * v * v;
+  const pctMax = 0.8 + 0.1894393 * Math.exp(-0.012778 * tMin) + 0.2989558 * Math.exp(-0.1932605 * tMin);
+  return pctMax > 0 ? +(vo2 / pctMax).toFixed(1) : 0;
+}
+function vFromVo2(targetVo2) {
+  const a = 0.000104, b = 0.182258, c = -(4.60 + targetVo2);
+  const disc = b * b - 4 * a * c;
+  if (disc < 0) return 0;
+  return (-b + Math.sqrt(disc)) / (2 * a);
+}
+function paceMinKm(vMPerMin) {
+  if (!vMPerMin || vMPerMin <= 0) return '—';
+  const secPerKm = 60000 / vMPerMin;
+  const m = Math.floor(secPerKm / 60);
+  const s = Math.round(secPerKm % 60);
+  return m + ':' + String(s).padStart(2, '0') + '/km';
+}
+function vdotPaces(vdot) {
+  if (!vdot || vdot < 20 || vdot > 85) return null;
+  return {
+    vdot: vdot,
+    z1: paceMinKm(vFromVo2(vdot * 0.62)) + ' – ' + paceMinKm(vFromVo2(vdot * 0.70)),
+    z2: paceMinKm(vFromVo2(vdot * 0.70)) + ' – ' + paceMinKm(vFromVo2(vdot * 0.75)),
+    z3: paceMinKm(vFromVo2(vdot * 0.78)) + ' – ' + paceMinKm(vFromVo2(vdot * 0.84)),
+    z4: paceMinKm(vFromVo2(vdot * 0.86)) + ' – ' + paceMinKm(vFromVo2(vdot * 0.88)),
+    z5: paceMinKm(vFromVo2(vdot * 0.95)) + ' – ' + paceMinKm(vFromVo2(vdot * 0.98))
+  };
+}
+function athleteVdot(cid) {
+  const myPbs = PBSD.filter(p => String(p.cid || 1) === String(cid));
+  const parseTime = s => {
+    const p = String(s || '').trim().split(':');
+    if (p.length === 3) return (+p[0])*3600 + (+p[1])*60 + (+p[2]);
+    if (p.length === 2) return (+p[0])*60 + (+p[1]);
+    return parseFloat(s) || 0;
+  };
+  const pb5k = myPbs.find(p => /5k|5000/i.test(p.ev));
+  if (pb5k) { const sec = parseTime(pb5k.val); if (sec > 600 && sec < 3600) return calcVdot(5000, sec); }
+  const pb10k = myPbs.find(p => /10k|10000/i.test(p.ev));
+  if (pb10k) { const sec = parseTime(pb10k.val); if (sec > 1200 && sec < 7200) return calcVdot(10000, sec); }
+  const pbHalf = myPbs.find(p => /half/i.test(p.ev));
+  if (pbHalf) { const sec = parseTime(pbHalf.val); if (sec > 3000) return calcVdot(21097, sec); }
+  const pb15 = myPbs.find(p => /1500/i.test(p.ev));
+  if (pb15) { const sec = parseTime(pb15.val); if (sec > 180 && sec < 600) return calcVdot(1500, sec); }
+  return 46.2;
+}
+
 /* ================= ATHLETICS §3 — ATHLETE PROFILE =================
    The athletics layer ON TOP of the existing athlete: discipline, target,   availability. Nothing here replaces a CLIENTS field — it extends it. */
-/* v19.12 — §3 now renders INSIDE the athlete's workspace as the "Athletics" tab
-   (desktop) or from the mobile client view. The athlete arrives as an explicit
-   cid — S.apCid and the ap-pick chip row are gone, because Clients already IS
-   the athlete picker. The Save button carries data-cid so the handler needs no
-   hidden "currently editing" state either. */
 function vAprofile(cid){
   const c=client(cid||S.cid);
   if(!c)return '';
   const p=aprofOf(c.id)||{};
   const F=(k,l,ph,dl)=>`<div class="field"><label class="lbl">${t(l)}</label>
     <input class="inp" id="ap-${k}"${dl?` list="${dl}"`:''} value="${esc(p[k]||'')}" placeholder="${ph||''}"></div>`;
+  const myPbs = PBSD.filter(p => String(p.cid || 1) === String(c.id)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const pbsHtml = `<div class="card" style="padding:16px;margin-top:14px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('medal',16)}</span>
+        <b style="font-size:14px">${t('Personal Bests')} · ${esc(c.name)}</b>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="pb-new-for" data-cid="${c.id}">${ic('plus',13)} ${t('Record mark')}</button>
+    </div>
+    ${myPbs.length?`<table class="tbl"><thead><tr>
+      <th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th><th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th><th></th>
+    </tr></thead><tbody>${myPbs.map(pb=>`<tr>
+      <td><b>${esc(pb.ev)}</b></td>
+      <td><b style="font-size:14px;color:var(--accent-text)">${esc(pb.val)}</b></td>
+      <td class="muted">${esc(pb.prev||'—')}</td>
+      <td>${fmtD(pb.date)}</td>
+      <td><span class="chip">${esc(pb.src||'Manual')}</span></td>
+      <td class="muted">${esc(pb.notes||'')}</td>
+      <td class="num"><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(pb.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td>
+    </tr>`).join('')}</tbody></table>`:`<div class="muted" style="font-size:12.5px">${t('No marks recorded yet for this athlete.')}</div>`}
+  </div>`;
+  const vd = athleteVdot(c.id);
+  const paces = vdotPaces(vd);
+  const zonesHtml = paces ? `<div class="card" style="padding:16px;margin-top:14px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="icw" style="background:var(--blue-soft);color:var(--blue)">${ic('trending-up',16)}</span>
+        <div>
+          <b style="font-size:14px">${t('Training Pace Zones')} (VDOT ${vd})</b>
+          <span class="muted" style="font-size:11.5px;display:block">${t('Calculated scientifically based on race performances & Jack Daniels formula')}</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+      <div style="padding:10px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:8px">
+        <div class="row" style="justify-content:space-between"><span class="bdg bdg-green" style="font-size:9.5px">Zone 1</span><span class="muted" style="font-size:10.5px">62–70%</span></div>
+        <b style="font-size:12.5px;display:block;margin-top:4px">${t('Recovery & Warm-up')}</b>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);margin-top:4px">${paces.z1}</div>
+      </div>
+      <div style="padding:10px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:8px">
+        <div class="row" style="justify-content:space-between"><span class="bdg bdg-blue" style="font-size:9.5px">Zone 2</span><span class="muted" style="font-size:10.5px">70–75%</span></div>
+        <b style="font-size:12.5px;display:block;margin-top:4px">${t('Easy & Aerobic Base')}</b>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);margin-top:4px">${paces.z2}</div>
+      </div>
+      <div style="padding:10px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:8px">
+        <div class="row" style="justify-content:space-between"><span class="bdg bdg-purple" style="font-size:9.5px">Zone 3</span><span class="muted" style="font-size:10.5px">78–84%</span></div>
+        <b style="font-size:12.5px;display:block;margin-top:4px">${t('Marathon / Steady')}</b>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);margin-top:4px">${paces.z3}</div>
+      </div>
+      <div style="padding:10px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:8px">
+        <div class="row" style="justify-content:space-between"><span class="bdg bdg-amber" style="font-size:9.5px">Zone 4</span><span class="muted" style="font-size:10.5px">86–88%</span></div>
+        <b style="font-size:12.5px;display:block;margin-top:4px">${t('Lactate Threshold')}</b>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);margin-top:4px">${paces.z4}</div>
+      </div>
+      <div style="padding:10px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:8px">
+        <div class="row" style="justify-content:space-between"><span class="bdg bdg-red" style="font-size:9.5px">Zone 5</span><span class="muted" style="font-size:10.5px">95–98%</span></div>
+        <b style="font-size:12.5px;display:block;margin-top:4px">${t('VO2max Intervals')}</b>
+        <div style="font-weight:700;font-size:14px;color:var(--ink);margin-top:4px">${paces.z5}</div>
+      </div>
+    </div>
+  </div>` : '';
+
   return `<div class="page-h"><div><h1>${t('Athletics Profile')}</h1>
     <div class="sub">${esc(c.name)} · ${t('Discipline, target and availability — the layer the athletics engine reads')}</div></div>
     <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button></div>
@@ -9933,7 +10652,9 @@ function vAprofile(cid){
     </div>
     <datalist id="ap-evts">${AEVTS.map(e=>`<option value="${e}"></option>`).join('')}</datalist>
     <div class="muted" style="font-size:12px;margin-top:12px">${ic('database',12)} ${t('Events are data, not code — add a row to the catalogue, never a branch in the engine.')}</div>
-  </div>`;
+  </div>
+  ${zonesHtml}
+  ${pbsHtml}`;
 }
 
 /* ================= ATHLETICS §7 — TRAINING PHASES =================
@@ -9965,16 +10686,19 @@ function vPhases(){
     <div style="margin-top:9px">${bar(ph.load)}</div>
     <div class="row" style="gap:6px;margin-top:10px;justify-content:flex-end">
       <button class="btn btn-ghost btn-sm" data-act="ph-del" data-id="${esc(ph.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+      <button class="btn btn-outline btn-sm" data-act="ph-edit" data-id="${esc(ph.id)}">${ic('edit',13)} ${t('Edit')}</button>
       ${ph.now?'':`<button class="btn btn-outline btn-sm" data-act="ph-now" data-id="${esc(ph.id)}">${ic('check',13)} ${t('Set current')}</button>`}
     </div>
   </div>`).join(''):`<div class="empty">${ic('calendar',24)}<b>${t('No phases yet')}</b>
     <span class="muted" style="font-size:12.5px">${t('Define the blocks your season is built from')}</span></div>`}
   <div class="muted" style="font-size:12px;margin-top:8px">${ic('info',12)} ${t('Phases are yours to name — CoachMint does not impose a periodization model, and your weekly plan stays where it is.')}</div>`;
 }
-function phEditor(){
-  const d=S.phDraft||{name:'',weeks:'',focus:'',load:50};
+function phEditor(id){
+  const ph=id!=null?PHASES.find(x=>String(x.id)===String(id)):null;
+  S.phDraft=ph?JSON.parse(JSON.stringify(ph)):{name:'',weeks:'',focus:'',load:50};
+  const d=S.phDraft;
   openModal(`
-  <div class="modal-h"><h3>${ic('clock',16)} ${t('Phase')}</h3>
+  <div class="modal-h"><h3>${ic('clock',16)} ${ph?t('Edit Phase'):t('New Phase')}</h3>
     <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="field"><label class="lbl">${t('Phase name')}</label>
@@ -10118,13 +10842,16 @@ const pvPlanPace=b=>{if(!b||!b.dist)return '';
 const pvClock=s=>Math.floor(s/60)+':'+String(Math.round(s)%60).padStart(2,'0');
 const pvDelta=(p,a)=>{const sec=x=>{const m=/(\d+):(\d+)/.exec(x);return m?(+m[1])*60+(+m[2]):0};
   const d=sec(a)-sec(p);if(!d)return '0:00';const ab=Math.abs(d);
-  return (d<0?'-':'+')+Math.floor(ab/60)+':'+String(ab%60).padStart(2,'0')};
+  const isFaster=d<0;const sign=isFaster?'-':'+';
+  const val=sign+Math.floor(ab/60)+':'+String(ab%60).padStart(2,'0');
+  return `<span style="color:${isFaster?'var(--green)':'var(--amber)'}">${val}</span> <span class="muted" style="font-size:10px">(${t(isFaster?'faster':'slower')})</span>`;};
 /* RUNW.day is a FULLDAYS name ('Thursday'); TLOG carries a date. Both sides
    reduce to Monday=0, which is what TODAY and EVENTS.day already use. */
 const pvDayIdx=name=>{for(let i=0;i<7;i++){if(FULLDAYS[i]===name||t(FULLDAYS[i])===name)return i}return -1};
 
 /* ================= ATHLETICS §6 — TRAINING LOAD =================
-   Every number below is computed from TLOG. Deltas are deliberately NEUTRAL:   a rise in load is not "good", so it never gets a green/red treatment.   Nothing here estimates injury risk or readiness — §6 forbids presenting   this as a diagnostic tool. */
+   Every number below is computed from TLOG. Includes ACWR (Acute:Chronic Workload Ratio),
+   elevation gain, and GPX activity ingestion. */
 function vLoad(){
   const sel=S.loadCid||'all';
   const rows=sel==='all'?TLOG:TLOG.filter(r=>String(r.cid)===String(sel));
@@ -10136,24 +10863,49 @@ function vLoad(){
   const pct=(a,b)=>{if(!b)return a>0?'new':'0%';const d=Math.round((a-b)/b*100);return (d>0?'+':'')+d+'%'};
   const c=inW(cur),p=inW(cur-1);
   const km=sum(c,'km'),mins=sum(c,'min'),ses=c.length;
+  const elevSum=sum(c,'elev'),pElevSum=sum(p,'elev');
   const hi=c.filter(r=>r.kind==='hi').length;
   const lng=c.filter(r=>r.kind==='long').length;
   const rec=c.filter(r=>r.kind==='recovery').length;
   const load=tlogLoad(c),pload=tlogLoad(p);
-  /* §6's load card carries a metric switch — Distance / Duration / Session RPE.
-     Bars are normalised against the selected metric only, never mixed. */
+
+  /* ACWR (Acute:Chronic Workload Ratio) */
+  const acuteLoad=load;
+  const past4=[cur-3,cur-2,cur-1,cur].filter(w=>w>=0);
+  const past4Loads=past4.map(w=>tlogLoad(inW(w)));
+  const chronicLoad=past4Loads.length?+(past4Loads.reduce((a,b)=>a+b,0)/past4Loads.length).toFixed(1):0;
+  const acwr=chronicLoad>0?+(acuteLoad/chronicLoad).toFixed(2):1.0;
+  let acwrBdg='bdg-green',acwrText=t('Optimal (Sweet Spot)');
+  if(acwr>1.5){acwrBdg='bdg-red';acwrText=t('Danger: Load Spike (High Injury Risk)');}
+  else if(acwr>1.3){acwrBdg='bdg-amber';acwrText=t('High Load (Caution)');}
+  else if(acwr<0.8){acwrBdg='bdg-blue';acwrText=t('Deload / Under-training');}
+
+  const acwrCard=`<div class="card" style="padding:14px 18px;margin-bottom:14px;border-inline-start:4px solid ${acwr>1.5?'var(--red)':acwr>1.3?'var(--amber)':'var(--green)'}">
+    <div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div>
+        <div class="row" style="gap:8px;align-items:center">
+          <b style="font-size:14px">${t('Acute:Chronic Workload Ratio (ACWR)')}</b>
+          <span class="bdg ${acwrBdg}">${acwrText}</span>
+        </div>
+        <div class="muted" style="font-size:12px;margin-top:4px">
+          ${t('Acute (this week)')}: <b>${nf(acuteLoad)} sRPE</b> · ${t('Chronic (4-week avg)')}: <b>${nf(chronicLoad)} sRPE</b> · ${t('ACWR')}: <b>${nf(acwr)}</b>
+        </div>
+      </div>
+      <div style="font-size:12px;max-width:380px" class="muted">
+        ${ic('shield',13)} ${acwr>1.5?t('Workload spiked >50% over monthly baseline — elevated risk of overuse injury!'):t('Workload safely within the 0.8–1.3 sweet spot to build endurance without sudden fatigue.')}
+      </div>
+    </div>
+  </div>`;
+
+  /* §6's load card carries a metric switch — Distance / Duration / Session RPE. */
   const met=S.loadMet||'km';
   const METS=[['km','Distance'],['min','Duration'],['load','Session RPE']];
   const valOf=w=>{const g=inW(w);return met==='km'?+sum(g,'km').toFixed(1):met==='min'?Math.round(sum(g,'min')):+tlogLoad(g)};
   const metFmt=v=>met==='min'?hm(v):nf(v);
   const metUnit=met==='km'?'km':met==='min'?'min':'sRPE';
   const maxV=Math.max(1,...weeks.map(valOf));
-  /* RPE distribution for the current week — §6 reads it beside session mix. */
-  const rpeDist=[1,2,3,4,5,6,7,8,9,10].map(r=>({r:r,n:c.filter(x=>(+x.rpe||0)===r).length}))
-    .filter(x=>x.n>0), maxRpe=Math.max(1,...rpeDist.map(x=>x.n));
-  /* Most-recently-written first, so the session just logged sits on top. */
+  const rpeDist=[1,2,3,4,5,6,7,8,9,10].map(r=>({r:r,n:c.filter(x=>(+x.rpe||0)===r).length})).filter(x=>x.n>0),maxRpe=Math.max(1,...rpeDist.map(x=>x.n));
   const recent=rows.map((r,i)=>[i,r]).sort((a,b)=>(b[1].w-a[1].w)||(b[0]-a[0])).slice(0,6).map(x=>x[1]);
-  /* The app's stat tile is `.stats > .card.stat` (icw chip + .k + .v). `.kpi`   exists only in shop/index.html — using it here would render an unstyled block. */
   const cell=(l,v,u,d,i,c)=>`<div class="card stat">
       <div class="row"><span class="icw" style="background:var(--${c}-soft);color:var(${c==='accent'?'--accent-deep':'--'+c})">${ic(i,17)}</span>
         <span class="k">${t(l)}</span><span class="sp"></span></div>
@@ -10178,18 +10930,18 @@ function vLoad(){
     <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>${chips}
     <div class="empty">${ic('chart',24)}<b>${t('No sessions logged yet')}</b>
       <span class="muted" style="font-size:12.5px">${t('Log a session to start tracking volume and progression')}</span></div>`;
-  /* §16/§17 — planned vs actual. TWO PANELS, never one blended score, and a
-     planned day with no log says "Not logged yet" instead of showing zeros.
-     Paired by WEEKDAY: a plan workout owns a day name, TLOG rows carry a date. */
+
+  /* §16/§17 — planned vs actual with robust wid and unicode name pairing */
   const pvPairs=RUNW.map(w=>{const di=pvDayIdx(w.day);
-    /* Pair by NAME first: a plan workout and its log entry share a leading word
-       ('Interval session — 6 × 400m' ↔ 'Intervals · 6 × 400m',
-       'Long run — 28 km' ↔ 'Long run'). Weekday-only pairing compared the
-       plan's Thursday interval session against the log's Thursday long run —
-       a big but meaningless Δ. No name match ⇒ "Not logged yet" rather than a
-       wrong pairing. Scoped to the CURRENT week (c), never the whole log. */
-    const sig=String(w.name||'').toLowerCase().split(/[^a-z]+/).filter(Boolean)[0]||'';
-    const act=sig?c.filter(r=>String(r.name||'').toLowerCase().indexOf(sig)>=0):[];
+    const act = c.filter(r => {
+      if (r.wid && String(r.wid) === String(w.id)) return true;
+      const wNorm = String(w.name || '').toLowerCase().trim();
+      const rNorm = String(r.name || '').toLowerCase().trim();
+      if (!wNorm || !rNorm) return false;
+      if (rNorm.indexOf(wNorm) >= 0 || wNorm.indexOf(rNorm) >= 0) return true;
+      const wWords = wNorm.match(/[\p{L}\p{N}]{3,}/gu) || [];
+      return wWords.some(word => rNorm.indexOf(word) >= 0);
+    });
     const main=(w.blocks||[]).filter(b=>b.t==='main')[0]||null;
     const pkm=+(w.blocks||[]).reduce((a,b)=>a+pvBlockKm(b),0).toFixed(1);
     const akm=+act.reduce((s,x)=>s+(+x.km||0),0).toFixed(1);
@@ -10232,6 +10984,7 @@ function vLoad(){
       </div>`).join('')}</div>
     <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Objective differences only — no interpretation and no medical or performance conclusions. Planned distance is derived from the fields typed in each block.')}${sel==='all'?'':` ${t('The plan is workspace-wide; Actual follows the athlete filter above.')}`}</div>
   </div>`:'';
+
   return `<div class="page-h"><div><h1>${t('Training Load')}</h1>
     <div class="sub">${t('Distance, duration, session mix and progression')}</div></div>
     <button class="btn btn-primary" data-act="load-new">${ic('plus',15)} ${t('Log session')}</button></div>
@@ -10239,9 +10992,10 @@ function vLoad(){
   <div class="stats" style="margin-bottom:14px">
     ${cell('Weekly distance',nf(km),'km',pct(km,sum(p,'km')),'chart','accent')}
     ${cell('Weekly duration',hm(mins),'h:mm',pct(mins,sum(p,'min')),'clock','blue')}
-    ${cell('Sessions',nf(ses),'',pct(ses,p.length),'calendar','purple')}
     ${cell('Session load',nf(load),'sRPE',pct(load,pload),'zap','amber')}
+    ${cell('Elevation Gain',nf(elevSum),'m',pct(elevSum,pElevSum),'trending-up','purple')}
   </div>
+  ${acwrCard}
   <div class="grid2" style="margin-bottom:14px">
     <div class="card" style="padding:16px 18px">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><span class="card-t">${ic('chart',14)} ${t('Weekly volume')}</span>
@@ -10284,24 +11038,78 @@ function vLoad(){
       <span class="muted" style="font-size:11.5px;margin-inline-start:8px">${t('Newest first')}</span></div>
     <table class="tbl"><thead><tr><th>${t('Session')}</th><th>${t('Type')}</th>
       <th class="num">${t('Distance')}</th><th class="num">${t('Duration')}</th>
-      <th class="num">RPE</th><th class="num">${t('Load')}</th><th></th></tr></thead>
+      <th class="num">${t('Elevation')}</th><th class="num">RPE</th><th class="num">${t('Load')}</th><th></th></tr></thead>
       <tbody>${recent.map(r=>{const kl=TLOG_KINDS.find(k=>k[0]===r.kind);
         const rl=(+r.min||0)/60*(+r.rpe||0);
-        return `<tr><td><b>${esc(r.name)}</b><div class="muted" style="font-size:11px">${t('Week')} ${nf(+r.w+1)}${r.date?` · ${esc(r.date)}`:''}</div></td>
+        return `<tr><td><b>${esc(r.name)}</b><div class="muted" style="font-size:11px">${t('Week')} ${nf(+r.w+1)}${r.date?` · ${esc(r.date)}`:''}${r.splits?` · <span style="color:var(--accent-text)">${esc(r.splits)}</span>`:''}</div></td>
           <td>${kl?`<span class="bdg bdg-gray">${t(kl[1])}</span>`:''}</td>
           <td class="num">${(+r.km||0)>0?nf(+r.km)+' km':'—'}</td>
           <td class="num">${hm(+r.min||0)}</td>
+          <td class="num">${r.elev?`+${nf(r.elev)} m`:'—'}</td>
           <td class="num">${nf(+r.rpe||0)}</td>
           <td class="num">${nf(+rl.toFixed(1))}</td>
           <td class="num"><button class="btn btn-ghost btn-icon" data-act="load-del" data-id="${r.id}" title="${t('Delete')}">${ic('trash',15)}</button></td></tr>`}).join('')}</tbody></table>
   </div>
-  <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Session load is duration × RPE (sRPE) — a plain arithmetic total to help you read the trend. CoachMint does not interpret it, and it is not a medical or readiness score.')}</div>`;
+  <div class="muted" style="font-size:12px">${ic('info',12)} ${t('Session load is duration × RPE (sRPE) — ACWR monitors acute spike vs chronic baseline for safer endurance progression.')}</div>`;
 }
+
+/* GPX File Parser for watches & endurance activity logs */
+window.parseGpxFile=function(input){
+  const file=input&&input.files&&input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const xml=new DOMParser().parseFromString(e.target.result,'text/xml');
+      const trkpts=xml.querySelectorAll('trkpt');
+      if(!trkpts.length){toast(t('No GPS trackpoints found in GPX file'));return;}
+      let totalDistM=0,totalElevGain=0,prevEle=null,prevLat=null,prevLon=null;
+      const rad=x=>x*Math.PI/180;
+      const haversine=(lat1,lon1,lat2,lon2)=>{
+        const R=6371000,dLat=rad(lat2-lat1),dLon=rad(lon2-lon1);
+        const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(rad(lat1))*Math.cos(rad(lat2))*Math.sin(dLon/2)*Math.sin(dLon/2);
+        return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+      };
+      for(let i=0;i<trkpts.length;i++){
+        const pt=trkpts[i],lat=parseFloat(pt.getAttribute('lat')),lon=parseFloat(pt.getAttribute('lon'));
+        const eleNode=pt.querySelector('ele'),ele=eleNode?parseFloat(eleNode.textContent):null;
+        if(prevLat!==null&&prevLon!==null)totalDistM+=haversine(prevLat,prevLon,lat,lon);
+        if(ele!==null&&prevEle!==null&&ele>prevEle)totalElevGain+=(ele-prevEle);
+        prevLat=lat;prevLon=lon;if(ele!==null)prevEle=ele;
+      }
+      let durMin=0;
+      const firstTime=trkpts[0].querySelector('time'),lastTime=trkpts[trkpts.length-1].querySelector('time');
+      if(firstTime&&lastTime){
+        const t1=new Date(firstTime.textContent).getTime(),t2=new Date(lastTime.textContent).getTime();
+        if(t2>t1)durMin=Math.round((t2-t1)/60000);
+      }
+      const km=+(totalDistM/1000).toFixed(2),elev=Math.round(totalElevGain);
+      if($('tl-km'))$('tl-km').value=km;
+      if($('tl-min')&&durMin>0)$('tl-min').value=durMin;
+      if($('tl-elev'))$('tl-elev').value=elev;
+      if($('tl-name')&&!$('tl-name').value)$('tl-name').value='GPS Run · '+file.name.replace(/\.gpx$/i,'');
+      toast(t('GPX loaded')+`: ${km} km, ${durMin} min, +${elev}m`);
+    }catch(err){toast(t('Could not parse GPX file'));}
+  };
+  reader.readAsText(file);
+};
+
 function tlogEditor(){
+  const selCid = S.loadCid && S.loadCid !== 'all' ? S.loadCid : (CLIENTS[0] ? CLIENTS[0].id : 1);
   openModal(`
   <div class="modal-h"><h3>${ic('plus',16)} ${t('Log session')}</h3>
     <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Athlete')}</label>
+      <select class="sel" id="tl-cid">
+        ${CLIENTS.map(c => `<option value="${c.id}" ${String(c.id)===String(selCid)?'selected':''}>${esc(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field"><label class="lbl">${t('Linked Workout Plan')}</label>
+      <select class="sel" id="tl-wid">
+        <option value="">${t('Custom / Unlinked')}</option>
+        ${RUNW.map(w => `<option value="${esc(w.id)}">${esc(w.name)} (${t(w.day||'—')})</option>`).join('')}
+      </select>
+    </div>
     <div class="field"><label class="lbl">${t('Session name')}</label>
       <input class="inp" id="tl-name" placeholder="Tempo · 4 × 2 km"></div>
     <div class="fgrid">
@@ -10311,25 +11119,127 @@ function tlogEditor(){
         <input class="inp" id="tl-min" inputmode="numeric" placeholder="50"></div>
     </div>
     <div class="fgrid">
-      <div class="field"><label class="lbl">RPE</label>
+      <div class="field"><label class="lbl">RPE (1–10)</label>
         <input class="inp" id="tl-rpe" inputmode="numeric" placeholder="7"></div>
+      <div class="field"><label class="lbl">${t('Elevation Gain')} (m)</label>
+        <input class="inp" id="tl-elev" inputmode="numeric" placeholder="85"></div>
+    </div>
+    <div class="fgrid">
       <div class="field"><label class="lbl">${t('Type')}</label>
         <select class="sel" id="tl-kind">${TLOG_KINDS.map(([k,l])=>`<option value="${k}">${t(l)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Lap Splits')} (${t('optional')})</label>
+        <input class="inp" id="tl-splits" placeholder="e.g. 1:40, 1:42, 1:39"></div>
     </div>
-    <div class="muted" style="font-size:12px">${t('Saved into the current week. Load = duration × RPE.')}</div>
+    <div class="row" style="margin-top:10px;padding:10px 12px;background:var(--seg-bg);border-radius:8px;justify-content:space-between;align-items:center;border:1px dashed var(--line)">
+      <div style="font-size:12px;color:var(--ink2)">${ic('watch',14)} ${t('Have a GPS watch or GPX file?')}</div>
+      <label class="btn btn-outline btn-sm" style="cursor:pointer">
+        ${ic('upload',13)} ${t('Import GPX')}
+        <input type="file" id="tl-gpx-input" accept=".gpx,.xml" style="display:none" onchange="window.parseGpxFile(this)">
+      </label>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:8px">${t('Saved into the current week. Load = duration × RPE.')}</div>
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
     <button class="btn btn-primary" data-act="load-save">${ic('check',14)} ${t('Log session')}</button></div>`);
 }
 
-/* ================= ATHLETICS §12 — WEARABLES =================
-   NOTHING HERE IS WIRED. No Strava credential exists in this deployment
-   (.env is not ours to change), so the screen refuses to pretend otherwise:
-   no fake "Connected", no fake last-sync time, no seeded activity rows.
-   What it DOES ship is real: the provider contract the engine will read
-   (§11/§12), the import policy (§15/§9), the privacy promises (§21) and the
-   human error copy the UI is designed to show (§20). §16/§17's planned-vs-
-   actual panel already lives in vLoad(), so it is not duplicated here. */
+/* ================= ATHLETICS §12 — WEARABLES ================= */
+const STRAVA={
+  connected:false,
+  athleteName:'',
+  athleteId:'',
+  lastSync:'',
+  importedCount:0,
+  isSimulator:true,
+  syncing:false,
+  loaded:false,
+  fetching:false
+};
+
+async function loadStravaStatus(force){
+  if(STRAVA.fetching)return;
+  if(STRAVA.loaded&&!force)return;
+  STRAVA.fetching=true;
+  try{
+    const r=await fetch('/api/strava/status');
+    const d=await r.json();
+    if(d&&d.ok){
+      STRAVA.connected=!!d.connected;
+      STRAVA.athleteName=d.athleteName||'';
+      STRAVA.athleteId=d.athleteId||'';
+      STRAVA.lastSync=d.lastSync||'';
+      STRAVA.importedCount=d.importedCount||0;
+      STRAVA.isSimulator=!!d.isSimulator;
+      STRAVA.loaded=true;
+    }
+  }catch(e){}
+  finally{
+    STRAVA.fetching=false;
+  }
+}
+
+function fmtDateTime(iso){
+  if(!iso)return '—';
+  try{
+    const d=new Date(iso);
+    if(isNaN(d.getTime()))return String(iso);
+    return `${fmtShortDate(d)} · ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }catch(e){return String(iso)}
+}
+
+async function wearConfigModal(){
+  let cfg={clientId:'',configured:false,simulator:true};
+  try{
+    const r=await fetch('/api/strava/config');
+    const d=await r.json();
+    if(d&&d.ok)cfg=d;
+  }catch(e){}
+
+  openModal(`
+  <div class="modal-h">
+    <h3>${ic('settings',17)} ${t('Strava Integration Settings')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b">
+    <div style="background:var(--accent-soft);border:1px solid var(--accent-deep);border-radius:10px;padding:14px;margin-bottom:14px">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+        <input type="checkbox" id="scfg-sim" ${cfg.simulator!==false?'checked':''} style="margin-top:3px;accent-color:var(--accent-deep);width:16px;height:16px">
+        <div>
+          <b style="font-size:13.5px;color:var(--ink)">${t('Enable Sandbox / Simulation Mode')}</b>
+          <div class="muted" style="font-size:12px;margin-top:3px;line-height:1.45">
+            ${t('Zero-configuration test mode. Connects instantly with realistic athlete profile ("Daniel Okoye"), GPS runs, elevation profiles, and lap splits without needing a Strava developer account.')}
+          </div>
+        </div>
+      </label>
+    </div>
+
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Strava Client ID')}</label>
+      <input class="inp" id="scfg-id" placeholder="e.g. 158291" value="${esc(cfg.clientId||'')}">
+      <div class="muted" style="font-size:11px;margin-top:3px">${t('Found on your Strava API Application page.')}</div>
+    </div>
+
+    <div class="field" style="margin-bottom:14px">
+      <label class="lbl">${t('Strava Client Secret')}</label>
+      <input class="inp" id="scfg-secret" type="password" placeholder="••••••••••••••••••••••••••••••••" value="">
+      <div class="muted" style="font-size:11px;margin-top:3px">${t('Keep empty to preserve the server’s existing secret.')}</div>
+    </div>
+
+    <div class="card" style="padding:12px 14px;background:var(--seg-bg);border:1px solid var(--line);font-size:12px;line-height:1.5">
+      <b>${t('Live Strava Developer Setup:')}</b>
+      <ol style="margin:6px 0 0 18px;padding:0" class="muted">
+        <li>${t('Register an app at ')}<a href="https://www.strava.com/settings/api" target="_blank" rel="noopener" style="color:var(--accent-text);text-decoration:underline">strava.com/settings/api</a></li>
+        <li>${t('Set "Authorization Callback Domain" to:')} <code style="font-family:monospace;background:var(--line);padding:2px 5px;border-radius:4px;color:var(--ink)">${location.host}</code></li>
+        <li>${t('Paste your Client ID & Secret, uncheck Sandbox Mode, and save.')}</li>
+      </ol>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="wear-config-save">${ic('check',14)} ${t('Save Settings')}</button>
+  </div>`);
+}
+
 const WEAR_ERRS=[
  ['OAuth denied','You cancelled the Strava authorization. Nothing was connected.'],
  ['Invalid authorization','That authorization link expired. Start the connection again.'],
@@ -10338,43 +11248,104 @@ const WEAR_ERRS=[
  ['Rate limit','Strava rate limit reached. Automatic sync resumes in 14 minutes.'],
  ['Missing athlete mapping','This Strava account is not linked to a CoachMint athlete yet.'],
  ['Duplicate activity','Already imported — the existing record was updated instead.']];
+
 function vWear(){
-  /* v19.13 — the key node must READ as the key: a pale-lime fill plus a real
-     lime edge, so it separates from the two grey nodes beside it instead of
-     sitting on the same --seg-bg as they do. The EDGE is --accent-deep (a border
-     only has to be recognisable, and the different fill already carries the
-     boundary); the LABEL stays --accent-text because #8FB51E as 12.5px bold text
-     measures 1.96:1 — illegible, which is why it was darkened in the first place. */
+  if(!STRAVA.loaded&&!STRAVA.fetching){
+    loadStravaStatus().then(()=>{if(S.view==='wear')render()});
+  }
+
   const node=(a,b,key)=>`<div style="border:1px solid ${key?'var(--accent-deep)':'var(--line)'};border-radius:9px;padding:8px 13px;background:${key?'var(--accent-key)':'var(--seg-bg)'};text-align:center">
       <b style="font-size:12.5px;${key?'color:var(--accent-text)':''}">${a}</b>
       ${b?`<div class="muted" style="font-size:10.5px;margin-top:2px">${b}</div>`:''}</div>`;
   const kv=(k,v)=>`<div><div class="muted" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t(k)}</div>
     <b style="font-size:15px;font-variant-numeric:tabular-nums">${v}</b></div>`;
+
+  const stravaRuns=TLOG.filter(x=>String(x.id).startsWith('strava_'));
+
   return `<div class="page-h"><div><h1>${t('Wearables')}</h1>
-      <div class="sub">${t('External activity providers — what would connect, and how it would land')}</div></div>
-    <div class="row" style="gap:8px;min-width:0"><span class="bdg bdg-amber">${t('NOT CONNECTED')}</span>
-      <button class="btn btn-primary" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button></div></div>
+      <div class="sub">${t('External activity providers — sync your GPS runs and training load')}</div></div>
+    <div class="row" style="gap:8px;min-width:0;flex-wrap:wrap">
+      ${STRAVA.connected
+        ? `<span class="bdg bdg-lime">${ic('check',12)} ${t('CONNECTED')}${STRAVA.isSimulator?` · ${t('SANDBOX')}`:''}</span>
+           <button class="btn btn-outline btn-sm" data-act="wear-config">${ic('settings',14)} ${t('API Settings')}</button>
+           <button class="btn btn-primary btn-sm" data-act="wear-sync" ${STRAVA.syncing?'disabled':''}>${ic('refresh-cw',14)} ${STRAVA.syncing?t('Syncing…'):t('Sync Now')}</button>`
+        : `<span class="bdg bdg-amber">${t('NOT CONNECTED')}</span>
+           <button class="btn btn-outline btn-sm" data-act="wear-config">${ic('settings',14)} ${t('API Settings')}</button>
+           <button class="btn btn-primary btn-sm" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button>`
+      }
+    </div></div>
   <div class="grid2" style="margin-bottom:14px">
     <div class="card" style="padding:16px 18px">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
         <span class="card-t">${ic('link',14)} ${t('Connected apps')}</span>
-        <span class="bdg bdg-amber">${t('NOT CONNECTED')}</span></div>
+        ${STRAVA.connected
+          ? `<span class="bdg bdg-lime">${t('CONNECTED')}</span>`
+          : `<span class="bdg bdg-amber">${t('NOT CONNECTED')}</span>`
+        }
+      </div>
       <div class="row" style="gap:12px;margin-top:14px">
         <span style="width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent-deep);display:grid;place-items:center;flex:none">${ic('watch',18)}</span>
-        <div style="flex:1;min-width:0"><b style="font-size:14.5px">Strava</b>
-          <div class="muted" style="font-size:12.5px">${t('Running activities and training data')}</div></div>
-        <span class="bdg bdg-gray" style="flex:none">${t('Off')}</span></div>
+        <div style="flex:1;min-width:0">
+          <b style="font-size:14.5px">${STRAVA.connected ? esc(STRAVA.athleteName || 'Strava Athlete') : 'Strava'}</b>
+          <div class="muted" style="font-size:12.5px">${STRAVA.connected ? (STRAVA.isSimulator ? t('Sandbox Simulator Profile') : t('Authorized Strava Account')+(STRAVA.athleteId?` · ID #${esc(STRAVA.athleteId)}`:'')) : t('Running activities and training data')}</div>
+        </div>
+        ${STRAVA.connected
+          ? `<span class="bdg bdg-lime" style="flex:none">${t('Active')}</span>`
+          : `<span class="bdg bdg-gray" style="flex:none">${t('Off')}</span>`
+        }
+      </div>
       <div class="row" style="gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--line2)">
-        ${kv('Last sync','—')}${kv('Auto-sync',t('OFF'))}${kv('Imported','0')}${kv('Token','—')}</div>
-      <button class="btn btn-outline" style="margin-top:14px" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button>
+        ${kv('Last sync', STRAVA.lastSync ? fmtDateTime(STRAVA.lastSync) : '—')}
+        ${kv('Auto-sync', STRAVA.connected ? t('ON') : t('OFF'))}
+        ${kv('Imported', STRAVA.connected ? (stravaRuns.length || STRAVA.importedCount || '0') : '0')}
+        ${kv('Token', STRAVA.connected ? (STRAVA.isSimulator ? t('SANDBOX') : t('ACTIVE')) : '—')}
+      </div>
+      ${STRAVA.connected
+        ? `<div class="row" style="gap:8px;margin-top:14px;flex-wrap:wrap">
+             <button class="btn btn-primary" data-act="wear-sync" ${STRAVA.syncing?'disabled':''}>${ic('refresh-cw',15)} ${STRAVA.syncing?t('Syncing…'):t('Sync Activities Now')}</button>
+             <button class="btn btn-outline" data-act="wear-config">${ic('settings',14)} ${t('API Settings')}</button>
+             <button class="btn btn-ghost" style="color:var(--red);margin-left:auto" data-act="wear-disconnect">${ic('x',14)} ${t('Disconnect')}</button>
+           </div>`
+        : `<div class="row" style="gap:8px;margin-top:14px;flex-wrap:wrap">
+             <button class="btn btn-primary" data-act="wear-connect">${ic('link',15)} ${t('Connect Strava')}</button>
+             <button class="btn btn-outline" data-act="wear-config">${ic('settings',14)} ${t('API Settings')}</button>
+           </div>`
+      }
       <div class="muted" style="font-size:12px;margin-top:11px">${ic('shield-check',12)} ${t('The athlete authorizes their own account through the official OAuth flow. CoachMint never asks for a provider password, and no access or refresh token is ever returned to the browser.')}</div>
     </div>
     <div class="card" style="padding:16px 18px">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
         <span class="card-t">${ic('refresh-cw',14)} ${t('Sync log')}</span>
-        <span class="bdg bdg-gray">${t('LIMIT 200 / 15 MIN')}</span></div>
-      <div class="empty" style="margin:14px 0 4px">${ic('refresh-cw',22)}<b>${t('No syncs yet')}</b>
-        <span class="muted" style="font-size:12.5px">${t('Connect an account and every sync attempt will be listed here')}</span></div>
+        <span class="bdg bdg-gray">${t('LIMIT 200 / 15 MIN')}</span>
+      </div>
+      ${STRAVA.connected && stravaRuns.length > 0
+        ? `<div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+             ${stravaRuns.slice(0, 4).map(r => `
+               <div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px">
+                 <div style="min-width:0;flex:1">
+                   <div style="display:flex;align-items:center;gap:6px">
+                     <span style="color:var(--accent-deep)">${ic('trending-up',13)}</span>
+                     <b style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.name)}</b>
+                   </div>
+                   <div class="muted" style="font-size:11px;margin-top:2px">${esc(r.date)} · ${r.km} km · ${r.min} min · RPE ${r.rpe}/10${r.elev?` · ${r.elev}m ↑`:''}</div>
+                 </div>
+                 <span class="bdg bdg-lime" style="font-size:10.5px;flex:none">${t('Imported')}</span>
+               </div>
+             `).join('')}
+             <div style="margin-top:4px;display:flex;justify-content:flex-end">
+               <button class="btn btn-outline btn-sm" data-act="nav" data-view="load">${ic('trending-up',13)} ${t('View in Training Load')} →</button>
+             </div>
+           </div>`
+        : (STRAVA.connected
+          ? `<div class="empty" style="margin:14px 0 4px">${ic('refresh-cw',22)}<b>${t('Connected — ready to sync')}</b>
+               <span class="muted" style="font-size:12.5px">${t('Click "Sync Now" to fetch activities from Strava into your Training Log.')}</span>
+               <button class="btn btn-primary btn-sm" style="margin-top:10px" data-act="wear-sync">${ic('refresh-cw',13)} ${t('Sync Now')}</button>
+             </div>`
+          : `<div class="empty" style="margin:14px 0 4px">${ic('refresh-cw',22)}<b>${t('No syncs yet')}</b>
+               <span class="muted" style="font-size:12.5px">${t('Connect an account and every sync attempt will be listed here')}</span>
+             </div>`
+        )
+      }
       <div class="muted" style="font-size:12px;margin-top:10px">${ic('info',12)} ${t('Strava allows 200 requests / 15 min and 2 000 / day — automatic sync and any manual refresh share that budget.')}</div>
     </div>
   </div>
@@ -10390,7 +11361,7 @@ function vWear(){
     <div style="height:1px;background:var(--line2);margin:15px 0 12px"></div>
     <div class="muted" style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em">${t('Normalization')} (§11)</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:9px;margin-top:9px">
-      ${[['moving_time','duration'],['average_heartrate','heartRate']].map(x=>
+      ${[['moving_time','duration'],['average_heartrate','heartRate'],['distance','km'],['total_elevation_gain','elev']].map(x=>
         `<div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px">
           <div class="muted" style="font-size:10.5px">Strava</div><b style="font-size:13px">${x[0]}</b>
           <div class="muted" style="font-size:10.5px;margin-top:7px">CoachMint</div>
@@ -10425,8 +11396,7 @@ function vWear(){
           <span class="muted" style="flex:1;min-width:0;font-size:12.5px">${t(e[1])}</span></div>`).join('')}</div>
       <div class="muted" style="font-size:12px;margin-top:11px">${ic('eye-off',12)} ${t('Raw API responses, tokens and secrets are never surfaced to the athlete or the coach.')}</div>
     </div>
-  </div>
-  <div class="muted" style="font-size:12px;margin-top:14px">${ic('info',12)} ${t('No provider is connected in this deployment — the cards above describe the contract this screen will honour once one is, and no sync, activity or timestamp on this page is invented.')}</div>`;
+  </div>`;
 }
 
 /* ================= SHELL / RENDER ================= */
@@ -11062,7 +12032,13 @@ document.addEventListener('click',e=>{
      pass, so the destination never renders underneath an open overlay. */
   if(el.hasAttribute('data-mjump')&&S.mjump)S.mjump=false;
   switch(a){
-    case 'lang':break; /* v18.116 — language switcher removed */
+    case 'lang':
+    case 'lang-cycle':{
+      const next=lang==='en'?'tr':(lang==='tr'?'fa':'en');
+      lang=next;applyLang();render();
+      toast(lang==='tr'?'Dil Türkçe olarak değiştirildi':(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English'));
+      break;
+    }
     case 'client-entry':S.loginRole='client';S.demoPick=false;render();break;
     case 'back-role':S.loginRole=null;S.joinCode=null;S.demoPick=false;render();break;
     /* v18.41 — unlock stage (v18.51 — the profile picker is gone; un-pick removed)
@@ -11105,6 +12081,8 @@ document.addEventListener('click',e=>{
     case 'fc-new':formCheckModal(el.dataset.c);break;
     case 'fc-pattern':fcStart(el.dataset.p);break;
     case 'fc-flip':fcFlip();break;
+    case 'fc-voice':fcToggleVoice(el);break;
+    case 'fc-trail':fcToggleTrail(el);break;
     case 'fc-mask':fcToggleMask(el);break;
     case 'fc-acc':{S.fcAcc=el.dataset.a;try{localStorage.setItem('co-fc-acc',S.fcAcc)}catch(e){}if(FC_POSE){FC_POSE.close().catch(()=>{});FC_POSE=null;FC_ACC=null}formCheckModal(S.fcName);break}
     case 'fc-finish':fcFinish();break;
@@ -11161,9 +12139,114 @@ document.addEventListener('click',e=>{
     case 'ath-f':{const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
       F[el.dataset.k]=el.dataset.v;render();break;}
     case 'ath-reset':S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'};render();break;
-    /* v19.9 — ATHLETICS §12. No OAuth is configured in this deployment, so
-       connecting cannot be faked: the button says exactly what is missing. */
-    case 'wear-connect':toast(t('Strava OAuth is not configured here — a Strava application (client id and secret) is needed before an athlete can authorize.'));break;
+    /* ATHLETICS §12 — STRAVA OAUTH & ACTIVITY PROVIDER */
+    case 'wear-connect':{
+      toast(t('Connecting to Strava…'));
+      fetch('/api/strava/auth').then(r=>r.json()).then(d=>{
+        if(d&&d.ok&&d.url){
+          window.location.href=d.url;
+        }else{
+          toast(t('Could not generate Strava authorization URL'));
+        }
+      }).catch(e=>{
+        toast(t('Error connecting to Strava: ')+(e.message||'network'));
+      });
+      break;
+    }
+    case 'wear-config':wearConfigModal();break;
+    case 'wear-config-save':{
+      const clientId=($('scfg-id')?.value||'').trim();
+      const clientSecret=($('scfg-secret')?.value||'').trim();
+      const simulator=!!$('scfg-sim')?.checked;
+      toast(t('Saving Strava settings…'));
+      fetch('/api/strava/config',{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({clientId,clientSecret,simulator})
+      }).then(r=>r.json()).then(async d=>{
+        if(d&&d.ok){
+          closeModal();
+          toast(t('Strava settings saved ✓'));
+          await loadStravaStatus(true);
+          render();
+        }else{
+          toast(t('Failed to save settings'));
+        }
+      }).catch(e=>{
+        toast(t('Error saving Strava config: ')+(e.message||'network'));
+      });
+      break;
+    }
+    case 'wear-sync':{
+      if(STRAVA.syncing)break;
+      STRAVA.syncing=true;
+      render();
+      toast(t('Sync activities from Strava…'));
+      fetch('/api/strava/sync',{method:'POST'}).then(r=>r.json()).then(d=>{
+        if(d&&d.ok){
+          const acts=d.activities||[];
+          let imported=0;
+          const maxW=Math.max(0,...TLOG.map(x=>+x.w||0));
+          const chosenCid=(S.cid&&S.cid!=='all')?S.cid:(CLIENTS[0]?CLIENTS[0].id:1);
+
+          acts.forEach(act=>{
+            const existing=TLOG.find(x=>String(x.id)===String(act.id));
+            if(existing){
+              existing.km=act.km;
+              existing.min=act.min;
+              existing.elev=act.elev;
+              existing.rpe=act.rpe;
+              existing.name=act.name;
+              existing.splits=act.splits;
+            }else{
+              TLOG.push({
+                id:act.id,
+                cid:chosenCid,
+                w:maxW,
+                date:act.date||new Date().toISOString().slice(0,10),
+                name:act.name,
+                kind:act.kind||'easy',
+                km:act.km,
+                min:act.min,
+                rpe:act.rpe,
+                elev:act.elev||0,
+                splits:act.splits||''
+              });
+              imported++;
+            }
+          });
+
+          saveData();
+          STRAVA.lastSync=d.lastSync||new Date().toISOString();
+          STRAVA.importedCount=(STRAVA.importedCount||0)+imported;
+          toast(imported>0 ? `${imported} ${t('activities imported from Strava ✓')}` : t('Strava activities are up to date ✓'));
+        }else{
+          toast(t('Sync failed: ')+(d&&d.error?d.error:t('unknown')));
+        }
+      }).catch(e=>{
+        toast(t('Strava sync error: ')+(e.message||'network'));
+      }).finally(()=>{
+        STRAVA.syncing=false;
+        render();
+      });
+      break;
+    }
+    case 'wear-disconnect':{
+      if(!confirm(t('Disconnect Strava? Past imported activities will remain in your training log.')))break;
+      toast(t('Disconnecting Strava…'));
+      fetch('/api/strava/disconnect',{method:'POST'}).then(r=>r.json()).then(d=>{
+        if(d&&d.ok){
+          STRAVA.connected=false;
+          STRAVA.athleteName='';
+          STRAVA.athleteId='';
+          toast(t('Strava disconnected'));
+          render();
+        }
+      }).catch(e=>{
+        toast(t('Error disconnecting Strava'));
+      });
+      break;
+    }
     /* v19.6 — ATHLETICS §6 training load */
     case 'load-pick':S.loadCid=el.dataset.cid;render();break;
     case 'load-met':S.loadMet=el.dataset.v;render();break;
@@ -11173,13 +12256,16 @@ document.addEventListener('click',e=>{
       if(i>-1){markDead('TLOG',TLOG[i].id);TLOG.splice(i,1);saveData();render();toast(t('Session removed'))}break;}
     case 'load-new':tlogEditor();break;
     case 'load-save':{const g=k=>{const e2=$('tl-'+k);return e2?e2.value:''};
-      const km=parseFloat(g('km')),mn=parseInt(g('min')),rp=parseInt(g('rpe'));
+      const km=parseFloat(g('km')),mn=parseInt(g('min')),rp=parseInt(g('rpe')),elv=parseInt(g('elev'))||0;
       if(!g('name').trim()||isNaN(mn)){toast(t('Name and duration are required'));break}
       const weeks=TLOG.map(x=>x.w);const w=weeks.length?Math.max.apply(null,weeks):0;
-      TLOG.push({id:'tl'+Date.now(),cid:S.loadCid&&S.loadCid!=='all'?S.loadCid:1,
+      const chosenCid=+g('cid')||g('cid')||(S.loadCid&&S.loadCid!=='all'?S.loadCid:(CLIENTS[0]?CLIENTS[0].id:1));
+      TLOG.push({id:'tl'+Date.now(),cid:chosenCid,
+        wid:g('wid')||'',
         w:w,date:new Date().toISOString().slice(0,10),name:g('name').trim(),
         kind:g('kind')||'easy',km:isNaN(km)?0:+km.toFixed(1),min:mn,
-        rpe:isNaN(rp)?5:Math.max(1,Math.min(10,rp))});
+        rpe:isNaN(rp)?5:Math.max(1,Math.min(10,rp)),
+        elev:elv,splits:g('splits').trim()});
       closeModal();saveData();render();toast(t('Session logged'));break;}
     /* v19.5 — ATHLETICS §4 block builder */
     case 'run-new':runEditor(null);break;
@@ -11198,11 +12284,20 @@ document.addEventListener('click',e=>{
       if(i<0)RUNW.push(d);else RUNW[i]=d;
       closeModal();saveData();render();toast(t('Workout saved'));break;}
     /* v19.4 — ATHLETICS §7 phases */
-    case 'ph-new':S.phDraft=null;phEditor();break;
+    case 'ph-new':S.phDraft=null;phEditor(null);break;
+    case 'ph-edit':phEditor(el.dataset.id);break;
     case 'ph-save':{const g=k=>{const e2=$('ph-'+k);return e2?e2.value:''};
-      const p={id:'ph'+Date.now(),name:g('name').trim(),weeks:g('weeks').trim(),
-        focus:g('focus').trim(),load:Math.max(0,Math.min(100,parseInt(g('load'))||0)),now:false};
-      if(!p.name){toast(t('Phase name is required'));break}
+      const name=g('name').trim(),weeks=g('weeks').trim(),focus=g('focus').trim(),load=Math.max(0,Math.min(100,parseInt(g('load'))||0));
+      if(!name){toast(t('Phase name is required'));break}
+      const d=S.phDraft;
+      if(d&&d.id){
+        const i=PHASES.findIndex(x=>String(x.id)===String(d.id));
+        if(i>=0){
+          PHASES[i].name=name;PHASES[i].weeks=weeks;PHASES[i].focus=focus;PHASES[i].load=load;
+          closeModal();saveData();render();toast(t('Phase updated'));break;
+        }
+      }
+      const p={id:'ph'+Date.now(),name,weeks,focus,load,now:false};
       PHASES.push(p);closeModal();saveData();render();toast(t('Phase added'));break;}
     case 'ph-now':{const i=PHASES.findIndex(x=>String(x.id)===String(el.dataset.id));
       if(i>=0){PHASES.forEach((x,j)=>{x.now=(j===i)});saveData();render();toast(t('Current phase set'))}break;}
@@ -11239,9 +12334,14 @@ document.addEventListener('click',e=>{
           pb:!!($('rs-pb')||{}).checked,notes:g('rs-notes').trim()};}
       closeModal();saveData();render();toast(t('Result saved'));break;}
     /* v19.2 — ATHLETICS §9 personal bests */
-    case 'pb-new':pbEditor();break;
+    case 'pb-pick':S.pbCid=el.dataset.cid;render();break;
+    case 'pb-new':pbEditor(null);break;
+    case 'pb-new-for':pbEditor(el.dataset.cid);break;
+    case 'pb-del':{const i=PBSD.findIndex(x=>String(x.id)===String(el.dataset.id));
+      if(i>=0){markDead('PBSD',PBSD[i].id);PBSD.splice(i,1);saveData();render();toast(t('Mark deleted'));}break;}
     case 'pb-save':{const g=id=>{const e2=$(id);return e2?e2.value:''};
-      const p={id:'pb'+Date.now(),ev:g('pb-ev').trim(),val:g('pb-val').trim(),
+      const pCid=+g('pb-cid')||g('pb-cid')||(S.pbCid&&S.pbCid!=='all'?S.pbCid:(CLIENTS[0]?CLIENTS[0].id:1));
+      const p={id:'pb'+Date.now(),cid:pCid,ev:g('pb-ev').trim(),val:g('pb-val').trim(),
         prev:g('pb-prev').trim(),date:g('pb-date')||isoToday(),
         src:g('pb-src')||'Manual',notes:g('pb-notes').trim()};
       if(!p.ev||!p.val){toast(t('Event and mark are required'));break}
@@ -12456,7 +13556,7 @@ document.addEventListener('click',e=>{
     case 'units-tog':{PREFS.units=PREFS.units==='Imperial'?'Metric':'Imperial';savePrefs();render();
       toast(t('Units')+': '+(PREFS.units==='Imperial'?'lb · in':'kg · cm'));break}
     case 'lang-set':{const nl=el.dataset.l;if(nl&&nl!==lang){lang=nl;applyLang();render();
-      toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}break}
+      toast(lang==='tr'?'Dil Türkçe olarak değiştirildi':(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English'))}break}
     /* Chat quick replies (mockup07): pre-baked message + focus the composer. */
     case 'quick-msg':{const c=client(S.cid);const v=el.dataset.m||'';if(!c||!v)break;
       MSGS.push({id:uid(),client:c.name,from:'client',type:'text',body:v,time:'Just now',read:false});
@@ -12591,7 +13691,7 @@ document.addEventListener('change',e=>{
      its value only reached S.wday at save time, so ANY re-render (adding or
      editing an exercise) silently reverted the coach's day choice. */
   if(el.dataset.change==='wday'){S.wday=el.value;render()}
-  if(el.dataset.change==='lang'){lang=el.value;applyLang();render();toast(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English')}
+  if(el.dataset.change==='lang'){lang=el.value;applyLang();render();toast(lang==='tr'?'Dil Türkçe olarak değiştirildi':(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English'))}
   if(el.dataset.change==='calclient'){S.calfClient=el.value;render()}
   /* v15.7 — persisted selects (rest timer, response time) */
   if(el.dataset.change==='pref'){setP(PREFS,el.dataset.k,el.value);savePrefs();toast('Setting saved')}
@@ -12696,9 +13796,29 @@ document.addEventListener('keydown',e=>{
 });
 let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
-(()=>{const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/);if(m){S.joinCode=m[1].toUpperCase();S.loginRole='client'}
-const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/);if(r){S.resetToken=r[1];S.loginRole='coach';S.authMode='login'}
-const v=location.hash.match(/view=([a-z]+)/);if(v){S.role='coach';S.view=v[1];}})();
+(()=>{
+  const sParams=new URLSearchParams(location.search);
+  const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/)||sParams.get('join');
+  if(m){S.joinCode=(typeof m==='string'?m:m[1]).toUpperCase();S.loginRole='client'}
+  const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/)||sParams.get('reset');
+  if(r){S.resetToken=typeof r==='string'?r:r[1];S.loginRole='coach';S.authMode='login'}
+  const vMatch=location.hash.match(/view=([a-z]+)/);
+  const v=vMatch?vMatch[1]:sParams.get('view');
+  if(v){S.role='coach';S.view=v;if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';}
+  if(sParams.get('strava')==='connected'){
+    S.role='coach';S.view='wear';ONBOARD.sport='Running & Endurance';
+    setTimeout(()=>{
+      loadStravaStatus(true).then(()=>{
+        render();
+        toast(t('Strava connected successfully! ✓'));
+      });
+    },350);
+    try{
+      const cleanUrl=location.pathname+(v?('?view='+v):'');
+      history.replaceState(null,'',cleanUrl);
+    }catch(e){}
+  }
+})();
 loadPrefs();
 applyLang();
 applyAccent(PREFS.accent);

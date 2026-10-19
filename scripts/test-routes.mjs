@@ -399,6 +399,33 @@ try {
   const expMiss = await fetch(`${BASE}/api/export/pdf?code=ZZZZZZ99`);
   ok('export with unknown code -> 404', expMiss.status === 404, expMiss.status);
 
+  console.log('== strava activity provider & oauth ==');
+  const strCfg0 = await j('/api/strava/config');
+  ok('GET /api/strava/config -> 200', strCfg0.status === 200 && strCfg0.d?.ok === true, strCfg0.d);
+  ok('strava defaults to simulator mode', strCfg0.d?.simulator === true, strCfg0.d);
+
+  const strAuth = await j('/api/strava/auth');
+  ok('GET /api/strava/auth -> simulator redirect', strAuth.status === 200 && strAuth.d?.mode === 'simulator' && strAuth.d?.url?.includes('mock_strava_sandbox_token'), strAuth.d);
+
+  const strStat0 = await j('/api/strava/status');
+  ok('GET /api/strava/status initially disconnected', strStat0.status === 200 && strStat0.d?.connected === false, strStat0.d);
+
+  const strCb = await fetch(`${BASE}/api/strava/callback?code=mock_strava_sandbox_token`);
+  ok('GET /api/strava/callback -> connects athlete', strCb.status === 200, strCb.status);
+
+  const strStat1 = await j('/api/strava/status');
+  ok('GET /api/strava/status now connected with athlete profile', strStat1.status === 200 && strStat1.d?.connected === true && strStat1.d?.athleteName === 'Daniel Okoye', strStat1.d);
+
+  const strSync = await j('/api/strava/sync', { method: 'POST' });
+  ok('POST /api/strava/sync imports normalized activities', strSync.status === 200 && strSync.d?.ok === true && Array.isArray(strSync.d?.activities) && strSync.d?.count >= 1, strSync.d);
+  ok('activity carries CoachMint normalized km/min/elev/rpe/splits', strSync.d?.activities?.[0]?.km > 0 && strSync.d?.activities?.[0]?.min > 0, strSync.d?.activities?.[0]);
+
+  const strDisc = await j('/api/strava/disconnect', { method: 'POST' });
+  ok('POST /api/strava/disconnect -> disconnected', strDisc.status === 200 && strDisc.d?.connected === false, strDisc.d);
+
+  const strStat2 = await j('/api/strava/status');
+  ok('GET /api/strava/status confirmed disconnected', strStat2.status === 200 && strStat2.d?.connected === false, strStat2.d);
+
   console.log('== static exposure (regression: secrets were downloadable) ==');
   // The exact-case list below once passed while GET /.ENV returned the whole
   // .env: a case-INSENSITIVE filesystem (Windows/macOS) folds the name AFTER

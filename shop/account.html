@@ -104,8 +104,132 @@ tr:last-child td{border-bottom:none}
 .spin{width:15px;height:15px;border:2px solid rgba(22,28,4,.25);border-top-color:var(--acc-ink);border-radius:50%;animation:sp .7s linear infinite;display:none}
 @keyframes sp{to{transform:rotate(360deg)}}
 .btn.loading .spin{display:block}
-#langToggle{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;color:var(--mut);font-size:11px;font-weight:700;letter-spacing:.08em}
-#langToggle:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+
+/* ====== INNOVATIVE FLOATING LANGUAGE PICKER ====== */
+.lang-picker{position:relative;display:inline-block;z-index:90}
+.lang-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line2);border-radius:999px;
+  padding:7px 12px 7px 10px;color:var(--txt);
+  font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.02em;
+  background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  cursor:pointer;transition:all .22s cubic-bezier(.16,1,.3,1);
+  user-select:none;
+}
+.lang-btn:hover, .lang-picker.open .lang-btn{
+  color:#fff;background:rgba(255,255,255,.07);border-color:rgba(198,241,78,.45);
+  box-shadow:0 0 20px rgba(198,241,78,.14);
+}
+.lang-btn .globe-ic{
+  width:14px;height:14px;color:var(--acc);opacity:.9;flex-shrink:0;
+}
+.lang-btn .cur-lang-name{
+  font-weight:600;letter-spacing:.01em;color:#fff;
+}
+.lang-btn .chev-ic{
+  width:11px;height:11px;color:var(--mut);transition:transform .25s cubic-bezier(.16,1,.3,1);
+  flex-shrink:0;
+}
+.lang-picker.open .lang-btn .chev-ic{
+  transform:rotate(180deg);color:var(--acc);
+}
+
+.lang-menu{
+  position:absolute;top:calc(100% + 10px);right:0;
+  width:236px;padding:8px;
+  background:rgba(13,16,21,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 45px -8px rgba(0,0,0,.75), 0 0 0 1px rgba(198,241,78,.12);
+  border-radius:16px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(-8px) scale(.97);
+  transform-origin:top right;
+  transition:opacity .2s cubic-bezier(.16,1,.3,1), transform .2s cubic-bezier(.16,1,.3,1), visibility .2s;
+}
+html[dir="rtl"] .lang-menu{
+  right:auto;left:0;transform-origin:top left;
+}
+.lang-picker.open .lang-menu{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+.lang-menu-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 8px 8px;margin-bottom:4px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.lang-menu-title{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+}
+.lang-menu-badge{
+  font-size:9.5px;font-weight:700;color:var(--acc);background:rgba(198,241,78,.12);
+  padding:2px 6px;border-radius:999px;border:1px solid rgba(198,241,78,.25);
+}
+.lang-opt{
+  display:flex;align-items:center;gap:11px;
+  width:100%;padding:9px 10px;
+  border:1px solid transparent;border-radius:10px;
+  background:transparent;color:var(--txt);
+  cursor:pointer;text-align:left;
+  transition:all .18s ease;font-family:inherit;
+}
+html[dir="rtl"] .lang-opt{
+  text-align:right;
+}
+.lang-opt:hover{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.08);
+}
+.lang-opt.active{
+  background:rgba(198,241,78,.09);
+  border-color:rgba(198,241,78,.28);
+}
+.lang-flag-pill{
+  width:28px;height:24px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp, sans-serif);font-size:10px;font-weight:800;
+  letter-spacing:.05em;
+  background:rgba(255,255,255,.08);color:var(--txt);
+  border:1px solid rgba(255,255,255,.1);
+  flex-shrink:0;transition:all .18s ease;
+}
+.lang-opt.active .lang-flag-pill{
+  background:var(--acc);color:#0e1117;border-color:var(--acc);
+}
+.lang-text{
+  display:flex;flex-direction:column;gap:1px;flex:1;min-width:0;
+}
+.lang-name{
+  font-size:12.5px;font-weight:600;color:#fff;
+}
+.lang-sub{
+  font-size:10px;color:var(--mut);letter-spacing:.02em;
+}
+.lang-check{
+  width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  color:var(--acc);opacity:0;transform:scale(.6);transition:all .2s ease;flex-shrink:0;
+}
+.lang-opt.active .lang-check{
+  opacity:1;transform:scale(1);
+}
+
+/* Mobile Menu Language Selector */
+.menu-lang-box{
+  margin-top:14px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;width:min(320px,90vw);
+}
+.menu-lang-head{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:8px;text-align:center}
+.menu-lang-pills{display:flex;gap:6px}
+.menu-lang-pill{
+  flex:1;padding:8px 0;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);color:var(--mut);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .2s ease;text-align:center;font-family:inherit;
+}
+.menu-lang-pill.active{
+  background:var(--acc);color:#0a0c10;border-color:var(--acc);font-weight:700;
+}
+
 footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim)}
 </style>
 </head>
@@ -116,7 +240,36 @@ footer{border-top:1px solid var(--line);padding:18px 28px;display:flex;justify-c
     <span class="wm">COACHMINT</span>
   </a>
   <div style="display:flex;align-items:center;gap:14px">
-    <button id="langToggle" type="button">FA</button>
+    
+    <div class="lang-picker" data-no-translate="true">
+      <button id="langToggle" class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <svg class="globe-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg>
+        <span class="cur-lang-name">English</span>
+        <svg class="chev-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" role="menu">
+        <div class="lang-menu-head">
+          <span class="lang-menu-title">Select Language</span>
+          <span class="lang-menu-badge">2</span>
+        </div>
+        <button class="lang-opt" type="button" data-lang="en" role="menuitem">
+          <span class="lang-flag-pill">EN</span>
+          <span class="lang-text">
+            <span class="lang-name">English</span>
+            <span class="lang-sub">English</span>
+          </span>
+          <svg class="lang-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+        <button class="lang-opt" type="button" data-lang="tr" role="menuitem">
+          <span class="lang-flag-pill">TR</span>
+          <span class="lang-text">
+            <span class="lang-name">Türkçe</span>
+            <span class="lang-sub">Turkey</span>
+          </span>
+          <svg class="lang-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    </div>
     <a class="back" href="/shop/">← Shop</a>
   </div>
 </header>
@@ -209,33 +362,99 @@ const FA={
   'Active':'فعال','Trial':'آزمایشی','Expired':'منقضی','Suspended':'معلق',
   'basic':'پایه','professional':'حرفه‌ای','club':'باشگاه','trial':'آزمایشی'
 };
+const TR={
+  'My account':'Hesabım','Sign in to your account':'Hesabınıza giriş yapın','Create your account':'Hesabınızı oluşturun',
+  'Use the same email and password as the CoachMint app.':'CoachMint uygulamasındaki e-posta ve şifrenizi kullanın.',
+  'Have an activation code? It is applied automatically — your plan unlocks instantly.':'Aktivasyon kodunuz var mı? Otomatik olarak uygulanır — planınız anında açılır.',
+  'Sign in':'Giriş yap','Create account':'Hesap oluştur','Full name':'Ad Soyad',
+  'Activation code (optional)':'Aktivasyon kodu (isteğe bağlı)',
+  'Redeems with signup — a used or invalid code never blocks the account.':'Kayıtla birlikte kullanılır — geçersiz bir kod hesap oluşumunu engellemez.',
+  'Email':'E-posta','Password':'Şifre',
+  'No account yet? Create one in the app, or buy a plan — the code links to your email automatically.':'Henüz hesabınız yok mu? Uygulamada oluşturun veya bir plan satın alın.',
+  'Subscription':'Abonelik','days remaining':'gün kaldı','Valid until':'Geçerlilik tarihi','Clients':'Danışanlar','Workspace code':'Çalışma alanı kodu','Renew':'Yenile',
+  'Purchase history':'Satın alma geçmişi','Date':'Tarih','Plan':'Plan','Amount':'Tutar','Code':'Kod','No purchases yet':'Henüz satın alma yok',
+  'Codes are single-use. Redeem in the app: Settings → Account → Coupon.':'Kodlar tek kullanımlıktır. Uygulamada kullanın: Ayarlar → Hesap → Kupon.',
+  'Open the app':'Uygulamayı aç','Log out':'Çıkış yap','🔒 Secure':'🔒 Güvenli',
+  'Enter email and password':'E-posta ve şifrenizi girin','Wrong email or password':'E-posta veya şifre yanlış','Could not reach server':'Sunucuya ulaşılamadı',
+  'Active':'Aktif','Trial':'Deneme','Expired':'Süresi doldu','Suspended':'Askıya alındı',
+  'basic':'Temel','professional':'Profesyonel','club':'Kulüp','trial':'Deneme'
+};
+
 const $=id=>document.getElementById(id);
-let lang='en';try{lang=localStorage.getItem('coach-os-locale')||'en'}catch(e){}
-const t=k=>lang==='fa'?(FA[k]??k):k;
+let lang='en';try{lang=localStorage.getItem('coach-os-locale')||'en'}catch(e){} if(lang!=='tr') lang='en';
+const t=k=>lang==='tr'?(TR[k]??k):(lang==='fa'?(FA[k]??k):k);
 const nf=v=>lang==='fa'?String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):String(v);
+function updateLangUI(locale){
+  const isTr=locale==='tr';
+  const name=isTr?'Türkçe':'English';
+  const title=isTr?'Dil Seçimi':'Select Language';
+  document.querySelectorAll('.cur-lang-name').forEach(el=>{el.textContent=name});
+  document.querySelectorAll('.lang-menu-title').forEach(el=>{el.textContent=title});
+  document.querySelectorAll('.lang-opt').forEach(btn=>{
+    const match=btn.getAttribute('data-lang')===(isTr?'tr':'en');
+    btn.classList.toggle('active',match);
+  });
+}
+function setupLangPickers(){
+  document.querySelectorAll('.lang-picker').forEach(picker=>{
+    const btn=picker.querySelector('.lang-btn');
+    if(!btn)return;
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const isOpen=picker.classList.toggle('open');
+      btn.setAttribute('aria-expanded',isOpen?'true':'false');
+    });
+  });
+  document.querySelectorAll('.lang-opt').forEach(opt=>{
+    opt.addEventListener('click',e=>{
+      e.stopPropagation();
+      lang=opt.getAttribute('data-lang');
+      applyLang();
+      document.querySelectorAll('.lang-picker').forEach(p=>{
+        p.classList.remove('open');
+        const b=p.querySelector('.lang-btn');if(b)b.setAttribute('aria-expanded','false');
+      });
+    });
+  });
+  document.addEventListener('click',e=>{
+    document.querySelectorAll('.lang-picker').forEach(p=>{
+      if(!p.contains(e.target)){
+        p.classList.remove('open');
+        const b=p.querySelector('.lang-btn');if(b)b.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      document.querySelectorAll('.lang-picker').forEach(p=>{
+        p.classList.remove('open');
+        const b=p.querySelector('.lang-btn');if(b)b.setAttribute('aria-expanded','false');
+      });
+    }
+  });
+}
 function applyLang(){
-  const fa=lang==='fa';
-  document.documentElement.lang=fa?'fa':'en';
-  document.documentElement.dir=fa?'rtl':'ltr';
-  $('langToggle').textContent=fa?'EN':'FA';
+  if(lang!=='tr') lang='en';
+  const tr=lang==='tr';
+  document.documentElement.lang=lang;
+  document.documentElement.dir='ltr';
+  updateLangUI(lang);
   document.querySelectorAll('[id^="t-"]').forEach(el=>{
     const key=el.dataset.k||(el.dataset.k=el.textContent.trim());
-    if(FA[key]||!fa)el.textContent=fa?(FA[key]??key):key;
+    el.textContent=t(key);
   });
   try{localStorage.setItem('coach-os-locale',lang)}catch(e){}
-  // applyLang() is also called on page load; render() does not exist in this
-  // file, so a signed-in reload threw ReferenceError here and the dashboard
-  // silently stopped re-rendering on every language switch.
   if(TOKEN)loadDash();
 }
-$('langToggle').addEventListener('click',()=>{lang=lang==='fa'?'en':'fa';applyLang()});
+setupLangPickers();
+applyLang();
 
 let TOKEN='';try{TOKEN=localStorage.getItem('coach-os-shop-token')||''}catch(e){}
 const showErr=m=>{const e=$('err');e.textContent=t(m);e.classList.add('show')};
 /* t() returns the key unchanged in English, and the key is the raw plan id
    ('professional', 'club'), so the dashboard used to show lowercase names. */
 const EN_PLAN={trial:'Trial',basic:'Basic',professional:'Professional',club:'Club'};
-const planName=p=>lang==='fa'?t(p||'trial'):(EN_PLAN[p]||EN_PLAN.trial);
+const planName=p=>lang==='tr'?(TR[p]||EN_PLAN[p]||EN_PLAN.trial):(lang==='fa'?t(p||'trial'):(EN_PLAN[p]||EN_PLAN.trial));
 const daysLeftOf=b=>{if(!b)return null;const end=b.subEndsAt||b.trialEndsAt;return end?Math.max(0,Math.ceil((end-Date.now())/86400000)):null};
 
 function renderDash(d){

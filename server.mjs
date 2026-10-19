@@ -76,6 +76,8 @@ const exportFn = await import('./backend/handlers/export.mjs');
 const mediaFn = await import('./backend/handlers/media.mjs');
 /* v18.108 — realtime chat stream (one long-lived SSE connection). */
 const chatFn = await import('./backend/handlers/chat.mjs');
+/* Athletics — Strava activity provider and OAuth handler */
+const stravaFn = await import('./backend/handlers/strava.mjs');
 
 // Vercel maps "/api/auth/signup" -> handler URL "/api/auth/signup" (rewrite),
 // so the handler sees the full path. Reproduce that here.
@@ -88,6 +90,7 @@ const ROUTES = [
   { re: /^\/api\/data\/?$/, fn: dataFn.default },
   { re: /^\/api\/media\/?/, fn: mediaFn.default },
   { re: /^\/api\/chat\/(.*)$/, fn: chatFn.default },
+  { re: /^\/api\/strava\/(.*)$/, fn: stravaFn.default },
   { re: /^\/api\/health\/?$/, fn: healthFn.default },
   { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default },
   { re: /^\/shop\/api\/account\/(.*)$/, fn: shopAccountFn.default }
