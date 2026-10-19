@@ -6471,9 +6471,11 @@ function chalSyncCE(){
   chalReadStages();
 }
 function chalLivePrev(){chalReadStages();const d=S.chalDraft,box=$('chal-prev');if(box&&d)box.innerHTML=chalPath(d.stages,0,{w:520})}
-function renderChalEditor(){
+function renderChalEditor(skipSync){
   const d=S.chalDraft;if(!d)return;
-  if($('ce-name'))chalSyncCE(); /* keep typed values across re-renders (v19.18) */
+  /* skipSync: the AI branch assigns fresh values to the draft right before
+     re-rendering — syncing the STALE inputs back would wipe them. */
+  if(!skipSync&&$('ce-name'))chalSyncCE(); /* keep typed values across re-renders (v19.18) */
   const step=Math.max(0,Math.min(2,S.wizStep|0));
   const wizChips=[[0,'Basics'],[1,'Journey'],[2,'People & Reward']].map(([i,l])=>
     `<button class="fchip ${step===i?'on':''}" data-act="chal-wiz" data-s="${i}"${step===i?' style="cursor:default"':''}>${nf(i+1)} · ${esc(t(l))}</button>`).join('');
@@ -11859,7 +11861,7 @@ document.addEventListener('click',e=>{
             d.unit=ch.unit||d.unit;d.days=ch.days||d.days;
             if(Array.isArray(ch.stages)&&ch.stages.length>=2)d.stages=ch.stages;
             if(ch.reward)d.reward=ch.reward;
-            renderChalEditor();toast(t('Challenge drafted ✓'));
+            renderChalEditor(true);toast(t('Challenge drafted ✓'));
           }else{
             renderChalEditor();
             const e=r.d&&r.d.error;
