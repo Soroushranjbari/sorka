@@ -97,7 +97,7 @@ const FA={
 'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
 'Your Workouts':'تمرین‌های تو','Preview exercises':'پیش‌نمایش حرکات',
 'Help center — docs & shortcuts':'مرکز راهنما — مستندات و میان‌برها','Sign out':'خروج','Signed out':'خارج شدی','Welcome back, Coach':'خوش برگشتی، مربی','Done':'انجام شد','Switch role':'تغییر نقش','Exit demo':'خروج از دمو','Reply':'پاسخ',
-'Add Client':'افزودن شاگرد','Create Workout':'ساخت تمرین','Schedule Session':'زمان‌بندی جلسه','Add Measurement':'ثبت اندازه‌گیری','Create Template':'ساخت قالب','Add Exercise':'افزودن حرکت','Create Note':'یادداشت جدید','Create Nutrition Plan':'ساخت برنامه تغذیه',
+'Add Client':'افزودن شاگرد','Create Workout':'ساخت تمرین','Create Challenge':'ساخت چالش','Schedule Session':'زمان‌بندی جلسه','Add Measurement':'ثبت اندازه‌گیری','Create Template':'ساخت قالب','Add Exercise':'افزودن حرکت','Create Note':'یادداشت جدید','Create Nutrition Plan':'ساخت برنامه تغذیه',
 'PROFESSIONAL COACH WORKSPACE':'فضای کاری حرفه‌ای مربیان','Run your coaching business like a pro.':'کسب‌وکار مربی‌گری‌ات را حرفه‌ای مدیریت کن.',
 'One workspace for every client':'همه‌ی شاگردان در یک فضای کاری','Plan workouts in minutes — not hours':'برنامه‌ریزی تمرین در چند دقیقه، نه چند ساعت','Progress, measurements & notes together':'پیشرفت، اندازه‌گیری‌ها و یادداشت‌ها کنار هم','Your decisions. Zero automation.':'تصمیم با مربی است. صفر اتوماسیون.',
 '"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."':'«CoachMint چهار ابزار مختلف را برای من جایگزین کرد. همه‌چیز درباره‌ی شاگردهام حالا یک‌جا است.»','— Arman T. · Online Coach, 63 clients':'— آرمان تی · مربی آنلاین، ۶۳ شاگرد',
@@ -265,7 +265,7 @@ const FA={
 'New Session':'جلسه جدید','Session type':'نوع جلسه','Time':'ساعت','30 min':'۳۰ دقیقه','90 min':'۹۰ دقیقه','Session scheduled ✓':'جلسه زمان‌بندی شد ✓',
 'Create and manage nutrition plans for your clients.':'ساخت و مدیریت برنامه‌های تغذیه شاگردانت.',
 'Active Plans':'برنامه‌های فعال','Plans Created':'برنامه‌های ساخته‌شده','Clients With Nutrition Plans':'شاگردان دارای برنامه تغذیه','Plans Needing Review':'برنامه‌های نیازمند بازبینی','Average Daily Calories':'میانگین کالری روزانه',
-'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan paused':'برنامه متوقف شد','Plan resumed':'برنامه ادامه یافت','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
+'Current Plan':'برنامه فعلی','Phase':'فاز','Last Updated':'آخرین به‌روزرسانی','Open Plan':'باز کردن برنامه','Duplicate':'تکثیر','Plan duplicated':'برنامه تکثیر شد','Plan archived':'برنامه آرشیو شد','Plan paused':'برنامه متوقف شد','Plan resumed':'برنامه ادامه یافت','Basics':'مبانی','Journey':'مسیر','People & Reward':'افراد و پاداش','Describe your challenge':'چالش‌ات را توصیف کن','e.g. 30-day fat-loss, 4 sessions a week':'مثلاً ۳۰ روز چربی‌سوزی، هفته‌ای ۴ جلسه','AI fills the fields below — you review and edit':'هوش مصنوعی فیلدهای پایین را پر می‌کند — تو بررسی و ویرایش کن','Build with AI':'با هوش مصنوعی بساز','Drafting…':'در حال نگارش…','Describe your challenge first':'اول چالش‌ات را توصیف کن','Challenge drafted ✓':'پیش‌نویس چالش ساخته شد ✓','Monthly AI limit reached':'سقف ماهانه AI پر شد','AI could not draft — try again':'نگارش AI ناموفق بود — دوباره تلاش کن','Plan created ✓':'برنامه ساخته شد ✓','New Nutrition Plan':'برنامه تغذیه جدید','Nutrition Plan Updated':'برنامه تغذیه به‌روزرسانی شد','Weight Updated':'وزن به‌روزرسانی شد','Coach Note Added':'یادداشت مربی ثبت شد','Version preview (demo)':'پیش‌نمایش نسخه (دمو)',
 'Plan Name':'نام برنامه','Start Date':'تاریخ شروع','Plan Type':'نوع برنامه','Standard':'استاندارد','Training Day / Rest Day':'روز تمرین / روز استراحت','Target Macros':'ماکروهای هدف',
 'Meal Planner':'برنامه‌ریز وعده‌ها','Weekly':'هفتگی','Phases':'فازها','Meal Templates':'قالب وعده‌ها','Plan Templates':'قالب برنامه‌ها','History':'تاریخچه','Jump to the food log below':'رفتن به لاگ غذا در پایین',
 'Search food…':'جستجوی غذا…','Per 100g':'هر ۱۰۰ گرم','Custom Food':'غذای سفارشی','Food name':'نام غذا','Custom food added':'غذای سفارشی اضافه شد','Add Food':'افزودن غذا','added to meal':'به وعده اضافه شد','Category':'دسته',
@@ -3714,7 +3714,7 @@ function vDashCm(){
   const totDone=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.done||0),0);
   const totMiss=CLIENTS.reduce((a,c)=>a+(DB[c.id]?.stats.missed||0),0);
   const pctW=Math.round(totDone/((totDone+totMiss)||1)*100);
-  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar'],['Create Challenge','trophy']];
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const kpi=(k,v,s)=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b><span class="s">${s}</span></div>`;
@@ -4053,7 +4053,7 @@ function vDash(){
   const topAtt=att.find(x=>x.icon==='camera'||x.why==='Missed session'||x.why==='Waiting on your reply')||att[0];
   const advancing=roster.find(c=>c.status==='Active'&&c.week>=8)||roster.find(c=>c.status==='Active');
 
-  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar']];
+  const qa=[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar'],['Create Challenge','trophy']];
   if(ONBOARD.context==='Online coaching'){const i=qa.findIndex(x=>x[0]==='Connect Client (Code)');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
@@ -6440,26 +6440,64 @@ function chalDetail(id){
 function chalEditor(id){
   const ch=id!=null?CHALLENGES.find(x=>String(x.id)===String(id)):null;
   S.chalDraft=ch?JSON.parse(JSON.stringify(ch)):{id:'ch'+Date.now(),name:'',emoji:'🏆',desc:'',type:'target',metric:'workouts',target:12,unit:'workouts',start:isoToday(),days:30,parts:['*'],reward:{pts:100,be:'🏅',bn:'Champion'},stages:[{e:'🌱',n:'Start'},{e:'💪',n:'Halfway'},{e:'🔥',n:'Almost'},{e:'🏆',n:'Finish'}],prog:{},done:[],status:'active',createdAt:Date.now()};
+  S.wizStep=0;S.chalAiBusy=false; /* v19.18 — wizard opens on step 1 */
   renderChalEditor();
 }
 function chalReadStages(){
   const d=S.chalDraft;if(!d)return;
   (d.stages||[]).forEach((s,i)=>{const e=$('ce-st-e-'+i),n2=$('ce-st-n-'+i);if(e)s.e=e.value.trim()||'⭐';if(n2)s.n=n2.value.trim()||''});
 }
+function chalSyncCE(){
+  /* v19.18 — sync whatever is typed in the OPEN editor DOM back into the
+     draft. Re-renders happen on every emoji/type/participant/stage toggle and
+     on every wizard step change; without this the typed name/description/
+     numbers vanished on the next re-render (pre-existing bug the wizard made
+     unavoidable). ce-* fields that are not in the DOM (hidden steps still
+     render, so in practice all of them are) are skipped safely. */
+  const d=S.chalDraft;if(!d)return;
+  const v=id=>{const e=$(id);return e?e.value:null};
+  if(v('ce-name')!=null)d.name=String(v('ce-name')).trim();
+  if(v('ce-desc')!=null)d.desc=String(v('ce-desc')).trim();
+  if(v('ce-idea')!=null)d.idea=String(v('ce-idea'));
+  const tg=v('ce-target');if(tg!=null&&tg!=='')d.target=Math.max(1,parseInt(tg,10)||d.target||1);
+  const un=v('ce-unit');if(un!=null&&un!=='')d.unit=String(un).trim();
+  const sd=v('ce-start');if(sd)d.start=sd;
+  const dy=v('ce-days');if(dy!=null&&dy!=='')d.days=Math.max(1,parseInt(dy,10)||d.days||30);
+  if(v('ce-pts')!=null){d.reward=d.reward||{pts:100,be:'🏅',bn:'Champion'};
+    d.reward.pts=Math.max(0,parseInt(v('ce-pts'),10)||0);
+    if(v('ce-be')!=null)d.reward.be=String(v('ce-be')).trim()||'🏅';
+    if(v('ce-bn')!=null)d.reward.bn=String(v('ce-bn')).trim()||d.reward.bn||'Champion';}
+  const ms=document.querySelector('select[data-k="metric"]');if(ms&&ms.value)d.metric=ms.value;
+  chalReadStages();
+}
+function chalLivePrev(){chalReadStages();const d=S.chalDraft,box=$('chal-prev');if(box&&d)box.innerHTML=chalPath(d.stages,0,{w:520})}
 function renderChalEditor(){
   const d=S.chalDraft;if(!d)return;
+  if($('ce-name'))chalSyncCE(); /* keep typed values across re-renders (v19.18) */
+  const step=Math.max(0,Math.min(2,S.wizStep|0));
+  const wizChips=[[0,'Basics'],[1,'Journey'],[2,'People & Reward']].map(([i,l])=>
+    `<button class="fchip ${step===i?'on':''}" data-act="chal-wiz" data-s="${i}"${step===i?' style="cursor:default"':''}>${nf(i+1)} · ${esc(t(l))}</button>`).join('');
+  const show=i=>step===i?'':'display:none';
   const emojiRow=CHAL.EMOJIS.map(e=>`<button class="fchip ${d.emoji===e?'on':''}" data-act="chal-draft" data-k="emoji" data-v="${e}" style="font-size:15px;padding:4px 9px">${e}</button>`).join('');
   const stageRows=(d.stages||[]).map((s,i)=>`
     <div class="row" style="gap:6px;margin-bottom:6px">
       <input class="inp" style="width:52px;text-align:center" id="ce-st-e-${i}" value="${esc(s.e||'⭐')}" maxlength="2">
-      <input class="inp" style="flex:1" id="ce-st-n-${i}" value="${esc(s.n||'')}" placeholder="${t('Stage name')}">
+      <input class="inp" style="flex:1" id="ce-st-n-${i}" value="${esc(s.n||'')}" placeholder="${t('Stage name')}" oninput="chalLivePrev()">
       <button class="btn btn-ghost btn-icon" data-act="chal-stage-del" data-i="${i}" style="color:var(--red)">${ic('trash',13)}</button>
     </div>`).join('');
   const partChip=(n,label)=>`<button class="fchip ${(d.parts||[]).includes(n)?'on':''}" data-act="chal-part" data-n="${esc(n)}">${esc(label)}</button>`;
   openModal(`
   <div class="modal-h"><h3>${ic('trophy',16)} ${CHALLENGES.some(x=>String(x.id)===String(d.id))?t('Edit Challenge'):t('New Challenge')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
+    <div class="row" style="gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">${wizChips}</div>
+    <div style="${show(0)}">
     <div class="field"><label class="lbl">${t('Challenge name')}</label><input class="inp" id="ce-name" value="${esc(d.name)}" placeholder="${t('September Streak')}"></div>
+    <!-- v19.18 — AI builder: one line of intent → every field below is drafted
+         for the coach to review (POST /api/ai/challenge, monthly draft quota). -->
+    <div class="field"><label class="lbl">${t('Describe your challenge')}</label>
+      <div class="row" style="gap:8px"><input class="inp" id="ce-idea" value="${esc(d.idea||'')}" placeholder="${t('e.g. 30-day fat-loss, 4 sessions a week')}" style="flex:1">
+      <button class="btn btn-outline" data-act="chal-ai"${S.chalAiBusy?' disabled style="opacity:.6"':''}>${ic('zap',14)} ${S.chalAiBusy?t('Drafting…'):t('Build with AI')}</button></div>
+      <div class="muted" style="font-size:11.5px;margin-top:4px">${t('AI fills the fields below — you review and edit')}</div></div>
     <div class="field"><label class="lbl">${t('Emoji')}</label><div class="row" style="gap:5px;flex-wrap:wrap">${emojiRow}</div></div>
     <div class="field"><label class="lbl">${t('Description')}</label><input class="inp" id="ce-desc" value="${esc(d.desc||'')}" placeholder="${t('Keep your streak alive all month')}"></div>
     <div class="field"><label class="lbl">${t('Challenge type')}</label>
@@ -6475,21 +6513,29 @@ function renderChalEditor(){
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('Start Date')}</label><input class="inp" type="date" id="ce-start" value="${esc(d.start||isoToday())}"></div>
       <div class="field"><label class="lbl">${t('Duration (days)')}</label><input class="inp" type="number" id="ce-days" value="${d.days||30}" min="1"></div>
-    </div>
+    </div></div><!-- /step 0 -->
+    <div style="${show(2)}">
     <div class="field"><label class="lbl">${t('Participants')}</label>
       <div class="row" style="gap:5px;flex-wrap:wrap">${partChip('*',ic('users',12)+' '+t('All active clients'))}${CLIENTS.filter(c=>c.status!=='Archived').map(c=>partChip(c.name,t(c.name))).join('')}</div></div>
     <div class="fgrid">
       <div class="field"><label class="lbl">${t('Reward')}</label><input class="inp" type="number" id="ce-pts" value="${(d.reward||{}).pts||100}" min="0"></div>
       <div class="field"><label class="lbl">${t('Badge emoji')}</label><input class="inp" id="ce-be" value="${esc((d.reward||{}).be||'🏅')}" maxlength="2" style="text-align:center"></div>
       <div class="field"><label class="lbl">${t('Badge name')}</label><input class="inp" id="ce-bn" value="${esc((d.reward||{}).bn||'')}" placeholder="${t('Challenge Champion')}"></div>
-    </div>
+    </div></div><!-- /step 2 -->
+    <div style="${show(1)}">
     <div class="field"><label class="lbl">${t('Path stages')} — ${t('the journey the client walks')}</label>
       ${stageRows}
       <button class="btn btn-outline btn-sm" data-act="chal-stage-add">${ic('plus',13)} ${t('Add stage')}</button></div>
     <div class="field"><label class="lbl">${t('Journey preview')}</label>
-      <div style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px">${chalPath(d.stages,0,{w:520})}</div></div>
+      <div id="chal-prev" style="background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 8px">${chalPath(d.stages,0,{w:520})}</div></div>
+    </div><!-- /step 1 -->
   </div>
-  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="chal-save">${ic('check',15)} ${t('Save')}</button></div>`);
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    ${step>0?`<span class="sp"></span><button class="btn btn-outline" data-act="chal-wiz" data-s="${step-1}">${ic('chevL',14)} ${t('Back')}</button>`:''}
+    ${step<2?`<button class="btn btn-primary" data-act="chal-wiz" data-s="${step+1}">${t('Next')} ${ic('chevR',14)}</button>`
+      :`<button class="btn btn-primary" data-act="chal-save">${ic('check',15)} ${t('Save')}</button>`}
+  </div>`);
 }
 /* ---------- client: challenge card modal + mobile list ---------- */
 function chalClientModal(id){
@@ -10438,7 +10484,7 @@ function shell(inner){
       <div class="mwrap" data-mw>
         <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
         <div class="menu"><div class="menu-hd">${t('Create')}</div>
-          ${[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar'],['Create Template','stack'],['Create Note','note']].map(([l,i])=>`<div class="menu-it" data-act="qa-item" data-item="${l}">${ic(i,15)} ${t(l)}</div>`).join('')}
+          ${[['Add Client','users'],['Connect Client (Code)','copy'],['Create Workout','dumbbell'],['Create Nutrition Plan','utensils'],['Add Measurement','ruler'],['Schedule Session','calendar'],['Create Template','stack'],['Create Note','note'],['Create Challenge','trophy']].map(([l,i])=>`<div class="menu-it" data-act="qa-item" data-item="${l}">${ic(i,15)} ${t(l)}</div>`).join('')}
         </div>
       </div>
       <div class="mwrap" data-mw>
@@ -11795,6 +11841,35 @@ document.addEventListener('click',e=>{
       d.parts=ps.length?ps:['*'];renderChalEditor();break}
     case 'chal-stage-add':{const d=S.chalDraft;if(!d)break;chalReadStages();(d.stages=d.stages||[]).push({e:'⭐',n:''});renderChalEditor();break}
     case 'chal-stage-del':{const d=S.chalDraft;if(!d)break;chalReadStages();d.stages.splice(+el.dataset.i,1);renderChalEditor();break}
+    /* ===== v19.18 — 3-step wizard + AI builder ===== */
+    case 'chal-wiz':{if(!S.chalDraft)break;chalSyncCE();S.wizStep=Math.max(0,Math.min(2,+el.dataset.s||0));renderChalEditor();break}
+    case 'chal-ai':{const d=S.chalDraft;if(!d)break;
+      if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
+      if(S.chalAiBusy)break;
+      const idea=(($('ce-idea')&&$('ce-idea').value)||'').trim();
+      if(!idea){toast(t('Describe your challenge first'));break}
+      S.chalAiBusy=true;renderChalEditor();
+      authApi('/api/ai/challenge',{method:'POST',body:JSON.stringify({idea,lang})})
+        .then(r=>{
+          S.chalAiBusy=false;
+          if(r.ok&&r.d&&r.d.challenge){
+            const ch=r.d.challenge;
+            d.name=ch.name||d.name;d.desc=ch.desc||d.desc;d.emoji=ch.emoji||d.emoji;
+            d.type=ch.type||d.type;d.metric=ch.metric||d.metric;d.target=ch.target||d.target;
+            d.unit=ch.unit||d.unit;d.days=ch.days||d.days;
+            if(Array.isArray(ch.stages)&&ch.stages.length>=2)d.stages=ch.stages;
+            if(ch.reward)d.reward=ch.reward;
+            renderChalEditor();toast(t('Challenge drafted ✓'));
+          }else{
+            renderChalEditor();
+            const e=r.d&&r.d.error;
+            toast(t(e==='ai-quota'?'Monthly AI limit reached'
+              :e==='ai-not-configured'?'AI is not configured on this server'
+              :e==='unauthorized'?'Sign in to CoachMint'
+              :'AI could not draft — try again'));
+          }})
+        .catch(()=>{S.chalAiBusy=false;renderChalEditor();toast(t('AI could not draft — try again'))});
+      break}
     case 'chal-save':{const d=S.chalDraft;if(!d)break;if(S.role!=='coach'){toast(t('Only the coach can manage challenges'));break}
       d.name=($('ce-name')&&$('ce-name').value.trim())||d.name||'Challenge';
       d.desc=($('ce-desc')&&$('ce-desc').value.trim())||'';
@@ -12356,6 +12431,8 @@ document.addEventListener('click',e=>{
       else if(it==='Create Template'){S.tplEdit=null;if(isNarrow()){S.mview='builder'}else S.view='builder';render()}
       else if(it==='Add Exercise'){S.view='library';render()}
       else if(it==='Create Note'){S.view='notes';render()}
+      /* v19.18 — Quick Add can start a challenge (opens the wizard step 1). */
+      else if(it==='Create Challenge'){S.view='challenges';render();chalEditor(null)}
       break}
     case 'markread':NOTIFS.forEach(n=>n.un=false);render();toast('All notifications marked as read');break;
     case 'stab':S.stab=el.dataset.k;render();if(el.dataset.k==='admin')billAdminLoad();else if(el.dataset.k==='account')billRefresh().then(render).catch(()=>{});break;

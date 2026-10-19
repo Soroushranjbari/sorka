@@ -4,6 +4,7 @@
 //   POST /api/ai/insight (Bearer) {kind:'weekly'|'reply', client?, lang?} -> {ok, text, model}
 //   POST /api/ai/analyze (Bearer) {client, lang, catalog?} -> {ok, analysis, model}
 //   POST /api/ai/action  (Bearer) {request, lang?, catalog?} -> {ok, reply, applied, failed}
+//   POST /api/ai/challenge(Bearer) {idea, lang?} -> {ok, challenge, model, usage}
 //   GET  /api/ai/quota   (Bearer) -> {ok, used, max, plan, chatToday, enabled}
 //
 // DESIGN CONTRACT — "the coach decides": the AI only DRAFTS and ADVISES. Its
@@ -970,6 +971,76 @@ function nutriSafetyReply(lang) {
     : 'That is something to discuss with a doctor or a qualified dietitian — I am a nutrition assistant, not a medical professional, and I do not advise on medical conditions. If symptoms are serious, please seek professional care promptly. I can still help with logging meals and everyday food choices.';
 }
 /* Resolve a workspace + its payload by CODE (student auth). */
+/** POST /api/ai/challenge {idea, lang?} — the coach types a one-line intent
+ * ("30-day fat-loss, 4 sessions a week") and gets a STRICT-JSON challenge
+ * draft back to review in the wizard. DRAFT ONLY per the design contract:
+ * nothing is created server-side; the coach edits and saves it locally.
+ * Burns one monthly draft credit — same budget as workout drafts. */
+async function challengeDraft(req, st) {
+  const s = await sessionOf(st, bearerOf(req));
+  if (!s) return j(401, { ok: false, error: 'unauthorized' });
+  const acct = await accountById(st, s.coachId);
+  if (!acct) return j(401, { ok: false, error: 'unauthorized' });
+  if (!AI_KEY) return j(503, { ok: false, error: 'ai-not-configured' });
+  const access = accessOf(acct);
+  if (access.status === 'suspended') return j(402, { ok: false, error: 'sub-suspended' });
+  if (access.status === 'expired') return j(402, { ok: false, error: 'sub-expired' });
+  const { data: body, tooLarge: big, bad } = await readJsonCapped(req, MAX_BYTES);
+  if (big) return tooLarge(MAX_BYTES);
+  if (bad) return badJson();
+  const idea = String(body?.idea || '').trim().slice(0, 600);
+  if (!idea) return j(400, { ok: false, error: 'bad-request' });
+  const lang = body?.lang === 'fa' ? 'fa' : 'en';
+  const sys =
+    'You are the challenge builder inside CoachMint, a coaching app. You DRAFT ONLY: the coach reviews ' +
+    'and edits before anything is created. Output STRICT JSON only — no markdown fences, no commentary. ' +
+    'Schema: {"name":string(<=60),"desc":string(<=160),"emoji":string(<=2 chars),' +
+    '"type":"target"|"streak"|"habit","metric":"workouts"|"checkins"|"forms"|"custom",' +
+    '"target":integer>=1,"unit":string(<=20),"days":integer 7..90,' +
+    '"stages":[{"e":string(<=2 chars),"n":string(<=24)}] 3 to 5 stages,' +
+    '"reward":{"pts":integer 0..1000,"be":string(<=2 chars),"bn":string(<=32)}}. ' +
+    'Pick sensible defaults from the idea. For type "streak" set metric "workouts" and unit "days"; ' +
+    'for type "habit" set metric "checkins". ' +
+    (lang === 'fa' ? 'Write name, desc and stage names in Persian (Farsi).' : 'Write name, desc and stage names in English.');
+  const parse = (raw) => {
+    try {
+      const t = String(raw).replace(/```json|```/g, '').trim();
+      const o = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1));
+      const stg = Array.isArray(o.stages) ? o.stages.slice(0, 5)
+        .map((x) => ({ e: String((x && x.e) || '⭐').slice(0, 2), n: String((x && x.n) || '').slice(0, 24) })) : [];
+      const r = o.reward || {};
+      return {
+        name: String(o.name || '').slice(0, 60) || (lang === 'fa' ? 'چالش جدید' : 'New Challenge'),
+        desc: String(o.desc || '').slice(0, 160),
+        emoji: String(o.emoji || '🏆').slice(0, 2),
+        type: ['target', 'streak', 'habit'].includes(o.type) ? o.type : 'target',
+        metric: ['workouts', 'checkins', 'forms', 'custom'].includes(o.metric) ? o.metric : 'workouts',
+        target: Math.max(1, Math.min(365, Math.round(Number(o.target) || 12))),
+        unit: String(o.unit || '').slice(0, 20) || 'workouts',
+        days: Math.max(7, Math.min(90, Math.round(Number(o.days) || 30))),
+        stages: stg.length >= 2 ? stg
+          : [{ e: '🌱', n: 'Start' }, { e: '💪', n: 'Halfway' }, { e: '🔥', n: 'Almost' }, { e: '🏆', n: 'Finish' }],
+        reward: {
+          pts: Math.max(0, Math.min(1000, Math.round(Number(r.pts) || 100))),
+          be: String(r.be || '🏅').slice(0, 2),
+          bn: String(r.bn || '').slice(0, 32) || (lang === 'fa' ? 'قهرمان چالش' : 'Challenge Champion')
+        }
+      };
+    } catch (e) { return null; }
+  };
+  return withLock(`ai:${acct.id}`, async () => {
+    const q = await quotaOf(st, acct);
+    if (q.used >= q.max) return j(402, { ok: false, error: 'ai-quota', used: q.used, max: q.max });
+    const out = await callModel(
+      [{ role: 'system', content: sys }, { role: 'user', content: idea }],
+      (raw) => parse(raw)
+    );
+    if (!out) return j(502, { ok: false, error: 'ai-upstream' });
+    await st.setJSON(q.key, q.used + 1);
+    return j(200, { ok: true, challenge: out.parsed, model: out.model, usage: { used: q.used + 1, max: q.max, plan: q.plan } });
+  });
+}
+
 async function wsByCode(st, code) {
   try {
     const ptr = await st.get(`ws-by-code:${code}`, { type: 'json' });
@@ -1180,6 +1251,7 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'analyze') return secure(await analyze(req, st));
     if (req.method === 'POST' && action === 'action') return secure(await aiAction(req, st));
     if (req.method === 'POST' && action === 'nutri') return secure(await nutri(req, st));
+    if (req.method === 'POST' && action === 'challenge') return secure(await challengeDraft(req, st));
     return j(404, { ok: false, error: 'not-found' });
   } catch (e) {
     console.error('[ai] handler error:', e.message);
