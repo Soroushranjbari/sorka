@@ -413,6 +413,114 @@ Object.assign(FA, {
   "External activity providers — sync your GPS runs and training load": "سرویس‌های ورزشی خارجی — همگام‌سازی دویدن‌های GPS و بار تمرین"
 });
 
+Object.assign(TR, {
+  "Endurance Hub": "Dayanıklılık Merkezi",
+  "Running & Endurance": "Koşu ve Dayanıklılık",
+  "Bodybuilding & Fitness": "Vücut Geliştirme & Fitness",
+  "Powerlifting": "Powerlifting",
+  "General Fitness": "Genel Fitness",
+  "Team Sports": "Takım Sporları",
+  "Sport Discipline": "Spor Branşı",
+  "Shoe Tracker": "Ayakkabı Takibi",
+  "Running Shoes": "Koşu Ayakkabıları",
+  "Add Shoe": "Ayakkabı Ekle",
+  "Shoe Name / Model": "Model / Ayakkabı Adı",
+  "Current Mileage": "Mevcut Mesafe",
+  "Max Mileage": "Maksimum Mesafe",
+  "Upcoming Races": "Yaklaşan Yarışlar",
+  "Add Race": "Yarış Ekle",
+  "Countdown": "Geri Sayım",
+  "Target Time": "Hedef Süre",
+  "Training Pace Zones": "Antrenman Tempo Bölgeleri",
+  "Recovery & Warm-up": "Toparlanma ve Isınma",
+  "Easy & Aerobic Base": "Kolay Koşu ve Aerobik Temel",
+  "Marathon / Steady": "Maraton / Sabit Tempo",
+  "Lactate Threshold": "Laktat Eşiği / Tempo",
+  "VO2max Intervals": "VO2max İntervalleri",
+  "Athlete Profile": "Sporcu Profili",
+  "Athletics Profile": "Dayanıklılık & Koşu Profili",
+  "Primary discipline": "Ana Branş",
+  "Competitive level": "Yarış Seviyesi",
+  "Age category": "Yaş Kategorisi",
+  "Target race": "Hedef Yarış",
+  "Target race date": "Hedef Yarış Tarihi",
+  "Training availability": "Antrenman Müsaitliği",
+  "Weekly sessions": "Haftalık Seans Sayısı",
+  "Current weekly mileage (km)": "Haftalık Koşu Mesafesi (km)",
+  "Training history": "Antrenman Geçmişi",
+  "Injury / limitation notes": "Sakatlık / Kısıtlamalar",
+  "Coach notes": "Antrenör Notları",
+  "Save profile": "Profili Kaydet",
+  "Profile set": "Profil Kayıtlı",
+  "Not set": "Belirtilmemiş",
+  "Mileage remaining": "Kalan Mesafe",
+  "Retired": "Emekliye Ayrıldı",
+  "Active shoes": "Aktif Ayakkabılar",
+  "Record mark": "Derece Kaydet",
+  "Personal Bests": "Kişisel En İyiler (PB)",
+  "Sync Strava": "Strava'yı Eşitle",
+  "Shoe added ✓": "Ayakkabı eklendi ✓",
+  "Shoe removed": "Ayakkabı silindi",
+  "No shoes tracked": "Kayıtlı ayakkabı yok",
+  "No marks recorded": "Kayıtlı derece yok",
+  "days left": "gün kaldı",
+  "Whole squad": "Tüm Takım"
+});
+
+Object.assign(FA, {
+  "Endurance Hub": "مرکز استقامت و دویدن",
+  "Running & Endurance": "دویدن و استقامت",
+  "Bodybuilding & Fitness": "بدنسازی و تناسب اندام",
+  "Powerlifting": "پاورلیفتینگ",
+  "General Fitness": "آمادگی جسمانی عمومی",
+  "Team Sports": "ورزش‌های تیمی",
+  "Sport Discipline": "رشته ورزشی",
+  "Shoe Tracker": "ردیاب مسافت کفش‌ها",
+  "Running Shoes": "کفش‌های دویدن",
+  "Add Shoe": "افزودن کفش",
+  "Shoe Name / Model": "نام و مدل کفش",
+  "Current Mileage": "مسافت طی‌شده",
+  "Max Mileage": "حداکثر مسافت استاندارد",
+  "Upcoming Races": "مسابقات پیش‌رو",
+  "Add Race": "افزودن مسابقه",
+  "Countdown": "شمارش معکوس",
+  "Target Time": "زمان هدف",
+  "Training Pace Zones": "زون‌های سرعت تمرین",
+  "Recovery & Warm-up": "ریکاوری و گرم‌کردن",
+  "Easy & Aerobic Base": "دویدن سبک و پایه هوازی",
+  "Marathon / Steady": "ماراتن و سرعت پیوسته",
+  "Lactate Threshold": "آستانه لاکتات (تمپو)",
+  "VO2max Intervals": "اینتروال‌های VO2max",
+  "Athlete Profile": "پروفایل ورزشکار",
+  "Athletics Profile": "پروفایل استقامت و دویدن",
+  "Primary discipline": "شاخهٔ تخصصی",
+  "Competitive level": "سطح رقابتی",
+  "Age category": "رده سنی",
+  "Target race": "مسابقه هدف",
+  "Target race date": "تاریخ مسابقه هدف",
+  "Training availability": "زمان‌های در دسترس برای تمرین",
+  "Weekly sessions": "تعداد جلسات هفتگی",
+  "Current weekly mileage (km)": "کیلومتر هفتگی فعلی",
+  "Training history": "سابقه تمرینی",
+  "Injury / limitation notes": "آسیب‌دیدگی‌ها و محدودیت‌ها",
+  "Coach notes": "یادداشت‌های مربی",
+  "Save profile": "ذخیره پروفایل",
+  "Profile set": "پروفایل تکمیل شده",
+  "Not set": "تنظیم نشده",
+  "Mileage remaining": "کیلومتر مانده تا تعویض",
+  "Retired": "بازنشسته شده",
+  "Active shoes": "کفش‌های فعال",
+  "Record mark": "ثبت رکورد",
+  "Personal Bests": "رکوردهای شخصی (PB)",
+  "Sync Strava": "همگام‌سازی استراوا",
+  "Shoe added ✓": "کفش با موفقیت اضافه شد ✓",
+  "Shoe removed": "کفش حذف شد",
+  "No shoes tracked": "کفشی ثبت نشده",
+  "No marks recorded": "رکوردی ثبت نشده",
+  "days left": "روز باقی‌مانده",
+  "Whole squad": "کل تیم"
+});
+
 const t=s=>lang==='tr'?(TR[s]??s):(lang==='fa'?(FA[s]??s):s);
 const TR_MUSCLE={
   'Back':'Sırt','Chest':'Göğüs','Shoulders':'Omuz','Biceps':'Biceps (Pazı)','Triceps':'Triceps (Arka Kol)',
@@ -1279,13 +1387,57 @@ const SPORT_EXT={
      view) where the athlete is already known and the duplicate ap-pick chips
      could be deleted. ATH_KEYS derives from this table, so the gate follows
      automatically. */
-  'Running & Endurance':{groups:[{label:'Athletics',items:[
+  'Running & Endurance':{groups:[{label:'Endurance Hub',items:[
     ['races','Races','flag'],
     ['phases','Training Phases','clock'],['runbuild','Run Builder','dumbbell'],
     ['load','Training Load','trending-up'],['pbs','Personal Bests','medal'],
     ['wear','Wearables','watch']]}]}
 };
+const SPORT_ICONS = {
+  'Running & Endurance': '🏃',
+  'Bodybuilding & Fitness': '💪',
+  'Powerlifting': '🏋️',
+  'General Fitness': '⚡',
+  'Team Sports': '⚽'
+};
+const clientSport = c => {
+  if (!c) return ONBOARD.sport || 'Bodybuilding & Fitness';
+  if (c.sport) return c.sport;
+  if (c.goal === 'Endurance') return 'Running & Endurance';
+  if (c.goal === 'Strength') return 'Powerlifting';
+  return ONBOARD.sport || 'Bodybuilding & Fitness';
+};
+const isClientRunner = c => clientSport(c) === 'Running & Endurance';
+const daysUntil = dstr => {
+  if (!dstr) return null;
+  const p = String(dstr).split('-');
+  if (p.length < 3) return null;
+  const target = new Date(+p[0], +p[1] - 1, +p[2]);
+  const now = new Date(TDATE.getFullYear(), TDATE.getMonth(), TDATE.getDate());
+  return Math.round((target - now) / 864e5);
+};
+function defaultClientShoes(cid){
+  if(String(cid)==='1'||String(cid)==='6'){
+    return [
+      {id:'sh1',name:'Nike Vaporfly 3',km:142,maxKm:600,status:'Active'},
+      {id:'sh2',name:'Asics Novablast 4',km:385,maxKm:800,status:'Active'}
+    ];
+  }
+  return [
+    {id:'sh'+Date.now(),name:'Saucony Endorphin Speed',km:85,maxKm:700,status:'Active'}
+  ];
+}
+const clientShoes = c => {
+  if (!c) return [];
+  if (!Array.isArray(c.shoes)) c.shoes = defaultClientShoes(c.id);
+  return c.shoes;
+};
 const sportSections=()=>{
+  const coachIsRunner = ONBOARD.sport === 'Running & Endurance';
+  const hasRunnerClient = CLIENTS.some(c => c.status !== 'Archived' && isClientRunner(c));
+  if (coachIsRunner || hasRunnerClient) {
+    return SPORT_EXT['Running & Endurance'] ? SPORT_EXT['Running & Endurance'].groups : [];
+  }
   const e=SPORT_EXT[ONBOARD.sport];
   return (e&&Array.isArray(e.groups))?e.groups:[];
 };
@@ -3880,7 +4032,7 @@ function vDashCm(){
 function vClientsCm(){
   const act=CLIENTS.filter(c=>c.status!=='Archived').length;
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
-  const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)).slice().sort(sorters[S.csort]||sorters.name);
   const cnt=v=>CLIENTS.filter(c=>v==='All'?c.status!=='Archived':c.status===v).length;
   const chip=(v,l)=>`<button class="cm-fchip ${(S.cfilter||'All')===v?'on':''}" data-act="cm-filter" data-v="${v}">${t(l)} <b>${nf(cnt(v))}</b></button>`;
   return `
@@ -3902,7 +4054,7 @@ function vClientsCm(){
       ${avC(c.name,46)}
       <div style="flex:1;min-width:180px">
         <div class="row" style="gap:8px;flex-wrap:wrap"><b>${t(c.name)}</b>${cmStatusChip(c.status)}${pend?`<span class="bdg bdg-lime">${t('Pending')}</span>`:''}</div>
-        <div class="muted" style="font-size:12px;margin-top:3px">${t(c.goal)} · ${t(c.prog)}</div>
+        <div class="muted" style="font-size:12px;margin-top:3px">${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))} · ${t(c.goal)} · ${t(c.prog)}</div>
         <div class="row" style="gap:12px;margin-top:7px;flex-wrap:wrap">
           <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
           ${c.streak?`<span class="cm-meta">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
@@ -4317,7 +4469,7 @@ function vClients(){
   /* v18.9 — Filter/Sort buttons used to be toast stubs. Real status filter +
      sort (name / status / streak / next session) applied to BOTH views. */
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
-  const list=CLIENTS.filter(c=>!S.cfilter||S.cfilter==='All'||c.status===S.cfilter).slice().sort(sorters[S.csort]||sorters.name);
+  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)).slice().sort(sorters[S.csort]||sorters.name);
   /* v19.12 — §3 completion surfaced WHERE THE COACH ALREADY LOOKS. Without it,
      "who has not filled their athletics profile?" was only answerable by
      opening athletes one at a time — and the profile screen itself now lives
@@ -4346,9 +4498,10 @@ function vClients(){
         ${stBdg(c.status)}
       </div>
       <div class="row" style="gap:6px;flex-wrap:wrap">
+        <span class="chip" title="${t('Sport Discipline')}">${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}</span>
         <span class="chip">${t(c.goal)}</span>
         ${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}
-        ${isAthletics()?profBdg(c.id):''}
+        ${isClientRunner(c)?profBdg(c.id):''}
         ${c.streak?`<span class="chip">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
       </div>
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
@@ -4359,13 +4512,13 @@ function vClients(){
   </div>`
   :`
   <div class="card" style="overflow-x:auto"><table class="tbl">
-    <thead><tr><th>${t('Client')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
+    <thead><tr><th>${t('Client')}</th><th>${t('Sport')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
     <tbody>${list.map(c=>`
     <tr data-act="open-client" data-cid="${c.id}">
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
-      <td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
+      <td><span class="chip" style="font-size:11.5px">${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}</span></td><td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
       <td class="hide-md">${c.streak||c.dayStreak?`${ic('flame',13)} ${esc(streakLbl(c))}`:'—'}</td>
-      <td><div class="row" style="gap:6px;flex-wrap:wrap">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}${isAthletics()?profBdg(c.id):''}</div></td>
+      <td><div class="row" style="gap:6px;flex-wrap:wrap">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}${isClientRunner(c)?profBdg(c.id):''}</div></td>
       <td style="text-align:end;white-space:nowrap">
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
@@ -4380,12 +4533,12 @@ function vWorkspace(){
   /* v19.12 — §3 Athletics Profile is the second tab and only exists when the
      sport has athletics sections. The body map is built the same way, so a
      stale S.tab='athletics' with no athletics sport falls through to Overview   instead of calling an undefined function. */
-  const tabs=[['overview','Overview'],...(isAthletics()?[['athletics','Athletics']]:[]),
+  const tabs=[['overview','Overview'],...(isClientRunner(c)?[['endurance','Endurance Hub']]:(isAthletics()?[['athletics','Athletics']]:[])),
     ['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],
     ['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
   const body={overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
     measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles};
-  if(isAthletics())body.athletics=()=>vAprofile(S.cid);
+  if(isClientRunner(c)){body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}else if(isAthletics()){body.athletics=()=>vAprofile(S.cid);}
   const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
   return `
   ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
@@ -4398,7 +4551,7 @@ function vWorkspace(){
       <div style="flex:1;min-width:240px">
         <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
         <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
-          ${[['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))]].map(([k,v])=>`
+          ${[['Sport',`${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}`],['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))]].map(([k,v])=>`
           <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
           ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
         </div>
@@ -6818,7 +6971,7 @@ function clFilterModal(){
   openModal(`
   <div class="modal-h"><h3>${t('Filter')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b"><div class="row" style="gap:8px;flex-wrap:wrap">
-    ${['All','Active','On Hold','Inactive','Archived'].map(s=>`<button class="fchip ${(S.cfilter||'All')===s?'on':''}" data-act="cl-filter-set" data-s="${s}">${t(s)}</button>`).join('')}
+    ${['All','Active','On Hold','Inactive','Archived'].map(s=>`<button class="fchip ${(S.cfilter||'All')===s?'on':''}" data-act="cl-filter-set" data-s="${s}">${t(s)}</button>`).join('')}</div><div class="lbl" style="margin:14px 0 8px">${t('Sport Discipline')}</div><div class="row" style="gap:8px;flex-wrap:wrap"><button class="fchip ${(!S.csport||S.csport==='All')?'on':''}" data-act="cl-sport-set" data-sp="All">${t('All')}</button>${ONB_SPORTS.map(sp=>`<button class="fchip ${S.csport===sp?'on':''}" data-act="cl-sport-set" data-sp="${sp}">${SPORT_ICONS[sp]||'🏅'} ${t(sp)}</button>`).join('')}
   </div></div>
   <div class="modal-f"><button class="btn btn-primary" data-act="modal-x">${t('Done')}</button></div>`);
 }
@@ -8666,7 +8819,7 @@ function mClientView(){
         <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
         <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('camera',14)} ${t('Form reports')}</button>
         <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
-        ${isAthletics()?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Athletics Profile')}</button>`:''}
+        ${isClientRunner(c)?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Endurance Hub')}</button>`:''}
         <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
         <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
       </div>`)}
@@ -8779,6 +8932,7 @@ function vClient(){
    absent" rule. Countdowns are descriptive days only. */
 function athToday(c){
   if(!isAthletics())return '';
+  if(!isClientRunner(c))return '';
   const p=aprofOf(c.id)||{};
   const hm=m=>{m=Math.round(m);return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')};
   const cw=TLOG.length?Math.max.apply(null,TLOG.map(r=>+r.w)):0;
@@ -10390,9 +10544,9 @@ function vRaces(){
       <td>${r.result.pb?`<span class="bdg bdg-green" style="font-size:10px">${t('PB')}</span>`:'—'}</td>
     </tr>`).join('')}</tbody></table></div>`:''}`;
 }
-function raceEditor(id){
+function raceEditor(id, presetAth){
   const r=id!=null?RACES.find(x=>String(x.id)===String(id)):null;
-  S.raceDraft=r?JSON.parse(JSON.stringify(r)):{id:'rc'+Date.now(),name:'',event:'',dist:'',date:isoToday(),loc:'',target:'',goal:'',notes:'',ath:''};
+  S.raceDraft=r?JSON.parse(JSON.stringify(r)):{id:'rc'+Date.now(),name:'',event:'',dist:'',date:isoToday(),loc:'',target:'',goal:'',notes:'',ath:presetAth||''};
   const d=S.raceDraft;
   const f=(k,l,ph,ty)=>`<div class="field"><label class="lbl">${t(l)}</label>
     <input class="inp" id="rc-${k}"${ty?` type="${ty}"`:''} value="${esc(d[k]||'')}" placeholder="${ph||''}"></div>`;
@@ -10558,36 +10712,93 @@ function athleteVdot(cid) {
 
 /* ================= ATHLETICS §3 — ATHLETE PROFILE =================
    The athletics layer ON TOP of the existing athlete: discipline, target,   availability. Nothing here replaces a CLIENTS field — it extends it. */
-function vAprofile(cid){
-  const c=client(cid||S.cid);
-  if(!c)return '';
-  const p=aprofOf(c.id)||{};
-  const F=(k,l,ph,dl)=>`<div class="field"><label class="lbl">${t(l)}</label>
-    <input class="inp" id="ap-${k}"${dl?` list="${dl}"`:''} value="${esc(p[k]||'')}" placeholder="${ph||''}"></div>`;
-  const myPbs = PBSD.filter(p => String(p.cid || 1) === String(c.id)).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-  const pbsHtml = `<div class="card" style="padding:16px;margin-top:14px">
-    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
-      <div class="row" style="gap:8px;align-items:center">
-        <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('medal',16)}</span>
-        <b style="font-size:14px">${t('Personal Bests')} · ${esc(c.name)}</b>
-      </div>
-      <button class="btn btn-outline btn-sm" data-act="pb-new-for" data-cid="${c.id}">${ic('plus',13)} ${t('Record mark')}</button>
+function shoeEditor(cid){
+  openModal(`
+  <div class="modal-h"><h3>${ic('watch',16)} ${t('Add Shoe')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-b">
+    <div class="field"><label class="lbl">${t('Shoe Name / Model')}</label>
+      <input class="inp" id="sh-name" placeholder="Nike Vaporfly 3"></div>
+    <div class="fgrid">
+      <div class="field"><label class="lbl">${t('Current Mileage')} (km)</label>
+        <input class="inp" type="number" id="sh-km" value="0" placeholder="0"></div>
+      <div class="field"><label class="lbl">${t('Max Mileage')} (km)</label>
+        <input class="inp" type="number" id="sh-max" value="650" placeholder="650"></div>
     </div>
-    ${myPbs.length?`<table class="tbl"><thead><tr>
-      <th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th><th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th><th></th>
-    </tr></thead><tbody>${myPbs.map(pb=>`<tr>
-      <td><b>${esc(pb.ev)}</b></td>
-      <td><b style="font-size:14px;color:var(--accent-text)">${esc(pb.val)}</b></td>
-      <td class="muted">${esc(pb.prev||'—')}</td>
-      <td>${fmtD(pb.date)}</td>
-      <td><span class="chip">${esc(pb.src||'Manual')}</span></td>
-      <td class="muted">${esc(pb.notes||'')}</td>
-      <td class="num"><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(pb.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td>
-    </tr>`).join('')}</tbody></table>`:`<div class="muted" style="font-size:12.5px">${t('No marks recorded yet for this athlete.')}</div>`}
-  </div>`;
+  </div>
+  <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="shoe-save" data-cid="${cid}">${ic('check',14)} ${t('Add Shoe')}</button></div>`);
+}
+
+function vClientEnduranceHub(cid){
+  const c = client(cid || S.cid);
+  if(!c) return '';
+  const p = aprofOf(c.id) || {};
   const vd = athleteVdot(c.id);
   const paces = vdotPaces(vd);
-  const zonesHtml = paces ? `<div class="card" style="padding:16px;margin-top:14px">
+  const shoes = clientShoes(c);
+
+  const cw = TLOG.length ? Math.max.apply(null, TLOG.map(r => +r.w)) : 0;
+  const mineWk = TLOG.filter(r => +r.w === cw && String(r.cid) === String(c.id));
+  const kmThisWk = +mineWk.reduce((s,x) => s + (+x.km||0), 0).toFixed(1);
+  const targetKm = p.mileage || '42';
+
+  const now0 = new Date(TDATE.getFullYear(), TDATE.getMonth(), TDATE.getDate());
+  const dOf = r => { const q = String(r.date||'').split('-'); return new Date(+q[0]||2000, (+q[1]||1)-1, +q[2]||1); };
+  const dLeft = r => Math.round((dOf(r) - now0) / 864e5);
+  const myRaces = RACES.filter(r => !r.ath || r.ath === c.name || String(r.ath) === String(c.id))
+    .slice().sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  const nextRace = myRaces.find(r => !r.result && dLeft(r) >= 0);
+
+  const myPbs = PBSD.filter(x => String(x.cid || 1) === String(c.id))
+    .slice().sort((a,b) => String(b.date).localeCompare(String(a.date)));
+  const topPb = myPbs[0];
+
+  const activeShoe = shoes.find(s => s.status === 'Active') || shoes[0];
+
+  const F=(k,l,ph,dl)=>`<div class="field"><label class="lbl">${t(l)}</label>
+    <input class="inp" id="ap-${k}"${dl?` list="${dl}"`:''} value="${esc(p[k]||'')}" placeholder="${ph||''}"></div>`;
+
+  const kpisHtml = `<div class="grid4" style="margin-bottom:14px;gap:12px">
+    <div class="card stat" style="padding:14px">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <span class="icw" style="background:var(--blue-soft);color:var(--blue)">${ic('trending-up',16)}</span>
+        <span class="bdg bdg-blue" style="font-size:10px">${t('Week')} ${nf(cw+1)}</span>
+      </div>
+      <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase">${t('Weekly mileage')}</div>
+      <div style="font-size:20px;font-weight:800;color:var(--ink);margin-top:2px">${nf(kmThisWk)} <span style="font-size:13px;font-weight:600;color:var(--ink3)">km</span></div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${t('Target')}: ${nf(targetKm)} km / wk</div>
+    </div>
+    <div class="card stat" style="padding:14px">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <span class="icw" style="background:var(--amber-soft);color:var(--amber)">${ic('flag',16)}</span>
+        ${nextRace ? `<span class="bdg bdg-lime" style="font-size:10px">${dLeft(nextRace) === 0 ? t('Today') : `${nf(dLeft(nextRace))} ${t('days left')}`}</span>` : ''}
+      </div>
+      <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase">${t('Next Race')}</div>
+      <div style="font-size:15px;font-weight:800;color:var(--ink);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nextRace ? esc(nextRace.name) : '—'}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${nextRace ? (nextRace.target ? `${t('Target')}: ${esc(nextRace.target)}` : fmtD(nextRace.date)) : t('No upcoming races')}</div>
+    </div>
+    <div class="card stat" style="padding:14px">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('medal',16)}</span>
+        <span class="bdg bdg-green" style="font-size:10px">VDOT ${vd}</span>
+      </div>
+      <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase">${t('Personal Best')}</div>
+      <div style="font-size:16px;font-weight:800;color:var(--accent-text);margin-top:4px">${topPb ? `${esc(topPb.ev)} · ${esc(topPb.val)}` : '—'}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${topPb ? fmtD(topPb.date) : t('No marks recorded')}</div>
+    </div>
+    <div class="card stat" style="padding:14px">
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <span class="icw" style="background:var(--purple-soft);color:var(--purple)">${ic('watch',16)}</span>
+        <span class="bdg ${STRAVA.connected?'bdg-lime':'bdg-gray'}" style="font-size:10px">${STRAVA.connected?'Strava ✓':'Strava'}</span>
+      </div>
+      <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase">${t('Shoe Tracker')}</div>
+      <div style="font-size:14px;font-weight:800;color:var(--ink);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${activeShoe ? esc(activeShoe.name) : '—'}</div>
+      <div class="muted" style="font-size:11.5px;margin-top:2px">${activeShoe ? `${nf(activeShoe.km)} / ${nf(activeShoe.maxKm)} km` : t('No shoes tracked')}</div>
+    </div>
+  </div>`;
+
+  const zonesHtml = paces ? `<div class="card" style="padding:16px;margin-bottom:14px">
     <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
       <div class="row" style="gap:8px;align-items:center">
         <span class="icw" style="background:var(--blue-soft);color:var(--blue)">${ic('trending-up',16)}</span>
@@ -10626,9 +10837,100 @@ function vAprofile(cid){
     </div>
   </div>` : '';
 
-  return `<div class="page-h"><div><h1>${t('Athletics Profile')}</h1>
+  const racesHtml = `<div class="card" style="padding:16px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="icw" style="background:var(--amber-soft);color:var(--amber)">${ic('flag',16)}</span>
+        <b style="font-size:14px">${t('Upcoming Races')} · ${esc(c.name)}</b>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="race-new-for" data-ath="${esc(c.name)}">${ic('plus',13)} ${t('Add Race')}</button>
+    </div>
+    ${myRaces.length ? `<table class="tbl"><thead><tr>
+      <th>${t('Race')}</th><th>${t('Event')}</th><th>${t('Date')}</th><th>${t('Location')}</th><th>${t('Target')}</th><th>${t('Status')}</th><th></th>
+    </tr></thead><tbody>${myRaces.map(r => {
+      const dd = dLeft(r);
+      const pill = r.result ? `<span class="bdg bdg-green">${t('PB')} · ${esc(r.result.time||'')}</span>`
+        : (dd < 0 ? `<span class="bdg bdg-gray">${t('Done')}</span>`
+        : `<span class="bdg ${dd<=7?'bdg-lime':'bdg-amber'}">${dd===0?t('Today'):`${nf(dd)} ${t('days left')}`}</span>`);
+      return `<tr>
+        <td><b>${esc(r.name)}</b></td>
+        <td><span class="chip">${esc(r.event||'')}</span></td>
+        <td>${fmtD(r.date)}</td>
+        <td class="muted">${esc(r.loc||'—')}</td>
+        <td><b>${esc(r.target||'—')}</b></td>
+        <td>${pill}</td>
+        <td class="num"><button class="btn btn-ghost btn-sm" data-act="race-edit" data-id="${esc(r.id)}">${ic('edit',13)}</button></td>
+      </tr>`;
+    }).join('')}</tbody></table>` : `<div class="muted" style="font-size:12.5px">${t('No upcoming races')}</div>`}
+  </div>`;
+
+  const pbsHtml = `<div class="card" style="padding:16px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('medal',16)}</span>
+        <b style="font-size:14px">${t('Personal Bests')} · ${esc(c.name)}</b>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="pb-new-for" data-cid="${c.id}">${ic('plus',13)} ${t('Record mark')}</button>
+    </div>
+    ${myPbs.length ? `<table class="tbl"><thead><tr>
+      <th>${t('Event')}</th><th>${t('Mark')}</th><th>${t('Previous')}</th><th>${t('Date')}</th><th>${t('Source')}</th><th>${t('Notes')}</th><th></th>
+    </tr></thead><tbody>${myPbs.map(pb => `<tr>
+      <td><b>${esc(pb.ev)}</b></td>
+      <td><b style="font-size:14px;color:var(--accent-text)">${esc(pb.val)}</b></td>
+      <td class="muted">${esc(pb.prev||'—')}</td>
+      <td>${fmtD(pb.date)}</td>
+      <td><span class="chip">${esc(pb.src||'Manual')}</span></td>
+      <td class="muted">${esc(pb.notes||'')}</td>
+      <td class="num"><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(pb.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td>
+    </tr>`).join('')}</tbody></table>` : `<div class="muted" style="font-size:12.5px">${t('No marks recorded yet for this athlete.')}</div>`}
+  </div>`;
+
+  const shoesHtml = `<div class="card" style="padding:16px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="icw" style="background:var(--purple-soft);color:var(--purple)">${ic('watch',16)}</span>
+        <div>
+          <b style="font-size:14px">${t('Shoe Tracker')} · ${esc(c.name)}</b>
+          <span class="muted" style="font-size:11.5px;display:block">${t('Track mileage on each pair of running shoes to avoid injury')}</span>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="shoe-add" data-cid="${c.id}">${ic('plus',13)} ${t('Add Shoe')}</button>
+    </div>
+    ${shoes.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">${shoes.map(sh => {
+      const pctShoe = Math.min(100, Math.round(((sh.km||0) / (sh.maxKm||600)) * 100));
+      const col = pctShoe > 90 ? 'var(--red)' : (pctShoe > 70 ? 'var(--amber)' : 'var(--green)');
+      return `<div style="padding:12px 14px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <div class="row" style="justify-content:space-between;align-items:flex-start">
+          <div>
+            <b style="font-size:13.5px">${esc(sh.name)}</b>
+            <div class="muted" style="font-size:11.5px;margin-top:2px">${sh.status==='Retired'?t('Retired'):t('Active')}</div>
+          </div>
+          <span class="bdg ${sh.status==='Retired'?'bdg-gray':'bdg-lime'}" style="font-size:10px">${pctShoe}%</span>
+        </div>
+        <div class="pbar" style="margin:10px 0 6px"><i style="width:${pctShoe}%;background:${col}"></i></div>
+        <div class="row" style="justify-content:space-between;font-size:11.5px;color:var(--ink2)">
+          <span><b>${nf(sh.km||0)}</b> / ${nf(sh.maxKm||600)} km</span>
+          <span>${nf(Math.max(0, (sh.maxKm||600) - (sh.km||0)))} km ${t('left')}</span>
+        </div>
+        <div class="row" style="gap:6px;margin-top:10px;justify-content:flex-end">
+          <button class="btn btn-ghost btn-sm" data-act="shoe-retire" data-cid="${c.id}" data-id="${esc(sh.id)}">${sh.status==='Retired'?t('Active'):t('Retire')}</button>
+          <button class="btn btn-ghost btn-icon" data-act="shoe-del" data-cid="${c.id}" data-id="${esc(sh.id)}" style="color:var(--red)">${ic('trash',13)}</button>
+        </div>
+      </div>`;
+    }).join('')}</div>` : `<div class="muted" style="font-size:12.5px">${t('No shoes tracked')}</div>`}
+  </div>`;
+
+  return `<div class="page-h"><div><h1>${t('Endurance Hub')}</h1>
     <div class="sub">${esc(c.name)} · ${t('Discipline, target and availability — the layer the athletics engine reads')}</div></div>
-    <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button></div>
+    <div class="row" style="gap:8px">
+      ${STRAVA.connected ? `<button class="btn btn-outline btn-sm" data-act="wear-sync" ${STRAVA.syncing?'disabled':''}>${ic('refresh',13)} ${STRAVA.syncing?t('Syncing…'):t('Sync Strava')}</button>` : `<button class="btn btn-outline btn-sm" data-act="wear-connect">${ic('watch',13)} ${t('Connect Strava')}</button>`}
+      <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button>
+    </div></div>
+  ${kpisHtml}
+  ${zonesHtml}
+  ${racesHtml}
+  ${pbsHtml}
+  ${shoesHtml}
   <div class="card" style="padding:16px">
     <div class="row" style="gap:10px;margin-bottom:14px">${avC(c.name,40)}
       <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(c.name)}</b>
@@ -10652,9 +10954,10 @@ function vAprofile(cid){
     </div>
     <datalist id="ap-evts">${AEVTS.map(e=>`<option value="${e}"></option>`).join('')}</datalist>
     <div class="muted" style="font-size:12px;margin-top:12px">${ic('database',12)} ${t('Events are data, not code — add a row to the catalogue, never a branch in the engine.')}</div>
-  </div>
-  ${zonesHtml}
-  ${pbsHtml}`;
+  </div>`;
+}
+function vAprofile(cid){
+  return vClientEnduranceHub(cid);
 }
 
 /* ================= ATHLETICS §7 — TRAINING PHASES =================
@@ -11562,6 +11865,7 @@ function editClientModal(name){
       <div class="field"><label class="lbl">${t('Last Name')}</label><input class="inp" id="ec-ln" value="${esc(nm.slice(1).join(' '))}"></div>
       <div class="field"><label class="lbl">${t('Email')}</label><input class="inp" id="ec-email" value="${esc(c.email||'')}"></div>
       <div class="field"><label class="lbl">${t('National ID')} <span class="muted" style="font-weight:400;font-size:10.5px">· ${t('For contract & insurance')}</span></label><input class="inp" id="ec-nid" value="${esc(c.nid||'')}" inputmode="numeric" autocomplete="off"></div>
+      <div class="field"><label class="lbl">${t('Sport Discipline')}</label><select class="sel" id="ec-sport">${ONB_SPORTS.map(sp=>`<option value="${sp}" ${clientSport(c)===sp?'selected':''}>${SPORT_ICONS[sp]||'🏅'} ${t(sp)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="ec-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option value="${g}" ${c.goal===g?'selected':''}>${t(g)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Status')}</label><select class="sel" id="ec-status">${['Active','Inactive','On Hold','Pending','Archived'].map(s=>`<option value="${s}" ${c.status===s?'selected':''}>${t(s)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel" id="ec-freq">${['—','2x / week','3x / week','4x / week','5x / week'].map(f=>`<option value="${f}" ${c.freq===f?'selected':''}>${t(f)}</option>`).join('')}</select></div>
@@ -11610,6 +11914,7 @@ function addClientModal(){openModal(`
       <div class="field"><label class="lbl">${t('Activity Level')}</label><select class="sel" id="nc-act"><option value="Sedentary">${t('Sedentary')}</option><option value="Lightly active" selected>${t('Lightly active')}</option><option value="Moderately active">${t('Moderately active')}</option><option value="Very active">${t('Very active')}</option></select></div></div></div>
     <div class="fs"><div class="fs-t">${t('Training Information')}</div><div class="fgrid">
       <div class="field"><label class="lbl">${t('Experience Level')}</label><select class="sel" id="nc-exp"><option value="Beginner">${t('Beginner')}</option><option value="Intermediate" selected>${t('Intermediate')}</option><option value="Advanced">${t('Advanced')}</option></select></div>
+      <div class="field"><label class="lbl">${t('Sport Discipline')}</label><select class="sel" id="nc-sport">${ONB_SPORTS.map(sp=>`<option value="${sp}" ${(ONBOARD.sport||'Bodybuilding & Fitness')===sp?'selected':''}>${SPORT_ICONS[sp]||'🏅'} ${t(sp)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Primary Goal')}</label><select class="sel" id="nc-goal">${['Muscle Gain','Fat Loss','Strength','Mobility','Endurance'].map(g=>`<option value="${g}">${t(g)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel" id="nc-freq">${['2x / week','3x / week','4x / week','5x / week'].map(f=>`<option value="${f}" ${f==='3x / week'?'selected':''}>${t(f)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Preferred Days')}</label><input class="inp" id="nc-days" placeholder="Mon · Wed · Fri"></div>
@@ -12115,6 +12420,7 @@ document.addEventListener('click',e=>{
     case 'invite-open':inviteModal();break;
     case 'cl-filter':clFilterModal();break;
     case 'cl-filter-set':{S.cfilter=el.dataset.s;closeModal();render();break}
+    case 'cl-sport-set':{S.csport=el.dataset.sp;closeModal();render();break}
     case 'cl-sort':clSortModal();break;
     case 'cl-sort-set':{S.csort=el.dataset.k;closeModal();render();break}
     case 'act-all':activityModal();break;
@@ -12337,6 +12643,31 @@ document.addEventListener('click',e=>{
     case 'pb-pick':S.pbCid=el.dataset.cid;render();break;
     case 'pb-new':pbEditor(null);break;
     case 'pb-new-for':pbEditor(el.dataset.cid);break;
+    case 'race-new-for':raceEditor(null, el.dataset.ath);break;
+    case 'shoe-add':shoeEditor(el.dataset.cid);break;
+    case 'shoe-save':{
+      const c=client(el.dataset.cid);if(!c)break;
+      const name=($('sh-name')?.value||'').trim()||'Running Shoe';
+      const km=parseFloat($('sh-km')?.value||0)||0;
+      const maxKm=parseFloat($('sh-max')?.value||650)||650;
+      if(!Array.isArray(c.shoes))c.shoes=defaultClientShoes(c.id);
+      c.shoes.push({id:'sh'+Date.now(),name,km,maxKm,status:'Active'});
+      closeModal();saveData();render();toast(t('Shoe added ✓'));break;
+    }
+    case 'shoe-retire':{
+      const c=client(el.dataset.cid);if(!c||!Array.isArray(c.shoes))break;
+      const sh=c.shoes.find(x=>String(x.id)===String(el.dataset.id));
+      if(sh){
+        sh.status=sh.status==='Retired'?'Active':'Retired';
+        saveData();render();toast(sh.status==='Retired'?t('Retired'):t('Active shoes'));
+      }
+      break;
+    }
+    case 'shoe-del':{
+      const c=client(el.dataset.cid);if(!c||!Array.isArray(c.shoes))break;
+      c.shoes=c.shoes.filter(x=>String(x.id)!==String(el.dataset.id));
+      saveData();render();toast(t('Shoe removed'));break;
+    }
     case 'pb-del':{const i=PBSD.findIndex(x=>String(x.id)===String(el.dataset.id));
       if(i>=0){markDead('PBSD',PBSD[i].id);PBSD.splice(i,1);saveData();render();toast(t('Mark deleted'));}break;}
     case 'pb-save':{const g=id=>{const e2=$(id);return e2?e2.value:''};
@@ -12359,6 +12690,7 @@ document.addEventListener('click',e=>{
       const oldName=c.name;
       c.name=newName;
       c.goal=$('ec-goal').value;
+      if($('ec-sport')) c.sport = $('ec-sport').value;
       c.status=$('ec-status').value;
       c.freq=$('ec-freq').value;
       const wv=$('ec-weight').value;c.weight=wv===''?c.weight:wToKg(parseFloat(wv));
@@ -13202,7 +13534,7 @@ document.addEventListener('click',e=>{
       const ncV=id=>{const el=$(id);return el?String(el.value||'').trim():''};
       const ncN=id=>{const n=parseFloat(ncV(id));return Number.isFinite(n)?n:undefined};
       const ncH=ncN('nc-h'),ncW=ncN('nc-w'),ncBF=ncN('nc-bf');
-      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),goal:ncV('nc-goal')||'Muscle Gain',weight:ncW!=null?ncW:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:ncV('nc-freq')||'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:ncH!=null?ncH:175,bf:ncBF!=null?ncBF:18,
+      const nc={id:nextId(),name:fn+' '+ln,code:genCode(8),sport:ncV('nc-sport')||(ONBOARD.sport||'Bodybuilding & Fitness'),goal:ncV('nc-goal')||'Muscle Gain',weight:ncW!=null?ncW:72.5,prog:'Onboarding — Week 1',week:1,next:'—',status:'Active',freq:ncV('nc-freq')||'3x / week',streak:0,done:0,missed:0,last:'—',nextW:'Unscheduled',h:ncH!=null?ncH:175,bf:ncBF!=null?ncBF:18,
         email:ncV('nc-email')||undefined,phone:ncV('nc-phone')||undefined,dob:ncV('nc-dob')||undefined,
         gender:ncV('nc-gender')||undefined,actLvl:ncV('nc-act')||undefined,expLvl:ncV('nc-exp')||undefined,
         prefDays:ncV('nc-days')||undefined,equip:ncV('nc-equip')||undefined,inj:ncV('nc-inj')||undefined,
