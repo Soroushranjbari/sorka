@@ -1,0 +1,106 @@
+/* ═══════════════════════════════════════════════════════════════
+   Coach OS · Open Workspace redesign — theme_5.css
+   "CoachMint Bento" — light modern, grounded in the app's identity:
+   bone background, white surfaces, ink #15181E, signature lime #C8F04B,
+   dark sidebar #12151B, Space Grotesk + JetBrains Mono + Vazirmatn.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --background: #DDDDD0;
+  --foreground: #15181E;
+  --card: #FFFFFF;
+  --card-foreground: #15181E;
+  --popover: #FFFFFF;
+  --popover-foreground: #15181E;
+
+  --primary: #15181E;            /* dark ink buttons */
+  --primary-foreground: #F7F7F2;
+  --secondary: #EDEDE3;
+  --secondary-foreground: #15181E;
+  --muted: #F1F1E8;
+  --muted-foreground: #626875;
+
+  --accent: #C8F04B;             /* signature lime */
+  --accent-foreground: #1A2205;
+  --accent-deep: #8FB51E;        /* lime as text/border on white */
+  --accent-soft: #F4FAE0;
+  --accent-key: rgba(200, 240, 75, .12);
+
+  --destructive: #E5533D;
+  --destructive-foreground: #FFFFFF;
+  --green: #2FA860;
+  --amber: #C77414;
+
+  --border: #E4E4D8;
+  --line2: #ECECE2;
+  --input: #E4E4D8;
+  --ring: #8FB51E;
+
+  --sidebar: #12151B;
+  --sidebar-foreground: #A9AFBA;
+  --sidebar-accent: #C8F04B;
+
+  --ai-surface: #14171C;         /* inverted AI card */
+  --ai-border: rgba(200, 240, 75, .28);
+  --ai-glow: rgba(200, 240, 75, .35);
+
+  --chart-1: #8FB51E;
+  --chart-2: #15181E;
+  --chart-3: #C77414;
+  --chart-grid: #ECECE2;
+
+  --font-sans: 'Vazirmatn', 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', 'Vazirmatn', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Vazirmatn', monospace;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(21, 24, 30, .05);
+  --shadow-sm: 0 1px 3px rgba(21, 24, 30, .06), 0 1px 2px -1px rgba(21, 24, 30, .08);
+  --shadow: 0 4px 14px -6px rgba(21, 24, 30, .12);
+  --shadow-md: 0 8px 24px -10px rgba(21, 24, 30, .18);
+  --shadow-lg: 0 18px 44px -18px rgba(21, 24, 30, .28);
+  --glow: 0 0 0 1px rgba(200, 240, 75, .45), 0 10px 32px -10px rgba(200, 240, 75, .5);
+}
+
+/* ── base (overwrites Tailwind/Flowbite defaults) ─────────────── */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: var(--foreground) !important;
+  background:
+    radial-gradient(1100px 480px at 88% -8%, rgba(200, 240, 75, .16), transparent 62%),
+    radial-gradient(900px 420px at -6% 108%, rgba(200, 240, 75, .10), transparent 60%),
+    var(--background) !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display) !important;
+  color: var(--foreground) !important;
+  margin: 0 !important;
+  letter-spacing: -.01em;
+}
+
+p { margin: 0 !important; }
+a { color: inherit; text-decoration: none !important; }
+button { font-family: inherit !important; cursor: pointer; }
+input { font-family: inherit !important; }
+ul, ol { margin: 0 !important; padding: 0 !important; list-style: none !important; }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: rgba(21, 24, 30, .18); border-radius: 99px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-track { background: transparent; }

@@ -73,13 +73,13 @@ console.log('=== TEST SUITE: ENDURANCE HUB TAB FIX ===');
 evalIn("S.cid = 6; S.view = 'wspace'; S.tab = 'overview';");
 let ws6Overview = evalIn("vWorkspace()");
 test('Client 6 has Endurance Hub tab in overview', ws6Overview.includes('data-tab="endurance"'));
-test('Client 6 overview tab is on', ws6Overview.includes('class="tab on" data-act="tab" data-tab="overview"'));
+test('Client 6 overview tab is on', ws6Overview.includes('class="ws-tab on" data-act="tab" data-tab="overview"'));
 
 // Now click Endurance Hub tab on Client 6
 evalIn("S.tab = 'endurance';");
 let ws6Endurance = evalIn("vWorkspace()");
 test('Client 6 Endurance Hub tab stays present when active (NO DISAPPEAR)', ws6Endurance.includes('data-tab="endurance"'));
-test('Client 6 Endurance Hub tab has on class', ws6Endurance.includes('class="tab on" data-act="tab" data-tab="endurance"'));
+test('Client 6 Endurance Hub tab has on class', ws6Endurance.includes('class="ws-tab on" data-act="tab" data-tab="endurance"'));
 test('Client 6 renders Shoe Tracker in Endurance Hub', ws6Endurance.includes('Shoe Tracker'));
 test('Client 6 renders Training Pace Zones', ws6Endurance.includes('Training Pace Zones'));
 
@@ -92,7 +92,7 @@ test('Client 1 has Endurance Hub tab available', ws1Overview.includes('data-tab=
 evalIn("S.tab = 'endurance';");
 let ws1Endurance = evalIn("vWorkspace()");
 test('Client 1 Endurance Hub tab stays present when active (NO DISAPPEAR)', ws1Endurance.includes('data-tab="endurance"'));
-test('Client 1 Endurance Hub tab has on class', ws1Endurance.includes('class="tab on" data-act="tab" data-tab="endurance"'));
+test('Client 1 Endurance Hub tab has on class', ws1Endurance.includes('class="ws-tab on" data-act="tab" data-tab="endurance"'));
 test('Client 1 shows banner with Set as Runner action', ws1Endurance.includes('data-act="cl-set-runner"'));
 
 // 3. Test cl-set-runner action
@@ -119,7 +119,7 @@ evalIn("lang = 'fa';");
 evalIn("S.cid = 6; S.view = 'wspace'; S.tab = 'endurance';");
 let wsFa = evalIn("vWorkspace()");
 test('Persian translation for Endurance Hub tab', wsFa.includes('مرکز استقامت و دویدن'));
-test('Persian Endurance Hub tab is on and not vanished', wsFa.includes('class="tab on" data-act="tab" data-tab="endurance"'));
+test('Persian Endurance Hub tab is on and not vanished', wsFa.includes('class="ws-tab on" data-act="tab" data-tab="endurance"'));
 
 console.log(`\nRESULTS: ${pass} pass, ${fail} fail`);
 process.exit(fail ? 1 : 0);

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Workspace — بازطراحی · Coach OS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.0.0/dist/flowbite.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<link rel="stylesheet" href="theme_5.css">
+
+<style>
+/* ═══════════ LAYOUT SHELL ═══════════ */
+.app{display:flex;min-height:100vh}
+
+/* ── dark sidebar (app context) ── */
+.sidebar{
+  width:236px;flex:none;background:var(--sidebar);color:var(--sidebar-foreground);
+  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  padding:18px 14px;gap:4px;direction:rtl;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px}
+.brand-mark{
+  width:34px;height:34px;border-radius:10px;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;color:#1A2205;
+  box-shadow:0 6px 18px -6px rgba(200,240,75,.55);
+}
+.brand-name{font-family:var(--font-display);font-weight:700;font-size:15px;color:#F7F7F2;letter-spacing:.02em}
+.brand-tag{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.22em;color:#3E4A40;display:block;margin-top:1px}
+.nav-sec{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;color:#3E4A40;padding:14px 10px 6px;text-transform:uppercase}
+.nav-it{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  color:#A9AFBA;background:none;border:0;width:100%;text-align:start;position:relative;
+  transition:background .18s ease,color .18s ease;
+}
+.nav-it:hover{background:rgba(255,255,255,.05);color:#E9EAEE}
+.nav-it.on{background:rgba(200,240,75,.10);color:var(--accent)}
+.nav-it.on::after{content:'';position:absolute;inset-inline-start:0;top:22%;height:56%;width:3px;border-radius:3px;background:var(--accent)}
+.nav-it .nb{margin-inline-start:auto;font-size:9.5px;background:rgba(255,255,255,.07);border-radius:99px;padding:1px 7px;color:#E9EAEE}
+.nav-it.on .nb{background:var(--accent);color:#1A2205;font-weight:700}
+.side-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid rgba(255,255,255,.07)}
+.side-foot .sf-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#C8F04B,#8FB51E);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#1A2205;flex:none}
+.side-foot .sf-n{font-size:12.5px;font-weight:700;color:#E9EAEE;line-height:1.3}
+.side-foot .sf-r{font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;color:#3E4A40}
+
+/* ── main column ── */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 26px 8px;flex-wrap:wrap}
+.crumb{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--muted-foreground);text-transform:uppercase}
+.crumb .back{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-pill);padding:5px 12px;color:var(--foreground);font-weight:600;transition:box-shadow .18s ease,transform .18s ease}
+.crumb .back:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.crumb .cur{color:var(--foreground);font-weight:700}
+.topbar-a{display:flex;align-items:center;gap:8px}
+.search{
+  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-pill);padding:7px 14px;color:var(--muted-foreground);font-size:12.5px;min-width:220px;
+  transition:box-shadow .18s ease,border-color .18s ease;
+}
+.search:hover{border-color:#CFCFBF;box-shadow:var(--shadow-xs)}
+.search kbd{font-family:var(--font-mono);font-size:10px;background:var(--muted);border:1px solid var(--border);border-radius:6px;padding:1px 6px;color:var(--muted-foreground)}
+.icon-btn{
+  width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--foreground);position:relative;
+  transition:box-shadow .18s ease,transform .18s ease;
+}
+.icon-btn:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.icon-btn .dot{position:absolute;top:7px;inset-inline-end:8px;width:7px;height:7px;border-radius:50%;background:var(--destructive);border:2px solid var(--card)}
+
+/* ── workspace container ── */
+.ws{width:100%;max-width:1240px;margin:0 auto;padding:6px 26px 48px}
+
+/* sticky glass head: identity + tabs */
+.ws-head{
+  position:sticky;top:0;z-index:30;padding:8px 0 10px;margin-bottom:14px;
+  background:linear-gradient(to bottom, rgba(221,221,208,.92) 70%, rgba(221,221,208,0));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+
+/* ═══════════ IDENTITY HEADER ═══════════ */
+.identity{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:16px 18px;box-shadow:var(--shadow-xs);display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;align-items:center;
+}
+.id-l{display:flex;align-items:center;gap:14px;min-width:0}
+.id-av{position:relative;flex:none}
+.id-av .av{
+  width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#EDFAC4,#C8F04B 60%,#A8CC35);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#1A2205;
+  font-family:var(--font-display);box-shadow:inset 0 0 0 3px #fff, 0 6px 16px -8px rgba(143,181,30,.7);
+}
+.id-av .on{position:absolute;bottom:1px;inset-inline-end:1px;width:13px;height:13px;border-radius:50%;background:var(--green);border:2.5px solid #fff}
+.id-name{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.id-name h1{font-size:19.5px;font-weight:800}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:var(--radius-pill);font-size:10.5px;font-weight:700;padding:3px 10px;white-space:nowrap}
+.b-green{background:rgba(47,168,96,.12);color:#1E7A44}
+.b-lime{background:var(--accent-key);color:var(--accent-deep)}
+.b-gray{background:var(--muted);color:var(--muted-foreground)}
+.b-amber{background:rgba(199,116,20,.12);color:var(--amber)}
+.b-ink{background:var(--primary);color:var(--accent)}
+.id-meta{display:flex;align-items:center;gap:10px;margin-top:5px;flex-wrap:wrap;font-size:12px;color:var(--muted-foreground)}
+.id-meta .sep{color:#C9C9BA}
+.code-chip{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;
+  background:var(--muted);border:1px dashed #CFCFBF;border-radius:8px;padding:2px 9px;color:var(--foreground);
+  cursor:pointer;transition:background .15s ease,border-color .15s ease;
+}
+.code-chip:hover{background:var(--accent-soft);border-color:var(--accent-deep)}
+.id-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.switcher{display:flex;align-items:center;background:var(--muted);border:1px solid var(--border);border-radius:var(--radius-pill);padding:3px;gap:2px}
+.switcher button{width:28px;height:28px;border-radius:50%;border:0;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--foreground);transition:background .15s ease}
+.switcher button:hover{background:#fff;box-shadow:var(--shadow-xs)}
+.switcher .cnt{font-family:var(--font-mono);font-size:10.5px;font-weight:700;color:var(--muted-foreground);padding:0 6px;direction:ltr}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;border-radius:var(--radius-pill);
+  font-size:12.5px;font-weight:700;padding:8px 15px;border:1px solid transparent;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease;white-space:nowrap;
+}
+.btn:active{transform:scale(.97)}
+.btn-outline{background:var(--card);border-color:var(--border);color:var(--foreground)}
+.btn-outline:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.btn-dark{background:var(--primary);color:#F7F7F2}
+.btn-dark:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.btn-ai{
+  background:linear-gradient(135deg,#1B1F26,#12151B);color:var(--accent);
+  box-shadow:0 0 0 1px rgba(200,240,75,.35),0 8px 22px -10px rgba(200,240,75,.55);
+}
+.btn-ai:hover{box-shadow:0 0 0 1px rgba(200,240,75,.6),0 12px 28px -10px rgba(200,240,75,.7);transform:translateY(-1px)}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%}
+.btn-lime{background:var(--accent);color:#1A2205}
+.btn-lime:hover{box-shadow:0 8px 22px -8px rgba(200,240,75,.8);transform:translateY(-1px)}
+.btn-ghost-dark{background:rgba(255,255,255,.06);color:#E9EAEE;border-color:rgba(255,255,255,.12)}
+.btn-ghost-dark:hover{background:rgba(255,255,255,.11)}
+
+/* ═══════════ TAB PILLS ═══════════ */
+.tabpills{display:flex;gap:6px;overflow-x:auto;padding:12px 2px 4px;scrollbar-width:none}
+.tabpills::-webkit-scrollbar{display:none}
+.tab{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.72);border:1px solid transparent;color:var(--muted-foreground);
+  font-size:12.5px;font-weight:700;white-space:nowrap;position:relative;
+  transition:background .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.tab:hover{background:#fff;color:var(--foreground);border-color:var(--border)}
+.tab.on{background:var(--primary);color:#fff;box-shadow:0 6px 18px -8px rgba(21,24,30,.55)}
+.tab.on .tdot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--ai-glow)}
+.tab .tbadge{
+  font-family:var(--font-mono);font-size:9.5px;font-weight:700;background:var(--accent);
+  color:#1A2205;border-radius:99px;padding:0 6px;min-width:17px;text-align:center;
+}
+.tab.on .tbadge{background:var(--accent)}
+
+/* ═══════════ PENDING BANNER ═══════════ */
+.banner{
+  display:flex;align-items:center;gap:12px;background:var(--accent-soft);
+  border:1px solid rgba(143,181,30,.35);border-radius:16px;padding:11px 15px;margin-bottom:14px;
+  flex-wrap:wrap;
+}
+.banner .bic{width:32px;height:32px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#1A2205;flex:none}
+.banner b{font-size:13.5px}
+.banner .bsub{font-size:12px;color:#5A6B2E}
+.banner .bact{margin-inline-start:auto;display:flex;gap:8px}
+
+/* ═══════════ BENTO GRID ═══════════ */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card-x{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:17px 18px;box-shadow:var(--shadow-xs);position:relative;overflow:hidden;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.card-x:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}
+.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.span12{grid-column:span 12}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.card-t{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800}
+.card-t .ti{width:26px;height:26px;border-radius:8px;background:var(--muted);display:flex;align-items:center;justify-content:center;color:var(--foreground)}
+.card-s{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--muted-foreground);text-transform:uppercase}
+.lnk{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--accent-deep);background:none;border:0;padding:4px 6px;border-radius:8px;transition:background .15s ease}
+.lnk:hover{background:var(--accent-soft)}
+
+/* ── KPI tiles ── */
+.kpi-k{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--muted-foreground);text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.kpi-k::before{content:'//';color:var(--accent-deep);font-weight:700}
+.kpi-row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:8px}
+.kpi-v{font-family:var(--font-display);font-size:27px;font-weight:700;line-height:1.1;direction:ltr;text-align:start}
+.kpi-v .u{font-size:13px;font-weight:600;color:var(--muted-foreground);font-family:var(--font-sans)}
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:800;border-radius:99px;padding:3px 8px}
+.d-up{background:var(--accent-key);color:var(--accent-deep)}
+.d-down{background:rgba(47,168,96,.12);color:#1E7A44}
+.d-flat{background:var(--muted);color:var(--muted-foreground)}
+.kpi-sub{font-size:11.5px;color:var(--muted-foreground);margin-top:7px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.spark{width:100%;height:30px;margin-top:8px;display:block;direction:ltr}
+.pbar{height:7px;border-radius:99px;background:var(--muted);overflow:hidden;margin-top:10px;direction:ltr}
+.pbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-deep));width:0;transition:width 1.2s cubic-bezier(.2,.7,.2,1) .3s}
+
+/* ── charts ── */
+.chart-wrap{position:relative;direction:ltr}
+.chart-wrap svg{width:100%;height:auto;display:block;direction:ltr}
+.wline{fill:none;stroke:var(--chart-1);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.6s cubic-bezier(.35,.6,.2,1) .35s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.warea{opacity:0;animation:fadein .9s ease 1.1s forwards}
+@keyframes fadein{to{opacity:1}}
+.wdot{opacity:0;animation:fadein .5s ease 1.6s forwards}
+.wdot-halo{animation:halo 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes halo{0%,100%{opacity:.25;r:9}50%{opacity:.08;r:14}}
+.grid-l{stroke:var(--chart-grid);stroke-width:1;stroke-dasharray:3 5}
+.axis-t{font-family:'Vazirmatn',sans-serif;font-size:10px;fill:#9AA0AE}
+.xlabels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9.5px;color:var(--muted-foreground);padding:6px 4px 0;direction:rtl}
+
+/* consistency bars */
+.bars{display:flex;align-items:flex-end;gap:6px;height:132px;direction:ltr}
+.bars .b{flex:1;border-radius:6px 6px 3px 3px;background:var(--muted);position:relative;height:var(--h);
+  transform:scaleY(0);transform-origin:bottom;animation:grow .7s cubic-bezier(.2,.8,.25,1) forwards}
+.bars .b.hi{background:linear-gradient(to top,var(--accent-deep),var(--accent))}
+.bars .b.now{background:var(--primary);box-shadow:0 0 0 2px rgba(200,240,75,.55)}
+@keyframes grow{to{transform:scaleY(1)}}
+.bars-x{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9.5px;color:var(--muted-foreground);direction:ltr;margin-top:8px}
+.legend{display:flex;gap:12px;font-size:11px;color:var(--muted-foreground);align-items:center}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-inline-end:4px;vertical-align:-1px}
+
+/* ── AI card ── */
+.ai-card{
+  background:linear-gradient(150deg,#1A1E25 0%,#12151B 55%,#0E1116 100%);
+  border:1px solid var(--ai-border);color:#E9EAEE;border-radius:var(--radius);
+  padding:19px 20px;position:relative;overflow:hidden;
+  box-shadow:0 18px 44px -20px rgba(200,240,75,.35),0 0 0 1px rgba(200,240,75,.06);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.ai-card:hover{transform:translateY(-2px);box-shadow:0 24px 54px -20px rgba(200,240,75,.5),0 0 0 1px rgba(200,240,75,.12)}
+.ai-card::before{
+  content:'';position:absolute;top:-60%;inset-inline-start:-30%;width:60%;height:220%;
+  background:linear-gradient(100deg,transparent,rgba(200,240,75,.10),transparent);
+  transform:rotate(12deg);animation:sheen 5s ease-in-out infinite;pointer-events:none;
+}
+@keyframes sheen{0%,60%{inset-inline-start:-40%}100%{inset-inline-start:130%}}
+.ai-card .wm{position:absolute;bottom:-26px;inset-inline-end:-14px;opacity:.07;color:#fff;pointer-events:none}
+.ai-eye{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;
+  background:rgba(200,240,75,.09);border:1px solid rgba(200,240,75,.25);border-radius:99px;padding:4px 11px}
+.ai-eye .pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,240,75,.6)}50%{box-shadow:0 0 0 5px rgba(200,240,75,0)}}
+.ai-title{font-family:var(--font-display);font-size:16.5px;font-weight:700;color:#fff;margin-top:12px !important}
+.ai-body{font-size:13.5px;line-height:2;color:#C6CCD8;margin-top:8px !important;max-width:64ch}
+.ai-body b{color:var(--accent);font-weight:700}
+.ai-foot{display:flex;align-items:center;gap:9px;margin-top:15px;flex-wrap:wrap}
+.ai-meta{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;color:#5E6674;margin-inline-start:auto;direction:rtl}
+
+/* ── quick actions ── */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qa-it{
+  display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:13px 13px 11px;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;text-align:start;
+  font-size:12px;font-weight:700;color:var(--foreground);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.qa-it:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--accent-deep)}
+.qa-it .qi{width:32px;height:32px;border-radius:10px;background:var(--muted);display:flex;align-items:center;justify-content:center;transition:background .18s ease,color .18s ease}
+.qa-it:hover .qi{background:var(--accent);color:#1A2205}
+.qa-it .qs{font-size:10.5px;font-weight:500;color:var(--muted-foreground)}
+
+/* ── list rows (notes / sessions) ── */
+.row-it{display:flex;align-items:center;gap:11px;padding:10px 8px;border-radius:12px;transition:background .15s ease;cursor:pointer}
+.row-it + .row-it{border-top:1px solid var(--line2)}
+.row-it:hover{background:var(--muted)}
+.row-it .rt{font-size:13px;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-it .rs{font-size:11.5px;color:var(--muted-foreground);margin-top:1px}
+.row-it .rend{margin-inline-start:auto;display:flex;align-items:center;gap:7px;flex:none}
+.time-chip{font-family:var(--font-mono);font-size:11px;font-weight:700;background:var(--muted);border:1px solid var(--border);border-radius:9px;padding:4px 9px;direction:ltr;flex:none}
+.pin{color:var(--accent-deep)}
+
+/* ═══════════ REVEAL / ENTRANCE ═══════════ */
+.rv{opacity:0;transform:translateY(16px)}
+.rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width:1180px){
+  .span3{grid-column:span 6}
+  .span4,.span5,.span7,.span8{grid-column:span 12}
+  .span6{grid-column:span 12}
+}
+@media (max-width:900px){
+  .sidebar{width:74px;padding:16px 10px;align-items:stretch}
+  .brand-txt,.nav-lbl,.nav-sec,.side-foot-txt,.nav-it .nb{display:none}
+  .brand{justify-content:center;padding:6px 0 16px}
+  .nav-it{justify-content:center;padding:11px 0}
+  .side-foot{justify-content:center}
+  .search{min-width:0;width:40px;padding:7px;justify-content:center}
+  .search .stxt,.search kbd{display:none}
+}
+@media (max-width:640px){
+  .sidebar{display:none}
+  .ws{padding:4px 14px 40px}
+  .topbar{padding:14px 14px 6px}
+  .span3{grid-column:span 6}
+  .identity{padding:14px}
+  .id-r{width:100%;justify-content:flex-start}
+  .kpi-v{font-size:22px}
+}
+@media (max-width:430px){
+  .span3{grid-column:span 12}
+  .qa{grid-template-columns:1fr}
+}
+
+/* ═══════════ REDUCED MOTION ═══════════ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .rv{opacity:1;transform:none}
+  .wline{stroke-dashoffset:0}
+  .warea,.wdot{opacity:1}
+  .bars .b{transform:scaleY(1)}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- ══════════ SIDEBAR (app context) ══════════ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><i data-lucide="dumbbell" width="18" height="18"></i></div>
+      <div class="brand-txt">
+        <span class="brand-name">COACH OS</span>
+        <span class="brand-tag">SYS.SYNC // OPTIMAL</span>
+      </div>
+    </div>
+
+    <div class="nav-sec">Main</div>
+    <button class="nav-it"><i data-lucide="layout-dashboard" width="16" height="16"></i><span class="nav-lbl">داشبورد</span></button>
+    <button class="nav-it on"><i data-lucide="users" width="16" height="16"></i><span class="nav-lbl">شاگردان</span><span class="nb">۱۲</span></button>
+    <button class="nav-it"><i data-lucide="dumbbell" width="16" height="16"></i><span class="nav-lbl">تمرین‌ها</span></button>
+    <button class="nav-it"><i data-lucide="calendar" width="16" height="16"></i><span class="nav-lbl">تقویم</span></button>
+    <button class="nav-it"><i data-lucide="message-square" width="16" height="16"></i><span class="nav-lbl">پیام‌ها</span><span class="nb">۳</span></button>
+
+    <div class="nav-sec">Manage</div>
+    <button class="nav-it"><i data-lucide="salad" width="16" height="16"></i><span class="nav-lbl">تغذیه</span></button>
+    <button class="nav-it"><i data-lucide="trending-up" width="16" height="16"></i><span class="nav-lbl">گزارش‌ها</span></button>
+    <button class="nav-it"><i data-lucide="library" width="16" height="16"></i><span class="nav-lbl">کتابخانه حرکات</span></button>
+    <button class="nav-it"><i data-lucide="settings" width="16" height="16"></i><span class="nav-lbl">تنظیمات</span></button>
+
+    <div class="side-foot">
+      <div class="sf-av">م</div>
+      <div class="side-foot-txt">
+        <div class="sf-n">مریم رضایی</div>
+        <div class="sf-r">COACH · PRO</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════ MAIN ══════════ -->
+  <main class="main">
+
+    <!-- topbar -->
+    <div class="topbar">
+      <div class="crumb">
+        <button class="back"><i data-lucide="arrow-right" width="13" height="13"></i> شاگردان</button>
+        <span>/</span>
+        <span class="cur">فضای کاری — سارا احمدی</span>
+      </div>
+      <div class="topbar-a">
+        <div class="search">
+          <i data-lucide="search" width="14" height="14"></i>
+          <span class="stxt">جست‌وجو در فضای کاری…</span>
+          <kbd>⌘K</kbd>
+        </div>
+        <button class="icon-btn" title="اعلان‌ها"><i data-lucide="bell" width="16" height="16"></i><span class="dot"></span></button>
+        <button class="icon-btn" title="راهنما"><i data-lucide="circle-help" width="16" height="16"></i></button>
+      </div>
+    </div>
+
+    <div class="ws">
+
+      <!-- ── sticky glass head ── -->
+      <div class="ws-head">
+
+        <!-- identity -->
+        <section class="identity rv">
+          <div class="id-l">
+            <div class="id-av">
+              <div class="av">س‌ا</div>
+              <span class="on" title="آنلاین"></span>
+            </div>
+            <div>
+              <div class="id-name">
+                <h1>سارا احمدی</h1>
+                <span class="badge b-green"><i data-lucide="circle" width="7" height="7" fill="currentColor"></i> فعال</span>
+                <span class="badge b-lime">🏃 دویدن</span>
+                <span class="badge b-gray">۳۰ سال</span>
+              </div>
+              <div class="id-meta">
+                <span>هدف: <b style="color:var(--foreground)">چربی‌سوزی</b></span>
+                <span class="sep">·</span>
+                <span>هفته <b style="color:var(--foreground)">۶ از ۱۲</b></span>
+                <span class="sep">·</span>
+                <span class="code-chip" title="کپی کد اتصال"><i data-lucide="copy" width="11" height="11"></i> X7B2-9K</span>
+                <span class="sep">·</span>
+                <span>sara.a@mail.com</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="id-r">
+            <div class="switcher" title="جابه‌جایی بین شاگردان">
+              <button title="شاگرد قبلی"><i data-lucide="chevron-right" width="15" height="15"></i></button>
+              <span class="cnt">3 / 12</span>
+              <button title="شاگرد بعدی"><i data-lucide="chevron-left" width="15" height="15"></i></button>
+            </div>
+            <button class="btn btn-outline"><i data-lucide="message-square" width="14" height="14"></i> پیام</button>
+            <button class="btn btn-outline"><i data-lucide="pencil" width="14" height="14"></i> ویرایش</button>
+            <button class="btn btn-ai"><i data-lucide="sparkles" width="14" height="14"></i> تحلیل AI</button>
+            <button class="btn btn-dark btn-icon" title="یادداشت سریع"><i data-lucide="plus" width="16" height="16"></i></button>
+            <button class="btn btn-outline btn-icon" title="عملیات بیشتر"><i data-lucide="more-horizontal" width="16" height="16"></i></button>
+          </div>
+        </section>
+
+        <!-- tab pills -->
+        <nav class="tabpills rv" id="tabs">
+          <button class="tab on"><span class="tdot"></span> مرور</button>
+          <button class="tab">هاب استقامت</button>
+          <button class="tab">تمرین‌ها <span class="tbadge">۲</span></button>
+          <button class="tab">تقویم</button>
+          <button class="tab">حضور</button>
+          <button class="tab">پیشرفت</button>
+          <button class="tab">اندازه‌گیری</button>
+          <button class="tab">تغذیه</button>
+          <button class="tab">یادداشت‌ها <span class="tbadge">۵</span></button>
+          <button class="tab">فایل‌ها <span class="tbadge">۱۲</span></button>
+        </nav>
+      </div>
+
+      <!-- pending banner -->
+      <div class="banner rv">
+        <span class="bic"><i data-lucide="dumbbell" width="16" height="16"></i></span>
+        <div>
+          <b>۲ تمرین معلق — برای شاگرد قابل مشاهده است</b>
+          <div class="bsub">Lower Body (شنبه · ۶۰ دقیقه) · Interval Run (دوشنبه · ۴۵ دقیقه)</div>
+        </div>
+        <div class="bact">
+          <button class="btn btn-dark btn-sm" style="padding:7px 13px;font-size:12px">مشاهده در تمرین‌ها <i data-lucide="arrow-left" width="13" height="13"></i></button>
+        </div>
+      </div>
+
+      <!-- ══════════ BENTO ══════════ -->
+      <div class="bento">
+
+        <!-- KPI 1: attendance -->
+        <div class="card-x span3 rv">
+          <div class="kpi-k">حضور و غیبت</div>
+          <div class="kpi-row">
+            <div class="kpi-v"><span data-count="92">۰</span><span class="u">٪</span></div>
+            <span class="delta d-up"><i data-lucide="trending-up" width="11" height="11"></i> ۴+٪</span>
+          </div>
+          <svg class="spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,24 15,22 30,23 45,18 60,19 75,14 90,15 105,9 120,7" fill="none" stroke="#8FB51E" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="kpi-sub"><span>۲۳ حاضر / ۲ غایب</span></div>
+        </div>
+
+        <!-- KPI 2: streak -->
+        <div class="card-x span3 rv">
+          <div class="kpi-k">استریک تمرین</div>
+          <div class="kpi-row">
+            <div class="kpi-v"><span data-count="6">۰</span><span class="u"> هفته</span></div>
+            <span class="delta d-up"><i data-lucide="flame" width="11" height="11"></i> رکورد: ۹</span>
+          </div>
+          <div style="display:flex;gap:4px;margin-top:12px;direction:ltr">
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--accent)"></span>
+            <span style="flex:1;height:8px;border-radius:4px;background:var(--muted)"></span>
+          </div>
+          <div class="kpi-sub"><span>هفته ۷ هنوز شروع نشده</span></div>
+        </div>
+
+        <!-- KPI 3: weight -->
+        <div class="card-x span3 rv">
+          <div class="kpi-k">وزن</div>
+          <div class="kpi-row">
+            <div class="kpi-v">۷۵٫۰<span class="u"> کیلو</span></div>
+            <span class="delta d-down"><i data-lucide="trending-down" width="11" height="11"></i> ۳− کیلو</span>
+          </div>
+          <svg class="spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points="0,6 15,8 30,7 45,12 60,11 75,16 90,15 105,21 120,24" fill="none" stroke="#15181E" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="120" cy="24" r="3" fill="#C8F04B" stroke="#15181E" stroke-width="1.5"/>
+          </svg>
+          <div class="kpi-sub"><span>هدف: ۷۳ کیلو · تا ۱۵ آذر</span></div>
+        </div>
+
+        <!-- KPI 4: program -->
+        <div class="card-x span3 rv">
+          <div class="kpi-k">پیشرفت برنامه</div>
+          <div class="kpi-row">
+            <div class="kpi-v"><span data-count="6">۰</span><span class="u"> / ۱۲ هفته</span></div>
+            <span class="delta d-flat">۵۰٪</span>
+          </div>
+          <div class="pbar"><i data-pbar="50"></i></div>
+          <div class="kpi-sub"><span>۲۴ جلسه برنامه‌ریزی‌شده</span><span>۱۱ انجام‌شده</span></div>
+        </div>
+
+        <!-- weight chart -->
+        <div class="card-x span7 rv">
+          <div class="card-h">
+            <span class="card-t"><span class="ti"><i data-lucide="line-chart" width="14" height="14"></i></span> روند وزن</span>
+            <span class="card-s">12 weeks · kg</span>
+          </div>
+          <div class="chart-wrap">
+            <svg viewBox="0 0 640 200" role="img" aria-label="نمودار وزن ۱۲ هفته اخیر">
+              <defs>
+                <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C8F04B" stop-opacity=".45"/>
+                  <stop offset="100%" stop-color="#C8F04B" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line class="grid-l" x1="0" y1="20" x2="640" y2="20"/>
+              <line class="grid-l" x1="0" y1="60" x2="640" y2="60"/>
+              <line class="grid-l" x1="0" y1="100" x2="640" y2="100"/>
+              <line class="grid-l" x1="0" y1="140" x2="640" y2="140"/>
+              <line class="grid-l" x1="0" y1="180" x2="640" y2="180"/>
+              <text class="axis-t" x="6" y="16">۷۹</text>
+              <text class="axis-t" x="6" y="96">۷۶٫۵</text>
+              <text class="axis-t" x="6" y="176">۷۴</text>
+              <path class="warea" id="warea" fill="url(#wg)"/>
+              <path class="wline" id="wline"/>
+              <g class="wdot">
+                <circle class="wdot-halo" cx="614" cy="142" r="9" fill="#C8F04B" opacity=".25"/>
+                <circle cx="614" cy="142" r="4.5" fill="#C8F04B" stroke="#15181E" stroke-width="2"/>
+              </g>
+            </svg>
+            <div class="xlabels"><span>هفته ۱</span><span>هفته ۴</span><span>هفته ۸</span><span>هفته ۱۲</span></div>
+          </div>
+          <div class="kpi-sub" style="margin-top:10px">
+            <span class="legend"><span><i style="background:var(--accent)"></i>وزن واقعی</span><span><i style="background:var(--muted)"></i>بازه هدف</span></span>
+            <span class="delta d-down"><i data-lucide="trending-down" width="11" height="11"></i> ۰٫۲۸ کیلو در هفته</span>
+          </div>
+        </div>
+
+        <!-- consistency -->
+        <div class="card-x span5 rv">
+          <div class="card-h">
+            <span class="card-t"><span class="ti"><i data-lucide="bar-chart-3" width="14" height="14"></i></span> تداوم هفتگی</span>
+            <span class="card-s">avg 84%</span>
+          </div>
+          <div class="bars">
+            <span class="b hi" style="--h:62%;animation-delay:.05s"></span>
+            <span class="b hi" style="--h:80%;animation-delay:.1s"></span>
+            <span class="b hi" style="--h:100%;animation-delay:.15s"></span>
+            <span class="b" style="--h:74%;animation-delay:.2s"></span>
+            <span class="b hi" style="--h:92%;animation-delay:.25s"></span>
+            <span class="b hi" style="--h:100%;animation-delay:.3s"></span>
+            <span class="b" style="--h:55%;animation-delay:.35s"></span>
+            <span class="b" style="--h:70%;animation-delay:.4s"></span>
+            <span class="b hi" style="--h:95%;animation-delay:.45s"></span>
+            <span class="b hi" style="--h:85%;animation-delay:.5s"></span>
+            <span class="b hi" style="--h:100%;animation-delay:.55s"></span>
+            <span class="b now" style="--h:70%;animation-delay:.6s"></span>
+          </div>
+          <div class="bars-x"><span>W1</span><span>W4</span><span>W8</span><span>W12</span></div>
+          <div class="kpi-sub" style="margin-top:12px">
+            <span class="legend"><span><i style="background:var(--accent)"></i>≥۸۰٪</span><span><i style="background:var(--primary)"></i>این هفته</span></span>
+            <span class="delta d-up"><i data-lucide="zap" width="11" height="11"></i> بهترین هفته: ۳ و ۶</span>
+          </div>
+        </div>
+
+        <!-- AI insight -->
+        <div class="ai-card span8 rv">
+          <i class="wm" data-lucide="bot" width="150" height="150"></i>
+          <span class="ai-eye"><span class="pulse"></span> AI Insight · این هفته</span>
+          <div class="ai-title">تداوم در حال افت است — یک جابه‌جایی کافی است</div>
+          <p class="ai-body">
+            تداوم تمرین <b>۳ هفته متوالی</b> افت کرده (۱۰۰٪ ← ۷۰٪) و جلسه پنجشنبه دو بار جابه‌جا شده.
+            پیشنهاد: جلسه استقامت را به <b>شنبه صبح</b> منتقل کنید و بار هفته ۷ را <b>۱۰٪ کاهش</b> دهید تا ریکاوری قبل از اوج‌گیری هفته ۸ تضمین شود.
+          </p>
+          <div class="ai-foot">
+            <button class="btn btn-lime"><i data-lucide="wand-sparkles" width="14" height="14"></i> اعمال پیشنهاد</button>
+            <button class="btn btn-ghost-dark">جزئیات کامل</button>
+            <button class="btn btn-ghost-dark">نادیده بگیر</button>
+            <span class="ai-meta">تحلیل از ۱۲ هفته داده · ۲ دقیقه پیش</span>
+          </div>
+        </div>
+
+        <!-- quick actions -->
+        <div class="card-x span4 rv">
+          <div class="card-h">
+            <span class="card-t"><span class="ti"><i data-lucide="zap" width="14" height="14"></i></span> اکشن‌های سریع</span>
+          </div>
+          <div class="qa">
+            <button class="qa-it">
+              <span class="qi"><i data-lucide="plus" width="16" height="16"></i></span>
+              تمرین جدید
+              <span class="qs">برای هفته ۷</span>
+            </button>
+            <button class="qa-it">
+              <span class="qi"><i data-lucide="calendar-plus" width="16" height="16"></i></span>
+              جلسه بگذار
+              <span class="qs">تقویم سارا</span>
+            </button>
+            <button class="qa-it">
+              <span class="qi"><i data-lucide="file-down" width="16" height="16"></i></span>
+              خروجی PDF
+              <span class="qs">گزارش هفتگی</span>
+            </button>
+            <button class="qa-it">
+              <span class="qi"><i data-lucide="send" width="16" height="16"></i></span>
+              دعوت به پورتال
+              <span class="qs">لینک اتصال</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- upcoming sessions -->
+        <div class="card-x span6 rv">
+          <div class="card-h">
+            <span class="card-t"><span class="ti"><i data-lucide="calendar-clock" width="14" height="14"></i></span> جلسات پیش رو</span>
+            <button class="lnk">همه <i data-lucide="chevron-left" width="13" height="13"></i></button>
+          </div>
+          <div class="row-it">
+            <span class="time-chip">18:00</span>
+            <div style="min-width:0">
+              <div class="rt">جلسه آنلاین — بررسی فرم اسکات</div>
+              <div class="rs">چهارشنبه ۳۰ مهر · ۶۰ دقیقه</div>
+            </div>
+            <div class="rend"><span class="badge b-green">تایید شده</span></div>
+          </div>
+          <div class="row-it">
+            <span class="time-chip">07:00</span>
+            <div style="min-width:0">
+              <div class="rt">دویدن استقامتی — ۸ کیلومتر</div>
+              <div class="rs">پنجشنبه ۱ آبان · ۴۵ دقیقه</div>
+            </div>
+            <div class="rend"><span class="badge b-amber">در انتظار</span></div>
+          </div>
+          <div class="row-it">
+            <span class="time-chip">18:00</span>
+            <div style="min-width:0">
+              <div class="rt">جلسه حضوری — بدنسازی</div>
+              <div class="rs">جمعه ۲ آبان · ۷۵ دقیقه</div>
+            </div>
+            <div class="rend"><span class="badge b-green">تایید شده</span></div>
+          </div>
+        </div>
+
+        <!-- recent notes -->
+        <div class="card-x span6 rv">
+          <div class="card-h">
+            <span class="card-t"><span class="ti"><i data-lucide="notebook-pen" width="14" height="14"></i></span> یادداشت‌های اخیر</span>
+            <button class="lnk">همه (۵) <i data-lucide="chevron-left" width="13" height="13"></i></button>
+          </div>
+          <div class="row-it">
+            <span class="qi" style="width:34px;height:34px;border-radius:10px;background:var(--muted);display:flex;align-items:center;justify-content:center;flex:none"><i data-lucide="scan" width="15" height="15"></i></span>
+            <div style="min-width:0">
+              <div class="rt">فرم اسکات — زانو به داخل می‌زنه <span class="pin"><i data-lucide="pin" width="11" height="11"></i></span></div>
+              <div class="rs">تحلیل فرم · ۲ روز پیش</div>
+            </div>
+            <div class="rend"><span class="badge b-gray">خصوصی</span></div>
+          </div>
+          <div class="row-it">
+            <span class="qi" style="width:34px;height:34px;border-radius:10px;background:var(--muted);display:flex;align-items:center;justify-content:center;flex:none"><i data-lucide="file-text" width="15" height="15"></i></span>
+            <div style="min-width:0">
+              <div class="rt">گزارش هفتگی هفته ۶</div>
+              <div class="rs">گزارش · ۳ روز پیش · برای شاگرد قابل مشاهده</div>
+            </div>
+            <div class="rend"><span class="badge b-lime">اشتراکی</span></div>
+          </div>
+          <div class="row-it">
+            <span class="qi" style="width:34px;height:34px;border-radius:10px;background:var(--accent-key);color:var(--accent-deep);display:flex;align-items:center;justify-content:center;flex:none"><i data-lucide="message-circle" width="15" height="15"></i></span>
+            <div style="min-width:0">
+              <div class="rt">«زانوها بعد از دویدن درد می‌کنه»</div>
+              <div class="rs">از طرف شاگرد · امروز ۱۴:۲۰</div>
+            </div>
+            <div class="rend"><span class="badge b-ink">جدید</span></div>
+          </div>
+        </div>
+
+      </div><!-- /bento -->
+    </div><!-- /ws -->
+  </main>
+</div>
+
+<script>
+/* ── icons ── */
+lucide.createIcons();
+
+/* ── smooth weight path (Catmull-Rom → bezier) ── */
+(function(){
+  const pts=[[20,39],[74,49],[128,42],[182,65],[236,58],[290,78],[344,71],[398,97],[452,87],[506,113],[560,122],[614,142]];
+  const f=(a,b,c,d,t1,t2,t3)=>{const t2_=t1*t1,t3_=t2_*t1;return .5*((2*b)+(-a+c)*t1+(2*a-5*b+4*c-d)*t2_+(-a+3*b-3*c+d)*t3_)};
+  let d='M'+pts[0][0]+','+pts[0][1];
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||pts[i+1];
+    d+=' C'+f(p0[0],p1[0],p2[0],p3[0],0).toFixed(1)+','+f(p0[1],p1[1],p2[1],p3[1],0).toFixed(1)
+      +' '+f(p0[0],p1[0],p2[0],p3[0],1).toFixed(1)+','+f(p0[1],p1[1],p2[1],p3[1],1).toFixed(1)
+      +' '+p2[0]+','+p2[1];
+  }
+  const line=document.getElementById('wline'),area=document.getElementById('warea');
+  if(line){line.setAttribute('d',d)}
+  if(area){area.setAttribute('d',d+' L614,180 L20,180 Z')}
+})();
+
+/* ── staggered reveal ── */
+(function(){
+  const els=[...document.querySelectorAll('.rv')];
+  els.forEach((el,i)=>setTimeout(()=>el.classList.add('in'),90+i*80));
+})();
+
+/* ── count-up (Persian digits) ── */
+(function(){
+  const fmt=n=>n.toLocaleString('fa-IR');
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const end=+el.dataset.count,dur=1100,t0=performance.now();
+    const step=now=>{
+      const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);
+      el.textContent=fmt(Math.round(end*e));
+      if(p<1)requestAnimationFrame(step);
+    };
+    setTimeout(()=>requestAnimationFrame(step),450);
+  });
+})();
+
+/* ── progress bar fill ── */
+setTimeout(()=>{document.querySelectorAll('[data-pbar]').forEach(el=>{el.style.width=el.dataset.pbar+'%'})},400);
+
+/* ── tab pills (visual) ── */
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('#tabs .tab').forEach(t=>t.classList.remove('on'));
+  b.classList.add('on');
+  const dot=document.createElement('span');dot.className='tdot';
+  b.prepend(dot);
+  const old=document.querySelectorAll('#tabs .tab .tdot');
+  old.forEach(d=>{if(d.parentElement!==b)d.remove()});
+});
+</script>
+</body>
+</html>
