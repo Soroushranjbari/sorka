@@ -4546,55 +4546,130 @@ function vWorkspace(){
   const np=nPlanOf(c.name);
   /* v19.12 — §3 Athletics Profile is the second tab and only exists when the
      sport has athletics sections. The body map is built the same way, so a
-     stale S.tab='athletics' with no athletics sport falls through to Overview   instead of calling an undefined function. */
+     stale S.tab='athletics' with no athletics sport falls through to Overview instead of calling an undefined function. */
   const isRunner=isClientRunner(c)||(isAthletics()||S.tab==='endurance'||S.tab==='athletics');
-  const tabs=[['overview','Overview'],...(isRunner?(isClientRunner(c)?[['endurance','Endurance Hub']]:[['endurance','Endurance Hub']]):[]),
+  const athTab=isClientRunner(c)?[['endurance','Endurance Hub']]:[['endurance','Endurance Hub']];
+  const tabIcons={overview:'chart',endurance:'medal',workouts:'dumbbell',calendar:'calendar',attend:'check',progress:'trending-up',measurements:'ruler',nutrition:'utensils',notes:'note',files:'camera'};
+  
+  const notesCount=(NOTES.filter(n=>n.client===c.name||n.pin)||[]).length;
+  const filesCount=(DB[c.id]?.photos||[]).length;
+  const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w));
+  
+  const tabs=[['overview','Overview'],...(isRunner?athTab:[]),
     ['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],
     ['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
   const body={overview:vCOverview,endurance:()=>vClientEnduranceHub(c.id),athletics:()=>vClientEnduranceHub(c.id),workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
     measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles};
   if(isClientRunner(c)){body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}else{body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}
-  const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
-  return `
-  ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
-    <div class="row">${ic('dumbbell',16)}<div><b>${esc(w.name)}</b><div class="muted" style="font-size:12px">${t(w.day)} · ${t(w.dur)} · ${nf(w.exercises.length)} ${t('exercises')}</div></div></div>
-    <span class="bdg bdg-lime">${ic('users',11)} ${t('Pending')} — ${t('Visible to client')}</span>
-  </div>`).join('')}
-  <div class="card" style="padding:20px;margin-bottom:2px">
-    <div class="row" style="flex-wrap:wrap;gap:16px">
-      ${avC(c.name,56)}
-      <div style="flex:1;min-width:240px">
-        <div class="row" style="gap:10px;flex-wrap:wrap"><h1 style="font-size:20px">${t(c.name)}</h1>${stBdg(c.status)}</div>
-        <div style="display:flex;gap:26px;flex-wrap:wrap;margin-top:8px">
-          ${[['Sport',`${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}`],['Goal',t(c.goal)],['Weight',uwS(c.weight||null)],['Program',t(c.prog)],['Nutrition',np?t(np.name):'—'],['Streak',esc(streakLbl(c))]].map(([k,v])=>`
-          <div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t(k)}</span><b>${v}</b></div>`).join('')}
-          ${c.nid?`<div><span class="muted" style="font-size:10.5px;font-weight:700;display:block">${t('National ID')}</span><b style="letter-spacing:.04em">${esc(c.nid)}</b></div>`:''}
+
+  const activeClients=CLIENTS.filter(x=>x.status!=='Archived');
+  const cIdx=activeClients.findIndex(x=>x.id===c.id);
+  const prevC=cIdx>0?activeClients[cIdx-1]:activeClients[activeClients.length-1];
+  const nextC=cIdx>=0&&cIdx<activeClients.length-1?activeClients[cIdx+1]:activeClients[0];
+
+  const pendingBanner=assigned.length?`
+  <div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px">
+    <div class="row" style="gap:10px;align-items:center">
+      <span class="icw" style="background:var(--surface);color:var(--accent-deep);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('dumbbell',16)}</span>
+      <div>
+        <div class="row" style="gap:8px;align-items:center">
+          <b style="font-size:14px">${assigned.length===1?esc(assigned[0].name):`${nf(assigned.length)} ${t('Pending Workouts')}`}</b>
+          <span class="bdg bdg-lime">${ic('users',10)} ${t('Visible to client')}</span>
+        </div>
+        <div class="muted" style="font-size:12px;margin-top:2px">
+          ${assigned.map(w=>`${esc(w.name)} (${t(w.day)} · ${t(w.dur)})`).join(' · ')}
         </div>
       </div>
-      <div class="row" style="flex-wrap:wrap">
-        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
-        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
-        <button class="btn btn-outline btn-sm" data-act="hab-open">${ic('list-checks',14)} ${t('Habits')}</button>
-        <button class="btn btn-outline btn-sm" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',14)} ${t('Intake form')}</button>
-        <button class="btn btn-outline btn-sm" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',14)} ${t('Packages')}</button>
-        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+    </div>
+    <button class="btn btn-dark btn-sm" data-act="tab" data-tab="workouts">${ic('arrowR',12)} ${t('View in Workouts')}</button>
+  </div>`:'';
+
+  return `
+  ${pendingBanner}
+  <div class="card" style="padding:20px 22px;margin-bottom:4px;border-radius:14px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div class="row" style="gap:16px;flex:1;min-width:280px;align-items:center">
+        <div style="position:relative">
+          ${avC(c.name,58)}
+          <span style="position:absolute;bottom:0;inset-inline-end:0;width:13px;height:13px;border-radius:50%;background:${c.status==='Active'?'var(--green)':'var(--ink3)'};border:2px solid var(--surface)"></span>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
+            <h1 style="font-size:22px;font-weight:800;letter-spacing:-.01em;margin:0">${t(c.name)}</h1>
+            ${stBdg(c.status)}
+            <span class="chip" style="font-size:11.5px;font-weight:600;background:var(--seg-bg)">${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}</span>
+          </div>
+          <div class="row" style="gap:12px;margin-top:6px;align-items:center;flex-wrap:wrap;font-size:12px">
+            <span class="muted">${c.email?esc(c.email):''}</span>
+            <span class="chip" style="font-size:11px;font-family:monospace;cursor:pointer;padding:2px 8px" data-act="copy-code" data-code="${esc(joinCodeOf(c))}" title="${t('Copy connection code')}">${ic('copy',11)} ${esc(joinCodeOf(c))}</span>
+            ${c.nid?`<span class="muted">ID: <b style="letter-spacing:.04em">${esc(c.nid)}</b></span>`:''}
+          </div>
+        </div>
+      </div>
+      
+      <div class="row" style="gap:8px;align-items:center;flex-wrap:wrap">
+        <div class="row" style="gap:4px;background:var(--seg-bg);padding:3px;border-radius:8px;border:1px solid var(--line);align-items:center;margin-inline-end:4px">
+          <button class="btn btn-ghost btn-icon btn-sm" title="${t('Previous client')}: ${esc(prevC?.name||'')}" data-act="open-client" data-cid="${prevC?.id||1}" style="width:28px;height:28px">${ic('chevL',13)}</button>
+          <span class="muted" style="font-size:11px;font-weight:700;padding:0 4px">${cIdx+1}/${activeClients.length}</span>
+          <button class="btn btn-ghost btn-icon btn-sm" title="${t('Next client')}: ${esc(nextC?.name||'')}" data-act="open-client" data-cid="${nextC?.id||1}" style="width:28px;height:28px">${ic('chevR',13)}</button>
+        </div>
         <button class="btn btn-outline btn-sm" data-act="nav" data-view="messages">${ic('mail',14)} ${t('Messages')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
         <button class="btn btn-dark btn-sm" data-act="tab" data-tab="notes">${ic('note',14)} ${t('Add Note')}</button>
-        <div class="mwrap" data-mw><button class="btn btn-ghost btn-icon" data-act="mw">${ic('more',16)}</button>
+        <div class="mwrap" data-mw><button class="btn btn-ghost btn-icon" data-act="mw" title="${t('More actions')}">${ic('more',16)}</button>
           <div class="menu"><div class="menu-hd">${t('More actions')}</div>
-            <div class="menu-it" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',15)} ${t('AI Analysis')}</div>
-            <div class="menu-it" data-act="hab-open">${ic('list-checks',15)} ${t('Habits')}</div>
             <div class="menu-it" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',15)} ${t('Form reports')}</div>
-            <div class="menu-it" data-act="client-arch" data-c="${esc(c.name)}">${ic('archive',15)} ${t('Archive client')}</div>
+            <div class="menu-it" data-act="hab-open">${ic('list-checks',15)} ${t('Habits')}</div>
+            <div class="menu-it" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',15)} ${t('Intake form')}</div>
+            <div class="menu-it" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',15)} ${t('Packages')}</div>
             <div class="menu-it" data-act="export-pdf" data-kind="week">${ic('download',15)} ${t('Export PDF')}</div>
             <div class="menu-it" data-act="ws-export">${ic('download',15)} ${t('Export data')}</div>
             <div class="menu-it" data-act="invite-open">${ic('mail',15)} ${t('Invite to portal')}</div>
+            <div class="menu-it" data-act="client-arch" data-c="${esc(c.name)}">${ic('archive',15)} ${t('Archive client')}</div>
             <div class="menu-it" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)} ${t('Delete client')}</div>
-          </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)">
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Goal')}</span>
+        <b style="font-size:13.5px;color:var(--ink);margin-top:2px;display:block">${t(c.goal)}</b>
+      </div>
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Weight')}</span>
+        <b style="font-size:13.5px;color:var(--ink);margin-top:2px;display:block">${uwS(c.weight||null)}${c.targetW?`<span class="muted" style="font-size:11px;font-weight:400"> → ${uwS(c.targetW)}</span>`:''}</b>
+      </div>
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Current Program')}</span>
+        <b style="font-size:13.5px;color:var(--ink);margin-top:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(t(c.prog))}">${t(c.prog)}</b>
+      </div>
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Nutrition')}</span>
+        <b style="font-size:13.5px;color:var(--ink);margin-top:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${np?esc(t(np.name)):'—'}">${np?t(np.name):'—'}</b>
+      </div>
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Frequency')}</span>
+        <b style="font-size:13.5px;color:var(--ink);margin-top:2px;display:block">${t(c.freq)}</b>
+      </div>
+      <div style="padding:9px 12px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px">
+        <span class="muted" style="font-size:10px;font-weight:700;display:block;text-transform:uppercase;letter-spacing:.05em">${t('Streak')}</span>
+        <b style="font-size:13.5px;color:var(--amber,#C77414);margin-top:2px;display:flex;align-items:center;gap:4px">${ic('flame',13)} ${esc(streakLbl(c))}</b>
       </div>
     </div>
   </div>
-  <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}">${t(l)}</button>`).join('')}</div>
+
+  <div class="tabs">${tabs.map(([k,l])=>{
+    const icon=tabIcons[k];
+    const badge=k==='workouts'?assigned.length:(k==='notes'?notesCount:(k==='files'?filesCount:0));
+    return `<button class="tab ${S.tab===k?'on':''}" data-act="tab" data-tab="${k}" style="display:inline-flex;align-items:center;gap:6px">
+      ${icon?ic(icon,14):''}
+      <span>${t(l)}</span>
+      ${badge?`<span class="nbadge" style="font-size:10px;padding:1px 6px;margin-inline-start:2px;background:${k==='workouts'?'var(--accent)':'var(--surface2)'};color:${k==='workouts'?'var(--accent-ink)':'var(--ink)'}">${nf(badge)}</span>`:''}
+    </button>`;
+  }).join('')}</div>
   ${(body[S.tab]||body.overview)()}
   `;
 }
@@ -14184,6 +14259,8 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   if(r){S.resetToken=typeof r==='string'?r:r[1];S.loginRole='coach';S.authMode='login'}
   const vMatch=location.hash.match(/view=([a-z]+)/);
   const v=vMatch?vMatch[1]:sParams.get('view');
+  const cidParam=sParams.get('cid');if(cidParam)S.cid=+cidParam;
+  const tabParam=sParams.get('tab');if(tabParam)S.tab=tabParam;
   if(v){S.role='coach';S.view=v;if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';}
   if(sParams.get('strava')==='connected'){
     S.role='coach';S.view='wear';ONBOARD.sport='Running & Endurance';
