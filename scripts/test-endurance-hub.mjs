@@ -34,3 +34,4 @@ for (const [name, ok] of checks) {
 
 console.log(`\nENDURANCE_HUB: ${pass} pass, ${fail} fail`);
 process.exit(fail ? 1 : 0);
+

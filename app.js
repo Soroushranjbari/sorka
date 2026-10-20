@@ -464,7 +464,14 @@ Object.assign(TR, {
   "No shoes tracked": "Kayıtlı ayakkabı yok",
   "No marks recorded": "Kayıtlı derece yok",
   "days left": "gün kaldı",
-  "Whole squad": "Tüm Takım"
+  "Whole squad": "Tüm Takım",
+  "Athletics": "Atletizm",
+  "This athlete is currently set to": "Bu sporcunun branşı:",
+  "Enable Running & Endurance to unlock full pace zones and running workouts.": "Tüm tempo bölgelerini ve koşu antrenmanlarını açmak için Koşu & Dayanıklılık branşını etkinleştirin.",
+  "Set as Runner": "Koşucu Olarak Ayarla",
+  "Set to Running & Endurance ✓": "Koşu & Dayanıklılık olarak ayarlandı ✓",
+  "Discipline, pace zones, race calendar, personal bests & shoes": "Branş, tempo bölgeleri, yarış takvimi, dereceler ve ayakkabılar",
+  "Athlete sport is set to": "Sporcu branşı:"
 });
 
 Object.assign(FA, {
@@ -518,7 +525,14 @@ Object.assign(FA, {
   "No shoes tracked": "کفشی ثبت نشده",
   "No marks recorded": "رکوردی ثبت نشده",
   "days left": "روز باقی‌مانده",
-  "Whole squad": "کل تیم"
+  "Whole squad": "کل تیم",
+  "Athletics": "استقامت و دویدن",
+  "This athlete is currently set to": "رشته فعلی این ورزشکار:",
+  "Enable Running & Endurance to unlock full pace zones and running workouts.": "برای فعال‌سازی زون‌های سرعت و تمرینات دویدن، رشته را روی دویدن و استقامت بگذارید.",
+  "Set as Runner": "تبدیل به ورزشکار دو و استقامت",
+  "Set to Running & Endurance ✓": "رشته به دویدن و استقامت تغییر یافت ✓",
+  "Discipline, pace zones, race calendar, personal bests & shoes": "شاخه تخصصی، زون‌های سرعت، تقویم مسابقات، رکوردها و کفش‌ها",
+  "Athlete sport is set to": "رشته فعلی ورزشکار:"
 });
 
 const t=s=>lang==='tr'?(TR[s]??s):(lang==='fa'?(FA[s]??s):s);
@@ -4533,12 +4547,13 @@ function vWorkspace(){
   /* v19.12 — §3 Athletics Profile is the second tab and only exists when the
      sport has athletics sections. The body map is built the same way, so a
      stale S.tab='athletics' with no athletics sport falls through to Overview   instead of calling an undefined function. */
-  const tabs=[['overview','Overview'],...(isClientRunner(c)?[['endurance','Endurance Hub']]:(isAthletics()?[['athletics','Athletics']]:[])),
+  const isRunner=isClientRunner(c)||(isAthletics()||S.tab==='endurance'||S.tab==='athletics');
+  const tabs=[['overview','Overview'],...(isRunner?(isClientRunner(c)?[['endurance','Endurance Hub']]:[['endurance','Endurance Hub']]):[]),
     ['workouts','Workouts'],['calendar','Calendar'],['attend','Attendance'],['progress','Progress'],
     ['measurements','Measurements'],['nutrition','Nutrition'],['notes','Notes'],['files','Files']];
-  const body={overview:vCOverview,workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
+  const body={overview:vCOverview,endurance:()=>vClientEnduranceHub(c.id),athletics:()=>vClientEnduranceHub(c.id),workouts:vBuilder,calendar:vCCal,attend:vCAttend,progress:vCProgress,
     measurements:vMeasure,nutrition:wNutrition,notes:vCNotes,files:vFiles};
-  if(isClientRunner(c)){body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}else if(isAthletics()){body.athletics=()=>vAprofile(S.cid);}
+  if(isClientRunner(c)){body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}else{body.endurance=()=>vClientEnduranceHub(c.id);body.athletics=()=>vClientEnduranceHub(c.id);}
   const assigned=(DB[c.id]?.workouts||[]).filter(w=>!wDone(w)); // v18.62 — pending = not done THIS week
   return `
   ${assigned.map(w=>`<div class="ccard" style="margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px">
@@ -8496,7 +8511,7 @@ function renderMobile(){
      the map entry is added only while the sport has athletics sections. The
      athlete is passed in explicitly (S.mClient) — vAprofile takes a cid. */
   const mvMap={races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
-  if(isAthletics())mvMap.aprof=vAprofile;
+  if(isAthletics()){mvMap.aprof=vAprofile;mvMap.endurance=vAprofile;mvMap.athletics=vAprofile;}
   const sportMv=mvMap[sportKey(S.mview)];
   if(S.mview==='client')body=mClientView();
   else if(S.mview==='live')body=mLive();
@@ -8742,7 +8757,7 @@ function mMore(){
       <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
     </div>
     ${grp('Quick actions',quick)}
-    ${ath.length?grp('Athletics',ath):''}
+    ${ath.length?grp('Endurance Hub',ath):''}
     <div class="ccard" style="padding:6px">
       <div class="mrow" data-act="msettings">${ic('gear',17)}<span style="flex:1">${t('Settings')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
       <div class="mrow" data-act="reset-demo">${ic('trash',17)}<span style="flex:1">${t('Reset demo data')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
@@ -10920,12 +10935,35 @@ function vClientEnduranceHub(cid){
     }).join('')}</div>` : `<div class="muted" style="font-size:12.5px">${t('No shoes tracked')}</div>`}
   </div>`;
 
-  return `<div class="page-h"><div><h1>${t('Endurance Hub')}</h1>
-    <div class="sub">${esc(c.name)} · ${t('Discipline, target and availability — the layer the athletics engine reads')}</div></div>
+  const notRunnerBanner = !isClientRunner(c) ? `
+  <div class="banner banner-warn" style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:10px;flex-wrap:wrap">
+    <div class="row" style="gap:10px;align-items:center">
+      ${ic('info',16)}
+      <div>
+        <b style="font-size:13.5px">${t('Athlete sport is set to')}: ${t(clientSport(c))}</b>
+        <div class="muted" style="font-size:12px">${t('Enable Running & Endurance to unlock full pace zones and running workouts.')}</div>
+      </div>
+    </div>
+    <button class="btn btn-dark btn-sm" data-act="cl-set-runner" data-cid="${c.id}">${ic('zap',13)} ${t('Set as Runner')}</button>
+  </div>` : '';
+
+  const hubHeader = `
+  <div class="row" style="justify-content:space-between;align-items:center;margin:10px 0 16px;flex-wrap:wrap;gap:10px">
+    <div class="row" style="gap:10px;align-items:center">
+      <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('medal',17)}</span>
+      <div>
+        <b style="font-size:16px">${t('Endurance Hub')} · ${esc(c.name)}</b>
+        <div class="muted" style="font-size:12px">${t('Discipline, pace zones, race calendar, personal bests & shoes')}</div>
+      </div>
+    </div>
     <div class="row" style="gap:8px">
       ${STRAVA.connected ? `<button class="btn btn-outline btn-sm" data-act="wear-sync" ${STRAVA.syncing?'disabled':''}>${ic('refresh',13)} ${STRAVA.syncing?t('Syncing…'):t('Sync Strava')}</button>` : `<button class="btn btn-outline btn-sm" data-act="wear-connect">${ic('watch',13)} ${t('Connect Strava')}</button>`}
-      <button class="btn btn-primary" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button>
-    </div></div>
+      <button class="btn btn-primary btn-sm" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button>
+    </div>
+  </div>`;
+
+  return `${hubHeader}
+  ${notRunnerBanner}
   ${kpisHtml}
   ${zonesHtml}
   ${racesHtml}
@@ -11703,11 +11741,11 @@ function vWear(){
 }
 
 /* ================= SHELL / RENDER ================= */
-function currentView(){const m={dash:vDash,clients:vClients,wspace:vWorkspace,builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+function currentView(){const m={dash:vDash,clients:vClients,wspace:vWorkspace,endurance:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},athletics:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
   /* v19.1 — a view the current sport does not own (or a stale key from an old
      bookmark) must not throw; fall back to the dashboard instead. v19.7 made
      that a real gate: sportKey() also drops keys no selected sport owns. */
-  return (m[sportKey(S.view)]||m.dash)()}
+  return (m[sportKey(S.view)]||m[S.view]||m.dash)()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
   /* v18.118 — regrouped from 2 sections to 3. `Messages` moved OUT of "Manage"
@@ -12421,6 +12459,16 @@ document.addEventListener('click',e=>{
     case 'cl-filter':clFilterModal();break;
     case 'cl-filter-set':{S.cfilter=el.dataset.s;closeModal();render();break}
     case 'cl-sport-set':{S.csport=el.dataset.sp;closeModal();render();break}
+    case 'cl-set-runner':{
+      const c=client(el.dataset.cid);
+      if(c){
+        c.sport='Running & Endurance';
+        c.goal='Endurance';
+        saveData();render();
+        toast(t('Set to Running & Endurance ✓'));
+      }
+      break;
+    }
     case 'cl-sort':clSortModal();break;
     case 'cl-sort-set':{S.csort=el.dataset.k;closeModal();render();break}
     case 'act-all':activityModal();break;
