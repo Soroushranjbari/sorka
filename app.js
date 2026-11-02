@@ -697,7 +697,145 @@ let TEMPLATES=defaultTemplates();
 /* v18.4 — coach-level video bank: exercise EN name → URL. Set once in the
    library (or imported in bulk) and it auto-attaches to that exercise in
    every workout built afterwards. Travels with saveData/cloudPack. */
-let EXVID={};
+const DEFAULT_EXVID = {
+  "Barbell Bench Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/barbell-bench-press.gif",
+  "Incline Dumbbell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/dumbbell-incline-bench-press.gif",
+  "Cable Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/cable-middle-flys.gif",
+  "Push-Up": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/push-up.gif",
+  "Barbell Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/upper-back/barbell-bent-over-row.gif",
+  "Lat Pulldown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-lat-pulldown-full-range-of-motion.gif",
+  "Pull-Up": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/pull-up.gif",
+  "Seated Cable Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/upper-back/cable-seated-row.gif",
+  "Overhead Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-standing-military-press.gif",
+  "Lateral Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-lateral-raise.gif",
+  "Barbell Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/barbell-curl.gif",
+  "Hammer Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-hammer-curl.gif",
+  "Triceps Pushdown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/cable-pushdown.gif",
+  "Skull Crusher": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/barbell-lying-triceps-extension.gif",
+  "Back Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/barbell-full-squat.gif",
+  "Leg Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/sled-45-degrees-leg-press.gif",
+  "Leg Extension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/lever-leg-extension.gif",
+  "Romanian Deadlift": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/hamstrings/barbell-romanian-deadlift.gif",
+  "Leg Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/hamstrings/lever-lying-leg-curl.gif",
+  "Hip Thrust": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-hip-thrust.gif",
+  "Standing Calf Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/standing-calf-raises.gif",
+  "Plank": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/front-plank.gif",
+  "Dead Bug": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/dead-bug.gif",
+  "Incline Barbell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/barbell-incline-bench-press.gif",
+  "Decline Barbell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/barbell-press-sit-up.gif",
+  "Wide-Grip Barbell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/barbell-press-sit-up.gif",
+  "Dumbbell Bench Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/dumbbell-bench-press.gif",
+  "Decline Dumbbell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-seated-biceps-curl-to-shoulder-press.gif",
+  "Dumbbell Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/dumbbell-fly.gif",
+  "Incline Dumbbell Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-incline-biceps-curl.gif",
+  "Decline Dumbbell Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-one-arm-reverse-fly-with-support.gif",
+  "Dumbbell Pullover": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/dumbbell-pullover.gif",
+  "Cable Crossover": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/cable-standing-fly.gif",
+  "Incline Cable Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/cable-two-arm-curl-on-incline-bench.gif",
+  "Cable Chest Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-alternate-shoulder-press.gif",
+  "Smith Machine Bench Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/smith-machine-bicep-curl.gif",
+  "Incline Push-Up": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/incline-push-up.gif",
+  "Decline Push-Up": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/decline-push-up.gif",
+  "Chin-Up": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/chin-up.gif",
+  "Close-Grip Lat Pulldown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-bar-lateral-pulldown.gif",
+  "Wide-Grip Lat Pulldown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-bar-lateral-pulldown.gif",
+  "One-Arm Lat Pulldown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-bar-lateral-pulldown.gif",
+  "Underhand Lat Pulldown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-bar-lateral-pulldown.gif",
+  "Reverse-Grip Barbell Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-rear-delt-row.gif",
+  "Bent-Over Dumbbell Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-one-arm-upright-row.gif",
+  "One-Arm Dumbbell Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/upper-back/dumbbell-one-arm-row.gif",
+  "Renegade Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/upper-back/kettlebell-alternating-renegade-row.gif",
+  "Deadlift": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-deadlift.gif",
+  "Good Morning": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-seated-good-morning.gif",
+  "Back Extension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/spine/back-extension-on-exercise-ball.gif",
+  "Seated Military Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-seated-behind-head-military-press.gif",
+  "Arnold Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-arnold-press-v-2.gif",
+  "Dumbbell Shoulder Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-seated-shoulder-press.gif",
+  "Cable Lateral Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-lateral-raise.gif",
+  "Front Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-front-raise-v-2.gif",
+  "Cable Front Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-front-raise.gif",
+  "Reverse Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/dumbbell-one-arm-reverse-fly-with-support.gif",
+  "Cable Rear Delt Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-cross-over-revers-fly.gif",
+  "Rear Delt Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-rear-delt-raise.gif",
+  "Upright Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-upright-row-v-2.gif",
+  "Cable Upright Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-upright-row.gif",
+  "Barbell Shrug": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/traps/barbell-shrug.gif",
+  "Dumbbell Shrug": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/traps/dumbbell-shrug.gif",
+  "Cable Shrug": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/traps/cable-shrug.gif",
+  "Machine Shoulder Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/lever-seated-squat-calf-raise-on-leg-press-machine.gif",
+  "Band Lateral Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/band-lying-straight-leg-raise.gif",
+  "Cable External Rotation": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-seated-shoulder-internal-rotation.gif",
+  "Kettlebell Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/kettlebell-bent-press.gif",
+  "Preacher Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/barbell-preacher-curl.gif",
+  "Reverse Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/barbell-reverse-curl.gif",
+  "Drag Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/barbell-drag-curl.gif",
+  "Spider Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/ez-barbell-spider-curl-1628.gif",
+  "Dumbbell Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-alternate-biceps-curl-with-arm-blaster.gif",
+  "Seated Dumbbell Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-alternate-biceps-curl-with-arm-blaster.gif",
+  "Incline Dumbbell Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-alternate-biceps-curl-with-arm-blaster.gif",
+  "Incline Hammer Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-alternate-hammer-preacher-curl.gif",
+  "Concentration Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-concentration-curl.gif",
+  "Zottman Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-one-arm-zottman-preacher-curl.gif",
+  "Cable Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/cable-curl.gif",
+  "Rope Hammer Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/cable-hammer-curl-with-rope.gif",
+  "Cable Preacher Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/cable-preacher-curl.gif",
+  "Machine Bicep Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/smith-machine-bicep-curl.gif",
+  "Machine Preacher Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/smith-machine-bicep-curl.gif",
+  "Close-Grip Bench Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/barbell-bench-press.gif",
+  "Overhead Barbell Extension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/barbell-seated-overhead-press.gif",
+  "Rope Pushdown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/cable-triceps-pushdown-v-bar-attachment.gif",
+  "One-Arm Cable Pushdown": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-incline-pushdown.gif",
+  "Overhead Rope Extension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/lats/cable-lying-extension-pullover-with-rope-attachment.gif",
+  "Triceps Dip": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/chest-dip.gif",
+  "Bench Dip": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/bench-dip-knees-bent.gif",
+  "Machine Triceps Extension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/smith-machine-incline-tricep-extension.gif",
+  "Assisted Dip Machine": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/assisted-chest-dip-kneeling.gif",
+  "Front Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/barbell-front-squat.gif",
+  "Sumo Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/smith-sumo-squat.gif",
+  "Barbell Hack Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-hack-squat.gif",
+  "Walking Lunge": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/dumbbell-walking-lunge.gif",
+  "Sissy Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/sissy-squat.gif",
+  "Dumbbell Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/dumbbell-squat.gif",
+  "Dumbbell Lunge": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/dumbbell-lunge.gif",
+  "Dumbbell Split Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-biceps-curl-squat.gif",
+  "Goblet Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/quads/dumbbell-goblet-squat.gif",
+  "Hack Squat Machine": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/lever-seated-squat-calf-raise-on-leg-press-machine.gif",
+  "Bodyweight Squat": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/bodyweight-drop-jump-squat.gif",
+  "Seated Leg Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/hamstrings/lever-seated-leg-curl.gif",
+  "Standing Leg Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/hamstrings/inverse-leg-curl-on-pull-up-cable-machine.gif",
+  "Glute Ham Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/hamstrings/glute-ham-raise.gif",
+  "Reverse Hyperextension": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/lever-reverse-hyperextension.gif",
+  "Kettlebell Swing": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/kettlebell-swing.gif",
+  "Glute Bridge": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-glute-bridge-two-legs-on-bench-male.gif",
+  "Single-Leg Glute Bridge": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/barbell-glute-bridge-two-legs-on-bench-male.gif",
+  "Cable Kickback": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/triceps/cable-kickback.gif",
+  "Band Monster Walk": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/glutes/monster-walk.gif",
+  "Seated Calf Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/lever-seated-calf-raise.gif",
+  "Barbell Calf Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/barbell-sitted-alternate-leg-raise-female.gif",
+  "Barbell Seated Calf Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/barbell-seated-calf-raise.gif",
+  "Calf Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/calves/lever-seated-squat-calf-raise-on-leg-press-machine.gif",
+  "Crunch": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/band-bicycle-crunch.gif",
+  "Reverse Crunch": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/reverse-crunch.gif",
+  "Oblique Crunch": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/oblique-crunch-v-2.gif",
+  "Russian Twist": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/weighted-russian-twist.gif",
+  "Hanging Leg Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/hanging-leg-raise.gif",
+  "Lying Leg Raise": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/assisted-lying-leg-raise-with-lateral-throw-down.gif",
+  "Side Plank": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/bodyweight-incline-side-plank.gif",
+  "Cable Crunch": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/cable-kneeling-crunch.gif",
+  "Cable Reverse Crunch": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/cable-reverse-crunch.gif",
+  "Cable Russian Twist": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/cable-russian-twists-on-stability-ball.gif",
+  "Pallof Press": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/band-horizontal-pallof-press.gif",
+  "Wrist Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/forearms/barbell-palms-down-wrist-curl-over-a-bench.gif",
+  "Reverse Wrist Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/barbell-reverse-curl.gif",
+  "Dumbbell Wrist Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/biceps/dumbbell-alternate-biceps-curl-with-arm-blaster.gif",
+  "Cable Wrist Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/forearms/cable-wrist-curl.gif",
+  "Finger Curl": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/forearms/dumbbell-finger-curls.gif",
+  "Face Pull": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/delts/cable-standing-face-pull-with-rope.gif",
+  "Pec Deck Fly": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/pectorals/lever-pec-deck-fly.gif",
+  "T-Bar Row": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/upper-back/lever-t-bar-row.gif",
+  "Ab Rollout": "https://cdn.jsdelivr.net/gh/JahelCuadrado/ExerciseGymGifsDB@main/abs/barbell-rollout.gif"
+};
+let EXVID = Object.assign({}, DEFAULT_EXVID);
 const bankN=()=>Object.keys(EXVID).length;
 const fillVids=()=>BUILDER.forEach(b=>{const v=EXVID[(EXERCISES[b.ex]||{}).n];if(v&&!b.vid)b.vid=v});
 let NOTES=[
@@ -1378,7 +1516,7 @@ const foodName=n=>lang==='tr'?(TR_FOOD[n]||n):(lang==='fa'?(FA_FOOD[n]||n):n);
    tags) and the wizard/library pick them up automatically. ONBOARD rides the
    workspace payload so the answers follow the coach across devices. */
 let ONBOARD={done:false};
-const ONB_SPORTS=['Bodybuilding & Fitness','Powerlifting','Running & Endurance','Team Sports','General Fitness'];
+const ONB_SPORTS=['Bodybuilding & Fitness','Running & Endurance'];
 const ONB_CONTEXT=['Online coaching','In-person / gym','Hybrid'];
 const ONB_SCALE=[['starting','Just starting','Less than 5 clients','basic'],['growing','Growing','5 – 30 clients','professional'],['established','Established','More than 30 clients','club']];
 const ONB_FOCUS=[['programs','Program design','builder'],['nutrition','Nutrition planning','nutrition'],['progress','Progress tracking','progress'],['clients','Client management','clients']];
@@ -5208,11 +5346,24 @@ function vLibrary(){
 const exCard=e=>{
   const cex=e.i>=CEXBASE&&CEXS[e.i-CEXBASE];
   const fav=PREFS.favs&&PREFS.favs.includes(e.n);
+  const vUrl=EXVID[e.n]||'';
+  const thumbUrl=vUrl.includes('.gif')?vUrl.replace('.gif','.thumb.webp'):vUrl;
   return `
     <div class="card exc">
-      <div class="row"><div style="width:52px;height:40px;border-radius:9px;background:linear-gradient(150deg,var(--line2),var(--line));display:grid;place-items:center;color:var(--ink3)">${ic('dumbbell',18)}</div>
-      <div><div class="nm">${t(e.n)}${cex?` <span class="bdg bdg-blue" style="font-size:9.5px">${t('Custom')}</span>`:''}</div><div class="meta">${tmus(e.m)} · ${t(e.e)}</div></div></div>
-      <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip">${t(e.t)}</span><span class="chip">${t(e.e)}</span><span class="chip" data-act="ex-video" data-i="${e.i}" style="cursor:pointer;${EXVID[e.n]?'background:var(--accent-soft);color:var(--accent-ink)':''}" title="${t('Video link')}">▶ ${t('Video')}${EXVID[e.n]?' ✓':''}</span></div>
+      <div class="row">
+        <div style="width:54px;height:44px;border-radius:10px;overflow:hidden;flex:none;background:var(--seg-bg);display:grid;place-items:center;border:1px solid var(--line2);cursor:pointer" data-act="ex-video" data-i="${e.i}" title="${t('Preview animation')}">
+          ${thumbUrl?`<img src="${thumbUrl}" loading="lazy" style="width:100%;height:100%;object-fit:cover" alt="${esc(e.n)}">`:`<span style="color:var(--ink3)">${ic('dumbbell',18)}</span>`}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div class="nm" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t(e.n)}${cex?` <span class="bdg bdg-blue" style="font-size:9.5px">${t('Custom')}</span>`:''}</div>
+          <div class="meta">${tmus(e.m)} · ${t(e.e)}</div>
+        </div>
+      </div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">
+        <span class="chip">${t(e.t)}</span>
+        <span class="chip">${t(e.e)}</span>
+        <span class="chip" data-act="ex-video" data-i="${e.i}" style="cursor:pointer;${vUrl?'background:var(--accent-soft);color:var(--accent-ink)':''}" title="${t('Video link')}">▶ ${t('Video')}${vUrl?' ✓':''}</span>
+      </div>
       <div class="row" style="margin-top:auto;gap:6px">
         <button class="btn btn-dark btn-sm" data-act="ex-add" data-i="${e.i}">${ic('plus',13)} ${t('Add to Workout')}</button><span class="sp"></span>
         <button class="btn btn-ghost btn-icon" data-act="fav" data-n="${esc(e.n)}" title="${t('Favorite')}" style="color:${fav?'#E1B014':'var(--ink3)'}">${ic('star',15)}</button>
@@ -7590,6 +7741,42 @@ function fcEvalCheck(ch,lm,wl,bottom){
 
 /* Skeleton connections for the overlay. */
 const FC_BONES=[[11,12],[11,13],[13,15],[12,14],[14,16],[11,23],[12,24],[23,24],[23,25],[25,27],[24,26],[26,28],[27,31],[28,32]];
+
+/* One Euro Filter implementation for high-precision jitter-free motion tracking */
+class OneEuroFilter {
+  constructor(freq=30,minCutoff=1.0,beta=0.007,dCutoff=1.0){
+    this.freq=freq;this.minCutoff=minCutoff;this.beta=beta;this.dCutoff=dCutoff;
+    this.xPrev=null;this.dxPrev=0;this.tPrev=null;
+  }
+  alpha(cutoff,dt){const tau=1.0/(2*Math.PI*cutoff);return 1.0/(1.0+tau/dt)}
+  filter(x,t){
+    if(this.tPrev==null){this.tPrev=t;this.xPrev=x;this.dxPrev=0;return x}
+    const dt=Math.max(1e-3,(t-this.tPrev)/1000);
+    this.tPrev=t;
+    const dx=(x-this.xPrev)/dt;
+    const edx=this.alpha(this.dCutoff,dt)*dx+(1-this.alpha(this.dCutoff,dt))*this.dxPrev;
+    this.dxPrev=edx;
+    const cutoff=this.minCutoff+this.beta*Math.abs(edx);
+    const a=this.alpha(cutoff,dt);
+    const xFiltered=a*x+(1-a)*this.xPrev;
+    this.xPrev=xFiltered;
+    return xFiltered;
+  }
+  reset(){this.xPrev=null;this.dxPrev=0;this.tPrev=null}
+}
+const FC_FILTERS={};
+function fcFilterLandmarks(lm,now){
+  if(!lm||!lm.length)return lm;
+  return lm.map((pt,i)=>{
+    if(!FC_FILTERS[i])FC_FILTERS[i]={x:new OneEuroFilter(30,1.2,0.015),y:new OneEuroFilter(30,1.2,0.015),z:new OneEuroFilter(30,1.2,0.015)};
+    const fx=FC_FILTERS[i].x.filter(pt.x,now);
+    const fy=FC_FILTERS[i].y.filter(pt.y,now);
+    const fz=pt.z!=null?FC_FILTERS[i].z.filter(pt.z,now):pt.z;
+    return {...pt,x:fx,y:fy,z:fz};
+  });
+}
+function fcResetFilters(){Object.values(FC_FILTERS).forEach(f=>{f.x.reset();f.y.reset();f.z.reset()})}
+
 let FC={on:false};
 let FC_POSE=null,FC_VISION=null,FC_ACC=null;
 
@@ -7672,13 +7859,34 @@ function fcDrawTrail(ctx,cv){
   if(!FC.trailOn||!FC.trail||FC.trail.length<2)return;
   ctx.save();
   if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
-  ctx.lineWidth=Math.max(3,cv.width/160);
+  
+  // Plumb vertical reference line for Barbell Path analysis
+  const p0=FC.trail[0];
+  if(p0){
+    ctx.lineWidth=1.5;
+    ctx.setLineDash([4,4]);
+    ctx.strokeStyle='rgba(138,180,248,0.5)';
+    ctx.beginPath();
+    ctx.moveTo(p0.x*cv.width,0);
+    ctx.lineTo(p0.x*cv.width,cv.height);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Neon glowing path trail
+  ctx.lineWidth=Math.max(3.5,cv.width/150);
   ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.shadowBlur=8;
   for(let i=1;i<FC.trail.length;i++){
     const p1=FC.trail[i-1],p2=FC.trail[i];
-    const alpha=(i/FC.trail.length)*0.9;
-    ctx.strokeStyle=p2.phase==='down'?`rgba(56,189,248,${alpha})`:`rgba(200,240,75,${alpha})`;
-    ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke();
+    const alpha=(i/FC.trail.length)*0.95;
+    const clr=p2.phase==='down'?`rgba(56,189,248,${alpha})`:`rgba(0,255,157,${alpha})`;
+    ctx.strokeStyle=clr;
+    ctx.shadowColor=clr;
+    ctx.beginPath();
+    ctx.moveTo(p1.x*cv.width,p1.y*cv.height);
+    ctx.lineTo(p2.x*cv.width,p2.y*cv.height);
+    ctx.stroke();
   }
   ctx.restore();
 }
@@ -8019,11 +8227,55 @@ function fcLoop(){
 }
 
 function fcDrawSkeleton(ctx,cv,lm,primary){
-  ctx.save();if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
-  ctx.lineWidth=Math.max(2,cv.width/180);ctx.strokeStyle=primary?'rgba(200,240,75,.95)':'rgba(200,240,75,.35)';
-  FC_BONES.forEach(([a,b])=>{const p1=lm[a],p2=lm[b];if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){ctx.beginPath();ctx.moveTo(p1.x*cv.width,p1.y*cv.height);ctx.lineTo(p2.x*cv.width,p2.y*cv.height);ctx.stroke()}});
-  ctx.fillStyle=primary?'#fff':'rgba(255,255,255,.4)';const r=Math.max(2.5,cv.width/220);
-  lm.forEach((pt,i)=>{if(i<11&&i!==0)return;if(pt.v!=null&&pt.v<.4)return;ctx.beginPath();ctx.arc(pt.x*cv.width,pt.y*cv.height,r,0,7);ctx.fill()});
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+  const hasFault=FC.currentFaults&&FC.currentFaults.length>0;
+  ctx.lineCap='round';ctx.lineJoin='round';
+  
+  FC_BONES.forEach(([a,b])=>{
+    const p1=lm[a],p2=lm[b];
+    if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){
+      const isLeg=a>=23||b>=23;
+      const isFaultBone=hasFault&&(
+        (FC.currentFaults.some(f=>f.includes('depth')||f.includes('valgus')||f.includes('knee'))&&isLeg)||
+        (FC.currentFaults.some(f=>f.includes('Torso')||f.includes('Back')||f.includes('sag'))&&(a===11||a===12||a===23||a===24))
+      );
+      ctx.beginPath();
+      ctx.lineWidth=isFaultBone?Math.max(4,cv.width/130):Math.max(2.5,cv.width/170);
+      if(isFaultBone){
+        ctx.strokeStyle='#ef4444';
+        ctx.shadowColor='#ef4444';
+        ctx.shadowBlur=14;
+      }else{
+        ctx.strokeStyle=primary?'#00FF9D':'rgba(0,255,157,.4)';
+        ctx.shadowColor='#00FF9D';
+        ctx.shadowBlur=primary?8:0;
+      }
+      ctx.moveTo(p1.x*cv.width,p1.y*cv.height);
+      ctx.lineTo(p2.x*cv.width,p2.y*cv.height);
+      ctx.stroke();
+    }
+  });
+
+  // Dual-ring neon joints HUD
+  ctx.shadowBlur=0;
+  const r=Math.max(3.5,cv.width/190);
+  lm.forEach((pt,i)=>{
+    if(i<11&&i!==0)return;
+    if(pt.v!=null&&pt.v<.4)return;
+    const px=pt.x*cv.width,py=pt.y*cv.height;
+    ctx.beginPath();
+    ctx.arc(px,py,r+2,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,0.5)';
+    ctx.fill();
+    ctx.lineWidth=1.5;
+    ctx.strokeStyle=primary?'#00FF9D':'rgba(255,255,255,0.4)';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(px,py,r-0.5,0,Math.PI*2);
+    ctx.fillStyle='#ffffff';
+    ctx.fill();
+  });
   ctx.restore();
 }
 
@@ -8058,7 +8310,7 @@ function fcOnResult(res){
     /* primary pose = largest bounding box (closest to the camera) */
     let pi=0,best=-1;
     list.forEach((L,i)=>{let x0=9,x1=-9,y0=9,y1=-9;L.forEach(p=>{if(p.x<x0)x0=p.x;if(p.x>x1)x1=p.x;if(p.y<y0)y0=p.y;if(p.y>y1)y1=p.y});const a=(x1-x0)*(y1-y0);if(a>best){best=a;pi=i}});
-    const lm=list[pi];
+    const lm=fcFilterLandmarks(list[pi],performance.now());
     const wl=(res.worldLandmarks&&res.worldLandmarks[pi])||null;
     if(FC.maskOn&&masks[0])fcDrawMask(masks[0],cv,ctx);
     list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,L,i===pi));
@@ -8157,10 +8409,10 @@ function fcOnResult(res){
       fcUpdateTrail(lm,p.id,FC.state);
     }
 
-    const bottom=FC.state==='down';
+    const bottom=FC.state==='down';FC.currentFaults=[];
     p.checks.forEach(ch=>{
       if(fcEvalCheck(ch,lm,wl,bottom)){
-        FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;
+        FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;FC.currentFaults.push(ch.flag);
         if(Date.now()-(FC.lastFlagT||0)>2200){
           FC.lastFlagT=Date.now();
           fcFeed(ch.flag,false);
