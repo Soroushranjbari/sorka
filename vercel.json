@@ -1,11 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/[...path].mjs": { "maxDuration": 60 }
+    "api/[...path].mjs": {
+      "maxDuration": 60,
+      "includeFiles": "backend/**"
+    }
   },
   "rewrites": [
     { "source": "/shop/api/checkout", "destination": "/api/shop/api/checkout" },
-    { "source": "/shop/api/account/:path*", "destination": "/api/shop/api/account/:path*" }
+    { "source": "/shop/api/account/:path*", "destination": "/api/shop/api/account/:path*" },
+    { "source": "/shop", "destination": "/shop/index.html" }
   ],
   "headers": [
     {
@@ -45,6 +49,12 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" }
+      ]
+    },
+    {
+      "source": "/(app|index)\\.html|/app\\.js|/sw\\.js|/(icons|vendor)/(.*)",
+      "headers": [
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" }
       ]
     }
   ]

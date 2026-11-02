@@ -13,6 +13,7 @@
 //   /api/data              -> backend/handlers/data.mjs
 //   /api/health            -> backend/handlers/health.mjs
 //   /api/export/*          -> backend/handlers/export.mjs  (printable plan / PDF)
+//   /api/strava/*          -> backend/handlers/strava.mjs   (activity provider / OAuth)
 //   /shop/api/checkout     -> backend/handlers/shop-checkout.mjs   (via vercel.json rewrite)
 //   /shop/api/account/*    -> backend/handlers/shop-account.mjs    (via vercel.json rewrite)
 //
@@ -27,6 +28,10 @@ import dataHandler from '../backend/handlers/data.mjs';
 import aiHandler from '../backend/handlers/ai.mjs';
 import pushHandler from '../backend/handlers/push.mjs';
 import exportHandler from '../backend/handlers/export.mjs';
+/* v18.19 — Strava was routed by server.mjs only; on Vercel every
+   /api/strava/* request fell through to 404 (the client silently swallowed it),
+   so Strava connect/sync never worked in production. */
+import stravaHandler from '../backend/handlers/strava.mjs';
 import healthHandler from '../backend/handlers/health.mjs';
 import mediaHandler from '../backend/handlers/media.mjs';
 import chatHandler from '../backend/handlers/chat.mjs';
@@ -114,6 +119,7 @@ export default async function handler(req, res) {
     // set DATABASE_URL (Neon/Postgres); db.mjs then uses the kv_store table
     // and auto-creates it on first use.
     const inner = new URL(req.url || '/', 'http://localhost').pathname.replace(/^\/api\/?/, '');
+    const clean = inner.replace(/\/+$/, '');
     const webReq = await toWebRequest(req);
     let out;
     if (inner.startsWith('auth/')) out = await authHandler(webReq);
@@ -121,14 +127,15 @@ export default async function handler(req, res) {
     else if (inner.startsWith('ai/')) out = await aiHandler(webReq);
     else if (inner.startsWith('push/')) out = await pushHandler(webReq);
     else if (inner.startsWith('export/')) out = await exportHandler(webReq);
-    else if (inner === 'data') out = await dataHandler(webReq);
+    else if (inner.startsWith('strava/')) out = await stravaHandler(webReq);
+    else if (clean === 'data') out = await dataHandler(webReq);
     /* v18.103 — /api/media and /api/media/<id> */
-    else if (inner === 'media' || inner.startsWith('media/')) out = await mediaHandler(webReq);
+    else if (clean === 'media' || inner.startsWith('media/')) out = await mediaHandler(webReq);
     /* v18.108 — /api/chat/stream */
     else if (inner.startsWith('chat/')) out = await chatHandler(webReq);
-    else if (inner === 'health') out = await healthHandler(webReq);
-    else if (inner === 'shop/api/checkout') out = await shopCheckout(webReq);
-    else if (inner.startsWith('shop/api/account/')) out = await shopAccount(webReq);
+    else if (clean === 'health') out = await healthHandler(webReq);
+    else if (clean === 'shop/api/checkout') out = await shopCheckout(webReq);
+    else if (clean === 'shop/api/account' || inner.startsWith('shop/api/account/')) out = await shopAccount(webReq);
     else return json(res, 404, { ok: false, error: 'not-found' });
     await sendResponse(out, res);
   } catch (e) {

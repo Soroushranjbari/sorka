@@ -4,6 +4,9 @@
 // Exits non-zero with a clear fix list when something is misconfigured.
 // Safe to run repeatedly; never prints secret values.
 import { existsSync, readFileSync } from 'node:fs';
+// Load .env first (same loader + precedence as server.mjs) so the pre-flight
+// sees the developer's real configuration instead of a bare process.env.
+import './../backend/lib/env.mjs';
 
 const env = (k) => (process.env[k] || '').trim();
 const has = (k) => env(k).length > 0;
@@ -26,6 +29,13 @@ if (pgUrl) {
   }
 } else {
   // SQLite is the default backend — zero configuration needed.
+  // Mirrors SQLITE_PATH resolution in backend/lib/db.mjs so the check reports
+  // the database the server will ACTUALLY open (local runs override the path
+  // through .env, e.g. %LOCALAPPDATA%\CoachMint\data\sqlite.db).
+  /* .env is auto-loaded the same way server.mjs loads it (backend/lib/env.mjs)
+     BEFORE this script runs its checks, so the values below are the ones the
+     server will see and a developer with a configured .env gets a meaningful
+     pre-flight instead of "ADMIN_EMAILS empty" on a working machine. */
   const sqlitePath = env('SQLITE_PATH') || (process.env.VERCEL ? '/tmp/coach-os.sqlite.db' : './data/sqlite.db');
   info.push(`KV: SQLite (${sqlitePath})`);
   if (existsSync(sqlitePath)) {
@@ -70,6 +80,8 @@ if (coachUrl) {
   if (/YOUR-SITE|your-site|example\.com|\.invalid|\.example|CHANGEME/i.test(coachUrl)) {
     problems.push(`COACH_OS_URL is still a placeholder (${coachUrl}) — set the real public app URL`);
   }
+  // The shop checkout talks to the app over the network; a localhost value on
+  // a hosted app makes every purchase unreachable from another device.
   if (/\/\/(localhost|127\.0\.0\.1)/.test(coachUrl)) {
     warnings.push('COACH_OS_URL points at localhost — the shop cannot reach the app from a browser');
   }

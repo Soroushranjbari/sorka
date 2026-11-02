@@ -5,6 +5,8 @@ node_modules/
 .env
 .env.local
 .env.*.local
+# full plain-text dump of .env made during debugging — never commit or keep long
+.env.dump.txt
 
 # production credentials — MUST never be committed (rotate if they ever were)
 data/prod-secrets.txt
@@ -54,3 +56,9 @@ shop/COACH-OS-The-Operating-System-for-Fitness-Coaches*
 
 # agent tooling worktrees — contain a FULL project copy incl. data/prod-secrets.txt
 .kilo/
+
+# Continues.dev / local AI-assistant config (machine-specific paths)
+.continue/
+
+# local UI screenshot artifacts used while reviewing a build
+_shots/

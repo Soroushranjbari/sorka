@@ -78,8 +78,9 @@ async function issueCoupon(planId, code) {
 }
 
 // Every response carries the standard security headers (shop-account.mjs
-// wraps its calls in secure() too; server.mjs/netlify.toml add them again at
-// the edge, but the handler should not depend on the platform doing it).
+// server.mjs wraps its calls in secure() too and adds these headers once at the
+// HTTP edge alongside the static files, but a handler should never depend on the
+// platform doing it — so every JSON response here carries them itself.
 const j = (status, obj) => secure(new Response(JSON.stringify(obj), {
   status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' }
 }));

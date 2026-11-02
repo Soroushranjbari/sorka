@@ -8,9 +8,12 @@
 // All CoachMint calls happen here (server-to-server) so this page keeps working
 // even if the shop later moves to its own domain.
 //
-// NOTE (v16.2): moved here from shop/api/account.mjs — Netlify only bundles the
-// single [functions] directory from netlify.toml, so the old location was never
-// deployed and the shop account page could never sign in on Netlify.
+// NOTE (v16.2): moved here from shop/api/account.mjs — the shop account routes
+// were originally outside the deployed functions directory, so the old location
+// was never bundled and the shop account page could never sign in.
+// It now lives in backend/ and keeps the public path /shop/api/account/*
+// via `export const config` below (server.mjs maps it for self-hosting, and
+// api/[...path].mjs re-dispatches /api/shop/api/account/* for Vercel).
 import { kv } from '../lib/db.mjs';
 import { readJsonCapped, tooLarge, tooMany, badJson, rateLimit, ipOf, secure } from '../lib/guard.mjs';
 
@@ -18,9 +21,9 @@ const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const st = kv('shop-orders');
 const MAX_BYTES = 10_000;
 
-const j = (status, obj) => new Response(JSON.stringify(obj), {
+const j = (status, obj) => secure(new Response(JSON.stringify(obj), {
   status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' }
-});
+}));
 
 async function verifyToken(token) {
   if (!COACH_OS_URL || !token) return null;

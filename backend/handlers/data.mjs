@@ -295,12 +295,12 @@ export default async (req) => {
   const st = store();
   const url = new URL(req.url);
   const code = normCode(url.searchParams.get('code'));
-  if (!CODE_RE.test(code)) return j(400, { ok: false, error: 'bad code' });
+  if (!CODE_RE.test(code)) return secure(j(400, { ok: false, error: 'bad code' }));
   /* v18.107 — the KV circuit is open (bad DATABASE_URL): say so instead of
      handing back {rev:0, exists:false}, which a client would read as "your
      workspace vanished". cloudFetch returns null on !r.ok and cloudPull bails
      without touching state, so a DB outage never corrupts local data. */
-  if (kvDown()) return j(503, { ok: false, error: 'storage-unavailable' });
+  if (kvDown()) return secure(j(503, { ok: false, error: 'storage-unavailable' }));
   /* v18.107 — /api/data was the ONE endpoint with no rate limit, yet it is the
      hot path every device hits every 7 s. Caps are deliberately generous so a
      shared NAT (gym/school) never trips them: a client polls ~9×/min and pushes
@@ -309,9 +309,9 @@ export default async (req) => {
   const lim = rateLimit(`${req.method === 'PUT' ? 'data-put' : 'data-get'}:${ipOf(req)}`,
     req.method === 'PUT' ? 300 : 600, 60_000);
   if (!lim.ok) return tooMany(lim.retryAfter);
-  if (req.method === 'GET') return secure(handleGet(st, req, code));
-  if (req.method === 'PUT') return secure(handlePut(st, req, code));
-  return j(405, { ok: false, error: 'method not allowed' });
+  if (req.method === 'GET') return secure(await handleGet(st, req, code));
+  if (req.method === 'PUT') return secure(await handlePut(st, req, code));
+  return secure(j(405, { ok: false, error: 'method not allowed' }));
 };
 
 export const config = { path: '/api/data' };

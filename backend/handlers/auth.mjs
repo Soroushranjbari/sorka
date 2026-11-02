@@ -202,9 +202,9 @@ export default async (req) => {
     if (req.method === 'POST' && action === 'claim') { const lim = limited(req, 'claim'); return secure(lim || await claim(req, st)); }
     if (req.method === 'POST' && action === 'forgot') return secure(await forgot(req, st));
     if (req.method === 'POST' && action === 'reset') return secure(await reset(req, st));
-    return j(404, { ok: false, error: 'not-found' });
+    return secure(j(404, { ok: false, error: 'not-found' }));
   } catch (e) {
-    return j(500, { ok: false, error: 'server-error' });
+    return secure(j(500, { ok: false, error: 'server-error' }));
   }
 };
 

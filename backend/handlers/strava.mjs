@@ -51,8 +51,8 @@ export default async function handleStrava(req) {
     const clientId = cfg.clientId || envId;
     const origin = originOf(req);
 
-    // If simulator mode is explicitly enabled OR credentials are not yet configured, provide seamless sandbox auth
-    if (cfg.simulator || !clientId) {
+    // If simulator mode is explicitly enabled (or defaults to true) OR credentials are not yet configured, provide seamless sandbox auth
+    if (cfg.simulator !== false || !clientId) {
       const sandboxUrl = `${origin}/api/strava/callback?code=mock_strava_sandbox_token&scope=read,activity:read_all`;
       return secure(j(200, { ok: true, mode: 'simulator', url: sandboxUrl }));
     }
@@ -298,6 +298,13 @@ export default async function handleStrava(req) {
 
   return secure(j(404, { ok: false, error: 'not-found' }));
 }
+
+/* Route declaration, kept in the same shape every other handler uses
+   (auth/billing/data/push/…). server.mjs routes this file with its own
+   `ROUTES` regex table (needed because `handleStrava` ignores the `/api/strava/`
+   prefix that the adapter strips), and the Vercel adapter imports the default
+   export directly — so this constant is documentation, not a dispatch source. */
+export const config = { path: '/api/strava/*' };
 
 function escapeHtml(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

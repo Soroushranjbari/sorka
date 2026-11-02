@@ -13,9 +13,12 @@ export const config = {
   matcher: [
     '/data/:path*', '/backend/:path*', '/scripts/:path*', '/.kilo/:path*',
     '/design/:path*', '/plans/:path*', '/db/:path*', '/node_modules/:path*',
+    '/_shots/:path*', '/.agents/:path*', '/.continue/:path*', '/.superdesign/:path*',
+    '/.cursor/:path*', '/.vscode/:path*',
     '/server.mjs', '/package.json', '/package-lock.json', '/vercel.json',
     '/middleware.js', '/CLAUDE.md', '/.windsurfrules', '/skills-lock.json',
-    '/.env', '/.env.example', '/.gitignore', '/DEPLOY.md', '/SELFHOST.md'
+    '/.env', '/.env.example', '/.env.dump.txt', '/.gitignore', '/DEPLOY.md', '/SELFHOST.md',
+    '/ROTATION-RUNBOOK.md'
   ]
 };
 

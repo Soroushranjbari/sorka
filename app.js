@@ -204,7 +204,7 @@ const FA={
     'Recording… tap to stop':'در حال ضبط… برای توقف بزن','Hold a quick voice note':'یک یادداشت صوتی کوتاه بگیر',
     'Voice messages are not supported in this browser':'این مرورگر پیام صوتی را پشتیبانی نمی‌کند',
     'Microphone permission was denied':'دسترسی به میکروفون داده نشد','Could not start recording':'ضبط شروع نشد',
-    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Volume':'حجم تمرین','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
+    'Could not play this voice message':'پخش این پیام صوتی ممکن نشد','Drink 2L water':'۲ لیتر آب بنوش','Protein target':'هدف پروتئین','Morning check-in':'چک‌این صبحگاهی','Steps 8,000':'۸۰۰۰ قدم','Stretch 10 min':'۱۰ دقیقه کشش','Sleep by 23:00':'خواب تا ۲۳:۰۰','No sugary drinks':'بدون نوشیدنی شیرین','Walk 20 min':'۲۰ دقیقه پیاده‌روی','Meditate 5 min':'۵ دقیقه مدیتیشن','5+ veg servings':'۵ وعده سبزیجات','On pause':'متوقف','Fullscreen':'تمام‌صفحه','Resume':'ادامه','Skip rest':'رد استراحت','Rest done':'استراحت تمام شد','Current program':'برنامه فعلی','days / wk':'روز / هفته','avg time':'میانگین زمان','sets / wk':'ست / هفته','this week':'این هفته','Next up':'بعدی','Signals':'سیگنال‌ها','Squad pulse':'نبض تیم','Jump':'جستجو','Jump to…':'جستجو…','Jump to an athlete, screen or action…':'جستجوی شاگرد، صفحه یا عمل…','Athletes':'شاگردان','Log':'ثبت','Free':'آزاد','All sessions done for today':'همهٔ جلسات امروز تمام شد','No events this day':'امروز رویدادی نیست','sessions done':'جلسه انجام شد','Races':'مسابقات','Training Phases':'فازهای تمرین','Run Builder':'ساختنده دو','Training Load':'بار تمرین','Live now':'در حال اجرا','Live':'زنده','Open session':'باز کردن جلسه','Start session':'شروع جلسه','Open week plan':'باز کردن برنامهٔ هفته','Next step':'قدم بعدی','Share code or QR':'اشتراک‌گذاری کد یا QR','Language · Sport · Payments':'زبان · ورزش · پرداخت','No session scheduled':'جلسه‌ای برنامه‌ریزی نشده','Plan one on the calendar':'در تقویم برنامه‌ریزی کن','Volume':'حجم تمرین','Last':'آخرین','Weekly goal':'هدف هفتگی','sessions':'جلسه','total':'کل','Monday':'دوشنبه','Tuesday':'سه‌شنبه','Wednesday':'چهارشنبه','Thursday':'پنجشنبه','Friday':'جمعه','Saturday':'شنبه','Sunday':'یکشنبه',
 'Week Split':'برنامه هفتگی','Tap a day to assign a workout or rest':'برای انتساب تمرین یا استراحت، روی روز بزن','Rest day':'روز استراحت','No workout assigned':'تمرینی انتساب داده نشده','Choose a workout for':'انتخاب تمرین برای','Day updated ✓':'روز به‌روزرسانی شد ✓','Rest day set':'روز استراحت ثبت شد','Day cleared':'روز پاک شد','This week plan':'برنامه این هفته','Recovery is part of the program — come back stronger':'ریکاوری بخشی از برنامه است — قوی‌تر برگرد','Clear day':'پاک کردن روز','No workouts yet — build one first':'هنوز تمرینی نیست — اول یکی بساز','Assigned workout':'تمرین انتساب‌شده','Add workout':'افزودن تمرین','Add workout to which day?':'افزودن تمرین برای کدام روز؟','New workout for this day':'تمرین جدید برای این روز','Every week':'هر هفته','Workout':'تمرین','Week plan':'برنامه هفتگی','Back to calendar':'بازگشت به تقویم','training days / week':'روز تمرین در هفته','Rest unplanned days':'استراحت روزهای بی‌برنامه','Unplanned days set to rest':'روزهای بی‌برنامه استراحت شدند','Quick week setup':'تنظیم سریع هفته','Unassigned':'بی‌برنامه','One workout per day':'هر تمرین فقط یک روز','Week updated':'هفته به‌روزرسانی شد','Pick a workout or rest for each day — repeats every week':'برای هر روز تمرین یا استراحت انتخاب کن — هر هفته تکرار می‌شود','Training days adherence':'پایبندی روزهای تمرین','last':'۸','weeks':'هفته اخیر','No data yet':'هنوز داده‌ای نیست','done / planned · from real logged sessions':'انجام‌شده / برنامه · از جلسات واقعی ثبت‌شده','Copy to':'کپی به','Day copied':'روز کپی شد','Monthly workout plan':'برنامه تمرینی ماهانه',
 'Sets':'ست','Reps':'تکرار','Rest (sec)':'استراحت (ثانیه)','Tempo':'تمپو','Add Exercise':'افزودن حرکت','exercises':'حرکت','est.':'حدوداً','working sets':'ست اصلی','Save as Template':'ذخیره به‌عنوان قالب','Save Workout':'ذخیره تمرین','Program':'برنامه','completed':'تکمیل‌شده','current':'فعلی','planned':'برنامه‌ریزی‌شده','Current':'فعلی',
 'Exercise duplicated':'حرکت تکرار شد','Exercise removed':'حرکت حذف شد','Saved as template':'به‌عنوان قالب ذخیره شد','added to workout':'به تمرین اضافه شد','Workout saved':'تمرین ذخیره شد','loaded into the builder':'در سازنده بارگذاری شد','Search exercises…':'جستجوی حرکات…','All Equipment':'همه تجهیزات','All Types':'همه انواع','No exercises match your search.':'حرکتی مطابق جستجو پیدا نشد.','Add':'افزودن',
@@ -8390,12 +8390,16 @@ function rpeDrift(cid){
   const bef=rows.slice(3,6).reduce((s,x)=>s+(+x.rpe||0),0)/3;
   return {d:Math.round((now-bef)*10)/10,now:Math.round(now*10)/10,bef:Math.round(bef*10)/10};
 }
-/* ── athletics quick rail — the SAME SPORT_EXT rows the desktop claims ── */
+/* ── athletics quick rail — the SAME SPORT_EXT rows the desktop claims ──
+   v19.21 — mockup rail: Live rides FIRST as the hot (solid lime) pill, the
+   sport views follow with lime icons; 44px thumb targets. */
 function mRail(){
   if(!isAthletics())return '';
   const items=[];sportSections().forEach(g=>g.items.forEach(it=>items.push(it)));
   if(!items.length)return '';
-  return `<div class="mrail">${items.map(([k,l,i])=>
+  return `<div class="mrail">
+    <button class="fchip hot" data-act="mnav" data-v="live">${ic('zap',14)}${t('Live')}</button>
+    ${items.map(([k,l,i])=>
     `<button class="fchip" data-act="mnav" data-v="${k}">${ic(i,14)}${t(l)}</button>`).join('')}</div>`;
 }
 /* ── NOW hero ──────────────────────────────────────────────────────────
@@ -8403,13 +8407,20 @@ function mRail(){
 function mNow(){
   const r=liveRec();
   if(r){
-    return `<div class="ccard mfloor-now" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)">
+    /* v19.21 — the LIVE hero is the mockup's NOW card: avatar + name + sub,
+       the attention line under it, then the dock. */
+    const rc=CLIENTS.find(c=>+c.id===+r.cid);
+    const ra=attentionList().find(x=>rc&&(x.cid===rc.id||x.name===rc.name));
+    return `<div class="ccard mfloor-now">
       <div class="row" style="justify-content:space-between">
-        <span class="eyebrow" style="color:var(--accent-deep)">${ic('zap',12)} ${t('Live now')}</span>
+        <span class="eyebrow" style="color:var(--accent-text);display:inline-flex;align-items:center;gap:6px">${ic('zap',12)} ${t('Live now')}</span>
         <span class="bdg bdg-lime" style="font-size:10px">${nf(liveElapsed(r))} ${t('min')}</span></div>
-      <b style="display:block;margin-top:8px;font-size:15px">${esc(t(r.name))}</b>
-      <div class="muted" style="font-size:12px">${esc(t(r.label||t('Session')))} · ${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}${r.rpe!=null?` · RPE ${nf(r.rpe)}`:''}</div>
-      <div class="row" style="gap:8px;margin-top:12px">
+      <div class="row" style="gap:11px;margin-top:11px">
+        ${rc?avC(rc.name,42):av(t('Coach'),42,3)}
+        <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(t(r.name))}</b>
+        <div class="muted" style="font-size:12px">${esc(t(r.label||t('Session')))} · ${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}${r.rpe!=null?` · RPE ${nf(r.rpe)}`:''}</div></div></div>
+      ${ra?`<div class="mwarn">${ic('alert',14)} ${esc(t(ra.why))}</div>`:''}
+      <div class="row" style="gap:9px;margin-top:12px">
         <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-open">${ic('play',14)} ${t('Open session')}</button>
         <button class="btn btn-outline btn-sm" data-act="live-end">${ic('check',14)} ${t('Finish')}</button></div>
     </div>`;
@@ -8420,17 +8431,21 @@ function mNow(){
   const doneN=todays.filter(e=>e.start+e.dur<=NOW||e.att).length;
   const pctv=todays.length?Math.round(doneN/todays.length*100):0;
   const cc=ev?CLIENTS.find(c=>c.name===ev.client):null;
+  /* v19.21 — mockup eyebrow: "◉ NOW · 09:30" — icon + label + time, not a
+     bare word; the badge on the right carries the state (Free / duration). */
   return `<div class="ccard mfloor-now">
     <div class="row" style="justify-content:space-between">
-      <span class="eyebrow">${running?t('Now'):t('Next up')}</span>
-      ${ev?`<span class="bdg ${running?'bdg-lime':'bdg-amber'}" style="font-size:10px">${nf(fmtT(ev.start))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</span>`
+      <span class="eyebrow" style="color:var(--accent-text);display:inline-flex;align-items:center;gap:6px">${ic(running?'radio':'clock',12)} ${running?t('Now'):t('Next up')}${ev?` · ${nf(fmtT(ev.start))}`:''}</span>
+      ${ev?`<span class="bdg ${running?'bdg-lime':'bdg-amber'}" style="font-size:10px">${running?`${nf(Math.round((NOW-ev.start)*60))} ${t('min')}`:`${nf(Math.round(ev.dur*60))} ${t('min')}`}</span>`
             :`<span class="bdg bdg-gray" style="font-size:10px">${t('Free')}</span>`}</div>
     <div class="mprog" role="img" aria-label="${nf(doneN)}/${nf(todays.length)} ${t('sessions done')}"><i style="width:${pctv}%"></i></div>
     ${ev?`<div class="row" style="gap:11px;margin-top:11px">
       ${cc?avC(cc.name,42):av(t('Coach'),42,3)}
       <div style="flex:1;min-width:0"><b style="font-size:15px">${esc(t(ev.client))}</b>
       <div class="muted" style="font-size:12px">${esc(t(ev.label))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</div></div></div>
-      <div class="row" style="gap:8px;margin-top:12px">
+    ${(()=>{const a=attentionList().find(x=>cc&&(x.cid===cc.id||x.name===cc.name));
+      return a?`<div class="mwarn">${ic('alert',14)} ${esc(t(a.why))}</div>`:''})()}
+    <div class="row" style="gap:9px;margin-top:12px">
         <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center" data-act="live-start"${cc?` data-cid="${cc.id}"`:''} data-eid="${ev.id}">${ic('play',14)} ${t('Start session')}</button>
         ${cc?`<button class="btn btn-outline btn-sm" data-act="mclient" data-cid="${cc.id}">${t('Open')}</button>`:''}</div>`
     /* the bar is derived from todays.length, so saying "no events" under a   1/1 bar was a direct contradiction — split the two cases. */
@@ -8449,18 +8464,25 @@ function mSignals(){
   });
   attentionList().forEach(it=>{
     if(out.length>=6)return;
-    out.push({cls:it.bt==='bdg-red'?'bad':(it.bt==='bdg-amber'?'warn':''),
-      icon:it.icon,t:t(it.why),s:`${t(it.name)}${it.d?' · '+t(it.d):''}`,
+    /* v19.21 — mockup signal language: messages are the "act" role (solid
+       lime badge); everything else keeps warn/bad/neutral. The value column
+       carries the unread count for message signals — real data, never a
+       decorative number; other rows keep the chevron. */
+    const unread=it.act==='msg'?MSGS.filter(m=>m.client===it.name&&m.from==='client'&&!m.read).length:0;
+    out.push({cls:it.act==='msg'?'act':(it.bt==='bdg-red'?'bad':(it.bt==='bdg-amber'?'warn':'')),
+      icon:it.icon,t:t(it.why),s:`${t(it.name)}${it.d?' · '+t(it.d):''}`,val:unread,
       act:it.act==='msg'?'open-thread':it.act==='copy'?'copy-code':'open-client',
-      data:it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code||'')}"`:`data-cid="${it.cid}"`});
+      data:it.act==='msg'?`data-c="${esc(it.name)}"`:it.act==='copy'?`data-code="${esc(it.code||'')}"`:`data-cid="${it.cid}"${it.tab?` data-tab="${it.tab}"`:''}`});
   });
   if(!out.length)return '';
-  return `<div class="ccard" style="padding:6px 14px">
-    <div class="card-t" style="padding:10px 0 4px">${ic('bell',14)} ${t('Signals')} · ${nf(out.length)}</div>
+  /* v19.20 — mockup: the section label sits OUTSIDE the rows (.sec + .stg),
+     not as a header inside a card. */
+  return `<div class="msec">${t('Signals')} <span class="c">${nf(out.length)}</span></div>
+  <div class="stg">
     ${out.map(s=>`<div class="msig ${s.cls}" data-act="${s.act}" ${s.data}>
       <span class="msig-i">${ic(s.icon,15)}</span>
       <div style="min-width:0"><div class="msig-t">${esc(s.t)}</div><div class="msig-s">${esc(s.s)}</div></div>
-      ${ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
+      ${s.val?`<span class="msig-v">${nf(s.val)}</span>`:ic('chevR',14).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}
   </div>`;
 }
 /* ── squad pulse ──────────────────────────────────────────────────────
@@ -8471,8 +8493,8 @@ function mSquad(){
   const list=CLIENTS.filter(c=>c.status!=='Archived');
   if(!list.length)return '';
   const C=2*Math.PI*20;
-  return `<div class="ccard" style="padding:6px 14px">
-    <div class="card-t" style="padding:10px 0 4px">${ic('users',14)} ${t('Squad')} · ${nf(list.length)}</div>
+  /* v19.20 — mockup: label outside, the pulse rail itself is the content. */
+  return `<div class="msec">${t('Squad pulse')} <span class="c">${nf(list.length)}</span></div>
     <div class="mpulse">${list.map(c=>{
       const ac=attCnt(c.name);
       const tot=(+ac.d||0)+(+ac.m||0);
@@ -8489,9 +8511,9 @@ function mSquad(){
         <span class="r"><svg viewBox="0 0 46 46" aria-hidden="true">
           <circle class="tr" cx="23" cy="23" r="20"/><circle class="pg" cx="23" cy="23" r="20"
           stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${off}"/></svg>
-          <b>${esc(mInit(c.name))}</b></span>
+          <b>${esc(mInit(c.name))}</b><i class="st ${st}"></i></span>
         <span class="nm">${esc(mFirst(t(c.name)))}</span></button>`;
-    }).join('')}</div></div>`;
+    }).join('')}</div>`;
 }
 /* ── LIVE SESSION screen ────────────────────────────────────────────── */
 function mLive(){
@@ -8520,7 +8542,7 @@ function mLive(){
           <span class="sb2">${nf(r.set||0)}/${nf(r.sets||0)} ${t('sets')}</span></div>
       </div>
       <div class="mstep">
-        <button class="sb3" data-act="live-set" data-d="-1" aria-label="${t('Fewer sets')}">${ic('chevD',22)}</button>
+        <button class="sb3" data-act="live-set" data-d="-1" aria-label="${t('Fewer sets')}">${ic('minus',22)}</button>
         <div class="mid">
           <div class="cnt">${nf(r.set||0)}<small>/${nf(r.sets||0)}</small></div>
           <div class="lb">${esc(t(r.label||t('Session')))}</div></div>
@@ -8545,7 +8567,7 @@ function mLive(){
       ${r.notes.slice(-3).reverse().map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line2)">
       <div style="font-size:12.5px">${esc(n.body)}</div>
       <div style="font-size:10px;color:var(--ink3);margin-top:3px">${nf(new Date(n.at).getHours())}:${String(new Date(n.at).getMinutes()).padStart(2,'0')}</div></div>`).join('')}</div>`:''}
-    <button class="btn btn-dark" style="width:100%;justify-content:center;color:var(--red)" data-act="live-end">${ic('check',15)} ${t('Finish & log')}</button>
+    <button class="btn btn-danger-o" style="width:100%;justify-content:center;height:46px" data-act="live-end">${ic('check',15)} ${t('Finish & log')}</button>
   </div>`;
 }
 /* keeps the ring and the clock alive without a full re-render per second */
@@ -8578,7 +8600,7 @@ function mJump(){
   const att=CLIENTS.filter(c=>c.status!=='Archived').slice(0,6);
   return `<div class="mjump" role="dialog" aria-label="${t('Jump to…')}">
     <div class="mjump-in">
-      <button class="btn btn-ghost btn-icon" data-act="mjump-close" aria-label="${t('Close')}">${ic('x',18)}</button>
+      <button class="btn btn-ghost btn-icon" data-act="mjump-close" aria-label="${t('Close')}">${ic('chevL',18).replace('<svg','<svg class="ic flip-rtl"')}</button>
       <input class="inp" id="mjump-q" placeholder="${t('Jump to an athlete, screen or action…')}"
         style="border:none;box-shadow:none;flex:1" oninput="mJumpFilter(this.value)">
     </div>
@@ -8679,25 +8701,51 @@ function renderMobile(){
   else body={today:mToday,clients:mClients,messages:mMessages,more:mMore}[S.mtab]();
   /* v19.19 — OVERLAYS live on .mshell, never inside a screen. A descendant   with an animation-driven transform becomes the containing block for   position:fixed children, which is how a bottom sheet ends up pinned to   the wrong box. The FAB sits IN the thumb bar (the coach's thumb is already   there) instead of floating over content. */
   if(S.mview==='live')liveTick();
+  /* v19.20 — mockup header: the brand gives way to a mono SCREEN LABEL
+     (screen · short date), exactly as coachui_2 does on every sub-screen.
+     Jump moves to the thumb bar (mockup tabbar), so the header keeps only
+     theme, messages and the avatar. mview wins over mtab: S.mtab keeps its
+     last value under a sub-screen, so looking it up first mislabelled Live
+     and Athlete as "Messages". */
+  let mscr='';
+  if(S.mview==='tabs')mscr={today:'Today',clients:'Athletes',messages:'Messages',more:'More'}[S.mtab]||'';
+  else mscr={client:'Athlete',live:'Live session',calendar:'Calendar',settings:'Settings',
+    builder:'Create Workout',nutrition:'Nutrition',templates:'Templates'}[S.mview]||'';
+  if(!mscr){sportSections().forEach(g=>g.items.forEach(([k,l])=>{if(k===S.mview)mscr=l}))}
+  /* mockup date style: "Fri, Oct 24" — not the locale's 10/24/2026 */
+  const mdd=dayDate(TODAY);
+  const mdate=lang==='fa'?fmtShortDate(mdd):mdd.toLocaleDateString(dLoc(),{weekday:'short',day:'numeric',month:'short'});
+  const mlabel=`${t(mscr||'Today')} · ${mdate}`;
+  /* v19.21 — mockup header pill: Today shows the coach's plan block, the
+     roster shows its count — the same two pills coachui_2 puts right of the
+     screen label. Sub-screens carry their own pill in the body instead. */
+  let mpill='';
+  if(S.mview==='tabs'&&S.mtab==='today'){
+    const pl=AUTH.coach?((AUTH.access&&AUTH.access.plan)||'trial'):t('Coach');
+    mpill=`<span class="mpill">${ic('radio',11)} ${esc(String(pl).toUpperCase())}</span>`;
+  }else if(S.mview==='tabs'&&S.mtab==='clients'){
+    const actN=CLIENTS.filter(c=>c.status==='Active').length;
+    mpill=`<span class="mpill">${ic('users',11)} ${nf(CLIENTS.length)} · ${nf(actN)} ${t('Active')}</span>`;
+  }
   return `<div class="mshell"${S.mjump?' data-jump':''}${S.msheet?' data-sheet':''}>
     ${aiFabRound()}
     ${toolboxFab()}
     <div class="mhead">
-      <div class="mbrand"><div class="brand-mark" style="width:28px;height:28px;border-radius:8px">${CM(14)}</div><span style="font-style:italic;text-transform:uppercase">COACHMINT</span></div>
+      <span class="mlabel">${mlabel}</span>
+      ${mpill}
       <div class="row" style="gap:4px">
         ${themeBtn('btn-ghost btn-icon')}
-        <button class="btn btn-ghost btn-icon" data-act="mjump" aria-label="${t('Jump to…')}" title="${t('Jump to…')}">${ic('search',19)}</button>
         <button class="btn btn-ghost btn-icon" style="position:relative" data-act="mtab" data-t="messages">${ic('mail',19)}${unreadN?`<span class="cdot" style="top:5px;inset-inline-end:5px"></span>`:''}</button>
-        <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),34,3)}</div>
+        <div style="cursor:pointer" data-act="mtab" data-t="more">${av(coachName(),40,3)}</div>
       </div>
     </div>
     <div class="mmain ${(S.mview==='tabs'&&S.mtab==='messages'&&S.msgThread)?'chatmode':''}">${body}</div>
     <div class="cnav">
-      ${[['today','Today','zap'],['clients','Athletes','users']].map(([k,l,i])=>`
+      ${[['today','Today','home'],['clients','Athletes','users']].map(([k,l,i])=>`
       <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
       <button class="cnav-it cnav-gap" tabindex="-1" aria-hidden="true">${ic('plus',20)}<span>${t('Log')}</span></button>
-      ${[['more','More','more']].map(([k,l,i])=>`
-      <button class="cnav-it ${S.mview==='tabs'&&S.mtab===k?'on':''}" data-act="mtab" data-t="${k}">${ic(i,20)}<span>${t(l)}</span></button>`).join('')}
+      <button class="cnav-it" data-act="mjump">${ic('search',20)}<span>${t('Jump')}</span></button>
+      <button class="cnav-it ${S.mview==='tabs'&&S.mtab==='more'?'on':''}" data-act="mtab" data-t="more">${ic('menu',20)}<span>${t('More')}</span></button>
     </div>
     <button class="cnav-fab" data-act="msheet" aria-label="${t('Log session')}" title="${t('Log session')}">${ic('plus',24)}</button>
     ${S.mjump?mJump():''}
@@ -8767,25 +8815,38 @@ function mToday(){
     <button class="btn btn-primary" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div>`;
   }
+  /* v19.20 — mockup Today (coachui_2 · s-today): NOW hero → quick rail →
+     Signals → Next up → Squad pulse. The welcome card is gone — the header
+     carries the date now — and the two footer buttons moved into More/Jump:
+     the mockup keeps the area under the pulse rail empty so the thumb bar
+     is the only thing at the bottom.
+     The hero already displays the running session (or the very next one), so
+     the section must NOT repeat it: `running` is "now", never "next", and the
+     hero's event is excluded when there is no live session. With nothing left
+     the hero says so — a second "All sessions done" under it was noise. */
+  const running=today.find(e=>e.start<=NOW&&e.start+e.dur>NOW&&!e.att)||null;
+  const firstUp=today.find(e=>e.start>NOW&&!e.att)||null;
+  const heroEv=liveRec()?null:(running||firstUp);
+  const next=today.filter(e=>!e.att&&e.start+e.dur>NOW
+    &&(!running||e.id!==running.id)&&(!heroEv||e.id!==heroEv.id))
+    .sort((a,b)=>a.start-b.start);
   return `<div class="mstack">
-    <div class="ccard cstat"><div><b style="font-size:15.5px">${AUTH.coach?t('Welcome back')+', '+esc(coachFirst()):t('Welcome back, Coach')}</b><div class="muted" style="font-size:11px;font-weight:500">${fmtFullDate(dayDate(TODAY))}</div></div>
-    <span class="bdg bdg-lime">${nf(today.length)} ${t('Sessions Today')}</span></div>
     ${mNow()}
     ${mRail()}
     ${mSignals()}
-    <div class="ccard" style="padding:6px 14px">
-      <div class="card-t" style="padding:10px 0 4px">${ic('clock',14)} ${t("Today's Schedule")}</div>
-      ${today.length?today.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
-      return `<div class="tl-row click" style="padding:11px 2px" data-act="ev-open" data-eid="${ev.id}">
-        <div class="tl-time" style="width:44px;font-size:12px">${nf(fmtT(ev.start))}</div>${cc?avC(cc.name,34):av(t('Coach'),34,3)}
-        <div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${t(ev.label)}</div><div class="muted" style="font-size:11.5px">${t(ev.client)} · ${nf(ev.dur)} h</div></div>
-        ${attBadge(ev)||`<span class="bdg ${st.b}" style="font-size:10px">${t(st.l)}</span>`}
-      </div>`}).join('')
-      :`<div style="padding:14px;text-align:center"><div class="muted" style="font-size:12px;margin-bottom:8px">${t('No events this day')}</div><button class="btn btn-primary btn-sm" data-act="ns-new">${ic('plus',13)} ${t('New Session')}</button></div>`}
-    </div>
+    ${next.length?`<div class="msec">${t('Next up')} <span class="c">${nf(next.length)}</span></div>
+    <div class="stg">
+      ${next.map(ev=>{const st=evState(ev);const cc=CLIENTS.find(c=>c.name===ev.client);
+      return `<div class="mrow" data-act="ev-open" data-eid="${ev.id}">
+        ${cc?avC(cc.name,30):av(t('Coach'),30,3)}
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:650;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t(ev.client))}</div>
+          <div class="muted" style="font-size:11.5px;margin-top:3px">${nf(fmtT(ev.start))} · ${esc(t(ev.label))} · ${nf(Math.round(ev.dur*60))} ${t('min')}</div>
+        </div>
+        ${attBadge(ev)||`<span class="bdg ${st.b}">${t(st.l)}</span>`}
+      </div>`}).join('')}
+    </div>`:''}
     ${mSquad()}
-    <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="mcal">${ic('calendar',15)} ${t('Open calendar →')}</button>
-    <button class="btn btn-dark" style="width:100%;justify-content:center" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div>`;
 }
 function mClients(){
@@ -8820,16 +8881,20 @@ function mClients(){
   return `<div class="mstack">
     <div class="searchbox sm" style="width:100%;flex:none;cursor:text">${ic('search',14)} <input id="mc-q" value="${esc(S.mcq||'')}" placeholder="${t('Search clients…')}" style="border:none;outline:none;flex:1;background:none;font-size:13px;color:var(--ink)" oninput="mcSearch(this.value)"></div>
     ${strip}
-    ${list.map(c=>{const pend=(DB[c.id]?.workouts||[]).some(w=>w.status==='assigned');
-    return `<div class="ccard" data-act="mclient" data-cid="${c.id}" style="cursor:pointer">
-      <div class="row" style="gap:10px">${avC(c.name,44)}
-        <div style="flex:1;min-width:0"><b>${t(c.name)}</b><div class="muted" style="font-size:12px">${t(c.goal)} · ${t(c.prog)}</div></div>
-        ${stBdg(c.status)}
-      </div>
-      <div class="row" style="margin-top:10px;gap:6px;flex-wrap:wrap">
-        <span class="chip">${t('Next Session')}: ${t(c.next)}</span>
-        ${pend?`<span class="bdg bdg-lime" style="font-size:10px">${t('Pending')}</span>`:''}
-        <span class="sp"></span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
+    ${list.map(c=>{
+    /* v19.21 — mockup roster row: ONE line of content — avatar, name, goal ·
+       program — and the state as dot+label on the leading edge before the
+       chevron. The old third line (Next Session + Pending) made every row a
+       card-in-card; that data lives on Today and in the workspace. */
+    const stc=c.status==='Active'?'on':((c.status==='On Hold'||c.status==='Paused')?'hold':'off');
+    return `<div class="ccard" data-act="mclient" data-cid="${c.id}" style="cursor:pointer;padding:12px 14px">
+      <div class="row" style="gap:11px">${avC(c.name,40)}
+        <div style="flex:1;min-width:0">
+          <b style="font-size:13.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.name)}</b>
+          <div class="muted" style="font-size:11.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.goal)} · ${t(c.prog)}</div>
+        </div>
+        <span class="mstat ${stc}"><i class="dot"></i>${t(c.status)}</span>
+        ${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
       </div>
     </div>`}).join('')||`<div class="ccard" style="text-align:center;color:var(--ink3)">${t('No results found.')}</div>`}
   </div>`;
@@ -8871,11 +8936,14 @@ function mThread(name){
     </div>
   </div>`;
 }
-/* ── one collapsible block. Open state lives in S.macc so a re-render keeps   what the coach opened; no height animation — content is simply present. ── */
-const mAcc=(k,label,badge,inner)=>{
+/* ── one collapsible block. Open state lives in S.macc so a re-render keeps   what the coach opened; no height animation — content is simply present. ──
+   v19.22 — mockup accordion head: a leading 16px accent icon rides BEFORE the
+   label (dumbbell/gauge/utensils/pencil…), exactly like coachui_2 s-athlete. */
+const mAcc=(k,icon,label,badge,inner)=>{
   const open=!!(S.macc||{})[k];
   return `<div class="ccard" style="padding:0">
     <button class="mrow" style="width:100%;margin:0" data-act="macc" data-k="${k}">
+      <span style="display:inline-flex;flex:none;color:var(--accent-text)">${ic(icon,16)}</span>
       <span style="flex:1">${t(label)}</span>
       ${badge?`<span class="muted" style="font-size:11.5px;font-weight:500">${badge}</span>`:''}
       ${ic(open?'chevD':'chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
@@ -8883,6 +8951,10 @@ const mAcc=(k,label,badge,inner)=>{
 }
 function mMore(){
   /* v19.19 — the COMPLETE index, grouped. Nothing that exists on the desktop   rail is missing here, and athletics sections come from the SAME SPORT_EXT   table, so a future sport needs no edit. */
+  /* v19.21 — mockup More (coachui_2 · s-more): profile card with the real
+     athlete count, section labels OUTSIDE the rows with counts, and the
+     Account group as icon-badge rows with subtitles. Jump lives in the thumb
+     bar and AI has its own FAB, so neither needs a row here any more. */
   const quick=[
     ['Messages','mail','mtab','messages'],
     ['Add Client','users','add-client',''],
@@ -8897,27 +8969,37 @@ function mMore(){
   const ath=[];sportSections().forEach(g=>g.items.forEach(([k,l,i])=>ath.push([l,i,'mnav',k])));
   /* data-t rides alongside data-v: `mtab` reads data-t, `mnav` reads data-v,
      so one row helper serves both without a special case. */
-  const grp=(title,rows)=>rows.length?`<div class="card-t" style="margin:2px">${t(title)}</div>
-    <div class="ccard" style="padding:6px">${rows.map(([l,i,act,v])=>
+  const grp=(title,rows)=>rows.length?`<div class="msec">${t(title)} <span class="c">${nf(rows.length)}</span></div>
+    <div class="stg">${rows.map(([l,i,act,v])=>
       `<div class="mrow" data-act="${act}"${v?` data-v="${v}" data-t="${v}"`:''}>${ic(i,17)}<span style="flex:1">${t(l)}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>`).join('')}</div>`:'';
+  /* account rows: 36px inset icon badge + title + subtitle (mockup .palItem) */
+  const acctRow=(icon,label,sub,act,extra,color)=>`
+    <div class="mrow" data-act="${act}" ${extra||''} ${color?`style="color:${color}"`:''}>
+      <span class="macc-ic" ${color?`style="background:var(--bad-soft);color:${color}"`:''}>${ic(icon,17)}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:650;font-size:13.5px">${t(label)}</div>
+        ${sub?`<div class="muted" style="font-size:11.5px;margin-top:2px">${t(sub)}</div>`:''}
+      </div>
+      ${color?'':ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}
+    </div>`;
+  const nAth=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const plan=AUTH.coach?((AUTH.access&&AUTH.access.plan)||'trial'):t('Coach');
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
-      <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div>
+      <div style="flex:1;min-width:0"><b>${esc(coachName())}</b><div class="muted" style="font-size:11.5px">${nf(nAth)} ${t('Athletes')}</div>
+        <span class="mpill" style="margin-top:6px">${ic('radio',11)} ${esc(String(plan).toUpperCase())}</span></div>
       ${langBtn('btn-outline btn-sm')}
     </div>
-    <div class="ccard" style="padding:6px">
-      <div class="mrow" data-act="mjump" style="color:var(--accent-deep)">${ic('search',17)}<span style="flex:1">${t('Jump to…')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      <div class="mrow" data-act="ai-chat-fab" style="color:var(--accent-deep)">${ic('zap',17)}<span style="flex:1">${t('AI Assistant')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      <div class="mrow" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',17)}<span style="flex:1">${t('Connect Client (Code)')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-    </div>
-    ${grp('Quick actions',quick)}
+    ${grp('Coach',quick)}
     ${ath.length?grp('Endurance Hub',ath):''}
-    <div class="ccard" style="padding:6px">
-      <div class="mrow" data-act="msettings">${ic('gear',17)}<span style="flex:1">${t('Settings')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      <div class="mrow" data-act="reset-demo">${ic('trash',17)}<span style="flex:1">${t('Reset demo data')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      <div class="mrow" data-act="switch-role">${ic('users',17)}<span style="flex:1">${t('Switch role')}</span>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</div>
-      <div class="mrow" data-act="signout" style="color:var(--red)">${ic('x',17)}<span>${t('Sign out')}</span></div>
+    <div class="msec">${t('Account')}</div>
+    <div class="stg">
+      ${acctRow('copy','Connect Client (Code)','Share code or QR','qa-item','data-item="Connect Client (Code)"')}
+      ${acctRow('gear','Settings','Language · Sport · Payments','msettings')}
+      ${acctRow('trash','Reset demo data','','reset-demo')}
+      ${acctRow('users','Switch role','','switch-role')}
+      ${acctRow('x','Sign out','','signout','', 'var(--bad)')}
     </div>
     <div class="muted" style="font-size:10.5px;text-align:center;padding:6px 0 2px">CoachMint · v15.8 · PWA · BETA · ${t('Your decisions. Zero automation.')}</div>
   </div>`;
@@ -8933,6 +9015,82 @@ function mClientView(){
   const meas=(db.measures||[]).slice(0,3);
   const notes=NOTES.filter(n=>n.client===c.name&&!n.arch).slice(0,3);
   const files=(DB[c.id]&&DB[c.id].photos)||[];
+  const assigned=(db.workouts||[]).filter(x=>!wDone(x));
+  const unread=MSGS.filter(m=>m.client===c.name&&m.from==='client'&&!m.read).length;
+  /* v19.21 — mockup athlete screen (coachui_2 · s-athlete), sharing the
+     DESKTOP workspace's tab keys + data-act="tab", so state is one system:
+     header → meta → NEXT STEP (always) → pill tabs → tab body.
+     Each section body is defined ONCE: the overview accordions wrap them,
+     the dedicated tab panels show the same content bare. */
+  const inTrain=`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Completed')}</span><b style="font-size:12.5px">${nf(db.stats.done)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Missed')}</span><b style="font-size:12.5px">${nf(db.stats.missed)}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Last Workout')}</span><b style="font-size:12.5px">${esc(t(c.last))}</b></div>
+       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Next Workout')}</span><b style="font-size:12.5px">${esc(t(c.nextW))}</b></div>
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mworkout">${ic('dumbbell',14)} ${t('Create Workout')}</button>`;
+  const inMeas=`${wtBadge(c.id)}${wChart(c.id,150)}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>`;
+  const inNut=`${nPlanOf(c.name)
+        ?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Plan')}</span><b style="font-size:12.5px">${esc(t(nPlanOf(c.name).name||''))}</b></div>`
+        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>`}
+       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mnut">${ic('utensils',14)} ${t('Nutrition')}</button>`;
+  const inNotes=(notes.length?notes.map(n=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
+        <b style="font-size:12.5px">${esc(t(n.title))}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
+        <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)
+      +`<button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>`;
+  const inFiles=files.length?files.map(f=>`<div class="mrow" style="padding:8px 0">${ic('camera',15)}<span style="flex:1;font-size:12.5px">${esc(f.n||t('Photo'))}</span></div>`).join('')
+        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`;
+  const inMore=`<div class="row" style="gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
+        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('camera',14)} ${t('Form reports')}</button>
+        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
+        ${isClientRunner(c)?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Endurance Hub')}</button>`:''}
+        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
+        <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
+      </div>`;
+  /* NEXT STEP — always rendered, exactly like the mockup. Priority: the live
+     session > today's slot > the client's next event > the next programmed
+     workout > schedule. Every branch is real data; nothing is invented. */
+  let ns;
+  if(inSession)ns={eb:t('Live now'),title:live.label||t('Session'),
+    sub:`${nf(live.set||0)}/${nf(live.sets||0)} ${t('sets')}`,act:'live-open',btn:t('Open session'),icon:'play',data:''};
+  else if(w)ns={eb:`${t('Next step')} · ${t(w.day)===t(FULLDAYS[TODAY])?t('Today'):t(w.day)}`,title:w.name,
+    sub:`${t(c.name)} · ${t(w.dur||'')}${wDone(w)?` · ${t('Completed')}`:` · ${t('Pending')}`}`,act:'wp-open',btn:t('Open week plan'),icon:'play',data:''};
+  else{
+    const ev=EVENTS.filter(e=>e.client===c.name&&!e.att).sort((a,b)=>a.day-b.day||a.start-b.start)[0];
+    if(ev)ns={eb:`${t('Next step')} · ${t(WDN[ev.day])} ${nf(fmtT(ev.start))}`,title:ev.label,
+      sub:`${t(c.name)} · ${nf(Math.round(ev.dur*60))} ${t('min')}`,act:'live-start',btn:t('Start session'),icon:'play',data:`data-cid="${c.id}" data-eid="${ev.id}"`};
+    else if(c.nextW)ns={eb:t('Next step'),title:c.nextW,sub:`${t(c.name)} · ${t('Visible to client')}`,
+      act:'mworkout',btn:t('Open week plan'),icon:'dumbbell',data:''};
+    else ns={eb:t('Next step'),title:t('No session scheduled'),sub:t('Plan one on the calendar'),
+      act:'ns-new',btn:t('Schedule Session'),icon:'calendar',data:''};
+  }
+  /* pill tabs — the SAME keys and data-act="tab" the desktop workspace uses.
+     attentionList() sends tab:'measurements' (a DESKTOP tab key); the mobile
+     pill row carries that content under 'progress', so map it — otherwise the
+     "Measurement due" signal silently fell back to Overview. */
+  const mTabs=[['overview','Overview','chart',0],['workouts','Workouts','dumbbell',assigned.length],
+    ['nutrition','Nutrition','utensils',nPlanOf(c.name)?1:0],['progress','Progress','trending-up',(db.measures||[]).length],
+    ['messages','Messages','mail',unread],['notes','Notes','note',notes.length],['files','Files','camera',files.length]];
+  const wantTab=S.tab==='measurements'?'progress':S.tab;
+  const cur=mTabs.some(x=>x[0]===wantTab)?wantTab:'overview';
+  const tabbar=`<div class="mtabs">${mTabs.map(([k,l,icn,n])=>k==='messages'
+    ?`<button class="mtab" data-act="mmsg" data-c="${esc(c.name)}">${ic(icn,14)}<span>${t(l)}</span>${n?`<span class="n">${nf(n)}</span>`:''}</button>`
+    :`<button class="mtab ${cur===k?'on':''}" data-act="tab" data-tab="${k}">${ic(icn,14)}<span>${t(l)}</span>${n?`<span class="n">${nf(n)}</span>`:''}</button>`).join('')}</div>`;
+  let bodyHTML;
+  if(cur==='workouts')bodyHTML=`<div class="ccard">${inTrain}</div>`;
+  else if(cur==='nutrition')bodyHTML=`<div class="ccard">${inNut}</div>`;
+  else if(cur==='progress')bodyHTML=`<div class="ccard">${inMeas}</div>`;
+  else if(cur==='notes')bodyHTML=`<div class="ccard">${inNotes}</div>`;
+  else if(cur==='files')bodyHTML=`<div class="ccard">${inFiles}</div>`;
+  else bodyHTML=
+    mAcc('train','dumbbell','Training',`${nf(db.stats.done)} ✓ / ${nf(db.stats.missed)} ✗`,inTrain)+
+    mAcc('meas','gauge','Measurements',meas.length?esc(t(meas[0].d||'')):t('—'),inMeas)+
+    mAcc('nut','utensils','Nutrition',nPlanOf(c.name)?t('Plan set'):t('—'),inNut)+
+    mAcc('notes','note',t('Notes'),nf(notes.length),inNotes)+
+    mAcc('files','camera','Files',nf(files.length),inFiles)+
+    mAcc('more','more','More actions','',inMore);
   return `<div class="mstack">
     <div class="row" style="gap:8px">
       <button class="btn btn-ghost btn-icon back-ic" data-act="mhome">${ic('chevL',18)}</button>
@@ -8940,59 +9098,15 @@ function mClientView(){
       ${stBdg(c.status)}</div>
     <div class="s" style="margin:0;color:var(--ink3);font-size:12px">${esc(t(c.goal))} · ${t('Program')}: ${esc(t(c.prog))}${c.week?` · ${t('Week')} ${nf(c.week)}`:''}</div>
 
-    <!-- one dock: the four things a coach does with a thumb, above the fold -->
-    <div class="mtool">
-      <button data-act="${inSession?'live-open':'live-start'}" data-cid="${c.id}" style="${inSession?'color:var(--accent-deep);border-color:var(--acc-line)':''}">${ic(inSession?'play':'zap',20)}${inSession?t('Live'):t('Start')}</button>
-      <button data-act="msheet" data-cid="${c.id}">${ic('plus',20)}${t('Log')}</button>
-      <button data-act="mmsg" data-c="${esc(c.name)}">${ic('mail',20)}${t('Message')}</button>
-      <button data-act="macc" data-k="more">${ic('more',20)}${t('More')}</button>
+    <div class="ccard mns">
+      <span class="eyebrow">${ns.eb}</span>
+      <div class="row" style="gap:9px;margin-top:8px">${ic(ns.icon,16)}<b style="font-size:14.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t(ns.title))}</b></div>
+      <div class="muted" style="font-size:12px;margin-top:3px">${esc(ns.sub)}</div>
+      <button class="btn btn-primary" data-act="${ns.act}" ${ns.data}>${ic(ns.icon,15)} ${t(ns.btn)}</button>
     </div>
 
-    ${w?`<div class="ccard" style="border-color:var(--acc-line);background:linear-gradient(160deg,var(--accent-soft),transparent 70%),var(--surface)">
-      <span class="eyebrow" style="color:var(--accent-deep)">${t('Next action')}</span>
-      <div class="row" style="gap:9px;margin-top:8px">${ic('dumbbell',16)}<b style="font-size:14px">${esc(w.name)}</b></div>
-      <div class="muted" style="font-size:12px;margin-top:3px">${esc(t(w.day))} · ${wDone(w)?t('Completed'):t('Pending')} — ${t('Visible to client')}</div>
-      <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:12px" data-act="wp-open">${ic('play',14)} ${t('Open week plan')}</button>
-    </div>`:''}
-
-    ${mAcc('train','Training',`${nf(db.stats.done)} ✓ / ${nf(db.stats.missed)} ✗`,
-      `<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Completed')}</span><b style="font-size:12.5px">${nf(db.stats.done)}</b></div>
-       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Workouts Missed')}</span><b style="font-size:12.5px">${nf(db.stats.missed)}</b></div>
-       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Last Workout')}</span><b style="font-size:12.5px">${esc(t(c.last))}</b></div>
-       <div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Next Workout')}</span><b style="font-size:12.5px">${esc(t(c.nextW))}</b></div>
-       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mworkout">${ic('dumbbell',14)} ${t('Create Workout')}</button>`)}
-
-    ${mAcc('meas','Measurements',meas.length?esc(t(meas[0].d||'')):t('—'),
-      `${wtBadge(c.id)}${wChart(c.id,150)}
-       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>`)}
-
-    ${mAcc('nut','Nutrition',nPlanOf(c.name)?t('Plan set'):t('—'),
-      `${nPlanOf(c.name)
-        ?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Plan')}</span><b style="font-size:12.5px">${esc(t(nPlanOf(c.name).name||''))}</b></div>`
-        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>`}
-       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mnut">${ic('utensils',14)} ${t('Nutrition')}</button>`)}
-
-    ${mAcc('notes',t('Notes'),nf(notes.length),
-      (notes.length?notes.map(n=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
-        <b style="font-size:12.5px">${esc(t(n.title))}</b>
-        <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
-        <div style="font-size:10px;color:var(--ink3);margin-top:3px">${esc(t(n.date))}${n.from==='client'?' · '+t('Client'):''}</div></div>`).join('')
-        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)
-      +`<button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="qn-open" data-c="${esc(c.name)}">${ic('note',14)} ${t('Add Note')}</button>`)}
-
-    ${mAcc('files','Files',nf(files.length),
-      files.length?files.map(f=>`<div class="mrow" style="padding:8px 0">${ic('camera',15)}<span style="flex:1;font-size:12.5px">${esc(f.n||t('Photo'))}</span></div>`).join('')
-        :`<div class="muted" style="font-size:12px;padding:6px 0">${t('No results found.')}</div>`)}
-
-    ${mAcc('more','More actions','',
-      `<div class="row" style="gap:8px;flex-wrap:wrap">
-        <button class="btn btn-outline btn-sm" data-act="fc-open" data-c="${esc(c.name)}">${ic('ruler',14)} ${t('Form check')}</button>
-        <button class="btn btn-outline btn-sm" data-act="fc-reports" data-c="${esc(c.name)}">${ic('camera',14)} ${t('Form reports')}</button>
-        <button class="btn btn-outline btn-sm" data-act="ai-analyze" data-c="${esc(c.name)}">${ic('zap',14)} ${t('AI Analysis')}</button>
-        ${isClientRunner(c)?`<button class="btn btn-outline btn-sm" data-act="mnav" data-v="aprof">${ic('user-round',14)} ${t('Endurance Hub')}</button>`:''}
-        <button class="btn btn-outline btn-sm" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',14)} ${t('Edit Client')}</button>
-        <button class="btn btn-outline btn-sm" style="color:var(--red)" data-act="client-del" data-c="${esc(c.name)}">${ic('trash',14)} ${t('Delete')}</button>
-      </div>`)}
+    ${tabbar}
+    ${bodyHTML}
   </div>`;
 }
 
@@ -12533,7 +12647,12 @@ document.addEventListener('click',e=>{
     case 'lang':
     case 'lang-cycle':{
       const next=lang==='en'?'tr':(lang==='tr'?'fa':'en');
-      lang=next;applyLang();render();
+      lang=next;
+      /* persist BEFORE applyLang: it re-reads the saved locale and would
+         snap lang straight back to 'fa' the moment we set it to 'en' —
+         which made the cycle button a one-way trip into Persian. */
+      try{localStorage.setItem('co-lang',next);localStorage.setItem('coach-os-locale',next)}catch(e){}
+      applyLang();render();
       toast(lang==='tr'?'Dil Türkçe olarak değiştirildi':(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English'));
       break;
     }
@@ -12882,9 +13001,14 @@ document.addEventListener('click',e=>{
       PBSD.unshift(p);closeModal();saveData();render();toast(t('Mark recorded'));break;}
     case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
     case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();S.calOff=0;
-      if(isNarrow()){S.mClient=+el.dataset.cid;S.mview='client'}else{S.view='wspace';S.cid=+el.dataset.cid}
-      loadClientProgram(S.cid);
-      render();window.scrollTo({top:0});break}
+          /* the CLICKED client, not the previously selected one: on mobile only
+             S.mClient is set below, so the old loadClientProgram(S.cid) prefilled
+             the builder with the WRONG athlete's program. Desktop sets S.cid=ncid
+             first, so its behaviour is unchanged. */
+          const ncid=+el.dataset.cid||S.cid;
+          if(isNarrow()){S.mClient=ncid;S.mview='client'}else{S.view='wspace';S.cid=ncid}
+          loadClientProgram(ncid);
+          render();window.scrollTo({top:0});break}
     case 'ec-open':editClientModal(el.dataset.c);break;
     case 'ec-save':{const c=CLIENTS.find(x=>x.name===el.dataset.c)||client(S.cid);
       const fn=$('ec-fn').value.trim()||c.name.split(' ')[0];

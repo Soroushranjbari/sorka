@@ -2,14 +2,18 @@
 //
 // This test exists because of two production bugs that unit tests could not
 // catch:
-//   1. shop/api/*.mjs lived OUTSIDE netlify.toml's [functions] directory, so
-//      Netlify never deployed them and every shop checkout 404'd.
+//   1. shop/api/*.mjs lived OUTSIDE the deployed functions directory (the old
+//      Netlify layout), so the host never bundled them and every shop checkout
+//      404'd. The same filter now guards the Vercel `includeFiles` bundle in
+//      api/[...path].mjs: a handler the adapter imports MUST live under
+//      backend/**, otherwise the deployed function dies with
+//      ERR_MODULE_NOT_FOUND.
 //   2. publish = "." served db/schema.sql (every password hash), data/*.json
 //      and data/prod-secrets.txt to anyone who asked for them.
 //
 // It boots the real standalone server on a random port with a temp SQLite
 // database and asserts the API contracts + the static deny-list.
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
@@ -29,7 +33,10 @@ const child = spawn(process.execPath, ['server.mjs'], {
   env: {
     ...process.env,
     PORT: String(PORT), HOST: '127.0.0.1',
-    SQLITE_PATH: join(dir, 'kv-test.sqlite.db'), NODE_ENV: 'test',
+    SQLITE_PATH: join(dir, 'kv-test.sqlite.db'),
+    // NODE_ENV=test keeps /api/health from reporting any db host — the test
+    // suite runs against a real (possibly production) .env, so pin it.
+    NODE_ENV: 'test',
     // Hermetic: the suite tests the SQLITE backend. A developer .env with a
     // live DATABASE_URL would otherwise flip server.mjs to Postgres (and, if
     // that DB is unreachable, fail ~30 tests with server-error). Empty string
@@ -425,6 +432,42 @@ try {
 
   const strStat2 = await j('/api/strava/status');
   ok('GET /api/strava/status confirmed disconnected', strStat2.status === 200 && strStat2.d?.connected === false, strStat2.d);
+
+  /* v18.19 — REGRESSION GUARD: /api/strava/* existed in server.mjs only.
+     The Vercel adapter (api/[...path].mjs) never imported the handler, so in
+     production every Strava call 404'd while the local suite stayed green
+     (the client swallows the error). Every handler MUST be reachable through
+     both entry points, and every endpoint app.js/shop calls must exist.
+     Static check: no server, no network — pure source comparison. */
+  console.log('== routing parity: server.mjs <-> Vercel adapter ==');
+  const adapterSrc = readFileSync(new URL('../api/[...path].mjs', import.meta.url), 'utf8');
+  const serverSrc = readFileSync(new URL('../server.mjs', import.meta.url), 'utf8');
+  for (const [label, src] of [['adapter', adapterSrc], ['server', serverSrc]]) {
+    for (const ns of ['auth', 'billing', 'data', 'ai', 'push', 'export', 'media', 'chat', 'health', 'strava', 'checkout', 'account']) {
+      /* Literal substring match: no regex escaping to get wrong. */
+      ok(`${label} routes ${ns}`, src.includes(ns), ns);
+    }
+  }
+  ok('adapter imports the strava handler file', /from '\.\.\/backend\/handlers\/strava\.mjs'/.test(adapterSrc), 'import');
+  ok('adapter dispatches /api/strava/*', /inner\.startsWith\('strava\/'\)/.test(adapterSrc), 'dispatch');
+  /* Every handler lives under backend/ (the adapter's includeFiles bundle). */
+  ok('all imported handlers live under backend/handlers/', !/from '\.\.\/(?!backend\/handlers\/)[^']+\.mjs'/.test(adapterSrc), 'outside backend/');
+
+  /* No client-broken endpoint: every /api/... path app.js or the shop pages
+     fetch must be one the server + adapter actually dispatch. */
+  const KNOWN = ['/api/auth/', '/api/billing/', '/api/data', '/api/ai/', '/api/push/',
+    '/api/export/', '/api/media', '/api/chat/', '/api/health', '/api/strava/',
+    '/shop/api/checkout', '/shop/api/account/'];
+  for (const f of ['../app.js', '../shop/account.html', '../shop/checkout.html']) {
+    let src = '';
+    try { src = readFileSync(new URL(f, import.meta.url), 'utf8'); } catch { continue; }
+    const missing = new Set();
+    for (const m of src.matchAll(/['`"](\/(?:api|shop\/api)\/[A-Za-z0-9_\-/]*)/g)) {
+      const p = m[1];
+      if (!KNOWN.some((k) => p === k || p.startsWith(k))) missing.add(p);
+    }
+    ok(`every endpoint fetched by ${f} is routed`, missing.size === 0, [...missing]);
+  }
 
   console.log('== static exposure (regression: secrets were downloadable) ==');
   // The exact-case list below once passed while GET /.ENV returned the whole

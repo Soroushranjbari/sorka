@@ -1,6 +1,5 @@
 // CoachMint — request guard: rate limiting, body caps, security headers.
-// Pure functions over standard Web Request/Response — works on Netlify,
-// Vercel, the standalone server, anywhere. Zero dependencies.
+// Pure functions over standard Web Request/Response — works on Vercel, the standalone server, anywhere. Zero dependencies.
 //
 // Rate limiting is in-memory (per instance). Fine for single-instance
 // deployments; behind a multi-instance load balancer each instance enforces
@@ -155,7 +154,8 @@ export const CSP =
 
 // The shop landing page legitimately loads @fontsource CSS + three.js from
 // CDNs. Applying CSP above to it silently blocked both, so it gets its own
-// (still locked-down) policy. Mirrored in netlify.toml for /shop/*.
+// (still locked-down) policy. Mirrored for /shop/* in vercel.json's headers
+// and in server.mjs (CSP_SHOP) for self-hosted runs.
 export const CSP_SHOP =
   "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
@@ -171,8 +171,11 @@ export const SECURITY_HEADERS = {
   'strict-transport-security': 'max-age=31536000; includeSubDomains'
 };
 
-/** Apply security headers to a Response (mutates and returns it). */
+/** Apply security headers to a Response (mutates and returns it). Also safely handles Promise<Response>. */
 export function secure(res) {
+  if (res && typeof res.then === 'function') {
+    return res.then(secure);
+  }
   for (const [k, v] of Object.entries(SECURITY_HEADERS)) {
     try { res.headers.set(k, v); } catch {}
   }

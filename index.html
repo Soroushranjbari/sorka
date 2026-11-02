@@ -1503,23 +1503,154 @@ html[lang="fa"] .td-mi span{letter-spacing:0}
 .phone .cbody{animation:cfade .5s ease}
 @keyframes cfade{from{opacity:0;transform:translateY(10px)}}
 @media(prefers-reduced-motion:reduce){.phone .cbody{animation:none}}
-/* coach mobile — black chrome, green accents */
+/* ═══════════════════════════════════════════════════════════════════
+   v19.20 — COACH MOBILE · "Signal & Surface" (mockup coachui_2 +
+   theme_4, signed off in the superdesign workflow). The tokens are
+   scoped to .mshell so the desktop and the client portal keep their
+   own vocabulary untouched. Light is the base; dark overrides below.
+   Rule from theme_4: every token that carries TEXT is AA on the
+   surface it actually sits on.
+   ═════════════════════════════════════════════════════════════════ */
+.mshell{
+  --inset:#F2F2EC; --raised:#FFFFFF; --line-strong:#C9C9BC;
+  /* theme_4 ink ladder — the app's own tokens are --ink2/--ink3 (no hyphen);
+     every v19.20 rule that says var(--ink-2) was silently invalid without
+     these. Values are theme_4's, verified AA on the surface they sit on. */
+  --ink-2:#4A4F45; --ink-3:#5C6157; --ink-faint:#A3A79C;
+  --ink:#14170F;
+  --bg:#DDDDD0; --surface:#FFFFFF;
+  --line:#E2E2DA;
+  --accent-line:#C3DE7B; --accent-text:#4A6406; --accent-soft:#F2FADF;
+  --r-pill:999px;
+  --ok:#1B6B3A; --ok-soft:#E7F4EC; --ok-line:#BFE3CC;
+  --warn:#8A5300; --warn-soft:#FDF0DC; --warn-line:#F0D4A6;
+  --bad:#B02A25; --bad-soft:#FCEAEA; --bad-line:#F3C7C5;
+  --info:#1F5FA8; --info-soft:#E8F0FB; --info-line:#C4D8F3;
+  --font-num:'JetBrains Mono','SFMono-Regular',Consolas,monospace;
+  --t-sm:400 12.5px/1.45 var(--font);
+  --t-num:700 15px/1 var(--font-num);
+  --t-num-sm:700 12px/1 var(--font-num);
+  --r-sm:6px; --r-md:10px; --r-lg:14px;
+  --hair:1px solid var(--line); --hair-strong:1px solid var(--line-strong);
+  --sh-pop:0 12px 28px -16px rgba(18,21,27,.35);
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --d-press:120ms; --d-micro:160ms; --d-panel:200ms; --d-modal:240ms;
+}
+html[data-theme="dark"] .mshell{
+  --inset:#11141A; --raised:#1C2027; --line-strong:#39404A;
+  --ink-2:#B0B6C0; --ink-3:#868F9C; --ink-faint:#5A6270;
+  --ink:#E9EBEE;
+  --bg:#0D1013; --surface:#15181D;
+  --line:#262B33;
+  --accent-line:#5E7222; --accent-text:#C8F04B; --accent-soft:#1E2510;
+  --r-pill:999px;
+  --ok:#57CE8A; --ok-soft:#17331F; --ok-line:#2C5C3D;
+  --warn:#F0B45C; --warn-soft:#3A2A11; --warn-line:#6B4E1E;
+  --bad:#FF8079; --bad-soft:#3D1C1A; --bad-line:#713330;
+  --info:#79B8FF; --info-soft:#132A44; --info-line:#2A4E78;
+  --sh-pop:0 12px 28px -16px rgba(0,0,0,.7);
+}
+/* coach mobile — Signal & Surface chrome (was: black chrome, green accents) */
 .mshell{height:100vh;height:100dvh;display:flex;flex-direction:column;background:var(--bg)}
-.mhead{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#12151B,#171B22);backdrop-filter:blur(10px);border-bottom:1px solid rgba(200,240,75,.16);padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff}
-.mhead .mbrand{color:#fff}
-.mhead .mbrand b{color:var(--accent)}
-.mhead .btn-ghost{color:#B9BEC9}
-.mhead .btn-ghost:hover{background:rgba(255,255,255,.08);color:#fff}
+/* v19.20 — mockup header: recessed inset strip + hairline, mono screen label.
+   The old dark gradient + lime hairline was the v18 chrome, not the mockup. */
+.mhead{position:sticky;top:0;z-index:30;background:var(--inset);backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:var(--hair);padding:13px 14px 10px;padding-top:calc(13px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--ink)}
+.mhead .mbrand{color:var(--ink)}
+.mhead .mbrand b{color:var(--accent-text)}
+.mhead .btn-ghost{color:var(--ink-2)}
+.mhead .btn-ghost:hover{background:var(--line2);color:var(--ink)}
+/* the mono screen label — "TODAY · FRI 23 OCT" — replaces the brand on mobile,
+   pinned right after the left edge so it sits at the same x on every screen.
+   theme_4: ink-3 (muted), NOT ink — the label is instrumentation, not a title. */
+.mhead .mlabel{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  color:var(--ink-3);margin-inline-end:auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* header icon buttons — mockup .icb: 44×44 squares (the touch floor), hairline,
+   surface fill. The old 34px buttons made the header 58px vs the mockup's 68. */
+.mhead .icb,.mhead .btn-ghost.btn-icon{width:44px;height:44px;border-radius:var(--r-sm);border:var(--hair);background:var(--surface);
+  color:var(--ink-2);display:grid;place-items:center;cursor:pointer;position:relative;flex:none;padding:0;
+  transition:background var(--d-micro) var(--ease-out),color var(--d-micro) var(--ease-out)}
+.mhead .icb:hover,.mhead .btn-ghost.btn-icon:hover{background:var(--line2);color:var(--ink)}
+.mhead .icb .cdot,.mhead .btn-ghost.btn-icon .cdot{position:absolute;top:7px;inset-inline-end:7px}
+/* header pill — mockup .pill: 22px tall, 0 9px, mono 700 10.5, tinted border.
+   Light: accent-ink on accent-soft (theme_4's own pairing). Dark: accent-soft
+   is the deep olive #1E2510, so the text flips to accent-text (lime) — the
+   theme_4 dark pill pairing, since accent-ink would vanish on it. */
+.mshell .mpill{display:inline-flex;align-items:center;gap:5px;flex:none;height:22px;padding:0 9px;
+  border-radius:var(--r-pill);background:var(--accent-soft);border:1px solid var(--accent-line);
+  color:var(--accent-ink);font:700 10.5px/1 var(--font-num);letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap}
+html[data-theme="dark"] .mshell .mpill{color:var(--accent-text)}
 .mbrand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px}
 .mbrand b{color:var(--ink3)}
+/* ═══════════════════════════════════════════════════════════════════
+   v19.20 — Signal & Surface COMPONENTS, scoped to .mshell.
+   Vocabulary lifted from coachui_2: sharper 10px cards + hairlines,
+   tracked mono caps for every label, neutral avatars (state lives in
+   rings and pills, never in hue), status pills, section labels that
+   sit OUTSIDE their cards, and the hero dock.
+   ═════════════════════════════════════════════════════════════════ */
+.mshell .ccard{border-radius:var(--r-md);border:var(--hair);box-shadow:none}
+/* section / card labels — the instrumentation voice */
+.mshell .card-t{font:var(--t-label);letter-spacing:var(--tr-label);text-transform:uppercase;
+  color:var(--ink-3);font-size:10.5px;font-weight:700;gap:7px}
+.mshell .card-t .ic{color:var(--accent-text)}
+/* section label OUTSIDE a card (mockup .sec) + its row stack (.stg) */
+.mshell .msec{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin:14px 0 8px;font:var(--t-label);letter-spacing:var(--tr-label);
+  text-transform:uppercase;color:var(--ink-3)}
+.mshell .msec .c{font:var(--t-num-sm);color:var(--ink-faint);letter-spacing:0}
+.mshell .stg{display:flex;flex-direction:column;gap:8px}
+.mshell .stg>.msig,.mshell .stg>.mrow,.mshell .stg>.evr{
+  border:var(--hair);border-radius:var(--r-md);background:var(--surface);padding:11px 14px}
+/* badges → status pills (mono caps, tinted, never saturated text) */
+.mshell .bdg{font-family:var(--font-num);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;height:21px;padding:0 8px;border:1px solid transparent}
+/* filter chips → mockup pills */
+.mshell .fchip{border-radius:var(--r-pill);border:var(--hair);background:var(--surface);
+  color:var(--ink-2);font-weight:600;font-size:12.5px}
+.mshell .fchip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* avatars → neutral; the ring/badge carries the state (mockup rule) */
+.mshell .av{background:var(--seg-bg) !important;color:var(--ink);border:var(--hair-strong);
+  font-family:var(--font-num);letter-spacing:.02em}
+/* list rows: mockup metrics (≥46px thumb target, 650 weight) */
+.mshell .mrow{min-height:46px;border-radius:var(--r-sm);font-weight:650;font-size:13.5px;gap:11px}
+/* buttons: primary = lime fill, outline = ghost hairline (mockup btn-p/btn-g) */
+.mshell .btn-primary{background:var(--accent);color:var(--accent-ink);border-radius:var(--r-sm);border:1px solid transparent}
+.mshell .btn-outline{background:transparent;border:var(--hair-strong);color:var(--ink-2);border-radius:var(--r-sm)}
+.mshell .btn-outline:hover{background:var(--inset);color:var(--ink)}
+.mshell .btn-dark{background:var(--accent);color:var(--accent-ink);border-radius:var(--r-sm);border:1px solid transparent}
+/* hero action dock (mockup .dock) */
+.mshell .dock{display:flex;gap:9px;padding-top:4px}
+.mshell .dock .btn{flex:1;justify-content:center;height:46px}
+.mshell .mfloor-now .btn{height:46px;border-radius:var(--r-sm);font:650 13.5px/1 var(--font)}
+/* header icon buttons — mockup .icb squares, defined with the header above */
+/* ── FA: tracked mono caps break Persian letter-joining, so every label
+   drops tracking and switches to Vazirmatn when the app is Persian ── */
+html[lang="fa"] .mshell .card-t,html[lang="fa"] .mshell .msec,
+html[lang="fa"] .mhead .mlabel,html[lang="fa"] .mshell .mfloor-now .eyebrow{
+  font-family:'Vazirmatn','JetBrains Mono',sans-serif;letter-spacing:0;
+  text-transform:none;font-size:11.5px;font-weight:700;line-height:1.4}
+html[lang="fa"] .mshell .cnav-it{font-family:'Vazirmatn',sans-serif;letter-spacing:0;
+  font-size:9.5px;text-transform:none}
+html[lang="fa"] .mshell .bdg{font-family:'Vazirmatn',sans-serif;letter-spacing:0;
+  text-transform:none;font-size:10px}
+html[lang="fa"] .mshell .msec .c{font-family:'Vazirmatn',sans-serif}
+html[lang="fa"] .mshell .mpill,html[lang="fa"] .mstat,html[lang="fa"] .mshell .mns .eyebrow{
+  font-family:'Vazirmatn',sans-serif;letter-spacing:0;text-transform:none}
+html[lang="fa"] .mshell .mpill,html[lang="fa"] .mshell .mns .eyebrow{font-size:10.5px}
+html[lang="fa"] .mstat{font-size:10.5px}
+html[lang="fa"] .mshell .mtab .n,html[lang="fa"] .msig-v{font-family:'Vazirmatn',sans-serif}
 .mmain{flex:1;min-height:0;overflow-y:auto;padding:14px 14px 100px;scrollbar-width:thin}
 .mmain.chatmode{display:flex;flex-direction:column;overflow:hidden;padding:0}
 .mstack{display:flex;flex-direction:column;gap:12px}
 .mrow{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13.5px}
 .mrow:hover{background:var(--line2)}
-.mshell .cnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(13,15,19,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07)}
-.mshell .cnav-it{color:var(--ink3)}
-.mshell .cnav-it.on{color:var(--accent);background:rgba(200,240,75,.12)}
+/* v19.20 — mockup tabbar: inset strip + hairline, mono uppercase micro-labels,
+   active = accent-text colour only (the old lime pill + indicator bar is gone). */
+.mshell .cnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--inset);backdrop-filter:none;-webkit-backdrop-filter:none;border-top:var(--hair);padding-inline:2px}
+.mshell .cnav-it{color:var(--ink-3);font-family:var(--font-num);font-size:8.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;gap:4px}
+.mshell .cnav-it.on{color:var(--accent-text);background:none}
+.mshell .cnav-it.on::after{display:none}
 .mchat{display:flex;flex-direction:column;height:100%;min-height:0}
 .mchat-h{display:flex;align-items:center;gap:9px;padding:10px 12px;border-bottom:1px solid var(--line2);background:var(--surface)}
 .mchat-b{flex:1;min-height:0;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:10px}
@@ -1674,6 +1805,117 @@ body.sb-open .scrim{display:block}
   min-height:64px;padding:10px 4px;border:1px solid var(--line);border-radius:12px;
   background:var(--surface);color:var(--ink2);font-size:11px;font-weight:600;cursor:pointer}
 .mtool button:active{transform:scale(.95);background:var(--accent-soft)}
+/* ═══════════════════════════════════════════════════════════════════
+   v19.21 — mockup components (coachui_2 · Signal & Surface): hero
+   gradient, hot rail pill, signal roles + value column, header pill,
+   roster state, athlete pill tabs, next-step card, account icon
+   badges, 4×2 RPE keypad. Placed AFTER the v19.19 floor rules so the
+   equal-specificity overrides (.mrail .fchip, .mfloor-now) win.
+   ═════════════════════════════════════════════════════════════════ */
+.mshell .mfloor-now{border-color:var(--accent-line);
+  background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)}
+.mrail .fchip{height:44px;padding-inline:15px;gap:7px;font-weight:650;font-size:12.5px;
+  transition:transform var(--d-press) var(--ease-out),background var(--d-micro) var(--ease-out)}
+.mrail .fchip:active{transform:scale(.94)}
+.mrail .fchip .ic{color:var(--accent-text)}
+.mrail .fchip.hot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.mrail .fchip.hot .ic{color:var(--accent-ink)}
+/* signal roles: neutral inset badge by default, solid lime for "act" */
+.mshell .msig .msig-i{background:var(--inset);color:var(--ink-2)}
+.mshell .msig.act .msig-i{background:var(--accent);color:var(--accent-ink)}
+.mshell .msig.warn .msig-i{background:var(--warn-soft);color:var(--warn)}
+.mshell .msig.bad .msig-i{background:var(--bad-soft);color:var(--bad)}
+.mshell .msig-v{font:800 15px/1 var(--font-num);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+/* header pill (mockup .pill.accent) — defined with the header above */
+/* roster state: dot + label on the leading edge (mockup) */
+.mstat{display:inline-flex;align-items:center;gap:6px;flex:none;white-space:nowrap;
+  font:700 10px/1 var(--font-num);letter-spacing:.08em;text-transform:uppercase}
+.mstat .dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.mstat.on{color:var(--accent-text)}
+.mstat.hold{color:var(--warn)}
+.mstat.off{color:var(--bad)}
+/* athlete pill tabs — the SAME tab keys + data-act="tab" as desktop */
+.mshell .mtabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
+.mshell .mtabs::-webkit-scrollbar{display:none}
+.mshell .mtab{flex:none;display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 14px;
+  border-radius:999px;border:var(--hair);background:var(--surface);color:var(--ink-2);
+  font:650 12.5px/1 var(--font);cursor:pointer;white-space:nowrap;
+  transition:background var(--d-micro) var(--ease-out),color var(--d-micro) var(--ease-out)}
+.mshell .mtab .ic{color:var(--ink-3)}
+.mshell .mtab.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent-text)}
+.mshell .mtab.on .ic{color:var(--accent-text)}
+.mshell .mtab.on::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.mshell .mtab .n{font:700 10px/1 var(--font-num);background:var(--seg-bg);color:var(--ink-2);
+  border-radius:999px;padding:3px 6px}
+.mshell .mtab.on .n{background:var(--accent);color:var(--accent-ink)}
+/* next-step hero card (mockup) */
+.mshell .mns{border-color:var(--accent-line);
+  background:linear-gradient(160deg,var(--accent-soft),transparent 72%),var(--surface)}
+.mshell .mns .btn{width:100%;justify-content:center;height:46px;margin-top:12px;border-radius:var(--r-sm)}
+/* account rows: 36px inset icon badge */
+.macc-ic{width:36px;height:36px;border-radius:10px;background:var(--inset);color:var(--accent-text);
+  display:grid;place-items:center;flex:none}
+/* log-sheet RPE: 4×2 keypad, not one 8-across row (mockup floor: 44px keys) */
+.msheet #msheet-rpe{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.msheet #msheet-rpe .fchip{height:44px;justify-content:center;display:inline-flex;align-items:center;
+  font-family:var(--font-num);font-weight:700;font-size:13px}
+/* hero attention line (mockup: "۳ روز بدونِ جوابِ شما") */
+.mshell .mwarn{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:12px;
+  font-weight:650;color:var(--warn)}
+/* squad ring status dot (mockup .st) */
+.mpulse .mp .r .st{position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;border-radius:50%;
+  border:2.5px solid var(--surface)}
+.mpulse .mp .r .st.ok{background:var(--accent)}
+.mpulse .mp .r .st.watch{background:var(--warn)}
+.mpulse .mp .r .st.risk{background:var(--bad)}
+.mpulse .mp .r .st.idle{background:var(--line-strong)}
+/* hero avatar carries the accent tint — it is the card the eye lands on */
+.mshell .mfloor-now .av{background:var(--accent-soft)!important;color:var(--accent-text)!important;
+  border:none;font-size:13px!important}
+/* ═══════════════════════════════════════════════════════════════════
+   v19.21b — PRECISION PASS. Every value below was measured off the
+   mockup's own computed styles (coachui_2 @390px) and matched 1:1:
+   label/section colors, hero eyebrow, progress track, signal type
+   scale, pulse metrics, thumb-bar geometry, FAB seat, badge pills.
+   ═════════════════════════════════════════════════════════════════ */
+/* hero eyebrow = theme_4 .k.on: mono 700 10.5/.14em uppercase, accent-text */
+.mshell .mfloor-now .eyebrow{font:var(--t-label);letter-spacing:var(--tr-label);
+  text-transform:uppercase;font-size:10.5px}
+/* progress track = seg-bg (was line2), fill stays lime */
+.mshell .mfloor-now .mprog{background:var(--seg-bg)}
+/* hero sub + attention line = theme_4 .s (12.5px) */
+.mshell .mfloor-now .muted{font-size:12.5px}
+.mshell .mwarn{font-size:12.5px}
+/* section labels: ink-3 (mockup .sec), count ink-3 (not faint), 16px top */
+.mshell .msec{margin:16px 0 8px;color:var(--ink-3)}
+.mshell .msec .c{color:var(--ink-3)}
+/* signal type scale: tt 650 13.5/1.25, mm 12.5/1.45 ink-3, val ink-2 */
+.mshell .msig .msig-t{font:650 13.5px/1.25 var(--font);color:var(--ink)}
+.mshell .msig .msig-s{font:400 12.5px/1.45 var(--font);color:var(--ink-3)}
+/* pulse rail: gap 9, pad 3/5; ring gets the surface disc + 50% radius;
+   name = 600 10/12 at 7px (mockup .nm) */
+.mshell .mpulse{gap:9px;padding:3px 0 5px}
+.mshell .mpulse .mp .r{background:var(--surface);border-radius:50%}
+.mshell .mpulse .mp .nm{font:600 10px/12px var(--font);color:var(--ink-3);margin-top:7px}
+/* quick rail: pad 3/5, chip line-height 1 (mockup .q) */
+.mshell .mrail{padding:3px 0 5px}
+.mshell .mrail .fchip{line-height:1}
+/* badges → theme_4 .pill exactly: 22px, 0 9, mono 700 10.5, tinted border */
+.mshell .bdg{height:22px;padding:0 9px;font-size:10.5px;border:1px solid transparent}
+.mshell .bdg-lime{border-color:var(--accent-line)}
+.mshell .bdg-amber{border-color:var(--warn-line)}
+.mshell .bdg-red{border-color:var(--bad-line)}
+.mshell .bdg-green{border-color:var(--ok-line)}
+/* thumb bar: 64px (mockup .tabbar), items 56 centered, mono 8.5/1 */
+.mshell .cnav{height:calc(64px + env(safe-area-inset-bottom,0px));padding:0 2px;
+  padding-bottom:env(safe-area-inset-bottom,0px);align-items:center}
+.mshell .cnav-it{min-height:56px;justify-content:center;font:700 8.5px/1 var(--font-num)}
+/* FAB seats half-in the bar: bottom 36 (mockup), border = surface.
+   .mshell prefix: the base .cnav-fab rule sits LATER in the sheet and would
+   otherwise win the equal-specificity tie with its 34px. */
+.mshell .cnav-fab{bottom:calc(36px + env(safe-area-inset-bottom,0px))}
+/* body bottom padding clears the 64px bar + FAB (mockup 96) */
+.mmain{padding-bottom:96px}
 /* ── overlays ──────────────────────────────────────────────────── */
 .mjump{position:fixed;inset:0;z-index:70;background:var(--surface);display:flex;flex-direction:column;
   opacity:0;pointer-events:none;transform:translateY(10px);
@@ -1713,10 +1955,19 @@ body.sb-open .scrim{display:block}
 /* the coach's Log button lives in the THUMB BAR, not floating over content */
 .cnav-fab{position:absolute;left:50%;bottom:calc(34px + env(safe-area-inset-bottom,0px));
   transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:var(--accent);
-  color:var(--accent-ink);border:3px solid rgba(13,15,19,.94);display:grid;place-items:center;
-  cursor:pointer;z-index:16;box-shadow:0 8px 20px -4px rgba(0,0,0,.5)}
+  color:var(--accent-ink);border:3px solid var(--surface);display:grid;place-items:center;
+  cursor:pointer;z-index:40;box-shadow:var(--sh-pop)}
 .cnav-fab:active{transform:translateX(-50%) scale(.94)}
 .cnav-gap{visibility:hidden}
+/* v19.22 — final mockup pass (coachui_2):
+   1. End-of-session button = the mockup's danger outline (.btn-g.danger):
+      transparent fill, --red border + text; the old dark chip fought the
+      signal language (red = risk, never decoration).
+   2. Roster search = the mockup's 44px pill field. */
+.mshell .btn-danger-o{background:transparent;border:1px solid var(--red);color:var(--red);
+  border-radius:var(--r-sm);font-weight:650}
+.mshell .btn-danger-o:hover{background:var(--red-soft)}
+.mshell .searchbox{height:44px;border-radius:999px;padding:0 14px;font-size:13px}
 @media (prefers-reduced-motion:reduce){
   .mfloor-now .mprog i,.msheet,.mjump{animation:none!important;transition:none!important}
 }

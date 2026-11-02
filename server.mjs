@@ -115,7 +115,6 @@ async function handleApi(req, res, url) {
       res.statusCode = out.status;
       out.headers.forEach((v, k) => { if (k !== 'content-length') res.setHeader(k, v); });
       for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
-      for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
       /* v18.108 — SSE must never be buffered: frames have to leave as they are
          produced, or the client sees a burst once the connection closes.
          Returns before the content-length/copy path below. */
@@ -170,7 +169,7 @@ const MIME = {
    The Vercel middleware blocks the same paths before the filesystem
    (middleware.js). NOTE: ROOT = project root means without this an attacker
    can simply GET /data/prod-secrets.txt. */
-const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', 'api/', 'design/', '.kilo/'];
+const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', 'api/', 'design/', '.kilo/', '_shots/'];
 const DENY_FILES = new Set([
   'server.mjs', 'vercel.json', 'middleware.js', 'package.json', 'package-lock.json',
   '.env', '.env.example', '.gitignore', 'skills-lock.json'
@@ -240,7 +239,8 @@ async function serveStatic(req, res, url) {
     if (ext === '.html') {
       res.setHeader('content-security-policy', rel.startsWith('shop/') ? CSP_SHOP : CSP);
     }
-    // index.html / sw.js / manifest must always be fresh (same as netlify.toml).
+    // index.html / sw.js / manifest must always be fresh (the same sources in
+    // vercel.json set Cache-Control for these paths on Vercel).
     // Keyed off the RESOLVED file, not url.pathname — otherwise a request to "/"
     // (which maps to index.html) skipped the no-cache header entirely.
     if (['index.html', 'sw.js', 'manifest.json'].includes(rel)) {
