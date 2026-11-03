@@ -2098,7 +2098,13 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .btn-out{background:transparent;border:1px solid var(--line);color:var(--ink2)}
 .mono{font-family:'JetBrains Mono',monospace}
 .badge{font-size:10px;font-weight:900;border-radius:999px;padding:3px 9px;flex:none}
-.b-lime{background:var(--accent-soft);color:var(--accent)}
+.b-lime{background:rgba(0,255,157,0.14);color:#00FF9D;border:1px solid rgba(0,255,157,0.3)}
+html[data-theme="light"] .b-lime{background:#E8F8F0;color:#067647;border:1px solid #92E3B7}
+
+.ex-guide-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:rgba(0,255,157,0.14);color:#00FF9D;border:1px solid rgba(0,255,157,0.35);transition:all .15s ease}
+.ex-guide-badge:hover{background:rgba(0,255,157,0.24);border-color:#00FF9D}
+html[data-theme="light"] .ex-guide-badge{background:#E8F8F0;color:#067647;border-color:#92E3B7}
+
 .b-blue{background:rgba(77,124,254,.15);color:#7EA0FF}
 .b-red{background:rgba(239,91,91,.15);color:#FF8484}
 .b-gray{background:#22262D;color:var(--ink3)}
@@ -2661,6 +2667,6 @@ html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
      /vendor because the CSP allows 'self' scripts only — no CDN. ic() falls
      back to the legacy P map if this file ever fails to load. -->
 <script src="vendor/lucide/lucide.min.js"></script>
-<script src="app.js?v=19.50"></script>
+<script src="app.js?v=19.51"></script>
 </body>
 </html>
