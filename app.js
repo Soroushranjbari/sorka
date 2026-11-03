@@ -5347,12 +5347,14 @@ const exCard=e=>{
   const cex=e.i>=CEXBASE&&CEXS[e.i-CEXBASE];
   const fav=PREFS.favs&&PREFS.favs.includes(e.n);
   const vUrl=EXVID[e.n]||'';
-  const thumbUrl=vUrl.includes('.gif')?vUrl.replace('.gif','.thumb.webp'):vUrl;
+  const isGif=vUrl&&vUrl.includes('.gif');
+  const thumbUrl=isGif?vUrl.replace('.gif','.thumb.webp'):vUrl;
   return `
     <div class="card exc">
       <div class="row">
-        <div style="width:54px;height:44px;border-radius:10px;overflow:hidden;flex:none;background:var(--seg-bg);display:grid;place-items:center;border:1px solid var(--line2);cursor:pointer" data-act="ex-video" data-i="${e.i}" title="${t('Preview animation')}">
-          ${thumbUrl?`<img src="${thumbUrl}" loading="lazy" style="width:100%;height:100%;object-fit:cover" alt="${esc(e.n)}">`:`<span style="color:var(--ink3)">${ic('dumbbell',18)}</span>`}
+        <div style="width:56px;height:46px;border-radius:10px;overflow:hidden;flex:none;background:var(--seg-bg);display:grid;place-items:center;border:1px solid var(--line2);cursor:pointer;position:relative" data-act="ex-video" data-i="${e.i}" title="${t('Preview animation')}">
+          ${thumbUrl?`<img src="${thumbUrl}" loading="lazy" style="width:100%;height:100%;object-fit:cover" alt="${esc(e.n)}" onmouseenter="if(this.dataset.gif)this.src=this.dataset.gif" onmouseleave="if(this.dataset.thumb)this.src=this.dataset.thumb" data-gif="${esc(vUrl)}" data-thumb="${esc(thumbUrl)}">`:`<span style="color:var(--ink3)">${ic('dumbbell',18)}</span>`}
+          ${isGif?`<span style="position:absolute;bottom:2px;right:2px;background:rgba(0,0,0,0.8);color:#00FF9D;font-size:7.5px;font-weight:700;padding:1px 3px;border-radius:3px;line-height:1">GIF</span>`:''}
         </div>
         <div style="flex:1;min-width:0">
           <div class="nm" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t(e.n)}${cex?` <span class="bdg bdg-blue" style="font-size:9.5px">${t('Custom')}</span>`:''}</div>
@@ -5362,7 +5364,7 @@ const exCard=e=>{
       <div class="row" style="gap:6px;flex-wrap:wrap">
         <span class="chip">${t(e.t)}</span>
         <span class="chip">${t(e.e)}</span>
-        <span class="chip" data-act="ex-video" data-i="${e.i}" style="cursor:pointer;${vUrl?'background:var(--accent-soft);color:var(--accent-ink)':''}" title="${t('Video link')}">▶ ${t('Video')}${vUrl?' ✓':''}</span>
+        <span class="chip" data-act="ex-video" data-i="${e.i}" style="cursor:pointer;${vUrl?'background:rgba(0,255,157,0.12);color:var(--accent-ink);border:1px solid rgba(0,255,157,0.25)':''}" title="${t('Video link')}">🎬 ${isGif?t('Animated Guide'):t('Video')}${vUrl?' ✓':''}</span>
       </div>
       <div class="row" style="margin-top:auto;gap:6px">
         <button class="btn btn-dark btn-sm" data-act="ex-add" data-i="${e.i}">${ic('plus',13)} ${t('Add to Workout')}</button><span class="sp"></span>
@@ -5397,9 +5399,19 @@ function vidModal(bi,exi){
   const xi=b?b.ex:exi,ex=EXERCISES[xi];if(!ex)return;
   const cur=b?(b.vid||EXVID[ex.n]||''):(EXVID[ex.n]||'');
   const tgt=b?`data-bi="${bi}"`:`data-exi="${exi}"`;
+  const isImg=cur&&isImgUrl(cur);
   openModal(`
-  <div class="modal-h"><h3>${t('Video link')} — ${esc(t(ex.n))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3>🎬 ${t('Animated Exercise Guide')} — ${esc(t(ex.n))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
+    ${isImg?`
+      <div style="text-align:center;margin-bottom:14px;background:#0d1117;border-radius:12px;padding:12px;border:1px solid rgba(0,255,157,0.25)">
+        <img src="${cur}" style="max-height:240px;max-width:100%;border-radius:8px;object-fit:contain;box-shadow:0 4px 20px rgba(0,0,0,0.5)" alt="${esc(ex.n)}">
+        <div style="margin-top:8px;font-size:11.5px;color:var(--accent-ink);display:flex;align-items:center;justify-content:center;gap:6px">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00FF9D;box-shadow:0 0 8px #00FF9D"></span>
+          ${t('Standard execution & proper technique')}
+        </div>
+      </div>
+    `:''}
     <div class="field"><label class="lbl">${t(b?'Paste a YouTube or GIF link — the client sees it on their workout':'Set a link once — it attaches to this exercise in every workout')}</label><input class="inp" id="vid-url" dir="ltr" placeholder="https://youtube.com/… · https://…/move.gif" value="${esc(cur)}"></div>
     <div class="row" style="gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px"><button class="btn btn-outline btn-sm" data-act="vid-yt" data-i="${xi}">${ic('play',13)} ${t('Search on YouTube')}</button><span class="muted" style="font-size:12px">${t('GIF links play right inside the workout — other links open in a new tab.')}</span></div>
   </div>
