@@ -675,19 +675,19 @@ const MUSCLES=['All','Chest','Back','Shoulders','Biceps','Triceps','Quadriceps',
 let EXM='All';
 const TX=(ex,sets,reps,kg,rest,note='')=>({ex,sets,reps,kg,rest,rpe:'RPE 8',rir:'RIR 2',tempo:'2-0-1-0',note});
 function defaultTemplates(){return [
-{n:'Push A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Prioritize chest before shoulders. Warm up: 8 min bike + band work.',exs:[TX(0,4,8,80,120,'Elbows ~45°, full ROM'),TX(1,3,10,26,90,'Pause at bottom'),TX(8,3,8,45,120,'Brace before each rep'),TX(9,3,12,10,60,'Lead with elbow'),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
-{n:'Push B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Incline first today — vary the pressing angle.',exs:[TX(1,4,8,28,120),TX(0,3,10,70,120),TX(9,4,12,10,60),TX(8,3,10,40,90),TX(13,3,15,25,45),TX(3,3,15,0,60,'Bodyweight'),TX(2,3,15,15,45)]},
-{n:'Pull A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',note:'Keep the hinge neutral — quality over load.',exs:[TX(4,4,8,70,120,'Neutral spine'),TX(5,3,10,60,90),TX(6,3,8,0,90,'Bodyweight'),TX(7,3,10,55,90),TX(11,3,10,30,60),TX(12,3,12,12,60),TX(10,3,15,15,45)]},
-{n:'Pull B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Pull',dur:'55 min',mod:'4 days ago',exs:[TX(5,4,10,55,120),TX(6,3,10,0,90),TX(7,4,10,60,90),TX(12,3,12,12,60),TX(11,3,10,25,60),TX(10,3,15,15,45)]},
-{n:'Leg A',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'65 min',mod:'1 week ago',note:'Depth below parallel. Belt only on top sets.',exs:[TX(15,4,6,100,150,'Depth below parallel'),TX(16,3,10,120,120),TX(18,3,10,60,120,'Neutral spine'),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45),TX(22,3,40,0,60,'Seconds hold')]},
-{n:'Leg B',sp:['Bodybuilding & Fitness','Powerlifting'],days:'Legs',dur:'60 min',mod:'1 week ago',exs:[TX(20,4,10,80,120,'Pause 1s at top'),TX(16,4,12,110,120),TX(18,3,10,55,90),TX(19,3,12,40,60),TX(17,3,15,40,45),TX(21,4,15,45,45)]},
-{n:'Full Body Beginner',sp:['General Fitness','Bodybuilding & Fitness','Running & Endurance','Team Sports'],days:'Full Body',dur:'45 min',mod:'2 weeks ago',note:'Technique focus. Leave 2 reps in reserve everywhere.',exs:[TX(3,3,10,0,60),TX(1,3,10,10,90),TX(5,3,10,35,90),TX(16,3,10,60,90),TX(9,2,12,6,45),TX(13,2,12,15,45),TX(23,3,10,0,45),TX(24,3,30,12,60,'30 m per set')]},
+{n:'Push A',sp:['Bodybuilding & Fitness'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Prioritize chest before shoulders. Warm up: 8 min bike + band work.',exs:[TX(0,4,8,80,120,'Elbows ~45°, full ROM'),TX(1,3,10,26,90,'Pause at bottom'),TX(8,3,8,45,120,'Brace before each rep'),TX(9,3,12,10,60,'Lead with elbow'),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
+{n:'Push B',sp:['Bodybuilding & Fitness'],days:'Push',dur:'60 min',mod:'2 days ago',note:'Incline first today — vary the pressing angle.',exs:[TX(1,4,8,28,120),TX(0,3,10,70,120),TX(9,4,12,10,60),TX(8,3,10,40,90),TX(13,3,15,25,45),TX(3,3,15,0,60,'Bodyweight'),TX(2,3,15,15,45)]},
+{n:'Pull A',sp:['Bodybuilding & Fitness'],days:'Pull',dur:'55 min',mod:'4 days ago',note:'Keep the hinge neutral — quality over load.',exs:[TX(4,4,8,70,120,'Neutral spine'),TX(5,3,10,60,90),TX(6,3,8,0,90,'Bodyweight'),TX(7,3,10,55,90),TX(11,3,10,30,60),TX(12,3,12,12,60),TX(10,3,15,15,45)]},
+{n:'Pull B',sp:['Bodybuilding & Fitness'],days:'Pull',dur:'55 min',mod:'4 days ago',exs:[TX(5,4,10,55,120),TX(6,3,10,0,90),TX(7,4,10,60,90),TX(12,3,12,12,60),TX(11,3,10,25,60),TX(10,3,15,15,45)]},
+{n:'Leg A',sp:['Bodybuilding & Fitness'],days:'Legs',dur:'65 min',mod:'1 week ago',note:'Depth below parallel. Belt only on top sets.',exs:[TX(15,4,6,100,150,'Depth below parallel'),TX(16,3,10,120,120),TX(18,3,10,60,120,'Neutral spine'),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45),TX(22,3,40,0,60,'Seconds hold')]},
+{n:'Leg B',sp:['Bodybuilding & Fitness'],days:'Legs',dur:'60 min',mod:'1 week ago',exs:[TX(20,4,10,80,120,'Pause 1s at top'),TX(16,4,12,110,120),TX(18,3,10,55,90),TX(19,3,12,40,60),TX(17,3,15,40,45),TX(21,4,15,45,45)]},
+{n:'Full Body Beginner',sp:['Bodybuilding & Fitness','Running & Endurance'],days:'Full Body',dur:'45 min',mod:'2 weeks ago',note:'Technique focus. Leave 2 reps in reserve everywhere.',exs:[TX(3,3,10,0,60),TX(1,3,10,10,90),TX(5,3,10,35,90),TX(16,3,10,60,90),TX(9,2,12,6,45),TX(13,2,12,15,45),TX(23,3,10,0,45),TX(24,3,30,12,60,'30 m per set')]},
 {n:'Hypertrophy 4 Day',sp:['Bodybuilding & Fitness'],days:'4-day split',dur:'60 min',mod:'3 weeks ago',note:'Load each day separately. Rest 2–3 min on compounds.',parts:[
  {n:'Day 1 — Push',exs:[TX(0,4,8,80,120),TX(1,3,10,26,90),TX(8,3,8,45,120),TX(9,4,12,10,60),TX(2,3,12,15,60),TX(13,3,12,25,60),TX(14,3,10,30,60)]},
  {n:'Day 2 — Pull',exs:[TX(4,4,8,70,120),TX(5,3,10,60,90),TX(6,3,8,0,90),TX(7,3,10,55,90),TX(10,3,15,15,45),TX(11,3,10,30,60),TX(12,3,12,12,60)]},
  {n:'Day 3 — Legs',exs:[TX(15,4,6,100,150),TX(16,3,10,120,120),TX(18,3,10,60,120),TX(17,3,12,45,60),TX(19,3,12,40,60),TX(21,4,15,50,45)]},
  {n:'Day 4 — Upper',exs:[TX(0,3,10,70,90),TX(4,3,10,60,90),TX(8,3,10,40,90),TX(5,3,12,50,90),TX(11,3,12,25,45),TX(13,3,12,22,45),TX(9,3,15,8,45)]}]},
-{n:'Strength 5 Day',sp:['Powerlifting','Bodybuilding & Fitness'],days:'5-day split',dur:'70 min',mod:'1 month ago',note:'5×5 main lifts — add 2.5 kg when all sets hit.',parts:[
+{n:'Strength 5 Day',sp:['Bodybuilding & Fitness'],days:'5-day split',dur:'70 min',mod:'1 month ago',note:'5×5 main lifts — add 2.5 kg when all sets hit.',parts:[
  {n:'Day 1 — Squat',exs:[TX(15,5,5,105,180,'5×5 — add 2.5 kg weekly'),TX(16,3,8,120,120),TX(18,3,8,70,120),TX(21,3,12,60,60),TX(22,3,40,0,60,'Seconds hold')]},
  {n:'Day 2 — Bench',exs:[TX(0,5,5,82,180),TX(1,3,8,30,120),TX(8,3,8,47,120),TX(10,3,15,20,60),TX(13,3,10,27,60)]},
  {n:'Day 3 — Deadlift',exs:[TX(18,5,3,130,180,'Focus: bar path'),TX(4,4,8,75,120),TX(7,3,10,60,90),TX(19,3,10,45,60),TX(24,3,30,20,75)]},
@@ -1549,16 +1549,12 @@ const SPORT_EXT={
 };
 const SPORT_ICONS = {
   'Running & Endurance': '🏃',
-  'Bodybuilding & Fitness': '💪',
-  'Powerlifting': '🏋️',
-  'General Fitness': '⚡',
-  'Team Sports': '⚽'
+  'Bodybuilding & Fitness': '💪'
 };
 const clientSport = c => {
   if (!c) return ONBOARD.sport || 'Bodybuilding & Fitness';
-  if (c.sport) return c.sport;
+  if (c.sport && ONB_SPORTS.includes(c.sport)) return c.sport;
   if (c.goal === 'Endurance') return 'Running & Endurance';
-  if (c.goal === 'Strength') return 'Powerlifting';
   return ONBOARD.sport || 'Bodybuilding & Fitness';
 };
 const isClientRunner = c => clientSport(c) === 'Running & Endurance';
@@ -5438,9 +5434,8 @@ function exFilter(){
 }
 function vTemplates(){
   const snippet=tp=>tp.parts?tp.parts.map(p=>t(p.n)).join(' · '):(tp.exs||[]).slice(0,4).map(e=>t(EXERCISES[e.ex].n)).join(' · ')+((tp.exs||[]).length>4?` · +${nf(tp.exs.length-4)}`:'');
-  /* v17.11 — sport filter, defaulted to the coach's onboarding answer */
-  const sports=['All',...Array.from(new Set(TEMPLATES.flatMap(tp=>tp.sp||[])))];
-  if(ONBOARD.sport&&!sports.includes(ONBOARD.sport))sports.push(ONBOARD.sport);
+  /* v17.11 — sport filter, strictly Bodybuilding and Running */
+  const sports=['All',...ONB_SPORTS];
   if(!S.tsp||!sports.includes(S.tsp))S.tsp=ONBOARD.done&&ONBOARD.sport&&sports.includes(ONBOARD.sport)?ONBOARD.sport:'All';
   const list=TEMPLATES.filter(tp=>S.tsp==='All'||(tp.sp||[]).includes(S.tsp));
   return `
@@ -5695,8 +5690,7 @@ function vSettings(){
     <div class="set-row" style="margin:6px 0 2px"><div><span class="t">${t('Sport')}</span>
       <div class="d">${t('Drives the athletics sections, dashboard and athlete screens')}</div></div>
       <select class="sel" style="width:212px" data-change="osport">
-        <option value=""${!ONBOARD.sport?' selected':''}>${t('None (base workspace)')}</option>
-        ${ONB_SPORTS.map(s=>`<option value="${esc(s)}"${ONBOARD.sport===s?' selected':''}>${t(s)}</option>`).join('')}
+        ${ONB_SPORTS.map(s=>`<option value="${esc(s)}"${(ONBOARD.sport||'Bodybuilding & Fitness')===s?' selected':''}>${SPORT_ICONS[s]||'🏅'} ${t(s)}</option>`).join('')}
       </select></div>
     <div class="set-row" style="margin:6px 0 14px"><div><span class="t">${t('Setup wizard')}</span><div class="d">${t('Sport, coaching style and home screen')}</div></div><button class="btn btn-outline btn-sm" data-act="onb-open">${t('Redo')}</button></div>
     <button class="btn btn-primary" data-act="profile-save">${t('Save Changes')}</button></div>`,
