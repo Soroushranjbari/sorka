@@ -81,39 +81,129 @@ export function closeAll() {
 
 /* ---------- Postgres primitives (table: public.kv_store) ---------- */
 let _pool = null;
-async function pool() {
-  if (!_pool) {
-    const pg = await import('pg');
-    // Managed Postgres (Neon/Render/RDS/…) usually requires TLS; localhost
-    // does not. An explicit sslmode= in the URL always wins.
-    const local = /@(localhost|127\.0\.0\.1|\[::1\])[:/]/.test(DATABASE_URL);
-    // Serverless (Vercel/Lambda): every container gets its own pool, so max
-    // must stay at 1 or concurrent containers exhaust the connection limit.
-    // Use the provider's POOLED connection string in that environment.
+let _lastDbError = null;
+
+function parsePgConfig(rawUrl) {
+  if (!rawUrl) return null;
+  try {
+    const u = new URL(rawUrl);
+    const host = u.hostname.toLowerCase();
+    const local = host === 'localhost' || host === '127.0.0.1' || host === '::1' || host.endsWith('.local');
+    const internalHost = !host.includes('.') || host.endsWith('.internal');
+    const sslDisabled = /[?&]sslmode=disable(&|$)/i.test(rawUrl);
+    const sslExplicit = /[?&]sslmode=(require|prefer|verify-ca|verify-full)(&|$)/i.test(rawUrl);
+
+    // Strip sslmode from the URL so pg-connection-string does not force verify-full
+    const cleanedUrl = rawUrl.replace(/([?&])sslmode=[^&]*(&|$)/gi, '$1').replace(/[?&]$/, '');
+
     const serverless = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
-    _pool = new pg.default.Pool({
-      connectionString: DATABASE_URL,
+
+    // If local or explicitly disabled, no SSL.
+    // If internal without dots (like Render internal host dpg-xxx-a), default no SSL.
+    // Otherwise (external cloud host with dots or explicit sslmode) -> SSL with rejectUnauthorized: false.
+    const useSsl = !sslDisabled && !local && (sslExplicit || !internalHost);
+
+    return {
+      connectionString: cleanedUrl,
       max: serverless ? 1 : 5,
       idleTimeoutMillis: serverless ? 10000 : 30000,
       allowExitOnIdle: serverless,
       connectionTimeoutMillis: 10000,
-      ssl: local || /sslmode=/.test(DATABASE_URL) ? undefined : { rejectUnauthorized: false }
-    });
-    _pool.on('error', (e) => cbFail('pool', e));
-    // Self-healing schema: no external SQL file needed anymore.
-    await _pool.query(`
+      ssl: useSsl ? { rejectUnauthorized: false } : undefined,
+      host,
+      isInternal: internalHost
+    };
+  } catch (e) {
+    return {
+      connectionString: rawUrl,
+      max: 5,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+      ssl: undefined,
+      host: '?',
+      isInternal: false
+    };
+  }
+}
+
+async function pool() {
+  if (_pool) return _pool;
+  const pg = await import('pg');
+  const cfg = parsePgConfig(DATABASE_URL);
+
+  const p = new pg.default.Pool(cfg);
+  p.on('error', (e) => cbFail('pool', e));
+
+  try {
+    await p.query(`
       create table if not exists public.kv_store (
         key        text primary key,
         value      jsonb not null,
         updated_at timestamptz not null default now()
       );
     `);
+    _pool = p;
+    _lastDbError = null;
+    return _pool;
+  } catch (err) {
+    _lastDbError = err ? err.message : 'postgres connection failed';
+    try { await p.end(); } catch {}
+
+    // Auto-fallback: if connecting failed because server does not support SSL, retry without SSL:
+    if (cfg.ssl && /server does not support SSL/i.test(err?.message || '')) {
+      console.warn('[kv] Postgres rejected SSL — retrying without SSL for internal network...');
+      const fallbackCfg = { ...cfg, ssl: undefined };
+      const p2 = new pg.default.Pool(fallbackCfg);
+      p2.on('error', (e) => cbFail('pool', e));
+      try {
+        await p2.query(`
+          create table if not exists public.kv_store (
+            key        text primary key,
+            value      jsonb not null,
+            updated_at timestamptz not null default now()
+          );
+        `);
+        _pool = p2;
+        _lastDbError = null;
+        return _pool;
+      } catch (err2) {
+        try { await p2.end(); } catch {}
+        _lastDbError = err2 ? err2.message : 'fallback failed';
+        throw err2;
+      }
+    }
+
+    // Auto-fallback: if connecting failed because server requires SSL, retry with SSL:
+    if (!cfg.ssl && /server requires SSL/i.test(err?.message || '')) {
+      console.warn('[kv] Postgres requires SSL — retrying with TLS...');
+      const fallbackCfg = { ...cfg, ssl: { rejectUnauthorized: false } };
+      const p2 = new pg.default.Pool(fallbackCfg);
+      p2.on('error', (e) => cbFail('pool', e));
+      try {
+        await p2.query(`
+          create table if not exists public.kv_store (
+            key        text primary key,
+            value      jsonb not null,
+            updated_at timestamptz not null default now()
+          );
+        `);
+        _pool = p2;
+        _lastDbError = null;
+        return _pool;
+      } catch (err2) {
+        try { await p2.end(); } catch {}
+        _lastDbError = err2 ? err2.message : 'fallback failed';
+        throw err2;
+      }
+    }
+
+    throw err;
   }
-  return _pool;
 }
 
 async function pgGet(fullKey) {
-  const r = await (await pool()).query(
+  const p = await pool();
+  const r = await p.query(
     'select value from public.kv_store where key = $1 limit 1',
     [fullKey]
   );
@@ -121,7 +211,8 @@ async function pgGet(fullKey) {
 }
 
 async function pgSet(fullKey, value) {
-  await (await pool()).query(
+  const p = await pool();
+  await p.query(
     `insert into public.kv_store (key, value) values ($1, $2::jsonb)
      on conflict (key) do update set value = excluded.value, updated_at = now()`,
     [fullKey, JSON.stringify(value ?? null)]
@@ -129,7 +220,8 @@ async function pgSet(fullKey, value) {
 }
 
 async function pgDel(fullKey) {
-  await (await pool()).query('delete from public.kv_store where key = $1', [fullKey]);
+  const p = await pool();
+  await p.query('delete from public.kv_store where key = $1', [fullKey]);
 }
 
 /* ---------- Postgres circuit breaker (v18.107) ----------
@@ -153,26 +245,33 @@ function cbAllow() {
 }
 function cbFail(what, e) {
   cbFails++;
+  _lastDbError = e ? e.message : 'unknown postgres failure';
   if (cbFails >= CB_AFTER) {
     const opening = !cbOpenUntil;
     cbOpenUntil = Date.now() + CB_COOLDOWN;
     // Log only when the circuit actually opens, and only once until it recovers.
     if (opening && !cbWarned) {
-      console.error(`[kv] postgres unavailable (${what}): ${e && e.message} — ` +
-        `circuit open for ${CB_COOLDOWN / 1000}s. Check DATABASE_URL. ` +
-        `The app keeps working locally; cloud sync retries automatically.`);
+      console.error(`[kv] postgres unavailable (${what}): ${_lastDbError} — ` +
+        `circuit open for ${CB_COOLDOWN / 1000}s. Serving transparently via local SQLite.`);
       cbWarned = true;
     }
   }
 }
 function cbOk() {
-  if (cbWarned) console.log('[kv] postgres reachable again');
-  cbFails = 0; cbOpenUntil = 0; cbWarned = false;
+  if (cbWarned) console.log('[kv] postgres reachable again — active and in sync');
+  cbFails = 0; cbOpenUntil = 0; cbWarned = false; _lastDbError = null;
 }
-/** True while Postgres is known-unreachable — the API answers 503 with
- *  {ok:false} instead of pretending the workspace does not exist (which would
- *  make clients think their data vanished). cloudPull/cloudFetch bail on !ok. */
-export const kvDown = () => !isSqlite() && cbOpenUntil > Date.now();
+/** True while storage is known-unreachable. Since local SQLite acts as an
+ *  immediate resilient fallback on every write and read, storage is never down
+ *  unless SQLite itself cannot be initialized on disk. */
+export const kvDown = () => {
+  try {
+    db();
+    return false;
+  } catch (e) {
+    return !isSqlite() && cbOpenUntil > Date.now();
+  }
+};
 
 /**
  * Namespaced KV store with the exact surface Phase-1 expects:
@@ -184,23 +283,47 @@ export function kv(ns) {
   return {
     async get(key /* , opts */) {
       if (isSqlite()) return sqlGet(prefix + key);
-      if (!cbAllow()) return null;
-      try { const v = await pgGet(prefix + key); cbOk(); return v; }
-      catch (e) { cbFail('read', e); return null; }
+      // If Postgres circuit is open, serve immediately from local SQLite:
+      if (!cbAllow()) {
+        return sqlGet(prefix + key);
+      }
+      try {
+        const v = await pgGet(prefix + key);
+        cbOk();
+        // Keep local SQLite in sync as a resilient backup:
+        if (v !== null && v !== undefined) {
+          try { sqlSet(prefix + key, v); } catch {}
+        }
+        return v;
+      } catch (e) {
+        cbFail('read', e);
+        // Fallback to SQLite so temporary PG outages never destroy sessions or return 404:
+        try { return sqlGet(prefix + key); } catch { return null; }
+      }
     },
     async setJSON(key, val) {
-      if (isSqlite()) return sqlSet(prefix + key, val);
-      /* Never throws: the caller already persisted locally, and a throw would
-         turn a DB outage into a 500 for a write the client will retry. */
+      // 1. Dual persistence: ALWAYS save to SQLite first.
+      try { sqlSet(prefix + key, val); } catch (e) {}
+
+      if (isSqlite()) return;
       if (!cbAllow()) return;
-      try { await pgSet(prefix + key, val); cbOk(); }
-      catch (e) { cbFail('write', e); }
+      try {
+        await pgSet(prefix + key, val);
+        cbOk();
+      } catch (e) {
+        cbFail('write', e);
+      }
     },
     async delete(key) {
-      if (isSqlite()) return sqlDel(prefix + key);
+      try { sqlDel(prefix + key); } catch {}
+      if (isSqlite()) return;
       if (!cbAllow()) return;
-      try { await pgDel(prefix + key); cbOk(); }
-      catch (e) { cbFail('delete', e); }
+      try {
+        await pgDel(prefix + key);
+        cbOk();
+      } catch (e) {
+        cbFail('delete', e);
+      }
     }
   };
 }
@@ -223,6 +346,8 @@ export function dbInfo() {
     // null in production (see above); callers should treat it as optional.
     sqlitePath: isProd ? null : SQLITE_PATH,
     postgresConfigured: !!DATABASE_URL,
-    postgresHost: host
+    postgresHost: host,
+    postgresOk: isPostgres() ? !cbOpenUntil : true,
+    lastDbError: isProd ? (_lastDbError ? _lastDbError.replace(/postgres(ql)?:\/\/[^@]+@/gi, 'postgres://***@').slice(0, 160) : null) : _lastDbError
   };
 }

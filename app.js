@@ -2518,7 +2518,11 @@ const markDead=(k,v)=>{if(DEAD[k])DEAD[k].push(String(v))};
 const cloudFetch=async (code,rev)=>{
   try{
     const r=await fetch('/api/data?code='+encodeURIComponent(code)+(rev?'&rev='+encodeURIComponent(rev):''),{headers:authHeaders()});
-    if(!r.ok)return null;return await r.json()
+    if(!r.ok){
+      if(r.status===503)return {ok:false,error:'storage-unavailable',status:503};
+      return null;
+    }
+    return await r.json();
   }
   catch(e){return null}
 };
@@ -3009,8 +3013,13 @@ async function joinPersonal(v){
      server (or offline phone) must NOT show the misleading "Code not found" —
      the code may be perfectly valid. Returns 'offline' so the unlock screen
      shows a retry-with-connection message instead. */
-  if(!out){S.unOffline=true;return null}
-  if(!out.ok||out.exists===false)return null;
+  if(!out||!out.ok||out.exists===false){
+    if(!out){
+      if(!S.unT0)S.unT0=Date.now();
+      if(Date.now()-S.unT0>16000)S.unOffline=true;
+    }
+    return null;
+  }
   S.unOffline=false;
   /* Joining must start from a CLEAN slate (see the legacy path below). */
   cloudReset();
@@ -4037,12 +4046,11 @@ function unlockStage(){
   if(parts){ // PERSONAL code: only the bound profile counts — never the demo seed
     const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
     if(me)return 'ready';
-    if(S.unOffline)return 'invalid';
     const now=Date.now();
     if(!S.unT0)S.unT0=now;
-    if(S.unInvalid||(now-S.unT0>9200))return 'invalid';
+    if(S.unInvalid||(now-S.unT0>16000))return 'invalid';
     if(!S.unTimer){
-      S.unTimer=setTimeout(()=>{S.unTimer=null;const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},9400);
+      S.unTimer=setTimeout(()=>{S.unTimer=null;const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},16500);
     }
     return 'loading';
   }
@@ -4088,8 +4096,9 @@ function vUnlock(){
       <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Ask your coach for your personal invite code')}</div>
       <button class="btn btn-outline" data-act="un-retry" style="margin-top:14px">${ic('refresh',14)} ${t('Try another code')}</button>`;
   }else if(st==='loading'){
-    center=`<div class="un-sub">${t('Checking code…')}</div>
-      <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>`;
+    center=`<div class="un-sub">${t('Connecting to your coach…')}</div>
+      <div class="un-meta" style="margin-top:10px;letter-spacing:.15em;font-weight:700">${esc(S.joinCode||'')}</div>
+      <div style="margin-top:12px;font-size:12.5px;color:var(--ink3);line-height:1.5">${lang==='fa'?'در حال اتصال به سرور مربی…':'Connecting to server & finding your profile…'}</div>`;
   }else if(st==='invalid'){
     /* v18.53 — two DIFFERENT failure reasons, two different messages: a dead
        server is "check your connection / try again", a truly unknown code is
@@ -4160,7 +4169,7 @@ function unlockWire(){
      whole session as "Code not found". */
   const jp=S.joinCode?parseJoinCode(S.joinCode):null;
   const jpBound=jp&&CLIENTS.some(c=>String(c.code||'').toUpperCase()===jp.pc);
-  if(jp&&!jpBound&&!S.unFetching&&!S.unInvalid&&!S.unOffline){
+  if(jp&&!jpBound&&!S.unFetching&&!S.unInvalid){
     S.unFetching=true;
     const jc=S.joinCode; // a result from an abandoned/replaced code must not poison the new state
     joinPersonal(jc).then(me=>{
@@ -4171,17 +4180,20 @@ function unlockWire(){
         render();
       }else{
         if(!S.unT0)S.unT0=Date.now();
-        if(Date.now()-S.unT0>9200){
+        if(Date.now()-S.unT0>16000){
           S.unInvalid=true;
           render();
         }else{
-          setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1200);
+          setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1600);
         }
       }
     }).catch(()=>{
       S.unFetching=false;
-      if(Date.now()-(S.unT0||0)<=9200){
-        setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1200);
+      if(Date.now()-(S.unT0||0)<=16000){
+        setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1600);
+      }else{
+        S.unInvalid=true;
+        render();
       }
     });
   }
