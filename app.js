@@ -536,7 +536,10 @@ Object.assign(FA, {
   "Set as Runner": "تبدیل به ورزشکار دو و استقامت",
   "Set to Running & Endurance ✓": "رشته به دویدن و استقامت تغییر یافت ✓",
   "Discipline, pace zones, race calendar, personal bests & shoes": "شاخه تخصصی، زون‌های سرعت، تقویم مسابقات، رکوردها و کفش‌ها",
-  "Athlete sport is set to": "رشته فعلی ورزشکار:"
+  "Athlete sport is set to": "رشته فعلی ورزشکار:",
+  "Enter My Portal": "ورود به برنامه من",
+  "Hold the dumbbell to lift or tap enter above": "دمبل را نگه دارید تا بلند شود یا دکمه بالا را بزنید",
+  "Cloud sync is not active yet. Sign in or create a coach account so students can connect.": "همگام‌سازی ابری هنوز فعال نیست. ابتدا وارد حساب مربی خود شوید تا شاگردان بتوانند متصل شوند."
 });
 
 const t=s=>{
@@ -2972,11 +2975,12 @@ async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legac
       if(out&&out.ok){
         CLOUD.rev=out.rev||0;
         if(out.data&&cloudMerge(out.data,true)){cloudResync();render()}
+        CLOUD.on=true;
+        try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
         // Server holds no bytes yet (fresh account): push local demo/state up
         // so this device is the seed. Authenticated PUT binds tenant ownership.
         if(!out.data){CLOUD.dirty=true;await cloudPush()}
-        try{localStorage.setItem('co-ws',CLOUD.code)}catch(e){}
-        CLOUD.on=true;cloudStart();
+        cloudStart();
         toast(t('Cloud sync on — workspace ')+CLOUD.code);
         return;
       }
@@ -3037,11 +3041,8 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
   if(parts){
     const me=await joinPersonal(v);
     if(!me){toast(t('Invalid code'));return}
-    S.pickCid=me.id;S.joinCid=me.id;S.joinCode=v;
-    /* On the unlock stage the slider completes the entry (the whole point of
-       the welcome lock); from the legacy demo picker we enter directly. */
-    if(S.role==='client'){S.cid=me.id;S.ptab='today';S.player=null;render();toast(t('Connected as')+' '+t(me.name)+' ✓')}
-    else render();
+    S.role='client';S.cid=me.id;S.pickCid=me.id;S.joinCid=me.id;S.joinCode=v;S.ptab='today';S.player=null;
+    render();toast(t('Connected as')+' '+t(me.name)+' ✓');
     return;
   }
   if(CLOUD.on&&CLOUD.code===v){
@@ -3568,17 +3569,18 @@ const inviteLink=code=>location.origin+location.pathname+'#join='+code;
    student's code, and joining binds the device straight to that profile
    (no client picker, no access to other students' views). */
 const clientCode=c=>{
-  if(c.code)return String(c.code).toUpperCase();
+  if(c.code)return String(c.code).trim().toUpperCase();
   c.code=genCode(8);
-  if(CLOUD.on)cloudSchedule(); // persist the freshly minted code
+  saveData();
+  if(CLOUD.on||wsCode()){CLOUD.dirty=true;clearTimeout(CLOUD.pushT);cloudPush()}
   return c.code;
 };
-const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||'';
+const wsCode=()=>(CLOUD.on&&CLOUD.code)||(AUTH.ws&&AUTH.ws.code)||CLOUD.code||(function(){try{return (localStorage.getItem('co-ws')||'').trim().toUpperCase()}catch(e){return ''}})()||'';
 const joinCodeOf=c=>{const ws=wsCode();return ws?ws+'-'+clientCode(c):clientCode(c)};
 /* v18.38 — day-streak display: the real dayStreak once the gamification engine
    has run for a client, the legacy weekly streak as fallback for old data. */
 const streakLbl=c=>c.dayStreak!=null?`${nf(c.dayStreak)} ${t('day streak')}`:c.streak?`${nf(c.streak)} ${t('wk')}`:'—';
-const parseJoinCode=v=>{const i=String(v||'').indexOf('-');return i>0?{ws:String(v).slice(0,i),pc:String(v).slice(i+1)}:null};
+const parseJoinCode=v=>{if(!v)return null;const s=String(v).trim().toUpperCase(),i=s.indexOf('-');return (i>0&&i<s.length-1)?{ws:s.slice(0,i).trim(),pc:s.slice(i+1).trim()}:null};
 const itK=it=>{const f=FOODS[it.fi];return f?Math.round(f.kcal*it.g/100):0};
 const itM=(it,k)=>{const f=FOODS[it.fi];return f?Math.round((f[k]||0)*it.g/100):0};
 /* v18.9.1 — a missing food entry (old payload, pruned library) must never
@@ -4020,15 +4022,13 @@ function unlockStage(){
   if(parts){ // PERSONAL code: only the bound profile counts — never the demo seed
     const me=CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc);
     if(me)return 'ready';
-    /* v18.50 — NO infinite "Checking code…": once the workspace payload has
-       arrived (S.wsConnected), the fetch failed on its own (S.unInvalid) or
-       the 8s timeout passed, the code simply is not valid — show an explicit
-       error with a retry instead of loading forever. */
-    if(S.unInvalid||S.unOffline||(S.wsConnected&&CLOUD.code===parts.ws)||(S.unT0&&Date.now()-S.unT0>8200))return 'invalid';
-    /* Start the clock ONCE per attempt + schedule the re-render that flips
-       the state when the timeout fires (nothing else renders the login view
-       while the code is being checked). */
-    if(!S.unT0){S.unT0=Date.now();setTimeout(()=>{const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},8400)}
+    if(S.unOffline)return 'invalid';
+    const now=Date.now();
+    if(!S.unT0)S.unT0=now;
+    if(S.unInvalid||(now-S.unT0>9200))return 'invalid';
+    if(!S.unTimer){
+      S.unTimer=setTimeout(()=>{S.unTimer=null;const s=unlockStage();if(S.view==='login'&&(s==='loading'||s==='invalid'))render()},9400);
+    }
     return 'loading';
   }
   /* Bare/legacy code: v18.51 — the profile PICKER IS GONE. A student must
@@ -4064,7 +4064,8 @@ function vUnlock(){
       </div>
       <div class="un-hi">${t('Hello')} ${esc(first)}</div>
       <b class="un-name">${esc(t(known.name))}</b>
-      ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}`;
+      ${coach?`<div class="un-coach">${av(coach,22,3)}<span>${esc(coach)}</span></div>`:`<div class="un-meta">${esc(S.joinCode||'')}</div>`}
+      <button class="btn btn-primary" data-act="un-enter" style="margin-top:14px;padding:9px 24px;border-radius:10px;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(200,240,75,.25)">${t('Enter My Portal')} &rarr;</button>`;
   }else if(st==='multi'){
     /* v18.51 — several active students share this (legacy) workspace code:
        never ask "who are you?" — point the student at their PERSONAL code. */
@@ -4145,11 +4146,27 @@ function unlockWire(){
   if(jp&&!jpBound&&!S.unFetching&&!S.unInvalid&&!S.unOffline){
     S.unFetching=true;
     const jc=S.joinCode; // a result from an abandoned/replaced code must not poison the new state
-    joinPersonal(jc).then(me=>{S.unFetching=false;
-      if(S.joinCode!==jc)return; // stale attempt (user changed the code meanwhile)
-      if(me){S.wsConnected=true;S.pickCid=me.id}else{S.unInvalid=true}
-      render();
-    }).catch(()=>{S.unFetching=false});
+    joinPersonal(jc).then(me=>{
+      S.unFetching=false;
+      if(S.joinCode!==jc)return;
+      if(me){
+        S.wsConnected=true;S.pickCid=me.id;
+        render();
+      }else{
+        if(!S.unT0)S.unT0=Date.now();
+        if(Date.now()-S.unT0>9200){
+          S.unInvalid=true;
+          render();
+        }else{
+          setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1200);
+        }
+      }
+    }).catch(()=>{
+      S.unFetching=false;
+      if(Date.now()-(S.unT0||0)<=9200){
+        setTimeout(()=>{if(S.joinCode===jc&&!S.unInvalid)render();},1200);
+      }
+    });
   }
   if(lk.dataset.wired)return;
   lk.dataset.wired='1';
@@ -4176,6 +4193,7 @@ function unlockWire(){
   };
   lk.addEventListener('pointerdown',start);
   lk.addEventListener('pointerup',cancel);
+  lk.addEventListener('click',e=>{if(!armed())return;complete();});
   lk.addEventListener('pointercancel',cancel);
   lk.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!S.unlock.hold){start(e)}});
   lk.addEventListener('keyup',e=>{if(e.key===' '||e.key==='Enter')cancel()});
@@ -7802,11 +7820,13 @@ function inviteModal(){
 /* Success modal right after adding a client — surfaces the personal join code
    immediately so the coach can copy/share it without hunting for it. */
 function clientCodeModal(c){
+  const ws=wsCode();
   const code=joinCodeOf(c),link=inviteLink(code);
   openModal(`
   <div class="modal-h"><h3>${t('Client added ✓')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="row" style="margin-bottom:14px">${avC(c.name,46)}<div><b style="font-size:15px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t('added to your clients')}</div></div></div>
+    ${!ws?`<div class="banner banner-warn" style="margin-bottom:12px;font-size:12px;text-align:start;line-height:1.6;border-radius:8px;padding:10px 12px;background:rgba(255,180,0,.1);border:1px solid rgba(255,180,0,.3);color:var(--text-dim)">${t('Cloud sync is not active yet. Sign in or create a coach account so students can connect.')}</div>`:''}
     <div class="card" style="padding:18px;text-align:center;background:var(--accent-soft);border-color:var(--acc-line)">
       <div class="muted" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${t('Personal connection code')}</div>
       <div style="font-size:30px;font-weight:800;letter-spacing:.12em;margin:6px 0;color:var(--accent-ink)">${esc(code)}</div>
@@ -13561,6 +13581,16 @@ document.addEventListener('click',e=>{
        v18.54 — 'Try again' RETRIES with the SAME scanned code (it never clears
        it — the student must not re-scan for a transient failure); 'Try another
        code' is the only path that returns to the input. */
+    case 'un-enter':{
+      const parts=S.joinCode?parseJoinCode(S.joinCode):null;
+      let known=parts?CLIENTS.find(c=>String(c.code||'').toUpperCase()===parts.pc):null;
+      if(!known&&unlockStage()==='ready1')known=(S.joinCid&&CLIENTS.find(c=>c.id===S.joinCid&&c.status!=='Archived'))||CLIENTS.find(c=>c.status!=='Archived');
+      if(known){
+        S.role='client';S.cid=known.id;S.pickCid=known.id;S.joinCid=known.id;S.ptab='today';S.player=null;S.joinCode=null;
+        try{if(CLOUD.on)localStorage.setItem('co-join',JSON.stringify({code:CLOUD.code,cid:known.id,pcode:S.joinCode}))}catch(e){}
+        render();toast(t('Welcome')+', '+t(known.name).split(' ')[0]+' ✓');
+      }
+      break}
     case 'un-retry':{S.unInvalid=false;S.unOffline=false;S.unT0=0;S.unFetching=false;S.wsConnected=false;
       if(!S.joinCode){S.pickCid=null;S.joinCid=null}
       render();break}
@@ -13957,12 +13987,16 @@ document.addEventListener('click',e=>{
         EVENTS.forEach(ev=>{if(ev.client===oldName)ev.client=newName});
         if(S.msgThread===oldName)S.msgThread=newName;
       }
+      saveData();
+      if(CLOUD.on||wsCode()){CLOUD.dirty=true;clearTimeout(CLOUD.pushT);cloudPush();}
       closeModal();render();toast('Client updated ✓');break}
     case 'client-arch':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
       c.status='Archived';render();toast('Client archived');break}
     case 'client-regen':{const c=CLIENTS.find(x=>x.name===el.dataset.c);if(!c)break;
       // Issue a fresh personal code (old one stops working on next pull).
-      c.code=genCode(8);cloudSchedule();editClientModal(c.name);toast(t('Code regenerated ✓'));break}
+      c.code=genCode(8);saveData();
+      if(CLOUD.on||wsCode()){CLOUD.dirty=true;clearTimeout(CLOUD.pushT);cloudPush();}
+      editClientModal(c.name);toast(t('Code regenerated ✓'));break}
     case 'client-del':{const name=el.dataset.c;
       if(el.dataset.arm!=='1'){
         el.dataset.arm='1';el.style.color='var(--red)';
@@ -14768,6 +14802,8 @@ document.addEventListener('click',e=>{
         nid:ncV('nc-nid')||undefined,since:isoToday()};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
+      saveData();
+      if(CLOUD.on||wsCode()){CLOUD.dirty=true;clearTimeout(CLOUD.pushT);cloudPush();}
       closeModal();if(isNarrow()){S.mview='tabs';S.mtab='clients'}else S.view='clients';render();
       clientCodeModal(nc);break}
     case 'copy-code':{const v=el.dataset.code||'';
