@@ -89,7 +89,7 @@ let lang='en';
    boot; after that co-lang (the app's own choice) wins. */
 /* Multi-language support: English, Türkçe, فارسی */
 try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){lang='en'}
-const FA={
+const FA={'View in Workouts':'مشاهده در تمرین‌ها','Frequency':'تعداد جلسات','Sport':'رشته ورزشی','Ret.':'حفظ','Clear':'خلوت','h':'ساعت',
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
 'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
@@ -539,7 +539,42 @@ Object.assign(FA, {
   "Athlete sport is set to": "رشته فعلی ورزشکار:"
 });
 
-const t=s=>lang==='tr'?(TR[s]??s):(lang==='fa'?(FA[s]??s):s);
+const t=s=>{
+  if(!s&&s!==0)return '';
+  if(lang==='tr'){
+    if(TR[s]!==undefined)return TR[s];
+    if(typeof s==='string'){
+      if(s.startsWith('Today · '))return 'Bugün · '+s.slice(8);
+      if(s.startsWith('Tomorrow · '))return 'Yarın · '+s.slice(11);
+      if(s.startsWith('Phase '))return 'Faz '+s.slice(6);
+      if(s.startsWith('Week '))return 'Hafta '+s.slice(5);
+    }
+    return s;
+  }
+  if(lang==='fa'){
+    if(FA[s]!==undefined)return FA[s];
+    if(typeof s==='string'){
+      if(s.startsWith('Today · '))return 'امروز · '+nf(s.slice(8));
+      if(s.startsWith('Tomorrow · '))return 'فردا · '+nf(s.slice(11));
+      if(s.startsWith('Phase '))return 'فاز '+nf(s.slice(6));
+      if(s.startsWith('Week '))return 'هفته '+nf(s.slice(5));
+      if(s.startsWith('Sep '))return nf(s.slice(4))+' شهریور';
+      if(s.startsWith('Aug '))return nf(s.slice(4))+' مرداد';
+      if(s.startsWith('Jun '))return nf(s.slice(4))+' خرداد';
+      if(s.startsWith('Jul '))return nf(s.slice(4))+' تیر';
+      const mMin=s.match(/^(\d+)\s*(?:min|mins|minute|minutes)(?:\s+ago)?$/i);
+      if(mMin)return nf(mMin[1])+' دقیقه پیش';
+      const mH=s.match(/^(\d+)\s*(?:h|hr|hrs|hour|hours)(?:\s+ago)?$/i);
+      if(mH)return nf(mH[1])+' ساعت پیش';
+      const mD=s.match(/^(\d+)\s*(?:d|day|days)(?:\s+ago)?$/i);
+      if(mD)return nf(mD[1])+' روز پیش';
+      const mW=s.match(/^(\d+)\s*(?:w|wk|wks|week|weeks)(?:\s+ago)?$/i);
+      if(mW)return nf(mW[1])+' هفته پیش';
+    }
+    return s;
+  }
+  return s;
+};
 const TR_MUSCLE={
   'Back':'Sırt','Chest':'Göğüs','Shoulders':'Omuz','Biceps':'Biceps (Pazı)','Triceps':'Triceps (Arka Kol)',
   'Quadriceps':'Kuadriseps (Ön Bacak)','Hamstrings':'Hamstring (Arka Bacak)','Glutes':'Glute (Kalça)',
@@ -602,8 +637,8 @@ const getP=(o,k)=>k.split('.').reduce((a,x)=>a&&a[x],o);
 const KGI=2.20462;
 const uw=v=>v==null?null:(PREFS.units==='Imperial'?+(v*KGI).toFixed(1):v);
 const uc=v=>v==null?null:(PREFS.units==='Imperial'?+(v/2.54).toFixed(1):v);
-const uwS=v=>v==null?'—':nf(uw(v))+(PREFS.units==='Imperial'?' lb':' kg');
-const ucS=v=>v==null?'—':nf(uc(v))+(PREFS.units==='Imperial'?' in':' cm');
+const uwS=v=>v==null?'—':nf(uw(v))+(PREFS.units==='Imperial'?(lang==='fa'?' پوند':' lb'):(lang==='fa'?' کیلوگرم':' kg'));
+const ucS=v=>v==null?'—':nf(uc(v))+(PREFS.units==='Imperial'?(lang==='fa'?' اینچ':' in'):(lang==='fa'?' سانتی‌متر':' cm'));
 const wToKg=v=>PREFS.units==='Imperial'?+(v/KGI).toFixed(1):v;
 const lToCm=v=>PREFS.units==='Imperial'?+(v*2.54).toFixed(1):v;
 /* accent palettes — 10 derived values each (v15.7) */
@@ -1088,7 +1123,7 @@ function prList(cid,limit=3){
   const out=[];
   Object.keys(best).forEach(x=>{const f=first[x],b=best[x];
     if(b.kg<=f.kg)return; // never improved on the first session → not a PR
-    out.push({n:x,f:f.kg+' kg',t:b.kg+' kg',g:'+'+Math.round((b.kg/f.kg-1)*1000)/10+'%',d:fmtShortDate(pd(b.d))});});
+    out.push({n:x,f:uwS(f.kg),t:uwS(b.kg),g:'+'+nf(Math.round((b.kg/f.kg-1)*1000)/10)+'%',d:fmtShortDate(pd(b.d))});});
   out.sort((a,b)=>parseFloat(b.g)-parseFloat(a.g));
   return out.slice(0,limit);
 }
@@ -4525,9 +4560,9 @@ function vDash(){
   if(ONBOARD.context==='In-person / gym'){const i=qa.findIndex(x=>x[0]==='Schedule Session');if(i>0)qa.unshift(qa.splice(i,1)[0])}
   const stats=[
     ['Adherence',pct(pctW),`${nf(totDone)} ${t('of')} ${nf(totDone+totMiss)} ${t('Workouts Completed')}`,avStack,'target','accent',`${pctW>=90?'▲ ':''}${pct(pctW)}`],
-    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(nonActive)}`,'','check','green',`${pct(retPct)} Ret.`],
-    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue',doneT===today.length&&today.length?'Done':upT?'On pace':'Clear'],
-    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} h`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple',hrsW>=15?'High':hrsW>=8?'Optimal':'Light']];
+    ['Active Clients',nf(active),`${t('On Hold')}/${t('Inactive')}: ${nf(nonActive)}`,'','check','green',`${pct(retPct)} ${t('Ret.')}`],
+    ['Sessions Today',nf(today.length),`${nf(doneT)} ${t('Completed')} · ${nf(upT)} ${t('Upcoming')}${missT?` · ${nf(missT)} ${t('Missed')}`:''}`,sparkBars(perDayCnt),'calendar','blue',t(doneT===today.length&&today.length?'Done':upT?'On pace':'Clear')],
+    ['Hours This Week',`${nf(Math.round(hrsW*10)/10)} ${t('h')}`,`${t('Busiest Day')}: ${busiest}`,sparkBars(perDayHrs,'var(--blue)'),'clock','purple',t(hrsW>=15?'High':hrsW>=8?'Optimal':'Light')]];
   const attRow=it=>`<div class="tl-row" style="padding:10px 18px;gap:12px;align-items:center">
     ${it.name?avC(it.name,34):`<span class="bdg ${it.bt}" style="flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center">${ic(it.icon,16)}</span>`}
     <div style="flex:1;min-width:0">
@@ -5913,9 +5948,9 @@ function vCalendar(){
     <select class="sel" style="width:auto" data-change="calclient"><option value="All">${t('All Clients')}</option>${CLIENTS.map(c=>`<option value="${esc(c.name)}" ${S.calfClient===c.name?'selected':''}>${t(c.name)}</option>`).join('')}</select>
     <span class="sp"></span><span class="muted" style="font-size:12px">${t('Drag events between days to reschedule')} · ${t('Tap an empty slot to add a session')}</span>
   </div>
-  <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
+  <div class="calk" style="${cm?'display:none':''}">${[['Sessions This Week',nf(FE.length),'calendar'],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} ${t('h')}`,'clock'],['Active Clients',nf(new Set(FE.map(e=>e.client)).size),'users'],['Busiest Day',busiest,'zap']].map(([k,v,i])=>`
     <div class="card"><div class="row"><span class="muted" style="font-size:11.5px;font-weight:700">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,15)}</span></div><div class="v">${v}</div></div>`).join('')}</div>
-  ${cm?`<div class="cm-kpis" style="margin:-6px 0 14px">${[['Sessions This Week',nf(FE.length)],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} h`],['Active Clients',nf(new Set(FE.map(e=>e.client)).size)],['Busiest Day',busiest]].map(([k,v])=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`).join('')}</div>`:''}`;
+  ${cm?`<div class="cm-kpis" style="margin:-6px 0 14px">${[['Sessions This Week',nf(FE.length)],['Total Hours',`${nf(Math.round(FE.reduce((a,e)=>a+e.dur,0)*10)/10)} ${t('h')}`],['Active Clients',nf(new Set(FE.map(e=>e.client)).size)],['Busiest Day',busiest]].map(([k,v])=>`<div class="cm-kpi"><span class="k">${t(k)}</span><b>${v}</b></div>`).join('')}</div>`:''}`;
   if(S.calV==='Week'){
     return head+`
     <div class="cal-grid">
@@ -9600,7 +9635,7 @@ function mThread(name){
     <div class="composer" style="border:1px solid var(--line);border-radius:14px;margin:8px 12px 78px">
       <input class="inp" id="msg-inp" data-c="${esc(name)}" placeholder="${t('Type a message…')}" onkeydown="if(event.key==='Enter')sendCoachMsg(this.dataset.c)" style="border:none;box-shadow:none">
       <button class="btn btn-outline btn-icon" title="${t('AI draft reply')}" data-act="ai-reply" data-c="${esc(name)}" style="border:none">${ic('zap',15)}</button>
-      <button class="btn btn-primary btn-icon" data-act="send-coach" data-c="${esc(name)}">${ic('arrowR',16)}</button>
+      <button class="btn btn-primary btn-icon" data-act="send-coach" data-c="${esc(name)}">${lang==='fa'?ic('arrowL',16):ic('arrowR',16)}</button>
     </div>
   </div>`;
 }
@@ -15152,6 +15187,11 @@ let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
 (()=>{
   const sParams=new URLSearchParams(location.search);
+  const qLang=sParams.get('lang');
+  if(qLang && (qLang==='en'||qLang==='fa'||qLang==='tr')){
+    lang=qLang;
+    try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang);}catch(e){}
+  }
   const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/)||sParams.get('join');
   if(m){S.joinCode=(typeof m==='string'?m:m[1]).toUpperCase();S.loginRole='client'}
   const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/)||sParams.get('reset');

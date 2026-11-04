@@ -2677,6 +2677,82 @@ html[data-theme="light"] .eq-chip-Band{background:#F0FDFA!important;color:#0F766
 .ql-fav.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .ql-fav.on i{color:var(--accent-ink)}
 
+
+/* Universal RTL & Persian Typography Perfection */
+html[lang="fa"],
+html[dir="rtl"],
+html[lang="fa"] *,
+html[dir="rtl"] * {
+  letter-spacing: normal !important;
+}
+html[lang="fa"] body,
+html[dir="rtl"] body {
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+html[lang="fa"] .stat .k,
+html[dir="rtl"] .stat .k,
+html[lang="fa"] .kpi-label,
+html[dir="rtl"] .kpi-label,
+html[lang="fa"] .qa-lbl,
+html[dir="rtl"] .qa-lbl,
+html[lang="fa"] .bdg,
+html[dir="rtl"] .bdg,
+html[lang="fa"] .btn,
+html[dir="rtl"] .btn,
+html[lang="fa"] .card-t,
+html[dir="rtl"] .card-t,
+html[lang="fa"] .hero-k,
+html[dir="rtl"] .hero-k,
+html[lang="fa"] th,
+html[dir="rtl"] th {
+  text-transform: none !important;
+  font-family: 'Vazirmatn', sans-serif !important;
+}
+@media (min-width: 981px) {
+  .pwa-banner {
+    display: none !important;
+  }
+}
+.content {
+  padding: 24px 24px 84px !important;
+}
+
+
+/* Modern Compact Floating AI Assistant Button */
+.ai-fab {
+  height: 44px !important;
+  width: 44px !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  box-shadow: 0 8px 24px -4px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1) !important;
+  transition: all .25s cubic-bezier(.16,1,.3,1) !important;
+  overflow: hidden !important;
+}
+.ai-fab span {
+  display: none !important;
+}
+.ai-fab:hover {
+  width: auto !important;
+  padding: 0 16px 0 12px !important;
+  gap: 8px !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+.ai-fab:hover span {
+  display: inline !important;
+}
+
+
+/* Builder Input Fixes */
+.mi input[type="text"] {
+  width: 100% !important;
+  text-align: start !important;
+  padding: 8px 12px !important;
+}
+html[dir="rtl"] .mi input[type="text"] {
+  text-align: right !important;
+}
+
 </style>
 </head>
 <body>
@@ -2687,6 +2763,6 @@ html[data-theme="light"] .eq-chip-Band{background:#F0FDFA!important;color:#0F766
      /vendor because the CSP allows 'self' scripts only — no CDN. ic() falls
      back to the legacy P map if this file ever fails to load. -->
 <script src="vendor/lucide/lucide.min.js"></script>
-<script src="app.js?v=19.56"></script>
+<script src="app.js?v=19.57"></script>
 </body>
 </html>
