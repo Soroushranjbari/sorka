@@ -89,7 +89,7 @@ let lang='en';
    boot; after that co-lang (the app's own choice) wins. */
 /* Multi-language support: English, Türkçe, فارسی */
 try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){lang='en'}
-const FA={'Calf':'ساق پا','Rest Timer':'تایمر استراحت','Timer':'تایمر','Reset':'تنظیم مجدد','Presets':'زمان‌های آماده','Minimize':'کوچک‌کردن','Rest complete! Ready for next set':'زمان استراحت تمام شد! ست بعدی را شروع کنید 🔔','Rest in progress…':'در حال استراحت…','Time is up!':'زمان استراحت تمام شد!','Before':'قبل','After':'بعد','Week 1':'هفته ۱','Week 12':'هفته ۱۲','Print / Save as PDF':'چاپ / ذخیره به عنوان PDF','Share via WhatsApp':'اشتراک‌گذاری در واتساپ','Official Certified Program':'برنامه رسمی تاییدشده مربی','Personal Coach & Athletics Performance':'مربیگری حرفه‌ای و بهبود عملکرد ورزشی','Ready to Print or Save':'آماده چاپ یا ذخیره PDF','Athlete':'ورزشکار','View in Workouts':'مشاهده در تمرین‌ها','Frequency':'تعداد جلسات','Sport':'رشته ورزشی','Ret.':'حفظ','Clear':'خلوت','h':'ساعت',
+const FA={'Calf':'ساق پا','Rest Timer':'تایمر استراحت','Smart countdown & interval presets':'تایمر معکوس هوشمند و زمان‌های آماده','Switch to Stopwatch':'تغییر به کرنومتر','Switch to Rest Timer':'تغییر به تایمر استراحت','Timer':'تایمر','Reset':'تنظیم مجدد','Presets':'زمان‌های آماده','Minimize':'کوچک‌کردن','Rest complete! Ready for next set':'زمان استراحت تمام شد! ست بعدی را شروع کنید 🔔','Rest in progress…':'در حال استراحت…','Time is up!':'زمان استراحت تمام شد!','Before':'قبل','After':'بعد','Week 1':'هفته ۱','Week 12':'هفته ۱۲','Print / Save as PDF':'چاپ / ذخیره به عنوان PDF','Share via WhatsApp':'اشتراک‌گذاری در واتساپ','Official Certified Program':'برنامه رسمی تاییدشده مربی','Personal Coach & Athletics Performance':'مربیگری حرفه‌ای و بهبود عملکرد ورزشی','Ready to Print or Save':'آماده چاپ یا ذخیره PDF','Athlete':'ورزشکار','View in Workouts':'مشاهده در تمرین‌ها','Frequency':'تعداد جلسات','Sport':'رشته ورزشی','Ret.':'حفظ','Clear':'خلوت','h':'ساعت',
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
 'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
@@ -7943,25 +7943,38 @@ const aiFabRound=()=>`<button class="ai-fab-round" data-act="ai-chat-fab" title=
 /* v18.37 — toolbox FAB: tapping it makes the tool icons (form check, stopwatch)
    ORBIT out of the box and float around it (animated, staggered). Tapping the
    box again (or anywhere else) pulls them back in. */
-const toolboxFab=()=>`<div class="tbx-wrap" id="tbxWrap">
+const toolboxFab=()=>{
+  const tActive=COACH_TIMER.running;
+  return `<div class="tbx-wrap" id="tbxWrap">
   <button class="tbx-orb" data-act="fc-open" data-orb="1" title="${t('Form check')}" aria-label="${t('Form check')}">${ic('camera',20)}</button>
-  <button class="tbx-orb" data-act="tbx-stopwatch" data-orb="2" title="${t('Stopwatch')}" aria-label="${t('Stopwatch')}">${ic('stopwatch',20)}</button>
-  <button class="tbx-fab" data-act="tbx-toggle" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}</button>
-</div>`;
+  <button class="tbx-orb ${tActive?'tbx-active':''}" data-act="tbx-timer" data-orb="2" title="${t('Rest Timer')}" aria-label="${t('Rest Timer')}">${ic('clock',20)}</button>
+  <button class="tbx-orb ${swRuns?'tbx-active':''}" data-act="tbx-stopwatch" data-orb="3" title="${t('Stopwatch')}" aria-label="${t('Stopwatch')}">${ic('stopwatch',20)}</button>
+  <button class="tbx-fab ${(tActive||swRuns)?'tbx-fab-running':''}" data-act="tbx-toggle" title="${t('Coach Toolbox')}" aria-label="${t('Coach Toolbox')}">${ic('toolbox',22)}${(tActive||swRuns)?'<span class="tbx-dot"></span>':''}</button>
+</div>`};
 function toolboxSheet(){
   const c=(client(S.cid)||CLIENTS[0]||{}).name;
-  const rest=S.player&&S.player.rest>0?nf(fmtMS(S.player.rest)):null;
+  const tActive=COACH_TIMER.running;
+  const m=Math.floor(COACH_TIMER.left/60);
+  const s=COACH_TIMER.left%60;
+  const timeStr=`${m}:${s<10?'0':''}${s}`;
   openSheet(`
   <div class="sh-h"><b>${t('Coach Toolbox')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x">${ic('x',18)}</button></div>
   <div class="sh-b">
+    <button class="tbx-it" data-act="tbx-timer">${ic('clock',20)}<div style="flex:1;text-align:start"><b>${t('Rest Timer')}</b><div class="muted" style="font-size:11.5px">${tActive?`${t('Rest in progress…')} · ${nf(timeStr)}`:t('Smart countdown & interval presets')}</div></div>${tActive?`<span class="bdg bdg-green">${nf(timeStr)}</span>`:ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
+    <button class="tbx-it" data-act="tbx-stopwatch">${ic('stopwatch',20)}<div style="flex:1;text-align:start"><b>${t('Stopwatch')}</b><div class="muted" style="font-size:11.5px">${swRuns?t('Running…'):t('Interval timer for sets and rest')}</div></div>${swRuns?'<span class="bdg bdg-amber">Live</span>':ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
     <button class="tbx-it" data-act="fc-open">${ic('camera',20)}<div style="flex:1;text-align:start"><b>${t('Form check')}</b><div class="muted" style="font-size:11.5px">${t('Camera form check')} — ${esc(t(c||'—'))}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
-    <button class="tbx-it" data-act="tbx-stopwatch">${ic('stopwatch',20)}<div style="flex:1;text-align:start"><b>${t('Stopwatch')}</b><div class="muted" style="font-size:11.5px">${rest?`${t('Rest')}: ${rest}`:t('Interval timer for sets and rest')}</div></div>${ic('chevR',15).replace('<svg','<svg class="ic flip-rtl"')}</button>
   </div>`);
 }
 let swIv=null,swT0=0,swRuns=false,swElapsed=0;
 function stopwatchSheet(){
   openSheet(`
-  <div class="sh-h"><b>${t('Stopwatch')}</b><button class="btn btn-ghost btn-icon" data-act="sheet-x" onclick="swStop()">${ic('x',18)}</button></div>
+  <div class="sh-h">
+    <div class="row" style="gap:8px"><span class="qa-ico qa-ico-lime" style="width:26px;height:26px">${ic('stopwatch',15)}</span><b>${t('Stopwatch')}</b></div>
+    <div class="row" style="gap:6px">
+      <button class="btn btn-outline btn-sm" data-act="switch-to-timer" style="padding:4px 9px;font-size:11.5px;gap:5px">${ic('clock',13)} <span>${t('Rest Timer')}</span></button>
+      <button class="btn btn-ghost btn-icon" data-act="sheet-x" onclick="swStop()">${ic('x',18)}</button>
+    </div>
+  </div>
   <div class="sh-b" style="align-items:center;text-align:center">
     <div id="swDisp" style="font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:700;letter-spacing:.02em;padding:18px 0">00:00.0</div>
     <div class="row" style="gap:10px;justify-content:center">
@@ -13018,6 +13031,7 @@ function openTimerModal(){
         <h3 style="margin:0">${t('Rest Timer')}</h3>
       </div>
       <div class="row" style="gap:6px">
+        <button class="btn btn-outline btn-sm" data-act="switch-to-stopwatch" style="padding:4px 9px;font-size:11.5px;gap:5px">${ic('stopwatch',13)} <span>${t('Stopwatch')}</span></button>
         <button class="btn btn-ghost btn-icon" data-act="timer-sound" title="${t('Sound')}">${COACH_TIMER.sound ? ic('bell',15) : ic('bell-off',15)}</button>
         <button class="btn btn-ghost btn-icon" data-act="modal-x" title="${t('Minimize')}">${ic('x',16)}</button>
       </div>
@@ -14852,8 +14866,12 @@ document.addEventListener('click',e=>{
        dismissable via the backdrop. Same closeModal() the other two use. */
     case 'sheet-x':closeModal();break;
     /* v18.36/37 — coach toolbox FAB (mobile): toggle orbital tools */
+    case 'switch-to-stopwatch':{closeModal();stopwatchSheet();break}
+    case 'switch-to-timer':{closeModal();openTimerModal();break}
     case 'tbx-toggle':{const w=$('tbxWrap');if(w)w.classList.toggle('open');break}
-    case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');stopwatchSheet();break}
+    case 'tbx-timer':{const w=$('tbxWrap');if(w)w.classList.remove('open');closeModal();openTimerModal();break}
+    case 'tbx-stopwatch':{const w=$('tbxWrap');if(w)w.classList.remove('open');closeModal();stopwatchSheet();break}
+    case 'tbx-sheet':{const w=$('tbxWrap');if(w)w.classList.remove('open');closeModal();toolboxSheet();break}
     case 'sw-toggle':swToggle();break;
     case 'sw-reset':swReset();break;
     case 'pk':pickerModal();break;

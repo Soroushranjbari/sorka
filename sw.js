@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v19-62';
+const CACHE = 'co-os-v19-63';
 
 /* v18.22 — Web Push: show the OS notification and focus/open the app. */
 self.addEventListener('push', e => {

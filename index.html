@@ -1972,13 +1972,18 @@ body.sb-open .scrim{display:block}
   .mfloor-now .mprog i,.msheet,.mjump{animation:none!important;transition:none!important}
 }
 /* orbit positions: arc up and around the box (RTL-safe via logical side) */
-.tbx-wrap.open .tbx-orb[data-orb="1"]{transform:translate(calc(var(--tbx-dx,1) * 58px),-46px) scale(1)}
-.tbx-wrap.open .tbx-orb[data-orb="2"]{transform:translate(calc(var(--tbx-dx,1) * 8px),-84px) scale(1)}
-.tbx-wrap.open .tbx-orb[data-orb="1"]:hover{transform:translate(calc(var(--tbx-dx,1) * 58px),-52px) scale(1.08)}
-.tbx-wrap.open .tbx-orb[data-orb="2"]:hover{transform:translate(calc(var(--tbx-dx,1) * 8px),-90px) scale(1.08)}
+.tbx-wrap.open .tbx-orb[data-orb="1"]{transform:translate(calc(var(--tbx-dx,1) * 64px),-14px) scale(1)}
+.tbx-wrap.open .tbx-orb[data-orb="2"]{transform:translate(calc(var(--tbx-dx,1) * 48px),-62px) scale(1)}
+.tbx-wrap.open .tbx-orb[data-orb="3"]{transform:translate(calc(var(--tbx-dx,1) * 6px),-88px) scale(1)}
+.tbx-wrap.open .tbx-orb[data-orb="1"]:hover{transform:translate(calc(var(--tbx-dx,1) * 64px),-18px) scale(1.08)}
+.tbx-wrap.open .tbx-orb[data-orb="2"]:hover{transform:translate(calc(var(--tbx-dx,1) * 48px),-68px) scale(1.08)}
+.tbx-wrap.open .tbx-orb[data-orb="3"]:hover{transform:translate(calc(var(--tbx-dx,1) * 6px),-94px) scale(1.08)}
 /* staggered pop-out */
-.tbx-wrap.open .tbx-orb[data-orb="1"]{transition-delay:.05s}
-.tbx-wrap.open .tbx-orb[data-orb="2"]{transition-delay:.12s}
+.tbx-wrap.open .tbx-orb[data-orb="1"]{transition-delay:.04s}
+.tbx-wrap.open .tbx-orb[data-orb="2"]{transition-delay:.08s}
+.tbx-wrap.open .tbx-orb[data-orb="3"]{transition-delay:.14s}
+.tbx-dot{position:absolute;top:6px;inset-inline-end:6px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 0 8px var(--accent);animation:pulse 1.2s infinite}
+.tbx-active{border-color:var(--accent)!important;color:var(--accent)!important;box-shadow:0 0 12px rgba(200,240,75,.45)!important;animation:pulse 1.2s infinite}
 /* RTL: orbit to the right side instead (box sits on the right in FA) */
 html[dir="rtl"] .tbx-wrap{--tbx-dx:-1}
 .sheet{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;animation:sheetUp .22s var(--e,cubic-bezier(.22,.61,.2,1))}
