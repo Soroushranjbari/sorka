@@ -537,6 +537,8 @@ Object.assign(FA, {
   "Set to Running & Endurance ✓": "رشته به دویدن و استقامت تغییر یافت ✓",
   "Discipline, pace zones, race calendar, personal bests & shoes": "شاخه تخصصی، زون‌های سرعت، تقویم مسابقات، رکوردها و کفش‌ها",
   "Athlete sport is set to": "رشته فعلی ورزشکار:",
+  "Phone QR Scan (Wi-Fi)": "اسکن با گوشی (وای‌فای)",
+  "Configured for local network": "تنظیم‌شده برای شبکه محلی:",
   "Enter My Portal": "ورود به برنامه من",
   "Hold the dumbbell to lift or tap enter above": "دمبل را نگه دارید تا بلند شود یا دکمه بالا را بزنید",
   "Cloud sync is not active yet. Sign in or create a coach account so students can connect.": "همگام‌سازی ابری هنوز فعال نیست. ابتدا وارد حساب مربی خود شوید تا شاگردان بتوانند متصل شوند."
@@ -3560,7 +3562,20 @@ const themeBtn=cls=>{const dark=(PREFS.theme||'Dark')!=='Light';
   return `<button class="btn ${cls}" data-act="theme-toggle" title="${dark?t('Switch to light theme'):t('Switch to dark theme')}">${ic(dark?'sun':'moon',16)}</button>`};
 const fbBtn=pos=>FEEDBACK_MAIL?`<a class="btn btn-dark btn-sm" style="position:fixed;${pos}z-index:50;text-decoration:none;box-shadow:var(--sh-2)" href="mailto:${FEEDBACK_MAIL}?subject=Coach%20OS%20Feedback">💬 ${t('Feedback')}</a>`:'';
 const genCode=(n=6)=>{const C='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<n;i++)s+=C[Math.floor(Math.random()*C.length)];return s};
-const inviteLink=code=>location.origin+location.pathname+'#join='+code;
+let SERVER_LAN_IP=null;
+try{
+  if(/^https?:$/.test(location.protocol)){
+    fetch('/api/health').then(r=>r.json()).then(d=>{if(d&&d.lanIp)SERVER_LAN_IP=d.lanIp}).catch(()=>{});
+  }
+}catch(e){}
+
+const inviteOrigin=()=>{
+  if((location.hostname==='localhost'||location.hostname==='127.0.0.1')&&SERVER_LAN_IP){
+    return `${location.protocol}//${SERVER_LAN_IP}:${location.port||'8888'}`;
+  }
+  return location.origin;
+};
+const inviteLink=code=>inviteOrigin()+location.pathname+'#join='+code;
 /* ---- Per-student connection codes (v16.3) ----
    Every client owns a PERSONAL 8-char code (c.code) the coach issues. The
    string a student enters is "<workspaceCode>-<personalCode>" so ONE code
@@ -4082,7 +4097,9 @@ function vUnlock(){
        users hunting for a new code that was never wrong. */
     center=S.unOffline
       ?`<div class="un-sub">${t('Cannot reach the server')}</div>
-        <div class="un-meta" style="margin-top:10px;letter-spacing:0">${t('Check your internet connection and try again')}</div>
+        <div class="un-meta" style="margin-top:10px;letter-spacing:0;line-height:1.6">${(location.hostname==='localhost'||location.hostname==='127.0.0.1')
+          ?(lang==='fa'?'این لینک روی localhost باز شده که متعلق به کامپیوتر مربی است و روی گوشی در دسترس نیست. مربی باید کیوآر کد جدید حاوی آی‌پی وای‌فای کامپیوتر را به شما نشان دهد.':'This link points to localhost, which cannot be reached from a phone. Ask your coach for the Wi-Fi IP link or online URL.')
+          :t('Check your internet connection and try again')}</div>
         <div class="row" style="gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
           <button class="btn btn-primary btn-sm" data-act="un-retry">${ic('refresh',13)} ${t('Try again')}</button>
           <button class="btn btn-outline btn-sm" data-act="un-newcode">${t('Try another code')}</button></div>`
@@ -7822,11 +7839,15 @@ function inviteModal(){
 function clientCodeModal(c){
   const ws=wsCode();
   const code=joinCodeOf(c),link=inviteLink(code);
+  const isLoop=(location.hostname==='localhost'||location.hostname==='127.0.0.1');
   openModal(`
   <div class="modal-h"><h3>${t('Client added ✓')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="row" style="margin-bottom:14px">${avC(c.name,46)}<div><b style="font-size:15px">${t(c.name)}</b><div class="muted" style="font-size:12px">${t('added to your clients')}</div></div></div>
     ${!ws?`<div class="banner banner-warn" style="margin-bottom:12px;font-size:12px;text-align:start;line-height:1.6;border-radius:8px;padding:10px 12px;background:rgba(255,180,0,.1);border:1px solid rgba(255,180,0,.3);color:var(--text-dim)">${t('Cloud sync is not active yet. Sign in or create a coach account so students can connect.')}</div>`:''}
+    ${isLoop&&SERVER_LAN_IP?`<div style="margin-bottom:12px;padding:8px 12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:8px;font-size:12px;line-height:1.5;text-align:start;color:var(--text-dim)">
+      📱 <b>${t('Phone QR Scan (Wi-Fi)')}:</b> ${t('Configured for local network')} <code style="color:var(--accent-ink);background:rgba(0,0,0,.25);padding:2px 6px;border-radius:4px;font-size:11px">${esc(link.split('#')[0])}</code>
+    </div>`:''}
     <div class="card" style="padding:18px;text-align:center;background:var(--accent-soft);border-color:var(--acc-line)">
       <div class="muted" style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${t('Personal connection code')}</div>
       <div style="font-size:30px;font-weight:800;letter-spacing:.12em;margin:6px 0;color:var(--accent-ink)">${esc(code)}</div>

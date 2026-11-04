@@ -36,7 +36,7 @@ const PAAAS = !!(process.env.RENDER || process.env.RENDER_EXTERNAL_URL ||
   process.env.RAILWAY_ENVIRONMENT || process.env.FLY_APP_NAME ||
   process.env.DYNO /* Heroku */ || process.env.WEBSITE_INSTANCE_ID /* Azure App Service */ ||
   process.env.K_SERVICE /* Cloud Run */);
-const HOST = process.env.HOST || (PAAAS ? '0.0.0.0' : '127.0.0.1');
+const HOST = process.env.HOST || '0.0.0.0';
 const LISTEN_LOOPBACK = /^(127\.0\.0\.1|localhost|::1)$/i.test(HOST);
 const ROOT_REAL = await realpath(ROOT).catch(() => ROOT);
 
@@ -280,6 +280,17 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, HOST, async () => {
+  try {
+    const { networkInterfaces } = await import('node:os');
+    const nets = networkInterfaces();
+    for (const name of Object.keys(nets)) {
+      for (const net of (nets[name] || [])) {
+        if (net.family === 'IPv4' && !net.internal && (net.address.startsWith('192.168.') || net.address.startsWith('10.') || net.address.startsWith('172.'))) {
+          console.log(`Network (Phone / Wi-Fi) → http://${net.address}:${PORT}`);
+        }
+      }
+    }
+  } catch {}
   console.log(`CoachMint server → http://localhost:${PORT}`);
   const pgUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.PGURL;
   console.log(`KV backend: ${pgUrl ? 'postgres' : `sqlite (${SQLITE_PATH})`}`);
