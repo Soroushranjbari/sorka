@@ -9912,7 +9912,7 @@ function vClient(){
   const headA={today:headFull,chat:headFull,
     /* v18.105 — mockup 08: a gear in the header. Settings live inline on this
        screen (no separate route), so it scrolls to that section. */
-    profile:`<span class="icobtn" data-act="pf-gear" role="button" tabindex="0" title="${t('Settings')}">${ic('gear',15)}</span>`,
+    profile:`<div style="display:flex;align-items:center;gap:6px">${langBtn('btn-outline btn-sm')}<span class="icobtn" data-act="pf-gear" role="button" tabindex="0" title="${t('Settings')}">${ic('gear',15)}</span></div>`,
     workouts:`<span class="pill">W${nf(pmH.wk)}/${nf(pmH.weeks)}</span>`,
     nutrition:dayN?`<span class="pill">${t('Day')} ${nf(dayN)}</span>`:'',
     progress:`<span class="pill">${ic('chart',12)} ${gradeH}</span>`,
@@ -9958,7 +9958,6 @@ function vClient(){
   return `
   <div class="clientwrap">
     <button class="btn btn-outline btn-sm" style="position:fixed;top:18px;inset-inline-start:18px;z-index:10" data-act="exitdemo">${ic('x',14)} ${t('Exit demo')}</button>
-    ${langBtn('btn-outline btn-sm')}
     ${fbBtn('top:18px;inset-inline-end:18px;')}
     <div class="phone" data-skin="${esc(PREFS.phoneSkin||'fitflow')}"><div class="notch"></div>
       <div class="capp${S.ptab==='assistant'?' na':''}${full?' fs':''}" id="capp">
@@ -11182,7 +11181,10 @@ function cProfile(){
     <div class="sec"><span class="sec-t">${ic('gear',15)} ${t('Settings')}</span></div>
     <div class="cc tight">
       <div class="setrow"><span class="si">${ic('globe',15)}</span><div class="t"><b>${t('Language')}</b><span>${t('App language')}</span></div>
-        <select class="sel" style="width:120px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="tr" ${lang==='tr'?'selected':''}>Türkçe</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${langBtn('btn-outline btn-sm')}
+          <select class="sel" style="width:110px" data-change="lang"><option value="en" ${lang==='en'?'selected':''}>English</option><option value="tr" ${lang==='tr'?'selected':''}>Türkçe</option><option value="fa" ${lang==='fa'?'selected':''}>فارسی</option></select>
+        </div></div>
       <div class="setrow" data-act="units-tog" style="cursor:pointer"><span class="si">${ic('ruler',15)}</span><div class="t"><b>${t('Units')}</b><span>${PREFS.units==='Imperial'?'Imperial · lb · in':'Metric · kg · cm'}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" data-act="push-enable" style="cursor:pointer"><span class="si">${ic('bell',15)}</span><div class="t"><b>${t('Notifications')}</b><span>${t('Workout · message · reminder')}</span></div><span class="chev">${ic('chevR',15)}</span></div>
       <div class="setrow" style="cursor:default"><span class="si">${ic('camera',15)}</span><div class="t"><b>${t('Progress photos')}</b><span>${PREFS.priv.photos?'ON':'OFF'}</span></div>
