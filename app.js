@@ -89,7 +89,7 @@ let lang='en';
    boot; after that co-lang (the app's own choice) wins. */
 /* Multi-language support: English, Türkçe, فارسی */
 try{lang=localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')||'en'}catch(e){lang='en'}
-const FA={'View in Workouts':'مشاهده در تمرین‌ها','Frequency':'تعداد جلسات','Sport':'رشته ورزشی','Ret.':'حفظ','Clear':'خلوت','h':'ساعت',
+const FA={'Calf':'ساق پا','Rest Timer':'تایمر استراحت','Timer':'تایمر','Reset':'تنظیم مجدد','Presets':'زمان‌های آماده','Minimize':'کوچک‌کردن','Rest complete! Ready for next set':'زمان استراحت تمام شد! ست بعدی را شروع کنید 🔔','Rest in progress…':'در حال استراحت…','Time is up!':'زمان استراحت تمام شد!','Before':'قبل','After':'بعد','Week 1':'هفته ۱','Week 12':'هفته ۱۲','Print / Save as PDF':'چاپ / ذخیره به عنوان PDF','Share via WhatsApp':'اشتراک‌گذاری در واتساپ','Official Certified Program':'برنامه رسمی تاییدشده مربی','Personal Coach & Athletics Performance':'مربیگری حرفه‌ای و بهبود عملکرد ورزشی','Ready to Print or Save':'آماده چاپ یا ذخیره PDF','Athlete':'ورزشکار','View in Workouts':'مشاهده در تمرین‌ها','Frequency':'تعداد جلسات','Sport':'رشته ورزشی','Ret.':'حفظ','Clear':'خلوت','h':'ساعت',
 'Dashboard':'داشبورد','Clients':'شاگردان','Workouts':'تمرین‌ها','Calendar':'تقویم','Progress':'پیشرفت','Measurements':'اندازه‌گیری‌ها','Nutrition':'تغذیه','Templates':'قالب‌ها','Exercise Library':'کتابخانه حرکات','Notes':'یادداشت‌ها','Messages':'پیام‌ها','Settings':'تنظیمات','Help':'راهنما','Collapse':'جمع کردن','Workspace':'فضای کاری','Manage':'مدیریت','More':'بیشتر',
 'Search clients, foods, plans, meals…':'جستجوی شاگردان، غذاها، برنامه‌ها، وعده‌ها…','Quick Add':'افزودن سریع','Create':'ایجاد','Mark all read':'خواندن همه','PRO PLAN':'طرح حرفه‌ای','Coach Soroush':'مربی سروش','Coach':'مربی','Client':'شاگرد',
 'Switch to light theme':'سوییچ به تم روشن','Switch to dark theme':'سوییچ به تم تاریک','Dark theme':'تم تاریک','Light theme':'تم روشن',
@@ -3404,75 +3404,87 @@ function printDoc(title,inner,clientName){
   const c=clientName?CLIENTS.find(x=>x.name===clientName):(S.cid!=null?client(S.cid):null);
   const code=c?joinCodeOf(c):'';
   const link=code?inviteLink(code):'';
-  const qr=link?`<div class="qrbox"><div>${qrSvg(link,96)}</div><div><b>${t('Scan to connect')}</b><div class="meta">${t('Open the CoachMint app — your plan syncs live')}</div><div class="qrcode">${esc(code)}</div></div></div>`:'';
-  const w=window.open('','_blank','width=840,height=940');
+  const qr=link?`<div class="qrbox"><div style="background:#fff;padding:8px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">${qrSvg(link,96)}</div><div><b style="font-size:14px;color:#0F172A">${t('Scan to connect')}</b><div class="meta" style="margin-top:4px;color:#64748B">${t('Open the CoachMint app — your plan syncs live')}</div><div class="qrcode" style="font-size:15px;color:#15803D;font-weight:900">${esc(code)}</div></div></div>`:'';
+  const w=window.open('','_blank','width=900,height=960');
   if(!w){toast(t('Allow pop-ups to print'));return}
+  const cSport = c ? (SPORT_ICONS[clientSport(c)] || '🏋️') + ' ' + t(clientSport(c)) : '';
+  const shareText = encodeURIComponent(`سلام ${c?t(c.name):''}، برنامه تمرینی اختصاصی شما آماده است. برای مشاهده و همگام‌سازی اپلیکیشن:` + (link ? (' ' + link) : ''));
+  const waUrl = `https://wa.me/?text=${shareText}`;
+
   w.document.write(`<!DOCTYPE html><html ${lang==='fa'?'dir="rtl" lang="fa"':''}><head><meta charset="utf-8"><title>${esc(title)}</title><style>
-  body{font-family:Vazirmatn,'Segoe UI',Tahoma,sans-serif;color:#12151B;margin:32px;max-width:760px;font-size:13px}
-  .brand{display:flex;align-items:center;gap:10px;border-bottom:3px solid #C8F04B;padding-bottom:12px;margin-bottom:6px}
-  .brand svg{width:34px;color:#8FB51E;flex:none}
-  .wm{font-weight:800;font-size:18px;letter-spacing:.04em}.wm b{color:#8FB51E}
-  .brand .dt{margin-inline-start:auto;color:#6B7280;font-size:11.5px}
-  h1{font-size:20px;margin:14px 0 4px}h2{font-size:13px;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:#8FB51E}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
-  th,td{border-bottom:1px solid #E7E9DD;padding:7px 9px;text-align:start}th{background:#F7FAEC;color:#4A6210;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
-  .meta{color:#666;font-size:12px;margin-bottom:6px}.brand2{font-weight:800;letter-spacing:.05em}
-  .qrbox{display:flex;gap:16px;align-items:center;margin-top:26px;padding:14px 16px;border:1.5px dashed #C9D6A0;border-radius:12px;background:#FBFDF3;page-break-inside:avoid}
-  .qrcode{font-weight:800;letter-spacing:.12em;font-size:14px;margin-top:5px;color:#4A6210}
-  .foot{margin-top:24px;color:#999;font-size:11px;border-top:1px solid #eee;padding-top:8px;display:flex;justify-content:space-between}
-  @media print{h2{page-break-after:avoid}table,.qrbox{page-break-inside:avoid}}
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap');
+  body{font-family:'Vazirmatn','Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#0F172A;margin:0;padding:28px 36px;max-width:820px;font-size:13px;line-height:1.55;background:#fff;margin:0 auto}
+  .no-print{position:sticky;top:0;z-index:99;background:#0F172A;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-radius:12px;margin-bottom:24px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  .brand-card{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #84CC16;padding-bottom:16px;margin-bottom:20px}
+  .brand-logo{width:46px;height:46px;border-radius:12px;background:#0F172A;display:grid;place-items:center;color:#84CC16;font-size:22px;flex:none}
+  .brand-name{font-size:20px;font-weight:900;color:#0F172A;letter-spacing:-.01em}
+  .brand-sub{font-size:12px;color:#64748B;margin-top:2px}
+  .verified-seal{display:inline-flex;align-items:center;gap:6px;background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:800}
+  .athlete-card{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+  .athlete-it{display:flex;flex-direction:column}
+  .athlete-k{font-size:10.5px;font-weight:800;text-transform:uppercase;color:#64748B;letter-spacing:.04em}
+  .athlete-v{font-size:14px;font-weight:800;color:#0F172A;margin-top:2px}
+  h1{font-size:22px;margin:12px 0 6px;font-weight:900;color:#0F172A}
+  h2{font-size:14px;margin:24px 0 10px;text-transform:uppercase;letter-spacing:.06em;color:#15803D;font-weight:900}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px;border-radius:8px;overflow:hidden;border:1px solid #E2E8F0}
+  th,td{border-bottom:1px solid #E2E8F0;padding:8px 12px;text-align:start}
+  th{background:#F1F5F9;color:#334155;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+  tr:nth-child(even){background:#F8FAFC}
+  .exnote{font-size:11px;color:#0284C7;margin-top:3px;font-weight:600}
+  .meta{color:#64748B;font-size:12px;margin-bottom:6px}
+  .qrbox{display:flex;gap:18px;align-items:center;margin-top:28px;padding:16px 20px;border:1.5px dashed #84CC16;border-radius:14px;background:#F7FEE7;page-break-inside:avoid}
+  .foot{margin-top:30px;color:#94A3B8;font-size:11.5px;border-top:1px solid #E2E8F0;padding-top:12px;display:flex;justify-content:space-between;align-items:center}
+  @media print{
+    .no-print{display:none !important}
+    body{padding:0;max-width:100%}
+    h2{page-break-after:avoid}
+    table,.qrbox,.athlete-card{page-break-inside:avoid}
+  }
   </style></head><body>
-  <div class="brand"><svg viewBox="0 0 120 100" fill="none"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg><span class="wm">COACH<b>MINT</b></span><span class="dt">${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{year:'numeric',month:'long',day:'numeric'})}</span></div>
-  ${inner}${qr}
-  <div class="foot"><span class="brand2">CoachMint</span> — ${esc(t('Coach'))}: ${esc(wsOwnerName()||'—')}</div></body></html>`);
-  w.document.close();w.focus();setTimeout(()=>w.print(),250);
+  <div class="no-print">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-weight:900;color:#84CC16;font-size:16px">COACHMINT</span>
+      <span style="font-size:12.5px;color:#CBD5E1">${t('Ready to Print or Save')}</span>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="window.print()" style="background:#84CC16;color:#0F172A;border:none;padding:7px 16px;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer">${t('Print / Save as PDF')}</button>
+      <a href="${waUrl}" target="_blank" style="background:transparent;color:#84CC16;border:1px solid #84CC16;padding:6px 14px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;display:inline-flex;align-items:center">${t('Share via WhatsApp')}</a>
+      <button onclick="window.close()" style="background:transparent;color:#94A3B8;border:1px solid #334155;padding:6px 12px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer">${t('Close')}</button>
+    </div>
+  </div>
+
+  <div class="brand-card">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="brand-logo">🏋️</div>
+      <div>
+        <div class="brand-name">${esc(coachName())}</div>
+        <div class="brand-sub">${t('Personal Coach & Athletics Performance')} ${cSport ? '· ' + cSport : ''}</div>
+      </div>
+    </div>
+    <div style="text-align:end">
+      <div class="verified-seal">✓ ${t('Official Certified Program')}</div>
+      <div style="font-size:11.5px;color:#64748B;margin-top:5px">${new Date().toLocaleDateString(lang==='fa'?'fa-IR':'en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+    </div>
+  </div>
+
+  ${c ? `
+  <div class="athlete-card">
+    <div class="athlete-it"><span class="athlete-k">${t('Athlete')}</span><span class="athlete-v">${esc(t(c.name))}</span></div>
+    <div class="athlete-it"><span class="athlete-k">${t('Goal')}</span><span class="athlete-v">${esc(t(c.goal))}</span></div>
+    <div class="athlete-it"><span class="athlete-k">${t('Weight')}</span><span class="athlete-v">${uwS(c.weight)}</span></div>
+    <div class="athlete-it"><span class="athlete-k">${t('Training Frequency')}</span><span class="athlete-v">${esc(t(c.freq||'—'))}</span></div>
+  </div>
+  ` : ''}
+
+  ${inner}
+  ${qr}
+  <div class="foot">
+    <span style="font-weight:800;color:#0F172A">CoachMint Elite Coach OS</span>
+    <span>${t('Coach')}: <b>${esc(coachName())}</b></span>
+  </div>
+  </body></html>`);
+  w.document.close();
 }
-function printWorkout(){
-  if(!BUILDER.length){toast(t('Nothing to print — the builder is empty'));return}
-  const name=($('w-name')&&$('w-name').value)||S.wname||'Workout';
-  const day=($('w-day')&&$('w-day').value)||S.wday||'';
-  const dur=($('w-dur')&&$('w-dur').value)||S.wdur||'';
-  const note=($('w-note')&&$('w-note').value)||S.wnote||'';
-  const c=client(S.cid);
-  const rows=BUILDER.map((b,i)=>{const ex=EXERCISES[b.ex]||{};
-    return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td><td>${esc(t(b.note||''))}</td></tr>`}).join('');
-  printDoc(name,`<h1>${esc(t(name))}</h1>
-    <div class="meta">${esc(t(c.name))} · ${esc(t(day))} · ${esc(t(dur))} · ${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${esc(t('sets'))}</div>
-    ${note?`<div class="meta">${esc(t(note))}</div>`:''}
-    <table><thead><tr><th>#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th><th>${esc(t('Notes'))}</th></tr></thead><tbody>${rows}</tbody></table>`,c.name);
-}
-function printNutrition(){
-  const p=NPLANS[S.nplan];if(!p){toast(t('Create a nutrition plan first'));return}
-  const days=p.days.map((d,i)=>{
-    const tg=d.type==='train'?p.train:p.rest;
-    const mealRows=(d.meals||[]).map(m=>`<tr><td>${esc(t(m.time))}</td><td>${esc(t(m.name))}</td><td>${(m.foods||[]).map(x=>{const f=FOODS[x.fi];return f?esc(foodName(f.n))+' '+nf(x.g)+'g':''}).filter(Boolean).join(', ')||'—'}</td><td>${nf(Math.round(mealKcal(m)))} kcal</td></tr>`).join('');
-    return `<h2>${esc(t(DAYS[i]))} — ${esc(t(d.type==='train'?'Training Day':'Rest Day'))} (${nf(tg.kcal)} kcal)</h2>
-    <table><thead><tr><th>${esc(t('Meal time'))}</th><th>${esc(t('Meal'))}</th><th>${esc(t('Foods'))}</th><th>${esc(t('Calories'))}</th></tr></thead><tbody>${mealRows}</tbody></table>`;
-  }).join('');
-  printDoc(p.name,`<h1>${esc(t(p.name))}</h1><div class="meta">${esc(t(p.client))} · ${esc(t(p.goal))} · ${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal / ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>${days}`,p.client);
-}
-/* v18.38 — full week-plan print: every workout grouped by day + a nutrition
-   summary. This is the OFFLINE/demo fallback for /api/export/pdf — same
-   layout, rendered from local data with the full in-app FA dictionary. */
-const DOW=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const dayIx=d=>{const i=DOW.indexOf(d);return i<0?99:i};
-function printWeek(){
-  const c=client(S.cid),db=DB[c.id]||{};
-  const list=[...(db.workouts||[])].sort((a,b)=>dayIx(a.day)-dayIx(b.day)).slice(0,14);
-  const wk=list.map(w=>{
-    const rows=(w.exercises||[]).map((b,i)=>{const ex=EXERCISES[b.ex]||{};
-      return `<tr><td>${nf(i+1)}</td><td>${esc(t(ex.n))}${b.note?`<div class="meta">${esc(t(b.note))}</div>`:''}</td><td>${nf(b.sets)} × ${esc(t(b.reps))}</td><td>${b.kg?nf(b.kg)+' kg':'—'}</td><td>${nf(b.rest)} s</td></tr>`}).join('');
-    const sets=(w.exercises||[]).reduce((a,b)=>a+(b.sets||0),0);
-    return `<div style="display:flex;gap:10px;align-items:baseline;margin:16px 0 2px;flex-wrap:wrap"><span style="background:#12151B;color:#fff;font-weight:800;font-size:10.5px;padding:4px 10px;border-radius:6px">${esc(t(w.day||''))}</span><b style="font-size:14.5px">${esc(w.name)}</b><span class="meta">${esc(t(w.dur||''))} · ${nf(sets)} ${t('sets')}</span></div>
-    <table><thead><tr><th style="width:26px">#</th><th>${esc(t('Exercise'))}</th><th>${esc(t('Sets × Reps'))}</th><th>${esc(t('Load'))}</th><th>${esc(t('Rest'))}</th></tr></thead><tbody>${rows}</tbody></table>`;
-  }).join('')||`<div class="meta">${t('No workouts yet')}</div>`;
-  const p=nPlanOf(c.name);
-  const nut=p?`<h2>${esc(t('Nutrition Plan'))} — ${esc(t(p.name))}</h2><div class="meta">${esc(t('Training Day'))} ${nf(p.train.kcal)} kcal · ${esc(t('Rest Day'))} ${nf(p.rest.kcal)} kcal</div>`:'';
-  printDoc(t('Week Plan')+' — '+t(c.name),`<h1>${esc(t('Week Plan'))} — ${esc(t(c.name))}</h1><div class="meta">${esc(t(c.goal))} · ${esc(t(c.prog))}${c.freq?' · '+esc(t(c.freq)):''}</div>${wk}${nut}`,c.name);
-}
-/* v18.38 — /api/export/pdf client bridge: opens the server-rendered printable
-   page (works from any device that knows the workspace code, QR included).
-   Offline or demo → the local branded print (printWeek / printNutrition). */
 function exportPdf(kind,clientName){
   const c=clientName?CLIENTS.find(x=>x.name===clientName):client(S.cid);
   if(!c){toast(t('Create a nutrition plan first'));return}
@@ -5321,12 +5333,13 @@ function vMeasure(){
           const inPose=photos.filter(p=>p.tag===tag).sort((a,b)=>a.id-b.id);
           const A=inPose[0],B=inPose[inPose.length-1];
           const img=(p,cls)=>p?`<img src="${p.src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${cls}>`:`<div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>`;
-          return `<figure class="photo" style="--cut:${S.cut}%">
-          <span class="tag" style="left:10px">${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${A?'':nf(1)}</span><span class="tag" style="right:10px">${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):t('Week')} ${B?'':nf(12)}</span>
+          return `<figure class="photo" style="--cut:${S.cut}%;touch-action:none" data-ba-slider>
+          <span class="tag" style="left:12px;background:rgba(18,21,27,.82);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--accent)">${t('Before')}</b> · ${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(1)}`}</span>
+          <span class="tag" style="right:12px;background:rgba(18,21,27,.82);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--blue)">${t('After')}</b> · ${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(12)}`}</span>
           ${img(A)}
           <div class="photo after" style="--cut:${S.cut}%">${img(B,1)}</div>
-          <div class="handle" style="--cut:${S.cut}%"></div>
-          <figcaption>${inPose.length>=2?t('Drag the slider to compare'):inPose.length===1?t('Add one more photo to compare'):t('No photos yet — add the first one')}</figcaption>
+          <div class="handle" style="--cut:${S.cut}%"><div class="handle-pill">⟷</div></div>
+          <figcaption style="cursor:ew-resize">${inPose.length>=2?t('Drag to compare'):inPose.length===1?t('Add one more photo to compare'):t('No photos yet — add the first one')}</figcaption>
         </figure>`})()}
         <input type="range" min="0" max="100" value="${S.cut}" data-range-cut style="width:100%;margin-top:12px;accent-color:var(--accent-deep)">
         <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">${photos.length?[...photos].sort((a,b)=>b.id-a.id).map(p=>`
@@ -12765,6 +12778,7 @@ function shell(inner){
       <span class="sp"></span>
       ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
+      ${timerBtn('btn-outline btn-sm')}
       <span class="bdg bdg-gray">${ic('dumbbell',12)} ${ONBOARD.sport?t(ONBOARD.sport):t('Coach')}</span>
       <div class="mwrap" data-mw>
         <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
@@ -12784,6 +12798,181 @@ function shell(inner){
     ${aiFab()}
   </div></div>`;
 }
+
+/* ================= COACH SMART REST TIMER ================= */
+let COACH_TIMER = {
+  total: 90,
+  left: 90,
+  running: false,
+  sound: true,
+  iv: null,
+  modalOpen: false
+};
+
+function playTimerChime(){
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.65);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.65);
+  }catch(e){}
+}
+
+function startCoachTimer(sec){
+  if(sec){ COACH_TIMER.total = sec; COACH_TIMER.left = sec; }
+  COACH_TIMER.running = true;
+  if(COACH_TIMER.iv) clearInterval(COACH_TIMER.iv);
+  COACH_TIMER.iv = setInterval(()=>{
+    if(!COACH_TIMER.running) return;
+    if(COACH_TIMER.left > 0){
+      COACH_TIMER.left--;
+      updateTimerUI();
+    } else {
+      stopCoachTimer();
+      if(COACH_TIMER.sound) playTimerChime();
+      toast(t('Rest complete! Ready for next set'));
+      updateTimerUI();
+    }
+  }, 1000);
+  updateTimerUI();
+}
+
+function pauseCoachTimer(){
+  COACH_TIMER.running = false;
+  if(COACH_TIMER.iv) clearInterval(COACH_TIMER.iv);
+  COACH_TIMER.iv = null;
+  updateTimerUI();
+}
+
+function resetCoachTimer(sec){
+  pauseCoachTimer();
+  COACH_TIMER.left = sec || COACH_TIMER.total;
+  updateTimerUI();
+}
+
+function stopCoachTimer(){
+  COACH_TIMER.running = false;
+  if(COACH_TIMER.iv) clearInterval(COACH_TIMER.iv);
+  COACH_TIMER.iv = null;
+}
+
+function adjustCoachTimer(delta){
+  COACH_TIMER.left = Math.max(0, COACH_TIMER.left + delta);
+  if(!COACH_TIMER.running && COACH_TIMER.left > 0) COACH_TIMER.total = COACH_TIMER.left;
+  updateTimerUI();
+}
+
+function updateTimerUI(){
+  const btns = document.querySelectorAll('.topbar-timer-btn');
+  const m = Math.floor(COACH_TIMER.left / 60);
+  const s = COACH_TIMER.left % 60;
+  const timeStr = `${m}:${s < 10 ? '0' : ''}${s}`;
+  btns.forEach(b => {
+    if(COACH_TIMER.running){
+      b.className = 'btn btn-primary btn-sm topbar-timer-btn';
+      b.innerHTML = `${ic('clock',14)} <b>${nf(timeStr)}</b>`;
+      b.style.animation = 'pulse 1.2s infinite';
+    } else {
+      b.className = 'btn btn-outline btn-sm topbar-timer-btn';
+      b.innerHTML = `${ic('clock',14)} <span class="hide-sm">${t('Timer')}</span>`;
+      b.style.animation = 'none';
+    }
+  });
+
+  const mc = document.getElementById('timer-modal-content');
+  if(mc){
+    mc.innerHTML = timerModalInner();
+  }
+}
+
+function timerBtn(cls){
+  const active = COACH_TIMER.running;
+  const left = COACH_TIMER.left;
+  const m = Math.floor(left / 60);
+  const s = left % 60;
+  const timeStr = `${m}:${s < 10 ? '0' : ''}${s}`;
+  if(active){
+    return `<button class="btn btn-primary btn-sm topbar-timer-btn ${cls||''}" data-act="timer-toggle-modal" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-weight:700;animation:pulse 1.2s infinite" title="${t('Rest Timer')}">${ic('clock',14)} <b>${nf(timeStr)}</b></button>`;
+  }
+  return `<button class="btn btn-outline btn-sm topbar-timer-btn ${cls||''}" data-act="timer-toggle-modal" style="display:inline-flex;align-items:center;gap:5px" title="${t('Rest Timer')}">${ic('clock',14)} <span class="hide-sm">${t('Timer')}</span></button>`;
+}
+
+function timerModalInner(){
+  const left = COACH_TIMER.left;
+  const total = Math.max(1, COACH_TIMER.total);
+  const pct = Math.max(0, Math.min(100, Math.round((left / total) * 100)));
+  const m = Math.floor(left / 60);
+  const s = left % 60;
+  const timeStr = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+  const circumference = 2 * Math.PI * 72;
+  const offset = circumference - (pct / 100) * circumference;
+
+  return `
+    <div style="text-align:center;padding:10px 6px">
+      <!-- Circular Progress Ring -->
+      <div style="position:relative;width:180px;height:180px;margin:0 auto 16px;display:grid;place-items:center">
+        <svg width="180" height="180" viewBox="0 0 180 180" style="transform:rotate(-90deg)">
+          <circle cx="90" cy="90" r="72" fill="none" stroke="var(--line2)" stroke-width="8"></circle>
+          <circle cx="90" cy="90" r="72" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round" style="transition:stroke-dashoffset .4s ease"></circle>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center">
+          <div style="font-size:38px;font-weight:900;letter-spacing:1px;font-family:'JetBrains Mono','Space Grotesk',monospace;color:var(--ink)">${nf(timeStr)}</div>
+          <div style="font-size:12px;color:var(--ink2);margin-top:2px">${COACH_TIMER.running ? t('Rest in progress…') : COACH_TIMER.left === 0 ? t('Time is up!') : t('Paused')}</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="row" style="justify-content:center;gap:12px;margin-bottom:18px">
+        <button class="btn btn-outline" data-act="timer-adjust" data-s="-15" style="padding:8px 14px">-15s</button>
+        ${COACH_TIMER.running
+          ? `<button class="btn btn-outline" data-act="timer-pause" style="padding:10px 24px;font-weight:800;gap:8px;border-color:var(--amber);color:var(--amber)">${ic('pause',18)} ${t('Pause')}</button>`
+          : `<button class="btn btn-primary" data-act="timer-start" style="padding:10px 24px;font-weight:800;gap:8px">${ic('play',18)} ${t('Start')}</button>`
+        }
+        <button class="btn btn-outline" data-act="timer-adjust" data-s="15" style="padding:8px 14px">+15s</button>
+        <button class="btn btn-ghost btn-icon" data-act="timer-reset" title="${t('Reset')}">${ic('rotate-ccw',17)}</button>
+      </div>
+
+      <!-- Presets -->
+      <div style="border-top:1px solid var(--line);padding-top:14px">
+        <div class="muted" style="font-size:11.5px;font-weight:700;margin-bottom:8px">${t('Presets')}</div>
+        <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap">
+          ${[30, 60, 90, 120, 180].map(sec => `
+            <button class="fchip ${COACH_TIMER.total === sec ? 'on' : ''}" data-act="timer-preset" data-s="${sec}">${sec < 60 ? sec + 's' : (sec / 60) + 'm'}</button>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openTimerModal(){
+  openModal(`
+    <div class="modal-h" style="display:flex;justify-content:space-between;align-items:center">
+      <div class="row" style="gap:8px">
+        <span class="qa-ico qa-ico-lime">${ic('clock',16)}</span>
+        <h3 style="margin:0">${t('Rest Timer')}</h3>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn btn-ghost btn-icon" data-act="timer-sound" title="${t('Sound')}">${COACH_TIMER.sound ? ic('bell',15) : ic('bell-off',15)}</button>
+        <button class="btn btn-ghost btn-icon" data-act="modal-x" title="${t('Minimize')}">${ic('x',16)}</button>
+      </div>
+    </div>
+    <div id="timer-modal-content">
+      ${timerModalInner()}
+    </div>
+  `);
+}
+
 function renderInner(){
   if(S.role==='client'){
     /* v18.90 — bring a RUNNING rest back after a reload. Must run before vClient()
@@ -13347,6 +13536,13 @@ document.addEventListener('click',e=>{
      pass, so the destination never renders underneath an open overlay. */
   if(el.hasAttribute('data-mjump')&&S.mjump)S.mjump=false;
   switch(a){
+    case 'timer-toggle-modal': openTimerModal(); break;
+    case 'timer-start': startCoachTimer(); break;
+    case 'timer-pause': pauseCoachTimer(); break;
+    case 'timer-reset': resetCoachTimer(); break;
+    case 'timer-adjust': adjustCoachTimer(+el.dataset.s || 0); break;
+    case 'timer-preset': startCoachTimer(+el.dataset.s || 60); break;
+    case 'timer-sound': COACH_TIMER.sound = !COACH_TIMER.sound; updateTimerUI(); break;
     case 'lang':
     case 'lang-cycle':{
       const next=lang==='en'?'tr':(lang==='tr'?'fa':'en');
@@ -15200,6 +15396,7 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   const v=vMatch?vMatch[1]:sParams.get('view');
   const cidParam=sParams.get('cid');if(cidParam)S.cid=+cidParam;
   const tabParam=sParams.get('tab');if(tabParam)S.tab=tabParam;
+  if(sParams.get('timer')==='open'){setTimeout(openTimerModal,400);}
   if(v){S.role='coach';S.view=v;if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';}
   if(sParams.get('strava')==='connected'){
     S.role='coach';S.view='wear';ONBOARD.sport='Running & Endurance';
@@ -15326,3 +15523,33 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
     }catch(e){}
   });
 }
+
+
+// Interactive Before/After Photo Drag
+document.addEventListener('pointerdown', e => {
+  const fig = e.target.closest('.photo[data-ba-slider]');
+  if(!fig) return;
+  const setCut = ev => {
+    const rect = fig.getBoundingClientRect();
+    if(!rect.width) return;
+    const cut = Math.max(0, Math.min(100, Math.round(((ev.clientX - rect.left) / rect.width) * 100)));
+    S.cut = cut;
+    fig.style.setProperty('--cut', cut + '%');
+    const after = fig.querySelector('.photo.after');
+    if(after) after.style.setProperty('--cut', cut + '%');
+    const handle = fig.querySelector('.handle');
+    if(handle) handle.style.setProperty('--cut', cut + '%');
+    const range = fig.parentElement?.querySelector('[data-range-cut]');
+    if(range) range.value = cut;
+  };
+  setCut(e);
+  const onMove = ev => { setCut(ev); };
+  const onUp = () => {
+    window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('pointerup', onUp);
+    window.removeEventListener('pointercancel', onUp);
+  };
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp);
+  window.addEventListener('pointercancel', onUp);
+});

@@ -2753,6 +2753,54 @@ html[dir="rtl"] .mi input[type="text"] {
   text-align: right !important;
 }
 
+
+/* Interactive Before/After Photo Comparison Slider */
+.photo {
+  position: relative !important;
+  height: 360px !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--line) !important;
+  user-select: none !important;
+  cursor: ew-resize !important;
+  background: #181C24 !important;
+}
+.photo.after {
+  position: absolute !important;
+  inset: 0 !important;
+  clip-path: inset(0 0 0 var(--cut, 50%)) !important;
+}
+.handle {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: var(--cut, 50%) !important;
+  width: 3px !important;
+  background: var(--accent) !important;
+  z-index: 5 !important;
+  cursor: ew-resize !important;
+  transform: translateX(-50%) !important;
+  box-shadow: 0 0 12px rgba(200,240,75,0.6) !important;
+}
+.handle-pill {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: var(--accent) !important;
+  color: var(--accent-ink) !important;
+  display: grid !important;
+  place-items: center !important;
+  font-weight: 900 !important;
+  font-size: 14px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+  user-select: none !important;
+  border: 2px solid rgba(255,255,255,0.4) !important;
+}
+
 </style>
 </head>
 <body>
@@ -2763,6 +2811,6 @@ html[dir="rtl"] .mi input[type="text"] {
      /vendor because the CSP allows 'self' scripts only — no CDN. ic() falls
      back to the legacy P map if this file ever fails to load. -->
 <script src="vendor/lucide/lucide.min.js"></script>
-<script src="app.js?v=19.57"></script>
+<script src="app.js?v=19.58"></script>
 </body>
 </html>
