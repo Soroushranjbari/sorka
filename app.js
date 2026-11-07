@@ -105,7 +105,7 @@ const FA={'Calf':'ساق پا','Rest Timer':'تایمر استراحت','Smart c
 'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
 'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
 'App Theme':'تم اپلیکیشن','FitFlow':'فیت‌فلو','Carbon':'کربن','Ocean':'اقیانوس','Sunset':'غروب','CoachMint':'کوچ‌مینت','Charcoal · lime':'زغالی · لیمویی','Black · white':'مشکی · سفید','Navy · cyan':'سرمه‌ای · فیروزه‌ای','Plum · amber':'بادمجانی · کهربایی','Applies to this device only':'فقط روی همین دستگاه اعمال می‌شود',
-'Auto-Detect (AI)':'تشخیص خودکار (هوش مصنوعی)','Zero-touch · Real-time motion classifier':'بدون لمس صفحه · تشخیص آنی حرکت','Detected':'شناسایی شد','Normal':'طبیعی','Mild':'خفیف','Severe':'شدید','Level':'تراز','Tilt':'انحراف','Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Hold steady in front of the camera':'در برابر دوربین ثابت بمان','Stand so your whole body is visible':'طوری بایست که تمام بدنت در کادر باشد','AI Pose engine error: ':'خطای هوش مصنوعی تشخیص فرم: ','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Voice cues':'راهنمای صوتی','Motion trail':'ردیابی مسیر حرکت','Tempo':'تمپو','VBT Speed':'سرعت VBT','Velocity loss':'افت سرعت','Knee valgus':'والگوس زانو (انحراف به داخل)','Neck hyper-extended':'انحراف مهره‌های گردن','Posture Screen (Front)':'ارزیابی پاسچر (نمای روبرو)','Posture Screen (Side)':'ارزیابی پاسچر (نمای جانبی)','Uneven shoulder height':'عدم تقارن ارتفاع شانه‌ها','Pelvic lateral tilt':'انحراف جانبی لگن','Genu valgum (knock-knees)':'زانوی ضربدری (والگوم)','Forward head posture':'سر به جلو (فوروارد هد)','Thoracic kyphosis (rounded back)':'قوز پشتی (کایفوز)','Anterior pelvic tilt (lordosis)':'گودی بیش از حد کمر (لوردوز)','AI Biomechanical Analysis':'تحلیل بیومکانیکی هوش مصنوعی','Fatigue threshold (VBT >20%)':'آستانه خستگی عصبی (VBT >۲۰٪)','Posture':'پاسچر','Generate AI Analysis':'تولید تحلیل هوش مصنوعی','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Auto-Detect (AI)':'تشخیص خودکار (هوش مصنوعی)','Zero-touch · Real-time motion classifier':'بدون لمس صفحه · تشخیص آنی حرکت','Detected':'شناسایی شد','Normal':'طبیعی','Mild':'خفیف','Severe':'شدید','Level':'تراز','Tilt':'انحراف','Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Hold steady in front of the camera':'در برابر دوربین ثابت بمان','Step into camera view':'در کادر دوربین قرار بگیرید','Perfect framing! Hold steady ✓':'کادر عالی است — ثابت بمانید ✓','Step back — feet not visible':'کمی عقب‌تر بروید — پاها در کادر نیست','Adjust camera — head cut off':'زاویه دوربین را تنظیم کنید — سر خارج از کادر است','Get Ready':'آماده شوید','Biomechanics Card':'کارت آنالیز بیومکانیک','Download':'دانلود تصویر','Share':'اشتراک‌گذاری','Start Now':'شروع فوری','Lunge':'لانج','Front knee · depth · stability':'زانوی جلو · عمق · ثبات','Lateral Raise':'نشر از جانب','Elbow height · no swing':'ارتفاع آرنج · بدون تاب','Stand so your whole body is visible':'طوری بایست که تمام بدنت در کادر باشد','AI Pose engine error: ':'خطای هوش مصنوعی تشخیص فرم: ','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Voice cues':'راهنمای صوتی','Motion trail':'ردیابی مسیر حرکت','Tempo':'تمپو','VBT Speed':'سرعت VBT','Velocity loss':'افت سرعت','Knee valgus':'والگوس زانو (انحراف به داخل)','Neck hyper-extended':'انحراف مهره‌های گردن','Posture Screen (Front)':'ارزیابی پاسچر (نمای روبرو)','Posture Screen (Side)':'ارزیابی پاسچر (نمای جانبی)','Uneven shoulder height':'عدم تقارن ارتفاع شانه‌ها','Pelvic lateral tilt':'انحراف جانبی لگن','Genu valgum (knock-knees)':'زانوی ضربدری (والگوم)','Forward head posture':'سر به جلو (فوروارد هد)','Thoracic kyphosis (rounded back)':'قوز پشتی (کایفوز)','Anterior pelvic tilt (lordosis)':'گودی بیش از حد کمر (لوردوز)','AI Biomechanical Analysis':'تحلیل بیومکانیکی هوش مصنوعی','Fatigue threshold (VBT >20%)':'آستانه خستگی عصبی (VBT >۲۰٪)','Posture':'پاسچر','Generate AI Analysis':'تولید تحلیل هوش مصنوعی','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -8194,6 +8194,13 @@ const FPATTERNS=[
   {id:'curl',n:'Bicep Curl',sub:'Elbow · no swing',ang:'elbow',down:150,up:65,checks:[
     {at:'bottom',type:'swing',thr:0.06,flag:'Body swing'},
     {at:'bottom',type:'asym',thr:25,flag:'Uneven left/right'}]},
+  {id:'lunge',n:'Lunge',sub:'Front knee · depth · stability',ang:'knee',down:105,up:155,checks:[
+    {at:'bottom',type:'depth',thr:100,flag:'Shallow depth'},
+    {at:'always',type:'lean',thr:45,flag:'Torso collapses'},
+    {at:'bottom',type:'asym',thr:30,flag:'Uneven left/right'}]},
+  {id:'lateral_raise',n:'Lateral Raise',sub:'Elbow height · no swing',ang:'elbow',down:130,up:85,checks:[
+    {at:'bottom',type:'swing',thr:0.07,flag:'Body swing'},
+    {at:'bottom',type:'asym',thr:20,flag:'Uneven left/right'}]},
   {id:'plank',n:'Plank',sub:'Hold · body line',hold:true,ang:'line',checks:[
     {at:'always',type:'line',thr:150,flag:'Hips sag'},
     {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'},
@@ -8524,6 +8531,104 @@ function fcClassifyPose(lm,wl){
   return null;
 }
 
+/* Audio Chime Synthesizer (Web Audio API) */
+let fcAudioCtx=null;
+function fcBeep(freq=880,dur=0.12,type='sine'){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    fcAudioCtx=fcAudioCtx||new AC();
+    if(fcAudioCtx.state==='suspended')fcAudioCtx.resume();
+    const osc=fcAudioCtx.createOscillator(),g=fcAudioCtx.createGain();
+    osc.type=type;osc.frequency.setValueAtTime(freq,fcAudioCtx.currentTime);
+    g.gain.setValueAtTime(0.16,fcAudioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,fcAudioCtx.currentTime+dur);
+    osc.connect(g);g.connect(fcAudioCtx.destination);
+    osc.start();osc.stop(fcAudioCtx.currentTime+dur);
+  }catch(e){}
+}
+
+/* Smart Distance & Body Framing Target Guide */
+function fcDrawFramingGuide(ctx,cv,lm,p){
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+
+  const padX=cv.width*0.14;
+  const padTop=cv.height*0.06;
+  const padBot=cv.height*0.94;
+  const boxW=cv.width-padX*2;
+  const boxH=padBot-padTop;
+
+  const topY=lm?(lm[0]?.y??lm[11]?.y):null;
+  const botY=lm?Math.max(lm[27]?.y||0,lm[28]?.y||0):0;
+  const hasHead=topY!=null&&topY>0.02&&topY<0.45;
+  const hasFeet=botY>0.60&&botY<0.99;
+  const isFramed=hasHead&&hasFeet&&(botY-topY)>0.36;
+
+  // Box border
+  ctx.lineWidth=isFramed?3.5:2;
+  ctx.strokeStyle=isFramed?'#00FF9D':'rgba(255,255,255,0.35)';
+  ctx.setLineDash(isFramed?[]:[8,8]);
+  if(ctx.roundRect)ctx.roundRect(padX,padTop,boxW,boxH,18);else ctx.rect(padX,padTop,boxW,boxH);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Corner brackets
+  const bLen=Math.min(32,boxW*0.18);
+  ctx.lineWidth=4;
+  ctx.strokeStyle=isFramed?'#00FF9D':'#f59e0b';
+  ctx.beginPath();ctx.moveTo(padX,padTop+bLen);ctx.lineTo(padX,padTop);ctx.lineTo(padX+bLen,padTop);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(padX+boxW-bLen,padTop);ctx.lineTo(padX+boxW,padTop);ctx.lineTo(padX+boxW,padTop+bLen);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(padX,padTop+boxH-bLen);ctx.lineTo(padX,padTop+boxH);ctx.lineTo(padX+bLen,padTop+boxH);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(padX+boxW-bLen,padTop+boxH);ctx.lineTo(padX+boxW,padTop+boxH);ctx.lineTo(padX+boxW,padTop+boxH-bLen);ctx.stroke();
+
+  // Guidance badge
+  let badgeText=t('Step into camera view');
+  let badgeColor='#f59e0b';
+  if(isFramed){
+    badgeText=t('Perfect framing! Hold steady ✓');
+    badgeColor='#00FF9D';
+  }else if(lm&&lm.length){
+    if(!hasFeet)badgeText=t('Step back — feet not visible');
+    else if(!hasHead)badgeText=t('Adjust camera — head cut off');
+    else badgeText=t('Stand so your whole body is visible');
+  }
+  fcDrawBadge(ctx,cv.width/2,padTop+26,badgeText,badgeColor);
+  ctx.restore();
+  return isFramed;
+}
+
+/* Cinematic 3-2-1 Countdown Overlay */
+function fcDrawCountdown(ctx,cv,count){
+  ctx.save();
+  const cx=cv.width/2,cy=cv.height/2;
+  const r=Math.max(54,Math.min(90,cv.width/7));
+
+  // Dark glass circle
+  ctx.beginPath();
+  ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,0,0,0.72)';
+  ctx.fill();
+  ctx.lineWidth=3.5;
+  ctx.strokeStyle='#00FF9D';
+  ctx.shadowColor='#00FF9D';
+  ctx.shadowBlur=18;
+  ctx.stroke();
+
+  // Number / GO
+  ctx.shadowBlur=0;
+  ctx.fillStyle='#ffffff';
+  ctx.font='900 '+(count>0?Math.round(r*1.15):Math.round(r*0.85))+'px Inter, sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText(String(count>0?count:'GO!'),cx,cy+2);
+
+  // Label underneath
+  ctx.font='bold 12px Inter, sans-serif';
+  ctx.fillStyle='#00FF9D';
+  ctx.fillText(t('Get Ready'),cx,cy+r+26);
+  ctx.restore();
+}
+
 /* Postural Screening & Clinical Diagnostic Heatmap */
 function fcDrawPostureScreen(ctx,cv,lm){
   if(!lm)return;
@@ -8739,6 +8844,7 @@ async function fcStart(pid){
         <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
       </div>
       <div class="fc-tools">
+        <button title="${t('Start Now')}" data-act="fc-skip-guide" style="width:auto;border-radius:20px;padding:0 12px;font-size:12px;font-weight:700;background:var(--accent);color:#000;display:flex;align-items:center;gap:4px">${ic('play',14)} ${t('Start Now')}</button>
         <button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button>
         <button title="${t('Voice cues')}" data-act="fc-voice" class="${voiceDef?'on':''}">${ic('volume',18)}</button>
         <button title="${t('Motion trail')}" data-act="fc-trail" class="${trailDef?'on':''}">${ic('activity',18)}</button>
@@ -8751,7 +8857,7 @@ async function fcStart(pid){
   <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
   /* v18.19 — fullscreen camera on phones (CSS scopes it to ≤760px). */
   document.querySelector('#modal-root .modal')?.classList.add('fc-full');
-  FC={on:true,pid,pat:p,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0,
+  FC={on:true,pid,pat:p,stage:'guide',guideT0:0,cdCount:3,cdLastT:0,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0,
       voiceOn:voiceDef,trailOn:trailDef,trail:[],tempos:[],velocities:[],lastTempo:'—',lastV:0,lastVLoss:0,
       tRepStart:performance.now(),durEcc:0,durIso:0,durCon:0,bottomY:0,postureDone:false,autoVotes:{}};
   try{
@@ -8933,6 +9039,58 @@ function fcOnResult(res){
     list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,i===pi?lm:L,i===pi));
 
     let p=FC.pat;
+
+    /* Framing Guide Stage */
+    if(FC.stage==='guide'){
+      const isFramed=fcDrawFramingGuide(ctx,cv,lm,p);
+      const msg=$('fc-msg');
+      if(isFramed){
+        if(!FC.guideT0)FC.guideT0=performance.now();
+        if(msg)msg.textContent=t('Perfect framing! Hold steady ✓');
+        if(performance.now()-FC.guideT0>1100){
+          FC.stage='countdown';
+          FC.cdCount=3;
+          FC.cdLastT=performance.now();
+          fcBeep(880,0.14);
+          if(FC.voiceOn)fcSpeak('3',true);
+        }
+      }else{
+        FC.guideT0=0;
+        if(msg){
+          const topY=lm?(lm[0]?.y??lm[11]?.y):null;
+          const botY=lm?Math.max(lm[27]?.y||0,lm[28]?.y||0):0;
+          if(!lm||!lm.length)msg.textContent=t('Step into camera view');
+          else if(botY<=0.60)msg.textContent=t('Step back — feet not visible');
+          else if(topY<=0.02)msg.textContent=t('Adjust camera — head cut off');
+          else msg.textContent=t('Stand so your whole body is visible');
+        }
+      }
+      return;
+    }
+
+    /* 3-2-1 Countdown Stage */
+    if(FC.stage==='countdown'){
+      fcDrawCountdown(ctx,cv,FC.cdCount);
+      const now=performance.now();
+      if(now-FC.cdLastT>=1000){
+        FC.cdCount--;
+        FC.cdLastT=now;
+        if(FC.cdCount>0){
+          fcBeep(880,0.14);
+          if(FC.voiceOn)fcSpeak(String(FC.cdCount),true);
+        }else if(FC.cdCount<=0){
+          fcBeep(1760,0.25,'triangle');
+          if(FC.voiceOn)fcSpeak('Go!',true);
+          FC.stage='active';
+          FC.holdT0=performance.now();
+          FC.tRepStart=performance.now();
+          const msg=$('fc-msg');
+          if(msg)msg.textContent=t(p.posture?'Hold steady in front of the camera':'Stand so your whole body is visible');
+        }
+      }
+      return;
+    }
+
     /* Auto-Exercise Classification (Zero-Touch AI Mode) */
     if(p.auto){
       const det=fcClassifyPose(lm,wl);
@@ -9000,6 +9158,7 @@ function fcOnResult(res){
       FC.durIso=Math.max(0,(now-FC.durCon*1000-FC.tBottom)/1000);
       FC.tRepStart=now;
       FC.reps++;
+      fcBeep(1046.5,0.12,'sine');
       const tempoStr=`${FC.durEcc.toFixed(1)}-${Math.max(0,FC.durIso).toFixed(1)}-${FC.durCon.toFixed(1)}s`;
       FC.lastTempo=tempoStr;
       FC.tempos=FC.tempos||[];
@@ -9099,6 +9258,177 @@ function fcSave(el){
   closeModal();saveData();render();
   toast(S.role==='client'?t('Report saved — your coach can see it'):t('Report saved'));
 }
+/* Shareable Biomechanics Card Generator */
+function fcExportCard(f){
+  if(!f)return;
+  const cw=800, ch=1000;
+  const c=document.createElement('canvas');
+  c.width=cw; c.height=ch;
+  const ctx=c.getContext('2d');
+  
+  // Background gradient: dark sleek athletic lab
+  const bg=ctx.createLinearGradient(0,0,0,ch);
+  bg.addColorStop(0,'#0f172a');
+  bg.addColorStop(0.5,'#0a0f1d');
+  bg.addColorStop(1,'#030712');
+  ctx.fillStyle=bg;
+  ctx.fillRect(0,0,cw,ch);
+
+  // Decorative ambient glow
+  const glow=ctx.createRadialGradient(cw/2,ch*0.35,50,cw/2,ch*0.35,350);
+  glow.addColorStop(0,'rgba(200,240,75,0.08)');
+  glow.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=glow;
+  ctx.fillRect(0,0,cw,ch);
+
+  // Top branding bar
+  ctx.fillStyle='#ffffff';
+  ctx.font='900 18px Inter, sans-serif';
+  ctx.fillText('COACH OS · BIOMECHANICS LAB', 40, 55);
+
+  ctx.fillStyle='rgba(255,255,255,0.45)';
+  ctx.font='500 13px Inter, sans-serif';
+  ctx.fillText(f.d || 'Session Report', 40, 78);
+
+  // Client badge
+  const clientName = f.client || S.fcName || 'Athlete';
+  ctx.font='bold 14px Inter, sans-serif';
+  const ctw = ctx.measureText(clientName).width + 24;
+  ctx.fillStyle='rgba(255,255,255,0.08)';
+  if(ctx.roundRect) ctx.roundRect(cw - 40 - ctw, 45, ctw, 34, 17);
+  else ctx.rect(cw - 40 - ctw, 45, ctw, 34);
+  ctx.fill();
+  ctx.fillStyle='#c8f04b';
+  ctx.textAlign='center';
+  ctx.fillText(clientName, cw - 40 - ctw/2, 67);
+  ctx.textAlign='start';
+
+  // Exercise Title
+  ctx.fillStyle='#ffffff';
+  ctx.font='bold 28px Inter, sans-serif';
+  ctx.fillText(f.ex || 'Movement Analysis', 40, 135);
+
+  // Keyframe image in center
+  const imgY = 160, imgH = 460, imgW = 720, imgX = 40;
+  if(f.kf && f.kf[0]){
+    const img = new Image();
+    img.onload = () => {
+      ctx.save();
+      if(ctx.roundRect) ctx.roundRect(imgX, imgY, imgW, imgH, 16);
+      ctx.clip();
+      ctx.drawImage(img, imgX, imgY, imgW, imgH);
+      ctx.restore();
+
+      ctx.strokeStyle='rgba(200,240,75,0.35)';
+      ctx.lineWidth=2;
+      if(ctx.roundRect) ctx.roundRect(imgX, imgY, imgW, imgH, 16);
+      ctx.stroke();
+
+      finishDrawingCard();
+    };
+    img.onerror = () => finishDrawingCard();
+    img.src = f.kf[0];
+  } else {
+    ctx.fillStyle='rgba(255,255,255,0.05)';
+    if(ctx.roundRect) ctx.roundRect(imgX, imgY, imgW, imgH, 16);
+    ctx.fill();
+    finishDrawingCard();
+  }
+
+  function finishDrawingCard(){
+    const gridY = 645;
+    const cards = [
+      { label: t('Form score'), val: (f.score||0)+'%', color: f.score>=85?'#22c55e':f.score>=65?'#f59e0b':'#ef4444' },
+      { label: f.pattern?.includes('posture')?t('Hold'):t('Reps'), val: f.pattern?.includes('posture')?(f.reps||0)+'s':f.reps||0, color: '#38bdf8' },
+      { label: t('Tempo'), val: f.tempo || '3-0-1s', color: '#c8f04b' },
+      { label: t('Range of motion'), val: f.rom != null ? f.rom+'°' : 'Full', color: '#a78bfa' }
+    ];
+
+    const cardW = (cw - 80 - 36) / 4;
+    cards.forEach((cd, idx) => {
+      const cx = 40 + idx * (cardW + 12);
+      ctx.fillStyle='rgba(255,255,255,0.04)';
+      ctx.strokeStyle='rgba(255,255,255,0.1)';
+      ctx.lineWidth=1;
+      if(ctx.roundRect) ctx.roundRect(cx, gridY, cardW, 80, 12);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle='rgba(255,255,255,0.55)';
+      ctx.font='600 11px Inter, sans-serif';
+      ctx.fillText(cd.label, cx + 12, gridY + 28);
+
+      ctx.fillStyle=cd.color;
+      ctx.font='800 22px Inter, sans-serif';
+      ctx.fillText(String(cd.val), cx + 12, gridY + 60);
+    });
+
+    const flagsY = 750;
+    const flagsList = (f.flags && f.flags.length) ? f.flags : ['Optimal biomechanical trajectory', 'Symmetrical joint balance'];
+    ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.font='bold 11px Inter, sans-serif';
+    ctx.fillText('BIOMECHANICAL EVALUATION:', 40, flagsY + 14);
+
+    let fx = 40;
+    const pillY = flagsY + 26;
+    flagsList.slice(0, 3).forEach(flag => {
+      const isFault = f.flags && f.flags.includes(flag);
+      ctx.font='bold 12px Inter, sans-serif';
+      const text = (isFault ? '⚠️ ' : '✓ ') + t(flag);
+      const pw = ctx.measureText(text).width + 20;
+      ctx.fillStyle = isFault ? 'rgba(239,68,68,0.15)' : 'rgba(34,197,94,0.12)';
+      ctx.strokeStyle = isFault ? 'rgba(239,68,68,0.4)' : 'rgba(34,197,94,0.4)';
+      ctx.lineWidth=1;
+      if(ctx.roundRect) ctx.roundRect(fx, pillY, pw, 28, 14);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = isFault ? '#ef4444' : '#22c55e';
+      ctx.fillText(text, fx + 10, pillY + 18);
+      fx += pw + 10;
+    });
+
+    if(f.aiReport){
+      const repY = 825;
+      ctx.fillStyle='rgba(255,255,255,0.03)';
+      ctx.strokeStyle='rgba(200,240,75,0.25)';
+      ctx.lineWidth=1;
+      if(ctx.roundRect) ctx.roundRect(40, repY, cw - 80, 95, 12);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle='#c8f04b';
+      ctx.font='bold 11.5px Inter, sans-serif';
+      ctx.fillText('AI COACH PRESCRIPTION:', 54, repY + 24);
+
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.font='12px Inter, sans-serif';
+      const lines = f.aiReport.split(/\r?\n/).slice(0, 3);
+      lines.forEach((ln, li) => {
+        ctx.fillText(ln.replace(/^•s*/, ''), 54, repY + 46 + li * 18);
+      });
+    }
+
+    ctx.fillStyle='rgba(255,255,255,0.3)';
+    ctx.font='11px Inter, sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('Coach OS AI Biomechanics Engine · Verified Analysis', cw / 2, ch - 25);
+    ctx.textAlign='start';
+
+    const dataUrl = c.toDataURL('image/png', 0.95);
+    openModal(`
+      <div class="modal-h"><h3>${ic('ruler', 16)} ${t('Biomechanics Card')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x', 17)}</button></div>
+      <div class="modal-b" style="text-align:center;padding:12px">
+        <img src="${dataUrl}" style="width:100%;max-width:380px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5);margin:0 auto;display:block">
+      </div>
+      <div class="modal-f" style="justify-content:space-between">
+        <button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button>
+        <div class="row" style="gap:8px">
+          <a class="btn btn-ghost" href="${dataUrl}" download="biomech-${(f.client||'report').toLowerCase()}-${Date.now()}.png">${ic('download', 14)} ${t('Download')}</a>
+          <button class="btn btn-primary" data-act="fc-share-native" data-url="${dataUrl}" data-title="${esc(f.ex||'Report')}">${ic('share', 14)} ${t('Share')}</button>
+        </div>
+      </div>
+    `);
+  }
+}
+
 /* Keyframes survive the summary modal via this tiny stash (data-URLs are too
    big for element attributes). */
 const KF_STASH=[];
@@ -9111,6 +9441,7 @@ function formReportsModal(name){
     <div class="card" style="padding:12px;margin-bottom:8px">
       <div class="row" style="justify-content:space-between"><b style="font-size:13px">${esc(f.ex)}</b><span class="bdg ${f.score>=85?'bdg-lime':f.score>=65?'bdg-amber':'bdg-red'}">${t('Form score')} ${nf(f.score)}</span></div>
       <div class="muted" style="font-size:11.5px;margin-top:4px">${t('Reps')} ${nf(f.reps)}${f.rom!=null?` · ${t('Range of motion')} ${nf(f.rom)}°`:''}${f.tempo?` · ${t('Tempo')} ${esc(f.tempo)}`:''}${f.vLoss?` · VBT -${nf(f.vLoss)}%`:''} · ${esc(f.d)}</div>
+      <div class="row" style="margin-top:6px"><button class="btn btn-ghost btn-sm" data-act="fc-card" data-id="${f.id}" style="font-size:11px;padding:3px 9px">${ic('share',13)} ${t('Biomechanics Card')}</button></div>
       ${(f.flags||[]).length?`<div class="row" style="gap:5px;flex-wrap:wrap;margin-top:6px">${f.flags.map(fl=>`<span class="bdg bdg-red" style="font-size:10px">${t(fl)}</span>`).join('')}</div>`:''}
       ${f.aiReport?`<div style="font-size:11px;line-height:1.5;background:var(--bg2);padding:8px 10px;border-radius:8px;margin-top:7px;border-inline-start:3px solid var(--accent);white-space:pre-line">${esc(f.aiReport)}</div>`:''}
       ${(f.kf||[]).length?`<div class="fc-kfs">${f.kf.map(k=>`<img src="${k}" alt="">`).join('')}</div>`:''}
@@ -13777,6 +14108,34 @@ document.addEventListener('click',e=>{
     case 'fc-finish':fcFinish();break;
     case 'fc-cancel':fcStop();closeModal();break;
     case 'fc-save':fcSave(el);break;
+    case 'fc-skip-guide':{
+      if(FC.stage==='guide'||FC.stage==='countdown'){
+        FC.stage='countdown';
+        FC.cdCount=1;
+        FC.cdLastT=performance.now()-800;
+      }
+      break;
+    }
+    case 'fc-card':{
+      const id=el.dataset.id;
+      const f=FORMS.find(x=>x.id===id)||FORMS[0];
+      if(f)fcExportCard(f);
+      else toast(t('No report found'));
+      break;
+    }
+    case 'fc-share-native':{
+      const url=el.dataset.url;
+      const title=el.dataset.title||'Biomechanics Report';
+      if(navigator.share){
+        fetch(url).then(r=>r.blob()).then(blob=>{
+          const file=new File([blob],'biomechanics-report.png',{type:'image/png'});
+          navigator.share({title,text:'Coach OS Biomechanics Analysis',files:[file]}).catch(()=>{});
+        }).catch(()=>{});
+      }else{
+        toast(t('Use Download to save and share image'));
+      }
+      break;
+    }
     case 'ai-chat-clear':AI_CHAT=[];aiChatSave();renderAiChat();break;
     case 'ai-weekly':aiInsight('weekly');break;
     case 'ai-reply':aiReplyDraft(el.dataset.c,el);break;
