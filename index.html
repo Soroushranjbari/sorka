@@ -1692,7 +1692,54 @@ html[lang="fa"] .mshell .mtab .n,html[lang="fa"] .msig-v{font-family:'Vazirmatn'
   .sidebar,.topbar{display:none}
   .content{padding:0;max-width:none}
   .hamb{display:inline-flex}
+  .stats.n5{grid-template-columns:repeat(2,1fr) !important;gap:8px}
+  .stats.n5 .card.stat{padding:10px 12px}
+  .stats.n5 .card.stat .k{font-size:11px;line-height:1.2}
+  .stats.n5 .card.stat .v{font-size:17px;margin-top:4px}
+  .n-planner-grid{grid-template-columns:1fr !important;gap:12px}
+  .n-planner-grid > div:last-child{position:static !important}
+  .frow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 8px;padding:9px 0}
+  .frow>div:first-child{flex:1 1 100%;min-width:0;margin-bottom:2px}
+  .frow .fk{font-weight:700;font-size:13px}
+  .frow>span{font-size:11.5px;color:var(--ink-2);background:var(--inset);padding:2px 7px;border-radius:6px}
+  .tbl-responsive-cards thead{display:none}
+  .tbl-responsive-cards,
+  .tbl-responsive-cards tbody,
+  .tbl-responsive-cards tr{display:block;width:100%}
+  .tbl-responsive-cards tr{padding:12px 14px;margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-sizing:border-box}
+  .tbl-responsive-cards td{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border:none;white-space:normal}
+  .tbl-responsive-cards td::before{content:attr(data-label);font-weight:600;font-size:11.5px;color:var(--ink-3)}
+  .tbl-responsive-cards td:first-child{padding-bottom:8px;border-bottom:1px solid var(--line2);margin-bottom:4px}
+  .tbl-responsive-cards td:first-child::before{display:none}
+  .tbl-responsive-cards td:last-child{margin-top:8px;padding-top:8px;border-top:1px solid var(--line2);justify-content:space-between}
+  .tbl-responsive-cards td:last-child::before{display:none}
 }
+/* Coach Mobile (.mshell) Nutrition Layout */
+.mshell .stats.n5,
+.mshell .stats{grid-template-columns:repeat(2,1fr) !important;gap:8px}
+.mshell .stats.n5 .card.stat{padding:10px 12px}
+.mshell .stats.n5 .card.stat .k{font-size:11px;line-height:1.2}
+.mshell .stats.n5 .card.stat .v{font-size:17px;margin-top:4px}
+.mshell .grid2,
+.mshell .grid2b,
+.mshell .n-planner-grid{grid-template-columns:1fr !important;gap:12px}
+.mshell .n-planner-grid > div:last-child{position:static !important}
+.mshell .page-h{margin-bottom:12px;gap:10px;align-items:flex-start}
+.mshell .page-h h1{font-size:20px}
+.mshell .page-h h1::before{width:22px;height:3px;margin-bottom:6px}
+.mshell .page-h .sub{font-size:11.5px}
+.mshell .page-h .row{width:100%;gap:6px}
+.mshell .page-h .row .btn{flex:1;justify-content:center;padding:7px 10px;font-size:11.5px}
+.mshell .tabs{gap:6px;padding-bottom:6px;margin:10px 0 14px;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap}
+.mshell .tabs::-webkit-scrollbar{display:none}
+.mshell .tab{padding:6px 12px;font-size:12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);flex:none;white-space:nowrap}
+.mshell .tab.on{background:var(--accent-soft);color:var(--accent-text);border-color:var(--accent-line)}
+.mshell .frow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 8px;padding:9px 0}
+.mshell .frow>div:first-child{flex:1 1 100%;min-width:0;margin-bottom:2px}
+.mshell .frow .fk{font-weight:700;font-size:13px}
+.mshell .frow>span{font-size:11.5px;color:var(--ink-2);background:var(--inset);padding:2px 7px;border-radius:6px}
+.mshell .excards{grid-template-columns:1fr !important;gap:10px}
+.mshell .n-att-row{flex-wrap:wrap;gap:8px}
 /* ≤520px — client portal goes full-screen. The page must NEVER scroll as a whole:
    .clientwrap is pinned to the viewport (100vh on iOS is taller than the visible
    screen, which made the entire app wobble up/down while scrolling), overscroll

@@ -6408,9 +6408,9 @@ function nNutrition(){
   const body={overview:nOverview,planner:nPlanner,weekly:nWeekly,phases:nPhases,mealtpl:nMealTpl,plantpl:nPlanTpl,history:nHistory}[S.nview]();
   return `
   <div class="page-h"><div><h1>${t('Nutrition')}</h1><div class="sub">${t('Create and manage nutrition plans for your clients.')}</div></div>
-  <div class="row">
-    <button class="btn btn-outline" data-act="nn-plantpl">${ic('stack',15)} ${t('Templates')}</button>
-    <button class="btn btn-primary" data-act="np-new">${ic('plus',15)} ${t('Create Nutrition Plan')}</button>
+  <div class="row" style="flex-wrap:wrap;gap:8px">
+    <button class="btn btn-outline btn-sm" data-act="nn-plantpl">${ic('stack',14)} ${t('Templates')}</button>
+    <button class="btn btn-primary btn-sm" data-act="np-new">${ic('plus',14)} ${t('Create Nutrition Plan')}</button>
   </div></div>
   <div class="tabs">${tabs.map(([k,l])=>`<button class="tab ${S.nview===k?'on':''}" data-act="ntab" data-v="${k}">${t(l)}</button>`).join('')}</div>
   ${body}`;
@@ -6432,7 +6432,7 @@ function nOverview(){
     ['Average Daily Calories',`${nf(avg)} kcal`,'utensils']];
   return `
   ${nHealth()}
-  <div class="stats n5" style="grid-template-columns:repeat(5,1fr)">${kpis.map(([k,v,i])=>`
+  <div class="stats n5">${kpis.map(([k,v,i])=>`
     <div class="card stat"><div class="row"><span class="k">${t(k)}</span><span class="sp"></span><span class="ic" style="color:var(--ink3)">${ic(i,16)}</span></div><div class="v" style="font-size:21px">${nf(v)}</div></div>`).join('')}
   </div>
   <div class="card" style="overflow-x:auto">
@@ -6443,7 +6443,7 @@ function nOverview(){
         ${['All','Active','Paused','Archived'].map(s=>`<button class="fchip ${S.nstat===s?'on':''}" data-act="nstat" data-s="${s}">${t(s)}</button>`).join('')}
       </div>
     </div>
-    <table class="tbl">
+    <table class="tbl tbl-responsive-cards">
       <thead><tr><th>${t('Client')}</th><th>${t('Goal')}</th><th>${t('Calories')}</th><th>${t('Protein')}</th><th>${t('Current Plan')}</th><th class="hide-md">${t('Phase')}</th><th class="hide-md">${t('Last Updated')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
       <tbody id="ntab-body">${nTabRows(rows)}</tbody>
     </table>
@@ -6453,14 +6453,19 @@ function nTabRows(rows){
   if(!rows.length)return `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--ink3)">${t('No results found.')}</td></tr>`;
   return rows.map(p=>{const i=NPLANS.indexOf(p);
   return `<tr>
-    <td><div class="row">${avC(p.client,34)}<b style="font-size:13px">${t(p.client)}</b></div></td>
-    <td>${t(p.goal)}</td><td>${nf(p.train.kcal)} kcal</td><td>${nf(p.train.p)}g</td>
-    <td><b style="font-size:12.5px">${t(p.name)}</b></td><td>${t(p.phase)}</td><td class="hide-md">${t(p.updated)}</td><td>${stBdg(p.status)}</td>
-    <td style="text-align:end;white-space:nowrap">
+    <td data-label="${t('Client')}"><div class="row">${avC(p.client,34)}<b style="font-size:13px">${t(p.client)}</b></div></td>
+    <td data-label="${t('Goal')}">${t(p.goal)}</td>
+    <td data-label="${t('Calories')}">${nf(p.train.kcal)} kcal</td>
+    <td data-label="${t('Protein')}">${nf(p.train.p)}g</td>
+    <td data-label="${t('Current Plan')}"><b style="font-size:12.5px">${t(p.name)}</b></td>
+    <td class="hide-md" data-label="${t('Phase')}">${t(p.phase)}</td>
+    <td class="hide-md" data-label="${t('Last Updated')}">${t(p.updated)}</td>
+    <td data-label="${t('Status')}">${stBdg(p.status)}</td>
+    <td data-label="${t('Actions')}" style="text-align:end;white-space:nowrap">
       <button class="btn btn-outline btn-sm" data-act="nopen" data-i="${i}">${t('Open Plan')}</button>
       <button class="btn btn-ghost btn-icon" title="${t('Duplicate')}" data-act="ndup" data-i="${i}">${ic('copy',15)}</button>
       <button class="btn btn-ghost btn-icon" title="${p.status==='Paused'?t('Resume'):t('Pause')}" data-act="npause" data-i="${i}">${ic(p.status==='Paused'?'play':'pause',15)}</button>
-      <button class="btn btn-ghost btn-icon" title="${t('Archive')}" data-act="narch" data-i="${i}" style="color:var(--red)">${ic('archive',15)}</button>
+      <button class="btn btn-ghost btn-icon" title="${t('Archive')}" data-act="narch" data-i="${i}" style="color:var(--red)">${ic('trash',15)}</button>
     </td>
   </tr>`}).join('');
 }
@@ -6649,7 +6654,7 @@ function nPlanner(){
   const tg=day.type==='train'?p.train:p.rest;
   const s=daySum(day.meals);
   return `
-  <div class="grid2" style="grid-template-columns:1fr 300px;align-items:start">
+  <div class="grid2 n-planner-grid">
     <div class="stack">
       <div class="card" style="padding:16px 18px">
         <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
@@ -6662,8 +6667,8 @@ function nPlanner(){
           <button class="btn btn-outline btn-sm" data-act="print-nutrition">${ic('download',13)} ${t('Print / PDF')}</button>
           <button class="btn btn-outline btn-sm" data-act="export-pdf" data-kind="nutrition" data-c="${esc(p.client)}">${ic('download',13)} ${t('Nutrition PDF')}</button>
         </div>
-        <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:12px">
-          ${DAYS.map((d,i)=>`<button class="fchip ${S.nday===i?'on':''}" data-act="nday" data-i="${i}" style="display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${p.days[i].type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span>${t(d)}</button>`).join('')}
+        <div class="row" style="gap:6px;overflow-x:auto;padding-bottom:4px;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-top:12px">
+          ${DAYS.map((d,i)=>`<button class="fchip ${S.nday===i?'on':''}" data-act="nday" data-i="${i}" style="flex:none;display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${p.days[i].type==='train'?'var(--accent-deep)':'var(--purple)'};display:inline-block"></span>${t(d)}</button>`).join('')}
         </div>
       </div>
       ${day.meals.map((m,mi)=>nMealCard(p,day,m,mi)).join('')}
@@ -10236,10 +10241,22 @@ function mClientView(){
        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mworkout">${ic('dumbbell',14)} ${t('Create Workout')}</button>`;
   const inMeas=`${wtBadge(c.id)}${wChart(c.id,150)}
        <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="m-add">${ic('ruler',14)} ${t('Add Measurement')}</button>`;
-  const inNut=`${nPlanOf(c.name)
-        ?`<div class="set-row"><span style="color:var(--ink2);font-size:12.5px">${t('Plan')}</span><b style="font-size:12.5px">${esc(t(nPlanOf(c.name).name||''))}</b></div>`
-        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>`}
-       <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="mnut">${ic('utensils',14)} ${t('Nutrition')}</button>`;
+  const cp=nPlanOf(c.name);
+  const inNut=cp
+        ?`<div style="display:flex;flex-direction:column;gap:8px">
+           <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">${esc(t(cp.name))}</b><span class="bdg ${cp.status==='Active'?'bdg-lime':'bdg-gray'}">${t(cp.status||'Active')}</span></div>
+           <div class="row" style="gap:6px;flex-wrap:wrap">
+             <span class="chip">${t('Goal')}: ${t(cp.goal||c.goal)}</span>
+             ${cp.phase?`<span class="chip">${t('Phase')}: ${t(cp.phase)}</span>`:''}
+           </div>
+           <div class="row" style="gap:6px;flex-wrap:wrap">
+             <span class="chip">⚡ ${t('Training')}: ${nf((cp.train&&cp.train.kcal)||0)} kcal · ${nf((cp.train&&cp.train.p)||0)}g P</span>
+             <span class="chip">🌙 ${t('Rest')}: ${nf((cp.rest&&cp.rest.kcal)||0)} kcal · ${nf((cp.rest&&cp.rest.p)||0)}g P</span>
+           </div>
+           <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:6px" data-act="mnut-client" data-c="${esc(c.name)}">${ic('utensils',14)} ${t('Open Nutrition Plan')}</button>
+         </div>`
+        :`<div class="muted" style="font-size:12px;padding:4px 0">${t('No nutrition plan')}</div>
+          <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px" data-act="np-new" data-c="${esc(c.name)}">${ic('plus',14)} ${t('Create Nutrition Plan')}</button>`;
   const inNotes=(notes.length?notes.map(n=>`<div style="padding:9px 0;border-bottom:1px solid var(--line2)">
         <b style="font-size:12.5px">${esc(t(n.title))}</b>
         <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(t(n.body))}</div>
@@ -15800,7 +15817,21 @@ document.addEventListener('click',e=>{
     case 'wp-open':if(S.mClient!=null)S.cid=S.mClient;weekPlanModal('plan');render();break; // v18.63 — mobile client view: week plan + add workout
     case 'msettings':S.mview='settings';render();break;
     case 'mtemplates':S.mview='templates';render();break;
-    case 'mnut':S.mview='nutrition';render();break;
+    case 'mnut':case 'mnut-client':{
+      const cName = el.dataset.c || (S.mClient != null ? (client(S.mClient)||{}).name : null);
+      if(cName){
+        const pIdx = NPLANS.findIndex(p => p.client === cName);
+        if(pIdx >= 0){
+          S.nplan = pIdx;
+          S.nview = 'planner';
+          S.nday = TODAY;
+        }
+      }
+      S.mview = 'nutrition';
+      render();
+      window.scrollTo({top:0});
+      break;
+    }
     case 'mcal':S.mview='calendar';S.selDay=S.selDay??TODAY;render();break;
     case 'toast':toast(el.dataset.msg||'Done');break;
   }

@@ -147,7 +147,7 @@ for (const tab of tabs) {
 
 // 3. Mobile views
 sandbox.innerWidth = 375;
-const mviews = ['today', 'clients', 'client', 'more', 'live', 'thread'];
+const mviews = ['today', 'clients', 'client', 'more', 'live', 'thread', 'nutrition'];
 for (const l of langs) {
   vm.runInContext(`lang = "${l}"; applyLang();`, context);
   for (const mv of mviews) {
