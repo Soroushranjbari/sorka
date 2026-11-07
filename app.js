@@ -475,7 +475,18 @@ Object.assign(TR, {
   "Set as Runner": "Koşucu Olarak Ayarla",
   "Set to Running & Endurance ✓": "Koşu & Dayanıklılık olarak ayarlandı ✓",
   "Discipline, pace zones, race calendar, personal bests & shoes": "Branş, tempo bölgeleri, yarış takvimi, dereceler ve ayakkabılar",
-  "Athlete sport is set to": "Sporcu branşı:"
+  "Athlete sport is set to": "Sporcu branşı:",
+  "Instant Start": "Anında Başlat",
+  "Analyzing Live": "Canlı Analiz Ediliyor",
+  "Stance Locked — Recording!": "Duruş Kilitlendi — Kayıt Başladı!",
+  "Stance Locked! Starting…": "Duruş Kilitlendi! Başlatılıyor…",
+  "Locking stance… hold steady": "Duruş kilitleniyor… hareketsiz kalın",
+  "Stand still to auto-start": "Otomatik başlatma için hareketsiz durun",
+  "Stand still to auto-start, or tap Instant Start": "Otomatik başlatma için hareketsiz durun veya Anında Başlat'a basın",
+  "HOLD STILL": "SABİT DURUN",
+  "Active": "Aktif",
+  "Started! Tracking active": "Başlatıldı! Takip aktif",
+  "Perform repetitions with controlled form": "Tekrarları kontrollü form ile uygulayın"
 });
 
 Object.assign(FA, {
@@ -541,7 +552,18 @@ Object.assign(FA, {
   "Configured for local network": "تنظیم‌شده برای شبکه محلی:",
   "Enter My Portal": "ورود به برنامه من",
   "Hold the dumbbell to lift or tap enter above": "دمبل را نگه دارید تا بلند شود یا دکمه بالا را بزنید",
-  "Cloud sync is not active yet. Sign in or create a coach account so students can connect.": "همگام‌سازی ابری هنوز فعال نیست. ابتدا وارد حساب مربی خود شوید تا شاگردان بتوانند متصل شوند."
+  "Cloud sync is not active yet. Sign in or create a coach account so students can connect.": "همگام‌سازی ابری هنوز فعال نیست. ابتدا وارد حساب مربی خود شوید تا شاگردان بتوانند متصل شوند.",
+  "Instant Start": "شروع فوری",
+  "Analyzing Live": "تحلیل زنده",
+  "Stance Locked — Recording!": "وضعیت بدنی تثبیت شد — شروع ثبت!",
+  "Stance Locked! Starting…": "وضعیت بدنی تثبیت شد! شروع…",
+  "Locking stance… hold steady": "در حال تثبیت حالت بدنی… ثابت بمانید",
+  "Stand still to auto-start": "بی‌حرکت بایستید تا خودکار شروع شود",
+  "Stand still to auto-start, or tap Instant Start": "بی‌حرکت بایستید تا خودکار شروع شود یا دکمه شروع فوری را بزنید",
+  "HOLD STILL": "ثابت بمانید",
+  "Active": "فعال",
+  "Started! Tracking active": "شروع شد! ردیابی فعال است",
+  "Perform repetitions with controlled form": "حرکات را با کنترل و فرم صحیح اجرا کنید"
 });
 
 const t=s=>{
@@ -8604,36 +8626,122 @@ function fcDrawFramingGuide(ctx,cv,lm,p){
   return isFramed;
 }
 
-/* Cinematic 3-2-1 Countdown Overlay */
-function fcDrawCountdown(ctx,cv,count){
-  ctx.save();
-  const cx=cv.width/2,cy=cv.height/2;
-  const r=Math.max(54,Math.min(90,cv.width/7));
+/* Landmark velocity & body stillness detector for zero-touch auto-start */
+function fcCheckStillness(lm,prevLm){
+  if(!lm||!prevLm)return false;
+  const indices=[11,12,23,24,27,28]; // shoulders, hips, ankles
+  let sumSq=0,count=0;
+  for(const i of indices){
+    const p1=lm[i],p2=prevLm[i];
+    const v1=p1?.v!=null?p1.v:(p1?.visibility!=null?p1.visibility:1);
+    const v2=p2?.v!=null?p2.v:(p2?.visibility!=null?p2.visibility:1);
+    if(p1&&p2&&v1>0.35&&v2>0.35){
+      const dx=p1.x-p2.x,dy=p1.y-p2.y;
+      sumSq+=(dx*dx+dy*dy);
+      count++;
+    }
+  }
+  if(count<3)return false;
+  const rms=Math.sqrt(sumSq/count);
+  return rms<0.018; // steady starting posture threshold
+}
 
-  // Dark glass circle
+/* Futuristic Stance-Lock & Calibration HUD */
+function fcDrawStanceLock(ctx,cv,lm,progress,isStill){
+  ctx.save();
+  if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+
+  let cx=cv.width/2,cy=cv.height*0.46;
+  if(lm&&lm[11]&&lm[12]&&lm[23]&&lm[24]){
+    cx=((lm[11].x+lm[12].x+lm[23].x+lm[24].x)/4)*cv.width;
+    cy=((lm[11].y+lm[12].y+lm[23].y+lm[24].y)/4)*cv.height;
+  }
+
+  const r=Math.max(50,Math.min(84,cv.width*0.13));
+  const pct=Math.min(100,Math.round(progress*100));
+
+  // Outer corner tech brackets
+  const bLen=Math.min(20,r*0.38);
+  const gap=12;
+  ctx.lineWidth=2.5;
+  ctx.strokeStyle=progress>0.8?'#00FF9D':'rgba(56,189,248,0.75)';
+
+  ctx.beginPath();ctx.moveTo(cx-r-gap,cy-r-gap+bLen);ctx.lineTo(cx-r-gap,cy-r-gap);ctx.lineTo(cx-r-gap+bLen,cy-r-gap);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx+r+gap-bLen,cy-r-gap);ctx.lineTo(cx+r+gap,cy-r-gap);ctx.lineTo(cx+r+gap,cy-r-gap+bLen);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-r-gap,cy+r+gap-bLen);ctx.lineTo(cx-r-gap,cy+r+gap);ctx.lineTo(cx-r-gap+bLen,cy+r+gap);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx+r+gap-bLen,cy+r+gap);ctx.lineTo(cx+r+gap,cy+r+gap);ctx.lineTo(cx+r+gap,cy+r+gap-bLen);ctx.stroke();
+
+  // Subtle circular track ring
   ctx.beginPath();
   ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.fillStyle='rgba(0,0,0,0.72)';
-  ctx.fill();
-  ctx.lineWidth=3.5;
-  ctx.strokeStyle='#00FF9D';
-  ctx.shadowColor='#00FF9D';
-  ctx.shadowBlur=18;
+  ctx.lineWidth=4;
+  ctx.strokeStyle='rgba(255,255,255,0.14)';
   ctx.stroke();
 
-  // Number / GO
-  ctx.shadowBlur=0;
-  ctx.fillStyle='#ffffff';
-  ctx.font='900 '+(count>0?Math.round(r*1.15):Math.round(r*0.85))+'px Inter, sans-serif';
+  // Active charging arc
+  if(progress>0){
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+(Math.PI*2*Math.min(1.0,progress)));
+    ctx.lineWidth=5;
+    ctx.strokeStyle=progress>0.85?'#00FF9D':'#38bdf8';
+    ctx.shadowColor=progress>0.85?'#00FF9D':'#38bdf8';
+    ctx.shadowBlur=12;
+    ctx.lineCap='round';
+    ctx.stroke();
+    ctx.shadowBlur=0;
+  }
+
+  // Center percentage / status text
   ctx.textAlign='center';
   ctx.textBaseline='middle';
-  ctx.fillText(String(count>0?count:'GO!'),cx,cy+2);
+  if(progress>=1.0){
+    ctx.font='900 '+Math.round(r*0.36)+'px Inter, sans-serif';
+    ctx.fillStyle='#00FF9D';
+    ctx.fillText('LOCKED!',cx,cy-2);
+  }else if(progress>0.05){
+    ctx.font='800 '+Math.round(r*0.42)+'px Inter, sans-serif';
+    ctx.fillStyle='#ffffff';
+    ctx.fillText(pct+'%',cx,cy-2);
+  }else{
+    ctx.font='700 '+Math.max(11,Math.round(r*0.22))+'px Inter, sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.75)';
+    ctx.fillText(t('HOLD STILL'),cx,cy-2);
+  }
 
-  // Label underneath
-  ctx.font='bold 12px Inter, sans-serif';
-  ctx.fillStyle='#00FF9D';
-  ctx.fillText(t('Get Ready'),cx,cy+r+26);
+  // Guidance badge below reticle
+  const subText=progress>=1.0?t('Stance Locked! Starting…'):(isStill?t('Locking stance… hold steady'):t('Stand still to auto-start'));
+  const subColor=progress>=1.0?'#00FF9D':(isStill?'#38bdf8':'#f59e0b');
+  fcDrawBadge(ctx,cx,cy+r+24,subText,subColor);
+
   ctx.restore();
+}
+
+function fcDrawCountdown(ctx,cv,count){
+  // Backward compatibility alias: replaced by non-blocking stance lock
+  fcDrawStanceLock(ctx,cv,null,1.0,true);
+}
+
+/* Immediate, zero-delay manual start trigger */
+function fcTriggerInstantStart(){
+  if(!FC||!FC.on)return;
+  if(FC.stage==='active')return;
+  FC.stage='active';
+  FC.lockProgress=1.0;
+  FC.holdT0=performance.now();
+  FC.tRepStart=performance.now();
+  fcBeep(1318.5,0.18,'sine');
+  fcFeed(t('Started! Tracking active'),true);
+  if(FC.voiceOn)fcSpeak('Go!',true);
+
+  const btn=$('fc-instant-btn');
+  if(btn){
+    btn.classList.add('is-active');
+    btn.innerHTML=`<span class="fc-rec-dot"></span> <span>${t('Analyzing Live')}</span>`;
+  }
+  const msg=$('fc-msg');
+  if(msg){
+    msg.textContent=t(FC.pat?.posture?'Hold steady in front of the camera':'Perform repetitions with controlled form');
+  }
 }
 
 /* Postural Screening & Clinical Diagnostic Heatmap */
@@ -8850,8 +8958,10 @@ async function fcStart(pid){
         ${!p.posture?`<div class="fc-big"><small>${t('VBT Speed')}</small><span id="fc-vbt" style="font-size:15px">—</span></div>`:''}
         <div class="fc-big"><small>${t('Form score')}</small><span id="fc-score">—</span></div>
       </div>
+      <div class="fc-quick-bar">
+        <button class="fc-btn-instant" data-act="fc-start-instant" id="fc-instant-btn" title="${t('Instant Start')}">${ic('play',14)} <span>${t('Instant Start')}</span></button>
+      </div>
       <div class="fc-tools">
-        <button title="${t('Start Now')}" data-act="fc-skip-guide" style="width:auto;border-radius:20px;padding:0 12px;font-size:12px;font-weight:700;background:var(--accent);color:#000;display:flex;align-items:center;gap:4px">${ic('play',14)} ${t('Start Now')}</button>
         <button title="${t('Flip camera')}" data-act="fc-flip">${ic('camflip',18)}</button>
         <button title="${t('Voice cues')}" data-act="fc-voice" class="${voiceDef?'on':''}">${ic('volume',18)}</button>
         <button title="${t('Motion trail')}" data-act="fc-trail" class="${trailDef?'on':''}">${ic('activity',18)}</button>
@@ -8864,7 +8974,7 @@ async function fcStart(pid){
   <div class="modal-f"><button class="btn btn-ghost" data-act="fc-cancel">${t('Stop')}</button><button class="btn btn-primary" data-act="fc-finish">${ic('check',15)} ${t('Finish & save')}</button></div>`);
   /* v18.19 — fullscreen camera on phones (CSS scopes it to ≤760px). */
   document.querySelector('#modal-root .modal')?.classList.add('fc-full');
-  FC={on:true,pid,pat:p,stage:'guide',guideT0:0,cdCount:3,cdLastT:0,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0,
+  FC={on:true,pid,pat:p,stage:'guide',lockProgress:0,lockLastT:performance.now(),prevLm:null,lockRipple:null,guideT0:0,cdCount:0,cdLastT:0,reps:0,state:'up',minA:999,maxA:-999,flags:{},kf:[],lastT:-1,hipX:null,holdT0:0,flip:false,feedT:0,
       voiceOn:voiceDef,trailOn:trailDef,trail:[],tempos:[],velocities:[],lastTempo:'—',lastV:0,lastVLoss:0,
       tRepStart:performance.now(),durEcc:0,durIso:0,durCon:0,bottomY:0,postureDone:false,autoVotes:{}};
   try{
@@ -9047,22 +9157,58 @@ function fcOnResult(res){
 
     let p=FC.pat;
 
-    /* Framing Guide Stage */
+    // Expanding lock ripple wave
+    if(FC.lockRipple && FC.lockRipple.alpha>0.02){
+      ctx.save();
+      if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
+      ctx.beginPath();
+      ctx.arc(FC.lockRipple.x,FC.lockRipple.y,FC.lockRipple.r,0,Math.PI*2);
+      ctx.lineWidth=3.5;
+      ctx.strokeStyle=`rgba(0,255,157,${FC.lockRipple.alpha})`;
+      ctx.stroke();
+      FC.lockRipple.r+=8;
+      FC.lockRipple.alpha-=0.05;
+      ctx.restore();
+    }
+
+    /* Stance Lock & Framing Guide Stage (Zero-touch auto-calibration) */
     if(FC.stage==='guide'){
       const isFramed=fcDrawFramingGuide(ctx,cv,lm,p);
       const msg=$('fc-msg');
       if(isFramed){
-        if(!FC.guideT0)FC.guideT0=performance.now();
-        if(msg)msg.textContent=t('Perfect framing! Hold steady ✓');
-        if(performance.now()-FC.guideT0>1100){
-          FC.stage='countdown';
-          FC.cdCount=3;
-          FC.cdLastT=performance.now();
-          fcBeep(880,0.14);
-          if(FC.voiceOn)fcSpeak('3',true);
+        const now=performance.now();
+        const dt=Math.min(80,Math.max(16,now-(FC.lockLastT||now)));
+        FC.lockLastT=now;
+
+        const isStill=fcCheckStillness(lm,FC.prevLm);
+        FC.prevLm=lm.map(pt=>({x:pt.x,y:pt.y,v:pt.v!=null?pt.v:(pt.visibility||1)}));
+
+        if(isStill){
+          FC.lockProgress=Math.min(1.0,(FC.lockProgress||0)+(dt/800));
+        }else{
+          FC.lockProgress=Math.max(0,(FC.lockProgress||0)-(dt/350));
+        }
+
+        fcDrawStanceLock(ctx,cv,lm,FC.lockProgress,isStill);
+
+        if(msg){
+          msg.textContent=isStill ? 
+            `${t('Locking stance… hold steady')} (${Math.round(FC.lockProgress*100)}%)` : 
+            t('Stand still to auto-start, or tap Instant Start');
+        }
+
+        if(FC.lockProgress>=1.0){
+          fcTriggerInstantStart();
+          let rX=cv.width/2,rY=cv.height*0.46;
+          if(lm&&lm[11]&&lm[12]&&lm[23]&&lm[24]){
+            rX=((lm[11].x+lm[12].x+lm[23].x+lm[24].x)/4)*cv.width;
+            rY=((lm[11].y+lm[12].y+lm[23].y+lm[24].y)/4)*cv.height;
+          }
+          FC.lockRipple={x:rX,y:rY,r:20,alpha:1.0};
         }
       }else{
-        FC.guideT0=0;
+        FC.lockProgress=0;
+        FC.prevLm=lm?lm.map(pt=>({x:pt.x,y:pt.y,v:pt.v!=null?pt.v:(pt.visibility||1)})):null;
         if(msg){
           const topY=lm?(lm[0]?.y??lm[11]?.y):null;
           const botY=lm?Math.max(lm[27]?.y||0,lm[28]?.y||0):0;
@@ -9075,26 +9221,9 @@ function fcOnResult(res){
       return;
     }
 
-    /* 3-2-1 Countdown Stage */
+    /* Fallback countdown stage — instantly triggers start */
     if(FC.stage==='countdown'){
-      fcDrawCountdown(ctx,cv,FC.cdCount);
-      const now=performance.now();
-      if(now-FC.cdLastT>=1000){
-        FC.cdCount--;
-        FC.cdLastT=now;
-        if(FC.cdCount>0){
-          fcBeep(880,0.14);
-          if(FC.voiceOn)fcSpeak(String(FC.cdCount),true);
-        }else if(FC.cdCount<=0){
-          fcBeep(1760,0.25,'triangle');
-          if(FC.voiceOn)fcSpeak('Go!',true);
-          FC.stage='active';
-          FC.holdT0=performance.now();
-          FC.tRepStart=performance.now();
-          const msg=$('fc-msg');
-          if(msg)msg.textContent=t(p.posture?'Hold steady in front of the camera':'Stand so your whole body is visible');
-        }
-      }
+      fcTriggerInstantStart();
       return;
     }
 
@@ -14127,12 +14256,9 @@ document.addEventListener('click',e=>{
     case 'fc-finish':fcFinish();break;
     case 'fc-cancel':fcStop();closeModal();break;
     case 'fc-save':fcSave(el);break;
+    case 'fc-start-instant':
     case 'fc-skip-guide':{
-      if(FC.stage==='guide'||FC.stage==='countdown'){
-        FC.stage='countdown';
-        FC.cdCount=1;
-        FC.cdLastT=performance.now()-800;
-      }
+      fcTriggerInstantStart();
       break;
     }
     case 'fc-card':{

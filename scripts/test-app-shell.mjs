@@ -105,6 +105,7 @@ const sandbox = {
   cancelAnimationFrame: (id) => clearTimeout(id),
   fetch: async () => ({ ok: true, json: async () => ({ ok: true }) }),
   Notification: { permission: 'default', requestPermission: async () => 'granted' },
+  performance: globalThis.performance || { now: () => Date.now() },
   console, URL, URLSearchParams, Date, Math, JSON, Intl
 };
 sandbox.window = sandbox;
@@ -161,7 +162,7 @@ for (const l of langs) {
 }
 
 // 4. Modals
-const modals = ['addClientModal', 'pickerModal', 'measModal', 'newSessionModal', 'targetsModal', 'helpModal', 'intakeModal', 'weekPlanModal'];
+const modals = ['addClientModal', 'pickerModal', 'measModal', 'newSessionModal', 'targetsModal', 'helpModal', 'intakeModal', 'weekPlanModal', 'formCheckModal'];
 for (const m of modals) {
   try {
     vm.runInContext(`${m}(); closeModal();`, context);
@@ -169,6 +170,40 @@ for (const m of modals) {
   } catch (e) {
     ok(`modal [${m}] opens and closes`, false, e.message);
   }
+}
+
+// 5. Camera Form Check: Instant Start & Stance Lock Verification
+try {
+  // Test Stillness detector
+  const stillLm1 = [{x:0.5, y:0.2, v:0.9}];
+  for(let i=1;i<33;i++) stillLm1.push({x:0.5 + (i*0.01), y:0.3 + (i*0.01), v:0.9});
+  const stillLm2 = stillLm1.map(p => ({x: p.x + 0.002, y: p.y - 0.001, v: 0.9})); // tiny breathing shift
+  const jitterLm = stillLm1.map(p => ({x: p.x + 0.12, y: p.y - 0.08, v: 0.9}));  // large movement
+
+  context.stillLm1 = stillLm1;
+  context.stillLm2 = stillLm2;
+  context.jitterLm = jitterLm;
+
+  const isStill = vm.runInContext(`fcCheckStillness(stillLm1, stillLm2)`, context);
+  const isMoving = vm.runInContext(`fcCheckStillness(stillLm1, jitterLm)`, context);
+  ok('fcCheckStillness correctly identifies stationary pose', isStill === true);
+  ok('fcCheckStillness correctly identifies motion/walking', isMoving === false);
+
+  // Test Instant Start triggers zero delay transition to active
+  vm.runInContext(`
+    FC = { on: true, stage: 'guide', lockProgress: 0, pat: { posture: false } };
+    fcTriggerInstantStart();
+  `, context);
+  const activeStage = vm.runInContext(`FC.stage`, context);
+  ok('fcTriggerInstantStart switches stage immediately to active', activeStage === 'active');
+
+  // Test Persian translations for Instant Start & Stance Lock
+  const faInstant = vm.runInContext(`lang = 'fa'; t('Instant Start')`, context);
+  const faLocked = vm.runInContext(`t('Stance Locked — Recording!')`, context);
+  ok('Persian translation for Instant Start is correct', faInstant === 'شروع فوری');
+  ok('Persian translation for Stance Locked is correct', faLocked === 'وضعیت بدنی تثبیت شد — شروع ثبت!');
+} catch (e) {
+  ok('Camera Form Check start trigger logic passes', false, e.message);
 }
 
 console.log(`\nAPP_SHELL: ${pass} pass, ${fail} fail`);
