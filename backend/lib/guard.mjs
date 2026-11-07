@@ -148,9 +148,10 @@ export const badJson = () =>
 // 'wasm-unsafe-eval' (v18.17) lets the SELF-HOSTED MediaPipe pose engine
 // compile its WASM module — it adds nothing beyond WASM compilation.
 export const CSP =
-  "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-  "font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self'; " +
-  "media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
+  "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
+  "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; " +
+  "connect-src 'self' blob: data: https://cdn.jsdelivr.net https://storage.googleapis.com; " +
+  "worker-src 'self' blob:; child-src 'self' blob:; media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
 
 // The shop landing page legitimately loads @fontsource CSS + three.js from
 // CDNs. Applying CSP above to it silently blocked both, so it gets its own

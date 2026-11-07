@@ -105,7 +105,7 @@ const FA={'Calf':'ساق پا','Rest Timer':'تایمر استراحت','Smart c
 'Smart Reports':'گزارش‌های هوشمند','Auto daily':'خودکار روزانه','Every client analyzed — score, trends and what needs your attention':'هر شاگرد تحلیل می‌شود — امتیاز، روندها و آنچه نیاز به توجه شما دارد','Workspace health':'سلامت ورک‌اسپیس','Clients analyzed':'شاگردان تحلیل‌شده','Need attention':'نیاز به توجه','Full report':'گزارش کامل','Smart report':'گزارش هوشمند','Score':'امتیاز','Progress':'پیشرفت','Weight trend':'روند وزن','Not enough data':'داده کافی نیست','Gaining':'افزایشی','Losing':'کاهشی','Stable':'ثابت','Workout completion':'تکمیل تمرین','No workouts yet':'هنوز تمرینی نیست','Last contact':'آخرین تماس','No client messages yet':'هنوز پیامی از شاگرد نیست','Form checks':'بررسی‌های فرم','avg':'میانگین','Missing':'ندارد','Needs attention':'نیاز به توجه','All good — keep the plan running':'همه‌چیز خوب است — برنامه را ادامه بده','Low workout completion':'تکمیل تمرین پایین','Weight moving away from goal':'وزن از هدف دور می‌شود','Silent for 2+ weeks':'۲+ هفته بی‌خبر','Quiet this week':'این هفته ساکت','No nutrition plan':'بدون برنامه تغذیه','Form needs work':'فرم نیاز به تمرین دارد','clients need attention':'شاگرد نیاز به توجه دارد','Analyze':'تحلیل کن','what should I change this week?':'این هفته چه چیزی را باید تغییر بدهم؟',
 'Hello':'سلام','Build':'بساز','Better Habits':'عادت‌های بهتر','Ongoing challenge':'چالش در جریان','Daily Report':'گزارش روزانه','Health Grade':'امتیاز سلامت','Perfect progress dude, keep going to apply your fitness activity':'پیشرفت عالی — ادامه بده تا به هدف برسی','Health Metrics':'شاخص‌های سلامت','Calories':'کالری','Heart beat':'ضربان قلب','Week':'هفته','Day':'روز','Month':'ماه',
 'App Theme':'تم اپلیکیشن','FitFlow':'فیت‌فلو','Carbon':'کربن','Ocean':'اقیانوس','Sunset':'غروب','CoachMint':'کوچ‌مینت','Charcoal · lime':'زغالی · لیمویی','Black · white':'مشکی · سفید','Navy · cyan':'سرمه‌ای · فیروزه‌ای','Plum · amber':'بادمجانی · کهربایی','Applies to this device only':'فقط روی همین دستگاه اعمال می‌شود',
-'Auto-Detect (AI)':'تشخیص خودکار (هوش مصنوعی)','Zero-touch · Real-time motion classifier':'بدون لمس صفحه · تشخیص آنی حرکت','Detected':'شناسایی شد','Normal':'طبیعی','Mild':'خفیف','Severe':'شدید','Level':'تراز','Tilt':'انحراف','Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Voice cues':'راهنمای صوتی','Motion trail':'ردیابی مسیر حرکت','Tempo':'تمپو','VBT Speed':'سرعت VBT','Velocity loss':'افت سرعت','Knee valgus':'والگوس زانو (انحراف به داخل)','Neck hyper-extended':'انحراف مهره‌های گردن','Posture Screen (Front)':'ارزیابی پاسچر (نمای روبرو)','Posture Screen (Side)':'ارزیابی پاسچر (نمای جانبی)','Uneven shoulder height':'عدم تقارن ارتفاع شانه‌ها','Pelvic lateral tilt':'انحراف جانبی لگن','Genu valgum (knock-knees)':'زانوی ضربدری (والگوم)','Forward head posture':'سر به جلو (فوروارد هد)','Thoracic kyphosis (rounded back)':'قوز پشتی (کایفوز)','Anterior pelvic tilt (lordosis)':'گودی بیش از حد کمر (لوردوز)','AI Biomechanical Analysis':'تحلیل بیومکانیکی هوش مصنوعی','Fatigue threshold (VBT >20%)':'آستانه خستگی عصبی (VBT >۲۰٪)','Posture':'پاسچر','Generate AI Analysis':'تولید تحلیل هوش مصنوعی','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
+'Auto-Detect (AI)':'تشخیص خودکار (هوش مصنوعی)','Zero-touch · Real-time motion classifier':'بدون لمس صفحه · تشخیص آنی حرکت','Detected':'شناسایی شد','Normal':'طبیعی','Mild':'خفیف','Severe':'شدید','Level':'تراز','Tilt':'انحراف','Turn on notifications':'اعلان‌ها را روشن کن','Notifications on 🔔':'اعلان‌ها روشن شد 🔔','Notifications blocked — enable them in browser settings':'اعلان‌ها مسدود است — از تنظیمات مرورگر فعالش کن','Push is not configured on the server':'اعلان روی سرور تنظیم نشده است','Could not enable notifications':'فعال‌سازی اعلان‌ها ناموفق بود','Install CoachMint':'نصب CoachMint','Full screen, offline-ready, like an app':'تمام‌صفحه، آماده آفلاین — مثل یک اپ','Install':'نصب','Add it to your home screen — full screen and offline-ready, like an app:':'به صفحه اصلی گوشی اضافه‌اش کن — تمام‌صفحه و آماده آفلاین، مثل یک اپ:','1. Tap the Share button':'۱. دکمه Share را بزن','2. Choose "Add to Home Screen"':'۲. گزینه Add to Home Screen را انتخاب کن','3. Open CoachMint from your home screen':'۳. CoachMint را از صفحه اصلی گوشی باز کن','Got it':'فهمیدم','Runs on your device — the video never leaves it. Stand so your whole body is visible.':'روی خود دستگاه شما اجرا می‌شود — ویدیو هیچ‌جا ارسال نمی‌شود. طوری بایست که تمام بدنت در کادر باشد.','Squat':'اسکوات','Hinge / Deadlift':'هینج / ددلیفت','Push-up':'شنا','Shoulder Press':'پرس سرشانه','Bicep Curl':'جلوبازو','Plank':'پلانک','Knees · depth · torso':'زانو · عمق · تنه','Hips · back line':'لگن · خط کمر','Elbows · body line':'آرنج · خط بدن','Elbows · path':'آرنج · مسیر','Elbow · no swing':'آرنج · بدون تاب','Hold · body line':'نگه‌داشتن · خط بدن','Start form check':'شروع بررسی فرم','Point the camera at yourself — reps and form are checked on your device':'دوربین را سمت خودت بگیریر — تکرارها و فرم روی خود دستگاهت بررسی می‌شود','Reps':'تکرار','Hold':'نگه‌داشتن','Form score':'امتیاز فرم','Range of motion':'دامنه حرکتی','Flip camera':'تغییر دوربین','Loading the pose engine…':'در حال بارگذاری موتور تشخیص…','Hold steady in front of the camera':'در برابر دوربین ثابت بمان','Stand so your whole body is visible':'طوری بایست که تمام بدنت در کادر باشد','AI Pose engine error: ':'خطای هوش مصنوعی تشخیص فرم: ','Camera permission is required for form check':'برای بررسی فرم باید به دوربین اجازه بدهی','Camera is not available on this device':'دوربین روی این دستگاه در دسترس نیست','Finish & save':'پایان و ذخیره','Stop':'توقف','Retake':'دوباره','Save report':'ذخیره گزارش','Report saved':'گزارش ذخیره شد','Report saved — your coach can see it':'گزارش ذخیره شد — مربی‌ات می‌بیند','Good form':'فرم خوب','Shallow depth':'عمق ناکافی','Uneven left/right':'عدم تقارن چپ/راست','Torso collapses':'تنه می‌افتد','Back rounds':'کمر گرد می‌شود','Hips sag':'لگن افت می‌کند','Partial range':'دامنه ناقص','Body swing':'تاب دادن بدن','Voice cues':'راهنمای صوتی','Motion trail':'ردیابی مسیر حرکت','Tempo':'تمپو','VBT Speed':'سرعت VBT','Velocity loss':'افت سرعت','Knee valgus':'والگوس زانو (انحراف به داخل)','Neck hyper-extended':'انحراف مهره‌های گردن','Posture Screen (Front)':'ارزیابی پاسچر (نمای روبرو)','Posture Screen (Side)':'ارزیابی پاسچر (نمای جانبی)','Uneven shoulder height':'عدم تقارن ارتفاع شانه‌ها','Pelvic lateral tilt':'انحراف جانبی لگن','Genu valgum (knock-knees)':'زانوی ضربدری (والگوم)','Forward head posture':'سر به جلو (فوروارد هد)','Thoracic kyphosis (rounded back)':'قوز پشتی (کایفوز)','Anterior pelvic tilt (lordosis)':'گودی بیش از حد کمر (لوردوز)','AI Biomechanical Analysis':'تحلیل بیومکانیکی هوش مصنوعی','Fatigue threshold (VBT >20%)':'آستانه خستگی عصبی (VBT >۲۰٪)','Posture':'پاسچر','Generate AI Analysis':'تولید تحلیل هوش مصنوعی','Form reports':'گزارش‌های فرم','No report yet — run a form check':'هنوز گزارشی نیست — یک بررسی فرم انجام بده','New check':'بررسی جدید','Add a client first':'اول یک شاگرد اضافه کن','Weekly report, please':'گزارش این هفته را بده','Draft a reply, please':'یک پاسخ پیش‌نویس کن','AI draft reply':'پیش‌نویس پاسخ با AI','AI draft ready — edit and send':'پیش‌نویس آماده است — ویرایش کن و بفرست','AI Analysis':'تحلیل هوشمند','Analyzing client data…':'در حال تحلیل داده‌های شاگرد…','Suggested calorie & macros':'کالری و ماکروهای پیشنهادی','Suggested actions':'اقدامات پیشنهادی','Save as client note':'ذخیره به‌عنوان یادداشت شاگرد','Saved as client note':'به‌عنوان یادداشت شاگرد ذخیره شد','Client not found in synced data':'شاگرد در داده‌های سینک‌شده پیدا نشد','critical':'بحرانی','warning':'هشدار','ok':'عادی','high':'بالا','medium':'متوسط','low':'کم','weight-trend':'روند وزن','adherence':'پایبندی','engagement':'تعامل','Welcome back':'خوش برگشتی','Sign in to your CoachMint workspace.':'به فضای کاری CoachMint خودت وارد شو.','Email':'ایمیل','Password':'رمز عبور','Remember me':'مرا به خاطر بسپار','Forgot password?':'رمز عبور را فراموش کرده‌ای؟','Sign In':'ورود','or':'یا','Continue with Google':'ادامه با گوگل','New to CoachMint?':'تازه با CoachMint آشنا شدی؟','Request access':'درخواست دسترسی','Prefer to buy a plan first?':'می‌خواهی اول پلن تهیه کنی؟','See plans':'مشاهده پلن‌ها','Reset link sent to your email':'لینک بازیابی به ایمیلت ارسال شد','Access request sent':'درخواست دسترسی ارسال شد',
 'Send reset link':'ارسال لینک بازیابی','We will send a reset link to this address if it exists':'اگر این ایمیل در سیستم باشد، لینک بازیابی برایش ارسال می‌شود','Set a new password':'رمز عبور جدید تعیین کن','Password updated — sign in with your new password':'رمز عبور به‌روزرسانی شد — با رمز جدید وارد شو','Invalid or expired reset link':'لینک بازیابی نامعتبر یا منقضی است','Self-hosted mode — reset link':'حالت سرور شخصی — لینک بازیابی','Password must be 8+ characters':'رمز عبور باید ۸+ نویسه باشد',
 'Buy':'خرید','Opening the shop website…':'در حال باز کردن سایت فروش…',
 'Subscription':'اشتراک','Plans & billing':'پلن‌ها و پرداخت','Preferences':'تنظیمات','List':'لیست','Grid':'شبکه','No notes yet':'هنوز یادداشتی نیست','Write your first note for this client':'اولین یادداشت را برای این شاگرد بنویس','Try a different filter':'فیلتر دیگری را امتحان کن',
@@ -8302,7 +8302,8 @@ function fcFilterLandmarks(lm,now){
     const fx=FC_FILTERS[i].x.filter(pt.x,now);
     const fy=FC_FILTERS[i].y.filter(pt.y,now);
     const fz=pt.z!=null?FC_FILTERS[i].z.filter(pt.z,now):pt.z;
-    return {...pt,x:fx,y:fy,z:fz};
+    const v=pt.visibility!=null?pt.visibility:(pt.v!=null?pt.v:1);
+    return {...pt,x:fx,y:fy,z:fz,v,visibility:v};
   });
 }
 function fcResetFilters(){Object.values(FC_FILTERS).forEach(f=>{f.x.reset();f.y.reset();f.z.reset()})}
@@ -8424,6 +8425,7 @@ function fcDrawTrail(ctx,cv){
 /* Anatomical Floating Pill Badge */
 function fcDrawBadge(ctx,x,y,text,color){
   ctx.save();
+  try{const tr=ctx.getTransform();if(tr&&tr.a<0){ctx.translate(x,y);ctx.scale(-1,1);ctx.translate(-x,-y)}}catch(e){}
   ctx.font='bold 11px Inter, sans-serif';
   const tw=ctx.measureText(text).width+16;
   const th=22;
@@ -8451,9 +8453,12 @@ function fcDrawAngleArc(ctx,cv,lm,pat,currentAngle){
   else if(pat.ang==='hip'){vIdx=23;aIdx=11;cIdx=25}
   else if(pat.ang==='line'){vIdx=23;aIdx=11;cIdx=27}
 
-  const side=(lm[vIdx+1]&&lm[vIdx+1].v>(lm[vIdx]?.v||0))?1:0;
+  const v1=lm[vIdx+1]&&(lm[vIdx+1].v!=null?lm[vIdx+1].v:(lm[vIdx+1].visibility||0));
+  const v0=lm[vIdx]?.v!=null?lm[vIdx].v:(lm[vIdx]?.visibility||0);
+  const side=(lm[vIdx+1]&&v1>v0)?1:0;
   const pV=lm[vIdx+side],pA=lm[aIdx+side],pC=lm[cIdx+side];
-  if(!pV||!pA||!pC||(pV.v!=null&&pV.v<0.35)){ctx.restore();return}
+  const pVv=pV?.v!=null?pV.v:(pV?.visibility!=null?pV.visibility:1);
+  if(!pV||!pA||!pC||pVv<0.35){ctx.restore();return}
 
   const vx=pV.x*cv.width,vy=pV.y*cv.height;
   const ax=pA.x*cv.width,ay=pA.y*cv.height;
@@ -8630,15 +8635,34 @@ async function fcEngine(){
   const acc=S.fcAcc=S.fcAcc||(function(){try{return localStorage.getItem('co-fc-acc')||'lite'}catch(e){return 'lite'}})();
   if(FC_POSE&&FC_ACC===acc)return FC_POSE;
   if(FC_POSE){try{await FC_POSE.close()}catch(e){}FC_POSE=null}
-  FC_VISION=FC_VISION||await import(FC_VENDOR+'vision_bundle.mjs');
-  const files=await FC_VISION.FilesetResolver.forVisionTasks(FC_VENDOR+'wasm');
+  if(!FC_VISION){
+    try{FC_VISION=await import(FC_VENDOR+'vision_bundle.mjs');}
+    catch(e){
+      console.warn('[fcEngine] local vision_bundle failed, falling back to CDN',e);
+      FC_VISION=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.mjs');
+    }
+  }
+  let files;
+  try{
+    files=await FC_VISION.FilesetResolver.forVisionTasks(FC_VENDOR+'wasm');
+  }catch(e){
+    console.warn('[fcEngine] local wasm failed, falling back to CDN',e);
+    files=await FC_VISION.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm');
+  }
   const model=acc==='full'?'pose_landmarker_full.task':'pose_landmarker_lite.task';
-  const opts=d=>({baseOptions:{modelAssetPath:FC_VENDOR+model,delegate:d},runningMode:'LIVE_STREAM',numPoses:2,
+  const cdnModel = `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_${acc === "full" ? "full" : "lite"}/float16/latest/pose_landmarker_${acc === "full" ? "full" : "lite"}.task`;
+  const makeOpts=(path,d)=>({baseOptions:{modelAssetPath:path,delegate:d},runningMode:'VIDEO',numPoses:2,
     outputWorldLandmarks:true,outputSegmentationMasks:!!FC.maskOn,
-    minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5,
-    resultListener:(res)=>fcOnResult(res)});
-  try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('GPU'))}
-  catch(e){FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,opts('CPU'))}
+    minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5});
+  try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,makeOpts(FC_VENDOR+model,'GPU'))}
+  catch(e1){
+    try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,makeOpts(FC_VENDOR+model,'CPU'))}
+    catch(e2){
+      console.warn('[fcEngine] local model failed, trying CDN model',e2);
+      try{FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,makeOpts(cdnModel,'GPU'))}
+      catch(e3){FC_POSE=await FC_VISION.PoseLandmarker.createFromOptions(files,makeOpts(cdnModel,'CPU'))}
+    }
+  }
   FC_ACC=acc;
   return FC_POSE;
 }
@@ -8704,7 +8728,13 @@ async function fcStart(pid){
     FC.raf=requestAnimationFrame(fcLoop);
     if(p.posture)fcSpeak('Hold steady',true);
   }catch(e){
-    const msg=$('fc-msg');if(msg)msg.textContent=e&&e.name==='NotAllowedError'?t('Camera permission is required for form check'):t('Camera is not available on this device');
+    console.error('[fcStart error]',e);
+    const msg=$('fc-msg');
+    if(msg){
+      if(e&&e.name==='NotAllowedError')msg.textContent=t('Camera permission is required for form check');
+      else if(FC.stream)msg.textContent=t('AI Pose engine error: ')+(e?.message||e);
+      else msg.textContent=t('Camera is not available on this device');
+    }
   }
 }
 
@@ -8753,10 +8783,18 @@ function fcLoop(){
   if(!FC.on)return;
   FC.raf=requestAnimationFrame(fcLoop);
   const v=FC.video||$('fc-video');if(!v||!FC_POSE||v.readyState<2)return;
-  try{FC_POSE.detectForVideo(v,performance.now())}catch(e){}
+  const now=performance.now();
+  if(FC.lastT&&now<=FC.lastT)return;
+  FC.lastT=now;
+  try{
+    let called=false;
+    const res=FC_POSE.detectForVideo(v,now,(r)=>{called=true;fcOnResult(r)});
+    if(!called&&res&&res.landmarks){fcOnResult(res)}
+  }catch(e){}
 }
 
 function fcDrawSkeleton(ctx,cv,lm,primary){
+  if(!lm||!lm.length)return;
   ctx.save();
   if(FC.flip){ctx.translate(cv.width,0);ctx.scale(-1,1)}
   const hasFault=FC.currentFaults&&FC.currentFaults.length>0;
@@ -8764,7 +8802,9 @@ function fcDrawSkeleton(ctx,cv,lm,primary){
   
   FC_BONES.forEach(([a,b])=>{
     const p1=lm[a],p2=lm[b];
-    if(p1&&p2&&(p1.v==null||p1.v>.4)&&(p2.v==null||p2.v>.4)){
+    const v1=p1?.v!=null?p1.v:(p1?.visibility!=null?p1.visibility:1);
+    const v2=p2?.v!=null?p2.v:(p2?.visibility!=null?p2.visibility:1);
+    if(p1&&p2&&v1>.35&&v2>.35){
       const isLeg=a>=23||b>=23;
       const isFaultBone=hasFault&&(
         (FC.currentFaults.some(f=>f.includes('depth')||f.includes('valgus')||f.includes('knee'))&&isLeg)||
@@ -8792,7 +8832,8 @@ function fcDrawSkeleton(ctx,cv,lm,primary){
   const r=Math.max(3.5,cv.width/190);
   lm.forEach((pt,i)=>{
     if(i<11&&i!==0)return;
-    if(pt.v!=null&&pt.v<.4)return;
+    const v=pt.v!=null?pt.v:(pt.visibility!=null?pt.visibility:1);
+    if(v<.35)return;
     const px=pt.x*cv.width,py=pt.y*cv.height;
     ctx.beginPath();
     ctx.arc(px,py,r+2,0,Math.PI*2);
@@ -8840,10 +8881,11 @@ function fcOnResult(res){
     /* primary pose = largest bounding box (closest to the camera) */
     let pi=0,best=-1;
     list.forEach((L,i)=>{let x0=9,x1=-9,y0=9,y1=-9;L.forEach(p=>{if(p.x<x0)x0=p.x;if(p.x>x1)x1=p.x;if(p.y<y0)y0=p.y;if(p.y>y1)y1=p.y});const a=(x1-x0)*(y1-y0);if(a>best){best=a;pi=i}});
+    list.forEach(L=>{if(!L)return;L.forEach(pt=>{if(pt.v==null)pt.v=pt.visibility!=null?pt.visibility:1;if(pt.visibility==null)pt.visibility=pt.v})});
     const lm=fcFilterLandmarks(list[pi],performance.now());
     const wl=(res.worldLandmarks&&res.worldLandmarks[pi])||null;
     if(FC.maskOn&&masks[0])fcDrawMask(masks[0],cv,ctx);
-    list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,L,i===pi));
+    list.forEach((L,i)=>fcDrawSkeleton(ctx,cv,i===pi?lm:L,i===pi));
 
     let p=FC.pat;
     /* Auto-Exercise Classification (Zero-Touch AI Mode) */
