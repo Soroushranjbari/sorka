@@ -8198,14 +8198,14 @@ const FPATTERNS=[
     {at:'always',type:'line',thr:150,flag:'Hips sag'},
     {at:'always',type:'lineHi',thr:172,flag:'Torso collapses'},
     {at:'always',type:'neck',thr:35,flag:'Neck hyper-extended'}]},
-  {id:'posture_front',n:'Posture Screen (Front)',sub:'Shoulders · Hips · Knees',posture:true,hold:true,holdSec:4,ang:'line',checks:[
-    {at:'always',type:'shoulder_asym',thr:12,flag:'Uneven shoulder height'},
-    {at:'always',type:'pelvic_tilt',thr:12,flag:'Pelvic lateral tilt'},
-    {at:'always',type:'q_angle',thr:16,flag:'Genu valgum (knock-knees)'}]},
-  {id:'posture_side',n:'Posture Screen (Side)',sub:'Head · Thoracic · Pelvis',posture:true,hold:true,holdSec:4,ang:'line',checks:[
-    {at:'always',type:'forward_head',thr:28,flag:'Forward head posture'},
-    {at:'always',type:'kyphosis',thr:42,flag:'Thoracic kyphosis (rounded back)'},
-    {at:'always',type:'anterior_pelvic',thr:22,flag:'Anterior pelvic tilt (lordosis)'}]}
+  {id:'posture_front',n:'Posture Screen (Front)',sub:'Shoulders · Hips · Knees',posture:true,hold:true,holdSec:7,ang:'line',checks:[
+    {at:'always',type:'shoulder_asym',thr:3.0,flag:'Uneven shoulder height'},
+    {at:'always',type:'pelvic_tilt',thr:3.0,flag:'Pelvic lateral tilt'},
+    {at:'always',type:'q_angle',thr:14,flag:'Genu valgum (knock-knees)'}]},
+  {id:'posture_side',n:'Posture Screen (Side)',sub:'Head · Thoracic · Pelvis',posture:true,hold:true,holdSec:7,ang:'line',checks:[
+    {at:'always',type:'forward_head',thr:22,flag:'Forward head posture'},
+    {at:'always',type:'kyphosis',thr:25,flag:'Thoracic kyphosis (rounded back)'},
+    {at:'always',type:'anterior_pelvic',thr:16,flag:'Anterior pelvic tilt (lordosis)'}]}
 ];
 
 /* Rule evaluator — returns true when the rule FIRES (a problem). Uses the
@@ -8240,29 +8240,32 @@ function fcEvalCheck(ch,lm,wl,bottom){
       return Math.abs(180-fcAngle(ear,sh,hip))>ch.thr}
     /* Advanced 3: Static Postural Checks */
     case 'shoulder_asym':{
-      const sL=lm[11],sR=lm[12],hL=lm[23],hR=lm[24];
-      if(!sL||!sR||!hL||!hR)return false;
-      const tH=Math.max(0.1,Math.abs(((hL.y+hR.y)/2)-((sL.y+sR.y)/2)));
-      return (Math.abs(sL.y-sR.y)/tH*100)>ch.thr}
+      const sL=lm[11],sR=lm[12];
+      if(!sL||!sR)return false;
+      const ang=Math.atan2(Math.abs(sL.y-sR.y),Math.abs(sL.x-sR.x))*180/Math.PI;
+      return ang>(ch.thr||3.0)}
     case 'pelvic_tilt':{
-      const hL=lm[23],hR=lm[24],sL=lm[11],sR=lm[12];
-      if(!hL||!hR||!sL||!sR)return false;
-      const tH=Math.max(0.1,Math.abs(((hL.y+hR.y)/2)-((sL.y+sR.y)/2)));
-      return (Math.abs(hL.y-hR.y)/tH*100)>ch.thr}
+      const hL=lm[23],hR=lm[24];
+      if(!hL||!hR)return false;
+      const ang=Math.atan2(Math.abs(hL.y-hR.y),Math.abs(hL.x-hR.x))*180/Math.PI;
+      return ang>(ch.thr||3.0)}
     case 'q_angle':{
       const hL=lm[23],hR=lm[24],kL=lm[25],kR=lm[26],aL=lm[27],aR=lm[28];
       if(!hL||!hR||!kL||!kR||!aL||!aR)return false;
       return Math.abs(180-fcAngle(hL,kL,aL))>ch.thr||Math.abs(180-fcAngle(hR,kR,aR))>ch.thr}
     case 'forward_head':{
-      const ear=lm[7]||lm[8],sh=lm[11]||lm[12];
+      const isR=((lm[8]?.visibility||0)+(lm[12]?.visibility||0))>((lm[7]?.visibility||0)+(lm[11]?.visibility||0));
+      const s=isR?1:0,ear=lm[7+s],sh=lm[11+s];
       if(!ear||!sh)return false;
       return (Math.atan2(Math.abs(ear.x-sh.x),Math.abs(sh.y-ear.y))*180/Math.PI)>ch.thr}
     case 'kyphosis':{
-      const sh=lm[11],hip=lm[23],ear=lm[7]||lm[0];
-      if(!sh||!hip||!ear)return false;
-      return (180-fcAngle(ear,sh,hip))>ch.thr}
+      const isR=((lm[8]?.visibility||0)+(lm[12]?.visibility||0)+(lm[24]?.visibility||0))>((lm[7]?.visibility||0)+(lm[11]?.visibility||0)+(lm[23]?.visibility||0));
+      const s=isR?1:0,ear=lm[7+s],sh=lm[11+s],hip=lm[23+s];
+      if(!ear||!sh||!hip)return false;
+      return Math.abs(180-fcAngle(ear,sh,hip))>ch.thr}
     case 'anterior_pelvic':{
-      const sh=lm[11],hip=lm[23],kn=lm[25];
+      const isR=((lm[12]?.visibility||0)+(lm[24]?.visibility||0)+(lm[26]?.visibility||0))>((lm[11]?.visibility||0)+(lm[23]?.visibility||0)+(lm[25]?.visibility||0));
+      const s=isR?1:0,sh=lm[11+s],hip=lm[23+s],kn=lm[25+s];
       if(!sh||!hip||!kn)return false;
       return Math.abs(180-fcAngle(sh,hip,kn))>ch.thr}
   }
@@ -8530,75 +8533,110 @@ function fcDrawPostureScreen(ctx,cv,lm){
   const isFront=p.id==='posture_front';
 
   if(isFront){
-    const headX=lm[0]?lm[0].x*cv.width:cv.width/2;
-    const feetX=(lm[27]&&lm[28])?((lm[27].x+lm[28].x)/2)*cv.width:headX;
-    const plumbX=(headX+feetX)/2;
-
+    // True Coronal Plumb Line: anchored at midpoint between ankles
+    const feetX=(lm[27]&&lm[28])?((lm[27].x+lm[28].x)/2)*cv.width:(lm[0]?lm[0].x*cv.width:cv.width/2);
     ctx.lineWidth=2;
     ctx.setLineDash([6,6]);
-    ctx.strokeStyle='rgba(255,255,255,0.55)';
-    ctx.beginPath();ctx.moveTo(plumbX,0);ctx.lineTo(plumbX,cv.height);ctx.stroke();
+    ctx.strokeStyle='rgba(56,189,248,0.7)';
+    ctx.beginPath();ctx.moveTo(feetX,0);ctx.lineTo(feetX,cv.height);ctx.stroke();
     ctx.setLineDash([]);
 
+    // Head plumb deviation badge
+    if(lm[0]){
+      const headX=lm[0].x*cv.width,headY=lm[0].y*cv.height;
+      const hDev=Math.abs(headX-feetX);
+      const hDevOk=hDev<(cv.width*0.035);
+      if(!hDevOk){
+        fcDrawBadge(ctx,headX,headY-24,`Head shift: ${Math.round(hDev)}px ⚠️`,'#f59e0b');
+      }
+    }
+
+    // Shoulders Level & Angle in Degrees
     if(lm[11]&&lm[12]){
       const sLx=lm[11].x*cv.width,sLy=lm[11].y*cv.height;
       const sRx=lm[12].x*cv.width,sRy=lm[12].y*cv.height;
-      const sDiff=Math.abs(sLy-sRy);
-      const isLevel=sDiff<14;
+      const sDeg=Math.atan2(Math.abs(sLy-sRy),Math.abs(sRx-sLx))*180/Math.PI;
+      const isLevel=sDeg<3.0;
       ctx.lineWidth=3;
       ctx.strokeStyle=isLevel?'rgba(34,197,94,0.9)':'rgba(239,68,68,0.9)';
       ctx.beginPath();ctx.moveTo(sLx,sLy);ctx.lineTo(sRx,sRy);ctx.stroke();
-      fcDrawBadge(ctx,(sLx+sRx)/2,(sLy+sRy)/2-18,`Shoulders: ${sDiff.toFixed(1)}px ${isLevel?'✓ Level':'⚠️ Tilt'}`,isLevel?'#22c55e':'#ef4444');
+      fcDrawBadge(ctx,(sLx+sRx)/2,(sLy+sRy)/2-18,`Shoulders: ${sDeg.toFixed(1)}° ${isLevel?'✓ Level':'⚠️ Tilt'}`,isLevel?'#22c55e':'#ef4444');
     }
 
+    // Pelvis Level & Angle in Degrees
     if(lm[23]&&lm[24]){
       const hLx=lm[23].x*cv.width,hLy=lm[23].y*cv.height;
       const hRx=lm[24].x*cv.width,hRy=lm[24].y*cv.height;
-      const hDiff=Math.abs(hLy-hRy);
-      const isLevelH=hDiff<14;
+      const hDeg=Math.atan2(Math.abs(hLy-hRy),Math.abs(hRx-hLx))*180/Math.PI;
+      const isLevelH=hDeg<3.0;
       ctx.lineWidth=3;
       ctx.strokeStyle=isLevelH?'rgba(34,197,94,0.9)':'rgba(239,68,68,0.9)';
       ctx.beginPath();ctx.moveTo(hLx,hLy);ctx.lineTo(hRx,hRy);ctx.stroke();
-      fcDrawBadge(ctx,(hLx+hRx)/2,(hLy+hRy)/2-18,`Pelvis: ${hDiff.toFixed(1)}px ${isLevelH?'✓ Level':'⚠️ Tilt'}`,isLevelH?'#22c55e':'#ef4444');
+      fcDrawBadge(ctx,(hLx+hRx)/2,(hLy+hRy)/2-18,`Pelvis: ${hDeg.toFixed(1)}° ${isLevelH?'✓ Level':'⚠️ Tilt'}`,isLevelH?'#22c55e':'#ef4444');
     }
 
+    // Bilateral Q-Angle (Left and Right Knees)
     if(lm[23]&&lm[25]&&lm[27]){
       const qL=Math.round(Math.abs(180-fcAngle(lm[23],lm[25],lm[27])));
-      const qOk=qL<16;
-      fcDrawBadge(ctx,lm[25].x*cv.width,lm[25].y*cv.height+22,`Q: ${qL}° ${qOk?'Normal':'Valgum ⚠️'}`,qOk?'#22c55e':'#f59e0b');
+      const qOkL=qL<14;
+      fcDrawBadge(ctx,lm[25].x*cv.width,lm[25].y*cv.height+22,`L Knee: ${qL}° ${qOkL?'Normal':'Valgum ⚠️'}`,qOkL?'#22c55e':'#f59e0b');
+    }
+    if(lm[24]&&lm[26]&&lm[28]){
+      const qR=Math.round(Math.abs(180-fcAngle(lm[24],lm[26],lm[28])));
+      const qOkR=qR<14;
+      fcDrawBadge(ctx,lm[26].x*cv.width,lm[26].y*cv.height+22,`R Knee: ${qR}° ${qOkR?'Normal':'Valgum ⚠️'}`,qOkR?'#22c55e':'#f59e0b');
     }
   }else{
-    const ear=lm[7]||lm[8]||lm[0];
-    const sh=lm[11]||lm[12];
-    const hip=lm[23]||lm[24];
-    const kn=lm[25]||lm[26];
-    const ank=lm[27]||lm[28];
+    // Profile side detection (choose visible side)
+    const visR = ((lm[8]?.visibility||0)+(lm[12]?.visibility||0)+(lm[24]?.visibility||0));
+    const visL = ((lm[7]?.visibility||0)+(lm[11]?.visibility||0)+(lm[23]?.visibility||0));
+    const s = visR > visL ? 1 : 0;
+    const ear=lm[7+s]||lm[0];
+    const sh=lm[11+s];
+    const hip=lm[23+s];
+    const kn=lm[25+s];
+    const ank=lm[27+s];
 
+    // Sagittal Plumb Line through ankle
     if(ank){
       const ax=ank.x*cv.width;
       ctx.lineWidth=2;
       ctx.setLineDash([6,6]);
-      ctx.strokeStyle='rgba(255,255,255,0.55)';
+      ctx.strokeStyle='rgba(56,189,248,0.7)';
       ctx.beginPath();ctx.moveTo(ax,0);ctx.lineTo(ax,cv.height);ctx.stroke();
       ctx.setLineDash([]);
     }
 
+    // Forward Head Posture (FHP)
     if(ear&&sh){
       const ex=ear.x*cv.width,ey=ear.y*cv.height;
       const sx=sh.x*cv.width,sy=sh.y*cv.height;
       const fhpDeg=Math.round(Math.atan2(Math.abs(ex-sx),Math.abs(sy-ey))*180/Math.PI);
-      const isNorm=fhpDeg<22,isMild=fhpDeg>=22&&fhpDeg<32;
+      const isNorm=fhpDeg<18,isMild=fhpDeg>=18&&fhpDeg<28;
       ctx.lineWidth=2.5;
       ctx.strokeStyle=isNorm?'rgba(34,197,94,0.85)':(isMild?'rgba(245,158,11,0.85)':'rgba(239,68,68,0.9)');
       ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
       fcDrawBadge(ctx,ex,ey-22,`Head: ${fhpDeg}° (${isNorm?'Normal':isMild?'Mild FHP':'Severe FHP'})`,isNorm?'#22c55e':(isMild?'#f59e0b':'#ef4444'));
     }
 
+    // Thoracic Kyphosis Line
+    if(ear&&sh&&hip){
+      const sx=sh.x*cv.width,sy=sh.y*cv.height;
+      const hx=hip.x*cv.width,hy=hip.y*cv.height;
+      const kyphDeg=Math.round(Math.abs(180-fcAngle(ear,sh,hip)));
+      const isKyphOk=kyphDeg<25;
+      ctx.lineWidth=2.5;
+      ctx.strokeStyle=isKyphOk?'rgba(34,197,94,0.85)':'rgba(245,158,11,0.85)';
+      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(hx,hy);ctx.stroke();
+      fcDrawBadge(ctx,(sx+hx)/2,(sy+hy)/2,`Kyphosis: ${kyphDeg}° ${isKyphOk?'Normal':'Rounded ⚠️'}`,isKyphOk?'#22c55e':'#f59e0b');
+    }
+
+    // Pelvic Tilt / Lordosis
     if(sh&&hip&&kn){
       const hx=hip.x*cv.width,hy=hip.y*cv.height;
       const aptDeg=Math.round(Math.abs(180-fcAngle(sh,hip,kn)));
-      const isAptOk=aptDeg<20;
-      fcDrawBadge(ctx,hx,hy+24,`Pelvic Tilt: ${aptDeg}° ${isAptOk?'Normal':'Lordosis ⚠️'}`,isAptOk?'#22c55e':'#f59e0b');
+      const isAptOk=aptDeg<16;
+      fcDrawBadge(ctx,hx,hy+24,`Pelvis: ${aptDeg}° ${isAptOk?'Normal':'Lordosis ⚠️'}`,isAptOk?'#22c55e':'#f59e0b');
     }
   }
   ctx.restore();
@@ -8770,13 +8808,20 @@ function fcFeed(flag,ok){
 }
 
 function fcSnapshot(){
-  const v=$('fc-video'),c=document.createElement('canvas');
-  const w=240,h=Math.round(w*v.videoHeight/v.videoWidth)||320;
+  const v=$('fc-video'),cv=$('fc-canvas'),c=document.createElement('canvas');
+  if(!v)return '';
+  const w=320,h=Math.round(w*(v.videoHeight||320)/(v.videoWidth||240))||320;
   c.width=w;c.height=h;
   const ctx=c.getContext('2d');if(!ctx)return '';
-  if(FC.flip){ctx.translate(w,0);ctx.scale(-1,1)}
-  ctx.drawImage(v,0,0,w,h);
-  return c.toDataURL('image/jpeg',.5);
+  if(FC.flip){
+    ctx.save();ctx.translate(w,0);ctx.scale(-1,1);
+    ctx.drawImage(v,0,0,w,h);
+    ctx.restore();
+  }else{
+    ctx.drawImage(v,0,0,w,h);
+  }
+  if(cv)ctx.drawImage(cv,0,0,w,h);
+  return c.toDataURL('image/jpeg',.6);
 }
 
 function fcLoop(){
@@ -8927,13 +8972,20 @@ function fcOnResult(res){
     const up=p.hold?false:(p.up>p.down?(a>p.up):(a<p.up));
 
     if(p.hold){
-      FC.hold0=(performance.now()-FC.holdT0)/1000;
-      const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s';
-      if(p.posture&&FC.hold0>=(p.holdSec||4)&&!FC.postureDone){
-        FC.postureDone=true;
-        if(FC.kf.length<1)FC.kf.push(fcSnapshot());
-        fcSpeak('Assessment complete',true);
-        setTimeout(()=>{if(FC.on)fcFinish()},500);
+      const bodyInFrame = lm && (lm[11] || lm[12]) && (lm[27] || lm[28]);
+      if(p.posture && !bodyInFrame){
+        FC.holdT0 = performance.now();
+        const msg=$('fc-msg');if(msg)msg.textContent=t('Stand so your whole body is visible');
+      } else {
+        FC.hold0=(performance.now()-FC.holdT0)/1000;
+        const targetSec = p.holdSec || 7;
+        const h=$('fc-hold');if(h)h.textContent=Math.floor(FC.hold0)+'s / '+targetSec+'s';
+        if(p.posture && FC.hold0>=targetSec && !FC.postureDone){
+          FC.postureDone=true;
+          if(FC.kf.length<1)FC.kf.push(fcSnapshot());
+          fcSpeak('Assessment complete',true);
+          setTimeout(()=>{if(FC.on)fcFinish()},600);
+        }
       }
     }else if(FC.state==='up'&&down){
       FC.state='down';FC.bottomA=a;FC.bottomLm=lm;
@@ -8985,7 +9037,7 @@ function fcOnResult(res){
     p.checks.forEach(ch=>{
       if(fcEvalCheck(ch,lm,wl,bottom)){
         FC.flags[ch.flag]=(FC.flags[ch.flag]||0)+1;FC.currentFaults.push(ch.flag);
-        if(Date.now()-(FC.lastFlagT||0)>2200){
+        if(!p.posture && Date.now()-(FC.lastFlagT||0)>2200){
           FC.lastFlagT=Date.now();
           fcFeed(ch.flag,false);
           fcSpeak(ch.flag,false);
