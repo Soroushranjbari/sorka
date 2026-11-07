@@ -7835,13 +7835,15 @@ function inviteModal(){
   }
   const row=c=>{const code=joinCodeOf(c),link=inviteLink(code);
     return `<div class="card" style="padding:12px 14px;margin-bottom:10px">
-      <div class="row" style="gap:10px">
+      <div class="row" style="gap:10px;flex-wrap:wrap">
         ${avC(c.name,38)}
-        <div style="flex:1;min-width:0"><b style="font-size:13.5px">${t(c.name)}</b>
+        <div style="flex:1;min-width:140px"><b style="font-size:13.5px">${t(c.name)}</b>
           <div style="font-weight:800;letter-spacing:.12em;font-size:15px;color:var(--accent-ink);margin-top:2px">${esc(code)}</div></div>
-        <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Copy')}</button>
-        <button class="btn btn-ghost btn-icon" title="${t('Show QR')}" data-act="qr-open" data-code="${esc(code)}" data-name="${esc(c.name)}">${ic('qr',14)}</button>
-        <button class="btn btn-ghost btn-icon" title="${t('Connection link')}" data-act="copy-code" data-code="${esc(link)}">${ic('copy',14)}</button>
+        <div class="row" style="gap:5px;flex-wrap:wrap;margin-inline-start:auto">
+          <button class="btn btn-outline btn-sm" data-act="copy-code" data-code="${esc(code)}">${ic('copy',13)} ${t('Copy')}</button>
+          <button class="btn btn-ghost btn-icon" title="${t('Show QR')}" data-act="qr-open" data-code="${esc(code)}" data-name="${esc(c.name)}">${ic('qr',14)}</button>
+          <button class="btn btn-ghost btn-icon" title="${t('Connection link')}" data-act="copy-code" data-code="${esc(link)}">${ic('copy',14)}</button>
+        </div>
       </div></div>`};
   openModal(`
   <div class="modal-h"><h3>${t('Client connection codes')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
@@ -15670,13 +15672,13 @@ document.addEventListener('click',e=>{
     case 'qa-item':{const it=el.dataset.item;document.querySelectorAll('.mwrap.open').forEach(m=>m.classList.remove('open'));
       if(it==='Add Client')addClientModal();
       else if(it==='Connect Client (Code)')inviteModal();
-      else if(it==='Create Workout'){S.view='builder';render()}
+      else if(it==='Create Workout'){if(isNarrow()){S.mview='builder'}else S.view='builder';render()}
       else if(it==='Create Nutrition Plan'){newPlanModal()}
       else if(it==='Schedule Session'){newSessionModal()}
       else if(it==='Add Measurement'){measModal()}
       else if(it==='Create Template'){S.tplEdit=null;if(isNarrow()){S.mview='builder'}else S.view='builder';render()}
-      else if(it==='Add Exercise'){S.view='library';render()}
-      else if(it==='Create Note'){S.view='notes';render()}
+      else if(it==='Add Exercise'){if(isNarrow()){S.mview='builder'}else S.view='library';render()}
+      else if(it==='Create Note'){if(isNarrow()){qnModal(coachFirstClient())}else{S.view='notes';render()}}
       /* v19.18 — Quick Add can start a challenge (opens the wizard step 1). */
       else if(it==='Create Challenge'){S.view='challenges';render();chalEditor(null)}
       break}
