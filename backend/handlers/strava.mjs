@@ -1,23 +1,28 @@
-// CoachMint — Strava Activity Provider & OAuth Integration.
-//   GET  /api/strava/config     -> { ok, configured, clientId, simulator }
-//   POST /api/strava/config     -> { ok }  body: { clientId, clientSecret, simulator }
-//   GET  /api/strava/auth       -> { ok, mode, url }
-//   GET  /api/strava/callback   -> OAuth redirect handler
-//   GET  /api/strava/status     -> { ok, connected, athleteName, lastSync, importedCount, isSimulator }
-//   POST /api/strava/sync       -> { ok, count, activities }
-//   POST /api/strava/disconnect -> { ok }
+// CoachMint — Strava Activity Provider & OAuth Integration (Multi-Athlete Supported).
+//   GET  /api/strava/config           -> { ok, configured, clientId, simulator }
+//   POST /api/strava/config           -> { ok }  body: { clientId, clientSecret, simulator }
+//   GET  /api/strava/auth?cid=...     -> { ok, mode, url, cid }
+//   GET  /api/strava/callback         -> OAuth redirect handler (processes state=cid)
+//   GET  /api/strava/status?cid=...   -> { ok, connected, athleteName, lastSync, importedCount, isSimulator, cid }
+//   POST /api/strava/sync             -> { ok, count, activities, cid }  body: { cid }
+//   POST /api/strava/disconnect       -> { ok, connected: false, cid }   body: { cid }
 import { store, j } from '../lib/saas.mjs';
 import { originOf, readJsonCapped, secure } from '../lib/guard.mjs';
 
 const CONFIG_KEY = 'strava:config';
 const CONN_KEY = 'strava:connection';
 
+function athleteConnKey(cid) {
+  const c = cid != null ? String(cid).trim() : '';
+  return c ? `strava:connection:${c}` : CONN_KEY;
+}
+
 export default async function handleStrava(req) {
   const url = new URL(req.url, originOf(req));
   const sub = url.pathname.replace(/^\/api\/strava\/?/, '').replace(/\/+$/, '');
   const method = req.method.toUpperCase();
 
-  // 1. CONFIG
+  // 1. CONFIG (Platform-wide Strava API Client ID & Secret)
   if (sub === 'config') {
     if (method === 'GET') {
       const cfg = (await store().get(CONFIG_KEY)) || {};
@@ -44,49 +49,56 @@ export default async function handleStrava(req) {
     }
   }
 
-  // 2. AUTH URL
+  // 2. AUTH URL (Per-Athlete OAuth Generator)
   if (sub === 'auth') {
     const cfg = (await store().get(CONFIG_KEY)) || {};
     const envId = process.env.STRAVA_CLIENT_ID || '';
     const clientId = cfg.clientId || envId;
     const origin = originOf(req);
+    const cid = url.searchParams.get('cid') || '';
 
-    // If simulator mode is explicitly enabled (or defaults to true) OR credentials are not yet configured, provide seamless sandbox auth
+    // If simulator mode is enabled OR credentials not configured, provide seamless sandbox auth
     if (cfg.simulator !== false || !clientId) {
-      const sandboxUrl = `${origin}/api/strava/callback?code=mock_strava_sandbox_token&scope=read,activity:read_all`;
-      return secure(j(200, { ok: true, mode: 'simulator', url: sandboxUrl }));
+      const sandboxUrl = `${origin}/api/strava/callback?code=mock_strava_sandbox_token&scope=read,activity:read_all${cid ? `&state=${encodeURIComponent(cid)}` : ''}`;
+      return secure(j(200, { ok: true, mode: 'simulator', url: sandboxUrl, cid }));
     }
 
     const redirectUri = encodeURIComponent(`${origin}/api/strava/callback`);
-    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=auto&scope=read,activity:read_all`;
-    return secure(j(200, { ok: true, mode: 'oauth', url: stravaUrl }));
+    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${redirectUri}&approval_prompt=auto&scope=read,activity:read_all${cid ? `&state=${encodeURIComponent(cid)}` : ''}`;
+    return secure(j(200, { ok: true, mode: 'oauth', url: stravaUrl, cid }));
   }
 
-  // 3. OAUTH CALLBACK
+  // 3. OAUTH CALLBACK (Links OAuth token to specific athlete via state=cid)
   if (sub === 'callback') {
     const code = url.searchParams.get('code');
     const err = url.searchParams.get('error');
+    const stateCid = url.searchParams.get('state') || '';
 
     if (err || !code) {
+      const redUrl = `/?view=wear&strava=denied${stateCid ? `&cid=${encodeURIComponent(stateCid)}` : ''}`;
       return new Response(`<!DOCTYPE html><html><body><script>
         alert("Strava authorization was denied or cancelled.");
-        window.location.href = "/?view=wear";
-      </script></body></html>`, { status: 302, headers: { 'content-type': 'text/html', Location: '/?view=wear' } });
+        window.location.href = ${JSON.stringify(redUrl)};
+      </script></body></html>`, { status: 302, headers: { 'content-type': 'text/html', Location: redUrl } });
     }
 
     // A. Simulator / Sandbox Mode
     if (code === 'mock_strava_sandbox_token') {
       const mockConn = {
         connected: true,
-        athleteName: 'Daniel Okoye',
-        athleteId: 8941205,
+        cid: stateCid || '',
+        athleteName: stateCid ? `Athlete #${stateCid} (Strava)` : 'Daniel Okoye',
+        athleteId: stateCid ? 8940000 + (+stateCid || 1) : 8941205,
         connectedAt: new Date().toISOString(),
         lastSync: new Date().toISOString(),
         importedCount: 3,
         isSimulator: true
       };
-      await store().setJSON(CONN_KEY, mockConn);
-      return new Response(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=/?view=wear&strava=connected"></head><body>Redirecting to CoachMint...</body></html>`, {
+      await store().setJSON(athleteConnKey(stateCid), mockConn);
+      if (!stateCid) await store().setJSON(CONN_KEY, mockConn);
+
+      const dest = `/?view=wear&strava=connected${stateCid ? `&cid=${encodeURIComponent(stateCid)}` : ''}`;
+      return new Response(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=${dest}"></head><body>Redirecting to CoachMint...</body></html>`, {
         status: 200,
         headers: { 'content-type': 'text/html' }
       });
@@ -125,6 +137,7 @@ export default async function handleStrava(req) {
 
       const connRecord = {
         connected: true,
+        cid: stateCid || '',
         athleteName: athleteName,
         athleteId: athlete.id || '',
         accessToken: data.access_token,
@@ -135,9 +148,11 @@ export default async function handleStrava(req) {
         importedCount: 0,
         isSimulator: false
       };
-      await store().setJSON(CONN_KEY, connRecord);
+      await store().setJSON(athleteConnKey(stateCid), connRecord);
+      if (!stateCid) await store().setJSON(CONN_KEY, connRecord);
 
-      return new Response(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=/?view=wear&strava=connected"></head><body>Redirecting to CoachMint...</body></html>`, {
+      const dest = `/?view=wear&strava=connected${stateCid ? `&cid=${encodeURIComponent(stateCid)}` : ''}`;
+      return new Response(`<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=${dest}"></head><body>Redirecting to CoachMint...</body></html>`, {
         status: 200,
         headers: { 'content-type': 'text/html' }
       });
@@ -149,12 +164,18 @@ export default async function handleStrava(req) {
     }
   }
 
-  // 4. CONNECTION STATUS
+  // 4. CONNECTION STATUS (Checks specific athlete or default)
   if (sub === 'status') {
-    const conn = (await store().get(CONN_KEY)) || {};
+    const cid = url.searchParams.get('cid') || '';
+    const connKey = athleteConnKey(cid);
+    let conn = (await store().get(connKey)) || {};
+    if (!conn.connected && !cid) {
+      conn = (await store().get(CONN_KEY)) || {};
+    }
     return secure(j(200, {
       ok: true,
       connected: !!conn.connected,
+      cid: cid || conn.cid || '',
       athleteName: conn.athleteName || '',
       athleteId: conn.athleteId || '',
       lastSync: conn.lastSync || '',
@@ -163,11 +184,24 @@ export default async function handleStrava(req) {
     }));
   }
 
-  // 5. SYNC ACTIVITIES
+  // 5. SYNC ACTIVITIES (Per-Athlete Activity Fetching)
   if (sub === 'sync') {
-    const conn = (await store().get(CONN_KEY)) || {};
+    let cid = url.searchParams.get('cid') || '';
+    if (method === 'POST') {
+      try {
+        const { data } = await readJsonCapped(req);
+        if (data && data.cid) cid = String(data.cid);
+      } catch (_) {}
+    }
+
+    const connKey = athleteConnKey(cid);
+    let conn = (await store().get(connKey)) || {};
+    if (!conn.connected && !cid) {
+      conn = (await store().get(CONN_KEY)) || {};
+    }
+
     if (!conn.connected) {
-      return secure(j(400, { ok: false, error: 'not-connected' }));
+      return secure(j(400, { ok: false, error: 'not-connected', cid }));
     }
 
     let activities = [];
@@ -178,9 +212,11 @@ export default async function handleStrava(req) {
       const d1 = new Date(now - 1 * 864e5).toISOString().slice(0, 10);
       const d2 = new Date(now - 3 * 864e5).toISOString().slice(0, 10);
       const d3 = new Date(now - 5 * 864e5).toISOString().slice(0, 10);
+      const prefix = cid ? `strava_sim_${cid}_` : 'strava_sim_';
       activities = [
         {
-          id: 'strava_sim_' + d1.replace(/-/g, ''),
+          id: prefix + d1.replace(/-/g, ''),
+          cid: cid ? +cid : (conn.cid ? +conn.cid : 1),
           name: 'Morning Tempo Run · Strava',
           km: 10.4,
           min: 49,
@@ -191,7 +227,8 @@ export default async function handleStrava(req) {
           splits: '4:42, 4:38, 4:35, 4:40, 4:32'
         },
         {
-          id: 'strava_sim_' + d2.replace(/-/g, ''),
+          id: prefix + d2.replace(/-/g, ''),
+          cid: cid ? +cid : (conn.cid ? +conn.cid : 1),
           name: 'Track Intervals · 8 × 400m',
           km: 8.6,
           min: 44,
@@ -202,7 +239,8 @@ export default async function handleStrava(req) {
           splits: '1:38, 1:40, 1:39, 1:41, 1:37'
         },
         {
-          id: 'strava_sim_' + d3.replace(/-/g, ''),
+          id: prefix + d3.replace(/-/g, ''),
+          cid: cid ? +cid : (conn.cid ? +conn.cid : 1),
           name: 'Aerobic Base Long Run',
           km: 21.2,
           min: 112,
@@ -214,7 +252,7 @@ export default async function handleStrava(req) {
         }
       ];
     } else {
-      // B. Live Strava API Activities Fetch
+      // B. Live Strava API Activities Fetch using athlete's accessToken
       const cfg = (await store().get(CONFIG_KEY)) || {};
       const clientId = cfg.clientId || process.env.STRAVA_CLIENT_ID;
       const clientSecret = cfg.clientSecret || process.env.STRAVA_CLIENT_SECRET;
@@ -266,6 +304,7 @@ export default async function handleStrava(req) {
 
         return {
           id: 'strava_' + a.id,
+          cid: cid ? +cid : (conn.cid ? +conn.cid : 1),
           name: a.name || 'Strava Activity',
           km: km,
           min: min,
@@ -280,30 +319,36 @@ export default async function handleStrava(req) {
 
     conn.lastSync = new Date().toISOString();
     conn.importedCount = (conn.importedCount || 0) + activities.length;
-    await store().setJSON(CONN_KEY, conn);
+    await store().setJSON(connKey, conn);
+    if (!cid) await store().setJSON(CONN_KEY, conn);
 
     return secure(j(200, {
       ok: true,
       count: activities.length,
       activities: activities,
-      lastSync: conn.lastSync
+      lastSync: conn.lastSync,
+      cid: cid || conn.cid || ''
     }));
   }
 
-  // 6. DISCONNECT
+  // 6. DISCONNECT (Per-Athlete Disconnect)
   if (sub === 'disconnect') {
-    await store().delete(CONN_KEY);
-    return secure(j(200, { ok: true, connected: false }));
+    let cid = url.searchParams.get('cid') || '';
+    if (method === 'POST') {
+      try {
+        const { data } = await readJsonCapped(req);
+        if (data && data.cid) cid = String(data.cid);
+      } catch (_) {}
+    }
+    const connKey = athleteConnKey(cid);
+    await store().delete(connKey);
+    if (!cid) await store().delete(CONN_KEY);
+    return secure(j(200, { ok: true, connected: false, cid }));
   }
 
   return secure(j(404, { ok: false, error: 'not-found' }));
 }
 
-/* Route declaration, kept in the same shape every other handler uses
-   (auth/billing/data/push/…). server.mjs routes this file with its own
-   `ROUTES` regex table (needed because `handleStrava` ignores the `/api/strava/`
-   prefix that the adapter strips), and the Vercel adapter imports the default
-   export directly — so this constant is documentation, not a dispatch source. */
 export const config = { path: '/api/strava/*' };
 
 function escapeHtml(s) {

@@ -520,7 +520,15 @@ Object.assign(TR, {
   "High Churn Risk": "Yüksek Kayıp Riski",
   "Moderate Warning": "Orta Düzey Uyarı",
   "Loyal & Engaged": "Sadık ve Hedefte",
-  "Send to thread": "Sohbete Gönder"
+  "Send to thread": "Sohbete Gönder",
+  "Connect with Strava": "Strava ile Bağlan (Connect with Strava)",
+  "Powered by Strava": "Strava Destekli",
+  "Connected to Strava": "Strava'ya Bağlı",
+  "Sync My Activities": "Aktivitelerimi Eşitle",
+  "Automatically sync your GPS runs, pace, heart rate, and mileage from Strava into your training log.": "GPS koşularınız, tempo, nabız ve mesafe verileriniz Strava'dan antrenman kaydınıza otomatik aktarılır.",
+  "Strava Accounts Roster": "Danışanların Strava Durumu",
+  "Sync Activities": "Aktiviteleri Eşitle",
+  "Not Connected": "Bağlı Değil"
 });
 
 Object.assign(FA, {
@@ -631,7 +639,15 @@ Object.assign(FA, {
   "High Churn Risk": "ریسک بالای انصراف",
   "Moderate Warning": "هشدار کاهش تعامل",
   "Loyal & Engaged": "متعهد و در مسیر هدف",
-  "Send to thread": "ارسال مستقیم در گفتگو"
+  "Send to thread": "ارسال مستقیم در گفتگو",
+  "Connect with Strava": "اتصال به استراوا (Connect with Strava)",
+  "Powered by Strava": "پشتیبانی شده توسط استراوا",
+  "Connected to Strava": "متصل به استراوا",
+  "Sync My Activities": "همگام‌سازی فعالیت‌های من",
+  "Automatically sync your GPS runs, pace, heart rate, and mileage from Strava into your training log.": "فعالیت‌های دویدن، مسافت، ضربان قلب و کیلومترهای شما به صورت خودکار از حساب استراوا در پرونده تمرینی ثبت می‌شوند.",
+  "Strava Accounts Roster": "وضعیت استراوای شاگردان",
+  "Sync Activities": "همگام‌سازی تمرینات",
+  "Not Connected": "متصل نیست"
 });
 
 const t=s=>{
@@ -11820,6 +11836,10 @@ const PHONESKINS=[
 {id:'sunset',n:'Sunset',d:'Plum · amber',prev:'linear-gradient(150deg,#241527,#100A12)',dot:'#FB923C'}];
 function cProfile(){
   const c=client(S.cid);
+  const cst=clientStrava(c?c.id:S.cid);
+  if(c&&!cst.loaded&&!cst.fetching){
+    loadStravaStatus(c.id).then(()=>{if(S.ptab==='profile')render()});
+  }
   const lm=lastM(S.cid);
   const remain=packRemain(c.name);
   const pack=PACKS.find(p=>p&&p.client===c.name);
@@ -11913,6 +11933,42 @@ function cProfile(){
       </button>`).join('')}
       </div>
       <div class="muted" style="font-size:11px;margin-top:8px">${t('Applies to this device only')}</div>
+    </div>
+    <div class="sec"><span class="sec-t"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FC5200" style="vertical-align:middle;margin-inline-end:5px"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7.925 15.688h4.172"/></svg>Strava</span><span class="sec-c muted">${cst.connected ? (cst.isSimulator ? t('Sandbox') : t('Connected')) : t('Wearables')}</span></div>
+    <div class="cc tight" style="padding:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:12px;min-width:0">
+          <div style="width:40px;height:40px;border-radius:10px;background:#FC5200;display:grid;place-items:center;color:#fff;flex:none;box-shadow:0 3px 8px rgba(252,82,0,0.22)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7.925 15.688h4.172"/></svg>
+          </div>
+          <div style="min-width:0">
+            <b style="font-size:14px;color:var(--ink)">${cst.connected ? esc(cst.athleteName || 'Strava Athlete') : t('Connect with Strava')}</b>
+            <div class="muted" style="font-size:11.5px;margin-top:2px;line-height:1.4">
+              ${cst.connected ? `${t('Last sync')}: ${cst.lastSync ? fmtDateTime(cst.lastSync) : '—'}` : t('Sync your GPS runs, pace, and training load automatically with your coach.')}
+            </div>
+          </div>
+        </div>
+        ${cst.connected 
+          ? `<span class="bdg bdg-lime" style="font-size:11px">${ic('check',11)} ${t('Connected')}</span>`
+          : `<span class="bdg bdg-gray" style="font-size:11px">${t('Not Connected')}</span>`
+        }
+      </div>
+      ${cst.connected ? `
+        <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn btn-outline btn-sm" data-act="wear-sync" data-cid="${c ? c.id : ''}" ${cst.syncing?'disabled':''}>${ic('refresh-cw',13)} ${cst.syncing?t('Syncing…'):t('Sync My Activities')}</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red);margin-inline-start:auto" data-act="wear-disconnect" data-cid="${c ? c.id : ''}">${ic('x',13)} ${t('Disconnect')}</button>
+        </div>
+      ` : `
+        <div style="margin-top:12px">
+          <button class="btn btn-sm" style="background:#FC5200;color:#fff;border:none;font-weight:700;display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;box-shadow:0 2px 6px rgba(252,82,0,0.3);cursor:pointer" data-act="wear-connect" data-cid="${c ? c.id : ''}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7.925 15.688h4.172"/></svg>
+            ${t('Connect with Strava')}
+          </button>
+        </div>
+      `}
+      <div class="muted" style="font-size:10.5px;margin-top:9px;display:flex;align-items:center;gap:5px">
+        ${ic('shield-check',11)} ${t('Powered by Strava')} · ${t('Official OAuth 2.0 authorization')}
+      </div>
     </div>
     <button class="pf-out" data-act="signout">${ic('log-out',15)} ${t('Sign out')}</button>
   </div>`;
@@ -12499,6 +12555,10 @@ function vClientEnduranceHub(cid){
   const vd = athleteVdot(c.id);
   const paces = vdotPaces(vd);
   const shoes = clientShoes(c);
+  const cst = clientStrava(c.id);
+  if(!cst.loaded&&!cst.fetching){
+    loadStravaStatus(c.id).then(()=>{if(S.view==='wspace'||S.mview==='client')render()});
+  }
 
   const cw = TLOG.length ? Math.max.apply(null, TLOG.map(r => +r.w)) : 0;
   const mineWk = TLOG.filter(r => +r.w === cw && String(r.cid) === String(c.id));
@@ -12552,7 +12612,7 @@ function vClientEnduranceHub(cid){
     <div class="card stat" style="padding:14px">
       <div class="row" style="justify-content:space-between;margin-bottom:6px">
         <span class="icw" style="background:var(--purple-soft);color:var(--purple)">${ic('watch',16)}</span>
-        <span class="bdg ${STRAVA.connected?'bdg-lime':'bdg-gray'}" style="font-size:10px">${STRAVA.connected?'Strava ✓':'Strava'}</span>
+        <span class="bdg ${cst.connected?'bdg-lime':'bdg-gray'}" style="font-size:10px">${cst.connected?(cst.athleteName?esc(cst.athleteName):'Strava ✓'):'Strava'}</span>
       </div>
       <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase">${t('Shoe Tracker')}</div>
       <div style="font-size:14px;font-weight:800;color:var(--ink);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${activeShoe ? esc(activeShoe.name) : '—'}</div>
@@ -12704,7 +12764,7 @@ function vClientEnduranceHub(cid){
       </div>
     </div>
     <div class="row" style="gap:8px">
-      ${STRAVA.connected ? `<button class="btn btn-outline btn-sm" data-act="wear-sync" ${STRAVA.syncing?'disabled':''}>${ic('refresh',13)} ${STRAVA.syncing?t('Syncing…'):t('Sync Strava')}</button>` : `<button class="btn btn-outline btn-sm" data-act="wear-connect">${ic('watch',13)} ${t('Connect Strava')}</button>`}
+      ${cst.connected ? `<button class="btn btn-outline btn-sm" data-act="wear-sync" data-cid="${c.id}" ${cst.syncing?'disabled':''}>${ic('refresh-cw',13)} ${cst.syncing?t('Syncing…'):t('Sync Strava')}</button>` : `<button class="btn btn-outline btn-sm" data-act="wear-connect" data-cid="${c.id}">${ic('watch',13)} ${t('Connect Strava')}</button>`}
       <button class="btn btn-primary btn-sm" data-act="ap-save" data-cid="${c.id}">${ic('check',15)} ${t('Save profile')}</button>
     </div>
   </div>`;
@@ -13232,37 +13292,53 @@ function tlogEditor(){
 }
 
 /* ================= ATHLETICS §12 — WEARABLES ================= */
-const STRAVA={
-  connected:false,
-  athleteName:'',
-  athleteId:'',
-  lastSync:'',
-  importedCount:0,
-  isSimulator:true,
-  syncing:false,
-  loaded:false,
-  fetching:false
-};
+const STRAVA_CONNS={};
 
-async function loadStravaStatus(force){
-  if(STRAVA.fetching)return;
-  if(STRAVA.loaded&&!force)return;
-  STRAVA.fetching=true;
+function clientStrava(cid){
+  const k=cid?String(cid):'default';
+  if(!STRAVA_CONNS[k]){
+    STRAVA_CONNS[k]={
+      connected:false,
+      athleteName:'',
+      athleteId:'',
+      lastSync:'',
+      importedCount:0,
+      isSimulator:true,
+      syncing:false,
+      loaded:false,
+      fetching:false
+    };
+  }
+  return STRAVA_CONNS[k];
+}
+
+const STRAVA=clientStrava('default');
+
+async function loadStravaStatus(targetCid,force){
+  const cid=targetCid||(S.role==='client'?S.cid:null);
+  const st=clientStrava(cid);
+  if(st.fetching)return;
+  if(st.loaded&&!force)return;
+  st.fetching=true;
   try{
-    const r=await fetch('/api/strava/status');
+    const url=cid?`/api/strava/status?cid=${encodeURIComponent(cid)}`:'/api/strava/status';
+    const r=await fetch(url);
     const d=await r.json();
     if(d&&d.ok){
-      STRAVA.connected=!!d.connected;
-      STRAVA.athleteName=d.athleteName||'';
-      STRAVA.athleteId=d.athleteId||'';
-      STRAVA.lastSync=d.lastSync||'';
-      STRAVA.importedCount=d.importedCount||0;
-      STRAVA.isSimulator=!!d.isSimulator;
-      STRAVA.loaded=true;
+      st.connected=!!d.connected;
+      st.athleteName=d.athleteName||'';
+      st.athleteId=d.athleteId||'';
+      st.lastSync=d.lastSync||'';
+      st.importedCount=d.importedCount||0;
+      st.isSimulator=!!d.isSimulator;
+      st.loaded=true;
+      if(!cid||(S.role==='client'&&String(S.cid)===String(cid))){
+        Object.assign(STRAVA,st);
+      }
     }
   }catch(e){}
   finally{
-    STRAVA.fetching=false;
+    st.fetching=false;
   }
 }
 
@@ -13435,6 +13511,48 @@ function vWear(){
         )
       }
       <div class="muted" style="font-size:12px;margin-top:10px">${ic('info',12)} ${t('Strava allows 200 requests / 15 min and 2 000 / day — automatic sync and any manual refresh share that budget.')}</div>
+    </div>
+  </div>
+  <div class="card" style="padding:16px 18px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="card-t">${ic('users',14)} ${t('Strava Accounts Roster')}</span>
+        <span class="bdg bdg-gray">${CLIENTS.length} ${t('Athletes')}</span>
+      </div>
+      <span class="muted" style="font-size:11.5px">${t('Multi-athlete isolation')}</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>${t('Athlete')}</th>
+            <th>${t('Strava Account')}</th>
+            <th>${t('Status')}</th>
+            <th>${t('Last sync')}</th>
+            <th class="num">${t('Actions')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${CLIENTS.map(c=>{
+            const cst=clientStrava(c.id);
+            if(!cst.loaded&&!cst.fetching)loadStravaStatus(c.id).then(()=>{if(S.view==='wear')render()});
+            return `<tr>
+              <td><div class="row" style="gap:8px;align-items:center">${avC(c.name,24)}<b>${esc(c.name)}</b></div></td>
+              <td>${cst.connected?`<span style="font-weight:600;color:var(--ink)">${esc(cst.athleteName||'Strava Athlete')}</span>${cst.athleteId?`<span class="muted" style="font-size:11px;display:block">ID #${esc(cst.athleteId)}</span>`:''}`:`<span class="muted">${t('Not Connected')}</span>`}</td>
+              <td>${cst.connected?`<span class="bdg bdg-lime">${ic('check',11)} ${t('CONNECTED')}${cst.isSimulator?` · ${t('SANDBOX')}`:''}</span>`:`<span class="bdg bdg-gray">${t('Not Connected')}</span>`}</td>
+              <td class="muted" style="font-size:12px">${cst.connected&&cst.lastSync?fmtDateTime(cst.lastSync):'—'}</td>
+              <td class="num" style="white-space:nowrap">
+                ${cst.connected?`
+                  <button class="btn btn-outline btn-xs" data-act="wear-sync" data-cid="${c.id}" ${cst.syncing?'disabled':''} title="${t('Sync Activities')}">${ic('refresh-cw',12)} ${cst.syncing?t('Syncing…'):t('Sync')}</button>
+                  <button class="btn btn-ghost btn-xs" style="color:var(--red);margin-inline-start:4px" data-act="wear-disconnect" data-cid="${c.id}" title="${t('Disconnect')}">${ic('x',12)}</button>
+                `:`
+                  <button class="btn btn-outline btn-xs" data-act="wear-connect" data-cid="${c.id}" title="${t('Connect Strava')}">${ic('link',12)} ${t('Connect')}</button>
+                `}
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="card" style="padding:16px 18px;margin-bottom:14px">
@@ -15275,8 +15393,10 @@ document.addEventListener('click',e=>{
     case 'ath-reset':S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'};render();break;
     /* ATHLETICS §12 — STRAVA OAUTH & ACTIVITY PROVIDER */
     case 'wear-connect':{
+      const targetCid=el.dataset.cid||(S.role==='client'?S.cid:(S.cid&&S.cid!=='all'?S.cid:(CLIENTS[0]?CLIENTS[0].id:1)));
       toast(t('Connecting to Strava…'));
-      fetch('/api/strava/auth').then(r=>r.json()).then(d=>{
+      const q=targetCid?`?cid=${encodeURIComponent(targetCid)}`:'';
+      fetch('/api/strava/auth'+q).then(r=>r.json()).then(d=>{
         if(d&&d.ok&&d.url){
           window.location.href=d.url;
         }else{
@@ -15301,7 +15421,7 @@ document.addEventListener('click',e=>{
         if(d&&d.ok){
           closeModal();
           toast(t('Strava settings saved ✓'));
-          await loadStravaStatus(true);
+          await loadStravaStatus(null,true);
           render();
         }else{
           toast(t('Failed to save settings'));
@@ -15312,16 +15432,24 @@ document.addEventListener('click',e=>{
       break;
     }
     case 'wear-sync':{
-      if(STRAVA.syncing)break;
+      const targetCid=el.dataset.cid||(S.role==='client'?S.cid:(S.cid&&S.cid!=='all'?S.cid:(CLIENTS[0]?CLIENTS[0].id:1)));
+      const st=clientStrava(targetCid);
+      if(st.syncing)break;
+      st.syncing=true;
       STRAVA.syncing=true;
       render();
       toast(t('Sync activities from Strava…'));
-      fetch('/api/strava/sync',{method:'POST'}).then(r=>r.json()).then(d=>{
+      const url=targetCid?`/api/strava/sync?cid=${encodeURIComponent(targetCid)}`:'/api/strava/sync';
+      fetch(url,{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({cid:targetCid})
+      }).then(r=>r.json()).then(d=>{
         if(d&&d.ok){
           const acts=d.activities||[];
           let imported=0;
           const maxW=Math.max(0,...TLOG.map(x=>+x.w||0));
-          const chosenCid=(S.cid&&S.cid!=='all')?S.cid:(CLIENTS[0]?CLIENTS[0].id:1);
+          const chosenCid=targetCid||(CLIENTS[0]?CLIENTS[0].id:1);
 
           acts.forEach(act=>{
             const existing=TLOG.find(x=>String(x.id)===String(act.id));
@@ -15335,7 +15463,7 @@ document.addEventListener('click',e=>{
             }else{
               TLOG.push({
                 id:act.id,
-                cid:chosenCid,
+                cid:act.cid||chosenCid,
                 w:maxW,
                 date:act.date||new Date().toISOString().slice(0,10),
                 name:act.name,
@@ -15351,8 +15479,12 @@ document.addEventListener('click',e=>{
           });
 
           saveData();
-          STRAVA.lastSync=d.lastSync||new Date().toISOString();
-          STRAVA.importedCount=(STRAVA.importedCount||0)+imported;
+          st.lastSync=d.lastSync||new Date().toISOString();
+          st.importedCount=(st.importedCount||0)+imported;
+          if(!targetCid||(S.role==='client'&&String(S.cid)===String(targetCid))){
+            STRAVA.lastSync=st.lastSync;
+            STRAVA.importedCount=st.importedCount;
+          }
           toast(imported>0 ? `${imported} ${t('activities imported from Strava ✓')}` : t('Strava activities are up to date ✓'));
         }else{
           toast(t('Sync failed: ')+(d&&d.error?d.error:t('unknown')));
@@ -15360,19 +15492,32 @@ document.addEventListener('click',e=>{
       }).catch(e=>{
         toast(t('Strava sync error: ')+(e.message||'network'));
       }).finally(()=>{
+        st.syncing=false;
         STRAVA.syncing=false;
         render();
       });
       break;
     }
     case 'wear-disconnect':{
+      const targetCid=el.dataset.cid||(S.role==='client'?S.cid:(S.cid&&S.cid!=='all'?S.cid:null));
+      const st=clientStrava(targetCid);
       if(!confirm(t('Disconnect Strava? Past imported activities will remain in your training log.')))break;
       toast(t('Disconnecting Strava…'));
-      fetch('/api/strava/disconnect',{method:'POST'}).then(r=>r.json()).then(d=>{
+      const url=targetCid?`/api/strava/disconnect?cid=${encodeURIComponent(targetCid)}`:'/api/strava/disconnect';
+      fetch(url,{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({cid:targetCid})
+      }).then(r=>r.json()).then(d=>{
         if(d&&d.ok){
-          STRAVA.connected=false;
-          STRAVA.athleteName='';
-          STRAVA.athleteId='';
+          st.connected=false;
+          st.athleteName='';
+          st.athleteId='';
+          if(!targetCid||(S.role==='client'&&String(S.cid)===String(targetCid))){
+            STRAVA.connected=false;
+            STRAVA.athleteName='';
+            STRAVA.athleteId='';
+          }
           toast(t('Strava disconnected'));
           render();
         }
@@ -17150,9 +17295,15 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   if(sParams.get('timer')==='open'){setTimeout(openTimerModal,400);}
   if(v){S.role='coach';S.view=v;if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';}
   if(sParams.get('strava')==='connected'){
-    S.role='coach';S.view='wear';ONBOARD.sport='Running & Endurance';
+    const targetCid=sParams.get('cid');
+    const isClient=(S.role==='client'||S.loginRole==='client'||(!v&&targetCid));
+    if(!isClient){
+      S.role='coach';S.view='wear';ONBOARD.sport='Running & Endurance';
+    }else if(targetCid){
+      S.cid=+targetCid;
+    }
     setTimeout(()=>{
-      loadStravaStatus(true).then(()=>{
+      loadStravaStatus(targetCid,true).then(()=>{
         render();
         toast(t('Strava connected successfully! ✓'));
       });

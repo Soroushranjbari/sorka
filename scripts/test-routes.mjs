@@ -433,6 +433,30 @@ try {
   const strStat2 = await j('/api/strava/status');
   ok('GET /api/strava/status confirmed disconnected', strStat2.status === 200 && strStat2.d?.connected === false, strStat2.d);
 
+  // multi-athlete strava isolation
+  const ath1Cb = await fetch(BASE + '/api/strava/callback?code=mock_strava_sandbox_token&state=101');
+  ok('GET /api/strava/callback?state=101 connects Athlete #101', ath1Cb.status === 200, ath1Cb.status);
+  const ath1Stat = await j('/api/strava/status?cid=101');
+  ok('Athlete #101 is connected', ath1Stat.d?.connected === true && String(ath1Stat.d?.cid) === '101', ath1Stat.d);
+
+  const ath2Stat0 = await j('/api/strava/status?cid=102');
+  ok('Athlete #102 is initially disconnected', ath2Stat0.d?.connected === false, ath2Stat0.d);
+
+  const ath2Cb = await fetch(BASE + '/api/strava/callback?code=mock_strava_sandbox_token&state=102');
+  ok('GET /api/strava/callback?state=102 connects Athlete #102', ath2Cb.status === 200, ath2Cb.status);
+  const ath2Stat1 = await j('/api/strava/status?cid=102');
+  ok('Athlete #102 is now connected independently', ath2Stat1.d?.connected === true && String(ath2Stat1.d?.cid) === '102', ath2Stat1.d);
+
+  const ath1Sync = await j('/api/strava/sync', { method: 'POST', body: JSON.stringify({ cid: 101 }) });
+  ok('Athlete #101 sync returns activities with cid=101', ath1Sync.d?.ok === true && ath1Sync.d?.activities?.[0]?.cid === 101, ath1Sync.d);
+
+  const ath1Disc = await j('/api/strava/disconnect', { method: 'POST', body: JSON.stringify({ cid: 101 }) });
+  ok('Athlete #101 disconnected', ath1Disc.d?.connected === false, ath1Disc.d);
+
+  const ath2Stat2 = await j('/api/strava/status?cid=102');
+  ok('Athlete #102 remains connected after Athlete #101 disconnect', ath2Stat2.d?.connected === true, ath2Stat2.d);
+  await j('/api/strava/disconnect', { method: 'POST', body: JSON.stringify({ cid: 102 }) });
+
   /* v18.19 — REGRESSION GUARD: /api/strava/* existed in server.mjs only.
      The Vercel adapter (api/[...path].mjs) never imported the handler, so in
      production every Strava call 404'd while the local suite stayed green
