@@ -162,7 +162,10 @@ for (const l of langs) {
 }
 
 // 4. Modals
-const modals = ['addClientModal', 'pickerModal', 'measModal', 'newSessionModal', 'targetsModal', 'helpModal', 'intakeModal', 'weekPlanModal', 'formCheckModal'];
+const modals = [
+  'addClientModal', 'pickerModal', 'measModal', 'newSessionModal', 'targetsModal', 'helpModal', 'intakeModal', 'weekPlanModal', 'formCheckModal',
+  'photoExportMorphModal', 'coachWhisperModal', 'raceFuelingModal', 'storyCardModal', 'churnRadarModal', 'retentionNudgeModal'
+];
 for (const m of modals) {
   try {
     vm.runInContext(`${m}(); closeModal();`, context);

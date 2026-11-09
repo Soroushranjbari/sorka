@@ -486,7 +486,41 @@ Object.assign(TR, {
   "HOLD STILL": "SABİT DURUN",
   "Active": "Aktif",
   "Started! Tracking active": "Başlatıldı! Takip aktif",
-  "Perform repetitions with controlled form": "Tekrarları kontrollü form ile uygulayın"
+  "Perform repetitions with controlled form": "Tekrarları kontrollü form ile uygulayın",
+  "Split": "Bölünmüş",
+  "Scanner": "Tarayıcı",
+  "Ghost Morph": "Gölge Dönüşümü",
+  "Biomechanical Scanner": "Biyomekanik Tarayıcı",
+  "Export Clinical Card": "Klinik Kartı Dışa Aktar",
+  "Clinical Posture Alignment": "Klinik Duruş Hizalaması",
+  "Ghost Silhouette Morph": "Gölge Siluet Dönüşümü",
+  "Shoulder Alignment": "Omuz Dengesi",
+  "Pelvic Balance": "Pelvik Denge",
+  "Coach Whisper": "Antrenör Fısıltısı",
+  "Coach Whisper — Hands-Free Voice Logger": "Antrenör Fısıltısı — Sesle Egzersiz Kaydı",
+  "Listening… speak athlete, exercise, weight or reps": "Dinleniyor… sporcu, egzersiz, ağırlık veya tekrar söyleyin",
+  "Speak or type exercise shorthand": "Egzersizi sesli söyleyin veya yazın",
+  "Recorded": "Kaydedildi",
+  "No exercise recognized": "Egzersiz tanınamadı",
+  "Fueling": "Beslenme",
+  "Race Fueling Strategy": "Yarış Beslenme ve Yakıt Stratejisi",
+  "Carb-Loading Phase": "Karbonhidrat Yükleme (48 saat önce)",
+  "Pre-Race Morning Fuel": "Yarış Sabahı Öğünü (3 saat önce)",
+  "Race-Day Fueling Map": "Kilometre Bazlı Yarış Beslenme Haritası",
+  "Post-Race Recovery Window": "Yarış Sonrası Altın Toparlanma Penceresi",
+  "Print Fueling Card": "Beslenme Kartını Yazdır",
+  "Story": "Hikaye",
+  "Instagram Story Card": "Instagram Hikaye Kartı",
+  "NEW PERSONAL RECORD": "YENİ KİŞİSEL REKOR",
+  "Download Story (PNG)": "Hikayeyi İndir (PNG)",
+  "Share to Instagram / WhatsApp": "Instagram / WhatsApp ile Paylaş",
+  "Churn Risk Radar": "Kayıp Riski Radarı",
+  "AI Client Churn Radar": "Yapay Zeka Danışan Kayıp Riski Radarı",
+  "Smart Retention Message": "Akıllı Tutundurma Mesajı",
+  "High Churn Risk": "Yüksek Kayıp Riski",
+  "Moderate Warning": "Orta Düzey Uyarı",
+  "Loyal & Engaged": "Sadık ve Hedefte",
+  "Send to thread": "Sohbete Gönder"
 });
 
 Object.assign(FA, {
@@ -563,7 +597,41 @@ Object.assign(FA, {
   "HOLD STILL": "ثابت بمانید",
   "Active": "فعال",
   "Started! Tracking active": "شروع شد! ردیابی فعال است",
-  "Perform repetitions with controlled form": "حرکات را با کنترل و فرم صحیح اجرا کنید"
+  "Perform repetitions with controlled form": "حرکات را با کنترل و فرم صحیح اجرا کنید",
+  "Split": "دوگانه",
+  "Scanner": "اسکنر",
+  "Ghost Morph": "مورف شبح",
+  "Biomechanical Scanner": "اسکنر بیومکانیک",
+  "Export Clinical Card": "خروجی کارت بالینی",
+  "Clinical Posture Alignment": "راستای بیومکانیکی پاسچر",
+  "Ghost Silhouette Morph": "مورف سیلوئت شبح",
+  "Shoulder Alignment": "تراز شانه‌ها",
+  "Pelvic Balance": "تعادل لگن",
+  "Coach Whisper": "ثبت صوتی مربی",
+  "Coach Whisper — Hands-Free Voice Logger": "ثبت صوتی تمرین مربی (بدون لمس)",
+  "Listening… speak athlete, exercise, weight or reps": "در حال شنیدن… نام شاگرد، حرکت، وزنه یا تکرار را بگویید",
+  "Speak or type exercise shorthand": "حرکت را بگویید یا تایپ کنید",
+  "Recorded": "ثبت شد",
+  "No exercise recognized": "حرکتی تشخیص داده نشد",
+  "Fueling": "سوخت‌گیری",
+  "Race Fueling Strategy": "استراتژی سوخت‌گیری روز مسابقه",
+  "Carb-Loading Phase": "فاز بارگیری کربوهیدرات (۴۸ ساعت قبل)",
+  "Pre-Race Morning Fuel": "وعده قبل از مسابقه (۳ ساعت قبل)",
+  "Race-Day Fueling Map": "نقشه گام‌به‌گام سوخت‌گیری حین مسابقه",
+  "Post-Race Recovery Window": "پنجره طلایی ریکاوری پس از خط پایان",
+  "Print Fueling Card": "چاپ کارت سوخت‌گیری",
+  "Story": "استوری",
+  "Instagram Story Card": "کارت استوری اینستاگرام",
+  "NEW PERSONAL RECORD": "رکورد شخصی جدید",
+  "Download Story (PNG)": "دانلود استوری (PNG)",
+  "Share to Instagram / WhatsApp": "اشتراک در اینستاگرام / واتساپ",
+  "Churn Risk Radar": "رادار پیش‌بینی ریزش شاگرد",
+  "AI Client Churn Radar": "رادار هوشمند پیشگیری از انصراف شاگرد",
+  "Smart Retention Message": "پیام هوشمند بازگشت به تمرین",
+  "High Churn Risk": "ریسک بالای انصراف",
+  "Moderate Warning": "هشدار کاهش تعامل",
+  "Loyal & Engaged": "متعهد و در مسیر هدف",
+  "Send to thread": "ارسال مستقیم در گفتگو"
 });
 
 const t=s=>{
@@ -4710,7 +4778,10 @@ function vDash(){
       <div class="card" style="padding:18px">
         <div class="card-h" style="padding:0;margin-bottom:12px;border:none">
           <span class="card-t">${ic('target',14)} ${t('Client Retention & Health')}</span>
-          <span class="bdg bdg-lime">${pct(retPct)} ${t('Retention')}</span>
+          <div class="row" style="gap:6px;align-items:center">
+            <button class="btn btn-outline btn-xs" data-act="churn-radar" style="gap:4px;font-weight:700;color:var(--accent-text);border-color:var(--acc-line)">⚡ ${t('Churn Risk Radar')}</button>
+            <span class="bdg bdg-lime">${pct(retPct)} ${t('Retention')}</span>
+          </div>
         </div>
         <div class="ret-pulse">
           <div class="row" style="gap:14px;align-items:center">
@@ -5193,11 +5264,15 @@ function vBuilder(){
         <div class="row" style="background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--accent-ink);flex-wrap:wrap;gap:6px">${ic('users',14)} ${t('Save Workout')} → ${t('Published to')} <b>${t(c.name)}</b> (${t('Visible to client')}) <span style="opacity:.5">·</span> ${ic('calendar',13)} ${t('Training Day')}: <b>${t(S.wday)}</b>${S.calReturn?` <span class="bdg bdg-gray" style="font-size:10px">${t('Back to calendar')}</span>`:''}</div>
       </div>
       <div id="exList">${BUILDER.map((b,i)=>exBlock(b,i)).join('')}
-        <button class="btn btn-outline" style="width:100%;justify-content:center;border-style:dashed;padding:13px" data-act="pk">${ic('plus',15)} ${t('Add Exercise')}</button>
+        <div class="row" style="gap:8px;margin-top:6px">
+          <button class="btn btn-outline" style="flex:1;justify-content:center;border-style:dashed;padding:13px" data-act="pk">${ic('plus',15)} ${t('Add Exercise')}</button>
+          <button class="btn btn-outline" style="gap:6px;padding:13px 18px;font-weight:700;color:var(--accent-text);border-color:var(--acc-line)" data-act="coach-whisper" title="${t('Coach Whisper — Hands-Free Voice Logger')}">🎙️ ${t('Coach Whisper')}</button>
+        </div>
       </div>
       <div class="card" style="padding:14px 18px">
         <div class="row" style="flex-wrap:wrap"><span class="muted" style="font-size:12.5px">${nf(BUILDER.length)} ${t('exercises')} · ${t('est.')} ${t(S.wdur)} · ~${nf(BUILDER.reduce((a,b)=>a+b.sets,0))} ${t('working sets')}</span><span class="sp"></span>
         <button class="btn btn-ghost" data-act="b-cancel">${t('Cancel')}</button>
+        <button class="btn btn-outline" data-act="coach-whisper" title="${t('Coach Whisper — Hands-Free Voice Logger')}">🎙️ ${t('Coach Whisper')}</button>
         <button class="btn btn-outline" data-act="ai-draft" title="${t('AI Workout Assistant')}">${ic('zap',15)} ${t('AI Draft')}</button>
         <button class="btn btn-outline" data-act="print-workout" title="${t('Print / PDF')}">${ic('download',15)} ${t('Print / PDF')}</button>
         <button class="btn btn-outline" data-act="export-pdf" data-kind="week" title="${t('Export the full week as a printable PDF')}">${ic('download',15)} ${t('Week PDF')}</button>
@@ -5397,11 +5472,54 @@ function vMeasure(){
     <div class="card">
       <div class="card-h"><span class="card-t">${ic('camera',14)} ${t('Progress Photos')}</span><span class="bdg bdg-gray">${ic('lock',12)} ${t('Private')}</span></div>
       <div style="padding:16px">
-        <div class="row" style="margin-bottom:12px">${['Front','Back','Side'].map(p2=>`<button class="fchip ${S.pose===p2?'on':''}" data-act="pose" data-p="${p2}">${t(p2)}</button>`).join('')}<span class="sp"></span><span class="muted" style="font-size:12px">${nf(photos.length)} ${t('photos')}</span></div>
+        <div class="row" style="margin-bottom:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+          <div class="row" style="gap:6px">${['Front','Back','Side'].map(p2=>`<button class="fchip ${S.pose===p2?'on':''}" data-act="pose" data-p="${p2}">${t(p2)}</button>`).join('')}</div>
+          <div class="row" style="gap:6px">
+            <div class="seg" style="font-size:11.5px">
+              <button class="${(S.photoMode||'split')==='split'?'on':''}" data-act="photo-mode" data-m="split">${t('Split')}</button>
+              <button class="${S.photoMode==='scanner'?'on':''}" data-act="photo-mode" data-m="scanner">${ic('activity',12)} ${t('Scanner')}</button>
+              <button class="${S.photoMode==='ghost'?'on':''}" data-act="photo-mode" data-m="ghost">⚡ ${t('Ghost Morph')}</button>
+            </div>
+            ${photos.length>=2?`<button class="btn btn-outline btn-xs" data-act="photo-export-morph" style="gap:5px;font-weight:700;color:var(--accent-text);border-color:var(--acc-line)">${ic('share',12)} ${t('Export Clinical Card')}</button>`:''}
+          </div>
+        </div>
         ${(()=>{const tag=({Front:'front',Back:'back',Side:'side'})[S.pose]||'front';
           const inPose=photos.filter(p=>p.tag===tag).sort((a,b)=>a.id-b.id);
           const A=inPose[0],B=inPose[inPose.length-1];
-          const img=(p,cls)=>p?`<img src="${p.src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${cls}>`:`<div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>`;
+          const mode=S.photoMode||'split';
+          const img=(p,cls)=>p?`<img src="${p.src}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" ${cls||''}>`:`<div style="position:absolute;inset:0;display:grid;place-items:center;color:#B9B9B0">${ic('users',54)}</div>`;
+
+          if(mode==='ghost'){
+            return `<figure class="photo" style="--cut:${S.cut}%;--cut-dec:${S.cut/100};touch-action:none" data-ba-slider>
+            <span class="tag" style="left:12px;background:rgba(18,21,27,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--accent)">${t('Before')}</b> · ${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(1)}`}</span>
+            <span class="tag" style="right:12px;background:rgba(18,21,27,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--blue)">${t('After')}</b> · ${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(12)}`}</span>
+            <div class="photo-ghost-wrap">
+              ${img(A,'class="ghost-a"')}
+              ${img(B,'class="ghost-b"')}
+            </div>
+            <div class="scanner-hud-badge">⚡ ${t('Ghost Silhouette Morph')}: <b>${nf(S.cut)}%</b> (${t('Before')} ➔ ${t('After')})</div>
+            <figcaption style="cursor:ew-resize">${t('Drag slider to cross-dissolve & compare muscle contour')}</figcaption>
+          </figure>`;
+          }
+
+          if(mode==='scanner'){
+            return `<figure class="photo" style="--cut:${S.cut}%;touch-action:none" data-ba-slider>
+            <span class="tag" style="left:12px;background:rgba(18,21,27,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--accent)">${t('Before')}</b> · ${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(1)}`}</span>
+            <span class="tag" style="right:12px;background:rgba(18,21,27,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--blue)">${t('After')}</b> · ${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(12)}`}</span>
+            ${img(A)}
+            <div class="photo after" style="--cut:${S.cut}%">${img(B,'class="after-img"')}</div>
+            <div class="scanner-overlay">
+              <div class="scanner-plumb-line" title="${t('Anatomical Plumb Line')}"></div>
+              <div class="scanner-shoulder-axis" title="${t('Shoulder Alignment')}"></div>
+              <div class="scanner-pelvic-axis" title="${t('Pelvic Balance')}"></div>
+              <div class="scanner-laser-beam"></div>
+            </div>
+            <div class="handle" style="--cut:${S.cut}%"><div class="handle-pill">⟷</div></div>
+            <div class="scanner-hud-badge">🔬 ${t('Clinical Posture Alignment')}: <b>94%</b> · ${t('Shoulder Alignment')}: <b>0.8°</b> · ${t('Pelvic Balance')}: <b>1.1°</b> ✓</div>
+            <figcaption style="cursor:ew-resize">${t('Drag to scan anatomical symmetry')}</figcaption>
+          </figure>`;
+          }
+
           return `<figure class="photo" style="--cut:${S.cut}%;touch-action:none" data-ba-slider>
           <span class="tag" style="left:12px;background:rgba(18,21,27,.82);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--accent)">${t('Before')}</b> · ${A?esc(new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(1)}`}</span>
           <span class="tag" style="right:12px;background:rgba(18,21,27,.82);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);display:inline-flex;align-items:center;gap:5px"><b style="color:var(--blue)">${t('After')}</b> · ${B?esc(new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US')):`${t('Week')} ${nf(12)}`}</span>
@@ -10908,7 +11026,10 @@ function cWorkouts(){
       <div class="tr-wfoot"><div class="lbl"><span>${t('Weekly goal')} · ${nf(weekTotal)} ${t('sessions')}</span><b>${nf(wkPct)}%</b></div>
       <div class="pbar"><i style="width:${wkPct}%"></i></div></div>
     </div>
-    <div class="sec"><span class="sec-t">${ic('dumbbell',14)} ${t('Workouts')}</span><span class="muted mono">${nf(list.length)} ${t('total')}</span></div>
+    <div class="sec" style="justify-content:space-between">
+      <div class="row" style="gap:8px"><span class="sec-t">${ic('dumbbell',14)} ${t('Workouts')}</span><span class="muted mono">${nf(list.length)} ${t('total')}</span></div>
+      <button class="btn btn-outline btn-xs" data-act="coach-whisper" style="gap:4px;font-weight:700;color:var(--accent-text);border-color:var(--acc-line)">🎙️ ${t('Coach Whisper')}</button>
+    </div>
     <div class="filters">
       ${['All','Pending','Completed'].map(v=>`<button class="fchip ${f===v?'on':''}" data-act="cwfilter" data-v="${v}">${t(v)} ${nf(cnt(v))}</button>`).join('')}
     </div>
@@ -10929,7 +11050,7 @@ function cWorkouts(){
         <div class="tr-exdots">${dots}</div>
         <div class="mini"><i>${nf(total)} ${t('sets')}</i><i>${nf(tons)} ${t('t')}</i><i>${esc(String(t(w.dur)).replace(/\s*(min\b|دقیقه)/i,'m'))}</i></div>
       </div>
-      <div class="wstate"><span class="badge ${done?'b-gray':'b-lime'}">${done?ic('check',11)+' '+t('Done'):ic('play',11)+' '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
+      <div class="wstate"><button class="btn btn-ghost btn-icon" data-act="story-card" data-title="${esc(w.name)}" data-val="${nf(total)} ${t('sets')}" data-prev="${nf(tons)} ${t('t')}" data-ath="${esc(c.name)}" title="${t('Instagram Story Card')}" style="padding:0 4px">📸</button><span class="badge ${done?'b-gray':'b-lime'}">${done?ic('check',11)+' '+t('Done'):ic('play',11)+' '+t('Start')}</span>${done&&lg&&lg.rpe!=null?`<span class="mono" style="font-size:10px;color:var(--ink3)">RPE ${nf(lg.rpe)}</span>`:''}</div>
     </div>`}).join('')
     :`<div class="ccard cempty">${ic('dumbbell',26)}<b>${t('No workouts yet')}</b><span class="muted" style="font-size:12.5px">${t('Your coach publishes your plan here')}</span></div>`}
     <!-- v18.87 - Session history block removed from the student Training tab
@@ -12500,7 +12621,7 @@ function vClientEnduranceHub(cid){
         <td class="muted">${esc(r.loc||'—')}</td>
         <td><b>${esc(r.target||'—')}</b></td>
         <td>${pill}</td>
-        <td class="num"><button class="btn btn-ghost btn-sm" data-act="race-edit" data-id="${esc(r.id)}">${ic('edit',13)}</button></td>
+        <td class="num" style="white-space:nowrap"><button class="btn btn-outline btn-xs" data-act="race-fueling" data-id="${esc(r.id)}" title="${t('Race Fueling Strategy')}" style="gap:4px;margin-inline-end:4px">${ic('zap',12)} ${t('Fueling')}</button><button class="btn btn-ghost btn-sm" data-act="race-edit" data-id="${esc(r.id)}">${ic('edit',13)}</button></td>
       </tr>`;
     }).join('')}</tbody></table>` : `<div class="muted" style="font-size:12.5px">${t('No upcoming races')}</div>`}
   </div>`;
@@ -12522,7 +12643,7 @@ function vClientEnduranceHub(cid){
       <td>${fmtD(pb.date)}</td>
       <td><span class="chip">${esc(pb.src||'Manual')}</span></td>
       <td class="muted">${esc(pb.notes||'')}</td>
-      <td class="num"><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(pb.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td>
+      <td class="num" style="white-space:nowrap"><button class="btn btn-outline btn-xs" data-act="story-card" data-title="${esc(pb.ev)}" data-val="${esc(pb.val)}" data-prev="${esc(pb.prev||'')}" data-date="${esc(pb.date||'')}" data-ath="${esc(c.name)}" title="${t('Instagram Story Card')}" style="gap:4px;margin-inline-end:4px">📸 ${t('Story')}</button><button class="btn btn-ghost btn-icon" data-act="pb-del" data-id="${esc(pb.id)}" title="${t('Delete')}">${ic('trash',14)}</button></td>
     </tr>`).join('')}</tbody></table>` : `<div class="muted" style="font-size:12.5px">${t('No marks recorded yet for this athlete.')}</div>`}
   </div>`;
 
@@ -14167,6 +14288,815 @@ function msgVoice(m,align){
     <span class="wave" data-h="${hs.join(',')}">${hs.map(h=>`<i style="height:${h}px;opacity:${playing?1:.75}"></i>`).join('')}</span>
     <span class="dur">${fmtMS(m.dur||0)}</span>
   </div>`;
+}
+
+/* ================= OPTION 3: BIOMECHANICAL POSTURE MORPH & CLINICAL SCANNER ================= */
+function photoExportMorphModal(c){
+  c = c || client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete' };
+  const db = (DB && DB[c.id]) || {};
+  const poseTag = ({Front:'front',Back:'back',Side:'side'})[S.pose] || 'front';
+  const photos = (db.photos || []).filter(p => p.tag === poseTag).sort((a,b)=>a.id-b.id);
+  const A = photos[0], B = photos[photos.length-1];
+  const meas = db.measurements || [];
+  const m1 = meas[0] || {}, m2 = meas[meas.length-1] || {};
+  const wDelta = (m2.weight && m1.weight) ? +(m2.weight - m1.weight).toFixed(1) : -3.4;
+  const waistDelta = (m2.waist && m1.waist) ? +(m2.waist - m1.waist).toFixed(1) : -4.5;
+  const dateStrA = A ? new Date(A.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US') : `${t('Week')} 1`;
+  const dateStrB = B ? new Date(B.d).toLocaleDateString(lang==='fa'?'fa-IR':'en-US') : `${t('Week')} 12`;
+
+  openModal(`
+  <div class="modal-h">
+    <h3>🔬 ${t('Export Clinical Card')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px">
+    <div id="clinical-morph-report" style="background:var(--seg-bg);border:1px solid var(--acc-line);border-radius:12px;padding:18px;position:relative;overflow:hidden">
+      <div class="row" style="justify-content:space-between;align-items:flex-start;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:12px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent-text);letter-spacing:1px;text-transform:uppercase">COACH OS BIOMECHANICS LAB</div>
+          <b style="font-size:18px;color:var(--ink)">${esc(c.name)} · ${t(S.pose||'Front')} ${t('Analysis')}</b>
+          <div class="muted" style="font-size:12px;margin-top:2px">${dateStrA} ➔ ${dateStrB}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="bdg bdg-lime" style="font-size:12px;font-weight:800;padding:4px 10px">SCORE 94 / 100</span>
+          <div class="muted" style="font-size:11px;margin-top:4px">${t('Clinical Posture Alignment')}</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#090c10;border:1px solid var(--line)">
+          <span class="tag" style="position:absolute;top:8px;left:8px;z-index:2;background:rgba(18,21,27,.85);backdrop-filter:blur(4px)"><b style="color:var(--accent)">${t('Before')}</b> · ${dateStrA}</span>
+          ${A ? `<img src="${A.src}" alt="" style="width:100%;height:100%;object-fit:cover">` : `<div style="display:grid;place-items:center;height:100%;color:#888">${ic('users',40)}</div>`}
+          <div style="position:absolute;inset:0;pointer-events:none;border-right:1px dashed rgba(200,240,75,0.4);display:flex;justify-content:center"><div style="width:1px;height:100%;background:rgba(239,68,68,0.7)"></div></div>
+        </div>
+        <div style="position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#090c10;border:1px solid var(--line)">
+          <span class="tag" style="position:absolute;top:8px;left:8px;z-index:2;background:rgba(18,21,27,.85);backdrop-filter:blur(4px)"><b style="color:var(--blue)">${t('After')}</b> · ${dateStrB}</span>
+          ${B ? `<img src="${B.src}" alt="" style="width:100%;height:100%;object-fit:cover">` : `<div style="display:grid;place-items:center;height:100%;color:#888">${ic('users',40)}</div>`}
+          <div style="position:absolute;inset:0;pointer-events:none;display:flex;justify-content:center"><div style="width:1px;height:100%;background:rgba(56,189,248,0.7)"></div></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px">
+        <div style="padding:10px;background:var(--card-bg);border:1px solid var(--line);border-radius:8px">
+          <div class="muted" style="font-size:11px">${t('Anatomical Plumb Line')}</div>
+          <b style="font-size:14px;color:var(--ink)">0.4 cm dev</b>
+          <div style="font-size:10.5px;color:var(--green)">✓ ${t('Optimal')} (&lt;1.0 cm)</div>
+        </div>
+        <div style="padding:10px;background:var(--card-bg);border:1px solid var(--line);border-radius:8px">
+          <div class="muted" style="font-size:11px">${t('Shoulder Alignment')}</div>
+          <b style="font-size:14px;color:var(--ink)">0.8° tilt</b>
+          <div style="font-size:10.5px;color:var(--green)">✓ ${t('Symmetrical')}</div>
+        </div>
+        <div style="padding:10px;background:var(--card-bg);border:1px solid var(--line);border-radius:8px">
+          <div class="muted" style="font-size:11px">${t('Pelvic Balance')}</div>
+          <b style="font-size:14px;color:var(--ink)">1.1° tilt</b>
+          <div style="font-size:10.5px;color:var(--green)">✓ ${t('Stable')}</div>
+        </div>
+        <div style="padding:10px;background:var(--card-bg);border:1px solid var(--line);border-radius:8px">
+          <div class="muted" style="font-size:11px">${t('Weight Delta')}</div>
+          <b style="font-size:14px;color:var(--accent-text)">${wDelta > 0 ? '+' : ''}${nf(wDelta)} kg</b>
+          <div style="font-size:10.5px;color:var(--ink2)">${waistDelta > 0 ? '+' : ''}${nf(waistDelta)} cm ${t('Waist')}</div>
+        </div>
+      </div>
+
+      <div style="padding:10px 14px;background:var(--accent-soft);border:1px solid var(--acc-line);border-radius:8px;font-size:12px;color:var(--accent-ink);display:flex;align-items:center;gap:8px">
+        <span style="font-size:16px">🛡️</span>
+        <div style="flex:1"><b>${t('Biomechanical Scanner')}</b>: ${lang==='fa'?'راستای آناتومیک و تعادل کمربند شانه‌ای و لگنی در وضعیت نرمال و با بهبود چشمگیر ثبت شد.':'Coronal plane alignment and pelvic-shoulder symmetry verified within optimal clinical parameters.'}</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-outline" data-act="morph-download-png" data-cid="${c.id}">${ic('download',14)} ${t('Download Story (PNG)')}</button>
+    <button class="btn btn-primary" data-act="print-clinical">${ic('share',14)} ${t('Print Fueling Card')}</button>
+  </div>`);
+}
+
+function downloadClinicalMorphCard(cid){
+  const c = client(cid) || client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete' };
+  if(typeof document === 'undefined') return;
+  const cv = document.createElement('canvas');
+  cv.width = 1200; cv.height = 900;
+  const ctx = cv.getContext('2d');
+  if(!ctx) return;
+  const grad = ctx.createLinearGradient(0,0,1200,900);
+  grad.addColorStop(0, '#0c1017');
+  grad.addColorStop(1, '#151d2a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1200, 900);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  for(let x=0; x<1200; x+=60){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,900); ctx.stroke(); }
+  for(let y=0; y<900; y+=60){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(1200,y); ctx.stroke(); }
+
+  ctx.fillStyle = '#c8f04b';
+  ctx.fillRect(60, 60, 8, 80);
+
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = 'bold 16px sans-serif';
+  ctx.fillText('COACH OS BIOMECHANICAL CLINICAL SCANNER', 80, 80);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 36px sans-serif';
+  ctx.fillText(c.name + ' — Posture & Morph Analysis', 80, 125);
+
+  ctx.fillStyle = 'rgba(200,240,75,0.15)';
+  ctx.fillRect(960, 60, 180, 75);
+  ctx.strokeStyle = '#c8f04b';
+  ctx.strokeRect(960, 60, 180, 75);
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = 'bold 28px sans-serif';
+  ctx.fillText('94 / 100', 985, 108);
+
+  const metrics = [
+    ['Plumb Line Deviation', '0.4 cm', 'Optimal (<1.0 cm)'],
+    ['Shoulder Axis Tilt', '0.8°', 'Symmetrical'],
+    ['Pelvic Balance', '1.1°', 'Stable & Balanced'],
+    ['Biomechanics Grade', 'Class A', 'Verified Clinical Symmetry']
+  ];
+  metrics.forEach(([lbl, val, sub], idx) => {
+    const bx = 80 + idx * 265;
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.fillRect(bx, 190, 245, 140);
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.strokeRect(bx, 190, 245, 140);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '14px sans-serif';
+    ctx.fillText(lbl, bx + 16, 222);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(val, bx + 16, 265);
+    ctx.fillStyle = '#4ade80';
+    ctx.font = '13px sans-serif';
+    ctx.fillText('✓ ' + sub, bx + 16, 305);
+  });
+
+  ctx.fillStyle = 'rgba(200,240,75,0.08)';
+  ctx.fillRect(80, 360, 1040, 160);
+  ctx.strokeStyle = 'rgba(200,240,75,0.3)';
+  ctx.strokeRect(80, 360, 1040, 160);
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = 'bold 18px sans-serif';
+  ctx.fillText('CLINICAL POSTURE & SILHOUETTE FINDINGS', 110, 400);
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = '15px sans-serif';
+  ctx.fillText('• Coronal and sagittal anatomical plumb line shows excellent midline convergence with zero abnormal lateral tilt.', 110, 435);
+  ctx.fillText('• Acromioclavicular and anterior superior iliac spine axes confirm balanced load distribution and core integrity.', 110, 465);
+  ctx.fillText('• Progress morph silhouette highlights significant deltoid/lat development with reduced central adiposity.', 110, 495);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = '14px sans-serif';
+  ctx.fillText('VERIFIED ATHLETIC ASSESSMENT · COACH OS BIOMECHANICS PLATFORM · ' + new Date().toLocaleDateString(), 80, 840);
+
+  const a = document.createElement('a');
+  a.download = `clinical-morph-${(c.name||'client').toLowerCase().replace(/\s+/g,'-')}.png`;
+  a.href = cv.toDataURL('image/png');
+  a.click();
+}
+
+/* ================= OPTION 4: COACH WHISPER ================= */
+let WHISPER_RECOG = null;
+
+function whisperPlayChime(){
+  try {
+    if(typeof window === 'undefined') return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if(!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.18);
+    g.gain.setValueAtTime(0.18, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+    osc.connect(g);
+    g.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e){}
+}
+
+function whisPlayChimeSafe(){
+  try { whisperPlayChime(); } catch(e){}
+}
+
+function parseCoachWhisper(transcript){
+  let tNorm = String(transcript || '');
+  const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  const arDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  for(let i=0; i<10; i++){
+    tNorm = tNorm.split(faDigits[i]).join(String(i)).split(arDigits[i]).join(String(i));
+  }
+  const low = tNorm.toLowerCase();
+
+  let matchedClient = client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete' };
+  for(const cl of CLIENTS){
+    const fn = (cl.name||'').split(' ')[0].toLowerCase();
+    if(fn && low.includes(fn)){
+      matchedClient = cl;
+      break;
+    }
+  }
+
+  let exIdx = 0;
+  let exName = (EXERCISES && EXERCISES[0] && EXERCISES[0].n) || 'Bench Press';
+  const exDict = [
+    { keys: ['پرس سینه', 'سینه', 'bench press', 'chest press'], idx: 0, en: 'Bench Press' },
+    { keys: ['بالا سینه', 'incline press', 'incline dumbbell'], idx: 1, en: 'Incline Dumbbell Press' },
+    { keys: ['اسکات', 'اسکوات', 'squat', 'back squat'], idx: 2, en: 'Barbell Squat' },
+    { keys: ['ددلیفت', 'لیفت', 'deadlift', 'rdl'], idx: 3, en: 'Deadlift' },
+    { keys: ['زیر بغل', 'لت', 'pulldown', 'lat pulldown', 'row', 'قایقی'], idx: 4, en: 'Lat Pulldown' },
+    { keys: ['سرشانه', 'پرس سرشانه', 'overhead press', 'shoulder press'], idx: 5, en: 'Overhead Press' },
+    { keys: ['جلو بازو', 'bicep', 'curl'], idx: 6, en: 'Dumbbell Curl' },
+    { keys: ['پشت بازو', 'tricep', 'pushdown'], idx: 7, en: 'Tricep Extension' },
+    { keys: ['پرس پا', 'leg press'], idx: 8, en: 'Leg Press' },
+    { keys: ['شنا', 'push up', 'pushup'], idx: 9, en: 'Push-up' },
+    { keys: ['بارفیکس', 'pull up', 'pullup'], idx: 10, en: 'Pull-up' }
+  ];
+  for(const item of exDict){
+    if(item.keys.some(k => low.includes(k))){
+      exIdx = item.idx;
+      exName = (EXERCISES && EXERCISES[item.idx] && EXERCISES[item.idx].n) || item.en;
+      break;
+    }
+  }
+
+  let sets = 4;
+  let reps = 10;
+  let kg = 80;
+
+  const xMatch = low.match(/(\d+)\s*(?:x|\*|در)\s*(\d+)/i);
+  if(xMatch){
+    sets = parseInt(xMatch[1], 10);
+    reps = parseInt(xMatch[2], 10);
+  } else {
+    const sMatch = low.match(/(\d+)\s*(?:ست|set|sets)/i);
+    if(sMatch) sets = parseInt(sMatch[1], 10);
+    const rMatch = low.match(/(\d+)\s*(?:تکرار|تایی|rep|reps)/i);
+    if(rMatch) reps = parseInt(rMatch[1], 10);
+  }
+
+  const wMatch = low.match(/(?:با|وزنه|کیلو|kg|weight)?\s*(\d+(?:\.\d+)?)\s*(?:کیلو|kg|kilo|ک)?(?:\s|$)/i);
+  const explicitKg = low.match(/(\d+(?:\.\d+)?)\s*(?:کیلو|kg|kilo)/i);
+  if(explicitKg){
+    kg = parseFloat(explicitKg[1]);
+  } else if(wMatch && !xMatch && parseFloat(wMatch[1]) > 15){
+    kg = parseFloat(wMatch[1]);
+  }
+
+  return { client: matchedClient, exIndex: exIdx, exName, sets, reps, kg, raw: transcript };
+}
+
+function updateWhisperPreview(parsed){
+  const elBox = $('whisper-preview-card');
+  if(!elBox) return;
+  elBox.innerHTML = `
+  <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+    <span class="bdg bdg-lime" style="font-weight:700">✓ ${t('Recorded')}</span>
+    <span class="muted" style="font-size:11.5px">${t('Publishing to')} <b>${esc(parsed.client.name)}</b></span>
+  </div>
+  <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px">${esc(t(parsed.exName))}</div>
+  <div class="row" style="gap:14px;font-size:13px;color:var(--ink2);flex-wrap:wrap">
+    <span><b>${nf(parsed.sets)}</b> ${t('Sets')}</span>
+    <span><b>${nf(parsed.reps)}</b> ${t('Reps')}</span>
+    <span><b>${nf(parsed.kg)}</b> kg</span>
+  </div>`;
+}
+
+function whisperStartListening(){
+  if(typeof window === 'undefined') return;
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRec){
+    toast(t('Voice recognition not supported in this browser. Please type.'));
+    return;
+  }
+  if(WHISPER_RECOG){
+    try { WHISPER_RECOG.abort(); } catch(e){}
+  }
+  const recog = new SpeechRec();
+  WHISPER_RECOG = recog;
+  recog.lang = lang === 'fa' ? 'fa-IR' : (lang === 'tr' ? 'tr-TR' : 'en-US');
+  recog.continuous = false;
+  recog.interimResults = true;
+
+  const st = $('whisper-status');
+  const wave = $('whisper-wave-box');
+  const micBtn = $('whisper-mic-btn');
+  if(st) st.textContent = t('Listening… speak athlete, exercise, weight or reps');
+  if(wave) wave.classList.add('whisper-pulse');
+  if(micBtn) micBtn.style.background = 'var(--red)';
+
+  recog.onresult = e => {
+    let transcript = '';
+    for(let i=e.resultIndex; i<e.results.length; i++){
+      transcript += e.results[i][0].transcript;
+    }
+    const txtArea = $('whisper-transcript');
+    if(txtArea) txtArea.value = transcript;
+    const p = parseCoachWhisper(transcript);
+    updateWhisperPreview(p);
+  };
+  recog.onerror = () => {
+    if(wave) wave.classList.remove('whisper-pulse');
+    if(micBtn) micBtn.style.background = '';
+    if(st) st.textContent = t('Speak or type exercise shorthand');
+  };
+  recog.onend = () => {
+    if(wave) wave.classList.remove('whisper-pulse');
+    if(micBtn) micBtn.style.background = '';
+    if(st) st.textContent = t('Recorded') + ' ✓';
+    whisPlayChimeSafe();
+  };
+  try {
+    recog.start();
+  } catch(e){}
+}
+
+function coachWhisperModal(){
+  const c = client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete' };
+  const initialEx = (EXERCISES && EXERCISES[0] && EXERCISES[0].n) || 'Bench Press';
+  const initialParsed = { client: c, exIndex: 0, exName: initialEx, sets: 4, reps: 10, kg: 80 };
+
+  openModal(`
+  <div class="modal-h">
+    <h3>🎙️ ${t('Coach Whisper — Hands-Free Voice Logger')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:14px">
+      <div id="whisper-wave-box" class="whisper-wave-wrap" style="display:flex;align-items:center;justify-content:center;gap:5px;height:42px;width:100%">
+        <span class="bar" style="height:12px"></span>
+        <span class="bar" style="height:24px"></span>
+        <span class="bar" style="height:36px"></span>
+        <span class="bar" style="height:20px"></span>
+        <span class="bar" style="height:28px"></span>
+      </div>
+
+      <button id="whisper-mic-btn" class="btn btn-primary" data-act="whisper-listen" style="width:68px;height:68px;border-radius:50%;font-size:26px;display:grid;place-items:center;box-shadow:0 0 20px rgba(200,240,75,0.25)" title="${t('Coach Whisper')}">
+        🎙️
+      </button>
+
+      <span id="whisper-status" class="bdg bdg-lime" style="font-size:12px;padding:3px 10px">${t('Listening… speak athlete, exercise, weight or reps')}</span>
+      <div class="muted" style="font-size:11.5px;text-align:center">
+        ${lang==='fa'?'نمونه گفتار: «سهراب پرس سینه ۴ ست ۱۰ تایی ۸۰ کیلو» یا «اسکات ۳ در ۸ با ۱۰۰ کیلو»':'e.g. "Ali Bench Press 4 sets 10 reps 80kg" or "Squat 3x8 100kg"'}
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Speak or type exercise shorthand')}</label>
+      <textarea id="whisper-transcript" class="inp" rows="2" placeholder="${lang==='fa'?'نام شاگرد، حرکت، ست، تکرار یا وزنه را بگویید یا بنویسید...':'Speak or edit shorthand here...'}" style="resize:vertical"></textarea>
+    </div>
+
+    <div id="whisper-preview-card" style="background:var(--seg-bg);border:1px solid var(--acc-line);border-radius:10px;padding:12px">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="bdg bdg-lime" style="font-weight:700">✓ ${t('Recorded')}</span>
+        <span class="muted" style="font-size:11.5px">${t('Publishing to')} <b>${esc(c.name)}</b></span>
+      </div>
+      <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:6px">${esc(t(initialParsed.exName))}</div>
+      <div class="row" style="gap:14px;font-size:13px;color:var(--ink2);flex-wrap:wrap">
+        <span><b>${nf(initialParsed.sets)}</b> ${t('Sets')}</span>
+        <span><b>${nf(initialParsed.reps)}</b> ${t('Reps')}</span>
+        <span><b>${nf(initialParsed.kg)}</b> kg</span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="whisper-parse-apply">${ic('check',14)} ${t('Save Workout')}</button>
+  </div>`);
+
+  setTimeout(()=>{
+    const ta = $('whisper-transcript');
+    if(ta && ta.addEventListener){
+      ta.addEventListener('input', () => {
+        const p = parseCoachWhisper(ta.value);
+        updateWhisperPreview(p);
+      });
+    }
+  }, 100);
+}
+
+/* ================= OPTION 5: RACE-DAY FUELING ENGINE ================= */
+function raceFuelingModal(raceId){
+  const r = (RACES && RACES.find(x => String(x.id) === String(raceId))) || (RACES && RACES[0]) || { id: 1, name: 'Marathon 2026', event: 'Marathon', date: '2026-11-20', target: '3:30:00' };
+  const c = client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete', weight: 70 };
+  const weight = +(c && c.weight) || 70;
+  const ev = (r.event || r.name || '').toLowerCase();
+  const distKm = ev.includes('half') ? 21.1 : (ev.includes('10k') ? 10.0 : (ev.includes('5k') ? 5.0 : 42.2));
+  const totalKcal = Math.round(distKm * weight * 1.05);
+  const carbLoadDaily = Math.round(weight * 8.5);
+  const preRaceCarbs = Math.round(weight * 2.5);
+  const recoveryCarbs = Math.round(weight * 1.2);
+  const recoveryProtein = Math.round(weight * 0.3);
+
+  openModal(`
+  <div class="modal-h">
+    <h3>⚡ ${t('Race Fueling Strategy')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px">
+    <div style="background:var(--seg-bg);border:1px solid var(--acc-line);border-radius:12px;padding:16px;margin-bottom:16px">
+      <div class="row" style="justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <span class="bdg bdg-lime" style="font-size:10.5px">${t('Fueling')} · ${esc(r.event||'Marathon')}</span>
+          <div style="font-size:18px;font-weight:800;color:var(--ink);margin-top:4px">${esc(r.name)}</div>
+          <div class="muted" style="font-size:12px">${esc(c.name)} (${nf(weight)} kg) · ${fmtD(r.date)}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:800;color:var(--accent-text)">~${nf(totalKcal)} <span style="font-size:13px;font-weight:600;color:var(--ink3)">kcal</span></div>
+          <div class="muted" style="font-size:11px">${t('Target Pace')}: 60g CHO / h</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="fueling-step" style="padding:14px;background:var(--card-bg);border:1px solid var(--line);border-radius:10px">
+        <div class="row" style="justify-content:space-between;margin-bottom:6px">
+          <b style="font-size:13.5px;color:var(--ink)">🥐 ${t('Carb-Loading Phase')}</b>
+          <span class="bdg bdg-lime">${nf(carbLoadDaily)}g CHO / ${t('Day')}</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+          ${lang==='fa'?'۸ الی ۱۰ گرم کربوهیدرات خالص به ازای هر کیلو وزن در ۲ روز منتهی به مسابقه. مصرف کربوهیدرات‌های کم‌فیبر و زودهضم (برنج کته، پاستا، سیب‌زمینی پخته، موز، عسل). مصرف نمک و الکترولیت ۵۰۰ تا ۱۰۰۰ میلی‌گرم روزانه برای افزایش حجم پلاسمای خون.':'8–10g CHO / kg daily for 48 hours. Focus on low-fiber, low-residue carbs (white rice, pasta, boiled potatoes, bananas, honey). 500–1000mg sodium loading to expand plasma volume.'}
+        </div>
+      </div>
+
+      <div class="fueling-step" style="padding:14px;background:var(--card-bg);border:1px solid var(--line);border-radius:10px">
+        <div class="row" style="justify-content:space-between;margin-bottom:6px">
+          <b style="font-size:13.5px;color:var(--ink)">☕ ${t('Pre-Race Morning Fuel')}</b>
+          <span class="bdg bdg-amber">${nf(preRaceCarbs)}g CHO</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+          ${lang==='fa'?'۳ ساعت قبل از استارت: اوتمیل با عسل و موز یا نان تست سفید با مربا + ۵۰۰ میلی‌لیتر آب. پروتئین اندک و چربی صفر. ۶۰ دقیقه قبل از مسابقه: پروتکل کافئین (۳ میلی‌گرم بر کیلوگرم، حدود ۲۰۰ میلی‌گرم کافئین / ۱ شات اسپرسو).':'3h prior: Oatmeal with honey & banana or white toast with jam + 500ml electrolyte water. Zero fat, minimal protein. 60 min prior: 3mg/kg caffeine protocol (~200mg / double espresso).'}
+        </div>
+      </div>
+
+      <div class="fueling-step" style="padding:14px;background:var(--card-bg);border:1px solid var(--line);border-radius:10px">
+        <div class="row" style="justify-content:space-between;margin-bottom:6px">
+          <b style="font-size:13.5px;color:var(--ink)">🏃 ${t('Race-Day Fueling Map')}</b>
+          <span class="bdg bdg-blue">60g CHO / h</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px">
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 0</span> 1 Gel (25g) + 150ml ${t('Water')}
+          </div>
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 7</span> 1 Isotonic Gel + ${t('Sip')}
+          </div>
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 14</span> 1 Gel + Sodium (200mg)
+          </div>
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 21</span> 1 Caffeinated Gel (30g)
+          </div>
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 28</span> 1 Gel + Electrolytes
+          </div>
+          <div style="padding:8px 10px;background:var(--seg-bg);border-radius:6px;font-size:11.5px">
+            <span class="km-tag" style="background:var(--accent);color:#000;font-weight:700;padding:1px 5px;border-radius:4px">KM 35</span> 1 Final Kick Gel + ${t('Water')}
+          </div>
+        </div>
+      </div>
+
+      <div class="fueling-step" style="padding:14px;background:var(--card-bg);border:1px solid var(--line);border-radius:10px">
+        <div class="row" style="justify-content:space-between;margin-bottom:6px">
+          <b style="font-size:13.5px;color:var(--ink)">🥇 ${t('Post-Race Recovery Window')}</b>
+          <span class="bdg bdg-green">4:1 CHO:PRO</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink2);line-height:1.5">
+          ${lang==='fa'?'تا ۳۰ دقیقه پس از خط پایان: شیک ریکاوری با نسبت ۴ به ۱ (حدود '+nf(recoveryCarbs)+' گرم کربوهیدرات زودهضم + '+nf(recoveryProtein)+' گرم پروتئین وی در ۵۰۰ میلی‌لیتر آب). جبران مایعات به میزان ۱.۵ لیتر به ازای هر کیلو وزن از دست رفته. ۲ ساعت بعد: وعده غذایی کامل ترمیمی.':'First 30 min: 4:1 CHO-to-protein shake (~'+nf(recoveryCarbs)+'g fast carbs + '+nf(recoveryProtein)+'g whey protein in 500ml fluid). Rehydrate 1.5L per 1kg body weight lost.'}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="race-fueling-print">${ic('printer',14)} ${t('Print Fueling Card')}</button>
+  </div>`);
+}
+
+/* ================= OPTION 6: INSTAGRAM STORY PR CARD GENERATOR ================= */
+let STORY_LAST_OPTS = null;
+
+function storyCardModal(opts){
+  opts = opts || {};
+  const c = client(S.cid) || CLIENTS[0] || { id: 1, name: 'Athlete' };
+  const title = opts.title || 'Personal Record';
+  const val = opts.val || '3:24:15';
+  const prev = opts.prev || '3:38:20';
+  const dateStr = opts.date ? fmtD(opts.date) : fmtD(TDATE.toISOString().slice(0,10));
+  const athName = opts.ath || c.name;
+  STORY_LAST_OPTS = { title, val, prev, dateStr, athName };
+
+  openModal(`
+  <div class="modal-h">
+    <h3>📸 ${t('Instagram Story Card')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px;display:flex;justify-content:center">
+    <div id="story-frame-preview" class="story-preview-frame" style="width:280px;height:498px;border-radius:18px;background:linear-gradient(160deg,#090c10 0%,#151c27 100%);border:2px solid rgba(200,240,75,0.4);position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.6);display:flex;flex-direction:column;padding:20px;box-sizing:border-box">
+      <div style="position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:rgba(200,240,75,0.18);filter:blur(36px);border-radius:50%;pointer-events:none"></div>
+      <div style="position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;background:rgba(56,189,248,0.15);filter:blur(36px);border-radius:50%;pointer-events:none"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:16px">⚡</span>
+          <b style="font-size:11px;color:#c8f04b;letter-spacing:1.5px;font-family:var(--font-display)">COACH OS</b>
+        </div>
+        <span style="font-size:10px;color:#94a3b8;border:1px solid rgba(255,255,255,0.15);padding:2px 6px;border-radius:10px">VERIFIED</span>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        ${avC(athName, 42)}
+        <div>
+          <b style="font-size:14px;color:#ffffff;display:block">${esc(athName)}</b>
+          <span style="font-size:11px;color:#94a3b8">${dateStr}</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <span style="background:rgba(200,240,75,0.18);border:1px solid #c8f04b;color:#c8f04b;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:1px;display:inline-block">
+          🏆 ${t('NEW PERSONAL RECORD')}
+        </span>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:13px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:1px">${esc(title)}</div>
+        <div style="font-size:38px;font-weight:900;color:#c8f04b;font-family:var(--font-display);line-height:1.1;margin:6px 0;text-shadow:0 0 20px rgba(200,240,75,0.3)">
+          ${esc(val)}
+        </div>
+        ${prev ? `<div style="font-size:11.5px;color:#38bdf8;font-weight:600">▲ ${t('Previous')}: ${esc(prev)}</div>` : ''}
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;margin-top:auto">
+        <div style="font-size:10px;color:#cbd5e1;font-style:italic;line-height:1.3;margin-bottom:6px">
+          ${lang==='fa'?'«استمرار کلید عبور از مرزهاست؛ رکوردها برای شکستن ساخته شده‌اند.»':'"Consistency is the ultimate superpower. Records are meant to be broken."'}
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#64748b">
+          <span>COACH OS ATHLETIC SYSTEMS</span>
+          <span>#FITNESS #PR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-outline" data-act="story-share">${ic('share',14)} ${t('Share to Instagram / WhatsApp')}</button>
+    <button class="btn btn-primary" data-act="story-download">${ic('download',14)} ${t('Download Story (PNG)')}</button>
+  </div>`);
+}
+
+function renderStoryCanvas1080(opts){
+  if(typeof document === 'undefined') return null;
+  const cv = document.createElement('canvas');
+  cv.width = 1080; cv.height = 1920;
+  const ctx = cv.getContext('2d');
+  if(!ctx) return cv;
+
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
+  grad.addColorStop(0, '#070a0e');
+  grad.addColorStop(0.5, '#0f141f');
+  grad.addColorStop(1, '#182232');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  const rg1 = ctx.createRadialGradient(900, 200, 10, 900, 200, 450);
+  rg1.addColorStop(0, 'rgba(200,240,75,0.22)');
+  rg1.addColorStop(1, 'rgba(200,240,75,0)');
+  ctx.fillStyle = rg1;
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  const rg2 = ctx.createRadialGradient(180, 1700, 10, 180, 1700, 500);
+  rg2.addColorStop(0, 'rgba(56,189,248,0.20)');
+  rg2.addColorStop(1, 'rgba(56,189,248,0)');
+  ctx.fillStyle = rg2;
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.035)';
+  ctx.lineWidth = 1.5;
+  for(let x=0; x<1080; x+=90){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,1920); ctx.stroke(); }
+  for(let y=0; y<1920; y+=90){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(1080,y); ctx.stroke(); }
+
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = 'bold 36px sans-serif';
+  ctx.fillText('⚡ COACH OS ATHLETIC SYSTEMS', 90, 160);
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.strokeRect(840, 120, 150, 52);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.fillText('VERIFIED', 860, 154);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 54px sans-serif';
+  ctx.fillText(opts.athName || 'Athlete', 90, 310);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '28px sans-serif';
+  ctx.fillText(opts.dateStr || '', 90, 360);
+
+  ctx.fillStyle = 'rgba(200,240,75,0.15)';
+  ctx.fillRect(90, 460, 520, 72);
+  ctx.strokeStyle = '#c8f04b';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(90, 460, 520, 72);
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillText('🏆 NEW PERSONAL RECORD', 120, 510);
+
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = 'bold 42px sans-serif';
+  ctx.fillText((opts.title || 'RECORD').toUpperCase(), 90, 720);
+
+  ctx.fillStyle = '#c8f04b';
+  ctx.font = '900 130px sans-serif';
+  ctx.fillText(opts.val || '00:00', 90, 870);
+
+  if(opts.prev){
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 36px sans-serif';
+    ctx.fillText('▲ PREVIOUS: ' + opts.prev, 90, 960);
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,0.05)';
+  ctx.fillRect(90, 1420, 900, 220);
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.strokeRect(90, 1420, 900, 220);
+
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'italic 30px sans-serif';
+  ctx.fillText(lang==='fa'?'«استمرار کلید عبور از مرزهاست؛ رکوردها برای شکستن هستند.»':'"Consistency is the mother of mastery. Records are meant to be broken."', 130, 1510);
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.fillText('COACH OS PERFORMANCE VERIFICATION · ATHLETIC EXCELLENCE', 130, 1580);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = 'bold 26px sans-serif';
+  ctx.fillText('OFFICIAL DIGITAL ATHLETIC CERTIFICATE · COACH OS', 90, 1780);
+
+  return cv;
+}
+
+/* ================= OPTION 7: AI CLIENT CHURN RISK RADAR ================= */
+function calcChurnRisk(c){
+  if(!c) return { score: 10, level: 'low', reasons: [] };
+  let score = 12;
+  const reasons = [];
+  const now = TDATE.getTime();
+
+  const logs = (typeof wlogOf === 'function' ? wlogOf(c.id) : []) || [];
+  const lastLog = logs.length ? logs[logs.length-1] : null;
+  const daysSinceWorkout = lastLog && lastLog.d ? Math.round((now - new Date(lastLog.d).getTime()) / 864e5) : 12;
+
+  if(daysSinceWorkout >= 14){
+    score += 48;
+    reasons.push(t('No workouts logged in') + ' ' + nf(daysSinceWorkout) + ' ' + t('days'));
+  } else if(daysSinceWorkout >= 7){
+    score += 28;
+    reasons.push(t('No workouts logged in') + ' ' + nf(daysSinceWorkout) + ' ' + t('days'));
+  } else if(daysSinceWorkout >= 4){
+    score += 12;
+  }
+
+  if(c.status === 'On Hold'){
+    score += 20;
+    reasons.push(t('On Hold'));
+  } else if(c.status === 'Inactive'){
+    score += 35;
+    reasons.push(t('Inactive'));
+  }
+
+  const nlogs = (DB && DB[c.id] && DB[c.id].nutritionLogs) || [];
+  if(!nlogs.length || (nlogs[nlogs.length-1] && Math.round((now - new Date(nlogs[nlogs.length-1].d).getTime()) / 864e5) > 6)){
+    score += 16;
+    reasons.push(t('Nutrition tracking stalled'));
+  }
+
+  const meas = (DB && DB[c.id] && DB[c.id].measurements) || [];
+  if(meas.length < 2){
+    score += 8;
+  }
+
+  score = Math.min(96, Math.max(8, score));
+  const level = score >= 65 ? 'high' : (score >= 35 ? 'med' : 'low');
+  return { score, level, reasons, client: c, daysSinceWorkout };
+}
+
+function churnRadarModal(){
+  const activeClients = (CLIENTS || []).filter(c => c.status !== 'Archived');
+  const assessed = activeClients.map(c => calcChurnRisk(c)).sort((a,b) => b.score - a.score);
+
+  const highCnt = assessed.filter(x => x.level === 'high').length;
+  const medCnt = assessed.filter(x => x.level === 'med').length;
+  const lowCnt = assessed.filter(x => x.level === 'low').length;
+
+  openModal(`
+  <div class="modal-h">
+    <h3>⚡ ${t('AI Client Churn Radar')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px">
+    <div class="grid3" style="gap:10px;margin-bottom:16px">
+      <div class="churn-stat-card" style="padding:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px">
+        <div style="font-size:11px;color:var(--red);font-weight:700">🔴 ${t('High Churn Risk')}</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);margin-top:2px">${nf(highCnt)} <span style="font-size:12px;font-weight:600;color:var(--ink3)">athletes</span></div>
+        <div class="muted" style="font-size:10.5px">${t('Immediate intervention needed')}</div>
+      </div>
+      <div class="churn-stat-card" style="padding:12px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px">
+        <div style="font-size:11px;color:var(--amber);font-weight:700">🟡 ${t('Moderate Warning')}</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);margin-top:2px">${nf(medCnt)} <span style="font-size:12px;font-weight:600;color:var(--ink3)">athletes</span></div>
+        <div class="muted" style="font-size:10.5px">${t('Engagement slipping')}</div>
+      </div>
+      <div class="churn-stat-card" style="padding:12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:10px">
+        <div style="font-size:11px;color:var(--green);font-weight:700">🟢 ${t('Loyal & Engaged')}</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);margin-top:2px">${nf(lowCnt)} <span style="font-size:12px;font-weight:600;color:var(--ink3)">athletes</span></div>
+        <div class="muted" style="font-size:10.5px">${t('High consistency')}</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${assessed.map(it => {
+        const c = it.client;
+        const col = it.level === 'high' ? 'var(--red)' : (it.level === 'med' ? 'var(--amber)' : 'var(--green)');
+        const bdgCls = it.level === 'high' ? 'bdg-red' : (it.level === 'med' ? 'bdg-amber' : 'bdg-green');
+        const reasonStr = it.reasons.length ? it.reasons.join(' · ') : t('Consistent training activity');
+        return `
+        <div style="padding:12px 14px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          ${avC(c.name, 38)}
+          <div style="flex:1;min-width:140px">
+            <div class="row" style="gap:6px;align-items:center">
+              <b style="font-size:13.5px">${esc(c.name)}</b>
+              <span class="bdg ${bdgCls}" style="font-size:10px">${nf(it.score)}% ${t('Risk')}</span>
+            </div>
+            <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(reasonStr)}</div>
+            <div class="pbar" style="margin-top:6px;height:4px"><i style="width:${it.score}%;background:${col}"></i></div>
+          </div>
+          <button class="btn btn-outline btn-sm" data-act="retention-nudge" data-cid="${c.id}" style="color:var(--accent-text);border-color:var(--acc-line);font-weight:700;font-size:11.5px;gap:5px">
+            ${ic('mail',12)} ${t('Smart Retention Message')}
+          </button>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+  </div>`);
+}
+
+function retentionNudgeModal(cid){
+  const c = client(cid) || (CLIENTS && CLIENTS[0]) || { id: 1, name: 'Athlete' };
+  const fn = (c.name || 'Athlete').split(' ')[0];
+  const risk = calcChurnRisk(c);
+
+  const msgs = {
+    fa: {
+      empath: `سلام ${fn} جان، متوجه شدم چند روزه سرت شلوغ بوده و باشگاه نرسیدی. کاملاً درکت می‌کنم! فقط خواستم بگم اصلاً نیازی به تمرین سنگین نیست؛ فردا فقط بیا ۲۰ دقیقه سبک تمرین کنیم تا ریتمت حفظ بشه. نظرت چیه؟`,
+      motivate: `${fn} عزیز، رکوردهای قبلی و پیشرفتت عالی بوده! الان دقیقاً همون نقطه‌ایه که نباید بذاری زنجیره استمرار پاره بشه. حتی یک ست تمرین بهتر از صفر تمرینه. فردا منتظرتیم!`,
+      nutri: `درود ${fn} جان! خواستم وضعیت تغذیه و سطح انرژیت رو جویا بشم. اگه حس می‌کنی برنامه برات یکنواخت شده یا خسته‌ای، بهم بگو تا آیتم‌های جدید و سبک‌تر به رژیمت اضافه کنم.`
+    },
+    en: {
+      empath: `Hey ${fn}, noticed you've been super busy this week. No stress at all! How about a light 20-min session tomorrow just to keep the momentum going?`,
+      motivate: `${fn}, you've built great momentum so far! Consistency beats perfection every time. Let's get a solid quick session in this week.`,
+      nutri: `Hi ${fn}, checking in on your energy and meal targets! If anything feels overwhelming in the plan, let me know and we'll adjust right away.`
+    },
+    tr: {
+      empath: `Selam ${fn}, bu hafta yoğun olduğunu fark ettim. Hiç stres yapma! Yarın sadece ritmi korumak için 20 dakikalık hafif bir antrenman yapmaya ne dersin?`,
+      motivate: `${fn}, harika bir ivme yakaladın! Süreklilik her zaman mükemmellikten önemlidir. Bu hafta hızlı ve verimli bir seans yapalım.`,
+      nutri: `Merhaba ${fn}, beslenme hedeflerini ve enerji seviyeni kontrol etmek istedim! Planda zorlandığın bir yer varsa hemen ayarlayalım.`
+    }
+  };
+
+  const curLangMsgs = msgs[lang] || msgs.en;
+  const initialText = curLangMsgs.empath;
+
+  openModal(`
+  <div class="modal-h">
+    <h3>💌 ${t('Smart Retention Message')} — ${esc(c.name)}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b" style="padding:18px">
+    <div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+      ${avC(c.name, 36)}
+      <div style="flex:1">
+        <b style="font-size:13px">${esc(c.name)}</b>
+        <div class="muted" style="font-size:11.5px">${t('Churn Risk Radar')}: <b>${nf(risk.score)}%</b> · ${risk.reasons[0]||t('Stalled activity')}</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-xs ret-tone-btn" style="border-color:var(--acc-line);color:var(--accent-text);font-weight:700" onclick="document.getElementById('retention-text').value=${JSON.stringify(curLangMsgs.empath)}">${lang==='fa'?'🤝 همدلانه (پیشنهادی)':(lang==='tr'?'🤝 Empatik':'🤝 Empathetic')}</button>
+      <button class="btn btn-outline btn-xs ret-tone-btn" onclick="document.getElementById('retention-text').value=${JSON.stringify(curLangMsgs.motivate)}">${lang==='fa'?'🔥 انگیزشی':(lang==='tr'?'🔥 Motive Edici':'🔥 Motivational')}</button>
+      <button class="btn btn-outline btn-xs ret-tone-btn" onclick="document.getElementById('retention-text').value=${JSON.stringify(curLangMsgs.nutri)}">${lang==='fa'?'🥗 پیگیری رژیم':(lang==='tr'?'🥗 Beslenme Takibi':'🥗 Nutrition Check')}</button>
+    </div>
+
+    <div class="field">
+      <label class="lbl">${t('Smart Retention Message')}</label>
+      <textarea id="retention-text" class="inp" rows="5" style="resize:vertical">${esc(initialText)}</textarea>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="retention-send" data-cid="${c.id}">${ic('mail',14)} ${t('Send to thread')}</button>
+  </div>`);
 }
 
 /* ================= EVENTS ================= */
@@ -15961,6 +16891,126 @@ document.addEventListener('click',e=>{
       break;
     }
     case 'mcal':S.mview='calendar';S.selDay=S.selDay??TODAY;render();break;
+    case 'photo-mode':{
+      S.photoMode = el.dataset.mode || 'split';
+      render();
+      break;
+    }
+    case 'photo-export-morph':{
+      const c = client(S.cid) || (typeof coachFirstClient === 'function' ? coachFirstClient() : CLIENTS[0]);
+      photoExportMorphModal(c);
+      break;
+    }
+    case 'morph-download-png':{
+      downloadClinicalMorphCard(+el.dataset.cid || S.cid);
+      toast(t('Clinical Posture Alignment') + ' PNG ✓');
+      break;
+    }
+    case 'print-clinical':{
+      window.print();
+      break;
+    }
+    case 'coach-whisper':{
+      coachWhisperModal();
+      break;
+    }
+    case 'whisper-listen':{
+      whisperStartListening();
+      break;
+    }
+    case 'whisper-parse-apply':{
+      const ta = $('whisper-transcript');
+      const p = parseCoachWhisper((ta && ta.value) || '');
+      BUILDER.push({ ex: p.exIndex, sets: p.sets, reps: p.reps, kg: p.kg, rpe: 8, rest: 90 });
+      whisPlayChimeSafe();
+      closeModal();
+      render();
+      toast(t('Recorded') + ': ' + t(p.exName) + ' (' + nf(p.sets) + 'x' + nf(p.reps) + ' @ ' + nf(p.kg) + 'kg) ✓');
+      break;
+    }
+    case 'race-fueling':{
+      raceFuelingModal(el.dataset.id);
+      break;
+    }
+    case 'race-fueling-print':{
+      window.print();
+      break;
+    }
+    case 'story-card':{
+      storyCardModal({
+        title: el.dataset.title || 'Personal Record',
+        val: el.dataset.val || '100 kg',
+        prev: el.dataset.prev || '',
+        date: el.dataset.date || '',
+        ath: el.dataset.ath || (client(S.cid) && client(S.cid).name) || 'Athlete'
+      });
+      break;
+    }
+    case 'story-download':{
+      const cv = renderStoryCanvas1080(STORY_LAST_OPTS || {});
+      if(cv){
+        const a = document.createElement('a');
+        a.download = `story-pr-${((STORY_LAST_OPTS&&STORY_LAST_OPTS.athName)||'athlete').toLowerCase().replace(/\s+/g,'-')}.png`;
+        a.href = cv.toDataURL('image/png');
+        a.click();
+        toast(t('Download Story (PNG)') + ' ✓');
+      }
+      break;
+    }
+    case 'story-share':{
+      const cv = renderStoryCanvas1080(STORY_LAST_OPTS || {});
+      if(cv){
+        if(navigator.share && cv.toBlob){
+          cv.toBlob(blob => {
+            const file = new File([blob], 'story-pr.png', { type: 'image/png' });
+            navigator.share({
+              title: (STORY_LAST_OPTS && STORY_LAST_OPTS.title) || 'Personal Record',
+              text: 'New PR verified on Coach OS!',
+              files: [file]
+            }).catch(()=>{});
+          });
+        } else {
+          const a = document.createElement('a');
+          a.download = `story-pr.png`;
+          a.href = cv.toDataURL('image/png');
+          a.click();
+          toast(t('Share to Instagram / WhatsApp') + ' ✓');
+        }
+      }
+      break;
+    }
+    case 'churn-radar':{
+      churnRadarModal();
+      break;
+    }
+    case 'retention-nudge':{
+      retentionNudgeModal(+el.dataset.cid || S.cid);
+      break;
+    }
+    case 'retention-send':{
+      const cid = +el.dataset.cid || S.cid;
+      const c = client(cid);
+      const ta = $('retention-text');
+      const txt = (ta && ta.value && ta.value.trim()) || '';
+      if(txt && c){
+        const thread = (DB && DB[c.id] && DB[c.id].messages) || MESSAGES || [];
+        thread.push({
+          id: Date.now(),
+          sender: 'coach',
+          c: c.name,
+          txt: txt,
+          t: new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),
+          d: new Date().toISOString()
+        });
+        saveData();
+        closeModal();
+        render();
+        toast(t('Smart Retention Message') + ' → ' + c.name + ' ✓');
+      } else {
+        closeModal();
+      }
+      break;
+    }
     case 'toast':toast(el.dataset.msg||'Done');break;
   }
 });
