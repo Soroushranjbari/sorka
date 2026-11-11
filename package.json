@@ -18,7 +18,7 @@
     "logs:rotate": "node ./scripts/log-rotate.mjs",
     "test:live": "node ./scripts/test-live.mjs",
     "test:coach": "node ./scripts/test-coach-persona.mjs",
-    "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs && node ./scripts/test-guard.mjs && node ./scripts/test-routes.mjs && node ./scripts/test-endurance-hub.mjs && node ./scripts/test-endurance-tab-fix.mjs && node ./scripts/test-app-shell.mjs"
+    "test": "node ./scripts/test-kv-contract.mjs && node ./scripts/test-billing-core.mjs && node ./scripts/test-guard.mjs && node ./scripts/test-routes.mjs && node ./scripts/test-endurance-hub.mjs && node ./scripts/test-endurance-tab-fix.mjs && node ./scripts/test-app-shell.mjs && node ./scripts/test-camera-form-check.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^12.11.1",
