@@ -528,7 +528,39 @@ Object.assign(TR, {
   "Automatically sync your GPS runs, pace, heart rate, and mileage from Strava into your training log.": "GPS koşularınız, tempo, nabız ve mesafe verileriniz Strava'dan antrenman kaydınıza otomatik aktarılır.",
   "Strava Accounts Roster": "Danışanların Strava Durumu",
   "Sync Activities": "Aktiviteleri Eşitle",
-  "Not Connected": "Bağlı Değil"
+  "Not Connected": "Bağlı Değil",
+  "Injury Risk Heatmap": "Sakatlık Risk Isı Haritası",
+  "Biomechanics & Injury Risk": "Biyomekanik ve Sakatlık Riski",
+  "Biomechanical injury vulnerability mapped from historical camera form checks": "Kamera ile yapılan form kontrollerinden elde edilen biyomekanik sakatlık risk analizi",
+  "Joint Risk Breakdown": "Eklem Risk Dağılımı",
+  "Low Risk": "Düşük Risk",
+  "Moderate Risk": "Orta Risk",
+  "High Risk": "Yüksek Risk",
+  "No biomechanical data yet": "Henüz biyomekanik veri yok",
+  "Run camera form check sessions to populate the anatomical injury risk heatmap.": "Anatomik risk haritasını oluşturmak için kamera ile form kontrolü yapın.",
+  "Head & Neck": "Baş ve Boyun (Servikal)",
+  "Shoulders & Rotator Cuff": "Omuzlar ve Rotator Manşet",
+  "Upper Back & Thoracic": "Üst Sırt ve Torasik Omurga",
+  "Lower Back & Lumbar": "Bel ve Lumbar Omurga",
+  "Hips & Pelvis": "Kalça ve Pelvis",
+  "Knees & Patellofemoral": "Dizler ve Patellofemoral",
+  "Ankles & Kinetic Chain": "Ayak Bileği ve Kinetik Zincir",
+  "Fault occurrences": "Hata sayısı",
+  "Sessions analyzed": "Analiz edilen seans",
+  "Corrective Prescription": "Düzeltici Egzersiz Reçetesi",
+  "Biomechanical Stability": "Biyomekanik Stabilite",
+  "Injury Risk Score": "Sakatlık Risk Skoru",
+  "Tap a joint to inspect faults & corrective prescription": "Hataları ve düzeltici reçeteyi görmek için bir ekleme dokunun",
+  "Full Heatmap": "Tam Isı Haritası",
+  "Copy Coaching Cue": "Antrenör İpucunu Kopyala",
+  "Save to Notes": "Notlara Kaydet",
+  "Coaching cue copied ✓": "Antrenör ipucu kopyalandı ✓",
+  "Corrective prescription added to client notes ✓": "Düzeltici egzersiz reçetesi danışan notlarına eklendi ✓",
+  "Kinetic chain alignment is optimal. No faults detected.": "Kinetik zincir hizalaması optimum. Hata tespit edilmedi.",
+  "Corrective exercises": "Önerilen düzeltici egzersizler",
+  "Clinical rationale": "Klinik ve biyomekanik gerekçe",
+  "Risk Level": "Risk Seviyesi",
+  "Start form check": "Form Kontrolünü Başlat"
 });
 
 Object.assign(FA, {
@@ -647,7 +679,39 @@ Object.assign(FA, {
   "Automatically sync your GPS runs, pace, heart rate, and mileage from Strava into your training log.": "فعالیت‌های دویدن، مسافت، ضربان قلب و کیلومترهای شما به صورت خودکار از حساب استراوا در پرونده تمرینی ثبت می‌شوند.",
   "Strava Accounts Roster": "وضعیت استراوای شاگردان",
   "Sync Activities": "همگام‌سازی تمرینات",
-  "Not Connected": "متصل نیست"
+  "Not Connected": "متصل نیست",
+  "Injury Risk Heatmap": "نقشه حرارتی ریسک آسیب",
+  "Biomechanics & Injury Risk": "بیومکانیک و ریسک آسیب‌دیدگی",
+  "Biomechanical injury vulnerability mapped from historical camera form checks": "تحلیل آسیب‌پذیری بیومکانیکی بر اساس سابقه بررسی فرم با دوربین",
+  "Joint Risk Breakdown": "تفکیک ریسک مفاصل",
+  "Low Risk": "کم‌خطر",
+  "Moderate Risk": "ریسک متوسط",
+  "High Risk": "پرخطر",
+  "No biomechanical data yet": "هنوز داده بیومکانیکی ثبت نشده",
+  "Run camera form check sessions to populate the anatomical injury risk heatmap.": "برای تشکیل نقشه حرارتی مفاصل، با دوربین بررسی فرم انجام دهید.",
+  "Head & Neck": "سر و مهره‌های گردن",
+  "Shoulders & Rotator Cuff": "شانه‌ها و روتاتور کاف",
+  "Upper Back & Thoracic": "پشت و ستون فقرات سینه‌ای",
+  "Lower Back & Lumbar": "کمر و ستون فقرات کمری",
+  "Hips & Pelvis": "لگن و مفصل ران",
+  "Knees & Patellofemoral": "زانوها و کشکک",
+  "Ankles & Kinetic Chain": "مچ پا و زنجیره حرکتی",
+  "Fault occurrences": "تکرار خطاها",
+  "Sessions analyzed": "جلسات تحلیل‌شده",
+  "Corrective Prescription": "تجویز تمرینات اصلاحی",
+  "Biomechanical Stability": "پایداری بیومکانیکی",
+  "Injury Risk Score": "امتیاز ریسک آسیب",
+  "Tap a joint to inspect faults & corrective prescription": "روی هر مفصل بزنید تا خطاها و تمرینات اصلاحی را ببینید",
+  "Full Heatmap": "نقشه کامل",
+  "Copy Coaching Cue": "کپی توصیه مربی",
+  "Save to Notes": "ذخیره در یادداشت‌ها",
+  "Coaching cue copied ✓": "توصیه مربی کپی شد ✓",
+  "Corrective prescription added to client notes ✓": "نسخه اصلاحی در یادداشت‌های شاگرد ثبت شد ✓",
+  "Kinetic chain alignment is optimal. No faults detected.": "راستای زنجیره حرکتی بهینه است. خطایی ثبت نشده.",
+  "Corrective exercises": "تمرینات اصلاحی پیشنهادی",
+  "Clinical rationale": "تحلیل بالینی و بیومکانیکی",
+  "Risk Level": "سطح ریسک",
+  "Start form check": "شروع بررسی فرم"
 });
 
 const t=s=>{
@@ -5031,6 +5095,7 @@ function vWorkspace(){
         <div class="mwrap" data-mw><button class="btn btn-ghost btn-icon" data-act="mw" title="${t('More actions')}">${ic('more',16)}</button>
           <div class="menu"><div class="menu-hd">${t('More actions')}</div>
             <div class="menu-it" data-act="fc-reports" data-c="${esc(c.name)}">${ic('ruler',15)} ${t('Form reports')}</div>
+            <div class="menu-it" data-act="fc-heatmap" data-c="${esc(c.name)}">${ic('activity',15)} ${t('Injury Risk Heatmap')}</div>
             <div class="menu-it" data-act="hab-open">${ic('list-checks',15)} ${t('Habits')}</div>
             <div class="menu-it" data-act="intake-view" data-c="${esc(c.name)}">${ic('note',15)} ${t('Intake form')}</div>
             <div class="menu-it" data-act="pack-open" data-c="${esc(c.name)}">${ic('stack',15)} ${t('Packages')}</div>
@@ -9699,6 +9764,516 @@ function fcExportCard(f){
   }
 }
 
+/* ================= BIOMECHANICAL INJURY RISK HEATMAP =================
+   Dynamic kinetic chain risk profiling derived from historical FORMS data.
+   Evaluates 7 primary anatomical vulnerability zones based on detected
+   fault frequencies (valgus, kyphosis, lordosis, lateral tilt, etc.)
+   and synthesizes clinical corrective action plans. */
+
+const FC_RISK_REGIONS = {
+  neck: {
+    key: 'neck',
+    label: 'Head & Neck',
+    cx: 120, cy: 54, r: 8,
+    flags: ['Neck hyper-extended', 'Forward head posture'],
+    adviceEn: 'Maintain neutral cervical alignment with chin tuck cues. Avoid hyperextending neck at bottom of hinges or loading.',
+    adviceFa: 'راستای طبیعی مهره‌های گردن را با انقباض آرام چانه حفظ کنید. هنگام ددلیفت یا اسکات از نگاه کردن به سقف خودداری نمایید.',
+    adviceTr: 'Çene geride nötr boyun hizasını koruyun. Deadlift veya yük altında başı aşırı yukarı kaldırmaktan kaçının.',
+    exercisesEn: ['Cervical Retractions (Chin Tucks)', 'Prone Cobra', 'Upper Trapezius Stretch'],
+    exercisesFa: ['حرکت چانه به داخل (Chin Tucks)', 'کبرای خوابیده (Prone Cobra)', 'کشش عضله ذوزنقه‌ای بالایی'],
+    exercisesTr: ['Çene Çekme (Chin Tucks)', 'Yüzüstü Kobra', 'Üst Trapez Germe']
+  },
+  shoulders: {
+    key: 'shoulders',
+    label: 'Shoulders & Rotator Cuff',
+    nodes: [{cx: 72, cy: 88}, {cx: 168, cy: 88}],
+    cx: 120, cy: 88, r: 8,
+    flags: ['Uneven shoulder height', 'Partial range', 'Uneven left/right'],
+    adviceEn: 'Strengthen rotator cuff external rotators and serratus anterior. Focus on scapular depression and smooth bilateral symmetry.',
+    adviceFa: 'عضلات چرخاننده خارجی روتاتور کاف و دندانه‌ای قدامی را تقویت کنید. تقارن ارتفاع شانه‌ها را در بالای دامنه حفظ کنید.',
+    adviceTr: 'Rotator manşet dış rotatörlerini ve serratus anterior kasını güçlendirin. Omuz simetrisine dikkat edin.',
+    exercisesEn: ['Band Pull-Aparts', 'Face Pulls with External Rotation', 'Scapular Push-ups'],
+    exercisesFa: ['پول‌آپارت با کش', 'فیس‌پول با چرخش خارجی', 'شنای اسکاپولار (تیغه شانه)'],
+    exercisesTr: ['Direnç Lastiği ile Açış', 'Face Pull (Dış Rotasyonlu)', 'Skapular Şınav']
+  },
+  upperBack: {
+    key: 'upperBack',
+    label: 'Upper Back & Thoracic',
+    cx: 120, cy: 112, r: 8,
+    flags: ['Thoracic kyphosis (rounded back)'],
+    adviceEn: 'Mobilize thoracic spine extension with foam rolling and open-book drills to prevent compensatory cervical and lumbar strain.',
+    adviceFa: 'اکستنشن ستون فقرات سینه‌ای را با فوم رولر و تمرینات اوپن‌بوک بهبود دهید تا فشار مضاعف بر گردن و کمر کاسته شود.',
+    adviceTr: 'Torasik omurga ekstansiyonunu foam roller ve mobilite egzersizleriyle açarak bel ve boyun kompanzasyonunu önleyin.',
+    exercisesEn: ['Thoracic Foam Roller Extension', 'Prone Y-T-W Raises', 'Cat-Cow Mobility Drills'],
+    exercisesFa: ['اکستنشن سینه‌ای روی فوم رولر', 'حرکت Y-T-W خوابیده روی شکم', 'تحرک گربه-گاو (Cat-Cow)'],
+    exercisesTr: ['Foam Roller Sırt Açışı', 'Y-T-W Sırt Aktivasyonu', 'Kedi-Deve Hareketi']
+  },
+  lowerBack: {
+    key: 'lowerBack',
+    label: 'Lower Back & Lumbar',
+    cx: 120, cy: 156, r: 9,
+    flags: ['Back rounds', 'Torso collapses', 'Anterior pelvic tilt (lordosis)', 'Body swing'],
+    adviceEn: 'Reinforce 360° intra-abdominal bracing (Valsalva mechanism). Strengthen deep core anti-flexion and hip hinge mechanics.',
+    adviceFa: 'تنفس شکمی و ایجاد فشار داخل شکمی (بریسینگ ۳۶۰ درجه) را تثبیت کنید. از گرد شدن مهره‌های کمری در پایین دامنه ممانعت کنید.',
+    adviceTr: '360° karın içi basınç ve diyafram kilitlemeyi (Valsalva) uygulayın. Derin çekirdek anti-fleksiyon kaslarını güçlendirin.',
+    exercisesEn: ['McGill Big 3 (Bird-Dog, Side Plank, Curl-Up)', 'Deadbug with Core Press', 'RDL with Hip Hinge Cueing'],
+    exercisesFa: ['تمرینات سه‌گانه مک‌گیل (برد-داگ، پلانک جانبی، کرانچ اصلاحی)', 'ددباگ با فشار دست', 'ددلیفت رومانیایی با تمرکز لولای لگن'],
+    exercisesTr: ['McGill 3’lüsü (Bird-Dog, Yan Plank, Modifiye Mekik)', 'Deadbug Karın Aktivasyonu', 'RDL Kalça Menteşesi Eğitimi']
+  },
+  hips: {
+    key: 'hips',
+    label: 'Hips & Pelvis',
+    nodes: [{cx: 102, cy: 196}, {cx: 138, cy: 196}],
+    cx: 120, cy: 196, r: 8,
+    flags: ['Pelvic lateral tilt', 'Hips sag'],
+    adviceEn: 'Activate gluteus medius and adductor groups. Correct unilateral pelvic shift with single-leg stability exercises.',
+    adviceFa: 'عضلات سرینی میانی و دورکننده ران را فعال کنید. انحراف جانبی لگن را با حرکات تعادلی تک‌پایی تصحیح کنید.',
+    adviceTr: 'Gluteus medius ve addüktör kaslarını aktive edin. Tek bacak denge egzersizleriyle leğen kemiği dengesini sağlayın.',
+    exercisesEn: ['Mini-Band Monster Walks', 'Copenhagen Adductor Plank', 'Single-Leg Bulgarian Split Squats'],
+    exercisesFa: ['مانستر واک با مینی‌بند دور پا', 'پلانک کپنهاگ (تقویت کشاله)', 'اسپلیت اسکوات بلغاری تک‌پا'],
+    exercisesTr: ['Lastikle Canavar Yürüyüşü', 'Kopenhag Yan Plank', 'Bulgar Split Squat']
+  },
+  knees: {
+    key: 'knees',
+    label: 'Knees & Patellofemoral',
+    nodes: [{cx: 91, cy: 275}, {cx: 149, cy: 275}],
+    cx: 120, cy: 275, r: 9,
+    flags: ['Knee valgus', 'Genu valgum (knock-knees)', 'Shallow depth'],
+    adviceEn: 'Prevent dynamic knee cave (valgus collapse). Cue knees tracking over 2nd toe; strengthen VMO and glute external rotators.',
+    adviceFa: 'از انحراف زانو به داخل (والگوس دینامیک) جلوگیری کنید. زانوها در راستای انگشت دوم پا حرکت کنند؛ تقویت عضلات چهارسر داخلی (VMO).',
+    adviceTr: 'Dizlerin içe çökmesini (valgus çökmesi) önleyin. Dizlerin ayak 2. parmağı hizasında açılmasını sağlayın; VMO kasını güçlendirin.',
+    exercisesEn: ['Banded Goblet Squats (Knee Drive)', 'Poliquin Eccentric Step-Ups', 'Terminal Knee Extensions (TKE)'],
+    exercisesFa: ['اسکات گابلت با کش دور زانو', 'استپ‌آپ اکسنتریک پولیکین', 'اکستنشن انتهایی زانو با کش (TKE)'],
+    exercisesTr: ['Lastikli Goblet Squat', 'Poliquin Eksantrik Step-Up', 'Direnç Lastikli Terminal Diz Açışı (TKE)']
+  },
+  ankles: {
+    key: 'ankles',
+    label: 'Ankles & Kinetic Chain',
+    nodes: [{cx: 92, cy: 348}, {cx: 148, cy: 348}],
+    cx: 120, cy: 348, r: 8,
+    flags: [],
+    adviceEn: 'Improve closed-chain ankle dorsiflexion mobility to eliminate forward knee compensation and arch collapse.',
+    adviceFa: 'دامنه حرکتی دورسی‌فلکشن مچ پا را افزایش دهید تا چرخش مچ به داخل و افت قوس پا جبران شود.',
+    adviceTr: 'Ayak bileği dorsifleksiyon hareketliliğini artırarak diz kompanzasyonunu ve taban çökmesini önleyin.',
+    exercisesEn: ['Ankle Wall Mobilization Rocks', 'Standing Tibialis Raises', 'Eccentric Calf Drops on Edge'],
+    exercisesFa: ['موبیلیتی مچ پا به سمت دیوار', 'بالا آوردن پنجه ایستاده (تیبیالیس)', 'دراپ اکسنتریک پاشنه روی پله'],
+    exercisesTr: ['Duvara Karşı Ayak Bileği Açışı', 'Ayakta Tibialis Kaldırışı', 'Basamakta Eksantrik Baldır İndirişi']
+  }
+};
+
+let FC_HEAT_SELECTED = 'knees';
+
+function computeInjuryRisk(clientName, formsList = (typeof FORMS !== 'undefined' ? FORMS : [])) {
+  const sessions = (formsList || []).filter(f => f && f.client === clientName);
+  const totalSessions = sessions.length;
+  const recent = sessions.slice(0, 10);
+  let totalReps = 0;
+  let totalFaults = 0;
+
+  const regions = {};
+  for (const [key, cfg] of Object.entries(FC_RISK_REGIONS)) {
+    regions[key] = {
+      key,
+      name: cfg.label,
+      faults: 0,
+      sessionsWithFault: 0,
+      flagBreakdown: {},
+      risk: 'low',
+      score: 100
+    };
+  }
+
+  recent.forEach(sess => {
+    totalReps += (sess.reps || 0);
+    const flags = sess.flags || [];
+    const pat = sess.pattern || '';
+
+    for (const [key, cfg] of Object.entries(FC_RISK_REGIONS)) {
+      let regFaultsInSess = 0;
+      flags.forEach(fl => {
+        let match = false;
+        if (cfg.flags && cfg.flags.includes(fl)) match = true;
+        if (fl === 'Uneven left/right') {
+          if (key === 'shoulders' && (pat === 'press' || pat === 'pushup' || pat === 'lateral_raise')) match = true;
+          if (key === 'knees' && (pat === 'squat' || pat === 'lunge')) match = true;
+          if (key === 'hips' && (pat === 'hinge' || pat === 'squat')) match = true;
+        }
+        if (fl === 'Shallow depth' && key === 'ankles' && sess.rom && sess.rom < 85) match = true;
+
+        if (match) {
+          regFaultsInSess++;
+          regions[key].flagBreakdown[fl] = (regions[key].flagBreakdown[fl] || 0) + 1;
+        }
+      });
+
+      if (regFaultsInSess > 0) {
+        regions[key].faults += regFaultsInSess;
+        regions[key].sessionsWithFault++;
+        totalFaults += regFaultsInSess;
+      }
+    }
+  });
+
+  let highCount = 0;
+  let modCount = 0;
+  let lowCount = 0;
+
+  for (const key of Object.keys(regions)) {
+    const r = regions[key];
+    if (r.faults >= 6) {
+      r.risk = 'high';
+      r.score = Math.max(25, 100 - (r.faults * 12));
+      highCount++;
+    } else if (r.faults >= 3) {
+      r.risk = 'moderate';
+      r.score = Math.max(55, 100 - (r.faults * 10));
+      modCount++;
+    } else {
+      r.risk = 'low';
+      r.score = Math.max(88, 100 - (r.faults * 6));
+      lowCount++;
+    }
+  }
+
+  let compositeScore = 100;
+  if (totalSessions > 0) {
+    const rawScore = 100 - (highCount * 22) - (modCount * 10) - (totalFaults * 2);
+    compositeScore = Math.max(30, Math.min(100, Math.round(rawScore)));
+  }
+
+  const overallRisk = compositeScore >= 80 ? 'low' : (compositeScore >= 60 ? 'moderate' : 'high');
+
+  return {
+    client: clientName,
+    totalSessions,
+    analyzedCount: recent.length,
+    totalReps,
+    totalFaults,
+    highCount,
+    modCount,
+    lowCount,
+    compositeScore,
+    overallRisk,
+    regions
+  };
+}
+
+function renderInjuryRiskSvg(riskData, selectedKey = null, size = {w: 220, h: 360}) {
+  const { regions } = riskData;
+  const col = r => r === 'high' ? 'var(--red)' : (r === 'moderate' ? 'var(--amber)' : 'var(--green)');
+  const selKey = selectedKey || FC_HEAT_SELECTED || 'knees';
+
+  let hotspotsSvg = '';
+  for (const [k, cfg] of Object.entries(FC_RISK_REGIONS)) {
+    const reg = regions[k] || { risk: 'low', faults: 0 };
+    const isSel = k === selKey;
+    const color = col(reg.risk);
+    const nodes = cfg.nodes || [{ cx: cfg.cx, cy: cfg.cy }];
+
+    nodes.forEach(n => {
+      const isAnimated = reg.risk === 'high' || reg.risk === 'moderate' || isSel;
+      hotspotsSvg += `
+        <g class="fc-joint-node ${isSel ? 'selected' : ''}" data-act="fc-heat-select" data-joint="${k}" data-c="${esc(riskData.client)}" style="cursor:pointer" pointer-events="all">
+          ${isAnimated ? `<circle cx="${n.cx}" cy="${n.cy}" r="${isSel ? 16 : 13}" fill="${color}" opacity="${isSel ? 0.35 : 0.22}" class="fc-heat-pulse"/>` : ''}
+          <circle cx="${n.cx}" cy="${n.cy}" r="${isSel ? 10 : 8}" fill="${color}" stroke="${isSel ? 'var(--accent, #6366f1)' : '#ffffff'}" stroke-width="${isSel ? 3 : 2}" style="filter:drop-shadow(0 0 5px ${color})"/>
+          <circle cx="${n.cx}" cy="${n.cy}" r="20" fill="transparent"/>
+          <title>${t(cfg.label)}: ${t(reg.risk === 'high' ? 'High Risk' : (reg.risk === 'moderate' ? 'Moderate Risk' : 'Low Risk'))} (${reg.faults} ${t('Fault occurrences')})</title>
+        </g>
+      `;
+    });
+  }
+
+  return `
+    <svg viewBox="0 0 240 390" width="${size.w}" height="${size.h}" style="display:block;margin:0 auto;max-width:100%;height:auto;overflow:visible">
+      <style>
+        @keyframes fcPulse {
+          0% { transform: scale(0.85); opacity: 0.5; }
+          50% { transform: scale(1.35); opacity: 0.15; }
+          100% { transform: scale(0.85); opacity: 0.5; }
+        }
+        .fc-heat-pulse {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: fcPulse 2.2s infinite ease-in-out;
+        }
+        .fc-joint-node:hover circle:nth-child(2) {
+          stroke: #ffffff;
+          stroke-width: 3.5px;
+        }
+      </style>
+      <path d="M 120 18 C 108 18 100 27 100 38 C 100 48 107 56 114 58 L 112 68 C 96 70 82 76 72 88 L 62 148 L 56 202 C 54 208 61 212 65 206 L 73 154 L 79 108 L 88 116 C 92 136 94 150 100 168 L 97 188 L 90 260 L 91 275 L 92 344 L 83 360 C 81 364 87 368 93 366 L 102 348 L 105 285 L 110 215 L 120 206 L 130 215 L 135 285 L 138 348 L 147 366 C 153 368 159 364 157 360 L 148 344 L 149 275 L 150 260 L 143 188 L 140 168 C 146 150 148 136 152 116 L 161 108 L 167 154 L 175 206 C 179 212 186 208 184 202 L 178 148 L 168 88 C 158 76 144 70 128 68 L 126 58 C 133 56 140 48 140 38 C 140 27 132 18 120 18 Z" fill="rgba(148, 163, 184, 0.08)" stroke="rgba(148, 163, 184, 0.35)" stroke-width="1.8" stroke-linejoin="round"/>
+      <g stroke="rgba(148, 163, 184, 0.22)" stroke-width="1.5" stroke-dasharray="3,3">
+        <line x1="120" y1="58" x2="120" y2="196"/>
+        <line x1="72" y1="88" x2="168" y2="88"/>
+        <line x1="72" y1="88" x2="62" y2="148"/>
+        <line x1="62" y1="148" x2="56" y2="202"/>
+        <line x1="168" y1="88" x2="178" y2="148"/>
+        <line x1="178" y1="148" x2="184" y2="202"/>
+        <line x1="102" y1="196" x2="138" y2="196"/>
+        <line x1="102" y1="196" x2="91" y2="275"/>
+        <line x1="91" y1="275" x2="92" y2="348"/>
+        <line x1="138" y1="196" x2="149" y2="275"/>
+        <line x1="149" y1="275" x2="148" y2="348"/>
+      </g>
+      ${hotspotsSvg}
+    </svg>
+  `;
+}
+
+function renderInjuryRiskDetail(clientName, jointKey) {
+  const cfg = FC_RISK_REGIONS[jointKey] || FC_RISK_REGIONS['knees'];
+  const riskData = computeInjuryRisk(clientName);
+  const r = riskData.regions[cfg.key] || { risk: 'low', faults: 0, flagBreakdown: {} };
+
+  const advice = lang === 'fa' ? cfg.adviceFa : (lang === 'tr' ? cfg.adviceTr : cfg.adviceEn);
+  const exList = lang === 'fa' ? cfg.exercisesFa : (lang === 'tr' ? cfg.exercisesTr : cfg.exercisesEn);
+  const riskBadge = r.risk === 'high'
+    ? `<span class="bdg bdg-red">${t('High Risk')}</span>`
+    : (r.risk === 'moderate' ? `<span class="bdg bdg-amber">${t('Moderate Risk')}</span>` : `<span class="bdg bdg-lime">${t('Low Risk')}</span>`);
+
+  const faultsHtml = Object.keys(r.flagBreakdown || {}).length
+    ? `<div class="row" style="gap:5px;flex-wrap:wrap;margin:6px 0">${Object.entries(r.flagBreakdown).map(([f, c]) => `<span class="bdg bdg-red" style="font-size:10.5px">${t(f)} ×${c}</span>`).join('')}</div>`
+    : `<div class="muted" style="font-size:11.5px;margin:5px 0">${t('Kinetic chain alignment is optimal. No faults detected.')}</div>`;
+
+  return `
+    <div style="background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:14px">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="row" style="gap:7px;align-items:center">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${r.risk==='high'?'var(--red)':(r.risk==='moderate'?'var(--amber)':'var(--green)')}"></span>
+          <b style="font-size:13.5px">${t(cfg.label)}</b>
+        </div>
+        ${riskBadge}
+      </div>
+
+      <div style="margin-bottom:8px">
+        <div class="muted" style="font-size:11px;font-weight:600;text-transform:uppercase">${t('Fault occurrences')}: <b>${nf(r.faults)}</b></div>
+        ${faultsHtml}
+      </div>
+
+      <div style="font-size:11.5px;line-height:1.5;background:var(--surface);padding:9px 11px;border-radius:8px;margin:8px 0;border-inline-start:3px solid var(--accent)">
+        <b style="color:var(--accent-text);display:block;margin-bottom:3px">${t('Clinical rationale')}:</b>
+        ${esc(advice)}
+      </div>
+
+      <div>
+        <b style="font-size:11.5px;color:var(--ink);display:block;margin-bottom:5px">${t('Corrective exercises')}:</b>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          ${exList.map(e => `<span class="chip" style="font-size:10.5px;padding:3px 7px">${ic('check', 11)} ${esc(e)}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="row" style="gap:6px;margin-top:12px;justify-content:flex-end">
+        <button class="btn btn-outline btn-xs" data-act="fc-heat-cue" data-c="${esc(clientName)}" data-cue="${esc(advice)}" style="gap:4px">
+          ${ic('copy', 12)} ${t('Copy Coaching Cue')}
+        </button>
+        <button class="btn btn-outline btn-xs" data-act="fc-heat-add-note" data-c="${esc(clientName)}" data-joint="${cfg.key}" style="gap:4px">
+          ${ic('note', 12)} ${t('Save to Notes')}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function vInjuryRiskCard(clientName, opts = {}) {
+  const riskData = computeInjuryRisk(clientName);
+  const isCompact = opts.compact === true;
+  const isFull = opts.full === true;
+
+  if (riskData.totalSessions === 0) {
+    if (isCompact) return '';
+    return `
+      <div class="card" style="padding:16px;margin-bottom:14px" id="fc-injury-card">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <div class="row" style="gap:8px;align-items:center">
+            <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('activity',16)}</span>
+            <div>
+              <b style="font-size:14px">${t('Injury Risk Heatmap')} · ${esc(t(clientName))}</b>
+              <span class="muted" style="font-size:11.5px;display:block">${t('Biomechanical injury vulnerability mapped from historical camera form checks')}</span>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" data-act="fc-new" data-c="${esc(clientName)}">${ic('camera',13)} ${t('New check')}</button>
+        </div>
+        <div style="text-align:center;padding:26px 16px;background:var(--seg-bg);border:1px dashed var(--line);border-radius:12px">
+          <div style="display:inline-flex;width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent-deep);align-items:center;justify-content:center;margin-bottom:8px">
+            ${ic('activity',22)}
+          </div>
+          <b style="display:block;font-size:13.5px;margin-bottom:4px">${t('No biomechanical data yet')}</b>
+          <p class="muted" style="max-width:380px;margin:0 auto 12px;font-size:12px;line-height:1.5">${t('Run camera form check sessions to populate the anatomical injury risk heatmap.')}</p>
+          <button class="btn btn-primary btn-sm" data-act="fc-new" data-c="${esc(clientName)}">${ic('camera',14)} ${t('Start form check')}</button>
+        </div>
+      </div>
+    `;
+  }
+
+  if (!FC_HEAT_SELECTED || !FC_RISK_REGIONS[FC_HEAT_SELECTED]) {
+    FC_HEAT_SELECTED = 'knees';
+    for (const [k, r] of Object.entries(riskData.regions)) {
+      if (r.risk === 'high') { FC_HEAT_SELECTED = k; break; }
+    }
+    if (FC_HEAT_SELECTED === 'knees' && riskData.regions['knees'].risk === 'low') {
+      for (const [k, r] of Object.entries(riskData.regions)) {
+        if (r.risk === 'moderate') { FC_HEAT_SELECTED = k; break; }
+      }
+    }
+  }
+
+  const scoreCol = riskData.compositeScore >= 80 ? 'var(--green)' : (riskData.compositeScore >= 60 ? 'var(--amber)' : 'var(--red)');
+  const overallBadge = riskData.overallRisk === 'high'
+    ? `<span class="bdg bdg-red">${t('High Risk')}</span>`
+    : (riskData.overallRisk === 'moderate' ? `<span class="bdg bdg-amber">${t('Moderate Risk')}</span>` : `<span class="bdg bdg-lime">${t('Low Risk')}</span>`);
+
+  return `
+    <div class="card" style="padding:${isCompact?'12px':'16px'};margin-bottom:${isCompact?'10px':'14px'}" id="fc-injury-card">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <div class="row" style="gap:8px;align-items:center">
+          <span class="icw" style="background:var(--accent-soft);color:var(--accent-deep)">${ic('activity',16)}</span>
+          <div>
+            <b style="font-size:14px">${t('Injury Risk Heatmap')} · ${esc(t(clientName))}</b>
+            <span class="muted" style="font-size:11.5px;display:block">${t('Biomechanical injury vulnerability mapped from historical camera form checks')}</span>
+          </div>
+        </div>
+        <div class="row" style="gap:6px">
+          ${!isFull ? `<button class="btn btn-outline btn-sm" data-act="fc-heatmap" data-c="${esc(clientName)}">${ic('expand',13)} ${t('Full Heatmap')}</button>` : ''}
+          <button class="btn btn-primary btn-sm" data-act="fc-new" data-c="${esc(clientName)}">${ic('camera',13)} ${t('New check')}</button>
+        </div>
+      </div>
+
+      <!-- Overview Metric Bar -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:14px">
+        <div>
+          <div class="muted" style="font-size:10.5px">${t('Biomechanical Stability')}</div>
+          <div class="row" style="gap:6px;align-items:baseline;margin-top:2px">
+            <b style="font-size:18px;color:${scoreCol}">${nf(riskData.compositeScore)}</b>
+            <span class="muted" style="font-size:11px">/ 100</span>
+            ${overallBadge}
+          </div>
+        </div>
+        <div>
+          <div class="muted" style="font-size:10.5px">${t('Sessions analyzed')}</div>
+          <div style="font-size:13.5px;font-weight:700;margin-top:4px">${nf(riskData.analyzedCount)} ${t('sessions')} · ${nf(riskData.totalReps)} ${t('reps')}</div>
+        </div>
+        <div>
+          <div class="muted" style="font-size:10.5px">${t('Joint Risk Breakdown')}</div>
+          <div class="row" style="gap:5px;margin-top:4px;flex-wrap:wrap">
+            <span class="bdg bdg-lime" style="font-size:10px">${nf(riskData.lowCount)} ${t('Low')}</span>
+            <span class="bdg ${riskData.modCount>0?'bdg-amber':'bdg-gray'}" style="font-size:10px">${nf(riskData.modCount)} ${t('Moderate')}</span>
+            <span class="bdg ${riskData.highCount>0?'bdg-red':'bdg-gray'}" style="font-size:10px">${nf(riskData.highCount)} ${t('High')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Visual Layout: Anatomical SVG + Joint Pills & Details -->
+      <div style="display:grid;grid-template-columns:${isCompact?'190px 1fr':'220px 1fr'};gap:14px;align-items:start" class="fc-heat-grid">
+        <!-- Anatomical SVG Body Map -->
+        <div style="text-align:center;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:10px 6px">
+          <div id="fc-heat-svg-wrap">
+            ${renderInjuryRiskSvg(riskData, FC_HEAT_SELECTED, isCompact ? {w: 180, h: 290} : {w: 210, h: 340})}
+          </div>
+          <div class="row" style="justify-content:center;gap:10px;margin-top:8px;font-size:10.5px">
+            <span class="row" style="gap:4px;align-items:center"><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green)"></i> ${t('Low Risk')}</span>
+            <span class="row" style="gap:4px;align-items:center"><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber)"></i> ${t('Moderate Risk')}</span>
+            <span class="row" style="gap:4px;align-items:center"><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red)"></i> ${t('High Risk')}</span>
+          </div>
+          <div class="muted" style="font-size:10.5px;margin-top:4px">${t('Tap a joint to inspect faults & corrective prescription')}</div>
+        </div>
+
+        <!-- Joint Selector & Details Box -->
+        <div>
+          <!-- Quick Selector Pills -->
+          <div class="row" style="gap:5px;flex-wrap:wrap;margin-bottom:10px">
+            ${Object.entries(FC_RISK_REGIONS).map(([k, cfg]) => {
+              const r = riskData.regions[k];
+              const isSel = k === FC_HEAT_SELECTED;
+              const dotCol = r.risk === 'high' ? 'var(--red)' : (r.risk === 'moderate' ? 'var(--amber)' : 'var(--green)');
+              return `
+                <button class="btn btn-xs ${isSel ? 'btn-primary' : 'btn-outline'}" data-act="fc-heat-select" data-joint="${k}" data-c="${esc(clientName)}" style="padding:4px 8px;font-size:11px;gap:5px">
+                  <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${dotCol}"></span>
+                  ${t(cfg.label)}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Dynamic Detail Box -->
+          <div id="fc-heat-detail-box">
+            ${renderInjuryRiskDetail(clientName, FC_HEAT_SELECTED)}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function injuryRiskModal(clientName) {
+  openModal(`
+    <div class="modal-h">
+      <h3>${ic('activity', 16)} ${t('Injury Risk Heatmap')} — ${esc(t(clientName))}</h3>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x', 17)}</button>
+    </div>
+    <div class="modal-b" style="padding:14px">
+      ${vInjuryRiskCard(clientName, {full: true})}
+    </div>
+    <div class="modal-f" style="justify-content:space-between">
+      <button class="btn btn-ghost" data-act="modal-x">${t('Close')}</button>
+      <div class="row" style="gap:8px">
+        <button class="btn btn-outline" data-act="fc-reports" data-c="${esc(clientName)}">${ic('ruler', 14)} ${t('Form reports')}</button>
+        <button class="btn btn-primary" data-act="fc-new" data-c="${esc(clientName)}">${ic('camera', 14)} ${t('New check')}</button>
+      </div>
+    </div>
+  `);
+}
+
+function fcHeatSelectJoint(jointKey, clientName) {
+  FC_HEAT_SELECTED = jointKey;
+  const detailEl = document.getElementById('fc-heat-detail-box');
+  if (detailEl) {
+    detailEl.innerHTML = renderInjuryRiskDetail(clientName, jointKey);
+  }
+  const svgWrap = document.getElementById('fc-heat-svg-wrap');
+  if (svgWrap) {
+    const riskData = computeInjuryRisk(clientName);
+    svgWrap.innerHTML = renderInjuryRiskSvg(riskData, jointKey);
+  }
+  const pills = document.querySelectorAll('[data-act="fc-heat-select"]');
+  pills.forEach(p => {
+    if (p.dataset.joint) {
+      if (p.dataset.joint === jointKey) {
+        p.classList.remove('btn-outline');
+        p.classList.add('btn-primary');
+      } else {
+        p.classList.remove('btn-primary');
+        p.classList.add('btn-outline');
+      }
+    }
+  });
+}
+
+function fcHeatAddNote(cname, jointKey) {
+  const cfg = FC_RISK_REGIONS[jointKey];
+  if (!cfg) return;
+  const riskData = computeInjuryRisk(cname);
+  const r = riskData.regions[jointKey] || { risk: 'low', faults: 0 };
+  const advice = lang === 'fa' ? cfg.adviceFa : (lang === 'tr' ? cfg.adviceTr : cfg.adviceEn);
+  const exList = lang === 'fa' ? cfg.exercisesFa : (lang === 'tr' ? cfg.exercisesTr : cfg.exercisesEn);
+  const body = `${t('Risk Level')}: ${t(r.risk === 'high' ? 'High Risk' : (r.risk === 'moderate' ? 'Moderate Risk' : 'Low Risk'))} (${r.faults} ${t('Fault occurrences')}).\n${t('Clinical rationale')}: ${advice}\n${t('Corrective exercises')}: ${exList.join(' · ')}`;
+
+  if (typeof NOTES !== 'undefined') {
+    NOTES.unshift({
+      id: uid(),
+      client: cname,
+      from: 'coach',
+      shared: false,
+      type: 'Injury / Restriction',
+      title: `${t('Injury Risk Heatmap')} · ${t(cfg.label)}`,
+      date: 'Just now',
+      body,
+      pin: true,
+      arch: false
+    });
+  }
+  toast(t('Corrective prescription added to client notes ✓'));
+}
+
 /* Keyframes survive the summary modal via this tiny stash (data-URLs are too
    big for element attributes). */
 const KF_STASH=[];
@@ -9707,6 +10282,7 @@ function formReportsModal(name){
   openModal(`
   <div class="modal-h"><h3>${ic('ruler',16)} ${t('Form reports')} — ${esc(t(name))}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
+    ${list.length ? vInjuryRiskCard(name, {compact: true}) : ''}
     ${list.length?list.map(f=>`
     <div class="card" style="padding:12px;margin-bottom:8px">
       <div class="row" style="justify-content:space-between"><b style="font-size:13px">${esc(f.ex)}</b><span class="bdg ${f.score>=85?'bdg-lime':f.score>=65?'bdg-amber':'bdg-red'}">${t('Form score')} ${nf(f.score)}</span></div>
@@ -12772,6 +13348,7 @@ function vClientEnduranceHub(cid){
   return `${hubHeader}
   ${notRunnerBanner}
   ${kpisHtml}
+  ${vInjuryRiskCard(c.name)}
   ${zonesHtml}
   ${racesHtml}
   ${pbsHtml}
@@ -15294,6 +15871,17 @@ document.addEventListener('click',e=>{
     /* v18.17 — camera form check */
     case 'fc-open':formCheckModal(null);break;
     case 'fc-reports':formReportsModal(el.dataset.c);break;
+    case 'fc-heatmap':injuryRiskModal(el.dataset.c);break;
+    case 'fc-heat-select':fcHeatSelectJoint(el.dataset.joint, el.dataset.c);break;
+    case 'fc-heat-cue':{
+      const cue=el.dataset.cue||'';
+      if(cue){
+        if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(cue).then(()=>toast(t('Coaching cue copied ✓'))).catch(()=>toast(cue));
+        else toast(cue);
+      }
+      break;
+    }
+    case 'fc-heat-add-note':fcHeatAddNote(el.dataset.c, el.dataset.joint);break;
     case 'fc-new':formCheckModal(el.dataset.c);break;
     case 'fc-pattern':fcStart(el.dataset.p);break;
     case 'fc-flip':fcFlip();break;

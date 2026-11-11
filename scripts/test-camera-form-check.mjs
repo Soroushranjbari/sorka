@@ -498,6 +498,141 @@ vm.runInContext('FC.on = true; FC.stream = new MockMediaStream(); closeModal();'
 const isFcStillOn = vm.runInContext('FC.on', context);
 ok('closeModal guarantees immediate camera shutdown if user closes modal', isFcStillOn === false);
 
+// 11. Biomechanical Injury Risk Heatmap Engine
+console.log('\n-- 11. Biomechanical Injury Risk Heatmap Engine --');
+
+// Test 11.1: Empty forms state
+const emptyRisk = vm.runInContext("computeInjuryRisk('Unknown Athlete')", context);
+ok('computeInjuryRisk with no data returns 0 sessions and 100 stability score', emptyRisk.totalSessions === 0 && emptyRisk.compositeScore === 100);
+ok('All regions initialized to low risk with 0 faults', Object.values(emptyRisk.regions).every(r => r.risk === 'low' && r.faults === 0));
+
+// Test 11.2: Dynamic Fault Accumulation & Risk Grading
+// Simulate 4 squat sessions with knee valgus & shallow depth for Daniel Okoye
+vm.runInContext(`
+  FORMS.length = 0; // reset
+  for (let i = 0; i < 4; i++) {
+    FORMS.push({
+      id: 'fc-test-' + i,
+      client: 'Daniel Okoye',
+      pattern: 'squat',
+      ex: 'Squat',
+      reps: 8,
+      score: 72,
+      rom: 95,
+      flags: ['Knee valgus', 'Shallow depth'],
+      tempo: '2/1/1',
+      vLoss: 12,
+      aiReport: 'Knee cave observed',
+      kf: [],
+      d: '2026-11-10'
+    });
+  }
+`, context);
+
+const danielRisk = vm.runInContext("computeInjuryRisk('Daniel Okoye')", context);
+ok('Analyzed 4 sessions with 32 total reps', danielRisk.totalSessions === 4 && danielRisk.totalReps === 32);
+ok('Knee faults accumulated correctly (8 faults: 4 valgus + 4 shallow depth)', danielRisk.regions.knees.faults === 8);
+ok('Knee region graded as HIGH RISK (faults >= 6)', danielRisk.regions.knees.risk === 'high');
+ok('Composite biomechanical stability drops under high risk faults', danielRisk.compositeScore < 80);
+
+// Test 11.3: Moderate risk grading on lower back with hinge/deadlift faults
+vm.runInContext(`
+  for (let i = 0; i < 3; i++) {
+    FORMS.push({
+      id: 'fc-hinge-' + i,
+      client: 'Daniel Okoye',
+      pattern: 'hinge',
+      ex: 'Deadlift',
+      reps: 5,
+      score: 80,
+      rom: 70,
+      flags: ['Back rounds'],
+      tempo: '3/1/1',
+      vLoss: 8,
+      aiReport: 'Spinal flexion',
+      kf: [],
+      d: '2026-11-09'
+    });
+  }
+`, context);
+
+const updatedRisk = vm.runInContext("computeInjuryRisk('Daniel Okoye')", context);
+ok('Lower back accumulated 3 faults from deadlifts', updatedRisk.regions.lowerBack.faults === 3);
+ok('Lower back region graded as MODERATE RISK (3 <= faults < 6)', updatedRisk.regions.lowerBack.risk === 'moderate');
+
+// Test 11.4: Anatomical SVG Generation & Hotspots
+const svgOutput = vm.runInContext("renderInjuryRiskSvg(computeInjuryRisk('Daniel Okoye'), 'knees')", context);
+ok('renderInjuryRiskSvg outputs SVG element with viewBox', svgOutput.includes('<svg viewBox="0 0 240 390"'));
+ok('SVG contains human wireframe silhouette path', svgOutput.includes('<path d="M 120 18'));
+ok('SVG contains kinetic chain interconnect lines', svgOutput.includes('<line x1="120" y1="58" x2="120" y2="196"'));
+ok('SVG contains animated pulse circles for high/moderate risk joints', svgOutput.includes('fc-heat-pulse'));
+ok('SVG contains interactive data-act="fc-heat-select" for all joints', svgOutput.includes('data-joint="knees"') && svgOutput.includes('data-joint="lowerBack"'));
+
+// Test 11.5: Joint Detail Box & Clinical Corrective Prescription
+const kneeDetailEn = vm.runInContext(`
+  lang = 'en';
+  renderInjuryRiskDetail('Daniel Okoye', 'knees');
+`, context);
+ok('Knee detail includes risk badge and fault occurrences', kneeDetailEn.includes('High Risk') && kneeDetailEn.includes('Knee valgus'));
+ok('Knee detail includes clinical advice and corrective exercises', kneeDetailEn.includes('Clinical rationale') && kneeDetailEn.includes('Banded Goblet Squats'));
+
+// Test 11.6: Empty vs Populated Card States
+const emptyCardHtml = vm.runInContext("vInjuryRiskCard('Ghost Athlete')", context);
+ok('vInjuryRiskCard renders empty call-to-action for athlete with no sessions', emptyCardHtml.includes('No biomechanical data yet') && emptyCardHtml.includes('Start form check'));
+
+const fullCardHtml = vm.runInContext("vInjuryRiskCard('Daniel Okoye')", context);
+ok('vInjuryRiskCard renders full HUD with SVG, stability score, and pills for athlete with sessions', 
+  fullCardHtml.includes('Biomechanical Stability') && 
+  fullCardHtml.includes('fc-heat-svg-wrap') && 
+  fullCardHtml.includes('fc-heat-detail-box')
+);
+
+// Test 11.7: Interactive Joint Selection & Dynamic Update
+vm.runInContext(`
+  fcHeatSelectJoint('lowerBack', 'Daniel Okoye');
+`, context);
+const selectedJoint = vm.runInContext('FC_HEAT_SELECTED', context);
+ok('fcHeatSelectJoint updates active selected joint to lowerBack', selectedJoint === 'lowerBack');
+
+// Test 11.8: Corrective Prescription Note Dispatch
+const initialNotesCount = vm.runInContext('NOTES.length', context);
+vm.runInContext(`
+  fcHeatAddNote('Daniel Okoye', 'knees');
+`, context);
+const newNotesCount = vm.runInContext('NOTES.length', context);
+const latestNote = vm.runInContext('NOTES[0]', context);
+ok('fcHeatAddNote appends a clinical prescription note to client record', newNotesCount === initialNotesCount + 1);
+ok('Prescription note contains joint name, risk severity, and corrective exercise list', 
+  latestNote.title.includes('Injury Risk Heatmap') && 
+  latestNote.body.includes('Risk Level') &&
+  latestNote.body.includes('Corrective exercises')
+);
+
+// Test 11.9: Multilingual Support (English, Persian, Turkish)
+const labelsToCheck = [
+  'Injury Risk Heatmap',
+  'Low Risk',
+  'Moderate Risk',
+  'High Risk',
+  'Knees & Patellofemoral',
+  'Lower Back & Lumbar',
+  'Biomechanical Stability'
+];
+
+for (const label of labelsToCheck) {
+  const faVal = vm.runInContext(`lang = 'fa'; t('${label}')`, context);
+  const trVal = vm.runInContext(`lang = 'tr'; t('${label}')`, context);
+  ok(`Multilingual translation for [${label}]: FA="${faVal}", TR="${trVal}"`, faVal !== label && trVal !== label);
+}
+
+// Test 11.10: Endurance Hub Integration
+vm.runInContext(`
+  lang = 'en';
+  S.cid = 1;
+`, context);
+const hubHtml = vm.runInContext("vClientEnduranceHub(1)", context);
+ok('Endurance Hub renders the Injury Risk Heatmap card', hubHtml.includes('Injury Risk Heatmap') && hubHtml.includes('fc-injury-card'));
+
 console.log(`\n========================================`);
 console.log(`CAMERA FORM CHECK TEST RESULTS: ${pass} pass, ${fail} fail`);
 console.log(`========================================\n`);
