@@ -78,6 +78,7 @@ const mediaFn = await import('./backend/handlers/media.mjs');
 const chatFn = await import('./backend/handlers/chat.mjs');
 /* Athletics — Strava activity provider and OAuth handler */
 const stravaFn = await import('./backend/handlers/strava.mjs');
+const orgFn = await import('./backend/handlers/org.mjs');
 
 // Vercel maps "/api/auth/signup" -> handler URL "/api/auth/signup" (rewrite),
 // so the handler sees the full path. Reproduce that here.
@@ -91,6 +92,7 @@ const ROUTES = [
   { re: /^\/api\/media\/?/, fn: mediaFn.default },
   { re: /^\/api\/chat\/(.*)$/, fn: chatFn.default },
   { re: /^\/api\/strava\/(.*)$/, fn: stravaFn.default },
+  { re: /^\/api\/org\/?(.*)$/, fn: orgFn.default },
   { re: /^\/api\/health\/?$/, fn: healthFn.default },
   { re: /^\/shop\/api\/checkout\/?$/, fn: shopCheckoutFn.default },
   { re: /^\/shop\/api\/account\/(.*)$/, fn: shopAccountFn.default }

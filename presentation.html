@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CoachMint — Executive Pitch Deck & System Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #090C10;
+  --surface: #121620;
+  --surface-card: #181E2C;
+  --surface-hover: #222A3D;
+  --border: #263147;
+  --border-light: #374663;
+  --accent: #C8F04B;
+  --accent-glow: rgba(200, 240, 75, 0.25);
+  --accent-ink: #0E1502;
+  --text-main: #F3F5F9;
+  --text-muted: #8E9AB0;
+  --text-dim: #5C677D;
+  --green: #22C55E;
+  --amber: #F59E0B;
+  --red: #EF4444;
+  --cyan: #06B6D4;
+  --purple: #A855F7;
+  --font-fa: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Oxanium', 'Vazirmatn', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-fa);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(200, 240, 75, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 40%);
+}
+
+.deck-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 1000;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #10B981, var(--accent));
+  box-shadow: 0 0 12px var(--accent-glow);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: rgba(14, 18, 25, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  height: 62px;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  background: #12151B;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(200, 240, 75, 0.4);
+}
+.brand-logo svg { width: 20px; height: 20px; }
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: 0.5px;
+  color: #FFF;
+}
+.brand-tag {
+  font-size: 11px;
+  background: rgba(200, 240, 75, 0.12);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  border: 1px solid rgba(200, 240, 75, 0.3);
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pill-btn {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-fa);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.pill-btn:hover {
+  background: var(--surface-hover);
+  color: #FFF;
+  border-color: var(--border-light);
+}
+.pill-btn.active {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  border-color: var(--accent);
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(0,0,0,0.3);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.viewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 32px 50px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(0.97) translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+.slide-header {
+  margin-bottom: 24px;
+}
+.slide-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+.slide-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.slide-title {
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1.25;
+  color: #FFFFFF;
+}
+.slide-subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  max-width: 900px;
+  line-height: 1.6;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  flex: 1;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  flex: 1;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  flex: 1;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+}
+.card.highlight {
+  border-color: rgba(200, 240, 75, 0.5);
+  background: linear-gradient(180deg, rgba(200, 240, 75, 0.05) 0%, var(--surface) 100%);
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFF;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(200, 240, 75, 0.12);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.badge-lime { background: rgba(200, 240, 75, 0.15); color: var(--accent); border: 1px solid rgba(200, 240, 75, 0.3); }
+.badge-green { background: rgba(34, 197, 94, 0.15); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.3); }
+.badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+.bullet-bullet {
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.hero-tag {
+  background: rgba(200, 240, 75, 0.12);
+  border: 1px solid rgba(200, 240, 75, 0.35);
+  color: var(--accent);
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-title {
+  font-size: 58px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #FFF;
+  margin-bottom: 18px;
+}
+.hero-title span {
+  color: var(--accent);
+  background: linear-gradient(135deg, #FFF 20%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+  font-size: 19px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 800px;
+  margin-bottom: 40px;
+}
+.hero-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.biomech-box {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+}
+.biomech-hud {
+  flex: 1.2;
+  background: #0E1219;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.biomech-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.phone-mockup {
+  width: 310px;
+  height: 520px;
+  background: #0E1218;
+  border: 5px solid #232B3B;
+  border-radius: 36px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  margin: 0 auto;
+  position: relative;
+}
+.phone-notch {
+  width: 100px;
+  height: 16px;
+  background: #232B3B;
+  border-radius: 0 0 12px 12px;
+  margin: -16px auto 14px auto;
+}
+.phone-screen {
+  flex: 1;
+  background: #141822;
+  border-radius: 20px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 28px;
+  background: rgba(14, 18, 25, 0.95);
+  border-top: 1px solid var(--border);
+  height: 60px;
+  z-index: 100;
+}
+.key-hints {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.kbd {
+  background: #1B2232;
+  border: 1px solid #33415C;
+  color: var(--text-muted);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-btn {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  color: #FFF;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.nav-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.notes-drawer {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  background: #10141D;
+  border-top: 2px solid var(--accent);
+  padding: 20px 32px;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.7);
+  transform: translateY(110%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 90;
+}
+.notes-drawer.open {
+  transform: translateY(0);
+}
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.notes-title {
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notes-body {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #D1D5DB;
+}
+
+.overview-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 12, 16, 0.95);
+  backdrop-filter: blur(16px);
+  z-index: 2000;
+  padding: 40px;
+  display: none;
+  flex-direction: column;
+}
+.overview-modal.open { display: flex; }
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  overflow-y: auto;
+  flex: 1;
+  padding: 10px 0;
+}
+.overview-thumb {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
+}
+.overview-thumb:hover {
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+.overview-thumb.current {
+  border: 2px solid var(--accent);
+  background: #19202E;
+}
+.thumb-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+.thumb-title { font-size: 13px; font-weight: 700; color: #FFF; line-height: 1.4; }
+
+.rest-timer-box {
+  background: #1B2232;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.rest-timer-val {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+.pulse-circle {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+[dir="ltr"] {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+[dir="ltr"] .slide-title {
+  font-family: 'Oxanium', 'Inter', sans-serif;
+}
+</style>
+</head>
+<body>
+
+<div class="deck-container">
+  <div class="progress-rail"><div class="progress-bar" id="progressBar"></div></div>
+
+  <header class="top-bar">
+    <div class="brand-badge">
+      <div class="brand-logo">
+        <svg viewBox="0 0 120 100">
+          <path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="#C8F04B"/>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-title">COACHMINT</span>
+        <span class="brand-tag">COACH OS</span>
+      </div>
+    </div>
+
+    <div class="top-controls">
+      <button class="pill-btn" id="btnNotes" title="Toggle Speaker Notes (N)">
+        📝 <span>یادداشت ارائه</span>
+      </button>
+      <button class="pill-btn" id="btnGrid" title="Slide Overview (G)">
+        ⊞ <span>اسلایدها</span>
+      </button>
+      <button class="pill-btn" id="btnLang" title="Toggle Language (L)">
+        🌐 <span>EN / FA</span>
+      </button>
+      <div class="slide-counter" id="slideIndicator">01 / 13</div>
+    </div>
+  </header>
+
+  <main class="viewport">
+
+    <!-- SLIDE 1: Title & Hero -->
+    <section class="slide active" data-index="0" data-notes="این اسلاید ورودی است. بر ارزش بنیادین 'One Coach. One Workspace' تاکید کنید: CoachMint ابزار جانبی نیست، سیستم‌عامل کامل مربیگری است که جایگزین ۵ تا ۶ سرویس مجزا می‌شود.">
+      <div class="hero-wrapper">
+        <div class="hero-tag">⚡ سیستم‌عامل جامع مربیان ورزشی و قهرمانان | v18.1.0</div>
+        <h1 class="hero-title">
+          <span>COACHMINT</span><br>
+          ONE COACH. ONE WORKSPACE.
+        </h1>
+        <p class="hero-desc">
+          پلتفرم یکپارچه، فوق سریع و مستقل مربیگری ورزشی؛ ترکیبی از هوش مصنوعی، بینایی ماشین، اصلاح بیومکانیک با دوربین، هاب ورزش‌های استقامتی، تغذیه و فروشگاه اشتراکی در یک پنجره واحد.
+        </p>
+
+        <div class="hero-stats-row">
+          <div class="card highlight">
+            <div class="stat-number">3X</div>
+            <div class="stat-label">افزایش ظرفیت شاگردان مربی</div>
+          </div>
+          <div class="card">
+            <div class="stat-number">< 100ms</div>
+            <div class="stat-label">زمان بارگذاری فوق‌العاده سریع</div>
+          </div>
+          <div class="card">
+            <div class="stat-number">102+</div>
+            <div class="stat-label">تست اتوماتیک پایدار</div>
+          </div>
+          <div class="card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">آفلاین در موبایل شاگرد (PWA)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: The Problem -->
+    <section class="slide" data-index="1" data-notes="در این اسلاید به درد و اصطکاک روزمره مربیان اشاره کنید: پراکندگی بین تلگرام، اکسل، استراوا و اپلیکیشن‌های کالری‌شمار باعث ریزش شاگردان و فرسودگی شدید مربی می‌شود.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">چالش‌های صنعت مربیگری ورزشی</div>
+        <h2 class="slide-title">پراکندگی ابزارها و فرسودگی روزافزون مربیان</h2>
+        <p class="slide-subtitle">مربیان ورزشی امروز به جای مربیگری، ۷۰٪ وقت خود را صرف مدیریت تکه‌تکه برنامه‌ها و پیام‌های نامنظم می‌کنند.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🧩</div>
+          <div class="card-title">پراکندگی سرسام‌آور داده‌ها</div>
+          <p class="bullet-item" style="color:var(--text-muted);">
+            برنامه در اکسل یا PDF، اصلاح تکنیک در واتس‌اپ و تلگرام، دویدن در Strava، تغذیه در اپلیکیشن‌های متفرقه و ثبت شهریه در پیامک!
+          </p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span class="badge badge-red">اتلاف ۹+ ساعت در هفته</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📉</div>
+          <div class="card-title">ریزش مداوم شاگردان (Churn)</div>
+          <p class="bullet-item" style="color:var(--text-muted);">
+            شاگرد به دلیل نبود فیدبک آنی حین تمرین در باشگاه، حس رهاشدگی می‌کند و در ماه دوم یا سوم برنامه را تمدید نمی‌کند.
+          </p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span class="badge badge-amber">۳۵٪ ریزش در ۳ ماه اول</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">سقف درآمدی و محدودیت فیزیکی</div>
+          <p class="bullet-item" style="color:var(--text-muted);">
+            هر مربی به طور سنتی حداکثر ۲۰ تا ۲۵ ورزشکار را می‌تواند همزمان پشتیبانی کند. فراتر از آن، کیفیت افت کرده و خطای انسانی بالا می‌رود.
+          </p>
+          <div style="margin-top:auto; padding-top:14px;">
+            <span class="badge badge-lime">گلوگاه مقیاس‌پذیری</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: The Unified Solution -->
+    <section class="slide" data-index="2" data-notes="اینجا نشان دهید چطور CoachMint این دوگانگی را حل کرده است: پنل مدیریت تحت وب مربی + اپلیکیشن سبک و آفلاین شاگرد.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">راهکار هوشمند CoachMint</div>
+        <h2 class="slide-title">یک اکوسیستم یکپارچه، بدون اصطکاک</h2>
+        <p class="slide-subtitle">اتصال بی‌وقفه بین مغز متفکر مربی (دسکتاپ) و تجربه اجرای زنده ورزشکار (موبایل).</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card highlight">
+          <div class="badge badge-lime" style="width:fit-content; margin-bottom:12px;">مخصوص مربی (Coach Command Center)</div>
+          <h3 class="card-title">مرکز فرماندهی روی دسکتاپ و تبلت</h3>
+          <ul class="bullet-list">
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> مدیریت پرونده‌های سلامت و سنجش ۳۶۰ درجه ورزشکار</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> سازنده برنامه تمرینی با تمپو، RPE و سوپرست‌های پیچیده</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> تحلیل بیومکانیک و رادار ریسک آسیب مفاصل (ACWR)</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> هاب تخصصی دوندگان و ورزش‌های استقامتی با سینک Strava</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> چت متمرکز و ایمن با امکان ارسال صوت و تصویر</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="badge badge-green" style="width:fit-content; margin-bottom:12px;">مخصوص ورزشکار (Athlete PWA)</div>
+          <h3 class="card-title">اپلیکیشن زنده، آفلاین و بدون نصب</h3>
+          <ul class="bullet-list">
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> نصب مستقیم از مرورگر بدون تحریم و کارمزد اپ‌استورها</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> پلیر زنده تمرین با تایمر صوتی استراحت و ثبت ست‌ها</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> تست فرم حرکات با هوش مصنوعی و دوربین موبایل</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> کارکرد ۱۰۰٪ آفلاین در زیرزمین و سالن‌های بدون اینترنت</li>
+            <li class="bullet-item"><span class="bullet-bullet">✓</span> کارت استوری اینستاگرام (1080x1920) برای اشتراک افتخارات</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Coach Command Center -->
+    <section class="slide" data-index="3" data-notes="ویژگی‌های پنل دسکتاپ: از سازنده هوشمند تمرین با سوپرست و RPE تا تقویم مسابقات و خروجی تقویم ics.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">قابلیت‌های هسته</div>
+        <h2 class="slide-title">مرکز فرماندهی مربی (Command Center)</h2>
+        <p class="slide-subtitle">طراحی تمرین در ثانیه‌ها، آرشیو قدرتمند حرکات، و تقویم پریودایزیشن پیشرفته.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🏋️</div>
+          <div class="card-title">معمار تمرینات (Workout Builder)</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            پشتیبانی از ساختارهای پیشرفته: سوپرست‌ها، دراپ‌ست، تعیین RPE، سرعت تمپو (Tempo: 3-1-1-0)، تایمرهای استراحت داینامیک و پیوست ویدیوهای آموزشی.
+          </p>
+          <div style="margin-top:14px; display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="badge badge-lime">Super-sets</span>
+            <span class="badge badge-lime">RPE / RIR</span>
+            <span class="badge badge-lime">Tempo Control</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📅</div>
+          <div class="card-title">تقویم و پریودایزیشن (Macro/Micro)</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            طراحی دوره‌های حجمی، قدرتی، اوج‌گیری (Tapering) و مسابقه. دارای خروجی استاندارد iCal جهت همگام‌سازی مستقیم با تقویم گوشی و گوگل کلندر.
+          </p>
+          <div style="margin-top:14px; display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="badge badge-green">iCal Sync (.ics)</span>
+            <span class="badge badge-green">Periodization</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">رادار ریسک ریزش (Churn Radar)</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            شناسایی زودهنگام ورزشکارانی که احتمال ترک دوره را دارند بر اساس تعداد جلسات از دست رفته، کاهش ثبت رکوردها و تأخیر در پاسخ چت.
+          </p>
+          <div style="margin-top:14px; display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="badge badge-amber">Churn Detection</span>
+            <span class="badge badge-amber">Engagement Score</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Computer Vision & Biomechanics -->
+    <section class="slide" data-index="4" data-notes="این نقطه تمایز تکنولوژیک کلیدی است! ۸۷ تست پاس شده روی تشخیص خطای والگوس زانو، عمق اسکات، و نقشه حرارتی مفاصل با خروجی SVG تعاملی.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">نوآوری برتر در Fitness Tech</div>
+        <h2 class="slide-title">بینایی ماشین و آزمایشگاه بیومکانیک با دوربین</h2>
+        <p class="slide-subtitle">پردازش زاویه مفاصل، شمارش خودکار تکرارها، تشخیص خطای والگوس و نقشه حرارتی ریسک آسیب.</p>
+      </div>
+
+      <div class="biomech-box">
+        <div class="biomech-hud">
+          <svg viewBox="0 0 220 360" style="width:70%; height:90%;">
+            <circle cx="110" cy="45" r="22" fill="none" stroke="#374663" stroke-width="2.5"/>
+            <line x1="110" y1="67" x2="110" y2="165" stroke="#374663" stroke-width="3"/>
+            <line x1="65" y1="95" x2="155" y2="95" stroke="#374663" stroke-width="3"/>
+            <line x1="65" y1="95" x2="45" y2="155" stroke="#374663" stroke-width="2.5"/>
+            <line x1="155" y1="95" x2="175" y2="155" stroke="#374663" stroke-width="2.5"/>
+            <line x1="85" y1="165" x2="135" y2="165" stroke="#374663" stroke-width="3"/>
+            <line x1="85" y1="165" x2="80" y2="245" stroke="#374663" stroke-width="3"/>
+            <line x1="135" y1="165" x2="140" y2="245" stroke="#374663" stroke-width="3"/>
+            <line x1="80" y1="245" x2="75" y2="330" stroke="#374663" stroke-width="3"/>
+            <line x1="140" y1="245" x2="145" y2="330" stroke="#374663" stroke-width="3"/>
+            
+            <circle cx="80" cy="245" r="14" fill="rgba(239, 68, 68, 0.25)" class="pulse-circle"/>
+            <circle cx="80" cy="245" r="6" fill="#EF4444"/>
+            <circle cx="140" cy="245" r="14" fill="rgba(239, 68, 68, 0.25)" class="pulse-circle"/>
+            <circle cx="140" cy="245" r="6" fill="#EF4444"/>
+
+            <circle cx="110" cy="155" r="12" fill="rgba(245, 158, 11, 0.25)"/>
+            <circle cx="110" cy="155" r="5" fill="#F59E0B"/>
+
+            <circle cx="65" cy="95" r="5" fill="#22C55E"/>
+            <circle cx="155" cy="95" r="5" fill="#22C55E"/>
+          </svg>
+
+          <div style="position:absolute; bottom:14px; left:16px; background:rgba(0,0,0,0.7); padding:8px 14px; border-radius:8px; border:1px solid var(--border);">
+            <div style="font-size:11px; color:var(--text-dim);">پایداری بیومکانیک</div>
+            <div style="font-family:var(--font-mono); font-size:18px; font-weight:800; color:var(--amber);">78.4 / 100</div>
+          </div>
+        </div>
+
+        <div class="biomech-details">
+          <div class="card highlight">
+            <div class="card-title" style="font-size:18px;">
+              <span>🚨 خطای تشخیص‌داده‌شده: والگوس زانو (Knee Valgus)</span>
+            </div>
+            <p style="font-size:13.5px; color:var(--text-muted); line-height:1.6;">
+              سیستم در ۳ تکرار آخر اسکات، جمع‌شدن زانوها به سمت داخل (Inward Cave) را شناسایی کرد. این خطا فشار بر ACL و کشکک زانو را تا ۴ برابر افزایش می‌دهد.
+            </p>
+            <div style="margin-top:10px;">
+              <span class="badge badge-red">۸ خطا در ۴ جلسه اخیر</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="font-size:18px;">
+              <span>🩺 نسخه اصلاحی خودکار (Clinical Prescription)</span>
+            </div>
+            <p style="font-size:13.5px; color:var(--text-muted); line-height:1.6;">
+              سیستم به صورت خودکار حرکات تقویتی زنجیره خلفی و گلوتئوس مدیوس (مانند Clamshell و Banded Squat) را به برنامه روزهای سبک شاگرد پیشنهاد می‌دهد.
+            </p>
+            <div style="margin-top:10px;">
+              <span class="badge badge-lime">۸۷ تست پاس‌شده ارزیابی بیومکانیک</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Endurance Hub & Strava -->
+    <section class="slide" data-index="5" data-notes="هاب اختصاصی ورزشکاران استقامتی. اتصال بی‌درنگ به Strava، پایش فرسایش کفش‌های مسابقه‌ای و محاسبه نسبت فشار تمرینی ACWR.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">ورزش‌های استقامتی و هوازی</div>
+        <h2 class="slide-title">هاب اختصاصی دوندگان، دوچرخه‌سواران و تری‌اتلت‌ها</h2>
+        <p class="slide-subtitle">اتصال دوطرفه به Strava، پایش استهلاک کفش و محاسبه علمی نسبت بار حاد به مزمن (ACWR).</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">همگام‌سازی خودکار Strava</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            دریافت خودکار فعالیت‌ها، رکوردهای مسافت، ضربان قلب، مناطق تمرینی (Heart Rate Zones)، توان (Watts) و ارتفاع‌گیری بدون نیاز به ورود دستی اطلاعات.
+          </p>
+          <div style="margin-top:auto; padding-top:12px;">
+            <span class="badge badge-lime">Strava API OAuth2</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-title">پایش خستگی و بار تمرینی (ACWR)</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            نسبت بار تمرینی ۷ روز گذشته (Acute) به ۲۸ روز گذشته (Chronic). سیستم محدوده بهینه (۰.۸ تا ۱.۳) را حفظ کرده و قبل از بیش‌تمرینی یا مصدومیت هشدار می‌دهد.
+          </p>
+          <div style="margin-top:auto; padding-top:12px;">
+            <span class="badge badge-green">محدوده ایمن بار: 1.12</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">👟</div>
+          <div class="card-title">ردیاب استهلاک کفش و تجهیزات</div>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+            ثبت کیلومترهای طی‌شده با هر کفش رانینگ. سیستم در کیلومتر ۵۵۰ هشدار تعویض صادر می‌کند تا از شین‌اسپلینت و التهاب تاندون آشیل جلوگیری شود.
+          </p>
+          <div style="margin-top:auto; padding-top:12px;">
+            <span class="badge badge-amber">Shoe Mileage Alarm</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Nutrition & Diet Engine -->
+    <section class="slide" data-index="6" data-notes="ماژول تغذیه با تفکیک پروتئین، کربوهیدرات، چربی، فازبندی رژیم و فیلترهای ارجاع ایمنی در صورت الگوهای ناهنجار غذایی.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">ماژول تغذیه و مهندسی متابولیسم</div>
+        <h2 class="slide-title">طراحی رژیم، تفکیک ماکروها و فیلتر ایمنی بالینی</h2>
+        <p class="slide-subtitle">تنظیم دقیق کالری روزهای تمرین و استراحت، الگوهای غذایی هفتگی و پیشگیری از رژیم‌های خطرناک.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title">چرخش کالری و درشت‌مغذی‌ها (Calorie Cycling)</h3>
+          <p style="font-size:14.5px; color:var(--text-muted); line-height:1.7;">
+            سیستم امکان تنظیم اتوماتیک ماکروها بر اساس روزهای تمرین سنگین (کربوهیدرات بالا) و روزهای ریکاوری (چربی‌های مفید و پروتئین حفظ‌شده) را فراهم می‌سازد.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:20px;">
+            <div style="background:#0F131C; padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:11px; color:var(--text-dim);">پروتئین</div>
+              <div style="font-family:var(--font-mono); font-size:18px; color:var(--accent);">180g (30%)</div>
+            </div>
+            <div style="background:#0F131C; padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:11px; color:var(--text-dim);">کربوهیدرات</div>
+              <div style="font-family:var(--font-mono); font-size:18px; color:var(--cyan);">240g (45%)</div>
+            </div>
+            <div style="background:#0F131C; padding:12px; border-radius:8px; text-align:center;">
+              <div style="font-size:11px; color:var(--text-dim);">چربی مفید</div>
+              <div style="font-family:var(--font-mono); font-size:18px; color:var(--amber);">60g (25%)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card highlight">
+          <h3 class="card-title">فیلتر ایمنی و ارجاع پزشکی (Nutri-Safety Guard)</h3>
+          <p style="font-size:14.5px; color:var(--text-muted); line-height:1.7;">
+            CoachMint دارای پروتکل اخلاقی و بالینی است: اگر شاگرد نشانه‌های سوء‌تغذیه، کالری فوق‌العاده پایین کمتر از BMR یا اختلالات تغذیه‌ای ثبت کند، دستیار هوشمند فوراً به مربی و پزشک ارجاع می‌دهد.
+          </p>
+          <div style="margin-top:20px;">
+            <span class="badge badge-green">محافظ سلامت ورزشکار (Medical Referral Shield)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Athlete Mobile Experience (PWA) -->
+    <section class="slide" data-index="7" data-notes="تجربه کاربری شاگرد روی موبایل: پلیر زنده تمرین با تایمر صوتی، آفلاین بودن کامل، و تولید کارت‌های استوری ۱۰۸۰ در ۱۹۲۰ برای وایرال شدن مربی در اینستاگرام.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">تجربه شاگرد در باشگاه</div>
+        <h2 class="slide-title">وب‌اپلیکیشن فوق سبک، آفلاین و وایرال</h2>
+        <p class="slide-subtitle">شاگرد نیازی به رفتن به اپ‌استور ندارد؛ آیکون برنامه در ۱ ثانیه روی صفحه گوشی قرار می‌گیرد.</p>
+      </div>
+
+      <div class="grid-2" style="align-items:center;">
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div class="card">
+            <div class="card-title">⚡ پلیر زنده تمرین (Live Workout Player)</div>
+            <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+              نمایش ست‌به‌ست، ثبت فوری وزنه‌ها و تکرارها، شمارش معکوس زمان استراحت با صدای بیپ صوتی و راهنمای فرم ویدیویی.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title">📴 ۱۰۰٪ آفلاین با Service Worker</div>
+            <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+              باشگاه‌های ورزشی معمولاً در طبقات منفی یا نقاط کور آنتن‌دهی هستند. ورزشکار بدون اینترنت جلسه را انجام می‌دهد و هنگام آنلاین شدن دیتا ذخیره می‌شود.
+            </p>
+          </div>
+          <div class="card highlight">
+            <div class="card-title">📸 کارت استوری اینستاگرام (1080×1920)</div>
+            <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">
+              تولید تصویر استوری گرافیکی با یک کلیک از رکوردهای امروز؛ بازاریابی ارگانیک و ویروسی رایگان برای مربی در شبکه‌های اجتماعی!
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:8px;">
+                <span style="font-size:12px; font-weight:800; color:var(--accent);">SESSION #14</span>
+                <span class="badge badge-lime">STRENGTH</span>
+              </div>
+              <div style="font-size:15px; font-weight:800; color:#FFF;">Barbell Back Squat</div>
+              
+              <div style="background:#1B2232; padding:8px 12px; border-radius:8px; display:flex; justify-content:space-between; font-size:12.5px;">
+                <span>ست ۲ از ۴</span>
+                <span style="font-family:var(--font-mono); color:var(--accent);">100 kg × 8 reps</span>
+                <span style="color:var(--green);">✓ انجام شد</span>
+              </div>
+
+              <div class="rest-timer-box">
+                <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">تایمر استراحت بین ست‌ها</div>
+                <div class="rest-timer-val" id="mockTimer">01:18</div>
+                <div style="font-size:11px; color:var(--text-dim); margin-top:2px;">آماده برای ست ۳</div>
+              </div>
+
+              <div style="margin-top:auto; background:rgba(200, 240, 75, 0.15); border:1px solid var(--accent); color:var(--accent); padding:10px; border-radius:10px; text-align:center; font-size:12px; font-weight:700;">
+                ✨ استوری دستاورد تمرین در اینستاگرام
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: AI Assistant -->
+    <section class="slide" data-index="8" data-notes="فلسفه هوش مصنوعی CoachMint: مربی تصمیم‌گیرنده نهایی است. استفاده از OpenRouter با Fallback Chain برای مدل‌های رایگان (Qwen, Gemma, Gemini Flash).">
+      <div class="slide-header">
+        <div class="slide-eyebrow">هوش مصنوعی کاربردی، نه نمایشی</div>
+        <h2 class="slide-title">دستیار هوشمند: «مربی تصمیم می‌گیرد»</h2>
+        <p class="slide-subtitle">تولید پیش‌نویس برنامه تمرینی، تحلیل فرم‌های ارزیابی و تنظیم برنامه‌ها با صفر هزینه API برای مربی.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card highlight">
+          <div class="badge badge-lime" style="width:fit-content; margin-bottom:12px;">معماری هوش مصنوعی</div>
+          <h3 class="card-title">مدل‌های بدون هزینه و پایدار (Free Fallback Chain)</h3>
+          <p style="font-size:14.5px; color:var(--text-muted); line-height:1.7;">
+            بر خلاف سرویس‌های دیگر که هزینه‌های سنگین ماهانه تحمیل می‌کنند، CoachMint از زنجیره خودکار OpenRouter با چرخش مدل‌های پیشرفته زیر استفاده می‌کند:
+          </p>
+          <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
+            <div style="background:#0F131C; padding:10px 14px; border-radius:8px; display:flex; justify-content:space-between; font-size:13px;">
+              <span>1. Qwen 3.8 / 2.5 (Reasoning & Sports)</span>
+              <span class="badge badge-green">Free Router</span>
+            </div>
+            <div style="background:#0F131C; padding:10px 14px; border-radius:8px; display:flex; justify-content:space-between; font-size:13px;">
+              <span>2. Google Gemma 4 31B</span>
+              <span class="badge badge-lime">Backup Model</span>
+            </div>
+            <div style="background:#0F131C; padding:10px 14px; border-radius:8px; display:flex; justify-content:space-between; font-size:13px;">
+              <span>3. Gemini 2.0 Flash Vision (بررسی عکس فرم)</span>
+              <span class="badge badge-cyan">Vision Engine</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="badge badge-amber" style="width:fit-content; margin-bottom:12px;">پروتکل اخلاقی و حاکمیت مربی</div>
+          <h3 class="card-title">تزریق داده‌های واقعی سمت سرور</h3>
+          <ul class="bullet-list">
+            <li class="bullet-item"><span class="bullet-bullet">🎯</span> <strong>تزریق اتوماتیک کانتکست:</strong> مربی پرامپت طولانی نمی‌نویسد؛ سرور تمام سوابق شاگرد، وزنه‌ها، ماکروها و آسیب‌ها را مستقیم از دیتابیس تزریق می‌کند.</li>
+            <li class="bullet-item"><span class="bullet-bullet">🛡️</span> <strong>قانون تخطی‌ناپذیر:</strong> هوش مصنوعی فقط پیش‌نویس (Draft) تولید می‌کند و هیچ برنامه‌ای بدون بازبینی و تایید دستی مربی برای شاگرد فعال نمی‌شود.</li>
+            <li class="bullet-item"><span class="bullet-bullet">🔒</span> <strong>امنیت کلیدها:</strong> کلیدهای API هرگز به سمت کلاینت ارسال نمی‌شوند و در لایه سرور ایزوله هستند.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Technical Architecture -->
+    <section class="slide" data-index="9" data-notes="اسلاید معماری مهندسی: طراحی سبک با Vanilla ES Modules بدون سربار React/Vue. دیتابیس دوگانه SQLite و PostgreSQL با ۱۰۲ تست قبولی.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">مهندسی نرم‌افزار و کارایی</div>
+        <h2 class="slide-title">معماری فنی بدون وابستگی سنگین</h2>
+        <p class="slide-subtitle">طراحی مهندسی برای سرعت خارق‌العاده، پایداری بالا، مصرف ناچیز رم و امنیت سرسختانه.</p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title" style="font-size:16px;">فرانت‌اند خالص</div>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+            Vanilla JavaScript (ES Modules) بدون فریم‌ورک‌های سنگین React یا Angular. رندر ۶۰ فریم و لودینگ برق‌آسا در تمام دستگاه‌ها.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title" style="font-size:16px;">دیتابیس دوگانه</div>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+            پشتیبانی از SQLite سبک در یک فایل (`data/sqlite.db`) برای اجراهای مستقل/لوکال و PostgreSQL (Neon) برای استقرارهای کلاود سرورلس.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <div class="card-title" style="font-size:16px;">امنیت چندلایه</div>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+            میدل‌ور اختصاصی `guard.mjs`، مسدودسازی مسیرهای دایرکتوری در ورکسل، مقابله با Brute-Force، و رمزنگاری تایمینگ-سیف.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title" style="font-size:16px;">آزادی در استقرار</div>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+            قابلیت دیپلوی با یک کلیک روی Vercel، اجرای مستقل روی سرور شخصی (VPS) یا داکر با دستور `npm start` بدون پیش‌نیاز پیچیده.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; justify-content:space-around; align-items:center;">
+        <span style="font-size:13.5px; font-weight:700; color:#FFF;">پوشش تست‌های نرم‌افزار:</span>
+        <span class="badge badge-green">KV Contract: 6 PASS</span>
+        <span class="badge badge-green">Billing Core: 25 PASS</span>
+        <span class="badge badge-green">Guard Security: 23 PASS</span>
+        <span class="badge badge-lime">Camera Form & Biomechanics: 87 PASS</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Business Model & SaaS Monetization -->
+    <section class="slide" data-index="10" data-notes="مدل تجاری: فروشگاه مستقل، پلن‌های تریال ۱۴ روزه بدون کردیت‌کارت، پلن‌های Basic, Pro, Club، و اتصال فوری به زرین‌پال یا استرایپ.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">تجاری‌سازی و اقتصاد پلتفرم</div>
+        <h2 class="slide-title">مدل درآمدی پایدار با سیستم فروشگاه داخلی</h2>
+        <p class="slide-subtitle">سیستم صدور لایسنس، مدیریت کوپن‌ها و تبدیل سریع کاربر آزمایشی به مشتری وفادار.</p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card">
+          <div class="badge badge-green" style="width:fit-content; margin-bottom:8px;">FREE TRIAL</div>
+          <div style="font-size:22px; font-weight:800; color:#FFF;">۱۴ روز آزمایشی</div>
+          <div style="font-size:13px; color:var(--text-muted); margin:8px 0 14px 0;">بدون نیاز به کارت بانکی</div>
+          <ul class="bullet-list" style="font-size:13px;">
+            <li class="bullet-item">✓ تا ۵ شاگرد فعال</li>
+            <li class="bullet-item">✓ تمام امکانات هسته تمرین</li>
+            <li class="bullet-item">✓ ثبت‌نام در ۱ کلیک</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="badge badge-lime" style="width:fit-content; margin-bottom:8px;">STARTER</div>
+          <div style="font-size:22px; font-weight:800; color:#FFF;">Basic Plan</div>
+          <div style="font-size:13px; color:var(--text-muted); margin:8px 0 14px 0;">مناسب مربیان تازه‌کار</div>
+          <ul class="bullet-list" style="font-size:13px;">
+            <li class="bullet-item">✓ تا ۱۰ شاگرد همزمان</li>
+            <li class="bullet-item">✓ پایش کامل تغذیه و تمرین</li>
+            <li class="bullet-item">✓ استوری ساز اینستاگرام</li>
+          </ul>
+        </div>
+
+        <div class="card highlight">
+          <div class="badge badge-lime" style="width:fit-content; margin-bottom:8px;">POPULAR</div>
+          <div style="font-size:22px; font-weight:800; color:var(--accent);">Professional</div>
+          <div style="font-size:13px; color:var(--text-muted); margin:8px 0 14px 0;">انتخاب مربیان حرفه‌ای</div>
+          <ul class="bullet-list" style="font-size:13px;">
+            <li class="bullet-item">✓ تا ۳۰ شاگرد فعال</li>
+            <li class="bullet-item">✓ تحلیل بیومکانیک با دوربین</li>
+            <li class="bullet-item">✓ دستیار هوش مصنوعی نامحدود</li>
+            <li class="bullet-item">✓ سینک کامل Strava</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="badge badge-cyan" style="width:fit-content; margin-bottom:8px;">STUDIOS</div>
+          <div style="font-size:22px; font-weight:800; color:#FFF;">Club / Gym</div>
+          <div style="font-size:13px; color:var(--text-muted); margin:8px 0 14px 0;">باشگاه‌ها و آکادمی‌ها</div>
+          <ul class="bullet-list" style="font-size:13px;">
+            <li class="bullet-item">✓ تا ۲۰۰ شاگرد</li>
+            <li class="bullet-item">✓ چند مربی در یک اکوسیستم</li>
+            <li class="bullet-item">✓ پشتیبانی اختصاصی ۲۴ ساعته</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Roadmap -->
+    <section class="slide" data-index="11" data-notes="نقشه راه آینده: ادغام عمیق‌تر با ساعت‌های هوشمند Garmin و Apple Watch، پردازش تصویر در سمت کاربر با مدل‌های سبک محلی، و راه‌اندازی بازارچه برنامه‌های تمرینی.">
+      <div class="slide-header">
+        <div class="slide-eyebrow">چشم‌انداز و آینده محصول</div>
+        <h2 class="slide-title">نقشه راه توسعه و جهش‌های بعدی</h2>
+        <p class="slide-subtitle">مسیری شفاف از وضعیت پایدار فعلی تا تبدیل‌شدن به استاندارد طلایی پلتفرم‌های مربیگری ورزشی.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="border-top:3px solid var(--green);">
+          <div class="badge badge-green" style="width:fit-content; margin-bottom:10px;">فاز فعلی (تکمیل شده)</div>
+          <h3 class="card-title">هسته قدرتمند و پایدار</h3>
+          <ul class="bullet-list" style="font-size:13.5px;">
+            <li class="bullet-item">✓ سیستم مربیگری، تمرین و تغذیه</li>
+            <li class="bullet-item">✓ هوش بیومکانیک و بینایی با ۸۷ تست</li>
+            <li class="bullet-item">✓ PWA آفلاین شاگرد و کارت استوری</li>
+            <li class="bullet-item">✓ هاب استقامت و اتصال به Strava</li>
+            <li class="bullet-item">✓ فروشگاه و اشتراک SaaS</li>
+          </ul>
+        </div>
+
+        <div class="card highlight" style="border-top:3px solid var(--accent);">
+          <div class="badge badge-lime" style="width:fit-content; margin-bottom:10px;">فاز کوتاه‌مدت (Q1-Q2)</div>
+          <h3 class="card-title">پوشیدنی‌ها و چندمربیگری</h3>
+          <ul class="bullet-list" style="font-size:13.5px;">
+            <li class="bullet-item">⏱️ اتصال مستقیم به Apple Health و Garmin API</li>
+            <li class="bullet-item">👥 پشتیبانی چندمربی (Multi-Coach) در یک باشگاه</li>
+            <li class="bullet-item">📈 سیستم چالش‌ها و لیدربورد تیمی شاگردان</li>
+            <li class="bullet-item">💳 اضافه شدن درگاه‌های ریالی و ارزی کریپتو/استرایپ</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-top:3px solid var(--cyan);">
+          <div class="badge badge-cyan" style="width:fit-content; margin-bottom:10px;">فاز بلندمدت (Q3-Q4)</div>
+          <h3 class="card-title">اکوسیستم جهانی مربیان</h3>
+          <ul class="bullet-list" style="font-size:13.5px;">
+            <li class="bullet-item">🌐 مارکت‌پلیس بین‌المللی فروش برنامه‌ها</li>
+            <li class="bullet-item">🧠 مدل On-Device بینایی ماشین بدون نیاز به اینترنت</li>
+            <li class="bullet-item">🏢 نرم‌افزار سازمانی زنجیره باشگاه‌های ورزشی</li>
+            <li class="bullet-item">🎙️ دستیار صوتی مربی حین هدایت کلاس‌ها</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: Summary & Call to Action -->
+    <section class="slide" data-index="12" data-notes="اسلاید پایانی و جمع‌بندی: تأکید روی ارزش نهایی محصول و دعوت به تست زنده برنامه در لوکال هاست یا دیپلوی روی ورکسل.">
+      <div class="hero-wrapper">
+        <div class="hero-tag">🏆 آینده مربیگری ورزشی همین امروز ساخته شده است</div>
+        <h2 class="hero-title" style="font-size:46px;">
+          چرا <span>CoachMint</span> مربیگری را بازتعریف می‌کند؟
+        </h2>
+        
+        <div class="grid-3" style="width:100%; margin:30px 0;">
+          <div class="card" style="text-align:right;">
+            <div style="font-size:24px; margin-bottom:8px;">💎</div>
+            <div style="font-weight:800; font-size:17px; color:#FFF; margin-bottom:6px;">استقلال و صرفه‌جویی</div>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">بدون هزینه‌های ماهیانه دلاری، سلف‌هاست آسان و حفظ مالکیت ۱۰۰٪ داده‌ها.</div>
+          </div>
+          <div class="card highlight" style="text-align:right;">
+            <div style="font-size:24px; margin-bottom:8px;">🚀</div>
+            <div style="font-weight:800; font-size:17px; color:var(--accent); margin-bottom:6px;">سرعت و وفاداری</div>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">تجربه کاربری بی‌نقص ۶۰ فریم بدون تحریم‌های اپ‌استور، موجب کاهش چشمگیر ریزش شاگردان می‌شود.</div>
+          </div>
+          <div class="card" style="text-align:right;">
+            <div style="font-size:24px; margin-bottom:8px;">🔬</div>
+            <div style="font-weight:800; font-size:17px; color:#FFF; margin-bottom:6px;">فناوری عمیق بیومکانیک</div>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">آزمایشگاه دوربین و هوش مصنوعی داخلی که مربی را در بالاترین سطح علمی متمایز می‌کند.</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:16px;">
+          <a href="index.html" target="_blank" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); padding:12px 28px; border-radius:12px; font-weight:800; font-size:16px; display:inline-flex; align-items:center; gap:8px;">
+            <span>ورود به اپلیکیشن CoachMint</span> ➜
+          </a>
+          <a href="shop/index.html" target="_blank" style="text-decoration:none; background:var(--surface-card); border:1px solid var(--border); color:#FFF; padding:12px 24px; border-radius:12px; font-weight:700; font-size:15px;">
+            مشاهده سایت فروشگاه و اشتراک‌ها
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bottom-bar">
+    <div class="key-hints">
+      <span>راهنما:</span>
+      <span><span class="kbd">→</span> / <span class="kbd">←</span> اسلاید</span>
+      <span><span class="kbd">Space</span> بعدی</span>
+      <span><span class="kbd">N</span> یادداشت‌ها</span>
+      <span><span class="kbd">G</span> فهرست</span>
+      <span><span class="kbd">F</span> تمام‌صفحه</span>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn" id="btnPrev" title="Previous Slide">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="nav-btn" id="btnNext" title="Next Slide">
+        <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      </button>
+    </div>
+  </footer>
+
+  <div class="notes-drawer" id="notesDrawer">
+    <div class="notes-header">
+      <div class="notes-title">
+        <span>🎙️ یادداشت‌های گوینده (Speaker Notes)</span>
+      </div>
+      <button class="pill-btn" id="btnCloseNotes" style="padding:2px 8px; font-size:11px;">بستن (N)</button>
+    </div>
+    <div class="notes-body" id="notesContent">...</div>
+  </div>
+
+  <div class="overview-modal" id="overviewModal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <h3 style="font-size:22px; font-weight:900; color:#FFF;">فهرست تمام اسلایدها</h3>
+      <button class="pill-btn" id="btnCloseGrid" style="padding:6px 14px;">✕ بستن (G)</button>
+    </div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  let isRTL = true;
+
+  const progressBar = document.getElementById('progressBar');
+  const slideIndicator = document.getElementById('slideIndicator');
+  const notesDrawer = document.getElementById('notesDrawer');
+  const notesContent = document.getElementById('notesContent');
+  const overviewModal = document.getElementById('overviewModal');
+  const overviewGrid = document.getElementById('overviewGrid');
+
+  slides.forEach((slide, idx) => {
+    const titleEl = slide.querySelector('.slide-title') || slide.querySelector('.hero-title');
+    const title = titleEl ? titleEl.textContent.trim().replace(/\s+/g, ' ') : `اسلاید ${idx + 1}`;
+    
+    const thumb = document.createElement('div');
+    thumb.className = `overview-thumb ${idx === 0 ? 'current' : ''}`;
+    thumb.innerHTML = `
+      <div class="thumb-num">SLIDE ${String(idx + 1).padStart(2, '0')}</div>
+      <div class="thumb-title">${title.substring(0, 50)}...</div>
+    `;
+    thumb.addEventListener('click', () => {
+      goToSlide(idx);
+      closeGrid();
+    });
+    overviewGrid.appendChild(thumb);
+  });
+
+  function updateSlideUI() {
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === currentSlide);
+    });
+
+    const pct = ((currentSlide + 1) / totalSlides) * 100;
+    progressBar.style.width = pct + '%';
+    slideIndicator.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+
+    const activeSlide = slides[currentSlide];
+    notesContent.textContent = activeSlide.getAttribute('data-notes') || 'یادداشتی برای این اسلاید ثبت نشده است.';
+
+    const thumbs = overviewGrid.querySelectorAll('.overview-thumb');
+    thumbs.forEach((t, i) => t.classList.toggle('current', i === currentSlide));
+  }
+
+  function goToSlide(n) {
+    if (n < 0) n = 0;
+    if (n >= totalSlides) n = totalSlides - 1;
+    currentSlide = n;
+    updateSlideUI();
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+      goToSlide(currentSlide + 1);
+    }
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) {
+      goToSlide(currentSlide - 1);
+    }
+  }
+
+  document.getElementById('btnNext').addEventListener('click', nextSlide);
+  document.getElementById('btnPrev').addEventListener('click', prevSlide);
+
+  function toggleNotes() {
+    notesDrawer.classList.toggle('open');
+    document.getElementById('btnNotes').classList.toggle('active', notesDrawer.classList.contains('open'));
+  }
+  document.getElementById('btnNotes').addEventListener('click', toggleNotes);
+  document.getElementById('btnCloseNotes').addEventListener('click', toggleNotes);
+
+  function openGrid() { overviewModal.classList.add('open'); }
+  function closeGrid() { overviewModal.classList.remove('open'); }
+  document.getElementById('btnGrid').addEventListener('click', () => {
+    if (overviewModal.classList.contains('open')) closeGrid();
+    else openGrid();
+  });
+  document.getElementById('btnCloseGrid').addEventListener('click', closeGrid);
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  }
+
+  document.getElementById('btnLang').addEventListener('click', () => {
+    isRTL = !isRTL;
+    document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', isRTL ? 'fa' : 'en');
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (overviewModal.classList.contains('open')) {
+      if (e.key === 'Escape' || e.key.toLowerCase() === 'g') closeGrid();
+      return;
+    }
+
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+      if (isRTL) prevSlide(); else nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      if (isRTL) nextSlide(); else prevSlide();
+    } else if (e.key === ' ' || e.key === 'Enter') {
+      nextSlide();
+    } else if (e.key === 'Backspace') {
+      prevSlide();
+    } else if (e.key.toLowerCase() === 'n') {
+      toggleNotes();
+    } else if (e.key.toLowerCase() === 'g') {
+      openGrid();
+    } else if (e.key.toLowerCase() === 'f') {
+      toggleFullscreen();
+    }
+  });
+
+  let touchStartX = 0;
+  window.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        if (isRTL) prevSlide(); else nextSlide();
+      } else {
+        if (isRTL) nextSlide(); else prevSlide();
+      }
+    }
+  }, { passive: true });
+
+  let mockSec = 78;
+  setInterval(() => {
+    const el = document.getElementById('mockTimer');
+    if (!el) return;
+    if (mockSec > 0) mockSec--;
+    else mockSec = 90;
+    const m = String(Math.floor(mockSec / 60)).padStart(2, '0');
+    const s = String(mockSec % 60).padStart(2, '0');
+    el.textContent = `${m}:${s}`;
+  }, 1000);
+
+  updateSlideUI();
+})();
+</script>
+</body>
+</html>

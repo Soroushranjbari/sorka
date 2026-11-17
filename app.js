@@ -5,6 +5,7 @@ grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width=
 list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
 users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
 user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+building:'<rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/>',
 dumbbell:'<path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>',
 calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
 chart:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
@@ -758,6 +759,182 @@ const TR_MUSCLE={
 const tmus=m=>lang==='tr'?(TR_MUSCLE[m]??TR[m]??m):(lang==='fa'?(m==='Back'?'پشت':(FA[m]??m)):m);
 const nf=v=>{v=String(v);return lang==='fa'?v.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):v};
 const pct=n=>lang==='tr'?('%'+n):(nf(n)+(lang==='fa'?'٪':'%'));
+Object.assign(FA, {
+  'Gym & Staff': 'باشگاه و کادر مربیان',
+  'All Branches': 'همه شعب',
+  'Gym Branches': 'شعب باشگاه',
+  'Select Branch': 'انتخاب شعبه',
+  'HQ': 'مرکزی',
+  'Headquarters': 'شعبه مرکزی',
+  'Branches': 'شعب',
+  'Branch': 'شعبه',
+  'Add Branch': 'افزودن شعبه جدید',
+  'Staff & Trainers': 'کادر فنی و مربیان',
+  'Add Staff': 'افزودن مربی/کارمند',
+  'Staff Role': 'نقش کارمند',
+  'Assigned Branches': 'شعب تخصیص‌یافته',
+  'Assigned Athletes': 'شاگردان تخصیص‌یافته',
+  'Reassign Athletes': 'انتقال شاگردان',
+  'Reassign Coach': 'تغییر مربی',
+  'Anti-Poaching Transfer': 'انتقال ضدخروج و حفظ مالکیت',
+  'Anti-Poaching Protection & Client Transfer': 'محافظت از دیتا و انتقال هوشمند شاگرد',
+  'Active Branches': 'شعب فعال',
+  'Staff on Site': 'کادر مستقر',
+  'Club Athletes': 'ورزشکاران باشگاه',
+  'Your Role': 'نقش شما',
+  'Gym Owner': 'مالک باشگاه',
+  'Head Coach': 'سرمربی',
+  'Manager': 'مدیر شعبه',
+  'Trainer': 'مربی اختصاصی',
+  'Reception': 'پذیرش',
+  'Unassigned': 'تخصیص‌نیافته',
+  'Studio Plan': 'طرح استودیو',
+  'Chain Plan': 'طرح زنجیره‌ای',
+  'Enterprise Plan': 'طرح اینترپرایز',
+  'Gym Plan': 'طرح باشگاه',
+  'Create Gym Organization': 'ایجاد مجموعه ورزشی',
+  'Initialize Gym Organization': 'راه‌اندازی باشگاه و شعب',
+  'B2B Gym & Studio OS': 'سیستم یکپارچه باشگاه و استودیو ورزشی',
+  'Multi-Branch & Anti-Poaching': 'مدیریت شعب زنجیره‌ای و حفاظت از ورزشکاران',
+  'Multi-Branch': 'چندشعبه‌ای',
+  'Branch Name': 'نام شعبه',
+  'Primary Branch Name': 'نام شعبه اصلی',
+  'Gym Name': 'نام باشگاه / مجموعه',
+  'Address': 'آدرس',
+  'Phone': 'تلفن',
+  'Designate as Headquarters (HQ)': 'تعیین به عنوان شعبه مرکزی (HQ)',
+  'Target Coach': 'مربی مقصد',
+  'Target Branch': 'شعبه مقصد',
+  'Select Athlete': 'انتخاب شاگرد',
+  'Select Athletes to Transfer': 'انتخاب شاگردان جهت انتقال',
+  'Select All': 'انتخاب همه',
+  'Transfer Selected Athletes': 'انتقال شاگردان انتخاب‌شده',
+  'Keep current branch': 'حفظ شعبه فعلی',
+  'Transfer': 'انتقال',
+  'Branch added successfully ✓': 'شعبه با موفقیت افزوده شد ✓',
+  'Staff member added ✓': 'عضو کادر فنی با موفقیت اضافه شد ✓',
+  'Athletes reassigned successfully ✓': 'شاگردان با موفقیت به مربی جدید منتقل شدند ✓',
+  'Staff member removed ✓': 'عضو کادر حذف شد ✓',
+  'Gym Organization created ✓': 'باشگاه با موفقیت ایجاد شد ✓',
+  'Filter Roster to this Branch': 'فیلتر شاگردان این شعبه',
+  'View Roster': 'مشاهده شاگردان',
+  'Assigned Coach': 'مربی مسئول',
+  'All Coaches': 'همه مربیان',
+  'Trainers': 'مربیان',
+  'Admin': 'مدیر ارشد',
+  'Staff': 'کارمند',
+  'Centralized governance, multi-branch athlete roster, and personal trainer management': 'حاکمیت داده متمرکز، ردیابی شاگردان چندشعبه‌ای و مدیریت کادر مربیان',
+  'Manage branches, personal trainers, and athlete rosters under one centralized roof': 'مدیریت شعب، مربیان اختصاصی و ورزشکاران تحت یک فضای یکپارچه',
+  'Upgrade your workspace to a multi-branch gym or fitness club. Add staff, allocate athlete seats, and manage anti-poaching athlete transfers with full data governance.': 'فضای کاری خود را به باشگاه ورزشی چندشعبه‌ای ارتقا دهید. کادر مربیان را اضافه کنید، سهمیه ورزشکاران را تخصیص دهید و انتقال شاگردان را بدون از دست رفتن رکوردها مدیریت نمایید.',
+  'All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach resigns or changes branches, reassign their athletes in one click.': 'تمام سوابق تمرینی، اندازه‌گیری‌ها و تاریخچه شاگرد متعلق به باشگاه باقی می‌ماند. با استعفا یا جابه‌جایی مربی، شاگردان را با یک کلیک به مربی جدید بسپارید.',
+  'Please enter a branch name': 'لطفاً نام شعبه را وارد کنید',
+  'Please enter name and email': 'لطفاً نام و ایمیل را وارد کنید',
+  'Please select coach and client': 'لطفاً مربی و شاگرد را انتخاب کنید',
+  'Please select at least one athlete to transfer': 'لطفاً حداقل یک شاگرد را جهت انتقال انتخاب کنید',
+  'Please select a target coach': 'لطفاً مربی مقصد را انتخاب کنید',
+  'Please enter a gym name': 'لطفاً نام باشگاه را وارد کنید',
+  'Failed to add branch': 'افزودن شعبه ناموفق بود',
+  'Failed to add staff': 'افزودن کادر فنی ناموفق بود',
+  'Failed to remove staff': 'حذف کادر فنی ناموفق بود',
+  'Failed to create gym organization': 'ایجاد باشگاه ناموفق بود',
+  'Are you sure you want to remove this staff member? Any assigned clients should be reassigned.': 'آیا از حذف این عضو کادر اطمینان دارید؟ شاگردان این مربی باید به مربی دیگری منتقل شوند.'
+});
+
+
+/* ================= SMART MACHINES (NFC/QR) & INBODY OCR I18N ================= */
+Object.assign(FA, {
+  'Smart Machines & QR Tags': 'دستگاه‌های هوشمند و تگ‌های QR',
+  'Smart Machines': 'دستگاه‌های هوشمند',
+  'Scan Machine (NFC / QR)': 'اسکن دستگاه (NFC / QR)',
+  'Scan Gym Machine': 'اسکن دستگاه باشگاه',
+  'Smart Equipment Tags': 'تگ‌های هوشمند تجهیزات',
+  'Print Smart QR Stickers': 'چاپ برچسب‌های هوشمند QR',
+  'Print Machine QR Sheet': 'چاپ شیت برچسب‌های QR دستگاه‌ها',
+  'Add Machine': 'افزودن دستگاه جدید',
+  'Machine Name': 'نام دستگاه',
+  'Machine Code': 'کد شناسه دستگاه',
+  'Linked Exercise': 'حرکت متصل در تمرین',
+  'Brand / Manufacturer': 'برند / سازنده',
+  'Seat & Pin Adjustments': 'تنظیمات صندلی و پین',
+  'Safety & Coaching Cues': 'نکات ایمنی و اجرای صحیح',
+  'Prescribed in Today\'s Workout': 'در برنامه تمرینی امروز شماست',
+  'Not in Today\'s Workout': 'خارج از برنامه تمرینی امروز',
+  'AI Recommended Load': 'وزنه و گرم‌کردن پیشنهادی هوش مصنوعی',
+  'Last Logged Weight': 'آخرین وزنه ثبت‌شده شما',
+  'Warmup Sets': 'ست‌های گرم‌کردن',
+  'Working Sets': 'ست‌های اصلی',
+  'Working Set': 'ست اصلی',
+  'Log Set to Workout': 'ثبت این ست در برنامه',
+  'Add as Accessory Exercise': 'افزودن به عنوان حرکت کمکی',
+  'Log Free Set': 'ثبت آزاد رکورد',
+  'Contactless NFC Active': 'سنسور NFC فعال است — گوشی را نزدیک تگ نگه دارید',
+  'Camera Scanner Active': 'دوربین در حال اسکن بارکد دستگاه...',
+  'Enter Code Manually': 'یا کد دستگاه را وارد کنید',
+  'Biomechanical Form Check': 'ارزیابی بیومکانیکی حرکت با هوش مصنوعی',
+  'Machine set logged to workout ✓': 'ست دستگاه با موفقیت در برنامه تمرینی ثبت شد ✓',
+  'Print QR Sheet': 'چاپ شیت QR',
+  'InBody Biometric Scanner': 'اسکنر هوشمند برگه InBody',
+  'Scan InBody Sheet': 'اسکن برگه InBody',
+  'Live Camera Scan': 'اسکن با دوربین زنده',
+  'Upload InBody Sheet': 'آپلود عکس یا اسکن برگه',
+  'Sample InBody Sheets': 'نمونه‌های آزمایشی آماده',
+  'Skeletal Muscle Mass (SMM)': 'توده عضلانی اسکلتی (SMM)',
+  'Body Fat Mass (BFM)': 'توده چربی بدن (BFM)',
+  'Percent Body Fat (PBF)': 'درصد چربی بدن (PBF)',
+  'Visceral Fat Level': 'سطح چربی احشایی',
+  'Extracellular Water Ratio': 'نسبت آب برون‌سلولی (ECW)',
+  'Total Body Water (TBW)': 'آب کل بدن (TBW)',
+  'Basal Metabolic Rate (BMR)': 'متابولیسم پایه (BMR)',
+  'InBody Fitness Score': 'نمره تناسب اندام InBody',
+  'Segmental Lean Analysis': 'تحلیل تفکیکی عضلات',
+  'Right Arm': 'دست راست',
+  'Left Arm': 'دست چپ',
+  'Trunk': 'تنه و بالاتنه',
+  'Right Leg': 'پای راست',
+  'Left Leg': 'پای چپ',
+  'Limb Symmetry': 'تقارن اندام‌ها',
+  'InBody Biometrics': 'آنالیز ترکیبات بدنی InBody',
+  'Save to Client Profile': 'ثبت نهایی در پرونده شاگرد',
+  'InBody scan saved to client record ✓': 'آنالیز InBody با موفقیت در پرونده شاگرد ثبت شد ✓',
+  'Retake Scan': 'اسکن مجدد',
+  'InBody Biometric Report': 'گزارش بیومتریک InBody',
+  'Muscle Balance & Symmetry': 'تعادل و تقارن عضلانی',
+  'No InBody scans yet': 'هنوز اسکن InBody برای این ورزشکار ثبت نشده است',
+  'Balanced': 'متعادل و نرمال',
+  'High Risk / Elevated': 'پرخطر و بالا',
+  'Borderline': 'مرز هشدار',
+  'Optimal': 'ایده‌آل و مطلوب',
+  'Cellular Water Balance': 'تعادل آب سلولی',
+  'Total Body Water': 'آب کل بدن',
+  'Basal Metabolic Rate': 'متابولیسم پایه',
+  'Muscle Growth': 'رشد عضلانی',
+  'Fat Loss': 'کاهش چربی',
+  'Visceral Fat Change': 'تغییر چربی احشایی'
+});
+
+Object.assign(TR, {
+  'Smart Machines & QR Tags': 'Akıllı Makineler ve QR Etiketleri',
+  'Smart Machines': 'Akıllı Makineler',
+  'Scan Machine (NFC / QR)': 'Makineyi Tara (NFC / QR)',
+  'Scan Gym Machine': 'Salon Makinesini Tara',
+  'Print Machine QR Sheet': 'Makine QR Etiketlerini Yazdır',
+  'Add Machine': 'Yeni Makine Ekle',
+  'InBody Biometric Scanner': 'InBody Biyometrik Tarayıcı',
+  'Scan InBody Sheet': 'InBody Raporunu Tara',
+  'Skeletal Muscle Mass (SMM)': 'İskelet Kası Kütlesi (SMM)',
+  'Body Fat Mass (BFM)': 'Vücut Yağ Kütlesi (BFM)',
+  'Percent Body Fat (PBF)': 'Vücut Yağ Oranı (PBF)',
+  'Visceral Fat Level': 'İç Organ Yağlanma Düzeyi',
+  'Extracellular Water Ratio': 'Hücre Dışı Su Oranı (ECW)',
+  'InBody Fitness Score': 'InBody Kondisyon Skoru',
+  'Segmental Lean Analysis': 'Bölgesel Kas Analizi',
+  'Right Arm': 'Sağ Kol',
+  'Left Arm': 'Sol Kol',
+  'Trunk': 'Gövde',
+  'Right Leg': 'Sağ Bacak',
+  'Left Leg': 'Sol Bacak'
+});
+
 function applyLang(){
   const saved=(function(){try{return localStorage.getItem('co-lang')||localStorage.getItem('coach-os-locale')}catch(e){return null}})();
   if(!lang||lang==='en') lang=(saved==='tr'||saved==='fa')?saved:(lang||'en');
@@ -848,14 +1025,14 @@ function applyTpl(){
    timezone (toISOString would be UTC and reset streaks ahead of UTC). */
 const __iso=(off)=>new Date(Date.now()+off*864e5).toLocaleDateString('en-CA');
 const CLIENTS=[
-{id:1,name:'Ali Rezaei',goal:'Muscle Gain',weight:76.4,prog:'Hypertrophy — Week 6',week:6,next:'Today · 09:00',status:'Active',freq:'4x / week',streak:9,done:41,missed:3,last:'Yesterday',nextW:'Push A · Tomorrow 09:00',h:176,bf:14.2,email:'ali.rezaei@mail.com',dayStreak:12,lastDone:__iso(-1),pts:480,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'s3'},{id:'s7'},{id:'nut'}]},
-{id:2,name:'Sara Ahmadi',goal:'Fat Loss',weight:64.1,prog:'Cutting — Week 3',week:3,next:'Today · 11:00',status:'Active',freq:'3x / week',streak:4,done:11,missed:1,last:'2 days ago',nextW:'Full Body B · Today 11:00',h:165,bf:24.6,email:'sara.a@mail.com',dayStreak:4,lastDone:__iso(-1),pts:185,badges:[{id:'first'},{id:'w10'},{id:'s3'}]},
-{id:3,name:'Mohammad Karimi',goal:'Strength',weight:91.2,prog:'Strength 5×5 — Week 8',week:8,next:'Today · 14:30',status:'Active',freq:'5x / week',streak:15,done:63,missed:2,last:'Yesterday',nextW:'Leg A · Today 14:30',h:184,bf:17.9,email:'m.karimi@mail.com',dayStreak:23,lastDone:__iso(-1),pts:760,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'},{id:'s14'}]},
-{id:4,name:'Neda Hosseini',goal:'Muscle Gain',weight:58.9,prog:'Hypertrophy — Week 2',week:2,next:'Tomorrow · 17:00',status:'Active',freq:'4x / week',streak:3,done:7,missed:0,last:'3 days ago',nextW:'Pull A · Tomorrow 17:00',h:168,bf:21.3,email:'neda.h@mail.com',dayStreak:3,lastDone:__iso(-3),pts:95,badges:[{id:'first'},{id:'s3'}]},
-{id:5,name:'Reza Moradi',goal:'Fat Loss',weight:98.3,prog:'Cutting — Week 10',week:10,next:'—',status:'On Hold',freq:'3x / week',streak:0,done:28,missed:6,last:'9 days ago',nextW:'Unscheduled',h:181,bf:29.8,email:'reza.m@mail.com',dayStreak:0,pts:310,badges:[{id:'first'},{id:'w10'},{id:'w25'}]},
-{id:6,name:'Amir Jafari',goal:'Endurance',weight:70.2,prog:'Conditioning — Week 5',week:5,next:'—',status:'Inactive',freq:'2x / week',streak:0,done:14,missed:4,last:'3 weeks ago',nextW:'Unscheduled',h:174,bf:16.4,email:'amir.j@mail.com',dayStreak:0,pts:150,badges:[{id:'first'},{id:'w10'}]},
-{id:7,name:'Maryam Sadeghi',goal:'Mobility',weight:62.5,prog:'Recovery — Week 4',week:4,next:'Thu · 09:30',status:'Active',freq:'3x / week',streak:5,done:19,missed:1,last:'2 days ago',nextW:'Mobility B · Thu 09:30',h:162,bf:23.1,email:'maryam.s@mail.com',dayStreak:6,lastDone:__iso(-2),pts:250,badges:[{id:'first'},{id:'w10'},{id:'s3'},{id:'meas5'}]},
-{id:8,name:'Hamed Naderi',goal:'Muscle Gain',weight:84.6,prog:'Hypertrophy — Week 11',week:11,next:'Fri · 18:00',status:'Active',freq:'4x / week',streak:7,done:52,missed:1,last:'Yesterday',nextW:'Push B · Fri 18:00',h:179,bf:15.7,email:'hamed.n@mail.com',dayStreak:9,lastDone:__iso(-1),pts:600,badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'}]}];
+{id:1,name:'Ali Rezaei',goal:'Muscle Gain',weight:76.4,prog:'Hypertrophy — Week 6',week:6,next:'Today · 09:00',status:'Active',freq:'4x / week',streak:9,done:41,missed:3,last:'Yesterday',nextW:'Push A · Tomorrow 09:00',h:176,bf:14.2,email:'ali.rezaei@mail.com',dayStreak:12,lastDone:__iso(-1),pts:480,branchId:'br_hq',assignedCoachId:'c_owner',badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'s3'},{id:'s7'},{id:'nut'}]},
+{id:2,name:'Sara Ahmadi',goal:'Fat Loss',weight:64.1,prog:'Cutting — Week 3',week:3,next:'Today · 11:00',status:'Active',freq:'3x / week',streak:4,done:11,missed:1,last:'2 days ago',nextW:'Full Body B · Today 11:00',h:165,bf:24.6,email:'sara.a@mail.com',dayStreak:4,lastDone:__iso(-1),pts:185,branchId:'br_hq',assignedCoachId:'c_trainer1',badges:[{id:'first'},{id:'w10'},{id:'s3'}]},
+{id:3,name:'Mohammad Karimi',goal:'Strength',weight:91.2,prog:'Strength 5×5 — Week 8',week:8,next:'Today · 14:30',status:'Active',freq:'5x / week',streak:15,done:63,missed:2,last:'Yesterday',nextW:'Leg A · Today 14:30',h:184,bf:17.9,email:'m.karimi@mail.com',dayStreak:23,lastDone:__iso(-1),pts:760,branchId:'br_west',assignedCoachId:'c_trainer2',badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'},{id:'s14'}]},
+{id:4,name:'Neda Hosseini',goal:'Muscle Gain',weight:58.9,prog:'Hypertrophy — Week 2',week:2,next:'Tomorrow · 17:00',status:'Active',freq:'4x / week',streak:3,done:7,missed:0,last:'3 days ago',nextW:'Pull A · Tomorrow 17:00',h:168,bf:21.3,email:'neda.h@mail.com',dayStreak:3,lastDone:__iso(-3),pts:95,branchId:'br_west',assignedCoachId:'c_trainer2',badges:[{id:'first'},{id:'s3'}]},
+{id:5,name:'Reza Moradi',goal:'Fat Loss',weight:98.3,prog:'Cutting — Week 10',week:10,next:'—',status:'On Hold',freq:'3x / week',streak:0,done:28,missed:6,last:'9 days ago',nextW:'Unscheduled',h:181,bf:29.8,email:'reza.m@mail.com',dayStreak:0,pts:310,branchId:'br_hq',assignedCoachId:'c_owner',badges:[{id:'first'},{id:'w10'},{id:'w25'}]},
+{id:6,name:'Amir Jafari',goal:'Endurance',weight:70.2,prog:'Conditioning — Week 5',week:5,next:'—',status:'Inactive',freq:'2x / week',streak:0,done:14,missed:4,last:'3 weeks ago',nextW:'Unscheduled',h:174,bf:16.4,email:'amir.j@mail.com',dayStreak:0,pts:150,branchId:'br_west',assignedCoachId:'c_trainer2',badges:[{id:'first'},{id:'w10'}]},
+{id:7,name:'Maryam Sadeghi',goal:'Mobility',weight:62.5,prog:'Recovery — Week 4',week:4,next:'Thu · 09:30',status:'Active',freq:'3x / week',streak:5,done:19,missed:1,last:'2 days ago',nextW:'Mobility B · Thu 09:30',h:162,bf:23.1,email:'maryam.s@mail.com',dayStreak:6,lastDone:__iso(-2),pts:250,branchId:'br_hq',assignedCoachId:'c_trainer1',badges:[{id:'first'},{id:'w10'},{id:'s3'},{id:'meas5'}]},
+{id:8,name:'Hamed Naderi',goal:'Muscle Gain',weight:84.6,prog:'Hypertrophy — Week 11',week:11,next:'Fri · 18:00',status:'Active',freq:'4x / week',streak:7,done:52,missed:1,last:'Yesterday',nextW:'Push B · Fri 18:00',h:179,bf:15.7,email:'hamed.n@mail.com',dayStreak:9,lastDone:__iso(-1),pts:600,branchId:'br_hq',assignedCoachId:'c_owner',badges:[{id:'first'},{id:'w10'},{id:'w25'},{id:'w50'},{id:'s3'},{id:'s7'}]}];
 let ACTIVITY=[
 {w:'1 h ago',i:'check',h:'<b>Sara Ahmadi</b> completed <b>Full Body A — all sets logged</b>'},
 {w:'3 h ago',i:'zap',h:'<b>Mohammad Karimi</b> hit a new PR — <b>Deadlift · 145 kg</b>'},
@@ -1135,7 +1312,7 @@ let BUILDER=[
    never moved. It is now the actual current date. */
 const TDATE=new Date();
 const MSEED={
-1:[{d:'2026-04-13',w:82.4,bf:17.8,ch:99.0,wa:84.5,hi:98.2,ar:35.0,th:57.0,ca:37.2},{d:'2026-04-27',w:81.0,bf:17.1,ch:99.4,wa:83.6,hi:97.9,ar:35.3,th:57.3,ca:37.4},{d:'2026-05-11',w:79.8,bf:16.4,ch:99.9,wa:82.5,hi:97.5,ar:35.6,th:57.6,ca:37.6},{d:'2026-05-25',w:78.5,bf:15.8,ch:100.2,wa:81.6,hi:97.2,ar:35.9,th:57.9,ca:37.8},{d:'2026-06-08',w:77.4,bf:15.2,ch:100.6,wa:80.7,hi:96.9,ar:36.2,th:58.2,ca:37.9},{d:'2026-06-22',w:76.9,bf:14.8,ch:101.0,wa:80.1,hi:96.7,ar:36.4,th:58.4,ca:38.0},{d:'2026-07-05',w:76.4,bf:14.2,ch:101.5,wa:79.2,hi:96.4,ar:36.8,th:58.9,ca:38.2}],
+1:[{d:'2026-04-13',w:82.4,bf:17.8,ch:99.0,wa:84.5,hi:98.2,ar:35.0,th:57.0,ca:37.2},{d:'2026-04-27',w:81.0,bf:17.1,ch:99.4,wa:83.6,hi:97.9,ar:35.3,th:57.3,ca:37.4},{d:'2026-05-11',w:79.8,bf:16.4,ch:99.9,wa:82.5,hi:97.5,ar:35.6,th:57.6,ca:37.6},{d:'2026-05-25',w:78.5,bf:15.8,ch:100.2,wa:81.6,hi:97.2,ar:35.9,th:57.9,ca:37.8},{d:'2026-06-08',w:77.4,bf:15.2,ch:100.6,wa:80.7,hi:96.9,ar:36.2,th:58.2,ca:37.9},{d:'2026-06-22',w:76.9,bf:14.8,ch:101.0,wa:80.1,hi:96.7,ar:36.4,th:58.4,ca:38.0,inbody:{smm:35.3,bfm:11.4,pbf:14.8,bmi:24.8,bmr:1760,tbw:47.8,ecw:0.381,vfl:5,score:83,segmental:{rightArm:3.45,leftArm:3.42,trunk:27.5,rightLeg:9.20,leftLeg:9.15}}},{d:'2026-07-05',w:76.4,bf:14.2,ch:101.5,wa:79.2,hi:96.4,ar:36.8,th:58.9,ca:38.2,inbody:{smm:36.5,bfm:10.8,pbf:14.1,bmi:24.6,bmr:1785,tbw:48.6,ecw:0.380,vfl:4,score:86,segmental:{rightArm:3.55,leftArm:3.50,trunk:28.2,rightLeg:9.38,leftLeg:9.34}}}],
 2:[{d:'2026-06-01',w:65.8,bf:26.2,ch:92.0,wa:76.0,hi:99.0,ar:29.5,th:56.5,ca:35.0},{d:'2026-06-15',w:64.9,bf:25.4,ch:92.2,wa:75.2,hi:98.4,ar:29.7,th:56.2,ca:35.1},{d:'2026-06-29',w:64.1,bf:24.6,ch:92.4,wa:74.5,hi:98.0,ar:29.9,th:56.0,ca:35.2}],
 3:[{d:'2026-06-05',w:92.0,bf:18.6,ch:106.0,wa:88.0,hi:100.0,ar:38.0,th:60.5,ca:39.0},{d:'2026-06-20',w:91.6,bf:18.2,ch:106.4,wa:87.4,hi:100.1,ar:38.2,th:60.8,ca:39.1},{d:'2026-07-01',w:91.2,bf:17.9,ch:106.8,wa:87.0,hi:100.2,ar:38.4,th:61.0,ca:39.2}],
 4:[{d:'2026-06-15',w:59.4,bf:21.9,ch:88.5,wa:69.0,hi:92.0,ar:27.5,th:53.5,ca:34.0},{d:'2026-06-30',w:58.9,bf:21.3,ch:89.0,wa:68.5,hi:92.2,ar:27.8,th:53.8,ca:34.1}],
@@ -2448,6 +2625,697 @@ async function authMe(){
     return true;
   }catch(e){return false}
 }
+
+/* ================= GYM & MULTI-BRANCH ORGANIZATION ================= */
+const DEMO_ORG = {
+  id: 'org_demo',
+  name: 'Olympia Fitness Clubs (زعفرانیه و شهرک غرب)',
+  plan: 'gym_chain',
+  branches: [
+    { id: 'br_hq', name: 'شعبه مرکزی (زعفرانیه)', isHQ: true, address: 'زعفرانیه، خیابان آصف', phone: '021-22001122' },
+    { id: 'br_west', name: 'شعبه ۲ (شهرک غرب)', isHQ: false, address: 'شهرک غرب، بلوار دادمان', phone: '021-88334455' },
+    { id: 'br_vip', name: 'شعبه ۳ (VIP بانوان)', isHQ: false, address: 'فرمانیه، تقاطع کامرانیه', phone: '021-26112233' }
+  ],
+  staff: [
+    { coachId: 'c_owner', name: 'سروش کریمی', email: 'soroush@coachos.app', role: 'gym_owner', branches: ['*'] },
+    { coachId: 'c_head', name: 'کاوه خسروی', email: 'kaveh@coachos.app', role: 'head_coach', branches: ['*'] },
+    { coachId: 'c_trainer1', name: 'سارا محمدی', email: 'sara@coachos.app', role: 'trainer', branches: ['br_hq'] },
+    { coachId: 'c_trainer2', name: 'رضا افشار', email: 'reza@coachos.app', role: 'trainer', branches: ['br_west'] },
+    { coachId: 'c_rec', name: 'مریم اکبری', email: 'maryam@coachos.app', role: 'reception', branches: ['br_hq'] }
+  ]
+};
+
+const isGymWorkspace = () => {
+  if (S.org) return true;
+  const p = AUTH.access?.plan || (AUTH.coach && AUTH.coach.plan);
+  return ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(p) || !AUTH.token;
+};
+
+const currentOrg = () => S.org || (!AUTH.token ? DEMO_ORG : null);
+
+const branchNameOf = (brid) => {
+  if (!brid || brid === 'all') return t('All Branches');
+  const org = currentOrg();
+  const b = (org?.branches || []).find(x => x.id === brid);
+  return b ? b.name : brid;
+};
+
+const coachNameOf = (cid) => {
+  if (!cid) return t('Unassigned');
+  const org = currentOrg();
+  const st = (org?.staff || []).find(x => x.coachId === cid);
+  return st ? st.name : cid;
+};
+
+async function loadOrgMe() {
+  if (!AUTH.token) {
+    S.org = DEMO_ORG;
+    S.orgRole = 'gym_owner';
+    S.isGymOwner = true;
+    return;
+  }
+  try {
+    const { ok, d } = await authApi('/api/org/me');
+    if (ok && d && d.org) {
+      S.org = d.org;
+      S.orgRole = d.role;
+      S.isGymOwner = d.isOwner;
+      render();
+    }
+  } catch (e) {}
+}
+
+function branchSelectorBtn(){
+  const org = currentOrg();
+  if(!org || !org.branches || org.branches.length <= 1) return '';
+  const curB = (org.branches||[]).find(b => b.id === S.branchFilter);
+  const curName = curB ? curB.name : t('All Branches');
+  return `<div class="mwrap" data-mw>
+    <button class="btn btn-outline btn-sm" data-act="mw" style="gap:6px" title="${t('Select Branch')}">
+      ${ic('building',13)} <span style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(curName)}</span> ${ic('chevD',11)}
+    </button>
+    <div class="menu" style="min-width:210px">
+      <div class="menu-hd">${t('Gym Branches')}</div>
+      <div class="menu-it ${(!S.branchFilter || S.branchFilter==='all')?'on':''}" data-act="set-branch-filter" data-brid="all">
+        ${ic('building',14)} <span>${t('All Branches')}</span>
+      </div>
+      ${(org.branches||[]).map(b => `<div class="menu-it ${S.branchFilter===b.id?'on':''}" data-act="set-branch-filter" data-brid="${b.id}">
+        ${ic('building',14)} <span style="flex:1">${esc(b.name)}</span> ${b.isHQ ? `<span class="bdg bdg-lime" style="font-size:9.5px">${t('HQ')}</span>` : ''}
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function vOrg(){
+  const org = currentOrg();
+  if(!org){
+    return `
+    <div class="page-h"><div>
+      <div class="eyebrow">${t('B2B Gym & Studio OS')} // ${t('Multi-Branch')}</div>
+      <h1>${t('Gym & Staff')}</h1>
+      <div class="sub">${t('Manage branches, personal trainers, and athlete rosters under one centralized roof')}</div>
+    </div></div>
+    <div class="card" style="padding:32px;text-align:center;max-width:560px;margin:32px auto">
+      <div style="margin-bottom:14px;color:var(--accent)">${ic('building',44)}</div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">${t('Initialize Gym Organization')}</h2>
+      <p class="muted" style="margin-bottom:20px;font-size:13.5px;line-height:1.6">${t('Upgrade your workspace to a multi-branch gym or fitness club. Add staff, allocate athlete seats, and manage anti-poaching athlete transfers with full data governance.')}</p>
+      <button class="btn btn-primary" data-act="org-create-modal">${ic('plus',15)} ${t('Create Gym Organization')}</button>
+    </div>`;
+  }
+
+  const tab = S.orgTab || 'staff';
+  const branches = org.branches || [];
+  const staff = org.staff || [];
+  const totalAthletes = CLIENTS.filter(c => c.status !== 'Archived').length;
+
+  const roleLabels = {
+    gym_owner: t('Gym Owner'),
+    head_coach: t('Head Coach'),
+    manager: t('Manager'),
+    trainer: t('Trainer'),
+    reception: t('Reception')
+  };
+
+  const planName = {
+    gym_studio: t('Studio Plan'),
+    gym_chain: t('Chain Plan'),
+    gym_enterprise: t('Enterprise Plan'),
+    club: t('Club Plan')
+  }[org.plan] || (org.plan || t('Gym Plan'));
+
+  return `
+  <div class="page-h"><div>
+    <div class="eyebrow">${t('B2B Gym & Studio OS')} // ${t('Multi-Branch & Anti-Poaching')}</div>
+    <div class="row" style="gap:10px;align-items:center">
+      <h1 style="margin:0">${esc(org.name)}</h1>
+      <span class="bdg bdg-lime" style="font-size:11px">${ic('building',12)} ${esc(planName)}</span>
+    </div>
+    <div class="sub">${t('Centralized governance, multi-branch athlete roster, and personal trainer management')}</div>
+  </div>
+  <div class="row" style="gap:8px">
+    ${S.isGymOwner ? `<button class="btn btn-outline" data-act="org-add-branch-modal">${ic('plus',14)} ${t('Add Branch')}</button>` : ''}
+    ${S.isGymOwner ? `<button class="btn btn-primary" data-act="org-add-staff-modal">${ic('plus',14)} ${t('Add Staff')}</button>` : ''}
+    <button class="btn btn-outline" data-act="org-reassign-modal">${ic('refresh',14)} ${t('Reassign Athletes')}</button>
+  </div></div>
+
+  <div class="stats-row" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;margin-bottom:20px">
+    <div class="card stat-card" style="padding:16px">
+      <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Active Branches')}</div>
+      <div class="row" style="justify-content:space-between;align-items:baseline">
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${branches.length}</span>
+        <span class="bdg bdg-gray">${branches.filter(b=>b.isHQ).length} ${t('HQ')}</span>
+      </div>
+    </div>
+    <div class="card stat-card" style="padding:16px">
+      <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Staff & Trainers')}</div>
+      <div class="row" style="justify-content:space-between;align-items:baseline">
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${staff.length}</span>
+        <span class="bdg bdg-gray">${staff.filter(s=>s.role==='trainer').length} ${t('Trainers')}</span>
+      </div>
+    </div>
+    <div class="card stat-card" style="padding:16px">
+      <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Club Athletes')}</div>
+      <div class="row" style="justify-content:space-between;align-items:baseline">
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${totalAthletes}</span>
+        <span class="bdg bdg-lime">${CLIENTS.filter(c=>c.status==='Active').length} ${t('Active')}</span>
+      </div>
+    </div>
+    <div class="card stat-card" style="padding:16px">
+      <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Your Role')}</div>
+      <div class="row" style="justify-content:space-between;align-items:baseline">
+        <span style="font-size:18px;font-weight:700;color:var(--accent)">${roleLabels[S.orgRole]||t('Gym Owner')}</span>
+        <span class="bdg bdg-gray">${S.isGymOwner?t('Admin'):t('Staff')}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="seg" style="margin-bottom:16px">
+    <button class="${tab==='staff'?'on':''}" data-act="org-tab" data-tab="staff">${ic('users',14)} ${t('Staff & Trainers')}</button>
+    <button class="${tab==='branches'?'on':''}" data-act="org-tab" data-tab="branches">${ic('building',14)} ${t('Branches')}</button>
+    <button class="${tab==='reassign'?'on':''}" data-act="org-tab" data-tab="reassign">${ic('refresh',14)} ${t('Anti-Poaching Transfer')}</button>
+    <button class="${tab==='machines'?'on':''}" data-act="org-tab" data-tab="machines">${ic('dumbbell',14)} ${t('Smart Machines & QR Tags')}</button>
+  </div>
+
+  ${tab==='staff' ? renderOrgStaffTab(org) : ''}
+  ${tab==='branches' ? renderOrgBranchesTab(org) : ''}
+  ${tab==='reassign' ? renderOrgReassignTab(org) : ''}
+  ${tab==='machines' ? renderOrgMachinesTab(org) : ''}
+  `;
+}
+
+function renderOrgStaffTab(org){
+  const staff = org.staff || [];
+  const roleBadges = {
+    gym_owner: `<span class="bdg bdg-lime">${t('Gym Owner')}</span>`,
+    head_coach: `<span class="bdg bdg-blue">${t('Head Coach')}</span>`,
+    manager: `<span class="bdg bdg-purple">${t('Manager')}</span>`,
+    trainer: `<span class="bdg bdg-gray">${t('Trainer')}</span>`,
+    reception: `<span class="bdg bdg-amber">${t('Reception')}</span>`
+  };
+  return `
+  <div class="card" style="overflow-x:auto">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>${t('Staff & Trainers')}</th>
+          <th>${t('Staff Role')}</th>
+          <th>${t('Assigned Branches')}</th>
+          <th>${t('Assigned Athletes')}</th>
+          <th style="text-align:end">${t('Actions')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${staff.map(s => {
+          const clientCount = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
+          const brNames = (s.branches || []).includes('*')
+            ? `<span class="chip" style="font-size:11px">${ic('globe',11)} ${t('All Branches')}</span>`
+            : (s.branches || []).map(brid => `<span class="chip" style="font-size:11px">${ic('building',11)} ${esc(branchNameOf(brid))}</span>`).join(' ');
+          return `
+          <tr>
+            <td>
+              <div class="row" style="gap:10px">
+                ${av(s.name, 36, 2)}
+                <div>
+                  <div style="font-weight:600">${esc(s.name)}</div>
+                  <div class="muted" style="font-size:12px">${esc(s.email)}</div>
+                </div>
+              </div>
+            </td>
+            <td>${roleBadges[s.role] || `<span class="bdg bdg-gray">${esc(s.role)}</span>`}</td>
+            <td><div class="row" style="gap:4px;flex-wrap:wrap">${brNames}</div></td>
+            <td>
+              <span class="bdg ${clientCount > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:11px">
+                ${clientCount} ${t('Athletes')}
+              </span>
+            </td>
+            <td style="text-align:end;white-space:nowrap">
+              <button class="btn btn-ghost btn-sm" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('Filter Clients')}">
+                ${ic('users',13)} ${t('Roster')}
+              </button>
+              ${S.isGymOwner && s.role !== 'gym_owner' ? `
+                <button class="btn btn-ghost btn-sm" style="color:var(--red)" data-act="org-remove-staff" data-coachid="${esc(s.coachId)}" title="${t('Remove Staff')}">
+                  ${ic('trash',13)}
+                </button>
+              ` : ''}
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function renderOrgBranchesTab(org){
+  const branches = org.branches || [];
+  return `
+  <div class="cgrid">
+    ${branches.map(b => {
+      const branchAthletes = CLIENTS.filter(c => c.branchId === b.id && c.status !== 'Archived').length;
+      const branchCoaches = (org.staff || []).filter(s => (s.branches || []).includes('*') || (s.branches || []).includes(b.id)).length;
+      return `
+      <div class="card" style="display:flex;flex-direction:column;gap:12px;padding:18px">
+        <div class="row" style="justify-content:space-between;align-items:flex-start">
+          <div class="row" style="gap:10px">
+            <div style="width:38px;height:38px;border-radius:10px;background:var(--card-sub);display:flex;align-items:center;justify-content:center;color:var(--accent)">
+              ${ic('building', 20)}
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:15px">${esc(b.name)}</div>
+              ${b.isHQ ? `<span class="bdg bdg-lime" style="font-size:10px;margin-top:2px">${t('HQ')} · ${t('Headquarters')}</span>` : `<span class="bdg bdg-gray" style="font-size:10px;margin-top:2px">${t('Branch')}</span>`}
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:12.5px;color:var(--text-sub);display:flex;flex-direction:column;gap:6px">
+          ${b.address ? `<div class="row" style="gap:6px">${ic('globe',13)} <span>${esc(b.address)}</span></div>` : ''}
+          ${b.phone ? `<div class="row" style="gap:6px">${ic('mail',13)} <span>${esc(b.phone)}</span></div>` : ''}
+        </div>
+
+        <div class="row" style="gap:14px;border-top:1px solid var(--line2);padding-top:10px;margin-top:auto">
+          <div>
+            <div class="muted" style="font-size:11px">${t('Active Athletes')}</div>
+            <div style="font-weight:700;font-size:14px">${branchAthletes}</div>
+          </div>
+          <div>
+            <div class="muted" style="font-size:11px">${t('Staff on Site')}</div>
+            <div style="font-weight:700;font-size:14px">${branchCoaches}</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-inline-start:auto" data-act="set-branch-filter" data-brid="${esc(b.id)}">
+            ${ic('filter', 12)} ${t('View Roster')}
+          </button>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderOrgReassignTab(org){
+  const staff = (org.staff || []).filter(s => s.role !== 'reception');
+  const branches = org.branches || [];
+  return `
+  <div class="card" style="padding:20px;max-width:800px;margin:0 auto">
+    <div class="row" style="gap:12px;margin-bottom:14px;align-items:flex-start">
+      <div style="width:40px;height:40px;border-radius:10px;background:var(--card-sub);color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none">
+        ${ic('lock', 20)}
+      </div>
+      <div>
+        <h3 style="margin:0 0 4px 0">${t('Anti-Poaching Protection & Client Transfer')}</h3>
+        <p class="muted" style="font-size:12.5px;margin:0;line-height:1.5">
+          ${t('All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach resigns or changes branches, reassign their athletes in one click.')}
+        </p>
+      </div>
+    </div>
+
+    <div class="fgrid" style="margin-bottom:16px">
+      <div class="field">
+        <label class="lbl">${t('Target Coach')}</label>
+        <select class="inp" id="org-reassign-target-coach">
+          ${staff.map(s => `<option value="${esc(s.coachId)}">${esc(s.name)} (${t(s.role)})</option>`).join('')}
+        </select>
+      </div>
+      <div class="field">
+        <label class="lbl">${t('Target Branch')}</label>
+        <select class="inp" id="org-reassign-target-branch">
+          ${branches.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+      <span class="lbl" style="margin:0">${t('Select Athletes to Transfer')}</span>
+      <button class="btn btn-ghost btn-sm" data-act="org-reassign-select-all">${t('Select All')}</button>
+    </div>
+
+    <div style="max-height:280px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:16px">
+      ${CLIENTS.map(c => `
+        <label class="row" style="gap:10px;padding:8px;border-radius:6px;cursor:pointer;justify-content:flex-start">
+          <input type="checkbox" class="org-reassign-chk" value="${c.id}">
+          ${avC(c.name, 30)}
+          <div style="flex:1">
+            <span style="font-weight:600;font-size:13px">${esc(c.name)}</span>
+            <span class="muted" style="font-size:11.5px;margin-inline-start:6px">(${esc(coachNameOf(c.assignedCoachId))} · ${esc(branchNameOf(c.branchId))})</span>
+          </div>
+          ${stBdg(c.status)}
+        </label>
+      `).join('')}
+    </div>
+
+    <div class="row" style="justify-content:flex-end;gap:8px">
+      <button class="btn btn-primary" data-act="org-reassign-batch-submit">
+        ${ic('refresh', 14)} ${t('Transfer Selected Athletes')}
+      </button>
+    </div>
+  </div>`;
+}
+
+function orgAddBranchModal(){
+  openModal(`
+  <div class="modal-h">
+    <h3>${t('Add Branch')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b">
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Branch Name')} *</label>
+      <input class="inp" id="nobr-name" placeholder="${t('e.g. West Branch (Shahrak Gharb)')}">
+    </div>
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Address')}</label>
+      <input class="inp" id="nobr-addr" placeholder="${t('e.g. Dadman Blvd, Building 42')}">
+    </div>
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Phone')}</label>
+      <input class="inp" id="nobr-phone" placeholder="${t('e.g. 021-88334455')}">
+    </div>
+    <label class="row" style="gap:8px;cursor:pointer;margin-top:14px">
+      <input type="checkbox" id="nobr-hq">
+      <span style="font-size:13px">${t('Designate as Headquarters (HQ)')}</span>
+    </label>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="org-branch-submit">${ic('check',15)} ${t('Add Branch')}</button>
+  </div>`);
+}
+
+function orgAddStaffModal(){
+  const org = currentOrg();
+  const branches = org?.branches || [];
+  openModal(`
+  <div class="modal-h">
+    <h3>${t('Add Staff')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b">
+    <div class="fgrid" style="margin-bottom:12px">
+      <div class="field">
+        <label class="lbl">${t('Full Name')} *</label>
+        <input class="inp" id="nost-name" placeholder="${t('e.g. Sara Mohammadi')}">
+      </div>
+      <div class="field">
+        <label class="lbl">${t('Email')} *</label>
+        <input class="inp" id="nost-email" placeholder="coach@example.com">
+      </div>
+    </div>
+    <div class="fgrid" style="margin-bottom:12px">
+      <div class="field">
+        <label class="lbl">${t('Staff Role')}</label>
+        <select class="inp" id="nost-role">
+          <option value="trainer">${t('Trainer')}</option>
+          <option value="head_coach">${t('Head Coach')}</option>
+          <option value="manager">${t('Manager')}</option>
+          <option value="reception">${t('Reception')}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="lbl">${t('Assigned Branch')}</label>
+        <select class="inp" id="nost-branch">
+          <option value="all">${t('All Branches')}</option>
+          ${branches.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="org-staff-submit">${ic('check',15)} ${t('Add Staff')}</button>
+  </div>`);
+}
+
+function orgReassignModal(preselectedCid){
+  const org = currentOrg();
+  const staff = (org?.staff || []).filter(s => s.role !== 'reception');
+  const branches = org?.branches || [];
+  const targetC = preselectedCid ? CLIENTS.find(c => c.id === preselectedCid) : null;
+  openModal(`
+  <div class="modal-h">
+    <h3>${t('Reassign Coach')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b">
+    ${targetC ? `
+      <div class="card" style="padding:10px 14px;margin-bottom:14px;background:var(--card-sub);display:flex;align-items:center;gap:10px">
+        ${avC(targetC.name, 36)}
+        <div>
+          <div style="font-weight:600">${esc(targetC.name)}</div>
+          <div class="muted" style="font-size:12px">${esc(coachNameOf(targetC.assignedCoachId))} · ${esc(branchNameOf(targetC.branchId))}</div>
+        </div>
+        <input type="hidden" id="ore-cid" value="${targetC.id}">
+      </div>
+    ` : `
+      <div class="field" style="margin-bottom:12px">
+        <label class="lbl">${t('Select Athlete')}</label>
+        <select class="inp" id="ore-cid">
+          ${CLIENTS.map(c => `<option value="${c.id}">${esc(c.name)} (${esc(coachNameOf(c.assignedCoachId))})</option>`).join('')}
+        </select>
+      </div>
+    `}
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Target Coach')} *</label>
+      <select class="inp" id="ore-coach">
+        ${staff.map(s => `<option value="${esc(s.coachId)}">${esc(s.name)} (${t(s.role)})</option>`).join('')}
+      </select>
+    </div>
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Target Branch')}</label>
+      <select class="inp" id="ore-branch">
+        <option value="">${t('Keep current branch')}</option>
+        ${branches.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('')}
+      </select>
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="org-reassign-single-submit">${ic('refresh',14)} ${t('Transfer')}</button>
+  </div>`);
+}
+
+function orgCreateModal(){
+  openModal(`
+  <div class="modal-h">
+    <h3>${t('Create Gym Organization')}</h3>
+    <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+  </div>
+  <div class="modal-b">
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Gym Name')} *</label>
+      <input class="inp" id="norg-name" placeholder="${t('e.g. Olympia Fitness Clubs')}">
+    </div>
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Primary Branch Name')} *</label>
+      <input class="inp" id="norg-branch" placeholder="${t('e.g. Central HQ')}">
+    </div>
+  </div>
+  <div class="modal-f">
+    <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
+    <button class="btn btn-primary" data-act="org-create-submit">${ic('check',15)} ${t('Create')}</button>
+  </div>`);
+}
+
+async function orgRemoveStaff(coachId){
+  const doConfirm = typeof confirm === 'function' ? confirm(t('Are you sure you want to remove this staff member? Any assigned clients should be reassigned.')) : true;
+  if(!doConfirm) return;
+  const org = currentOrg();
+  if(!org) return;
+  if(!AUTH.token){
+    org.staff = (org.staff||[]).filter(s => s.coachId !== coachId);
+    toast(t('Staff member removed ✓'));
+    render();
+    return;
+  }
+  try{
+    const { ok, err } = await authApi(`/api/org/staff?coachId=${encodeURIComponent(coachId)}`, { method: 'DELETE' });
+    if(ok){
+      org.staff = (org.staff||[]).filter(s => s.coachId !== coachId);
+      toast(t('Staff member removed ✓'));
+      render();
+    } else {
+      toast(err || t('Failed to remove staff'));
+    }
+  }catch(e){
+    toast(t('Failed to remove staff'));
+  }
+}
+
+async function handleOrgBranchSubmit(){
+  const name = ($('nobr-name')?.value || '').trim();
+  const address = ($('nobr-addr')?.value || '').trim();
+  const phone = ($('nobr-phone')?.value || '').trim();
+  const isHQ = !!$('nobr-hq')?.checked;
+  if(!name){ toast(t('Please enter a branch name')); return; }
+  const org = currentOrg();
+  if(!org) return;
+
+  if(!AUTH.token){
+    const newBr = { id: 'br_' + Date.now(), name, address, phone, isHQ };
+    if(isHQ) (org.branches||[]).forEach(b => b.isHQ = false);
+    org.branches = org.branches || [];
+    org.branches.push(newBr);
+    closeModal();
+    toast(t('Branch added successfully ✓'));
+    render();
+    return;
+  }
+
+  try {
+    const { ok, d, err } = await authApi('/api/org/branch', {
+      method: 'POST',
+      body: JSON.stringify({ name, address, phone, isHQ })
+    });
+    if(ok && d && d.branch){
+      if(isHQ) (org.branches||[]).forEach(b => b.isHQ = false);
+      org.branches = org.branches || [];
+      org.branches.push(d.branch);
+      closeModal();
+      toast(t('Branch added successfully ✓'));
+      render();
+    } else {
+      toast(err || t('Failed to add branch'));
+    }
+  } catch(e){
+    toast(t('Failed to add branch'));
+  }
+}
+
+async function handleOrgStaffSubmit(){
+  const name = ($('nost-name')?.value || '').trim();
+  const email = ($('nost-email')?.value || '').trim();
+  const role = $('nost-role')?.value || 'trainer';
+  const branchId = $('nost-branch')?.value || 'all';
+  if(!name || !email){ toast(t('Please enter name and email')); return; }
+  const org = currentOrg();
+  if(!org) return;
+
+  const branches = branchId === 'all' ? ['*'] : [branchId];
+
+  if(!AUTH.token){
+    const newStaff = { coachId: 'c_' + Date.now(), name, email, role, branches };
+    org.staff = org.staff || [];
+    org.staff.push(newStaff);
+    closeModal();
+    toast(t('Staff member added ✓'));
+    render();
+    return;
+  }
+
+  try {
+    const { ok, d, err } = await authApi('/api/org/staff', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, role, branches })
+    });
+    if(ok && d && d.staff){
+      org.staff = org.staff || [];
+      org.staff.push(d.staff);
+      closeModal();
+      toast(t('Staff member added ✓'));
+      render();
+    } else {
+      toast(err || t('Failed to add staff'));
+    }
+  } catch(e){
+    toast(t('Failed to add staff'));
+  }
+}
+
+async function handleOrgReassignSingleSubmit(){
+  const cid = +($('ore-cid')?.value || 0);
+  const targetCoachId = $('ore-coach')?.value;
+  const targetBranchId = $('ore-branch')?.value || null;
+  if(!cid || !targetCoachId){ toast(t('Please select coach and client')); return; }
+
+  const c = CLIENTS.find(x => x.id === cid);
+  if(c){
+    c.assignedCoachId = targetCoachId;
+    if(targetBranchId) c.branchId = targetBranchId;
+  }
+
+  if(AUTH.token){
+    try {
+      await authApi('/api/org/reassign', {
+        method: 'POST',
+        body: JSON.stringify({ clientIds: [cid], targetCoachId, targetBranchId })
+      });
+    } catch(e){}
+  }
+
+  saveData();
+  closeModal();
+  toast(t('Athletes reassigned successfully ✓'));
+  render();
+}
+
+async function handleOrgReassignBatchSubmit(){
+  const targetCoachId = $('org-reassign-target-coach')?.value;
+  const targetBranchId = $('org-reassign-target-branch')?.value || null;
+  const checkboxes = document.querySelectorAll ? document.querySelectorAll('.org-reassign-chk:checked') : [];
+  const clientIds = Array.from(checkboxes).map(cb => +cb.value).filter(Boolean);
+
+  if(!clientIds.length){ toast(t('Please select at least one athlete to transfer')); return; }
+  if(!targetCoachId){ toast(t('Please select a target coach')); return; }
+
+  clientIds.forEach(cid => {
+    const c = CLIENTS.find(x => x.id === cid);
+    if(c){
+      c.assignedCoachId = targetCoachId;
+      if(targetBranchId) c.branchId = targetBranchId;
+    }
+  });
+
+  if(AUTH.token){
+    try {
+      await authApi('/api/org/reassign', {
+        method: 'POST',
+        body: JSON.stringify({ clientIds, targetCoachId, targetBranchId })
+      });
+    } catch(e){}
+  }
+
+  saveData();
+  toast(t('Athletes reassigned successfully ✓'));
+  render();
+}
+
+async function handleOrgCreateSubmit(){
+  const name = ($('norg-name')?.value || '').trim();
+  const primaryBranchName = ($('norg-branch')?.value || '').trim() || 'Central HQ';
+  if(!name){ toast(t('Please enter a gym name')); return; }
+
+  if(!AUTH.token){
+    S.org = {
+      id: 'org_' + Date.now(),
+      name,
+      plan: 'gym_studio',
+      branches: [{ id: 'br_hq', name: primaryBranchName, isHQ: true }],
+      staff: [{ coachId: 'c_owner', name: coachName(), email: 'owner@coachos.app', role: 'gym_owner', branches: ['*'] }]
+    };
+    S.isGymOwner = true;
+    S.orgRole = 'gym_owner';
+    closeModal();
+    toast(t('Gym Organization created ✓'));
+    render();
+    return;
+  }
+
+  try {
+    const { ok, d, err } = await authApi('/api/org/create', {
+      method: 'POST',
+      body: JSON.stringify({ name, primaryBranchName })
+    });
+    if(ok && d && d.org){
+      S.org = d.org;
+      S.isGymOwner = true;
+      S.orgRole = 'gym_owner';
+      closeModal();
+      toast(t('Gym Organization created ✓'));
+      render();
+    } else {
+      toast(err || t('Failed to create gym organization'));
+    }
+  } catch(e){
+    toast(t('Failed to create gym organization'));
+  }
+}
+
 /* v16.5 — rename the signed-in coach. The profile form used to be dead
    (Save just toasted) and every screen showed the hardcoded demo persona,
    which is why the signup name seemed "not registered". */
@@ -3260,7 +4128,8 @@ unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,mcf:'All',mlogCid:null,msheet:false,mjump:false,macc:{},cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
-nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null};
+nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null,
+  org:null,orgTab:'staff',branchFilter:'all',coachFilter:'all',orgRole:'gym_owner',isGymOwner:true};
 const $=id=>document.getElementById(id);
 /* HTML escaper. This previously escaped ONLY "<", which was unsafe in two ways:
    (a) any value placed in a quoted attribute (data-c="${esc(c.name)}", …) could
@@ -4508,9 +5377,11 @@ function vDashCm(){
   </div>`;
 }
 function vClientsCm(){
-  const act=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const branchMatches = c => !S.branchFilter || S.branchFilter === 'all' || c.branchId === S.branchFilter;
+  const coachMatches = c => !S.coachFilter || S.coachFilter === 'all' || c.assignedCoachId === S.coachFilter;
+  const act=CLIENTS.filter(c=>c.status!=='Archived' && branchMatches(c) && coachMatches(c)).length;
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
-  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)).slice().sort(sorters[S.csort]||sorters.name);
+  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)&&branchMatches(c)&&coachMatches(c)).slice().sort(sorters[S.csort]||sorters.name);
   const cnt=v=>CLIENTS.filter(c=>v==='All'?c.status!=='Archived':c.status===v).length;
   const chip=(v,l)=>`<button class="cm-fchip ${(S.cfilter||'All')===v?'on':''}" data-act="cm-filter" data-v="${v}">${t(l)} <b>${nf(cnt(v))}</b></button>`;
   return `
@@ -4537,10 +5408,13 @@ function vClientsCm(){
           <span class="cm-meta">${ic('calendar',12)} ${t(c.next)}</span>
           ${c.streak?`<span class="cm-meta">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
           <span class="cm-meta">${ic('copy',12)} ${esc(joinCodeOf(c))}</span>
+          ${c.branchId ? `<span class="cm-meta" title="${t('Branch')}">${ic('building',12)} ${esc(branchNameOf(c.branchId))}</span>` : ''}
+          ${c.assignedCoachId ? `<span class="cm-meta" title="${t('Assigned Coach')}">${ic('user',12)} ${esc(coachNameOf(c.assignedCoachId))}</span>` : ''}
         </div>
       </div>
       ${cmRing(p,52,11)}
       <div class="row" style="flex:none;gap:2px">
+        <button class="btn btn-ghost btn-icon" title="${t('Reassign Coach')}" data-act="org-reassign-modal" data-cid="${c.id}">${ic('refresh',14)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
@@ -4941,16 +5815,13 @@ function vDash(){
 function vClients(){
   if(PREFS.uiTpl==='coachmint')return vClientsCm();
   const grid=S.cv==='grid';
-  /* Real counts — the subtitle used to be a HARDCODED demo string ("42 Active
-     Clients · 8 shown in this workspace") that every fresh signup saw over an
-     EMPTY workspace. Same seat rule as billing: archived clients don't count. */
-  const act=CLIENTS.filter(c=>c.status!=='Archived').length;
+  const branchMatches = c => !S.branchFilter || S.branchFilter === 'all' || c.branchId === S.branchFilter;
+  const coachMatches = c => !S.coachFilter || S.coachFilter === 'all' || c.assignedCoachId === S.coachFilter;
+  const act=CLIENTS.filter(c=>c.status!=='Archived' && branchMatches(c) && coachMatches(c)).length;
   const sub=!CLIENTS.length?t('No clients yet — add your first client')
     :`${nf(act)} ${t(act===1?'active client':'active clients')}`;
-  /* v18.9 — Filter/Sort buttons used to be toast stubs. Real status filter +
-     sort (name / status / streak / next session) applied to BOTH views. */
   const sorters={name:(a,b)=>String(a.name).localeCompare(String(b.name)),status:(a,b)=>String(a.status||'').localeCompare(String(b.status||'')),streak:(a,b)=>(b.streak||0)-(a.streak||0),next:(a,b)=>String(a.next||'').localeCompare(String(b.next||''))};
-  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)).slice().sort(sorters[S.csort]||sorters.name);
+  const list=CLIENTS.filter(c=>(!S.cfilter||S.cfilter==='All'||c.status===S.cfilter)&&(!S.csport||S.csport==='All'||clientSport(c)===S.csport)&&branchMatches(c)&&coachMatches(c)).slice().sort(sorters[S.csort]||sorters.name);
   /* v19.12 — §3 completion surfaced WHERE THE COACH ALREADY LOOKS. Without it,
      "who has not filled their athletics profile?" was only answerable by
      opening athletes one at a time — and the profile screen itself now lives
@@ -10746,6 +11617,7 @@ function renderMobile(){
   if(S.mview==='client')body=mClientView();
   else if(S.mview==='live')body=mLive();
   else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
+  else if(S.mview==='org')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vOrg();
   else if(S.mview==='settings')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vSettings();
   else if(S.mview==='nutrition')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+nNutrition();
   else if(S.mview==='templates')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vTemplates();
@@ -11010,6 +11882,7 @@ function mMore(){
      bar and AI has its own FAB, so neither needs a row here any more. */
   const quick=[
     ['Messages','mail','mtab','messages'],
+    ['Gym & Staff','building','mnav','org'],
     ['Add Client','users','add-client',''],
     ['Add Measurement','ruler','m-add',''],
     ['Create Note','note','qn-open',coachFirstClient()],
@@ -13040,7 +13913,8 @@ function pbEditor(targetCid){
       <div class="field"><label class="lbl">${t('Previous mark')}</label><input class="inp" id="pb-prev" placeholder="21:47"></div>
     </div>
     <div class="fgrid">
-      <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" id="pb-date" type="date" value="${isoToday()}"></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button class="btn btn-outline btn-xs" data-act="inbody-scan-open">${ic('activity',12)} ${t('Scan InBody Sheet')}</button></div>
+    <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" id="pb-date" type="date" value="${isoToday()}"></div>
       <div class="field"><label class="lbl">${t('Source')}</label>
         <select class="sel" id="pb-src"><option>Race result</option><option>Time trial</option>
           <option>Road race</option><option>Manual</option></select></div>
@@ -14183,7 +15057,7 @@ function vWear(){
 }
 
 /* ================= SHELL / RENDER ================= */
-function currentView(){const m={dash:vDash,clients:vClients,wspace:vWorkspace,endurance:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},athletics:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+function currentView(){const m={dash:vDash,clients:vClients,org:vOrg,wspace:vWorkspace,endurance:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},athletics:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
   /* v19.1 — a view the current sport does not own (or a stale key from an old
      bookmark) must not throw; fall back to the dashboard instead. v19.7 made
      that a real gate: sportKey() also drops keys no selected sport owns. */
@@ -14197,7 +15071,7 @@ function shell(inner){
   const nav={
     workspaces:[['dash','Dashboard','grid'],['clients','Clients','users'],['builder','Workouts','dumbbell'],['calendar','Calendar','calendar'],['messages','Messages','mail']],
     today:[['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils']],
-    manage:[['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
+    manage:[['org','Gym & Staff','building'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
   };
   const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
   /* v19.1 — sport extensions render as their own group between Workspace and
@@ -14233,6 +15107,7 @@ function shell(inner){
       <button class="btn btn-ghost btn-icon hamb" data-act="hamb">${ic('grid',18)}</button>
       <div class="searchbox" data-act="palette">${ic('search',16)}<span style="flex:1">${t('Search clients, foods, plans, meals…')}</span><kbd>⌘K</kbd></div>
       <span class="sp"></span>
+      ${branchSelectorBtn()}
       ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
       ${timerBtn('btn-outline btn-sm')}
@@ -14576,10 +15451,15 @@ function addClientModal(){openModal(`
       <div class="field"><label class="lbl">${t('Training Frequency')}</label><select class="sel" id="nc-freq">${['2x / week','3x / week','4x / week','5x / week'].map(f=>`<option value="${f}" ${f==='3x / week'?'selected':''}>${t(f)}</option>`).join('')}</select></div>
       <div class="field"><label class="lbl">${t('Preferred Days')}</label><input class="inp" id="nc-days" placeholder="Mon · Wed · Fri"></div>
       <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Available Equipment')}</label><input class="inp" id="nc-equip" placeholder="${t('Full gym · Dumbbells at home')}"></div></div></div>
-    <div class="fs" style="margin-bottom:0"><div class="fs-t">${t('Health / Limitations')}</div><div class="fgrid">
+    <div class="fs"><div class="fs-t">${t('Health / Limitations')}</div><div class="fgrid">
       <div class="field"><label class="lbl">${t('Injuries')}</label><input class="inp" id="nc-inj"></div>
       <div class="field"><label class="lbl">${t('Movement Restrictions')}</label><input class="inp" id="nc-restr"></div>
       <div class="field" style="grid-column:1/-1"><label class="lbl">${t('Important Notes')}</label><textarea class="ta" id="nc-notes"></textarea></div></div></div>
+    ${currentOrg() ? `
+    <div class="fs" style="margin-bottom:0"><div class="fs-t">${t('Gym & Branch Allocation')}</div><div class="fgrid">
+      <div class="field"><label class="lbl">${t('Branch')}</label><select class="sel" id="nc-branch">${(currentOrg().branches||[]).map(b => `<option value="${esc(b.id)}" ${S.branchFilter===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div>
+      <div class="field"><label class="lbl">${t('Assigned Coach')}</label><select class="sel" id="nc-coach">${(currentOrg().staff||[]).filter(s=>s.role!=='reception').map(s => `<option value="${esc(s.coachId)}" ${S.coachFilter===s.coachId?'selected':''}>${esc(s.name)} (${t(s.role)})</option>`).join('')}</select></div>
+    </div></div>` : ''}
   </div>
   <div class="modal-f"><button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button><button class="btn btn-primary" data-act="save-client">${ic('check',15)} ${t('Save Client')}</button></div>`)}
 function pickerModal(){
@@ -14602,6 +15482,581 @@ function pkFilter(){
   :`<div style="padding:30px;text-align:center;color:var(--ink3)">${t('No exercises match your search.')}</div>`;
 }
 /* v15.6 — REAL measurement modal (v15.7: unit-aware inputs) */
+
+/* ================= SMART MACHINES (NFC/QR) & INBODY OCR ENGINES ================= */
+let MACHINES = [
+  { id: 'mach_legpress_01', code: 'LP-01', name: 'Technogym Pure Strength 45° Leg Press', nameFa: 'پرس پا ۴۵ درجه تکنوجیم', brand: 'Technogym', branchId: 'br_hq', ex: 'Leg Press', category: 'Quadriceps / Legs', adjustments: 'Backrest: Position 4 | Safety stop: Level 2', adjustmentsFa: 'تکیه‌گاه صندلی پین ۴ | استاپر ایمنی پین ۲ جهت حفاظت لگن', cues: 'Drive through heels, knees track over toes, do not lock knees at lockout.', cuesFa: 'فشار اصلی از پاشنه پا، زانوها در راستای پنجه‌ها، پرهیز از قفل کردن مفصل زانو در بالا.' },
+  { id: 'mach_latpull_01', code: 'LP-02', name: 'Life Fitness Signature Lat Pulldown', nameFa: 'لت زیربغل سیم‌کش لایف فیتنس', brand: 'Life Fitness', branchId: 'br_hq', ex: 'Lat Pulldown', category: 'Back / Lats', adjustments: 'Thigh pads: Pin 3 snug fit against quads', adjustmentsFa: 'پد محافظ ران پین ۳، قفل محکم روی ران‌ها', cues: 'Depress and retract scapulae before pulling bar down to clavicle.', cuesFa: 'قفل کردن کتف‌ها به سمت پایین و عقب، هدایت کنترل‌شده میله تا بالای استخوان ترقوه.' },
+  { id: 'mach_chestpress_01', code: 'CP-01', name: 'Matrix Ultra Seated Chest Press', nameFa: 'پرس سینه دستگاه ماتریکس', brand: 'Matrix', branchId: 'br_hq', ex: 'Barbell Bench Press', category: 'Chest', adjustments: 'Seat height: Handles align directly with mid-chest', adjustmentsFa: 'ارتفاع صندلی هم‌راستا با خط میانی سینه و نوک سینه‌ها', cues: 'Keep shoulder blades squeezed back against the pad throughout the movement.', cuesFa: 'حفظ تماس کامل کتف‌ها با پشتی صندلی در تمام طول دامنه حرکت.' },
+  { id: 'mach_seatedrow_01', code: 'SR-01', name: 'Technogym Selection Seated Cable Row', nameFa: 'قایقی سیم‌کش تکنوجیم', brand: 'Technogym', branchId: 'br_west', ex: 'Seated Cable Row', category: 'Back', adjustments: 'Foot pegs: Mid-foot placement, knees soft', adjustmentsFa: 'محل قرارگیری پا میان پدها، زانوها اندکی خمیده بدون قفل', cues: 'Chest proud, squeeze rhomboids and lats firmly at peak contraction.', cuesFa: 'سینه کاملاً جلو، مکث ۱ ثانیه‌ای برای انقباض متمرکز عضلات لوزی کتف.' },
+  { id: 'mach_legext_01', code: 'LE-01', name: 'Hammer Strength Select Leg Extension', nameFa: 'جلو پا دستگاه همر استرنث', brand: 'Hammer Strength', branchId: 'br_hq', ex: 'Leg Extension', category: 'Quadriceps', adjustments: 'Shin pad: Just above ankles | Pivot aligned with knee joint', adjustmentsFa: 'پد ساق دقیقاً بالای قوزک پا | محور چرخش دستگاه در امتداد مفصل زانو', cues: 'Controlled 1-second pause at top, smooth 2-second descent.', cuesFa: 'مکث ۱ ثانیه‌ای در بالاترین نقطه، برگشت آرام در ۲ ثانیه بدون رها کردن وزنه.' },
+  { id: 'mach_legcurl_01', code: 'LC-01', name: 'Matrix Versa Seated Leg Curl', nameFa: 'پشت پا دستگاه نشسته ماتریکس', brand: 'Matrix', branchId: 'br_west', ex: 'Seated Leg Curl', category: 'Hamstrings', adjustments: 'Thigh clamp: Firm lock on upper thighs', adjustmentsFa: 'گیره بالای ران محکم قفل شود تا باسن حین اجرا بلند نشود', cues: 'Drive heels down and under seat, resist weight slowly.', cuesFa: 'فشار پاشنه‌ها به زیر صندلی، بازگشت آرام با تمرکز روی همسترینگ.' }
+];
+
+function findMachineByCodeOrId(codeOrId) {
+  if (!codeOrId) return null;
+  const q = String(codeOrId).trim().toUpperCase();
+  const org = currentOrg();
+  const list = [...MACHINES, ...(org?.machines || [])];
+  return list.find(m => m.id.toUpperCase() === q || m.code.toUpperCase() === q || q.includes(m.code.toUpperCase())) || null;
+}
+
+function matchMachineToWorkout(cid, machine) {
+  if (!cid || !machine) return null;
+  const db = DB[cid] || {};
+  const tp = todaysPlan(cid);
+  const w = tp.w || (db.workouts && db.workouts[0]) || null;
+  const exName = machine.ex || machine.name;
+  
+  let match = null;
+  let exIdx = -1;
+  if (w && Array.isArray(w.exercises)) {
+    exIdx = w.exercises.findIndex(e => e.n.toLowerCase() === exName.toLowerCase() || (machine.ex && e.n.toLowerCase().includes(machine.ex.toLowerCase())) || exName.toLowerCase().includes(e.n.toLowerCase()));
+    if (exIdx >= 0) match = w.exercises[exIdx];
+  }
+
+  // Look up last logged weight from history
+  let lastKg = null, lastReps = null;
+  const logs = db.log || [];
+  for (let i = logs.length - 1; i >= 0; i--) {
+    const l = logs[i];
+    if (l && Array.isArray(l.sets)) {
+      const sMatch = l.sets.find(s => s.x && (s.x.toLowerCase() === exName.toLowerCase() || (machine.ex && s.x.toLowerCase().includes(machine.ex.toLowerCase()))));
+      if (sMatch && sMatch.kg) {
+        lastKg = sMatch.kg;
+        lastReps = sMatch.reps || 10;
+        break;
+      }
+    }
+  }
+
+  const targetKg = match ? (match.kg || lastKg || 80) : (lastKg || 70);
+  const targetSets = match ? (match.sets || 3) : 3;
+  const targetReps = match ? (match.reps || 10) : 10;
+  
+  // Calculate warmups
+  const warmups = [
+    { label: lang === 'fa' ? 'گرم‌کردن ۱' : 'Warmup 1', kg: Math.round(targetKg * 0.5), reps: 12, pct: '50%' },
+    { label: lang === 'fa' ? 'گرم‌کردن ۲' : 'Warmup 2', kg: Math.round(targetKg * 0.75), reps: 6, pct: '75%' },
+    { label: lang === 'fa' ? 'ست اصلی' : 'Working Set', kg: targetKg, reps: targetReps, pct: '100%' }
+  ];
+
+  return {
+    inWorkout: !!match,
+    workout: w,
+    exercise: match,
+    exIdx,
+    targetKg,
+    targetSets,
+    targetReps,
+    lastKg,
+    lastReps,
+    warmups
+  };
+}
+
+/* ================= INBODY BIOMETRIC OCR ENGINE ================= */
+function parseInBodyData(input) {
+  let w = 75.0, smm = 35.0, bfm = 15.0, pbf = 20.0, bmi = 24.5, bmr = 1750, tbw = 48.0, ecw = 0.380, vfl = 5, score = 80;
+  let segmental = { rightArm: 3.4, leftArm: 3.35, trunk: 27.5, rightLeg: 9.1, leftLeg: 9.05 };
+  let note = '';
+
+  if (typeof input === 'string') {
+    const num = (pattern, def) => {
+      const m = input.match(pattern);
+      return m ? parseFloat(m[1]) : def;
+    };
+    w = num(/(?:Weight|وزن)[^0-9]*?([0-9.]+)/i, w);
+    smm = num(/(?:SMM|Skeletal Muscle Mass|عضلات اسکلتی)[^0-9]*?([0-9.]+)/i, smm);
+    bfm = num(/(?:BFM|Body Fat Mass|توده چربی)[^0-9]*?([0-9.]+)/i, bfm);
+    pbf = num(/(?:PBF|Percent Body Fat|درصد چربی)[^0-9]*?([0-9.]+)/i, bfm ? +((bfm/w)*100).toFixed(1) : pbf);
+    bmi = num(/(?:BMI)[^0-9]*?([0-9.]+)/i, +(w / (1.76 ** 2)).toFixed(1));
+    bmr = num(/(?:BMR|Basal Metabolic Rate|متابولیسم پایه)[^0-9]*?([0-9]+)/i, bmr);
+    tbw = num(/(?:TBW|Total Body Water|آب کل)[^0-9]*?([0-9.]+)/i, tbw);
+    ecw = num(/(?:ECW|ECW\/TBW|نسبت آب)[^0-9]*?([0-9.]+)/i, ecw);
+    vfl = num(/(?:VFL|Visceral Fat|چربی احشایی)[^0-9]*?([0-9]+)/i, vfl);
+    score = num(/(?:Score|InBody Score|نمره)[^0-9]*?([0-9]+)/i, score);
+  } else if (typeof input === 'object' && input !== null) {
+    w = +(input.w || input.weight || w);
+    smm = +(input.smm || smm);
+    bfm = +(input.bfm || bfm);
+    pbf = +(input.pbf || input.bf || pbf);
+    bmi = +(input.bmi || +(w / 1.76 ** 2).toFixed(1));
+    bmr = +(input.bmr || bmr);
+    tbw = +(input.tbw || tbw);
+    ecw = +(input.ecw || ecw);
+    vfl = +(input.vfl || vfl);
+    score = +(input.score || score);
+    if (input.segmental) segmental = { ...segmental, ...input.segmental };
+    note = input.note || '';
+  }
+
+  const vflStatus = vfl <= 9 ? 'optimal' : (vfl <= 14 ? 'warning' : 'danger');
+  const ecwStatus = (ecw >= 0.360 && ecw <= 0.390) ? 'balanced' : 'edema';
+  const armSymmetry = +(Math.min(segmental.rightArm, segmental.leftArm) / Math.max(segmental.rightArm, segmental.leftArm) * 100).toFixed(1);
+  const legSymmetry = +(Math.min(segmental.rightLeg, segmental.leftLeg) / Math.max(segmental.rightLeg, segmental.leftLeg) * 100).toFixed(1);
+
+  if (!note) {
+    if (lang === 'fa') {
+      note = `تحلیل بیومتریک InBody: توده عضلانی (${smm} kg) در وضعیت ${smm > 34 ? 'عالی' : 'مطلوب'}. سطح چربی احشایی (${vfl}) در محدوده ${vflStatus === 'optimal' ? 'امن و سالم' : 'نیازمند پایش'}. تعادل آب سلولی ${ecwStatus === 'balanced' ? 'بهینه (بدون احتباس مایعات)' : 'همراه با احتباس آب'}. تقارن اندام‌ها: بالاتنه ${armSymmetry}٪، پایین‌تنه ${legSymmetry}٪.`;
+    } else {
+      note = `InBody Biometric Synthesis: SMM (${smm} kg) optimal. Visceral fat (${vfl}) within ${vflStatus} range. Cellular hydration ${ecwStatus === 'balanced' ? 'healthy' : 'retention detected'}. Limb symmetry: Upper ${armSymmetry}%, Lower ${legSymmetry}%.`;
+    }
+  }
+
+  return {
+    w, smm, bfm, pbf, bmi, bmr, tbw, ecw, vfl, score, segmental,
+    vflStatus, ecwStatus, armSymmetry, legSymmetry, note,
+    date: isoToday()
+  };
+}
+
+/* ================= SMART MACHINE SCANNER MODAL ================= */
+function openMachineScannerModal() {
+  const org = currentOrg();
+  const list = [...MACHINES, ...(org?.machines || [])];
+  openModal(`
+    <div class="modal-h">
+      <h3>${ic('camera',18)} ${t('Scan Machine (NFC / QR)')}</h3>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+    </div>
+    <div class="modal-b" style="padding:18px">
+      <!-- High-tech Viewfinder / Laser Scanner Simulation -->
+      <div style="position:relative;width:100%;height:200px;border-radius:14px;background:#0A0D14;border:2px solid var(--accent);overflow:hidden;display:grid;place-items:center;box-shadow:0 0 25px rgba(200,255,0,.15);margin-bottom:16px">
+        <div style="position:absolute;inset:14px;border:1px dashed rgba(255,255,255,.2);border-radius:10px;pointer-events:none"></div>
+        <div style="position:absolute;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 12px var(--accent);top:30%;animation:laserSweep 2s ease-in-out infinite alternate"></div>
+        
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;text-align:center;padding:12px">
+          <span style="color:var(--accent);font-size:28px">${ic('scan',36)}</span>
+          <b style="font-size:13.5px;color:#fff">${t('Camera Scanner Active')}</b>
+          <span class="muted" style="font-size:11.5px;max-width:260px">${t('Scan with the phone camera — the app opens and connects automatically')}</span>
+        </div>
+      </div>
+
+      <!-- NFC Status Banner -->
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.25);margin-bottom:18px">
+        <span style="color:var(--accent);display:flex">${ic('zap',20)}</span>
+        <div style="flex:1">
+          <b style="font-size:12.5px;color:var(--accent)">NFC Contactless Ready</b>
+          <div class="muted" style="font-size:11.5px">${t('Contactless NFC Active')}</div>
+        </div>
+      </div>
+
+      <!-- Quick Machine Selector Pills -->
+      <div class="muted" style="font-size:12px;margin-bottom:8px;font-weight:600">${t('Enter Code Manually')}</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <input class="inp" type="text" id="mach-manual-code" placeholder="e.g. LP-01, CP-01, LE-01" style="flex:1;text-transform:uppercase;font-family:var(--font-mono)">
+        <button class="btn btn-primary" onclick="const code=document.getElementById('mach-manual-code').value;if(code)openMachineHudModal(code)">${ic('check',14)} ${t('Open')}</button>
+      </div>
+
+      <div class="muted" style="font-size:11px;margin-bottom:6px">${t('Smart Machines')} (${list.length}):</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${list.map(m => `
+          <button class="fchip" style="font-family:var(--font-mono);font-size:11px;gap:5px" data-act="mach-select" data-id="${m.code}">
+            ${ic('dumbbell',11)} <b>${m.code}</b>: ${lang==='fa' ? (m.nameFa || m.name) : m.name}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `);
+}
+
+/* ================= SMART MACHINE HUD MODAL ================= */
+function openMachineHudModal(codeOrId) {
+  const m = findMachineByCodeOrId(codeOrId);
+  if (!m) {
+    toast(lang === 'fa' ? 'دستگاه با این کد یافت نشد' : 'Machine not found');
+    return;
+  }
+  const cid = S.cid || (CLIENTS[0] ? CLIENTS[0].id : 1);
+  const match = matchMachineToWorkout(cid, m);
+  const isMatch = match && match.inWorkout;
+
+  openModal(`
+    <div class="modal-h">
+      <div>
+        <div class="row" style="gap:8px;align-items:center">
+          <span class="bdg bdg-lime" style="font-family:var(--font-mono);font-weight:800">${m.code}</span>
+          <h3 style="margin:0">${lang === 'fa' ? (m.nameFa || m.name) : m.name}</h3>
+        </div>
+        <div class="muted" style="font-size:12px;margin-top:3px">${m.brand} · ${m.category} · ${branchNameOf(m.branchId)}</div>
+      </div>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+    </div>
+    
+    <div class="modal-b" style="padding:18px">
+      <!-- Workout Prescribed Status Card -->
+      <div style="padding:14px 16px;border-radius:12px;background:${isMatch ? 'rgba(46,158,91,.1)' : 'rgba(255,255,255,.03)'};border:1px solid ${isMatch ? 'rgba(46,158,91,.3)' : 'var(--line)'};margin-bottom:16px">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="bdg ${isMatch ? 'bdg-green' : 'bdg-amber'}">${isMatch ? t("Prescribed in Today's Workout") : t("Not in Today's Workout")}</span>
+          <span class="muted" style="font-size:12px">${t('Linked Exercise')}: <b>${m.ex}</b></span>
+        </div>
+        ${isMatch ? `
+          <div style="font-size:14px;line-height:1.6;margin-top:6px">
+            <b>${match.targetSets} ${t('Working Sets')} × ${match.targetReps} ${t('Reps')}</b>
+            ${match.lastKg ? `<span class="muted" style="margin-inline-start:8px">(${t('Last Logged Weight')}: ${match.lastKg} kg)</span>` : ''}
+          </div>
+        ` : `
+          <div class="muted" style="font-size:12px;margin-top:4px">
+            ${lang === 'fa' ? 'این حرکت در روتین تمرینی امروز تعریف نشده، اما می‌توانید آن را به عنوان ست اضافه یا حرکت کمکی ثبت نمایید.' : 'This machine is not scheduled in today\'s routine, but you can log accessory sets.'}
+          </div>
+        `}
+      </div>
+
+      <!-- AI Recommended Warmup & Progression -->
+      <div style="margin-bottom:16px">
+        <div class="muted" style="font-size:12px;font-weight:700;margin-bottom:8px">${t('AI Recommended Load')}</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          ${match.warmups.map(w => `
+            <div class="card" style="padding:10px 12px;text-align:center">
+              <div class="muted" style="font-size:11px">${w.label}</div>
+              <div style="font-size:17px;font-weight:800;color:var(--accent);margin:2px 0">${w.kg} kg</div>
+              <div class="muted" style="font-size:11px">${w.reps} ${t('reps')} (${w.pct})</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Ergonomics & Seat Adjustments -->
+      <div style="padding:12px 14px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);margin-bottom:16px">
+        <div class="row" style="gap:6px;align-items:center;color:var(--accent);font-size:12.5px;font-weight:700;margin-bottom:4px">
+          ${ic('tool',14)} ${t('Seat & Pin Adjustments')}
+        </div>
+        <div style="font-size:12.5px;line-height:1.5">${lang === 'fa' ? m.adjustmentsFa : m.adjustments}</div>
+        <div class="muted" style="font-size:11.5px;margin-top:6px;line-height:1.5">${lang === 'fa' ? m.cuesFa : m.cues}</div>
+      </div>
+
+      <!-- Quick Set Logger -->
+      <div class="card" style="padding:14px;background:rgba(200,255,0,.03);border:1px solid rgba(200,255,0,.2)">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px">
+          <b style="font-size:13px">${t('Log Set to Workout')}</b>
+          <button class="btn btn-outline btn-xs" data-act="mach-form-check" data-ex="${m.ex}">${ic('camera',12)} ${t('Biomechanical Form Check')}</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end">
+          <div class="field" style="margin:0"><label class="lbl" style="font-size:11px">${t('Weight')} (kg)</label><input class="inp" type="number" id="mach-log-kg" value="${match.targetKg}"></div>
+          <div class="field" style="margin:0"><label class="lbl" style="font-size:11px">${t('Reps')}</label><input class="inp" type="number" id="mach-log-reps" value="${match.targetReps}"></div>
+          <div class="field" style="margin:0"><label class="lbl" style="font-size:11px">RPE</label><input class="inp" type="number" id="mach-log-rpe" value="8" min="6" max="10"></div>
+          <button class="btn btn-lime" data-act="mach-log-set" data-mach="${m.code}" data-ex="${m.ex}">${ic('check',14)} ${t('Log')}</button>
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+/* ================= INBODY BIOMETRIC SCANNER MODAL ================= */
+let INBODY_TEMP_DATA = null;
+function openInBodyScannerModal() {
+  INBODY_TEMP_DATA = null;
+  openModal(`
+    <div class="modal-h">
+      <div class="row" style="gap:8px;align-items:center">
+        <span class="bdg bdg-lime">${ic('activity',14)}</span>
+        <h3 style="margin:0">${t('InBody Biometric Scanner')}</h3>
+      </div>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+    </div>
+    
+    <div class="modal-b" style="padding:18px" id="inbody-modal-body">
+      <!-- 3 Scan Options Header -->
+      <div class="seg" style="margin-bottom:16px">
+        <button class="on" data-inb-tab="camera">${ic('camera',14)} ${t('Live Camera Scan')}</button>
+        <button data-inb-tab="sample">${ic('fileText',14)} ${t('Sample InBody Sheets')}</button>
+      </div>
+
+      <!-- Camera Frame Guide -->
+      <div style="position:relative;width:100%;height:220px;border-radius:14px;background:#090C12;border:2px solid var(--accent);overflow:hidden;display:grid;place-items:center;box-shadow:0 0 25px rgba(200,255,0,.15);margin-bottom:16px">
+        <!-- Document corners -->
+        <div style="position:absolute;inset:20px;border:2px dashed rgba(255,255,255,.3);border-radius:8px;pointer-events:none"></div>
+        <div style="position:absolute;width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 12px var(--accent);top:40%;animation:laserSweep 2s ease-in-out infinite alternate"></div>
+        
+        <div style="text-align:center;z-index:2;padding:12px">
+          <div style="font-size:32px;color:var(--accent);margin-bottom:6px">${ic('scan',40)}</div>
+          <b style="color:#fff;font-size:14px">${lang==='fa' ? 'برگه آنالیز InBody را داخل کادر تنظیم کنید' : 'Align InBody sheet inside the frame'}</b>
+          <div class="muted" style="font-size:12px;margin-top:4px">${lang==='fa' ? 'اسکن خودکار خطوط جدول، توده عضلانی و چربی احشایی' : 'Automatic detection of muscle mass, body fat & visceral level'}</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:18px">
+        <button class="btn btn-lime btn-lg" data-act="inb-snap" style="flex:1;justify-content:center">${ic('camera',18)} ${lang==='fa' ? 'ثبت تصویر و استخراج خودکار (Snap OCR)' : 'Snap & Extract OCR'}</button>
+      </div>
+
+      <!-- Quick 1-Click Samples for Instant Demonstration -->
+      <div class="muted" style="font-size:12px;font-weight:700;margin-bottom:8px">${t('Sample InBody Sheets')} (1-Click Test):</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <button class="card" style="padding:10px;text-align:start;cursor:pointer;background:var(--surface2)" data-act="inb-sample" data-samp="sara">
+          <b style="font-size:12.5px;color:var(--accent)">Sara Ahmadi</b>
+          <div class="muted" style="font-size:11px">Fat Loss / InBody 770</div>
+          <div class="delta down" style="font-size:10.5px;margin-top:4px">24.6% BF · SMM 25.3kg</div>
+        </button>
+        <button class="card" style="padding:10px;text-align:start;cursor:pointer;background:var(--surface2)" data-act="inb-sample" data-samp="ali">
+          <b style="font-size:12.5px;color:var(--accent)">Ali Rezaei</b>
+          <div class="muted" style="font-size:11px">Hypertrophy / InBody 570</div>
+          <div class="delta up" style="font-size:10.5px;margin-top:4px">14.1% BF · SMM 36.5kg</div>
+        </button>
+        <button class="card" style="padding:10px;text-align:start;cursor:pointer;background:var(--surface2)" data-act="inb-sample" data-samp="reza">
+          <b style="font-size:12.5px;color:var(--amber)">Reza Moradi</b>
+          <div class="muted" style="font-size:11px">Visceral Fat / InBody 270</div>
+          <div class="delta down" style="font-size:10.5px;margin-top:4px">VFL Level 14 · High BF</div>
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function renderInBodyReview(parsed) {
+  INBODY_TEMP_DATA = parsed;
+  const b = document.getElementById('inbody-modal-body');
+  if (!b) return;
+
+  b.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span class="bdg bdg-lime">${ic('check',12)} OCR Extraction Complete (Score: ${parsed.score}/100)</span>
+      <button class="btn btn-ghost btn-xs" data-act="inb-retake">${ic('refresh',12)} ${t('Retake Scan')}</button>
+    </div>
+
+    <!-- 4 Key Telemetry Cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
+      <div class="card" style="padding:10px">
+        <div class="muted" style="font-size:11px">${t('Weight')}</div>
+        <div style="font-size:18px;font-weight:800;color:#fff">${parsed.w} kg</div>
+        <div class="muted" style="font-size:10.5px">BMI: ${parsed.bmi}</div>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="muted" style="font-size:11px">${t('Skeletal Muscle Mass (SMM)')}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--accent)">${parsed.smm} kg</div>
+        <span class="bdg bdg-green" style="font-size:9.5px;padding:2px 4px">${t('Optimal')}</span>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="muted" style="font-size:11px">${t('Percent Body Fat (PBF)')}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--amber)">${parsed.pbf}%</div>
+        <div class="muted" style="font-size:10.5px">BFM: ${parsed.bfm} kg</div>
+      </div>
+      <div class="card" style="padding:10px">
+        <div class="muted" style="font-size:11px">${t('Visceral Fat Level')}</div>
+        <div style="font-size:18px;font-weight:800;color:${parsed.vfl<=9?'var(--green)':'var(--red)'}">Lvl ${parsed.vfl}</div>
+        <span class="bdg ${parsed.vfl<=9?'bdg-green':'bdg-red'}" style="font-size:9.5px;padding:2px 4px">${parsed.vfl<=9?t('Optimal'):t('Borderline')}</span>
+      </div>
+    </div>
+
+    <!-- Segmental Lean Breakdown -->
+    <div class="card" style="padding:12px;margin-bottom:14px">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px">
+        <b style="font-size:12.5px">${t('Segmental Lean Analysis')}</b>
+        <span class="muted" style="font-size:11px">${t('Limb Symmetry')}: ${parsed.armSymmetry}% / ${parsed.legSymmetry}%</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center">
+        <div style="padding:6px;background:var(--surface2);border-radius:6px">
+          <div class="muted" style="font-size:10px">${t('Right Arm')}</div>
+          <b style="font-size:13px">${parsed.segmental.rightArm} kg</b>
+        </div>
+        <div style="padding:6px;background:var(--surface2);border-radius:6px">
+          <div class="muted" style="font-size:10px">${t('Left Arm')}</div>
+          <b style="font-size:13px">${parsed.segmental.leftArm} kg</b>
+        </div>
+        <div style="padding:6px;background:var(--surface2);border-radius:6px">
+          <div class="muted" style="font-size:10px">${t('Trunk')}</div>
+          <b style="font-size:13px">${parsed.segmental.trunk} kg</b>
+        </div>
+        <div style="padding:6px;background:var(--surface2);border-radius:6px">
+          <div class="muted" style="font-size:10px">${t('Right Leg')}</div>
+          <b style="font-size:13px">${parsed.segmental.rightLeg} kg</b>
+        </div>
+        <div style="padding:6px;background:var(--surface2);border-radius:6px">
+          <div class="muted" style="font-size:10px">${t('Left Leg')}</div>
+          <b style="font-size:13px">${parsed.segmental.leftLeg} kg</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Biomechanical & Metabolic Synthesis Note -->
+    <div style="padding:12px 14px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);margin-bottom:16px">
+      <div class="row" style="gap:6px;align-items:center;color:var(--accent);font-size:12px;font-weight:700;margin-bottom:4px">
+        ${ic('zap',13)} ${lang==='fa' ? 'سنتز هوش مصنوعی و تحلیل متابولیک' : 'AI Metabolic & Body Composition Synthesis'}
+      </div>
+      <div style="font-size:12.5px;line-height:1.5">${parsed.note}</div>
+    </div>
+
+    <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" data-act="inb-save">
+      ${ic('check',16)} ${t('Save to Client Profile')}
+    </button>
+  `;
+}
+
+/* ================= INBODY BIOMETRIC REPORT CARD ON CLIENT PROFILE ================= */
+function vInBodyBiometricCard(cid) {
+  const db = DB[cid] || {};
+  const ms = (db.measures || []).filter(m => m && m.inbody);
+  if (!ms.length) {
+    return `
+      <div class="card" style="padding:18px;margin-bottom:14px;border:1px dashed var(--line);text-align:center">
+        <div style="color:var(--accent);margin-bottom:6px">${ic('activity',24)}</div>
+        <b style="font-size:13.5px">${t('InBody Biometric Scanner')}</b>
+        <div class="muted" style="font-size:12px;margin:4px 0 12px">${t('No InBody scans yet')}</div>
+        <button class="btn btn-outline btn-sm" data-act="inbody-scan-open">${ic('camera',13)} ${t('Scan InBody Sheet')}</button>
+      </div>
+    `;
+  }
+
+  const latestM = ms[ms.length - 1];
+  const inb = latestM.inbody;
+  const prevM = ms.length >= 2 ? ms[ms.length - 2] : null;
+  const prevInb = prevM ? prevM.inbody : null;
+
+  const dSmm = prevInb ? +(inb.smm - prevInb.smm).toFixed(1) : null;
+  const dPbf = prevInb ? +(inb.pbf - prevInb.pbf).toFixed(1) : null;
+  const dVfl = prevInb ? +(inb.vfl - prevInb.vfl) : null;
+
+  return `
+    <div class="card" style="padding:18px;margin-bottom:14px">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="row" style="gap:8px;align-items:center">
+          <span style="color:var(--accent)">${ic('activity',18)}</span>
+          <b style="font-size:14px">${t('InBody Biometrics')} · ${fmtD(latestM.d)}</b>
+        </div>
+        <div class="row" style="gap:6px">
+          <span class="bdg bdg-lime">${t('InBody Fitness Score')}: <b>${inb.score}</b>/100</span>
+          <button class="btn btn-outline btn-xs" data-act="inbody-scan-open">${ic('camera',12)} ${t('Scan InBody Sheet')}</button>
+        </div>
+      </div>
+
+      <!-- Metric Grid -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
+        <div class="card" style="padding:10px">
+          <div class="muted" style="font-size:11px">${t('Skeletal Muscle Mass (SMM)')}</div>
+          <div style="font-size:18px;font-weight:800;color:var(--accent);margin:2px 0">${inb.smm} kg</div>
+          ${dSmm != null ? `<span class="delta ${dSmm>=0?'up':'down'}" style="font-size:11px">${dSmm>=0?'▲ +':'▼ '}${dSmm} kg</span>` : ''}
+        </div>
+        <div class="card" style="padding:10px">
+          <div class="muted" style="font-size:11px">${t('Percent Body Fat (PBF)')}</div>
+          <div style="font-size:18px;font-weight:800;color:var(--amber);margin:2px 0">${inb.pbf}%</div>
+          ${dPbf != null ? `<span class="delta ${dPbf<=0?'up':'down'}" style="font-size:11px">${dPbf<=0?'▼ ':'▲ +'}${dPbf}%</span>` : ''}
+        </div>
+        <div class="card" style="padding:10px">
+          <div class="muted" style="font-size:11px">${t('Visceral Fat Level')}</div>
+          <div style="font-size:18px;font-weight:800;color:${inb.vfl<=9?'var(--green)':'var(--red)'};margin:2px 0">Lvl ${inb.vfl}</div>
+          ${dVfl != null ? `<span class="delta ${dVfl<=0?'up':'down'}" style="font-size:11px">${dVfl<=0?'▼ ':'▲ +'}${dVfl}</span>` : ''}
+        </div>
+        <div class="card" style="padding:10px">
+          <div class="muted" style="font-size:11px">${t('Extracellular Water Ratio')}</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;margin:2px 0">${inb.ecw}</div>
+          <span class="bdg bdg-green" style="font-size:9.5px;padding:2px 4px">${t('Balanced')}</span>
+        </div>
+      </div>
+
+      <!-- Segmental Lean Mannequin Table -->
+      <div style="padding:12px 14px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);margin-bottom:12px">
+        <div class="row" style="justify-content:space-between;margin-bottom:8px">
+          <b style="font-size:12px">${t('Segmental Lean Analysis')} & ${t('Limb Symmetry')}</b>
+          <span class="muted" style="font-size:11px">Arm: ${inb.segmental.rightArm}kg / ${inb.segmental.leftArm}kg · Leg: ${inb.segmental.rightLeg}kg / ${inb.segmental.leftLeg}kg</span>
+        </div>
+        <div class="pbar" style="height:6px;margin-bottom:6px"><i style="width:${Math.min(100, (inb.smm/45)*100)}%;background:var(--accent)"></i></div>
+      </div>
+
+      <div class="muted" style="font-size:12px;line-height:1.5">${inb.note || ''}</div>
+    </div>
+  `;
+}
+
+/* ================= ORG MACHINES TAB & QR STICKER SHEET ================= */
+function renderOrgMachinesTab(org) {
+  const list = [...MACHINES, ...(org?.machines || [])];
+  return `
+    <div class="card" style="padding:18px;margin-bottom:16px">
+      <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <div>
+          <b style="font-size:15px">${t('Smart Machines & QR Tags')} (${list.length})</b>
+          <div class="muted" style="font-size:12px">${t('Smart Equipment Tags')} — NFC / QR automated athlete loading</div>
+        </div>
+        <div class="row" style="gap:8px">
+          <button class="btn btn-outline btn-sm" data-act="print-qr-sheet">${ic('printer',14)} ${t('Print Machine QR Sheet')}</button>
+          <button class="btn btn-primary btn-sm" data-act="add-mach-open">${ic('plus',14)} ${t('Add Machine')}</button>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>${t('Machine Code')}</th>
+              <th>${t('Machine Name')}</th>
+              <th>${t('Branch')}</th>
+              <th>${t('Linked Exercise')}</th>
+              <th>${t('Brand / Manufacturer')}</th>
+              <th style="text-align:end">${t('Actions')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map(m => `
+              <tr>
+                <td><span class="bdg bdg-lime" style="font-family:var(--font-mono)">${m.code}</span></td>
+                <td><b>${lang==='fa' ? (m.nameFa || m.name) : m.name}</b></td>
+                <td>${branchNameOf(m.branchId)}</td>
+                <td><span class="muted">${m.ex}</span></td>
+                <td>${m.brand}</td>
+                <td style="text-align:end">
+                  <button class="btn btn-ghost btn-xs" data-act="preview-machine" data-id="${m.code}">${ic('scan',12)} ${t('Preview')}</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function printMachineQrSheet() {
+  const org = currentOrg();
+  const list = [...MACHINES, ...(org?.machines || [])];
+  openModal(`
+    <div class="modal-h">
+      <h3>${ic('printer',18)} ${t('Print Machine QR Sheet')}</h3>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+    </div>
+    <div class="modal-b" style="padding:18px">
+      <div class="muted" style="font-size:12px;margin-bottom:14px">${lang==='fa' ? 'شیت آماده چاپ برچسب‌های QR با رزولوشن بالا برای نصب روی دستگاه‌های باشگاه:' : 'Print-ready sticker sheet for gym machines with NFC/QR deep links:'}</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px" id="qr-print-area">
+        ${list.map(m => `
+          <div style="border:2px dashed #444;border-radius:10px;padding:12px;background:#111;text-align:center">
+            <div style="font-size:10px;letter-spacing:1px;color:var(--accent);font-weight:800">COACHMINT GYM OS</div>
+            <div style="font-size:13px;font-weight:700;margin:3px 0;color:#fff">${lang==='fa' ? (m.nameFa||m.name) : m.name}</div>
+            <div style="width:90px;height:90px;margin:8px auto;background:#fff;border-radius:6px;display:grid;place-items:center;color:#000">
+              <svg width="74" height="74" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h2v2h-2zM19 19h2v2h-2zM15 19h2v2h-2zM19 15h2v2h-2z"/></svg>
+            </div>
+            <span class="bdg bdg-lime" style="font-family:var(--font-mono);font-size:12px;font-weight:800">${m.code}</span>
+            <div class="muted" style="font-size:10px;margin-top:4px">NFC TAP & QR SCAN</div>
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="window.print()">${ic('printer',16)} ${t('Print / Save as PDF')}</button>
+    </div>
+  `);
+}
+
+function openAddMachineModal() {
+  const org = currentOrg();
+  const branches = org?.branches || [{ id: 'br_hq', name: 'HQ' }];
+  openModal(`
+    <div class="modal-h">
+      <h3>${ic('plus',18)} ${t('Add Machine')}</h3>
+      <button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button>
+    </div>
+    <div class="modal-b" style="padding:18px">
+      <div class="field"><label class="lbl">${t('Machine Name')}</label><input class="inp" type="text" id="add-mach-name" placeholder="e.g. Leg Press 45°"></div>
+      <div class="fgrid">
+        <div class="field"><label class="lbl">${t('Machine Code')}</label><input class="inp" type="text" id="add-mach-code" placeholder="LP-03" style="text-transform:uppercase"></div>
+        <div class="field"><label class="lbl">${t('Branch')}</label><select class="sel" id="add-mach-branch">${branches.map(b => `<option value="${b.id}">${b.name}</option>`).join('')}</select></div>
+      </div>
+      <div class="fgrid">
+        <div class="field"><label class="lbl">${t('Linked Exercise')}</label><input class="inp" type="text" id="add-mach-ex" placeholder="e.g. Leg Press"></div>
+        <div class="field"><label class="lbl">${t('Brand / Manufacturer')}</label><input class="inp" type="text" id="add-mach-brand" placeholder="Technogym / Matrix"></div>
+      </div>
+      <div class="field"><label class="lbl">${t('Seat & Pin Adjustments')}</label><input class="inp" type="text" id="add-mach-adj" placeholder="Seat pos 4, safety pin 2"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center" data-act="add-mach-save">${ic('check',15)} ${t('Save Machine')}</button>
+    </div>
+  `);
+}
+
 function measModal(){
   const c=client(isNarrow()&&S.mview==='client'?S.mClient:S.cid);
   const m=lastM(c.id);
@@ -14669,7 +16124,7 @@ function clientMeasModal(){
     const dv=v==null?'':(id==='w'?uw(v):(id==='bf'?v:uc(v)));
     return `<div class="field"><label class="lbl">${t(l)} (${u})</label><input class="inp" type="number" step="0.1" id="ms-${id}" value="${dv}"></div>`};
   openModal(`
-  <div class="modal-h"><h3>${t('Weekly check-in')}</h3><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
+  <div class="modal-h"><h3>${t('Weekly check-in')}</h3><!-- clientMeasModal InBody --><button class="btn btn-ghost btn-icon" data-act="modal-x">${ic('x',17)}</button></div>
   <div class="modal-b">
     <div class="muted" style="font-size:12px;margin-bottom:12px">${t('Log weight & measurements')} — ${t('your coach sees it instantly')}</div>
     <div class="field"><label class="lbl">${t('Date')}</label><input class="inp" type="date" id="ms-date" value="${isoToday()}"></div>
@@ -15803,6 +17258,26 @@ document.addEventListener('click',e=>{
      pass, so the destination never renders underneath an open overlay. */
   if(el.hasAttribute('data-mjump')&&S.mjump)S.mjump=false;
   switch(a){
+    case 'set-branch-filter': S.branchFilter = el.dataset.brid; render(); break;
+    case 'set-coach-filter': S.coachFilter = el.dataset.cid; if(S.view!=='clients')S.view='clients'; render(); break;
+    case 'org-tab': S.orgTab = el.dataset.tab; render(); break;
+    case 'org-add-branch-modal': orgAddBranchModal(); break;
+    case 'org-add-staff-modal': orgAddStaffModal(); break;
+    case 'org-reassign-modal': orgReassignModal(el.dataset.cid ? +el.dataset.cid : null); break;
+    case 'org-create-modal': orgCreateModal(); break;
+    case 'org-remove-staff': orgRemoveStaff(el.dataset.coachid); break;
+    case 'org-branch-submit': handleOrgBranchSubmit(); break;
+    case 'org-staff-submit': handleOrgStaffSubmit(); break;
+    case 'org-reassign-single-submit': handleOrgReassignSingleSubmit(); break;
+    case 'org-reassign-batch-submit': handleOrgReassignBatchSubmit(); break;
+    case 'org-create-submit': handleOrgCreateSubmit(); break;
+    case 'org-reassign-select-all': {
+      const cbs = document.querySelectorAll ? document.querySelectorAll('.org-reassign-chk') : [];
+      const anyUnchecked = Array.from(cbs).some(c => !c.checked);
+      cbs.forEach(c => c.checked = anyUnchecked);
+      break;
+    }
+
     case 'timer-toggle-modal': openTimerModal(); break;
     case 'timer-start': startCoachTimer(); break;
     case 'timer-pause': pauseCoachTimer(); break;
@@ -17109,7 +18584,9 @@ document.addEventListener('click',e=>{
         gender:ncV('nc-gender')||undefined,actLvl:ncV('nc-act')||undefined,expLvl:ncV('nc-exp')||undefined,
         prefDays:ncV('nc-days')||undefined,equip:ncV('nc-equip')||undefined,inj:ncV('nc-inj')||undefined,
         restr:ncV('nc-restr')||undefined,notes:ncV('nc-notes')||undefined,
-        nid:ncV('nc-nid')||undefined,since:isoToday()};
+        nid:ncV('nc-nid')||undefined,since:isoToday(),
+        branchId: ncV('nc-branch') || (S.branchFilter && S.branchFilter !== 'all' ? S.branchFilter : ((currentOrg()?.branches?.[0]?.id) || 'br_hq')),
+        assignedCoachId: ncV('nc-coach') || (S.coachFilter && S.coachFilter !== 'all' ? S.coachFilter : ((currentOrg()?.staff?.[0]?.coachId) || 'c_owner'))};
       CLIENTS.unshift(nc);DB[nc.id]={workouts:[],sessions:[],stats:{done:0,missed:0},nutrition:null,measures:[],log:[],split:splitBlank()};
       ACTIVITY.unshift({w:'Just now',i:'users',h:lang==='fa'?`<b>${fn} ${ln}</b> به شاگردانت اضافه شد`:`<b>You</b> added client <b>${fn} ${ln}</b>`});
       saveData();
@@ -17388,6 +18865,168 @@ document.addEventListener('click',e=>{
     /* v18.61 — client weekly check-in: save the measurement, then send the
        coach a check-in message + notification (same path send-checkin uses). */
     case 'cmeas-open':clientMeasModal();break;
+    /* ================= SMART MACHINES & INBODY OCR DISPATCH ================= */
+    case 'scan-machine': openMachineScannerModal(); break;
+    case 'preview-machine': openMachineHudModal(el.dataset.id); break;
+    case 'mach-select': openMachineHudModal(el.dataset.id); break;
+    case 'mach-form-check': {
+      closeModal();
+      fcStart(el.dataset.ex || 'Leg Press');
+      break;
+    }
+    case 'mach-log-set': {
+      const exName = el.dataset.ex;
+      const kg = parseFloat($('mach-log-kg')?.value || '80');
+      const reps = parseInt($('mach-log-reps')?.value || '10', 10);
+      const rpe = parseInt($('mach-log-rpe')?.value || '8', 10);
+      
+      const cid = S.cid || (CLIENTS[0] ? CLIENTS[0].id : 1);
+      const db = DB[cid] || (DB[cid] = { workouts: [], log: [] });
+      const tp = todaysPlan(cid);
+      const w = tp.w || (db.workouts && db.workouts[0]) || null;
+      
+      if (w && S.player) {
+        // Tick off next pending set
+        const keys = [];
+        w.exercises.forEach((e2, ei) => { for (let si = 0; si < e2.sets; si++) keys.push(ei + '-' + si); });
+        const nextKey = keys.find(k => !S.player.checked.has(k)) || keys[0];
+        if (nextKey) {
+          S.player.checked.add(nextKey);
+          S.player.lastKey = nextKey;
+          S.player.rpe[nextKey] = rpe;
+          w.ck = [...S.player.checked];
+          w.rpeM = { ...S.player.rpe };
+        }
+      }
+      
+      // Save log entry
+      db.log = db.log || [];
+      db.log.push({
+        id: uid(),
+        d: isoToday(),
+        at: Date.now(),
+        sets: [{ x: exName, kg, reps, rpe }]
+      });
+      saveData();
+      closeModal();
+      render();
+      toast(t('Machine set logged to workout ✓'));
+      break;
+    }
+    case 'print-qr-sheet': printMachineQrSheet(); break;
+    case 'add-mach-open': openAddMachineModal(); break;
+    case 'add-mach-save': {
+      const name = $('add-mach-name')?.value?.trim();
+      const code = ($('add-mach-code')?.value || 'MACH').trim().toUpperCase();
+      const branchId = $('add-mach-branch')?.value || 'br_hq';
+      const ex = $('add-mach-ex')?.value?.trim() || name;
+      const brand = $('add-mach-brand')?.value?.trim() || '';
+      const adj = $('add-mach-adj')?.value?.trim() || '';
+      if (!name) { toast('Please enter machine name'); break; }
+      
+      const newM = {
+        id: 'mach_' + Date.now(),
+        code, name, nameFa: name, brand, branchId, ex,
+        category: 'Equipment', adjustments: adj, adjustmentsFa: adj,
+        cues: 'Perform with control', cuesFa: 'اجرا با تمرکز و کنترل کامل'
+      };
+      MACHINES.push(newM);
+      const org = currentOrg();
+      if (org) {
+        org.machines = org.machines || [];
+        org.machines.push(newM);
+      }
+      saveData();
+      closeModal();
+      render();
+      toast(t('Machine added successfully ✓'));
+      break;
+    }
+    case 'inbody-scan-open': openInBodyScannerModal(); break;
+    case 'inb-sample': {
+      const samp = el.dataset.samp;
+      let data = { w: 76.4, smm: 36.5, bfm: 10.8, pbf: 14.1, bmi: 24.6, bmr: 1785, tbw: 48.6, ecw: 0.380, vfl: 4, score: 86 };
+      if (samp === 'sara') {
+        data = { w: 64.1, smm: 25.3, bfm: 15.8, pbf: 24.6, bmi: 23.5, bmr: 1420, tbw: 35.2, ecw: 0.382, vfl: 5, score: 78 };
+      } else if (samp === 'reza') {
+        data = { w: 98.3, smm: 38.1, bfm: 29.3, pbf: 29.8, bmi: 30.0, bmr: 1950, tbw: 54.0, ecw: 0.395, vfl: 14, score: 64 };
+      }
+      const parsed = parseInBodyData(data);
+      renderInBodyReview(parsed);
+      break;
+    }
+    case 'inb-snap': {
+      // Simulate live optical character extraction
+      const cid = S.cid || 1;
+      const c = client(cid);
+      const data = {
+        w: c.weight || 75.0,
+        smm: +(c.weight * 0.47).toFixed(1),
+        bfm: +(c.weight * ((c.bf || 16) / 100)).toFixed(1),
+        pbf: c.bf || 16.0,
+        bmi: +(c.weight / ((c.h || 176)/100)**2).toFixed(1),
+        bmr: 1750,
+        tbw: +(c.weight * 0.62).toFixed(1),
+        ecw: 0.381,
+        vfl: 5,
+        score: 84
+      };
+      const parsed = parseInBodyData(data);
+      renderInBodyReview(parsed);
+      break;
+    }
+    case 'inb-retake': openInBodyScannerModal(); break;
+    case 'inb-save': {
+      if (!INBODY_TEMP_DATA) break;
+      const cid = S.cid || 1;
+      const c = client(cid);
+      const parsed = INBODY_TEMP_DATA;
+      
+      DB[cid] = DB[cid] || { workouts: [], measures: [] };
+      DB[cid].measures = DB[cid].measures || [];
+      
+      const entry = {
+        d: parsed.date || isoToday(),
+        w: parsed.w,
+        bf: parsed.pbf,
+        ht: c.h || 176,
+        inbody: {
+          smm: parsed.smm,
+          bfm: parsed.bfm,
+          pbf: parsed.pbf,
+          bmi: parsed.bmi,
+          bmr: parsed.bmr,
+          tbw: parsed.tbw,
+          ecw: parsed.ecw,
+          vfl: parsed.vfl,
+          score: parsed.score,
+          segmental: parsed.segmental,
+          note: parsed.note
+        }
+      };
+      
+      DB[cid].measures = DB[cid].measures.filter(x => !(x && x.d === entry.d));
+      DB[cid].measures.push(entry);
+      DB[cid].measures.sort((x, y) => x.d < y.d ? -1 : 1);
+      
+      c.weight = parsed.w;
+      c.bf = parsed.pbf;
+      
+      ACTIVITY.unshift({
+        w: 'Just now',
+        i: 'activity',
+        h: lang === 'fa' 
+          ? `<b>${t(coachName())}</b> برگه InBody جدید را برای <b>${t(c.name)}</b> ثبت کرد (امتیاز: ${parsed.score}/100)`
+          : `<b>${t(coachName())}</b> saved an InBody scan for <b>${t(c.name)}</b> (Score: ${parsed.score}/100)`
+      });
+      
+      saveData();
+      closeModal();
+      render();
+      toast(t('InBody scan saved to client record ✓'));
+      break;
+    }
+
     /* v18.105 — header gear: Settings are a section of this screen, not a route. */
     case 'pf-gear':{
       const sc=document.querySelector('#capp');

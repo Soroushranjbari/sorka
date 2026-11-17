@@ -37,6 +37,7 @@ import mediaHandler from '../backend/handlers/media.mjs';
 import chatHandler from '../backend/handlers/chat.mjs';
 import shopCheckout from '../backend/handlers/shop-checkout.mjs';
 import shopAccount from '../backend/handlers/shop-account.mjs';
+import orgHandler from '../backend/handlers/org.mjs';
 
 /* Hop-by-hop / framing headers must NOT be copied onto the synthetic Request —
    undici sets its own and a stale content-length makes it throw. */
@@ -128,6 +129,7 @@ export default async function handler(req, res) {
     else if (inner.startsWith('push/')) out = await pushHandler(webReq);
     else if (inner.startsWith('export/')) out = await exportHandler(webReq);
     else if (inner.startsWith('strava/')) out = await stravaHandler(webReq);
+    else if (inner.startsWith('org/') || clean === 'org') out = await orgHandler(webReq);
     else if (clean === 'data') out = await dataHandler(webReq);
     /* v18.103 — /api/media and /api/media/<id> */
     else if (clean === 'media' || inner.startsWith('media/')) out = await mediaHandler(webReq);

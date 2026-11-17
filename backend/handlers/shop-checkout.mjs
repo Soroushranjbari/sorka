@@ -19,7 +19,14 @@ import { couponMail } from '../lib/mail.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || '';
-const PRICES = { basic: 290000, professional: 790000, club: 2490000 };
+const PRICES = {
+  basic: 290000,
+  professional: 790000,
+  club: 2490000,
+  gym_studio: 1890000,
+  gym_chain: 4900000,
+  gym_enterprise: 9900000
+};
 /* Checkout bodies are tiny (plan id + contact fields) — 16 KB is generous. */
 const MAX_BYTES = 16_000;
 /* Order registry — every purchase is recorded here so support/accounting can
@@ -120,7 +127,14 @@ export default async (req) => {
   // even if they close the tab. Real email only when RESEND_API_KEY is set
   // (demo orders stay silent); sendMail never throws so checkout is unaffected.
   if (!out.demo) {
-    const planLabel = { basic: 'Basic', professional: 'Professional', club: 'Club' }[planId] || planId;
+    const planLabel = {
+      basic: 'Basic',
+      professional: 'Professional',
+      club: 'Club',
+      gym_studio: 'Gym Studio',
+      gym_chain: 'Gym Chain',
+      gym_enterprise: 'Enterprise'
+    }[planId] || planId;
     couponMail(body?.name, email, out.coupons[0], planLabel, COACH_OS_URL).catch(() => {});
   }
   // Record the order (buyer specs + coupon) for the account page & support.

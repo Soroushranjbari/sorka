@@ -115,3 +115,137 @@ export async function accountById(st, coachId) {
   if (!ptr || !ptr.email) return null;
   return st.get(`acct:${String(ptr.email).toLowerCase()}`, { type: 'json' });
 }
+
+/** Organization (Gym / Club) Management */
+export async function createOrg(st, { ownerCoachId, ownerEmail, name, planId }) {
+  const orgId = newId('org');
+  const org = {
+    id: orgId,
+    name: String(name || 'Gym Workspace').trim(),
+    ownerCoachId,
+    ownerEmail: normEmail(ownerEmail),
+    plan: planId || 'gym_studio',
+    status: 'active',
+    createdAt: Date.now(),
+    branches: [
+      { id: 'br_hq', name: 'Main Branch (HQ)', isHQ: true, createdAt: Date.now() }
+    ],
+    staff: [
+      { coachId: ownerCoachId, email: normEmail(ownerEmail), role: 'gym_owner', branches: ['*'], addedAt: Date.now() }
+    ]
+  };
+  await st.setJSON(`org:${orgId}`, org);
+  await st.setJSON(`org-by-coach:${ownerCoachId}`, { orgId, role: 'gym_owner', branches: ['*'] });
+  return org;
+}
+
+export async function getOrg(st, orgId) {
+  if (!orgId) return null;
+  return st.get(`org:${orgId}`, { type: 'json' });
+}
+
+export async function getOrgByCoach(st, coachId) {
+  if (!coachId) return null;
+  const ptr = await st.get(`org-by-coach:${coachId}`, { type: 'json' });
+  if (!ptr || !ptr.orgId) return null;
+  const org = await getOrg(st, ptr.orgId);
+  return org ? { org, staffRecord: ptr } : null;
+}
+
+export async function addOrgBranch(st, orgId, { name, address, phone }, maxBranches = 5) {
+  const org = await getOrg(st, orgId);
+  if (!org) return { ok: false, error: 'org-not-found' };
+  if ((org.branches || []).length >= maxBranches) {
+    return { ok: false, error: 'branch-quota-exceeded', max: maxBranches };
+  }
+  const branchId = newId('br');
+  const branch = {
+    id: branchId,
+    name: String(name || 'Branch').trim(),
+    address: String(address || '').trim(),
+    phone: String(phone || '').trim(),
+    isHQ: false,
+    createdAt: Date.now()
+  };
+  org.branches = [...(org.branches || []), branch];
+  await st.setJSON(`org:${orgId}`, org);
+  return { ok: true, branch, org };
+}
+
+export async function addOrgStaff(st, orgId, { coachId, email, name, role = 'trainer', branches = ['*'] }, maxCoaches = 5) {
+  const org = await getOrg(st, orgId);
+  if (!org) return { ok: false, error: 'org-not-found' };
+  const currentCoaches = (org.staff || []).filter((s) => s.role !== 'reception').length;
+  if (role !== 'reception' && currentCoaches >= maxCoaches) {
+    return { ok: false, error: 'coach-quota-exceeded', max: maxCoaches };
+  }
+  const existing = (org.staff || []).find((s) => s.coachId === coachId || s.email === normEmail(email));
+  if (existing) {
+    return { ok: false, error: 'staff-already-exists' };
+  }
+  const staffMember = {
+    coachId,
+    email: normEmail(email),
+    name: String(name || '').trim(),
+    role,
+    branches: Array.isArray(branches) ? branches : ['*'],
+    addedAt: Date.now()
+  };
+  org.staff = [...(org.staff || []), staffMember];
+  await st.setJSON(`org:${orgId}`, org);
+  await st.setJSON(`org-by-coach:${coachId}`, { orgId, role, branches: staffMember.branches });
+  return { ok: true, staffMember, org };
+}
+
+export async function removeOrgStaff(st, orgId, coachId) {
+  const org = await getOrg(st, orgId);
+  if (!org) return { ok: false, error: 'org-not-found' };
+  if (org.ownerCoachId === coachId) {
+    return { ok: false, error: 'cannot-remove-owner' };
+  }
+  org.staff = (org.staff || []).filter((s) => s.coachId !== coachId);
+  await st.setJSON(`org:${orgId}`, org);
+  try { await st.delete(`org-by-coach:${coachId}`); } catch {}
+  return { ok: true, org };
+}
+
+export function reassignOrgClients(clientsList, { clientIds, toCoachId, toBranchId }) {
+  if (!Array.isArray(clientsList) || !Array.isArray(clientIds) || !toCoachId) return clientsList || [];
+  const set = new Set(clientIds.map(String));
+  return clientsList.map((c) => {
+    if (!c || !set.has(String(c.id))) return c;
+    const updated = { ...c, assignedCoachId: toCoachId };
+    if (toBranchId) updated.branchId = toBranchId;
+    return updated;
+  });
+}
+
+export async function addOrgMachine(st, orgId, { code, name, nameFa, branchId, ex, brand, adjustments, cues }) {
+  const org = await getOrg(st, orgId);
+  if (!org) return { ok: false, error: 'org-not-found' };
+  const machineId = newId('mach');
+  const machine = {
+    id: machineId,
+    code: String(code || '').toUpperCase().trim(),
+    name: String(name || 'Gym Machine').trim(),
+    nameFa: String(nameFa || name || 'دستگاه باشگاه').trim(),
+    brand: String(brand || '').trim(),
+    branchId: branchId || (org.branches && org.branches[0] ? org.branches[0].id : 'br_hq'),
+    ex: String(ex || '').trim(),
+    adjustments: String(adjustments || '').trim(),
+    cues: String(cues || '').trim(),
+    createdAt: Date.now()
+  };
+  org.machines = [...(org.machines || []), machine];
+  await st.setJSON(`org:${orgId}`, org);
+  return { ok: true, machine, org };
+}
+
+export async function removeOrgMachine(st, orgId, machineId) {
+  const org = await getOrg(st, orgId);
+  if (!org) return { ok: false, error: 'org-not-found' };
+  org.machines = (org.machines || []).filter((m) => m.id !== machineId);
+  await st.setJSON(`org:${orgId}`, org);
+  return { ok: true, org };
+}
+

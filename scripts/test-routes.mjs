@@ -467,20 +467,22 @@ try {
   const adapterSrc = readFileSync(new URL('../api/[...path].mjs', import.meta.url), 'utf8');
   const serverSrc = readFileSync(new URL('../server.mjs', import.meta.url), 'utf8');
   for (const [label, src] of [['adapter', adapterSrc], ['server', serverSrc]]) {
-    for (const ns of ['auth', 'billing', 'data', 'ai', 'push', 'export', 'media', 'chat', 'health', 'strava', 'checkout', 'account']) {
+    for (const ns of ['auth', 'billing', 'data', 'ai', 'push', 'export', 'media', 'chat', 'health', 'strava', 'checkout', 'account', 'org']) {
       /* Literal substring match: no regex escaping to get wrong. */
       ok(`${label} routes ${ns}`, src.includes(ns), ns);
     }
   }
   ok('adapter imports the strava handler file', /from '\.\.\/backend\/handlers\/strava\.mjs'/.test(adapterSrc), 'import');
   ok('adapter dispatches /api/strava/*', /inner\.startsWith\('strava\/'\)/.test(adapterSrc), 'dispatch');
+  ok('adapter imports the org handler file', /from '\.\.\/backend\/handlers\/org\.mjs'/.test(adapterSrc), 'import');
+  ok('adapter dispatches /api/org/*', /inner\.startsWith\('org\/'\)/.test(adapterSrc), 'dispatch');
   /* Every handler lives under backend/ (the adapter's includeFiles bundle). */
   ok('all imported handlers live under backend/handlers/', !/from '\.\.\/(?!backend\/handlers\/)[^']+\.mjs'/.test(adapterSrc), 'outside backend/');
 
   /* No client-broken endpoint: every /api/... path app.js or the shop pages
      fetch must be one the server + adapter actually dispatch. */
   const KNOWN = ['/api/auth/', '/api/billing/', '/api/data', '/api/ai/', '/api/push/',
-    '/api/export/', '/api/media', '/api/chat/', '/api/health', '/api/strava/',
+    '/api/export/', '/api/media', '/api/chat/', '/api/health', '/api/strava/', '/api/org/',
     '/shop/api/checkout', '/shop/api/account/'];
   for (const f of ['../app.js', '../shop/account.html', '../shop/checkout.html']) {
     let src = '';

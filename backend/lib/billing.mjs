@@ -9,13 +9,20 @@ import { normEmail, accessOf } from './saas.mjs';
 import { withLock } from './guard.mjs';
 
 export const PLANS = {
-  trial:        { id: 'trial',        name: 'Trial',        maxClients: 5,   maxStorageMB: 100 },
-  basic:        { id: 'basic',        name: 'Basic',        maxClients: 5,   maxStorageMB: 100 },
-  professional: { id: 'professional', name: 'Professional', maxClients: 30,  maxStorageMB: 2048 },
-  club:         { id: 'club',         name: 'Club',         maxClients: 200, maxStorageMB: 10240 }
+  // Solo coach tiers
+  trial:          { id: 'trial',          name: 'Trial',          tier: 'solo', maxClients: 5,   maxCoaches: 1,  maxBranches: 1, maxStorageMB: 100 },
+  basic:          { id: 'basic',          name: 'Basic',          tier: 'solo', maxClients: 5,   maxCoaches: 1,  maxBranches: 1, maxStorageMB: 100 },
+  professional:   { id: 'professional',   name: 'Professional',   tier: 'solo', maxClients: 30,  maxCoaches: 1,  maxBranches: 1, maxStorageMB: 2048 },
+  club:           { id: 'club',           name: 'Club',           tier: 'gym',  maxClients: 200, maxCoaches: 5,  maxBranches: 1, maxStorageMB: 10240 },
+
+  // Gym & Multi-Branch Enterprise tiers
+  gym_studio:     { id: 'gym_studio',     name: 'Gym Studio',     tier: 'gym',  maxClients: 150, maxCoaches: 5,  maxBranches: 1, maxStorageMB: 10240 },
+  gym_chain:      { id: 'gym_chain',      name: 'Gym Chain',      tier: 'gym',  maxClients: 600, maxCoaches: 20, maxBranches: 5, maxStorageMB: 30720 },
+  gym_enterprise: { id: 'gym_enterprise', name: 'Enterprise',     tier: 'gym',  maxClients: 3000, maxCoaches: 100, maxBranches: 25, maxStorageMB: 102400 }
 };
 
 export const planOf = (acct) => PLANS[acct?.plan] || PLANS.trial;
+export const isGymPlan = (planId) => (PLANS[planId]?.tier === 'gym');
 
 /** Seat count = non-archived clients in the workspace payload. */
 export function countSeats(data) {
@@ -23,10 +30,28 @@ export function countSeats(data) {
   return list.filter((c) => c && c.status !== 'Archived').length;
 }
 
-export function quotaCheck(acct, data) {
+export function quotaCheck(acct, data, org = null) {
   const plan = planOf(acct);
   const used = countSeats(data);
-  return { plan: plan.id, max: plan.maxClients, used, over: used > plan.maxClients };
+  const res = {
+    plan: plan.id,
+    tier: plan.tier || 'solo',
+    max: plan.maxClients,
+    used,
+    over: used > plan.maxClients
+  };
+  if (org && plan.tier === 'gym') {
+    const coachCount = (org.staff || []).filter((s) => s && s.role !== 'reception').length;
+    const branchCount = (org.branches || []).length;
+    res.maxCoaches = plan.maxCoaches || 1;
+    res.usedCoaches = coachCount;
+    res.overCoaches = coachCount > (plan.maxCoaches || 1);
+    res.maxBranches = plan.maxBranches || 1;
+    res.usedBranches = branchCount;
+    res.overBranches = branchCount > (plan.maxBranches || 1);
+    res.over = res.over || res.overCoaches || res.overBranches;
+  }
+  return res;
 }
 
 /** accessOf v2: single source of truth lives in saas.mjs (canonical Phase-1).

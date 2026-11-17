@@ -787,6 +787,11 @@ html[dir="rtl"] .sc-head::after,html[dir="rtl"] #probHead::after,html[dir="rtl"]
 @media(max-width:860px){.tgrid{grid-template-columns:1fr}}
 #s16{padding:140px 0}
 .bill-toggle{display:inline-flex;border:1px solid var(--line2);border-radius:99px;padding:4px;margin-top:34px}
+.tier-nav{display:inline-flex;gap:6px;margin:22px 0 6px;background:rgba(255,255,255,0.04);padding:4px;border-radius:99px;border:1px solid var(--line2)}
+.tier-tab{background:none;border:none;padding:9px 22px;border-radius:99px;font-size:13px;font-weight:700;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all .2s ease}
+.tier-tab:hover{color:var(--txt)}
+.tier-tab.on{background:var(--acc);color:#0a0b0d}
+#pgrid-gym{grid-template-columns:repeat(3,1fr)}
 .bill{padding:10px 22px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 .bill.on{background:var(--txt);color:#0a0b0d}
 .bill-note{font-size:12px;color:var(--dim);margin-top:12px}
@@ -923,6 +928,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-mark" viewBox="0 0 120 100"><path fill="currentColor" d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z"/></symbol>
 <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></symbol>
 <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19.5c.7-3.1 2.9-4.7 5.5-4.7s4.8 1.6 5.5 4.7"/><path d="M15.5 5.2a3.4 3.4 0 0 1 0 5.6M17.5 15.2c1.6.7 2.7 2.1 3.1 4.3"/></symbol>
 <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5V3h6v1.5M9 10h6M9 14h6M9 18h3.5"/></symbol>
 <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M4 12.5h16a8 8 0 0 1-16 0z"/><path d="M8.5 12.5V9m3.5 3.5V6.5m3.5 6V9.5"/></symbol>
@@ -1063,7 +1069,50 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     "Athlete's own view":'نمای خودِ ورزشکار',
     'Their week, their next race with a live countdown, their personal bests and their optional metrics — on their phone too.':'هفته‌شان، مسابقه بعدی با شمارش زنده، بهترین رکوردها و شاخص‌های اختیاری — روی گوشی خودشان هم.',
     'Wearables say "not connected" until they are.':'دستگاه‌های پوشیدنی تا وقتی وصل نشده‌اند می‌گویند «متصل نیست».',
-    'No invented sync timestamps and no fabricated activity rows — the page shows what is actually configured.':'نه زمان همگام‌سازی اختراعی، نه ردیف فعالیت ساختگی — صفحه همان چیزی را نشان می‌دهد که واقعاً پیکربندی شده.'
+    'No invented sync timestamps and no fabricated activity rows — the page shows what is actually configured.':'نه زمان همگام‌سازی اختراعی، نه ردیف فعالیت ساختگی — صفحه همان چیزی را نشان می‌دهد که واقعاً پیکربندی شده.',
+
+    '13 — Gym & Studio OS':'۱۳ — سیستم‌عامل باشگاه‌ها و شعب',
+    'Built for gyms, studios<br>& fitness chains.':'ساخته‌شده برای باشگاه‌ها، استودیوها<br>و مجموعه‌های زنجیره‌ای.',
+    'Built for gyms, studios & fitness chains.':'ساخته‌شده برای باشگاه‌ها، استودیوها و مجموعه‌های زنجیره‌ای.',
+    'Centralized data governance, multi-branch athlete tracking, role-based coach management, and instant anti-poaching athlete transfers.':'حاکمیت داده متمرکز، ردیابی شاگردان در شعب مختلف، مدیریت نقش‌های مربیان، و انتقال هوشمند ضدخروج شاگردان.',
+    'Multi-Branch Operations':'مدیریت هوشمند و متمرکز شعب',
+    'Switch seamlessly between HQ and regional branches with live topbar telemetry. Filter athlete rosters, track branch capacity, and manage on-site trainers effortlessly.':'سوئیچ آنی بین شعبه مرکزی و شعب سراسری از نوار بالا. فیلتر فهرست شاگردان، کنترل ظرفیت شعب و نظارت بر مربیان مستقر به سادگی یک کلیک.',
+    'Anti-Poaching Protection':'موتور ضدخروج و حفظ مالکیت شاگرد',
+    'All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach departs or relocates, reassign their athletes to a new trainer in one click without losing a single session.':'تمام سوابق تمرینی، اندازه‌گیری‌ها و تاریخچه شاگرد دارایی دائمی باشگاه است. در صورت استعفا یا جابه‌جایی مربی، شاگردان بدون از دست رفتن حتی ۱ جلسه به مربی جدید منتقل می‌شوند.',
+    'Role-Based Governance (RBAC)':'سطوح دسترسی سازمانی (RBAC)',
+    'Custom permissions for Gym Owners, Head Coaches, Branch Managers, Personal Trainers, and Front-Desk Reception. Reception staff seats are completely exempt from coach quotas.':'تفکیک دقیق اختیارات برای مالک باشگاه، سرمربی، مدیران شعب، مربیان اختصاصی و پذیرش. پرسنل پذیرش از سهمیه مربیان ورزشی معاف هستند.',
+    'Franchise & Studio Scalability':'مقیاس‌پذیری از استودیو تا فرانچایز',
+    'Engineered to scale from boutique private studios (up to 100 athletes) to massive multi-branch franchise networks (3,000+ athletes) with centralized data integrity.':'طراحی‌شده برای مقیاس‌پذیری از استودیوهای خصوصی (تا ۱۰۰ شاگرد) تا زنجیره‌های فرانچایز بزرگ (۳۰۰۰+ شاگرد) با تضمین کامل یکپارچگی داده‌ها.',
+    'Solo Coaches':'مربیان مستقل',
+    'Gyms & Chains':'باشگاه‌ها و شعب',
+    'Gym Studio':'استودیو ورزشی',
+    'Gym Chain':'باشگاه زنجیره‌ای',
+    'Enterprise':'سازمانی / اینترپرایز',
+    'For single-location fitness studios.':'برای استودیوهای ورزشی و باشگاه‌های تک‌شعبه.',
+    'For multi-branch fitness centers & chains.':'برای مجموعه‌ها و باشگاه‌های چندشعبه‌ای.',
+    'For franchise gyms & athletic academies.':'برای باشگاه‌های زنجیره‌ای بزرگ و آکادمی‌های قهرمانی.',
+    '1 dedicated branch':'۱ شعبه اختصاصی',
+    'Up to 5 coaches & trainers':'تا ۵ مربی و کادر ورزشی',
+    'Up to 100 active athletes':'تا ۱۰۰ شاگرد فعال',
+    'Anti-Poaching client transfer engine':'موتور ضدخروج شاگرد (Anti-Poaching)',
+    'Reception & staff accounts':'حساب‌های پذیرش و پرسنل دفتری',
+    'Centralized cloud data governance':'حاکمیت داده ابری متمرکز',
+    'Up to 5 branches with HQ tagging':'تا ۵ شعبه مستقل با نشان HQ',
+    'Up to 20 personal trainers & head coaches':'تا ۲۰ مربی اختصاصی و سرمربی',
+    'Up to 600 active athletes':'تا ۶۰۰ شاگرد فعال',
+    '1-click athlete transfer engine (Anti-Poaching)':'انتقال ۱کلیکه شاگردان (Anti-Poaching)',
+    'Live topbar branch telemetry & switching':'سوئیچ و رصد زنده شعب در نوار بالا',
+    'Receptionist accounts (exempt from coach cap)':'حساب‌های پذیرش (معاف از سقف مربی)',
+    'Priority onboarding & support':'پشتیبانی و راه‌اندازی اولویت‌دار',
+    'Up to 25 branches (custom scalable)':'تا ۲۵ شعبه (قابل افزایش اختصاصی)',
+    'Up to 100 coaches & branch managers':'تا ۱۰۰ مربی و مدیر شعبه',
+    'Up to 3,000 active athletes':'تا ۳,۰۰۰ شاگرد فعال',
+    'Multi-branch Franchise QC & Telemetry':'سیستم نظارت کیفی شعب (Franchise QC)',
+    'Custom data export & integration':'خروجی داده و وب‌هوک‌های اختصاصی',
+    'Dedicated account manager & 99.9% SLA':'مدیر حساب اختصاصی و ضمانت ۹۹.۹٪ پایداری',
+    'Buy Studio':'خرید پلن استودیو',
+    'Buy Chain':'خرید پلن زنجیره‌ای',
+    'Buy Enterprise':'خرید پلن سازمانی',
   };
   var original=new WeakMap();
   function normalize(value){return value.replace(/\s+/g,' ').trim();}
@@ -2067,10 +2116,43 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   </div>
 </section>
 
+<section class="scene" id="s12g" data-scene>
+  <div class="wrap">
+    <div data-reveal><span class="eyebrow">13 — Gym &amp; Studio OS</span></div>
+    <div data-reveal style="display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;margin-top:14px">
+      <h2 class="display" style="font-size:clamp(30px,4.6vw,64px)">Built for gyms, studios<br>&amp; fitness chains.</h2>
+      <p class="sub" style="text-align:center;max-width:760px">Centralized data governance, multi-branch athlete tracking, role-based coach management, and instant anti-poaching athlete transfers.</p>
+    </div>
+    <div class="feat2" data-reveal style="grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:18px;margin-top:32px">
+      <div class="ma-card" style="padding:26px">
+        <div class="mi"><svg class="ic"><use href="#i-building"/></svg></div>
+        <h4>Multi-Branch Operations</h4>
+        <p>Switch seamlessly between HQ and regional branches with live topbar telemetry. Filter athlete rosters, track branch capacity, and manage on-site trainers effortlessly.</p>
+      </div>
+      <div class="ma-card" style="padding:26px">
+        <div class="mi"><svg class="ic"><use href="#i-lock"/></svg></div>
+        <h4>Anti-Poaching Protection</h4>
+        <p>All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach departs or relocates, reassign their athletes to a new trainer in one click without losing a single session.</p>
+      </div>
+      <div class="ma-card" style="padding:26px">
+        <div class="mi"><svg class="ic"><use href="#i-users"/></svg></div>
+        <h4>Role-Based Governance (RBAC)</h4>
+        <p>Custom permissions for Gym Owners, Head Coaches, Branch Managers, Personal Trainers, and Front-Desk Reception. Reception staff seats are completely exempt from coach quotas.</p>
+      </div>
+      <div class="ma-card" style="padding:26px">
+        <div class="mi"><svg class="ic"><use href="#i-pulse"/></svg></div>
+        <h4>Franchise &amp; Studio Scalability</h4>
+        <p>Engineered to scale from boutique private studios (up to 100 athletes) to massive multi-branch franchise networks (3,000+ athletes) with centralized data integrity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section class="scene" id="s13" data-scene>
   <a id="how" style="position:absolute;top:0"></a>
   <div class="wrap">
-    <div data-reveal><span class="eyebrow">13 — How it works</span></div>
+    <div data-reveal><span class="eyebrow">14 — How it works</span></div>
     <div class="steps">
       <div class="step" data-reveal><i>Step</i><div class="num">01</div><h3>Add your clients</h3><p>Import profiles, set goals, and invite clients with a single link. Everything starts in one place.</p></div>
       <div class="step" data-reveal style="transition-delay:.12s"><i>Step</i><div class="num">02</div><h3>Build your programs</h3><p>Workouts, nutrition, templates. Build once — reuse, duplicate, and adapt whenever you need.</p></div>
@@ -2120,8 +2202,13 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
       <h2 class="display" style="font-size:clamp(30px,4.2vw,58px);margin-top:18px">Simple pricing.<br>No surprises.</h2>
       <div class="bill-toggle"><button class="bill on" data-bill="m">Monthly</button><button class="bill" data-bill="y">Yearly</button></div>
       <div class="bill-note">Billed monthly. Cancel anytime.</div>
+
+      <div class="tier-nav" data-reveal>
+        <button class="tier-tab on" data-tab="solo">Solo Coaches</button>
+        <button class="tier-tab" data-tab="gym">Gyms &amp; Chains</button>
+      </div>
     </div>
-    <div class="pgrid">
+    <div class="pgrid" id="pgrid-solo">
       <div class="pcard" data-reveal>
         <h3>Free Trial</h3><p class="for">14 days · full access</p>
         <!-- No currency glyph here: the three paid cards are priced in IRT, so a
@@ -2155,6 +2242,50 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
              club plan and the app's in-app Buy button already sends club buyers
              here, so the website funnel now matches (self-serve checkout). -->
         <a class="btn ghost" href="/shop/checkout.html?plan=club" data-checkout="club">Buy Now</a>
+      </div>
+
+    </div>
+    <div class="pgrid" id="pgrid-gym" style="display:none">
+      <div class="pcard" data-reveal>
+        <h3>Gym Studio</h3><p class="for">For single-location fitness studios.</p>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="1,890,000" data-y="18,900,000">1,890,000</span><span class="per">/ month</span></div>
+        <ul>
+          <li><svg class="ic"><use href="#i-check"/></svg>1 dedicated branch</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 5 coaches &amp; trainers</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 100 active athletes</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Anti-Poaching client transfer engine</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Reception &amp; staff accounts</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Centralized cloud data governance</li>
+        </ul>
+        <a class="btn ghost" href="/shop/checkout.html?plan=gym_studio" data-checkout="gym_studio">Buy Studio</a>
+      </div>
+      <div class="pcard rec" data-reveal style="transition-delay:.1s">
+        <span class="rec-chip">Recommended</span>
+        <h3>Gym Chain</h3><p class="for">For multi-branch fitness centers &amp; chains.</p>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="4,900,000" data-y="49,000,000">4,900,000</span><span class="per">/ month</span></div>
+        <ul>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 5 branches with HQ tagging</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 20 personal trainers &amp; head coaches</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 600 active athletes</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>1-click athlete transfer engine (Anti-Poaching)</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Live topbar branch telemetry &amp; switching</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Receptionist accounts (exempt from coach cap)</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Priority onboarding &amp; support</li>
+        </ul>
+        <a class="btn acc" href="/shop/checkout.html?plan=gym_chain" data-checkout="gym_chain">Buy Chain</a>
+      </div>
+      <div class="pcard" data-reveal style="transition-delay:.2s">
+        <h3>Enterprise</h3><p class="for">For franchise gyms &amp; athletic academies.</p>
+        <div class="price"><span class="cur">IRT</span><span class="num" data-m="9,900,000" data-y="99,000,000">9,900,000</span><span class="per">/ month</span></div>
+        <ul>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 25 branches (custom scalable)</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 100 coaches &amp; branch managers</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 3,000 active athletes</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Multi-branch Franchise QC &amp; Telemetry</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Custom data export &amp; integration</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Dedicated account manager &amp; 99.9% SLA</li>
+        </ul>
+        <a class="btn ghost" href="/shop/checkout.html?plan=gym_enterprise" data-checkout="gym_enterprise">Buy Enterprise</a>
       </div>
     </div>
     <p class="pfoot" data-reveal>Prices shown are launch placeholders — final pricing to be confirmed.</p>
@@ -2253,6 +2384,19 @@ function boot(){
     priceEls.forEach(function(p){p.textContent=p.getAttribute('data-'+mode);});
     billNotes.forEach(function(n){n.textContent=mode==='m'?'Billed monthly. Cancel anytime.':'Billed yearly — 2 months free.';});}
   bills.forEach(function(b){b.addEventListener('click',function(){setBill(b.getAttribute('data-bill'));});});
+  var tierTabs = $('.tier-tab');
+  tierTabs.forEach(function(tb){
+    tb.addEventListener('click', function(){
+      tierTabs.forEach(function(x){ x.classList.remove('on'); });
+      tb.classList.add('on');
+      var target = tb.getAttribute('data-tab');
+      var solo = $('#pgrid-solo'), gym = $('#pgrid-gym');
+      if (solo && gym) {
+        solo.style.display = target === 'solo' ? 'grid' : 'none';
+        gym.style.display = target === 'gym' ? 'grid' : 'none';
+      }
+    });
+  });
   var mouse={x:.5,y:.5};
   addEventListener('pointermove',function(e){mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight;
     var sp=$('#spot');if(sp){sp.style.setProperty('--sx',(mouse.x*100)+'%');sp.style.setProperty('--sy',(mouse.y*100)+'%');}},{passive:true});

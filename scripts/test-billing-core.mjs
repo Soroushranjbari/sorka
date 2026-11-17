@@ -16,8 +16,9 @@ const fakeClients = (n, archived = 0) => {
 };
 
 console.log('== plans ==');
-ok(Object.keys(PLANS).length === 4, `4 plans defined (${Object.keys(PLANS).join(',')})`);
+ok(Object.keys(PLANS).length >= 4, `plans defined (${Object.keys(PLANS).join(',')})`);
 ok(PLANS.trial.maxClients === 5 && PLANS.professional.maxClients === 30 && PLANS.club.maxClients === 200, 'trial5/pro30/club200 seat caps');
+ok(PLANS.gym_studio && PLANS.gym_chain && PLANS.gym_enterprise, 'gym studio/chain/enterprise defined');
 ok(planOf({ plan: 'nope' }).id === 'trial', 'unknown plan falls back to trial');
 ok(planOf(null).id === 'trial', 'null account falls back to trial');
 

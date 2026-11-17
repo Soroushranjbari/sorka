@@ -120,7 +120,7 @@ try {
 }
 
 // 1. Desktop views across all 3 languages
-const views = ['dash', 'clients', 'wspace', 'workouts', 'calendar', 'progress', 'nutrition', 'templates', 'exlib', 'notes', 'messages', 'settings', 'help', 'endurance', 'wear'];
+const views = ['dash', 'clients', 'org', 'wspace', 'workouts', 'calendar', 'progress', 'nutrition', 'templates', 'exlib', 'notes', 'messages', 'settings', 'help', 'endurance', 'wear'];
 const langs = ['en', 'fa', 'tr'];
 
 for (const l of langs) {
@@ -148,7 +148,7 @@ for (const tab of tabs) {
 
 // 3. Mobile views
 sandbox.innerWidth = 375;
-const mviews = ['today', 'clients', 'client', 'more', 'live', 'thread', 'nutrition', 'builder', 'settings', 'templates', 'calendar', 'races', 'pbs'];
+const mviews = ['today', 'clients', 'client', 'more', 'live', 'thread', 'nutrition', 'builder', 'settings', 'templates', 'calendar', 'races', 'pbs', 'org'];
 for (const l of langs) {
   vm.runInContext(`lang = "${l}"; applyLang();`, context);
   for (const mv of mviews) {
@@ -164,7 +164,8 @@ for (const l of langs) {
 // 4. Modals
 const modals = [
   'addClientModal', 'pickerModal', 'measModal', 'newSessionModal', 'targetsModal', 'helpModal', 'intakeModal', 'weekPlanModal', 'formCheckModal',
-  'photoExportMorphModal', 'coachWhisperModal', 'raceFuelingModal', 'storyCardModal', 'churnRadarModal', 'retentionNudgeModal'
+  'photoExportMorphModal', 'coachWhisperModal', 'raceFuelingModal', 'storyCardModal', 'churnRadarModal', 'retentionNudgeModal',
+  'orgAddBranchModal', 'orgAddStaffModal', 'orgReassignModal', 'orgCreateModal'
 ];
 for (const m of modals) {
   try {
