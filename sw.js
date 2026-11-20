@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v19-76';
+const CACHE = 'co-os-v20-03';
 
 /* v18.22 — Web Push: show the OS notification and focus/open the app. */
 self.addEventListener('push', e => {
@@ -44,13 +44,10 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.pathname.startsWith('/api/')) return; // never intercept the sync API
   if (url.pathname.startsWith('/shop')) return; // shop is online-only marketing — no SW, no cache collisions (?plan=…)
-  /* App shell (navigations): NETWORK-FIRST. Cache-first here was the root of
-     the "new UI appears, then an old shell comes back" flip-flop: the stale
-     cached index.html answered instantly while the new SW installed in the
-     background, so consecutive loads (and the many open tabs) alternated
-     between versions. Online the shell must ALWAYS come from the network;
-     the cache is only the offline fallback. */
-  if (e.request.mode === 'navigate') {
+  /* App shell & bundles (app.js, index.html): NETWORK-FIRST. Online the app bundle
+     must ALWAYS come from the network so updates land immediately; the cache is
+     the offline fallback. */
+  if (e.request.mode === 'navigate' || url.pathname.endsWith('app.js') || url.pathname.endsWith('index.html')) {
     e.respondWith(
       fetch(e.request).then(res => {
         const copy = res.clone();
@@ -61,7 +58,7 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  // Other same-origin assets: cache-first (they only change with a CACHE bump)
+  // Other same-origin static assets: cache-first
   if (url.origin === location.origin) {
     e.respondWith(
       caches.match(e.request, { ignoreSearch: true }).then(r => r || fetch(e.request).then(res => {

@@ -5705,7 +5705,8 @@ function coachLogin(){
       <div class="divider"><span>${t('or')}</span></div>
       ${isOrg
         ?`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin-org">${ic('building',15)}&nbsp;${t('Explore Organization Demo')}</button>`
-        :`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>`}
+        :`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
+        <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:6px;font-size:12px;color:var(--accent-text)" data-act="demo-signin-org">${ic('building',14)}&nbsp;${t('Explore Organization Demo')}</button>`}
       <div class="row" style="justify-content:center;margin-top:18px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${isOrg ? t('Register Gym / Club') : t('Create account')}</a></div>
       <div class="row" style="justify-content:center;margin-top:10px"><a class="lnk" style="font-size:12px" data-act="set-portal" data-p="${isOrg?'coach':'org'}">${isOrg ? t('Switch to Solo Coach Login') : t('Switch to Club / Gym Login')}</a></div>`}
     <div class="row" style="justify-content:center;margin-top:14px">${langBtn('btn-ghost btn-sm')}</div>
@@ -18039,10 +18040,16 @@ document.addEventListener('click',e=>{
       S.workspaceMode = newMode;
       try { localStorage.setItem('co-ws-mode', newMode); } catch (e) {}
       if (newMode === 'executive') {
+        S.role = 'coach';
         S.view = 'org';
-        S.orgTab = 'overview';
+        S.orgTab = S.orgTab || 'overview';
+        S.org = S.org || getDemoOrg(lang);
+        S.isGymOwner = true;
+        S.orgRole = 'gym_owner';
+        try{history.replaceState(null,'',location.pathname+'#org-'+S.orgTab)}catch(e){}
       } else {
         S.view = 'dash';
+        try{history.replaceState(null,'',location.pathname+'#dash')}catch(e){}
       }
       render();
       toast(newMode === 'executive' ? t('Switched to Executive Console') : t('Switched to Personal Coach Desk'));
@@ -18162,9 +18169,11 @@ document.addEventListener('click',e=>{
       S.workspaceMode='executive';
       S.view='org';
       S.orgTab='overview';
-      S.org=DEMO_ORG;
+      S.org=getDemoOrg(lang);
       S.isGymOwner=true;
       S.orgRole='gym_owner';
+      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+      try{history.replaceState(null,'',location.pathname+'#org-overview')}catch(e){}
       render();
       toast(t('Organization demo mode — explore multi-branch & multi-coach console'));
       cloudEnsure();
@@ -18559,11 +18568,18 @@ document.addEventListener('click',e=>{
       PBSD.unshift(p);closeModal();saveData();render();toast(t('Mark recorded'));break;}
     case 'nav':{
       const v = el.dataset.view;
-      if (v && v.startsWith('org-')) {
+      if (v && (v === 'org' || v.startsWith('org-'))) {
+        S.role = 'coach';
+        S.workspaceMode = 'executive';
         S.view = 'org';
-        S.orgTab = v.slice(4);
+        S.org = S.org || getDemoOrg(lang);
+        S.isGymOwner = true;
+        S.orgRole = 'gym_owner';
+        S.orgTab = v.startsWith('org-') ? v.slice(4) : (S.orgTab || 'overview');
+        try{history.replaceState(null,'',location.pathname+'#org-'+S.orgTab)}catch(e){}
       } else {
         S.view = v;
+        try{history.replaceState(null,'',location.pathname+'#'+v)}catch(e){}
       }
       S.calReturn = false;
       render();
@@ -20404,24 +20420,30 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
       }catch(e){}
     }
   }
-  // Portal separation: solo coach vs gym & organization
+  // Portal separation & deep-linking: solo coach vs gym & organization
   const pPath = location.pathname.toLowerCase();
-  const pHash = location.hash.toLowerCase();
+  const rawHash = location.hash.replace(/^#/, '').toLowerCase();
   const qPortal = (sParams.get('portal')||'').toLowerCase();
+  
+  // 1. Is this an explicit auth/login route?
+  const isExplicitAuth = rawHash.includes('login') || rawHash.includes('signin') || rawHash.includes('signup') ||
+                         sParams.get('auth') === 'login' || sParams.get('auth') === 'signup' ||
+                         pPath.includes('/login') || pPath.includes('/signup');
+
   let detectedPortal = 'coach';
   try{ detectedPortal = localStorage.getItem('co-login-portal') || 'coach'; }catch(e){}
 
-  if(pPath.includes('/org') || pPath.includes('/gym') || pPath.includes('/club') || pHash.includes('org') || pHash.includes('gym') || pHash.includes('club') || qPortal === 'org' || qPortal === 'gym'){
+  if(rawHash.includes('org') || rawHash.includes('gym') || rawHash.includes('club') || pPath.includes('/org') || pPath.includes('/gym') || pPath.includes('/club') || qPortal === 'org' || qPortal === 'gym'){
     detectedPortal = 'org';
-  } else if(pPath.includes('/coach') || pHash.includes('coach') || qPortal === 'coach'){
+  } else if(rawHash.includes('coach') || pPath.includes('/coach') || qPortal === 'coach'){
     detectedPortal = 'coach';
   }
   S.loginPortal = detectedPortal;
   try{ localStorage.setItem('co-login-portal', detectedPortal); }catch(e){}
 
-  if(pHash.includes('login')||pHash.includes('signin')||sParams.get('auth')==='login'||pHash.includes('org')||pHash.includes('gym')||pHash.includes('coach')||pPath.includes('/login')||pPath.includes('/org')||pPath.includes('/gym')||pPath.includes('/coach')){
+  if(isExplicitAuth){
     S.role=null;S.loginRole='coach';
-    S.authMode=(pHash.includes('signup')||sParams.get('auth')==='signup')?'signup':'login';
+    S.authMode=(rawHash.includes('signup')||sParams.get('auth')==='signup')?'signup':'login';
     S.view='login';
     const emailMatch=location.hash.match(/email=([^&]+)/)||sParams.get('email');
     if(emailMatch){
@@ -20435,14 +20457,24 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   if(r){S.resetToken=typeof r==='string'?r:r[1];S.loginRole='coach';S.authMode='login'}
   const modeMatch=location.hash.match(/mode=([a-z]+)/)||sParams.get('mode');
   if(modeMatch){
-    const m=typeof modeMatch==='string'?modeMatch:modeMatch[1];
-    if(m==='executive'||m==='coach'){
-      S.workspaceMode=m;
-      try{localStorage.setItem('co-ws-mode',m)}catch(e){}
+    const mm=typeof modeMatch==='string'?modeMatch:modeMatch[1];
+    if(mm==='executive'||mm==='coach'){
+      S.workspaceMode=mm;
+      try{localStorage.setItem('co-ws-mode',mm)}catch(e){}
     }
   }
-  const vMatch=location.hash.match(/view=([a-z-]+)/);
-  const v=vMatch?vMatch[1]:sParams.get('view');
+
+  // 2. Direct view dispatch (e.g. #org, #org-overview, #org-staff, #org-machines, #dash, #clients)
+  const vMatch=location.hash.match(/(?:view=|^#?)([a-z-]+)/);
+  let v=sParams.get('view');
+  if(!isExplicitAuth && rawHash){
+    const cand=rawHash.split('&')[0].split('=')[0];
+    if(cand.startsWith('org') || ['dash','clients','builder','calendar','messages','progress','measure','nutrition','challenges','templates','library','notes','settings','wspace'].includes(cand)){
+      v=cand;
+    }
+  }
+  if(!v && vMatch && !isExplicitAuth) v=vMatch[1];
+
   const cidParam=sParams.get('cid');if(cidParam)S.cid=+cidParam;
   const tabParam=sParams.get('tab');if(tabParam)S.tab=tabParam;
   if(sParams.get('timer')==='open'){setTimeout(openTimerModal,400);}
@@ -20451,7 +20483,11 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
     if(v.startsWith('org')){
       S.view='org';
       S.workspaceMode='executive';
-      if(v.includes('-'))S.orgTab=v.split('-')[1];
+      S.org = S.org || getDemoOrg(lang);
+      S.isGymOwner = true;
+      S.orgRole = 'gym_owner';
+      const sub = v.includes('-') ? v.split('-')[1] : 'overview';
+      S.orgTab = ['overview', 'staff', 'branches', 'machines', 'reassign'].includes(sub) ? sub : 'overview';
       try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
     }else{
       S.view=v;
@@ -20479,21 +20515,44 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   }
 })();
 window.addEventListener('hashchange',()=>{
-  const h=location.hash.toLowerCase();
-  if(S.view==='login'||!S.role){
+  const h=location.hash.replace(/^#/,'').toLowerCase();
+  if(!h)return;
+  // 1. Auth routes (#org-login, #coach-login, #org-signup, #coach-signup)
+  if(h.includes('login')||h.includes('signin')||h.includes('signup')){
+    S.role=null;S.loginRole='coach';
+    S.authMode=h.includes('signup')?'signup':'login';
+    S.view='login';
     if(h.includes('org')||h.includes('gym')||h.includes('club')){
       S.loginPortal='org';
       try{localStorage.setItem('co-login-portal','org')}catch(e){}
-      if(h.includes('signup'))S.authMode='signup';
-      else if(h.includes('login'))S.authMode='login';
-      render();
-    }else if(h.includes('coach')||h.includes('login')){
+    }else if(h.includes('coach')){
       S.loginPortal='coach';
       try{localStorage.setItem('co-login-portal','coach')}catch(e){}
-      if(h.includes('signup'))S.authMode='signup';
-      else if(h.includes('login'))S.authMode='login';
-      render();
     }
+    render();
+    return;
+  }
+  // 2. Organization routes (#org, #org-overview, #org-staff, #org-branches, #org-machines, #org-reassign)
+  if(h.startsWith('org')){
+    S.role='coach';
+    S.workspaceMode='executive';
+    S.view='org';
+    S.org=S.org||getDemoOrg(lang);
+    S.isGymOwner=true;
+    S.orgRole='gym_owner';
+    const sub=h.includes('-')?h.split('-')[1]:'overview';
+    S.orgTab=['overview','staff','branches','machines','reassign'].includes(sub)?sub:'overview';
+    try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+    render();
+    return;
+  }
+  // 3. Standard coach views (#dash, #clients, etc.)
+  const standardViews=['dash','clients','builder','calendar','messages','progress','measure','nutrition','challenges','templates','library','notes','settings','wspace'];
+  if(standardViews.includes(h)){
+    S.role='coach';
+    S.view=h;
+    render();
+    return;
   }
 });
 loadPrefs();
