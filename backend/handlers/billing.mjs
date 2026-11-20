@@ -63,7 +63,7 @@ async function redeem(req, st) {
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
   const { data: body, err } = await readSmall(req);
   if (err) return err;
-  const code = normCoupon(body?.code);
+  const code = normCoupon(body?.code || body?.coupon);
   if (!code) return j(400, { ok: false, error: 'bad-code' });
   // Redemption is serialized (coupon → account locks) inside redeemForAccount —
   // the ONE shared implementation, also used by signup/login activation.

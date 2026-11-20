@@ -324,6 +324,7 @@ html[dir="rtl"] .lang-opt{
       <div class="row">
         <button id="copyBtn" type="button"><span id="t-copy">Copy</span></button>
         <a class="btn acc" style="margin-top:0;width:auto;padding:10px 18px" id="appLink" href="/index.html">Open the app</a>
+        <a class="btn" style="margin-top:0;width:auto;padding:10px 18px;border:1px solid var(--acc-line);color:var(--acc)" id="signInLink" href="/index.html#login"><span id="t-signin">Sign in</span></a>
         <a class="btn" style="margin-top:0;width:auto;padding:10px 18px;border:1px solid var(--acc-line);color:var(--acc)" href="/shop/account.html" id="t-acct">My account</a>
       </div>
     </div>
@@ -372,13 +373,14 @@ const FA={
   'Order summary':'خلاصه سفارش','Plan':'پلن','Duration':'مدت','1 month':'۱ ماه','Clients':'شاگردان','Total':'مجموع',
   'The activation code is single-use and valid for 1 year. Enter a password to create your account with the plan already active — or leave it empty if you already have one and redeem the code later.':'کد فعال‌سازی تک‌مصرف است و یک سال اعتبار دارد. رمز عبور وارد کنید تا حسابتان با پلن فعال ساخته شود — یا اگر قبلاً حساب دارید خالی بگذارید و کد را بعداً ریدیم کنید.',
   'Payment successful':'پرداخت موفق','This is your activation code — keep it safe. It activates your plan inside the app.':'این کد فعال‌سازی شماست — آن را نگه دارید. پلن شما را در اپ فعال می‌کند.',
-  'Activation code':'کد فعال‌سازی','Copy':'کپی','Open the app':'باز کردن اپ',
+  'Activation code':'کد فعال‌سازی','Copy':'کپی','Open the app':'باز کردن اپ','Sign in':'ورود به اپلیکیشن',
   'Sign in to the app with this email':'با همین ایمیل در اپ وارد شوید',
   'Redeem the code in Settings → Account':'کد را در تنظیمات → حساب ریدیم کنید',
   'Your plan unlocks instantly':'پلن فوراً باز می‌شود',
   'Password (optional — creates your account)':'رمز عبور (اختیاری — حسابتان را می‌سازد)',
   'Pay & create account':'پرداخت و ساخت حساب',
   'Account created — your plan is active. “Open the app” signs you straight in.':'حساب ساخته شد — پلن شما فعال است. «باز کردن اپ» مستقیم وارد حسابتان می‌شود.',
+  'Redirecting to the app in':'در حال انتقال خودکار به برنامه در',
   'This email already has an account — sign in and redeem the code in Settings → Account.':'این ایمیل قبلاً ثبت شده — وارد شوید و کد را در تنظیمات → حساب ریدیم کنید.',
   'Code saved — sign in with this email and redeem it in Settings → Account.':'کد ذخیره شد — با همین ایمیل وارد شوید و آن را در تنظیمات → حساب ریدیم کنید.',
   'Password must be at least 8 characters':'رمز عبور باید حداقل ۸ کاراکتر باشد',
@@ -422,6 +424,7 @@ const TR={
   'Password (optional — creates your account)':'Şifre (isteğe bağlı — hesabınızı oluşturur)',
   'Pay & create account':'Öde ve hesap oluştur',
   'Account created — your plan is active. “Open the app” signs you straight in.':'Hesap oluşturuldu — planınız aktif. "Uygulamayı aç" doğrudan giriş yapar.',
+  'Redirecting to the app in':'Uygulamaya aktarılıyor',
   'This email already has an account — sign in and redeem the code in Settings → Account.':'Bu e-posta zaten kayıtlı — giriş yapın ve kodu Ayarlar → Hesap bölümünde kullanın.',
   'Code saved — sign in with this email and redeem it in Settings → Account.':'Kod kaydedildi — bu e-posta ile giriş yapın ve kodu Ayarlar → Hesap bölümünde kullanın.',
   'Password must be at least 8 characters':'Şifre en az 8 karakter olmalıdır',
@@ -599,7 +602,10 @@ $('payBtn').addEventListener('click',async()=>{
       try{
         localStorage.setItem('co-auth',sd.token);
         localStorage.setItem('coach-os-shop-token',sd.token);
+        localStorage.setItem('coach-os-email',email);
       }catch(e){}
+      $('appLink').href='/index.html#token='+encodeURIComponent(sd.token);
+      if($('signInLink'))$('signInLink').style.display='none';
       // Done view without a code: a trial needs no activation — the session
       // token above already signs the new coach into the app.
       $('t-code').style.display='none';$('code').style.display='none';$('copyBtn').style.display='none';
@@ -609,6 +615,7 @@ $('payBtn').addEventListener('click',async()=>{
       $('form-view').style.display='none';
       $('done').classList.add('show');
       window.scrollTo({top:0});
+      setTimeout(()=>{location.href=$('appLink').href},1600);
       return;
     }
     /* PRODUCTION: redirect to the gateway here; the coupon is issued in the
@@ -618,10 +625,6 @@ $('payBtn').addEventListener('click',async()=>{
     const d=await r.json().catch(()=>null);
     if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
     $('code').textContent=d.coupons[0];
-    $('appLink').href='/index.html';
-    // Hand the code to the app (same-origin localStorage contract, see
-    // shop/README.md): the app prefills Settings → Account → Coupon with it,
-    // so after signing up the buyer only presses Activate.
     try{localStorage.setItem('coach-os-coupon',d.coupons[0])}catch(e){}
     // ONE-STEP signup: a filled password creates the account WITH the code in
     // the same click — the plan is active on first login, no trial, no second
@@ -629,6 +632,7 @@ $('payBtn').addEventListener('click',async()=>{
     // email is already registered) must NOT lose the code: it stays shown and
     // in localStorage, redeemable from Settings → Account.
     let acct='none'; // 'created' | 'exists' | 'none'
+    let token='';
     if(pw){
       try{
         const sr=await fetch((API_BASE||'')+'/shop/api/account/signup',{
@@ -638,14 +642,26 @@ $('payBtn').addEventListener('click',async()=>{
         const sd=await sr.json().catch(()=>null);
         if(sr.ok&&sd&&sd.ok){
           acct='created';
+          token=sd.token;
           // Same-origin localStorage contract: the app boots its session from
           // 'co-auth', the shop account page from 'coach-os-shop-token'.
           try{
             localStorage.setItem('co-auth',sd.token);
             localStorage.setItem('coach-os-shop-token',sd.token);
+            localStorage.setItem('coach-os-email',email);
           }catch(e){}
         }else if(sd&&sd.error==='email-taken'){acct='exists'}
       }catch(e){acct='none'}
+    }
+    if(token){
+      $('appLink').href='/index.html#token='+encodeURIComponent(token);
+      if($('signInLink'))$('signInLink').style.display='none';
+    }else{
+      $('appLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'');
+      if($('signInLink')){
+        $('signInLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'');
+        $('signInLink').style.display='';
+      }
     }
     // The backend falls back to minting the code locally (and flags it `demo`)
     // when COACH_OS_URL / ADMIN_API_KEY are not configured — the code then
@@ -657,10 +673,24 @@ $('payBtn').addEventListener('click',async()=>{
       $('steps').style.display='none';
       okBox.classList.remove('acct-warn');okBox.classList.add('show');
       setT($('t-acctok'),'Account created — your plan is active. “Open the app” signs you straight in.');
+      let leftSec=2;
+      const countEl=$('t-acctok');
+      const baseMsg=countEl.textContent;
+      countEl.textContent=baseMsg+' ('+t('Redirecting to the app in')+' '+nf(leftSec)+'s…)';
+      const rTimer=setInterval(()=>{
+        leftSec--;
+        if(leftSec<=0){
+          clearInterval(rTimer);
+          location.href=$('appLink').href;
+        }else{
+          countEl.textContent=baseMsg+' ('+t('Redirecting to the app in')+' '+nf(leftSec)+'s…)';
+        }
+      },1000);
     }else if(acct==='exists'){
       $('steps').style.display='none';
       okBox.classList.add('acct-warn','show');
       setT($('t-acctok'),'This email already has an account — sign in and redeem the code in Settings → Account.');
+      setT($('appLink'),'Sign in');
     }else{
       // Code-only purchase (no password, or signup failed): keep the redeem
       // steps visible so the buyer knows what to do next.
@@ -695,6 +725,17 @@ $('copyBtn').addEventListener('click',()=>{
     setTimeout(()=>{$('t-copy').textContent=t('Copy')},2600);
   }
 });
+
+$('appLink').addEventListener('click', e => {
+  e.preventDefault();
+  if($('appLink').href) location.href = $('appLink').href;
+});
+if($('signInLink')){
+  $('signInLink').addEventListener('click', e => {
+    e.preventDefault();
+    if($('signInLink').href) location.href = $('signInLink').href;
+  });
+}
 
 applyLang();
 </script>

@@ -16,9 +16,9 @@
 // api/[...path].mjs re-dispatches /api/shop/api/account/* for Vercel).
 import { kv } from '../lib/db.mjs';
 import { readJsonCapped, tooLarge, tooMany, badJson, rateLimit, ipOf, secure } from '../lib/guard.mjs';
-import { store, sessionOf, accountById, accessOf } from '../lib/saas.mjs';
-import { signup as authSignup, login as authLogin, publicCoach, publicWs } from '../lib/auth-shared.mjs';
-import { publicBilling, planOf, countSeats } from '../lib/billing.mjs';
+import { store, sessionOf, accountById, accessOf, verifyPassword } from '../lib/saas.mjs';
+import { signup as authSignup, login as authLogin, publicCoach, publicWs, ensureWorkspace, issueSession } from '../lib/auth-shared.mjs';
+import { publicBilling, planOf, countSeats, redeemForAccount } from '../lib/billing.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const st = kv('shop-orders');
@@ -161,7 +161,7 @@ export default async (req) => {
       } catch {}
     }
 
-    if (!ok && (!COACH_OS_URL || upstreamStatus !== 409)) {
+    if (!ok) {
       const inReq = new Request(req.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -173,10 +173,40 @@ export default async (req) => {
       const inRes = await authSignup(inReq, store());
       d = await inRes.json().catch(() => null);
       if (!inRes.ok || !d || !d.ok) {
+        if ((d?.error === 'email-taken' || upstreamStatus === 409) && body?.password && body?.email && body?.coupon) {
+          // If the email is already registered, check if password matches:
+          // If correct, seamlessly log them in and redeem their newly purchased coupon!
+          const appSt = store();
+          const cleanEmail = String(body.email).trim().toLowerCase();
+          const acct = await appSt.get(`acct:${cleanEmail}`, { type: 'json' });
+          if (acct && verifyPassword(body.password, acct.pass)) {
+            const ws = await ensureWorkspace(appSt, acct);
+            const token = await issueSession(appSt, acct);
+            let redeemed = false;
+            let redeemError = null;
+            let billing = null;
+            if (body.coupon) {
+              const r = await redeemForAccount(appSt, acct, body.coupon);
+              if (r.ok) {
+                redeemed = true;
+                billing = r.billing;
+                const updatedAcct = await appSt.get(`acct:${cleanEmail}`, { type: 'json' });
+                if (updatedAcct) Object.assign(acct, updatedAcct);
+              } else {
+                redeemError = r.error;
+              }
+            }
+            const bill = await billingOf(token);
+            return secure(j(200, {
+              ok: true, token, coach: publicCoach(acct),
+              workspace: publicWs(ws), access: accessOf(acct),
+              billing: (bill && bill.billing) || billing, quota: (bill && bill.quota) || null,
+              redeemed, redeemError, existingUser: true
+            }));
+          }
+        }
         return j(inRes.status === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
       }
-    } else if (!ok) {
-      return j(upstreamStatus === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
     }
 
     const bill = await billingOf(d.token);

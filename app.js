@@ -2643,6 +2643,22 @@ async function authLogin(){
     // that belongs to the previous coach — otherwise the first sync pushes the
     // previous coach's clients into this coach's (empty) workspace.
     cloudReset();adoptAccount(d.coach);
+    // Auto-redeem any pending coupon from a recent shop checkout
+    let pendingCoupon = null;
+    try { pendingCoupon = localStorage.getItem('coach-os-coupon'); } catch(e) {}
+    if (pendingCoupon) {
+      try {
+        const { ok: rOk, d: rData } = await authApi('/api/billing/redeem', {
+          method: 'POST',
+          body: JSON.stringify({ code: pendingCoupon, coupon: pendingCoupon })
+        });
+        if (rOk && rData && rData.ok) {
+          AUTH.access = rData.access || AUTH.access;
+          if (rData.billing) BILL.info = rData.billing;
+          try { localStorage.removeItem('coach-os-coupon'); } catch(e) {}
+        }
+      } catch(e) {}
+    }
     await loadOrgMe();
     S.role='coach';
     if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
@@ -2773,12 +2789,13 @@ async function loadOrgMe() {
       try { savedMode = localStorage.getItem('co-ws-mode'); } catch (e) {}
       const isExecStaff = (d.isOwner || ['gym_owner', 'manager', 'head_coach'].includes(d.role));
       S.workspaceMode = savedMode || (isExecStaff ? 'executive' : 'coach');
-      render();
+      if (S.role) render();
     } else {
       S.org = null;
       S.orgRole = null;
       S.isGymOwner = false;
       S.workspaceMode = 'coach';
+      if (S.role) render();
     }
   } catch (e) {}
 }
@@ -19948,6 +19965,14 @@ document.addEventListener('keydown',e=>{
     if(S.role==='coach'&&S.msgThread){S.msgThread=null;render()}
   }
 });
+document.addEventListener('submit',e=>{
+  const f=e.target&&e.target.closest&&e.target.closest('.login-card');
+  if(!f)return;
+  e.preventDefault();
+  if(S.resetToken)authResetDo();
+  else if(S.authMode==='signup')authSignup();
+  else authLogin();
+});
 let _narrow=isNarrow();
 window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow=n;render()}});
 (()=>{
@@ -19956,6 +19981,25 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   if(qLang && (qLang==='en'||qLang==='fa'||qLang==='tr')){
     lang=qLang;
     try{localStorage.setItem('co-lang',lang);localStorage.setItem('coach-os-locale',lang);}catch(e){}
+  }
+  const tokenMatch=location.hash.match(/token=([A-Za-z0-9_]+)/)||sParams.get('token')||sParams.get('auth');
+  if(tokenMatch){
+    const uTok=typeof tokenMatch==='string'?tokenMatch:tokenMatch[1];
+    if(uTok&&uTok.startsWith('co_')){
+      authSet(uTok);
+      try{
+        const cleanHash=location.hash.replace(/#?token=[A-Za-z0-9_]+&?/,'').replace(/^&/,'');
+        history.replaceState(null,'',location.pathname+(cleanHash?'#'+cleanHash:''));
+      }catch(e){}
+    }
+  }
+  if(location.hash.includes('login')||location.hash.includes('signin')||sParams.get('auth')==='login'){
+    S.role=null;S.loginRole='coach';S.authMode='login';S.view='login';
+    const emailMatch=location.hash.match(/email=([^&]+)/)||sParams.get('email');
+    if(emailMatch){
+      const em=typeof emailMatch==='string'?emailMatch:emailMatch[1];
+      try{localStorage.setItem('coach-os-email',decodeURIComponent(em))}catch(e){}
+    }
   }
   const m=location.hash.match(/join=([A-Za-z0-9-]{4,24})/)||sParams.get('join');
   if(m){S.joinCode=(typeof m==='string'?m:m[1]).toUpperCase();S.loginRole='client'}
@@ -20006,6 +20050,9 @@ syncCustomEx(); // re-append workspace custom exercises after the static bank
 if(S.joinCode)freshWorkspace();
 (async()=>{ // Phase-1 bootstrap: session first, then tenant-owned code
   try{
+    if(!AUTH.token){
+      try{AUTH.token=localStorage.getItem('co-auth')||''}catch(e){}
+    }
     if(AUTH.token)await authMe();
     // v16.4 — the local payload must belong to the signed-in coach. On a
     // shared device (or two tabs) STORE_KEY may still hold the PREVIOUS
