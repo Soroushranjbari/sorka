@@ -828,6 +828,29 @@ Object.assign(FA, {
   'Upgrade your workspace to a multi-branch gym or fitness club. Add staff, allocate athlete seats, and manage anti-poaching athlete transfers with full data governance.': 'فضای کاری خود را به باشگاه ورزشی چندشعبه‌ای ارتقا دهید. کادر مربیان را اضافه کنید، سهمیه ورزشکاران را تخصیص دهید و انتقال شاگردان را بدون از دست رفتن رکوردها مدیریت نمایید.',
   'All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach resigns or changes branches, reassign their athletes in one click.': 'تمام سوابق تمرینی، اندازه‌گیری‌ها و تاریخچه شاگرد متعلق به باشگاه باقی می‌ماند. با استعفا یا جابه‌جایی مربی، شاگردان را با یک کلیک به مربی جدید بسپارید.',
   'Please enter a branch name': 'لطفاً نام شعبه را وارد کنید',
+  'Executive Console': 'کنسول مدیریت سازمان',
+  'Personal Coach Desk': 'میزکار شخصی مربی',
+  'Switch to Executive Console': 'سوییچ به کنسول مدیریت باشگاه',
+  'Switched to Executive Console': 'به کنسول مدیریت باشگاه تغییر یافت',
+  'Switched to Personal Coach Desk': 'به میزکار شخصی مربی تغییر یافت',
+  'Workspace Context': 'فضای کاری فعال',
+  'Command Center': 'کنسول فرماندهی باشگاه',
+  'Branch Telemetry & Occupancy': 'مانیتورینگ زنده و ظرفیت شعب',
+  'Live capacity and staff distribution across all facilities': 'وضعیت ظرفیت لحظه‌ای و توزیع پرسنل در تمام شعب',
+  'Staff Roster & Load': 'توزیع شاگردان و سهمیه مربیان',
+  'Assigned athlete rosters per personal trainer': 'فهرست شاگردان منتسب به هر مربی ورزشی',
+  'New Branch': 'شعبه جدید',
+  'Offboard & Transfer': 'خروج مربی و انتقال شاگردان',
+  'Departing / Source Coach': 'مربی مستعفی / مبدا',
+  'Athletes Selected for Transfer': 'شاگردان انتخاب‌شده جهت انتقال',
+  'Smart Equipment & QR Stickers': 'تجهیزات هوشمند و برچسب‌های QR',
+  'Club Master Roster': 'بانک شاگردان کل باشگاه',
+  'Search staff by name or email…': 'جستجوی پرسنل با نام یا ایمیل…',
+  'No staff members found matching filter': 'پرسنلی با این مشخصات یافت نشد',
+  'No active athletes under selected coach': 'ورزشکار فعالی تحت نظر مربی انتخابی وجود ندارد',
+  'Anti-Poaching Protection & Client Transfer Engine': 'موتور حفاظت از دیتا و انتقال هوشمند شاگرد',
+  'Departing trainer? Transfer their full athlete roster in 1 click.': 'استعفای مربی؟ کل شاگردان او را با یک کلیک به مربی جدید منتقل کنید.',
+  'machines registered · NFC deep links ready': 'دستگاه ثبت‌شده · آماده اسکن NFC/QR',
   'Please enter name and email': 'لطفاً نام و ایمیل را وارد کنید',
   'Please select coach and client': 'لطفاً مربی و شاگرد را انتخاب کنید',
   'Please select at least one athlete to transfer': 'لطفاً حداقل یک شاگرد را جهت انتقال انتخاب کنید',
@@ -837,7 +860,61 @@ Object.assign(FA, {
   'Failed to add staff': 'افزودن کادر فنی ناموفق بود',
   'Failed to remove staff': 'حذف کادر فنی ناموفق بود',
   'Failed to create gym organization': 'ایجاد باشگاه ناموفق بود',
-  'Are you sure you want to remove this staff member? Any assigned clients should be reassigned.': 'آیا از حذف این عضو کادر اطمینان دارید؟ شاگردان این مربی باید به مربی دیگری منتقل شوند.'
+  'Are you sure you want to remove this staff member? Any assigned clients should be reassigned.': 'آیا از حذف این عضو کادر اطمینان دارید؟ شاگردان این مربی باید به مربی دیگری منتقل شوند.',
+  'Executive': 'مدیریت ارشد',
+  'Coach Desk': 'میزکار مربی',
+  'Executive Command': 'فرماندهی سازمانی',
+  'Data Governance': 'حاکمیت داده و سرمایه انسانی',
+  'Operations': 'عملیات باشگاه',
+  'Branches & Studios': 'شعب و استودیوها',
+  'Staff Communication': 'ارتباط با کادر فنی',
+  'Club Schedule': 'برنامه زمان‌بندی باشگاه',
+  'Switch to Coach Desk': 'سوییچ به میزکار مربی',
+  'Active Branches': 'شعب فعال',
+  'Staff Members': 'کادر و مربیان',
+  'Active Athletes': 'ورزشکاران فعال',
+  'Organization Resource Quotas': 'سهمیه منابع سازمانی',
+  'Multi-branch command center': 'مرکز فرماندهی چندشعبه‌ای',
+  'Personal training workspace': 'فضای کاری تمرین خصوصی',
+  'Smart Equipment & QR': 'تجهیزات هوشمند و برچسب‌های QR',
+  'Filtered by Coach': 'فیلتر بر اساس مربی',
+  'Centralized Governance': 'حاکمیت داده متمرکز',
+  'Clear Filter': 'حذف فیلتر',
+  'Invite': 'دعوت',
+  'Our Club': 'باشگاه ما',
+  'Coach invite message copied ✓': 'متن دعوت مربی کپی شد ✓'
+});
+
+Object.assign(TR, {
+  'Executive Console': 'Yönetici Konsolu',
+  'Executive': 'Yönetici',
+  'Coach Desk': 'Koç Masası',
+  'Executive Command': 'Yönetici Komutası',
+  'Data Governance': 'Veri Yönetişimi',
+  'Operations': 'Operasyonlar',
+  'Branches & Studios': 'Şubeler & Stüdyolar',
+  'Staff Communication': 'Personel İletişimi',
+  'Club Schedule': 'Kulüp Takvimi',
+  'Switch to Coach Desk': 'Koç Masasına Geç',
+  'Switch to Executive Console': 'Yönetici Konsoluna Geç',
+  'Switched to Executive Console': 'Yönetici Konsoluna geçildi',
+  'Switched to Personal Coach Desk': 'Koç Masasına geçildi',
+  'Active Branches': 'Aktif Şubeler',
+  'Staff Members': 'Personel Üyeleri',
+  'Active Athletes': 'Aktif Sporcular',
+  'Organization Resource Quotas': 'Organizasyon Kaynak Kotaları',
+  'Multi-branch command center': 'Çok şubeli komuta merkezi',
+  'Personal training workspace': 'Kişisel antrenman çalışma alanı',
+  'Command Center': 'Komuta Merkezi',
+  'Club Master Roster': 'Kulüp Ana Kadrosu',
+  'Anti-Poaching Transfer': 'Antrenör Değişimi & Transfer',
+  'Smart Equipment & QR': 'Akıllı Ekipman & QR',
+  'Filtered by Coach': 'Antrenöre Göre Filtrelendi',
+  'Centralized Governance': 'Merkezi Yönetişim',
+  'Clear Filter': 'Filtreyi Temizle',
+  'Invite': 'Davet Et',
+  'Our Club': 'Kulübümüz',
+  'Coach invite message copied ✓': 'Antrenör davet mesajı kopyalandı ✓'
 });
 
 
@@ -2539,7 +2616,11 @@ async function authSignup(){
     // New account: drop the local demo seed and any previous tenant's cloud
     // state, so the coach starts with an empty, correctly-owned workspace.
     cloudReset();adoptAccount(d.coach);
-    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
+    await loadOrgMe();
+    S.role='coach';
+    if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
+    else{S.view=ONBOARD.done?landingView():'dash';}
+    render();
     toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
       :d.redeemError?t(billErr({error:d.redeemError}))
       :t('Welcome')+', '+d.coach.name.split(' ')[0]+' ✓');
@@ -2562,7 +2643,11 @@ async function authLogin(){
     // that belongs to the previous coach — otherwise the first sync pushes the
     // previous coach's clients into this coach's (empty) workspace.
     cloudReset();adoptAccount(d.coach);
-    S.role='coach';S.view=ONBOARD.done?landingView():'dash';render();
+    await loadOrgMe();
+    S.role='coach';
+    if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
+    else{S.view=ONBOARD.done?landingView():'dash';}
+    render();
     toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();maybeOnboard();
   }catch(e){toast(t('Could not reach server'))}
@@ -2622,6 +2707,7 @@ async function authMe(){
     const {ok,d}=await authApi('/api/auth/me');
     if(!ok||!d||!d.ok){if(d&&d.error==='unauthorized')authSet('');return false}
     AUTH.coach=d.coach;AUTH.ws=d.workspace;AUTH.access=d.access;
+    await loadOrgMe();
     return true;
   }catch(e){return false}
 }
@@ -2672,15 +2758,24 @@ async function loadOrgMe() {
     S.org = DEMO_ORG;
     S.orgRole = 'gym_owner';
     S.isGymOwner = true;
+    if (!S.workspaceMode) S.workspaceMode = 'executive';
     return;
   }
   try {
     const { ok, d } = await authApi('/api/org/me');
     if (ok && d && d.org) {
       S.org = d.org;
-      S.orgRole = d.role;
-      S.isGymOwner = d.isOwner;
+      S.orgRole = d.role || 'trainer';
+      S.isGymOwner = !!d.isOwner;
+      if (!S.workspaceMode) {
+        S.workspaceMode = (d.isOwner || ['gym_owner', 'manager', 'head_coach'].includes(d.role)) ? 'executive' : 'coach';
+      }
       render();
+    } else {
+      S.org = null;
+      S.orgRole = null;
+      S.isGymOwner = false;
+      S.workspaceMode = 'coach';
     }
   } catch (e) {}
 }
@@ -2723,7 +2818,7 @@ function vOrg(){
     </div>`;
   }
 
-  const tab = S.orgTab || 'staff';
+  const tab = S.orgTab || 'overview';
   const branches = org.branches || [];
   const staff = org.staff || [];
   const totalAthletes = CLIENTS.filter(c => c.status !== 'Archived').length;
@@ -2790,12 +2885,14 @@ function vOrg(){
   </div>
 
   <div class="seg" style="margin-bottom:16px">
+    <button class="${tab==='overview'?'on':''}" data-act="org-tab" data-tab="overview">${ic('building',14)} ${t('Overview')}</button>
     <button class="${tab==='staff'?'on':''}" data-act="org-tab" data-tab="staff">${ic('users',14)} ${t('Staff & Trainers')}</button>
-    <button class="${tab==='branches'?'on':''}" data-act="org-tab" data-tab="branches">${ic('building',14)} ${t('Branches')}</button>
+    <button class="${tab==='branches'?'on':''}" data-act="org-tab" data-tab="branches">${ic('globe',14)} ${t('Branches')}</button>
     <button class="${tab==='reassign'?'on':''}" data-act="org-tab" data-tab="reassign">${ic('refresh',14)} ${t('Anti-Poaching Transfer')}</button>
     <button class="${tab==='machines'?'on':''}" data-act="org-tab" data-tab="machines">${ic('dumbbell',14)} ${t('Smart Machines & QR Tags')}</button>
   </div>
 
+  ${tab==='overview' ? renderOrgOverviewTab(org) : ''}
   ${tab==='staff' ? renderOrgStaffTab(org) : ''}
   ${tab==='branches' ? renderOrgBranchesTab(org) : ''}
   ${tab==='reassign' ? renderOrgReassignTab(org) : ''}
@@ -2803,8 +2900,133 @@ function vOrg(){
   `;
 }
 
+function renderOrgOverviewTab(org){
+  const branches = org.branches || [];
+  const staff = org.staff || [];
+  const machines = [...MACHINES, ...(org.machines || [])];
+
+  return `
+  <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-bottom:20px" class="grid2">
+    <!-- Branch Telemetry Panel -->
+    <div class="card" style="padding:18px">
+      <div class="card-h" style="padding:0 0 12px 0;margin-bottom:14px;border-bottom:1px solid var(--line2)">
+        <div>
+          <b style="font-size:15px">${ic('building',15)} ${t('Branch Telemetry & Occupancy')}</b>
+          <div class="muted" style="font-size:11.5px">${t('Live capacity and staff distribution across all facilities')}</div>
+        </div>
+        <button class="btn btn-outline btn-sm" data-act="org-add-branch-modal">${ic('plus',12)} ${t('New Branch')}</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        ${branches.map(b => {
+          const bAthletes = CLIENTS.filter(c => c.branchId === b.id && c.status !== 'Archived').length;
+          const bCoaches = staff.filter(s => (s.branches || []).includes('*') || (s.branches || []).includes(b.id)).length;
+          return `
+          <div style="border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--card-sub);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+            <div class="row" style="gap:10px">
+              <div style="width:36px;height:36px;border-radius:8px;background:rgba(198,241,78,.08);color:var(--accent);display:grid;place-items:center;flex:none">
+                ${ic('building',16)}
+              </div>
+              <div>
+                <div class="row" style="gap:6px">
+                  <b style="font-size:13.5px">${esc(b.name)}</b>
+                  ${b.isHQ ? `<span class="bdg bdg-lime" style="font-size:9.5px">${t('HQ')}</span>` : ''}
+                </div>
+                <div class="muted" style="font-size:11.5px;margin-top:2px">${esc(b.address || t('No address registered'))} · ${esc(b.phone || '')}</div>
+              </div>
+            </div>
+            <div class="row" style="gap:12px;margin-inline-start:auto">
+              <div style="text-align:center">
+                <div class="muted" style="font-size:10px">${t('Athletes')}</div>
+                <b style="font-size:13px">${bAthletes}</b>
+              </div>
+              <div style="text-align:center">
+                <div class="muted" style="font-size:10px">${t('Staff')}</div>
+                <b style="font-size:13px">${bCoaches}</b>
+              </div>
+              <button class="btn btn-outline btn-xs" data-act="set-branch-filter" data-brid="${esc(b.id)}" title="${t('Filter Roster to this Branch')}">
+                ${ic('users',11)} ${t('Roster')}
+              </button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Staff Roster & Load Panel -->
+    <div class="card" style="padding:18px">
+      <div class="card-h" style="padding:0 0 12px 0;margin-bottom:14px;border-bottom:1px solid var(--line2)">
+        <div>
+          <b style="font-size:15px">${ic('users',15)} ${t('Staff Roster & Load')}</b>
+          <div class="muted" style="font-size:11.5px">${t('Assigned athlete rosters per personal trainer')}</div>
+        </div>
+        <button class="btn btn-primary btn-sm" data-act="org-add-staff-modal">${ic('plus',12)} ${t('Add Staff')}</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${staff.slice(0, 5).map(s => {
+          const sAthletes = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
+          return `
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px;border-radius:8px;background:rgba(255,255,255,.02)">
+            <div class="row" style="gap:8px">
+              ${av(s.name, 30, 2)}
+              <div>
+                <div style="font-weight:600;font-size:12.5px">${esc(s.name)}</div>
+                <div class="muted" style="font-size:10.5px">${t(s.role)}</div>
+              </div>
+            </div>
+            <div class="row" style="gap:6px">
+              <span class="bdg ${sAthletes > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:10.5px">
+                ${sAthletes} ${t('Athletes')}
+              </span>
+              <button class="btn btn-ghost btn-xs" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('View Roster')}">
+                ${ic('users',11)}
+              </button>
+            </div>
+          </div>`;
+        }).join('')}
+        ${staff.length > 5 ? `
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:4px" data-act="org-tab" data-tab="staff">
+            ${t('View all')} ${staff.length} ${t('staff members')} →
+          </button>` : ''}
+      </div>
+    </div>
+  </div>
+
+  <!-- Operational Shortcuts Row -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px">
+    <div class="card" style="padding:14px;display:flex;gap:12px;align-items:center">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(198,241,78,.1);color:var(--accent);display:grid;place-items:center;flex:none">
+        ${ic('refresh',18)}
+      </div>
+      <div style="flex:1">
+        <b style="font-size:13px">${t('Anti-Poaching Athlete Transfer')}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${t('Departing trainer? Transfer their full athlete roster in 1 click.')}</div>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="reassign">${t('Transfer')} →</button>
+    </div>
+
+    <div class="card" style="padding:14px;display:flex;gap:12px;align-items:center">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(59,130,246,.1);color:var(--blue);display:grid;place-items:center;flex:none">
+        ${ic('dumbbell',18)}
+      </div>
+      <div style="flex:1">
+        <b style="font-size:13px">${t('Smart Equipment & QR Stickers')}</b>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${machines.length} ${t('machines registered · NFC deep links ready')}</div>
+      </div>
+      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="machines">${t('Manage')} →</button>
+    </div>
+  </div>`;
+}
+
 function renderOrgStaffTab(org){
   const staff = org.staff || [];
+  const q = (S.staffQuery || '').toLowerCase().trim();
+  const brid = S.staffBranchFilter || 'all';
+  const filtered = staff.filter(s => {
+    if (brid !== 'all' && !(s.branches || []).includes('*') && !(s.branches || []).includes(brid)) return false;
+    if (q && !s.name.toLowerCase().includes(q) && !s.email.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
   const roleBadges = {
     gym_owner: `<span class="bdg bdg-lime">${t('Gym Owner')}</span>`,
     head_coach: `<span class="bdg bdg-blue">${t('Head Coach')}</span>`,
@@ -2813,55 +3035,80 @@ function renderOrgStaffTab(org){
     reception: `<span class="bdg bdg-amber">${t('Reception')}</span>`
   };
   return `
-  <div class="card" style="overflow-x:auto">
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>${t('Staff & Trainers')}</th>
-          <th>${t('Staff Role')}</th>
-          <th>${t('Assigned Branches')}</th>
-          <th>${t('Assigned Athletes')}</th>
-          <th style="text-align:end">${t('Actions')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${staff.map(s => {
-          const clientCount = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
-          const brNames = (s.branches || []).includes('*')
-            ? `<span class="chip" style="font-size:11px">${ic('globe',11)} ${t('All Branches')}</span>`
-            : (s.branches || []).map(brid => `<span class="chip" style="font-size:11px">${ic('building',11)} ${esc(branchNameOf(brid))}</span>`).join(' ');
-          return `
+  <div class="card" style="padding:16px;margin-bottom:14px">
+    <div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <div class="row" style="gap:10px;flex:1;max-width:440px">
+        <div class="searchbox" style="flex:1;background:var(--card-sub);border:1px solid var(--line2)">
+          ${ic('search',14)}
+          <input type="text" class="inp-naked" placeholder="${t('Search staff by name or email…')}" value="${esc(S.staffQuery||'')}" oninput="S.staffQuery=this.value;render()">
+        </div>
+        <select class="sel sel-sm" style="max-width:160px" onchange="S.staffBranchFilter=this.value;render()">
+          <option value="all" ${brid==='all'?'selected':''}>${t('All Branches')}</option>
+          ${(org.branches||[]).map(b => `<option value="${esc(b.id)}" ${brid===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="row" style="gap:8px">
+        ${S.isGymOwner ? `<button class="btn btn-primary btn-sm" data-act="org-add-staff-modal">${ic('plus',14)} ${t('Add Staff')}</button>` : ''}
+      </div>
+    </div>
+
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead>
           <tr>
-            <td>
-              <div class="row" style="gap:10px">
-                ${av(s.name, 36, 2)}
-                <div>
-                  <div style="font-weight:600">${esc(s.name)}</div>
-                  <div class="muted" style="font-size:12px">${esc(s.email)}</div>
+            <th>${t('Staff & Trainers')}</th>
+            <th>${t('Staff Role')}</th>
+            <th>${t('Assigned Branches')}</th>
+            <th>${t('Assigned Athletes')}</th>
+            <th style="text-align:end">${t('Actions')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.length ? filtered.map(s => {
+            const clientCount = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
+            const brNames = (s.branches || []).includes('*')
+              ? `<span class="chip" style="font-size:11px">${ic('globe',11)} ${t('All Branches')}</span>`
+              : (s.branches || []).map(brid => `<span class="chip" style="font-size:11px">${ic('building',11)} ${esc(branchNameOf(brid))}</span>`).join(' ');
+            return `
+            <tr>
+              <td>
+                <div class="row" style="gap:10px">
+                  ${av(s.name, 36, 2)}
+                  <div>
+                    <div style="font-weight:600">${esc(s.name)}</div>
+                    <div class="muted" style="font-size:12px">${esc(s.email)}</div>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>${roleBadges[s.role] || `<span class="bdg bdg-gray">${esc(s.role)}</span>`}</td>
-            <td><div class="row" style="gap:4px;flex-wrap:wrap">${brNames}</div></td>
-            <td>
-              <span class="bdg ${clientCount > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:11px">
-                ${clientCount} ${t('Athletes')}
-              </span>
-            </td>
-            <td style="text-align:end;white-space:nowrap">
-              <button class="btn btn-ghost btn-sm" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('Filter Clients')}">
-                ${ic('users',13)} ${t('Roster')}
-              </button>
-              ${S.isGymOwner && s.role !== 'gym_owner' ? `
-                <button class="btn btn-ghost btn-sm" style="color:var(--red)" data-act="org-remove-staff" data-coachid="${esc(s.coachId)}" title="${t('Remove Staff')}">
-                  ${ic('trash',13)}
+              </td>
+              <td>${roleBadges[s.role] || `<span class="bdg bdg-gray">${esc(s.role)}</span>`}</td>
+              <td><div class="row" style="gap:4px;flex-wrap:wrap">${brNames}</div></td>
+              <td>
+                <span class="bdg ${clientCount > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:11px">
+                  ${clientCount} ${t('Athletes')}
+                </span>
+              </td>
+              <td style="text-align:end;white-space:nowrap">
+                <button class="btn btn-ghost btn-sm" data-act="copy-staff-invite" data-email="${esc(s.email)}" data-name="${esc(s.name)}" title="${t('Copy Invite')}">
+                  ${ic('copy',13)} ${t('Invite')}
                 </button>
-              ` : ''}
-            </td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table>
+                <button class="btn btn-ghost btn-sm" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('Filter Clients')}">
+                  ${ic('users',13)} ${t('Roster')}
+                </button>
+                ${S.isGymOwner && s.role !== 'gym_owner' ? `
+                  <button class="btn btn-outline btn-sm" style="color:var(--amber)" data-act="org-offboard-staff" data-coachid="${esc(s.coachId)}" title="${t('Offboard & Transfer')}">
+                    ${ic('refresh',12)} ${t('Offboard & Transfer')}
+                  </button>
+                  <button class="btn btn-ghost btn-sm" style="color:var(--red)" data-act="org-remove-staff" data-coachid="${esc(s.coachId)}" title="${t('Remove Staff')}">
+                    ${ic('trash',13)}
+                  </button>
+                ` : ''}
+              </td>
+            </tr>`;
+          }).join('') : `
+          <tr><td colspan="5" style="text-align:center;padding:32px" class="muted">${t('No staff members found matching filter')}</td></tr>`}
+        </tbody>
+      </table>
+    </div>
   </div>`;
 }
 
@@ -2912,29 +3159,52 @@ function renderOrgBranchesTab(org){
 function renderOrgReassignTab(org){
   const staff = (org.staff || []).filter(s => s.role !== 'reception');
   const branches = org.branches || [];
+  const srcCoach = S.reassignSourceCoach || 'all';
+  const targetClients = CLIENTS.filter(c => {
+    if (c.status === 'Archived') return false;
+    if (srcCoach !== 'all' && c.assignedCoachId !== srcCoach) return false;
+    return true;
+  });
+
   return `
-  <div class="card" style="padding:20px;max-width:800px;margin:0 auto">
-    <div class="row" style="gap:12px;margin-bottom:14px;align-items:flex-start">
-      <div style="width:40px;height:40px;border-radius:10px;background:var(--card-sub);color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none">
-        ${ic('lock', 20)}
+  <div class="card" style="padding:22px;max-width:880px;margin:0 auto">
+    <div class="row" style="gap:14px;margin-bottom:18px;align-items:flex-start">
+      <div style="width:44px;height:44px;border-radius:12px;background:rgba(198,241,78,.12);color:var(--accent);display:grid;place-items:center;flex:none">
+        ${ic('lock', 22)}
       </div>
       <div>
-        <h3 style="margin:0 0 4px 0">${t('Anti-Poaching Protection & Client Transfer')}</h3>
+        <h3 style="margin:0 0 4px 0">${t('Anti-Poaching Protection & Client Transfer Engine')}</h3>
         <p class="muted" style="font-size:12.5px;margin:0;line-height:1.5">
           ${t('All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach resigns or changes branches, reassign their athletes in one click.')}
         </p>
       </div>
     </div>
 
-    <div class="fgrid" style="margin-bottom:16px">
-      <div class="field">
-        <label class="lbl">${t('Target Coach')}</label>
+    <!-- 3-Step Anti-Poaching Wizard -->
+    <div class="fgrid" style="grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">
+      <!-- Step 1: Source Coach -->
+      <div class="field" style="background:var(--card-sub);padding:12px;border-radius:10px;border:1px solid var(--line2)">
+        <label class="lbl" style="color:var(--amber)">① ${t('Departing / Source Coach')}</label>
+        <select class="inp" id="org-reassign-source-coach" onchange="S.reassignSourceCoach=this.value;render()">
+          <option value="all" ${srcCoach==='all'?'selected':''}>${t('All Coaches')} (${CLIENTS.length} ${t('Athletes')})</option>
+          ${staff.map(s => {
+            const count = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
+            return `<option value="${esc(s.coachId)}" ${srcCoach===s.coachId?'selected':''}>${esc(s.name)} (${count} ${t('Athletes')})</option>`;
+          }).join('')}
+        </select>
+      </div>
+
+      <!-- Step 2: Target Coach -->
+      <div class="field" style="background:var(--card-sub);padding:12px;border-radius:10px;border:1px solid var(--line2)">
+        <label class="lbl" style="color:var(--accent)">② ${t('Target Coach')}</label>
         <select class="inp" id="org-reassign-target-coach">
           ${staff.map(s => `<option value="${esc(s.coachId)}">${esc(s.name)} (${t(s.role)})</option>`).join('')}
         </select>
       </div>
-      <div class="field">
-        <label class="lbl">${t('Target Branch')}</label>
+
+      <!-- Step 3: Target Branch -->
+      <div class="field" style="background:var(--card-sub);padding:12px;border-radius:10px;border:1px solid var(--line2)">
+        <label class="lbl">③ ${t('Target Branch')}</label>
         <select class="inp" id="org-reassign-target-branch">
           ${branches.map(b => `<option value="${esc(b.id)}">${esc(b.name)}</option>`).join('')}
         </select>
@@ -2942,14 +3212,14 @@ function renderOrgReassignTab(org){
     </div>
 
     <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
-      <span class="lbl" style="margin:0">${t('Select Athletes to Transfer')}</span>
-      <button class="btn btn-ghost btn-sm" data-act="org-reassign-select-all">${t('Select All')}</button>
+      <span class="lbl" style="margin:0;font-size:13px">${t('Athletes Selected for Transfer')} (${targetClients.length}):</span>
+      <button class="btn btn-ghost btn-sm" data-act="org-reassign-select-all">${ic('check',12)} ${t('Select All')}</button>
     </div>
 
-    <div style="max-height:280px;overflow-y:auto;border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:16px">
-      ${CLIENTS.map(c => `
-        <label class="row" style="gap:10px;padding:8px;border-radius:6px;cursor:pointer;justify-content:flex-start">
-          <input type="checkbox" class="org-reassign-chk" value="${c.id}">
+    <div style="max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:18px;background:rgba(0,0,0,.15)">
+      ${targetClients.length ? targetClients.map(c => `
+        <label class="row" style="gap:10px;padding:9px;border-radius:8px;cursor:pointer;justify-content:flex-start;border-bottom:1px solid rgba(255,255,255,.03)">
+          <input type="checkbox" class="org-reassign-chk" value="${c.id}" checked>
           ${avC(c.name, 30)}
           <div style="flex:1">
             <span style="font-weight:600;font-size:13px">${esc(c.name)}</span>
@@ -2957,12 +3227,14 @@ function renderOrgReassignTab(org){
           </div>
           ${stBdg(c.status)}
         </label>
-      `).join('')}
+      `).join('') : `
+        <div style="text-align:center;padding:24px" class="muted">${t('No active athletes under selected coach')}</div>
+      `}
     </div>
 
-    <div class="row" style="justify-content:flex-end;gap:8px">
-      <button class="btn btn-primary" data-act="org-reassign-batch-submit">
-        ${ic('refresh', 14)} ${t('Transfer Selected Athletes')}
+    <div class="row" style="justify-content:flex-end;gap:10px">
+      <button class="btn btn-primary" data-act="org-reassign-batch-submit" style="padding:10px 20px">
+        ${ic('refresh', 15)} ${t('Transfer Selected Athletes')}
       </button>
     </div>
   </div>`;
@@ -4129,7 +4401,7 @@ mtab:'today',mview:'tabs',mClient:1,mcf:'All',mlogCid:null,msheet:false,mjump:fa
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
 wnote:'Prioritize protein at breakfast. Water: 3 L minimum on training days. Free meal on Saturday evenings — keep portions sensible.',cut:50,
 nview:'overview',nplan:0,nday:0,nq:'',nstat:'All',mtcat:'All',nclip:null,fp:null,authMode:'login',payPending:null,
-  org:null,orgTab:'staff',branchFilter:'all',coachFilter:'all',orgRole:'gym_owner',isGymOwner:true};
+  org:null,orgTab:'overview',branchFilter:'all',coachFilter:'all',orgRole:'gym_owner',isGymOwner:true,workspaceMode:'coach',staffQuery:'',staffBranchFilter:'all',reassignSourceCoach:'all'};
 const $=id=>document.getElementById(id);
 /* HTML escaper. This previously escaped ONLY "<", which was unsafe in two ways:
    (a) any value placed in a quoted attribute (data-c="${esc(c.name)}", …) could
@@ -5829,8 +6101,14 @@ function vClients(){
   const profBdg=cid=>{const p=aprofOf(cid);
     return p&&p.id?`<span class="bdg bdg-green" style="font-size:10px">${ic('check',11)} ${t('Profile set')}</span>`
       :`<span class="bdg bdg-gray" style="font-size:10px">${t('Not set')}</span>`};
+  const org = currentOrg();
+  const isExec = S.workspaceMode === 'executive' && !!org;
   return `
-  <div class="page-h"><div><h1>${t('Clients')}</h1><div class="sub">${sub}</div></div>
+  <div class="page-h"><div>
+    ${isExec ? `<div class="eyebrow">${t('B2B Gym & Studio OS')} // ${t('Centralized Governance')}</div>` : ''}
+    <h1>${isExec ? t('Club Master Roster') : t('Clients')}</h1>
+    <div class="sub">${sub}${isExec && org.name ? ` · ${esc(org.name)}` : ''}</div>
+  </div>
   <div class="row">
     <div class="searchbox" style="flex:none;width:220px">${ic('search',15)} <span>${t('Search clients…')}</span></div>
     <button class="btn btn-outline" data-act="cl-filter">${ic('filter',15)} ${S.cfilter&&S.cfilter!=='All'?t(S.cfilter):t('Filter')}</button>
@@ -5839,6 +6117,13 @@ function vClients(){
     <button class="btn btn-outline" data-act="qa-item" data-item="Connect Client (Code)">${ic('copy',15)} ${t('Connect')}</button>
     <button class="btn btn-primary" data-act="add-client">${ic('plus',15)} ${t('Add Client')}</button>
   </div></div>
+  ${isExec && S.coachFilter && S.coachFilter !== 'all' ? `
+    <div style="margin-bottom:12px;display:flex;align-items:center;gap:8px">
+      <span class="chip" style="font-size:12px;background:var(--accent-soft);color:var(--accent-text);font-weight:600">
+        ${ic('user',12)} ${t('Filtered by Coach')}: ${esc(coachNameOf(S.coachFilter))}
+        <a class="lnk" style="margin-inline-start:6px;cursor:pointer" data-act="set-coach-filter" data-cid="all" title="${t('Clear Filter')}">✕</a>
+      </span>
+    </div>` : ''}
   ${!CLIENTS.length?`
   <div class="card"><div class="empty" style="margin:14px"><div>${ic('users',24)}</div><b>${t('No clients yet')}</b><span class="muted">${t('Add your first client to start building programs, plans and progress tracking')}</span><button class="btn btn-primary btn-sm" data-act="add-client">${ic('plus',14)} ${t('Add Client')}</button></div></div>`
   :grid?`
@@ -5856,22 +6141,32 @@ function vClients(){
         ${isClientRunner(c)?profBdg(c.id):''}
         ${c.streak?`<span class="chip">${ic('flame',13)} ${esc(streakLbl(c))}</span>`:''}
       </div>
+      ${isExec ? `
+      <div class="row" style="gap:6px;margin-top:6px;font-size:11.5px">
+        <span class="chip" title="${t('Assigned Coach')}">${ic('user',11)} ${esc(coachNameOf(c.assignedCoachId))}</span>
+        <span class="chip" title="${t('Branch')}">${ic('building',11)} ${esc(branchNameOf(c.branchId))}</span>
+      </div>` : ''}
       <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line2);padding-top:10px">
         <span class="muted" style="font-size:12px;display:flex;align-items:center;gap:6px;min-width:0">${ic('calendar',13)}<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t(c.next)}</span></span>
-        <span class="lnk" style="font-size:12.5px;flex:none">${t('Open')} ${ic('arrowR',13)}</span>
+        <div class="row" style="gap:4px">
+          ${isExec ? `<button class="btn btn-ghost btn-icon btn-sm" title="${t('Reassign Coach')}" data-act="org-reassign-modal" data-cid="${c.id}">${ic('refresh',13)}</button>` : ''}
+          <span class="lnk" style="font-size:12.5px;flex:none">${t('Open')} ${ic('arrowR',13)}</span>
+        </div>
       </div>
     </div>`).join('')}
   </div>`
   :`
   <div class="card" style="overflow-x:auto"><table class="tbl">
-    <thead><tr><th>${t('Client')}</th><th>${t('Sport')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
+    <thead><tr><th>${t('Client')}</th>${isExec ? `<th>${t('Assigned Coach')}</th><th>${t('Branch')}</th>` : ''}<th>${t('Sport')}</th><th>${t('Goal')}</th><th>${t('Weight')}</th><th>${t('Program')}</th><th>${t('Next Session')}</th><th class="hide-md">${t('Streak')}</th><th>${t('Status')}</th><th style="text-align:end">${t('Actions')}</th></tr></thead>
     <tbody>${list.map(c=>`
     <tr data-act="open-client" data-cid="${c.id}">
       <td><div class="row">${avC(c.name,36)}<div><div style="font-weight:600">${t(c.name)}</div><div class="muted" style="font-size:12px">${c.email||''}</div></div></div></td>
+      ${isExec ? `<td><span class="chip" style="font-size:11px">${ic('user',11)} ${esc(coachNameOf(c.assignedCoachId))}</span></td><td><span class="chip" style="font-size:11px">${ic('building',11)} ${esc(branchNameOf(c.branchId))}</span></td>` : ''}
       <td><span class="chip" style="font-size:11.5px">${SPORT_ICONS[clientSport(c)]||'🏅'} ${t(clientSport(c))}</span></td><td>${t(c.goal)}</td><td>${uwS(c.weight||null)}</td><td>${t(c.prog)}</td><td>${t(c.next)}</td>
       <td class="hide-md">${c.streak||c.dayStreak?`${ic('flame',13)} ${esc(streakLbl(c))}`:'—'}</td>
       <td><div class="row" style="gap:6px;flex-wrap:wrap">${stBdg(c.status)}${(DB[c.id]?.workouts||[]).some(w=>!wDone(w))?`<span class="bdg bdg-lime">${ic('dumbbell',11)} ${t('Pending')}</span>`:''}${isClientRunner(c)?profBdg(c.id):''}</div></td>
       <td style="text-align:end;white-space:nowrap">
+        ${isExec ? `<button class="btn btn-ghost btn-icon" title="${t('Reassign Coach')}" data-act="org-reassign-modal" data-cid="${c.id}">${ic('refresh',14)}</button>` : ''}
         <button class="btn btn-ghost btn-icon" title="${t('Copy connection code')}" data-act="copy-code" data-code="${esc(joinCodeOf(c))}">${ic('copy',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Edit Client')}" data-act="ec-open" data-c="${esc(c.name)}">${ic('edit',15)}</button>
         <button class="btn btn-ghost btn-icon" title="${t('Delete client')}" data-act="client-del" data-c="${esc(c.name)}" style="color:var(--red)">${ic('trash',15)}</button>
@@ -11910,6 +12205,9 @@ function mMore(){
     </div>`;
   const nAth=CLIENTS.filter(c=>c.status!=='Archived').length;
   const plan=AUTH.coach?((AUTH.access&&AUTH.access.plan)||'trial'):t('Coach');
+  const org=currentOrg();
+  const isOwnerOrMgr=S.isGymOwner||S.orgRole==='gym_owner'||S.orgRole==='manager'||S.orgRole==='head_coach';
+  const isExec=!!org&&isOwnerOrMgr&&S.workspaceMode==='executive';
   return `<div class="mstack">
     <div class="ccard" style="display:flex;align-items:center;gap:12px">
       ${av(coachName(),46,3)}
@@ -11921,6 +12219,7 @@ function mMore(){
     ${ath.length?grp('Endurance Hub',ath):''}
     <div class="msec">${t('Account')}</div>
     <div class="stg">
+      ${(org && isOwnerOrMgr) ? acctRow(isExec ? 'user' : 'building', isExec ? 'Switch to Coach Desk' : 'Switch to Executive Console', isExec ? 'Personal training workspace' : 'Multi-branch command center', 'set-ws-mode', `data-mode="${isExec ? 'coach' : 'executive'}"`) : ''}
       ${acctRow('copy','Connect Client (Code)','Share code or QR','qa-item','data-item="Connect Client (Code)"')}
       ${acctRow('gear','Settings','Language · Sport · Payments','msettings')}
       ${acctRow('trash','Reset demo data','','reset-demo')}
@@ -15057,13 +15356,28 @@ function vWear(){
 }
 
 /* ================= SHELL / RENDER ================= */
-function currentView(){const m={dash:vDash,clients:vClients,org:vOrg,wspace:vWorkspace,endurance:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},athletics:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
+function currentView(){const m={dash:vDash,clients:vClients,org:vOrg,'org-overview':()=>{S.view='org';S.orgTab='overview';return vOrg();},'org-staff':()=>{S.view='org';S.orgTab='staff';return vOrg();},'org-branches':()=>{S.view='org';S.orgTab='branches';return vOrg();},'org-reassign':()=>{S.view='org';S.orgTab='reassign';return vOrg();},'org-machines':()=>{S.view='org';S.orgTab='machines';return vOrg();},wspace:vWorkspace,endurance:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},athletics:()=>{S.view='wspace';S.tab='endurance';return vWorkspace();},builder:vBuilder,library:vLibrary,templates:vTemplates,calendar:vCalendar,progress:vProgress,measure:vMeasureGlobal,notes:vNotes,messages:vMessages,nutrition:nNutrition,challenges:vChallenges,settings:vSettings,races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
   /* v19.1 — a view the current sport does not own (or a stale key from an old
      bookmark) must not throw; fall back to the dashboard instead. v19.7 made
      that a real gate: sportKey() also drops keys no selected sport owns. */
   return (m[sportKey(S.view)]||m[S.view]||m.dash)()}
 function shell(inner){
   const unreadN=MSGS.filter(m=>m.from==='client'&&!m.read).length;
+  const org = currentOrg();
+  const hasOrg = !!org;
+  const isOwnerOrMgr = S.isGymOwner || S.orgRole === 'gym_owner' || S.orgRole === 'manager' || S.orgRole === 'head_coach';
+  const isExec = hasOrg && isOwnerOrMgr && S.workspaceMode === 'executive';
+
+  const isAct = (k) => {
+    if (S.view === k) return true;
+    if (S.view === 'org') {
+      const curTab = S.orgTab || 'overview';
+      if (k === 'org' && curTab === 'overview') return true;
+      if (k === 'org-' + curTab) return true;
+    }
+    return false;
+  };
+
   /* v18.118 — regrouped from 2 sections to 3. `Messages` moved OUT of "Manage"
      (it is a daily communication tool, not a configuration screen) and the
      three numbers screens got their own "Today" group, so the rail scans as:
@@ -15073,28 +15387,90 @@ function shell(inner){
     today:[['progress','Progress','chart'],['measure','Measurements','ruler'],['nutrition','Nutrition','utensils']],
     manage:[['org','Gym & Staff','building'],['challenges','Challenges','trophy'],['templates','Templates','stack'],['library','Exercise Library','book'],['notes','Notes','note']]
   };
-  const navIt=([k,l,i])=>`<div class="nav-it ${S.view===k?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
+
+  const execNav = {
+    command: [
+      ['org-overview', 'Command Center', 'building'],
+      ['org-staff', 'Staff & Trainers', 'users'],
+      ['org-branches', 'Branches & Studios', 'globe']
+    ],
+    governance: [
+      ['clients', 'Club Master Roster', 'users'],
+      ['org-reassign', 'Anti-Poaching Transfer', 'refresh'],
+      ['org-machines', 'Smart Equipment & QR', 'dumbbell']
+    ],
+    operations: [
+      ['calendar', 'Club Schedule', 'calendar'],
+      ['messages', 'Staff Communication', 'mail']
+    ]
+  };
+
+  const navIt=([k,l,i])=>`<div class="nav-it ${isAct(k)?'on':''}" data-act="nav" data-view="${k}">${ic(i,17)}<span class="txt">${t(l)}</span>${k==='messages'&&unreadN?`<span class="nbadge">${nf(unreadN)}</span>`:''}</div>`;
   /* v19.1 — sport extensions render as their own group between Workspace and
      Today. With an empty table this joins to '' and the rail is unchanged. */
   const extNav=sportSections().map(g=>
     `<div class="nav-sec">${t(g.label)}</div>${(g.items||[]).map(navIt).join('')}`).join('');
-  return `<div class="shell">
-  ${fbBtn('bottom:20px;inset-inline-start:20px;')}
-  <aside class="sidebar">
-    <div class="brand"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>
+
+  const brandHtml = isExec ? `
+    <div class="brand" style="cursor:pointer" data-act="nav" data-view="org-overview">
+      <div class="brand-mark" style="background:var(--accent);color:#fff;border-radius:10px">${ic('building',18)}</div>
+      <div style="min-width:0;overflow:hidden">
+        <div class="brand-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(org.name)}">${esc(org.name || 'COACHMINT')}</div>
+        <div class="brand-tag" style="color:var(--accent-text);font-weight:700;letter-spacing:.06em">${t('EXECUTIVE CONSOLE')}</div>
+      </div>
+    </div>` : `
+    <div class="brand" style="cursor:pointer" data-act="nav" data-view="dash"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>`;
+
+  const wsSwitcher = (hasOrg && isOwnerOrMgr) ? `
+    <div style="margin:10px 14px 12px 14px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:3px;display:flex;gap:3px">
+      <button class="btn btn-xs ${isExec ? 'btn-primary' : 'btn-ghost'}" style="flex:1;justify-content:center;font-size:11px;font-weight:600;padding:5px 6px;border-radius:7px" data-act="set-ws-mode" data-mode="executive">
+        ${ic('building', 13)} <span>${t('Executive')}</span>
+      </button>
+      <button class="btn btn-xs ${!isExec ? 'btn-primary' : 'btn-ghost'}" style="flex:1;justify-content:center;font-size:11px;font-weight:600;padding:5px 6px;border-radius:7px" data-act="set-ws-mode" data-mode="coach">
+        ${ic('user', 13)} <span>${t('Coach Desk')}</span>
+      </button>
+    </div>` : '';
+
+  const navHtml = isExec ? `
+    <nav class="nav">
+      <div class="nav-sec">${t('Executive Command')}</div>${execNav.command.map(navIt).join('')}
+      <div class="nav-sec">${t('Data Governance')}</div>${execNav.governance.map(navIt).join('')}
+      <div class="nav-sec">${t('Operations')}</div>${execNav.operations.map(navIt).join('')}
+    </nav>` : `
     <nav class="nav">
       <div class="nav-sec">${t('Workspace')}</div>${nav.workspaces.map(navIt).join('')}
       ${extNav}
       <div class="nav-sec">${t('Today')}</div>${nav.today.map(navIt).join('')}
       <div class="nav-sec">${t('Manage')}</div>${nav.manage.map(navIt).join('')}
-    </nav>
+    </nav>`;
+
+  const execQuotaBadge = isExec ? `
+    <div class="hide-sm row" style="gap:8px;padding:4px 11px;background:var(--seg-bg);border:1px solid var(--line);border-radius:20px;font-size:11.5px;font-variant-numeric:tabular-nums" title="${t('Organization Resource Quotas')}">
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Branches')}">${ic('globe',12)} <b>${(org.branches||[]).length}</b>${org.quotas?.branches ? `/<span class="muted">${org.quotas.branches}</span>` : ''}</span>
+      <span style="color:var(--line)">|</span>
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Staff Members')}">${ic('users',12)} <b>${(org.staff||[]).length}</b>${org.quotas?.staff ? `/<span class="muted">${org.quotas.staff}</span>` : ''}</span>
+      <span style="color:var(--line)">|</span>
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Athletes')}">${ic('user',12)} <b>${CLIENTS.filter(c=>c.status!=='Archived').length}</b>${org.quotas?.athletes ? `/<span class="muted">${org.quotas.athletes}</span>` : ''}</span>
+    </div>` : '';
+
+  const roleSubtitle = isExec
+    ? (t('Executive') + (org.name ? ` · ${esc(org.name)}` : ''))
+    : (AUTH.coach ? esc(((AUTH.access && AUTH.access.plan) || 'trial').toUpperCase()) : t('PRO PLAN'));
+
+  return `<div class="shell">
+  ${fbBtn('bottom:20px;inset-inline-start:20px;')}
+  <aside class="sidebar">
+    ${brandHtml}
+    ${wsSwitcher}
+    ${navHtml}
     <div class="side-foot">
       <div class="nav-it" data-act="sb">${ic('chevL',17)}<span class="txt">${t('Collapse')}</span></div>
       <div class="nav-it ${S.view==='settings'?'on':''}" data-act="nav" data-view="settings">${ic('gear',17)}<span class="txt">${t('Settings')}</span></div>
       <div class="nav-it" data-act="help-open">${ic('help',17)}<span class="txt">${t('Help')}</span></div>
       <div class="mwrap" data-mw>
-        <div class="sprof" data-act="mw">${av(coachName(),34,3)}<div><div class="n">${esc(coachName())}</div><div class="p">${AUTH.coach?esc(((AUTH.access&&AUTH.access.plan)||'trial').toUpperCase()):t('PRO PLAN')}</div></div></div>
+        <div class="sprof" data-act="mw">${av(coachName(),34,3)}<div><div class="n">${esc(coachName())}</div><div class="p">${roleSubtitle}</div></div></div>
         <div class="menu">
+          ${(hasOrg && isOwnerOrMgr) ? `<div class="menu-it" data-act="set-ws-mode" data-mode="${isExec ? 'coach' : 'executive'}">${ic(isExec ? 'user' : 'building', 15)} ${isExec ? t('Switch to Coach Desk') : t('Switch to Executive Console')}</div>` : ''}
           <div class="menu-it" data-act="nav" data-view="settings">${ic('gear',15)} ${t('Settings')}</div>
           <div class="menu-it" data-act="switch-role">${ic('users',15)} ${t('Switch role')}</div>
           <div class="menu-it" data-act="signout" style="color:var(--red)">${ic('x',15)} ${t('Sign out')}</div>
@@ -15108,10 +15484,10 @@ function shell(inner){
       <div class="searchbox" data-act="palette">${ic('search',16)}<span style="flex:1">${t('Search clients, foods, plans, meals…')}</span><kbd>⌘K</kbd></div>
       <span class="sp"></span>
       ${branchSelectorBtn()}
+      ${execQuotaBadge}
       ${themeBtn('btn-outline btn-sm')}
       ${langBtn('btn-outline btn-sm')}
-      ${timerBtn('btn-outline btn-sm')}
-      <span class="bdg bdg-gray">${ic('dumbbell',12)} ${ONBOARD.sport?t(ONBOARD.sport):t('Coach')}</span>
+      ${isExec ? `<span class="bdg bdg-lime hide-sm">${ic('building',12)} ${t('Executive')}</span>` : `${timerBtn('btn-outline btn-sm')}<span class="bdg bdg-gray">${ic('dumbbell',12)} ${ONBOARD.sport?t(ONBOARD.sport):t('Coach')}</span>`}
       <div class="mwrap" data-mw>
         <button class="btn btn-dark" data-act="mw">${ic('plus',16)} <span class="txt">${t('Quick Add')}</span> ${ic('chevD',13)}</button>
         <div class="menu"><div class="menu-hd">${t('Create')}</div>
@@ -17260,12 +17636,48 @@ document.addEventListener('click',e=>{
   switch(a){
     case 'set-branch-filter': S.branchFilter = el.dataset.brid; render(); break;
     case 'set-coach-filter': S.coachFilter = el.dataset.cid; if(S.view!=='clients')S.view='clients'; render(); break;
-    case 'org-tab': S.orgTab = el.dataset.tab; render(); break;
+    case 'set-ws-mode': {
+      const newMode = el.dataset.mode || (S.workspaceMode === 'executive' ? 'coach' : 'executive');
+      S.workspaceMode = newMode;
+      if (newMode === 'executive') {
+        S.view = 'org';
+        S.orgTab = 'overview';
+      } else {
+        S.view = 'dash';
+      }
+      render();
+      toast(newMode === 'executive' ? t('Switched to Executive Console') : t('Switched to Personal Coach Desk'));
+      break;
+    }
+    case 'org-tab': S.view = 'org'; S.orgTab = el.dataset.tab; render(); break;
+    case 'org-offboard-staff': {
+      S.reassignSourceCoach = el.dataset.coachid || 'all';
+      S.orgTab = 'reassign';
+      S.view = 'org';
+      render();
+      break;
+    }
     case 'org-add-branch-modal': orgAddBranchModal(); break;
     case 'org-add-staff-modal': orgAddStaffModal(); break;
     case 'org-reassign-modal': orgReassignModal(el.dataset.cid ? +el.dataset.cid : null); break;
     case 'org-create-modal': orgCreateModal(); break;
     case 'org-remove-staff': orgRemoveStaff(el.dataset.coachid); break;
+    case 'copy-staff-invite': {
+      const name = el.dataset.name || t('Coach');
+      const email = el.dataset.email || '';
+      const org = currentOrg();
+      const orgName = org?.name || t('Our Club');
+      const appUrl = (typeof location !== 'undefined' ? (location.origin + location.pathname) : 'https://coachos.app');
+      const msg = lang === 'fa'
+        ? `سلام ${name} عزیز،\nشما به عنوان مربی در «${orgName}» به سامانه CoachMint دعوت شدید.\nجهت ورود به میزکار و داشبورد مربیگری خود، با ایمیل ${email} از لینک زیر وارد شوید:\n${appUrl}`
+        : `Hi ${name},\nYou have been invited as a coach to ${orgName}.\nAccess your coaching dashboard by logging in with ${email} at:\n${appUrl}`;
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(() => toast(t('Coach invite message copied ✓'))).catch(() => toast(msg));
+      } else {
+        toast(t('Coach invite message copied ✓'));
+      }
+      break;
+    }
     case 'org-branch-submit': handleOrgBranchSubmit(); break;
     case 'org-staff-submit': handleOrgStaffSubmit(); break;
     case 'org-reassign-single-submit': handleOrgReassignSingleSubmit(); break;
@@ -17713,7 +18125,19 @@ document.addEventListener('click',e=>{
         src:g('pb-src')||'Manual',notes:g('pb-notes').trim()};
       if(!p.ev||!p.val){toast(t('Event and mark are required'));break}
       PBSD.unshift(p);closeModal();saveData();render();toast(t('Mark recorded'));break;}
-    case 'nav':S.view=el.dataset.view;S.calReturn=false;render();window.scrollTo({top:0});break;
+    case 'nav':{
+      const v = el.dataset.view;
+      if (v && v.startsWith('org-')) {
+        S.view = 'org';
+        S.orgTab = v.slice(4);
+      } else {
+        S.view = v;
+      }
+      S.calReturn = false;
+      render();
+      window.scrollTo({top:0});
+      break;
+    }
     case 'open-client':{S.tab=el.dataset.tab||'overview';closeModal();S.calOff=0;
           /* the CLICKED client, not the previously selected one: on mobile only
              S.mClient is set below, so the old loadClientProgram(S.cid) prefilled
@@ -18936,6 +19360,24 @@ document.addEventListener('click',e=>{
         org.machines = org.machines || [];
         org.machines.push(newM);
       }
+      if (AUTH.token) {
+        authApi('/api/org/machine', {
+          method: 'POST',
+          body: JSON.stringify({
+            code: newM.code,
+            name: newM.name,
+            brand: newM.brand,
+            branchId: newM.branchId,
+            ex: newM.ex,
+            adjustments: newM.adjustments,
+            cues: newM.cues
+          })
+        }).then(res => {
+          if (res && res.ok && res.d && res.d.machine) {
+            newM.id = res.d.machine.id;
+          }
+        }).catch(() => {});
+      }
       saveData();
       closeModal();
       render();
@@ -19574,7 +20016,9 @@ if(S.joinCode)freshWorkspace();
     // AUTH.coach null and the normal login screen shows. Skipped for reset
     // links and client join links, which need their own screens.
     if(AUTH.coach&&!S.joinCode&&!S.resetToken){
-      S.role='coach';S.view=ONBOARD.done?landingView():'dash';
+      S.role='coach';
+      if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
+      else{S.view=ONBOARD.done?landingView():'dash';}
     }
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.

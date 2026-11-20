@@ -41,7 +41,7 @@ export default async function handle(req) {
 
   // 1. GET /api/org/me
   if (req.method === 'GET' && (!action || action === 'me')) {
-    const orgData = await getOrgByCoach(st, s.coachId);
+    const orgData = await getOrgByCoach(st, s.coachId, acct.email);
     if (!orgData) {
       return j(200, { ok: true, org: null, isGym: isGymPlan(acct.plan), plan: acct.plan });
     }
@@ -69,7 +69,7 @@ export default async function handle(req) {
     if (!isGymPlan(acct.plan)) {
       return j(403, { ok: false, error: 'gym-plan-required', message: 'An active Gym or Club subscription is required to create an organization.' });
     }
-    const existing = await getOrgByCoach(st, s.coachId);
+    const existing = await getOrgByCoach(st, s.coachId, acct.email);
     if (existing && existing.org) {
       return j(409, { ok: false, error: 'org-already-exists', orgId: existing.org.id });
     }
@@ -80,13 +80,14 @@ export default async function handle(req) {
       ownerCoachId: s.coachId,
       ownerEmail: acct.email,
       name: data?.name || `${acct.name || 'Coach'}'s Gym`,
+      primaryBranchName: data?.primaryBranchName,
       planId: acct.plan
     });
     return j(200, { ok: true, org });
   }
 
   // The remaining actions require membership in an organization
-  const orgData = await getOrgByCoach(st, s.coachId);
+  const orgData = await getOrgByCoach(st, s.coachId, acct.email);
   if (!orgData || !orgData.org) {
     return j(404, { ok: false, error: 'no-org-found' });
   }
@@ -128,7 +129,7 @@ export default async function handle(req) {
     }, plan.maxCoaches || 5);
 
     if (!res.ok) return j(400, res);
-    return j(200, res);
+    return j(200, { ok: true, staffMember: res.staffMember, staff: res.staffMember, org: res.org });
   }
 
   // 5. DELETE /api/org/staff
@@ -148,30 +149,44 @@ export default async function handle(req) {
     const { data, err } = await readSmall(req);
     if (err) return err;
 
-    const { clientIds, toCoachId, toBranchId } = data || {};
+    const toCoachId = data?.toCoachId || data?.targetCoachId;
+    const toBranchId = data?.toBranchId || data?.targetBranchId || null;
+    const clientIds = data?.clientIds;
     if (!Array.isArray(clientIds) || !clientIds.length || !toCoachId) {
       return j(400, { ok: false, error: 'invalid-reassign-payload' });
     }
 
     // Verify toCoachId belongs to org
-    const targetStaff = (org.staff || []).find((s) => s.coachId === toCoachId);
+    let targetStaff = (org.staff || []).find((s) => s.coachId === toCoachId || s.email === normEmail(toCoachId));
+    if (!targetStaff) {
+      const targetAcct = await accountById(st, toCoachId);
+      if (targetAcct && targetAcct.email) {
+        targetStaff = (org.staff || []).find((s) => s.email === normEmail(targetAcct.email));
+        if (targetStaff) {
+          targetStaff.coachId = toCoachId;
+          await st.setJSON(`org:${org.id}`, org);
+          await st.setJSON(`org-by-coach:${toCoachId}`, { orgId: org.id, role: targetStaff.role, branches: targetStaff.branches });
+        }
+      }
+    }
     if (!targetStaff) {
       return j(400, { ok: false, error: 'target-coach-not-in-org' });
     }
 
     // Update the workspace data for this owner
-    const wsId = acct.workspaceId;
+    const ownerAcct = org.ownerCoachId === s.coachId ? acct : await accountById(st, org.ownerCoachId);
+    const wsId = ownerAcct?.workspaceId || acct.workspaceId;
     if (wsId) {
       const meta = await st.get(`ws-meta:${wsId}`, { type: 'json' });
       if (meta && meta.data && Array.isArray(meta.data.CLIENTS)) {
-        meta.data.CLIENTS = reassignOrgClients(meta.data.CLIENTS, { clientIds, toCoachId, toBranchId });
+        meta.data.CLIENTS = reassignOrgClients(meta.data.CLIENTS, { clientIds, toCoachId: targetStaff.coachId, toBranchId });
         meta.rev = (meta.rev || 0) + 1;
         meta.updatedAt = Date.now();
         await st.setJSON(`ws-meta:${wsId}`, meta);
       }
     }
 
-    return j(200, { ok: true, reassignedCount: clientIds.length, toCoachId, toBranchId: toBranchId || null });
+    return j(200, { ok: true, reassignedCount: clientIds.length, toCoachId: targetStaff.coachId, toBranchId });
   }
 
   // 7. POST /api/org/machine

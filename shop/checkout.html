@@ -242,8 +242,16 @@ html[dir="rtl"] .lang-opt{
       <div class="lang-menu" role="menu">
         <div class="lang-menu-head">
           <span class="lang-menu-title">Select Language</span>
-          <span class="lang-menu-badge">2</span>
+          <span class="lang-menu-badge">3</span>
         </div>
+        <button class="lang-opt" type="button" data-lang="fa" role="menuitem">
+          <span class="lang-flag-pill">FA</span>
+          <span class="lang-text">
+            <span class="lang-name">فارسی</span>
+            <span class="lang-sub">Iran</span>
+          </span>
+          <svg class="lang-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
         <button class="lang-opt" type="button" data-lang="en" role="menuitem">
           <span class="lang-flag-pill">EN</span>
           <span class="lang-text">
@@ -445,7 +453,7 @@ const TR={
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 let plan=PLANS[params.get('plan')]?params.get('plan'):'professional';
-let lang='en';try{lang=localStorage.getItem('coach-os-locale')||'en'}catch(e){} if(lang!=='tr') lang='en';
+let lang='fa';try{lang=localStorage.getItem('coach-os-locale')||'fa'}catch(e){} if(!['fa','tr','en'].includes(lang)) lang='fa';
 const nf=v=>lang==='fa'?String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):String(v);
 const money=v=>nf(v.toLocaleString('en-US'));
 function renderPlans(){
@@ -483,13 +491,13 @@ function renderSummary(){
   $('t-pay').textContent=payLabel();
 }
 function updateLangUI(locale){
-  const isTr=locale==='tr';
-  const name=isTr?'Türkçe':'English';
-  const title=isTr?'Dil Seçimi':'Select Language';
+  const isTr=locale==='tr', isFa=locale==='fa';
+  const name=isFa?'فارسی':(isTr?'Türkçe':'English');
+  const title=isFa?'انتخاب زبان':(isTr?'Dil Seçimi':'Select Language');
   document.querySelectorAll('.cur-lang-name').forEach(el=>{el.textContent=name});
   document.querySelectorAll('.lang-menu-title').forEach(el=>{el.textContent=title});
   document.querySelectorAll('.lang-opt').forEach(btn=>{
-    const match=btn.getAttribute('data-lang')===(isTr?'tr':'en');
+    const match=btn.getAttribute('data-lang')===locale;
     btn.classList.toggle('active',match);
   });
 }
@@ -532,10 +540,10 @@ function setupLangPickers(){
   });
 }
 function applyLang(){
-  if(lang!=='tr') lang='en';
-  const tr=lang==='tr';
+  if(!['fa','tr','en'].includes(lang)) lang='fa';
+  const isFa=lang==='fa';
   document.documentElement.lang=lang;
-  document.documentElement.dir='ltr';
+  document.documentElement.dir=isFa?'rtl':'ltr';
   updateLangUI(lang);
   document.querySelectorAll('[id^="t-"]').forEach(el=>{
     const key=el.dataset.k||(el.dataset.k=el.textContent.trim());

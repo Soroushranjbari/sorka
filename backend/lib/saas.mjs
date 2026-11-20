@@ -117,7 +117,7 @@ export async function accountById(st, coachId) {
 }
 
 /** Organization (Gym / Club) Management */
-export async function createOrg(st, { ownerCoachId, ownerEmail, name, planId }) {
+export async function createOrg(st, { ownerCoachId, ownerEmail, name, primaryBranchName, planId }) {
   const orgId = newId('org');
   const org = {
     id: orgId,
@@ -128,7 +128,7 @@ export async function createOrg(st, { ownerCoachId, ownerEmail, name, planId }) 
     status: 'active',
     createdAt: Date.now(),
     branches: [
-      { id: 'br_hq', name: 'Main Branch (HQ)', isHQ: true, createdAt: Date.now() }
+      { id: 'br_hq', name: String(primaryBranchName || 'Main Branch (HQ)').trim(), isHQ: true, createdAt: Date.now() }
     ],
     staff: [
       { coachId: ownerCoachId, email: normEmail(ownerEmail), role: 'gym_owner', branches: ['*'], addedAt: Date.now() }
@@ -136,6 +136,9 @@ export async function createOrg(st, { ownerCoachId, ownerEmail, name, planId }) 
   };
   await st.setJSON(`org:${orgId}`, org);
   await st.setJSON(`org-by-coach:${ownerCoachId}`, { orgId, role: 'gym_owner', branches: ['*'] });
+  if (ownerEmail) {
+    await st.setJSON(`org-by-email:${normEmail(ownerEmail)}`, { orgId, role: 'gym_owner', branches: ['*'] });
+  }
   return org;
 }
 
@@ -144,19 +147,36 @@ export async function getOrg(st, orgId) {
   return st.get(`org:${orgId}`, { type: 'json' });
 }
 
-export async function getOrgByCoach(st, coachId) {
-  if (!coachId) return null;
-  const ptr = await st.get(`org-by-coach:${coachId}`, { type: 'json' });
+export async function getOrgByCoach(st, coachId, email = null) {
+  if (!coachId && !email) return null;
+  let ptr = coachId ? await st.get(`org-by-coach:${coachId}`, { type: 'json' }) : null;
+  if (!ptr && email) {
+    ptr = await st.get(`org-by-email:${normEmail(email)}`, { type: 'json' });
+    if (ptr && coachId) {
+      await st.setJSON(`org-by-coach:${coachId}`, ptr);
+      const org = await getOrg(st, ptr.orgId);
+      if (org) {
+        const s = (org.staff || []).find((x) => x.email === normEmail(email));
+        if (s && (!s.coachId || s.coachId.startsWith('coach_temp_') || s.coachId !== coachId)) {
+          s.coachId = coachId;
+          await st.setJSON(`org:${org.id}`, org);
+        }
+      }
+    }
+  }
   if (!ptr || !ptr.orgId) return null;
   const org = await getOrg(st, ptr.orgId);
   return org ? { org, staffRecord: ptr } : null;
 }
 
-export async function addOrgBranch(st, orgId, { name, address, phone }, maxBranches = 5) {
+export async function addOrgBranch(st, orgId, { name, address, phone, isHQ = false }, maxBranches = 5) {
   const org = await getOrg(st, orgId);
   if (!org) return { ok: false, error: 'org-not-found' };
   if ((org.branches || []).length >= maxBranches) {
     return { ok: false, error: 'branch-quota-exceeded', max: maxBranches };
+  }
+  if (isHQ) {
+    (org.branches || []).forEach((b) => { b.isHQ = false; });
   }
   const branchId = newId('br');
   const branch = {
@@ -164,7 +184,7 @@ export async function addOrgBranch(st, orgId, { name, address, phone }, maxBranc
     name: String(name || 'Branch').trim(),
     address: String(address || '').trim(),
     phone: String(phone || '').trim(),
-    isHQ: false,
+    isHQ: !!isHQ,
     createdAt: Date.now()
   };
   org.branches = [...(org.branches || []), branch];
@@ -179,7 +199,7 @@ export async function addOrgStaff(st, orgId, { coachId, email, name, role = 'tra
   if (role !== 'reception' && currentCoaches >= maxCoaches) {
     return { ok: false, error: 'coach-quota-exceeded', max: maxCoaches };
   }
-  const existing = (org.staff || []).find((s) => s.coachId === coachId || s.email === normEmail(email));
+  const existing = (org.staff || []).find((s) => (coachId && s.coachId === coachId) || s.email === normEmail(email));
   if (existing) {
     return { ok: false, error: 'staff-already-exists' };
   }
@@ -193,7 +213,8 @@ export async function addOrgStaff(st, orgId, { coachId, email, name, role = 'tra
   };
   org.staff = [...(org.staff || []), staffMember];
   await st.setJSON(`org:${orgId}`, org);
-  await st.setJSON(`org-by-coach:${coachId}`, { orgId, role, branches: staffMember.branches });
+  if (coachId) await st.setJSON(`org-by-coach:${coachId}`, { orgId, role, branches: staffMember.branches });
+  if (email) await st.setJSON(`org-by-email:${normEmail(email)}`, { orgId, role, branches: staffMember.branches });
   return { ok: true, staffMember, org };
 }
 
@@ -224,6 +245,9 @@ export async function addOrgMachine(st, orgId, { code, name, nameFa, branchId, e
   const org = await getOrg(st, orgId);
   if (!org) return { ok: false, error: 'org-not-found' };
   const machineId = newId('mach');
+  const cleanAdj = typeof adjustments === 'object' && adjustments !== null
+    ? JSON.stringify(adjustments)
+    : String(adjustments || '').trim();
   const machine = {
     id: machineId,
     code: String(code || '').toUpperCase().trim(),
@@ -232,7 +256,7 @@ export async function addOrgMachine(st, orgId, { code, name, nameFa, branchId, e
     brand: String(brand || '').trim(),
     branchId: branchId || (org.branches && org.branches[0] ? org.branches[0].id : 'br_hq'),
     ex: String(ex || '').trim(),
-    adjustments: String(adjustments || '').trim(),
+    adjustments: cleanAdj,
     cues: String(cues || '').trim(),
     createdAt: Date.now()
   };

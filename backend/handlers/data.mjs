@@ -7,7 +7,7 @@
 // write; a different coach can never write a foreign workspace (403).
 import {
   store, legacyBlobs, j, normCode, bearerOf, sessionOf, accountById,
-  ownerOf, accessOf, CODE_RE, newId
+  ownerOf, accessOf, CODE_RE, newId, getOrgByCoach
 } from '../lib/saas.mjs';
 import { planOf, countSeats } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, secure, withLock, rateLimit, ipOf, tooMany } from '../lib/guard.mjs';
@@ -165,10 +165,18 @@ async function handleGet(st, req, code) {
     if (want && rev === want) return j(200, { ok: true, rev, unchanged: true });
     if (!m) m = await metaOf(st, ws); // genuinely behind (or first load) — full read
     const coach = await coachOf(st, req);
+    let isOrgMember = false;
+    if (coach && ws.owner && ws.owner !== ownerOf(coach)) {
+      const ownerCoachId = String(ws.owner).replace(/^coach:/, '');
+      const orgData = await getOrgByCoach(st, coach.id, coach.email);
+      if (orgData && orgData.org && (orgData.org.ownerCoachId === ownerCoachId || (orgData.org.staff || []).some((s) => s.coachId === ownerCoachId))) {
+        isOrgMember = true;
+      }
+    }
     return j(200, {
       ok: true, rev: (m && m.rev) || rev, data: (m && m.data) || null,
       exists: true, owned: !!ws.owner,
-      mine: !!(coach && ws.owner && ws.owner === ownerOf(coach))
+      mine: !!(coach && ws.owner && (ws.owner === ownerOf(coach) || isOrgMember))
     });
   }
   if (want && (legacy.rev || 0) === want) return j(200, { ok: true, rev: legacy.rev || 0, unchanged: true });
@@ -218,8 +226,15 @@ async function handlePutLocked(st, req, code) {
 
   // Case 2: managed workspace (code pointer exists).
   if (ws) {
+    let isOrgMember = false;
     if (ws.owner && coach && ws.owner !== ownerOf(coach)) {
-      return j(403, { ok: false, error: 'foreign' });
+      const ownerCoachId = String(ws.owner).replace(/^coach:/, '');
+      const orgData = await getOrgByCoach(st, coach.id, coach.email);
+      if (orgData && orgData.org && (orgData.org.ownerCoachId === ownerCoachId || (orgData.org.staff || []).some((s) => s.coachId === ownerCoachId))) {
+        isOrgMember = true;
+      } else {
+        return j(403, { ok: false, error: 'foreign' });
+      }
     }
     // Phase-2 server quota — enforced against the WORKSPACE OWNER's plan for
     // EVERY writer. It used to run only for authenticated PUTs, so a student
@@ -265,7 +280,7 @@ async function handlePutLocked(st, req, code) {
         pushToAccount(st, ownerId, note).catch(() => {});
       }
     }
-    return j(200, { ok: true, rev, mine: !!(coach && ws.owner && ws.owner === ownerOf(coach)) });
+    return j(200, { ok: true, rev, mine: !!(coach && ws.owner && (ws.owner === ownerOf(coach) || isOrgMember)) });
   }
 
   // Case 3: legacy-only blob (pre-Phase-1 code, never claimed).
