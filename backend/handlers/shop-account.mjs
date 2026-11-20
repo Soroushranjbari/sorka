@@ -16,6 +16,9 @@
 // api/[...path].mjs re-dispatches /api/shop/api/account/* for Vercel).
 import { kv } from '../lib/db.mjs';
 import { readJsonCapped, tooLarge, tooMany, badJson, rateLimit, ipOf, secure } from '../lib/guard.mjs';
+import { store, sessionOf, accountById, accessOf } from '../lib/saas.mjs';
+import { signup as authSignup, login as authLogin, publicCoach, publicWs } from '../lib/auth-shared.mjs';
+import { publicBilling, planOf, countSeats } from '../lib/billing.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const st = kv('shop-orders');
@@ -26,22 +29,57 @@ const j = (status, obj) => secure(new Response(JSON.stringify(obj), {
 }));
 
 async function verifyToken(token) {
-  if (!COACH_OS_URL || !token) return null;
+  if (!token) return null;
+  if (COACH_OS_URL) {
+    try {
+      const r = await fetch(`${COACH_OS_URL}/api/auth/me`, { headers: { authorization: `Bearer ${token}` } });
+      if (r.ok) {
+        const d = await r.json();
+        if (d && d.ok) return d;
+      }
+    } catch {}
+  }
+  const appSt = store();
+  const s = await sessionOf(appSt, token);
+  if (!s) return null;
+  const acct = await accountById(appSt, s.coachId);
+  if (!acct) return null;
+  let ws = null;
   try {
-    const r = await fetch(`${COACH_OS_URL}/api/auth/me`, { headers: { authorization: `Bearer ${token}` } });
-    if (!r.ok) return null;
-    const d = await r.json();
-    return d && d.ok ? d : null;
-  } catch { return null; }
+    if (acct.workspaceId) ws = await appSt.get(`ws:${acct.workspaceId}`, { type: 'json' });
+  } catch {}
+  return { ok: true, coach: publicCoach(acct), workspace: publicWs(ws), access: accessOf(acct) };
 }
 
 async function billingOf(token) {
+  if (!token) return null;
+  if (COACH_OS_URL) {
+    try {
+      const r = await fetch(`${COACH_OS_URL}/api/billing/me`, { headers: { authorization: `Bearer ${token}` } });
+      if (r.ok) {
+        const d = await r.json();
+        if (d && d.ok) return d;
+      }
+    } catch {}
+  }
+  const appSt = store();
+  const s = await sessionOf(appSt, token);
+  if (!s) return null;
+  const acct = await accountById(appSt, s.coachId);
+  if (!acct) return null;
+  let seats = 0;
   try {
-    const r = await fetch(`${COACH_OS_URL}/api/billing/me`, { headers: { authorization: `Bearer ${token}` } });
-    if (!r.ok) return null;
-    const d = await r.json();
-    return d && d.ok ? d : null;
-  } catch { return null; }
+    if (acct.workspaceId) {
+      const m = await appSt.get(`ws-meta:${acct.workspaceId}`, { type: 'json' });
+      if (m && m.data) seats = countSeats(m.data);
+    }
+  } catch {}
+  const plan = planOf(acct);
+  return {
+    ok: true,
+    billing: publicBilling(acct),
+    quota: { plan: plan.id, max: plan.maxClients, used: seats }
+  };
 }
 
 export default async (req) => {
@@ -54,20 +92,34 @@ export default async (req) => {
     const { data: body, tooLarge: big, bad } = await readJsonCapped(req, MAX_BYTES);
     if (big) return tooLarge(MAX_BYTES);
     if (bad) return badJson();
-    if (!COACH_OS_URL) return j(503, { ok: false, error: 'account-service-not-configured' });
-    // Forward the buyer's IP: without this the app-side rate limiter sees every
-    // shop request as one client, so ALL shop signups/logins shared a single
-    // 5/min (signup) / 10/min (login) bucket — a busy shop locked everyone out.
-    const fwd = { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) };
-    let upstream;
-    try {
-      upstream = await fetch(`${COACH_OS_URL}/api/auth/login`, {
-        method: 'POST', headers: fwd,
+
+    let d = null;
+    let ok = false;
+    if (COACH_OS_URL) {
+      const fwd = { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) };
+      try {
+        const upstream = await fetch(`${COACH_OS_URL}/api/auth/login`, {
+          method: 'POST', headers: fwd,
+          body: JSON.stringify({ email: body?.email, password: body?.password })
+        });
+        d = await upstream.json().catch(() => null);
+        ok = upstream.ok && d && d.ok;
+      } catch {}
+    }
+
+    if (!ok) {
+      const inReq = new Request(req.url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email: body?.email, password: body?.password })
       });
-    } catch { return j(502, { ok: false, error: 'coachmint-unreachable' }); }
-    const d = await upstream.json().catch(() => null);
-    if (!upstream.ok || !d || !d.ok) return j(401, { ok: false, error: 'bad-credentials' });
+      const inRes = await authLogin(inReq, store());
+      d = await inRes.json().catch(() => null);
+      if (!inRes.ok || !d || !d.ok) {
+        return j(inRes.status || 401, { ok: false, error: (d && d.error) || 'bad-credentials' });
+      }
+    }
+
     const bill = await billingOf(d.token);
     return secure(j(200, {
       ok: true, token: d.token, coach: d.coach, workspace: d.workspace,
@@ -88,30 +140,49 @@ export default async (req) => {
     const { data: body, tooLarge: big, bad } = await readJsonCapped(req, MAX_BYTES);
     if (big) return tooLarge(MAX_BYTES);
     if (bad) return badJson();
-    if (!COACH_OS_URL) return j(503, { ok: false, error: 'account-service-not-configured' });
-    // Same IP forwarding as login — see the comment there.
-    let upstream;
-    try {
-      upstream = await fetch(`${COACH_OS_URL}/api/auth/signup`, {
+
+    let d = null;
+    let ok = false;
+    let upstreamStatus = 400;
+
+    if (COACH_OS_URL) {
+      try {
+        const upstream = await fetch(`${COACH_OS_URL}/api/auth/signup`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) },
+          body: JSON.stringify({
+            name: body?.name, email: body?.email,
+            password: body?.password, coupon: body?.coupon
+          })
+        });
+        upstreamStatus = upstream.status;
+        d = await upstream.json().catch(() => null);
+        ok = upstream.ok && d && d.ok;
+      } catch {}
+    }
+
+    if (!ok && (!COACH_OS_URL || upstreamStatus !== 409)) {
+      const inReq = new Request(req.url, {
         method: 'POST',
-        headers: { 'content-type': 'application/json', 'x-forwarded-for': ipOf(req) },
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           name: body?.name, email: body?.email,
           password: body?.password, coupon: body?.coupon
         })
       });
-    } catch { return j(502, { ok: false, error: 'coachmint-unreachable' }); }
-    const d = await upstream.json().catch(() => null);
-    if (!upstream.ok || !d || !d.ok) {
-      // Forward the app's own validation errors (bad-email, bad-name,
-      // weak-password, email-taken) so the shop UI can show a precise message
-      // instead of a generic failure.
-      return j(upstream.status === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
+      const inRes = await authSignup(inReq, store());
+      d = await inRes.json().catch(() => null);
+      if (!inRes.ok || !d || !d.ok) {
+        return j(inRes.status === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
+      }
+    } else if (!ok) {
+      return j(upstreamStatus === 409 ? 409 : 400, { ok: false, error: (d && d.error) || 'signup-failed' });
     }
+
     const bill = await billingOf(d.token);
     return secure(j(200, {
       ok: true, token: d.token, coach: d.coach, workspace: d.workspace,
-      access: d.access, billing: bill && bill.billing, quota: bill && bill.quota,
+      access: d.access, billing: (bill && bill.billing) || d.billing, quota: (bill && bill.quota) || null,
       redeemed: !!d.redeemed, redeemError: d.redeemError || null
     }));
   }

@@ -5,7 +5,7 @@
 // NOTE: accessOf2() delegates to the Phase-1 canonical accessOf() in saas.mjs
 // so there is exactly ONE definition of trial/active/expired everywhere.
 import { createHash } from 'node:crypto';
-import { normEmail, accessOf } from './saas.mjs';
+import { normEmail, accessOf, createOrg, getOrgByCoach } from './saas.mjs';
 import { withLock } from './guard.mjs';
 
 export const PLANS = {
@@ -115,6 +115,27 @@ export async function redeemForAccount(st, acct, rawCode) {
         if (w) { w.plan = cur.plan; w.status = 'active'; await st.setJSON(`ws:${cur.workspaceId}`, w); }
       }
     } catch {}
+    if (isGymPlan(c.planId)) {
+      try {
+        const existingOrg = await getOrgByCoach(st, cur.id, cur.email);
+        if (!existingOrg) {
+          const gymTitle = (cur.name ? `${cur.name.trim()}` : 'باشگاه') + ' (HQ)';
+          await createOrg(st, {
+            ownerCoachId: cur.id,
+            ownerEmail: cur.email,
+            name: gymTitle,
+            primaryBranchName: 'شعبه اصلی (مرکزی)',
+            planId: c.planId
+          });
+        } else if (existingOrg.org) {
+          existingOrg.org.plan = c.planId;
+          existingOrg.org.status = 'active';
+          await st.setJSON(`org:${existingOrg.org.id}`, existingOrg.org);
+        }
+      } catch (err) {
+        console.error('[billing] org auto-provision error:', err);
+      }
+    }
     const payId = newPayId();
     await st.setJSON(`pay:${payId}`, {
       id: payId, coachId: cur.id, planId: c.planId, amount: 0, currency: 'IRT',

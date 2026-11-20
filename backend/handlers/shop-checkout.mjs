@@ -14,8 +14,10 @@
 // via `export const config` below (server.mjs maps it for self-hosting).
 import { createHash } from 'node:crypto';
 import { kv } from '../lib/db.mjs';
-import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
+import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure, withLock } from '../lib/guard.mjs';
 import { couponMail } from '../lib/mail.mjs';
+import { store } from '../lib/saas.mjs';
+import { normCoupon } from '../lib/billing.mjs';
 
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || '';
@@ -59,29 +61,50 @@ function codeFor(ref, planId) {
 }
 
 async function issueCoupon(planId, code) {
-  if (!COACH_OS_URL || !ADMIN_API_KEY) {
-    // Local/demo fallback: mint the code here so the flow still completes.
-    // The code will NOT exist in CoachMint until ADMIN_API_KEY is configured.
-    return { ok: true, demo: true, coupons: [code] };
+  if (COACH_OS_URL && ADMIN_API_KEY) {
+    try {
+      const r = await fetch(`${COACH_OS_URL}/api/billing/issue-coupon`, {
+        method: 'POST',
+        headers: { 'x-api-key': ADMIN_API_KEY, 'content-type': 'application/json' },
+        body: JSON.stringify({ planId, durationDays: 30, maxUses: 1, count: 1, code })
+      });
+      const d = await r.json().catch(() => null);
+      if (r.status === 409 && d && d.error === 'code-exists') {
+        return { ok: true, coupons: [code] }; // retry of the same order — fine
+      }
+      if (r.ok && d && d.ok) return d;
+    } catch (e) {
+      // Upstream failed or unreachable, fall back to in-process store below
+    }
   }
-  let r;
-  try {
-    r = await fetch(`${COACH_OS_URL}/api/billing/issue-coupon`, {
-      method: 'POST',
-      headers: { 'x-api-key': ADMIN_API_KEY, 'content-type': 'application/json' },
-      body: JSON.stringify({ planId, durationDays: 30, maxUses: 1, count: 1, code })
-    });
-  } catch (e) {
-    // Network/DNS failure — do NOT record a paid order for a coupon that was
-    // never issued (previously the buyer got a code that could never be redeemed).
-    return { ok: false, error: 'coachmint-unreachable' };
-  }
-  const d = await r.json().catch(() => null);
-  if (r.status === 409 && d && d.error === 'code-exists') {
-    return { ok: true, coupons: [code] }; // retry of the same order — fine
-  }
-  if (!r.ok || !d || !d.ok) return { ok: false, error: (d && d.error) || `coachmint-${r.status}` };
-  return d;
+
+  // Standalone / in-process fallback: mint directly into KV so the code is 100% valid and redeemable
+  const cleanCode = normCoupon(code);
+  const st = store();
+  return withLock('coupons', async () => {
+    const existing = await st.get(`coupon:${cleanCode}`, { type: 'json' });
+    if (!existing) {
+      await st.setJSON(`coupon:${cleanCode}`, {
+        code: cleanCode,
+        planId,
+        durationDays: 30,
+        maxUses: 1,
+        usedCount: 0,
+        isActive: true,
+        expiresAt: null,
+        createdAt: Date.now(),
+        issuedBy: 'shop-checkout'
+      });
+      try {
+        const a = (await st.get('index:coupons', { type: 'json' })) || [];
+        if (!a.includes(cleanCode)) {
+          a.unshift(cleanCode);
+          await st.setJSON('index:coupons', a.slice(0, 2000));
+        }
+      } catch {}
+    }
+    return { ok: true, coupons: [cleanCode], demo: false };
+  });
 }
 
 // Every response carries the standard security headers (shop-account.mjs

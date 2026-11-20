@@ -41,7 +41,18 @@ export default async function handle(req) {
 
   // 1. GET /api/org/me
   if (req.method === 'GET' && (!action || action === 'me')) {
-    const orgData = await getOrgByCoach(st, s.coachId, acct.email);
+    let orgData = await getOrgByCoach(st, s.coachId, acct.email);
+    if (!orgData && isGymPlan(acct.plan)) {
+      const gymTitle = (acct.name ? `${acct.name.trim()}` : 'باشگاه') + ' (HQ)';
+      const newOrg = await createOrg(st, {
+        ownerCoachId: s.coachId,
+        ownerEmail: acct.email,
+        name: gymTitle,
+        primaryBranchName: 'شعبه اصلی (مرکزی)',
+        planId: acct.plan
+      });
+      orgData = { org: newOrg, staffRecord: newOrg.staff[0] };
+    }
     if (!orgData) {
       return j(200, { ok: true, org: null, isGym: isGymPlan(acct.plan), plan: acct.plan });
     }
@@ -57,7 +68,7 @@ export default async function handle(req) {
         machines: org.machines || [],
         createdAt: org.createdAt
       },
-      role: staffRecord.role || 'trainer',
+      role: staffRecord.role || 'gym_owner',
       branches: staffRecord.branches || ['*'],
       isOwner: org.ownerCoachId === s.coachId,
       plan: acct.plan
@@ -69,12 +80,21 @@ export default async function handle(req) {
     if (!isGymPlan(acct.plan)) {
       return j(403, { ok: false, error: 'gym-plan-required', message: 'An active Gym or Club subscription is required to create an organization.' });
     }
-    const existing = await getOrgByCoach(st, s.coachId, acct.email);
-    if (existing && existing.org) {
-      return j(409, { ok: false, error: 'org-already-exists', orgId: existing.org.id });
-    }
     const { data, err } = await readSmall(req);
     if (err) return err;
+
+    const existing = await getOrgByCoach(st, s.coachId, acct.email);
+    if (existing && existing.org) {
+      if (existing.org.ownerCoachId === s.coachId) {
+        if (data?.name) existing.org.name = String(data.name).trim();
+        if (data?.primaryBranchName && existing.org.branches?.[0]) {
+          existing.org.branches[0].name = String(data.primaryBranchName).trim();
+        }
+        await st.setJSON(`org:${existing.org.id}`, existing.org);
+        return j(200, { ok: true, org: existing.org });
+      }
+      return j(409, { ok: false, error: 'org-already-exists', orgId: existing.org.id });
+    }
 
     const org = await createOrg(st, {
       ownerCoachId: s.coachId,

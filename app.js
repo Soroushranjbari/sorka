@@ -2758,18 +2758,21 @@ async function loadOrgMe() {
     S.org = DEMO_ORG;
     S.orgRole = 'gym_owner';
     S.isGymOwner = true;
-    if (!S.workspaceMode) S.workspaceMode = 'executive';
+    let savedMode = null;
+    try { savedMode = localStorage.getItem('co-ws-mode'); } catch (e) {}
+    S.workspaceMode = savedMode || 'executive';
     return;
   }
   try {
     const { ok, d } = await authApi('/api/org/me');
     if (ok && d && d.org) {
       S.org = d.org;
-      S.orgRole = d.role || 'trainer';
+      S.orgRole = d.role || 'gym_owner';
       S.isGymOwner = !!d.isOwner;
-      if (!S.workspaceMode) {
-        S.workspaceMode = (d.isOwner || ['gym_owner', 'manager', 'head_coach'].includes(d.role)) ? 'executive' : 'coach';
-      }
+      let savedMode = null;
+      try { savedMode = localStorage.getItem('co-ws-mode'); } catch (e) {}
+      const isExecStaff = (d.isOwner || ['gym_owner', 'manager', 'head_coach'].includes(d.role));
+      S.workspaceMode = savedMode || (isExecStaff ? 'executive' : 'coach');
       render();
     } else {
       S.org = null;
@@ -17639,6 +17642,7 @@ document.addEventListener('click',e=>{
     case 'set-ws-mode': {
       const newMode = el.dataset.mode || (S.workspaceMode === 'executive' ? 'coach' : 'executive');
       S.workspaceMode = newMode;
+      try { localStorage.setItem('co-ws-mode', newMode); } catch (e) {}
       if (newMode === 'executive') {
         S.view = 'org';
         S.orgTab = 'overview';
