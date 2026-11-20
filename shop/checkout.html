@@ -653,13 +653,18 @@ $('payBtn').addEventListener('click',async()=>{
         }else if(sd&&sd.error==='email-taken'){acct='exists'}
       }catch(e){acct='none'}
     }
+    const isOrgPlan = ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);
+    if(isOrgPlan){
+      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+    }
+    const orgSuffix = isOrgPlan ? '&view=org&mode=executive' : '';
     if(token){
-      $('appLink').href='/index.html#token='+encodeURIComponent(token);
+      $('appLink').href='/index.html#token='+encodeURIComponent(token)+orgSuffix;
       if($('signInLink'))$('signInLink').style.display='none';
     }else{
-      $('appLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'');
+      $('appLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
       if($('signInLink')){
-        $('signInLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'');
+        $('signInLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
         $('signInLink').style.display='';
       }
     }

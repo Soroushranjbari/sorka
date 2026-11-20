@@ -2618,8 +2618,12 @@ async function authSignup(){
     cloudReset();adoptAccount(d.coach);
     await loadOrgMe();
     S.role='coach';
-    if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
-    else{S.view=ONBOARD.done?landingView():'dash';}
+    const isExecStaff = S.isGymOwner || (S.org && (S.org.ownerCoachId === d.coach.id || ['gym_owner', 'manager', 'head_coach'].includes(S.orgRole))) || isGymWorkspace();
+    if(isExecStaff || S.workspaceMode==='executive'){
+      S.workspaceMode='executive';S.view='org';S.orgTab='overview';
+      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+      ONBOARD.done=true;
+    }else{S.view=ONBOARD.done?landingView():'dash';}
     render();
     toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
       :d.redeemError?t(billErr({error:d.redeemError}))
@@ -2661,8 +2665,12 @@ async function authLogin(){
     }
     await loadOrgMe();
     S.role='coach';
-    if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
-    else{S.view=ONBOARD.done?landingView():'dash';}
+    const isExecStaff = S.isGymOwner || (S.org && (S.org.ownerCoachId === d.coach.id || ['gym_owner', 'manager', 'head_coach'].includes(S.orgRole))) || isGymWorkspace();
+    if(isExecStaff || S.workspaceMode==='executive'){
+      S.workspaceMode='executive';S.view='org';S.orgTab='overview';
+      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+      ONBOARD.done=true;
+    }else{S.view=ONBOARD.done?landingView():'dash';}
     render();
     toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
     cloudEnsure();maybeOnboard();
@@ -2788,7 +2796,15 @@ async function loadOrgMe() {
       let savedMode = null;
       try { savedMode = localStorage.getItem('co-ws-mode'); } catch (e) {}
       const isExecStaff = (d.isOwner || ['gym_owner', 'manager', 'head_coach'].includes(d.role));
-      S.workspaceMode = savedMode || (isExecStaff ? 'executive' : 'coach');
+      if (isExecStaff) {
+        let savedMode = null;
+        try { savedMode = localStorage.getItem('co-ws-mode'); } catch (e) {}
+        S.workspaceMode = (savedMode === 'coach' && S.manualModeSwitch) ? 'coach' : 'executive';
+        try { localStorage.setItem('co-ws-mode', S.workspaceMode); } catch (e) {}
+      } else {
+        S.workspaceMode = 'coach';
+        try { localStorage.setItem('co-ws-mode', 'coach'); } catch (e) {}
+      }
       if (S.role) render();
     } else {
       S.org = null;
@@ -4874,8 +4890,9 @@ function onbWizard(){
    cancels the popup. Demo coaches (no token) are never interrupted. */
 function maybeOnboard(){
   if(!AUTH.token||ONBOARD.done)return;
+  if(S.workspaceMode==='executive'||isGymWorkspace()){ONBOARD.done=true;return;}
   setTimeout(()=>{
-    if(ONBOARD.done||S.role!=='coach')return;
+    if(ONBOARD.done||S.role!=='coach'||S.workspaceMode==='executive'||isGymWorkspace())return;
     S.onb={step:0,sport:ONBOARD.sport||null,context:ONBOARD.context||null,scale:ONBOARD.scale||null,focus:ONBOARD.focus||null};
     onbWizard();
   },600);
@@ -11929,7 +11946,8 @@ function renderMobile(){
   const mvMap={races:vRaces,pbs:vPbs,phases:vPhases,runbuild:vRunBuilder,load:vLoad,wear:vWear};
   if(isAthletics()){mvMap.aprof=vAprofile;mvMap.endurance=vAprofile;mvMap.athletics=vAprofile;}
   const sportMv=mvMap[sportKey(S.mview)];
-  if(S.mview==='client')body=mClientView();
+  if(S.workspaceMode==='executive'&&(S.mview==='tabs'||!S.mview||S.mview==='org'))body=vOrg();
+  else if(S.mview==='client')body=mClientView();
   else if(S.mview==='live')body=mLive();
   else if(S.mview==='builder')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vBuilder();
   else if(S.mview==='org')body=`<div class="mstack" style="gap:10px"><button class="btn btn-outline btn-sm" data-act="mhome" style="align-self:flex-start">${ic('chevL',14)} ${t('Back')}</button></div>`+vOrg();
@@ -11966,6 +11984,10 @@ function renderMobile(){
   }else if(S.mview==='tabs'&&S.mtab==='clients'){
     const actN=CLIENTS.filter(c=>c.status==='Active').length;
     mpill=`<span class="mpill">${ic('users',11)} ${nf(CLIENTS.length)} · ${nf(actN)} ${t('Active')}</span>`;
+  }
+  if(S.workspaceMode==='executive'){
+    mscr='Executive Console';
+    mpill=`<span class="mpill">${ic('building',11)} ${t('EXECUTIVE')}</span>`;
   }
   return `<div class="mshell"${S.mjump?' data-jump':''}${S.msheet?' data-sheet':''}>
     ${aiFabRound()}
@@ -20005,12 +20027,31 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
   if(m){S.joinCode=(typeof m==='string'?m:m[1]).toUpperCase();S.loginRole='client'}
   const r=location.hash.match(/reset=(rs_[A-Za-z0-9]+)/)||sParams.get('reset');
   if(r){S.resetToken=typeof r==='string'?r:r[1];S.loginRole='coach';S.authMode='login'}
-  const vMatch=location.hash.match(/view=([a-z]+)/);
+  const modeMatch=location.hash.match(/mode=([a-z]+)/)||sParams.get('mode');
+  if(modeMatch){
+    const m=typeof modeMatch==='string'?modeMatch:modeMatch[1];
+    if(m==='executive'||m==='coach'){
+      S.workspaceMode=m;
+      try{localStorage.setItem('co-ws-mode',m)}catch(e){}
+    }
+  }
+  const vMatch=location.hash.match(/view=([a-z-]+)/);
   const v=vMatch?vMatch[1]:sParams.get('view');
   const cidParam=sParams.get('cid');if(cidParam)S.cid=+cidParam;
   const tabParam=sParams.get('tab');if(tabParam)S.tab=tabParam;
   if(sParams.get('timer')==='open'){setTimeout(openTimerModal,400);}
-  if(v){S.role='coach';S.view=v;if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';}
+  if(v){
+    S.role='coach';
+    if(v.startsWith('org')){
+      S.view='org';
+      S.workspaceMode='executive';
+      if(v.includes('-'))S.orgTab=v.split('-')[1];
+      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+    }else{
+      S.view=v;
+    }
+    if(v==='wear'||v==='load'||v==='races'||v==='phases'||v==='runbuild'||v==='pbs')ONBOARD.sport='Running & Endurance';
+  }
   if(sParams.get('strava')==='connected'){
     const targetCid=sParams.get('cid');
     const isClient=(S.role==='client'||S.loginRole==='client'||(!v&&targetCid));
@@ -20068,8 +20109,19 @@ if(S.joinCode)freshWorkspace();
     // links and client join links, which need their own screens.
     if(AUTH.coach&&!S.joinCode&&!S.resetToken){
       S.role='coach';
-      if(S.workspaceMode==='executive'){S.view='org';S.orgTab='overview';}
-      else{S.view=ONBOARD.done?landingView():'dash';}
+      const isExecStaff = S.isGymOwner || (S.org && (S.org.ownerCoachId === AUTH.coach.id || ['gym_owner', 'manager', 'head_coach'].includes(S.orgRole))) || isGymWorkspace();
+      if(isExecStaff && (!S.manualModeSwitch || S.workspaceMode === 'executive')){
+        S.workspaceMode='executive';
+        S.view='org';
+        S.orgTab=S.orgTab||'overview';
+        try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+        ONBOARD.done=true;
+      } else if(S.workspaceMode==='executive'){
+        S.view='org';
+        S.orgTab='overview';
+      } else {
+        S.view=ONBOARD.done?landingView():'dash';
+      }
     }
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.
