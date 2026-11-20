@@ -9,7 +9,16 @@
   "rewrites": [
     { "source": "/shop/api/checkout", "destination": "/api/shop/api/checkout" },
     { "source": "/shop/api/account/:path*", "destination": "/api/shop/api/account/:path*" },
-    { "source": "/shop", "destination": "/shop/index.html" }
+    { "source": "/shop", "destination": "/shop/index.html" },
+    { "source": "/org", "destination": "/index.html" },
+    { "source": "/org/:path*", "destination": "/index.html" },
+    { "source": "/gym", "destination": "/index.html" },
+    { "source": "/gym/:path*", "destination": "/index.html" },
+    { "source": "/club", "destination": "/index.html" },
+    { "source": "/club/:path*", "destination": "/index.html" },
+    { "source": "/coach", "destination": "/index.html" },
+    { "source": "/coach/:path*", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" }
   ],
   "headers": [
     {

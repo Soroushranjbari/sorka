@@ -16,6 +16,7 @@ import { createHash, randomBytes, pbkdf2Sync, timingSafeEqual } from 'node:crypt
 // Re-exported so handlers can do timing-safe secret comparisons.
 export { timingSafeEqual };
 import { kv } from './db.mjs';
+import { withLock } from './guard.mjs';
 
 export const STORE_NAME = 'coach-os-saas';
 export const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
@@ -116,6 +117,18 @@ export async function accountById(st, coachId) {
   return st.get(`acct:${String(ptr.email).toLowerCase()}`, { type: 'json' });
 }
 
+/** Lightweight in-record audit trail (last 50 entries) for B2B data governance.
+    Lives inside the org blob so it needs no extra keys and is returned with
+    GET /api/org/me. pushAudit only mutates the in-memory org — the caller's
+    following st.setJSON('org:<id>') persists it. */
+export function pushAudit(org, action, detail = '') {
+  if (!org || typeof org !== 'object') return;
+  org.audit = [
+    ...(org.audit || []),
+    { at: Date.now(), action: String(action || '').slice(0, 40), detail: String(detail || '').slice(0, 120) }
+  ].slice(-50);
+}
+
 /** Organization (Gym / Club) Management */
 export async function createOrg(st, { ownerCoachId, ownerEmail, name, primaryBranchName, planId }) {
   const orgId = newId('org');
@@ -134,6 +147,7 @@ export async function createOrg(st, { ownerCoachId, ownerEmail, name, primaryBra
       { coachId: ownerCoachId, email: normEmail(ownerEmail), role: 'gym_owner', branches: ['*'], addedAt: Date.now() }
     ]
   };
+  pushAudit(org, 'org.create', org.name);
   await st.setJSON(`org:${orgId}`, org);
   await st.setJSON(`org-by-coach:${ownerCoachId}`, { orgId, role: 'gym_owner', branches: ['*'] });
   if (ownerEmail) {
@@ -149,24 +163,43 @@ export async function getOrg(st, orgId) {
 
 export async function getOrgByCoach(st, coachId, email = null) {
   if (!coachId && !email) return null;
+  const emailL = email ? normEmail(email) : null;
   let ptr = coachId ? await st.get(`org-by-coach:${coachId}`, { type: 'json' }) : null;
-  if (!ptr && email) {
-    ptr = await st.get(`org-by-email:${normEmail(email)}`, { type: 'json' });
+  if (!ptr && emailL) {
+    ptr = await st.get(`org-by-email:${emailL}`, { type: 'json' });
     if (ptr && coachId) {
+      // Pointer backfill is an idempotent same-value write — safe to race.
       await st.setJSON(`org-by-coach:${coachId}`, ptr);
-      const org = await getOrg(st, ptr.orgId);
-      if (org) {
-        const s = (org.staff || []).find((x) => x.email === normEmail(email));
-        if (s && (!s.coachId || s.coachId.startsWith('coach_temp_') || s.coachId !== coachId)) {
-          s.coachId = coachId;
-          await st.setJSON(`org:${org.id}`, org);
-        }
-      }
     }
   }
   if (!ptr || !ptr.orgId) return null;
   const org = await getOrg(st, ptr.orgId);
-  return org ? { org, staffRecord: ptr } : null;
+  if (!org) return null;
+  /* v-fix (CR-1) — the pointer is only an index; org.staff is authoritative.
+     A removed staff member's stale pointer (org-by-email was never cleaned)
+     used to keep FULL data + management access alive after offboarding:
+     data.mjs isOrgMember trusted it and the role ptr still carried the old
+     role. Validate membership here and self-heal the stale pointers. */
+  const member = (org.staff || []).find((s) => s && ((coachId && s.coachId === coachId) || (emailL && s.email === emailL)));
+  if (!member) {
+    try { if (coachId) await st.delete(`org-by-coach:${coachId}`); } catch {}
+    try { if (emailL) await st.delete(`org-by-email:${emailL}`); } catch {}
+    return null;
+  }
+  // Reconcile the real signed-up coachId into the staff record (the invite may
+  // predate the coach's account). Locked read-modify-write so a concurrent
+  // addOrgStaff on the same org blob cannot be lost (v-fix HI-4).
+  if (coachId && member.coachId !== coachId) {
+    await withLock(`org:${org.id}`, async () => {
+      const fresh = await getOrg(st, org.id);
+      const m = fresh && (fresh.staff || []).find((s) => s && (emailL ? s.email === emailL : s.coachId === coachId));
+      if (fresh && m && m.coachId !== coachId) {
+        m.coachId = coachId;
+        await st.setJSON(`org:${fresh.id}`, fresh);
+      }
+    });
+  }
+  return { org, staffRecord: { orgId: org.id, role: member.role || 'trainer', branches: member.branches || ['*'] } };
 }
 
 export async function addOrgBranch(st, orgId, { name, address, phone, isHQ = false }, maxBranches = 5) {

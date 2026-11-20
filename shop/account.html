@@ -478,6 +478,8 @@ function renderDash(d){
   const q=d.quota||{};
   $('seats').textContent=q.used!=null?`${nf(q.used)} / ${nf(q.max)}`:'—';
   $('wsCode').textContent=(d.workspace&&d.workspace.code)||'—';
+  const isOrg = ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(b.plan);
+  if($('t-openapp')) $('t-openapp').href = '/index.html' + (isOrg ? '#org-login' : '#coach-login');
   $('renewBtn').href='/shop/checkout.html?plan='+(b.plan&&b.plan!=='trial'?b.plan:'professional');
 }
 function renderOrders(orders){

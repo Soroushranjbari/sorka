@@ -655,16 +655,19 @@ $('payBtn').addEventListener('click',async()=>{
     }
     const isOrgPlan = ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);
     if(isOrgPlan){
-      try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+      try{localStorage.setItem('co-ws-mode','executive');localStorage.setItem('co-login-portal','org');}catch(e){}
+    } else {
+      try{localStorage.setItem('co-login-portal','coach');}catch(e){}
     }
-    const orgSuffix = isOrgPlan ? '&view=org&mode=executive' : '';
+    const orgSuffix = isOrgPlan ? '&view=org&mode=executive&portal=org' : '&portal=coach';
+    const portalHash = isOrgPlan ? '#org-login' : '#coach-login';
     if(token){
       $('appLink').href='/index.html#token='+encodeURIComponent(token)+orgSuffix;
       if($('signInLink'))$('signInLink').style.display='none';
     }else{
-      $('appLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
+      $('appLink').href='/index.html'+portalHash+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
       if($('signInLink')){
-        $('signInLink').href='/index.html#login'+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
+        $('signInLink').href='/index.html'+portalHash+(email?'&email='+encodeURIComponent(email):'')+orgSuffix;
         $('signInLink').style.display='';
       }
     }

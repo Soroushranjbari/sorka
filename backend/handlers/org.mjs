@@ -42,14 +42,14 @@ export default async function handle(req) {
   // 1. GET /api/org/me
   if (req.method === 'GET' && (!action || action === 'me')) {
     let orgData = await getOrgByCoach(st, s.coachId, acct.email);
-    if (!orgData && isGymPlan(acct.plan)) {
+    if (!orgData && (isGymPlan(acct.plan) || acct.isOrg)) {
       const gymTitle = (acct.name ? `${acct.name.trim()}` : 'باشگاه') + ' (HQ)';
       const newOrg = await createOrg(st, {
         ownerCoachId: s.coachId,
         ownerEmail: acct.email,
         name: gymTitle,
         primaryBranchName: 'شعبه اصلی (مرکزی)',
-        planId: acct.plan
+        planId: isGymPlan(acct.plan) ? acct.plan : 'gym_studio'
       });
       orgData = { org: newOrg, staffRecord: newOrg.staff[0] };
     }
@@ -77,7 +77,7 @@ export default async function handle(req) {
 
   // 2. POST /api/org/create
   if (req.method === 'POST' && action === 'create') {
-    if (!isGymPlan(acct.plan)) {
+    if (!isGymPlan(acct.plan) && !acct.isOrg) {
       return j(403, { ok: false, error: 'gym-plan-required', message: 'An active Gym or Club subscription is required to create an organization.' });
     }
     const { data, err } = await readSmall(req);

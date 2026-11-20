@@ -38,7 +38,7 @@ async function me(req, st) {
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
   const ws = acct.workspaceId ? await st.get(`ws:${acct.workspaceId}`, { type: 'json' }) : null;
-  return j(200, { ok: true, coach: acct && { id: acct.id, email: acct.email, name: acct.name, plan: acct.plan || 'trial', role: acct.role || 'coach', phone: acct.phone || '', bio: acct.bio || '' }, workspace: publicWs(ws), access: accessOf(acct) });
+  return j(200, { ok: true, coach: acct && { id: acct.id, email: acct.email, name: acct.name, plan: acct.plan || 'trial', role: acct.role || 'coach', phone: acct.phone || '', bio: acct.bio || '', isOrg: !!acct.isOrg }, workspace: publicWs(ws), access: accessOf(acct) });
 }
 
 async function logout(req, st) {

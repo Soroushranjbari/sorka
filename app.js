@@ -882,7 +882,71 @@ Object.assign(FA, {
   'Clear Filter': 'حذف فیلتر',
   'Invite': 'دعوت',
   'Our Club': 'باشگاه ما',
-  'Coach invite message copied ✓': 'متن دعوت مربی کپی شد ✓'
+  'Coach invite message copied ✓': 'متن دعوت مربی کپی شد ✓',
+  'Solo Coach': 'مربی تک‌نفره و مستقل',
+  'Clubs & Organizations': 'باشگاه‌ها و سازمان‌ها',
+  'Solo Coach Portal': 'پورتال مربیان مستقل',
+  'Organization Portal': 'پورتال باشگاه‌ها و سازمان‌ها',
+  'Solo Coach Sign In': 'ورود مربی مستقل',
+  'Create Solo Coach Account': 'ثبت‌نام مربی مستقل',
+  'Organization Sign In': 'ورود باشگاه و سازمان',
+  'Register Gym / Club': 'ثبت‌نام باشگاه یا مجموعه',
+  'Gym / Club Name': 'نام باشگاه یا مجموعه ورزشی',
+  'Manager / Owner Name': 'نام مدیر یا نماینده مجموعه',
+  'Work Email': 'ایمیل کاری / سازمانی',
+  'Register Organization': 'ثبت‌نام مجموعه ورزشی',
+  'Sign In to Organization': 'ورود به پورتال سازمانی',
+  'MULTI-COACH & MULTI-BRANCH ENTERPRISE': 'سامانه یکپارچه مجموعه‌ها و شعب ورزشی',
+  'ENTERPRISE & GYM COMMAND CENTER': 'مرکز فرماندهی باشگاه‌ها و سازمان‌ها',
+  'Run your fitness clubs & training staff with enterprise control.': 'مدیریت سازمانی شعب، کادر مربیان و تجهیزات ورزشی',
+  'Multi-branch & Staff management': 'مدیریت شعب و کادر مربیان مجموعه',
+  'Gym ownership of all client rosters & logs': 'مالکیت متمرکز پرونده شاگردان برای باشگاه',
+  'Gym equipment QR tracking & maintenance': 'کد QR و سوابق هوشمند دستگاه‌های بدنسازی',
+  'Executive analytics, revenue & oversight': 'داشبورد نظارت مدیریتی و تحلیل عملکرد شعب',
+  '"CoachMint transformed how we manage our 3 branches and 12 coaches. Total clarity and enterprise control."': '«با پنل سازمانی CoachMint، مدیریت ۳ شعبه و ۱۲ مربی باشگاه ما شفاف، دقیق و کاملاً متمرکز شد.»',
+  '— Kaveh M. · General Manager, Oxygen Fitness Clubs': '— کاوه م. · مدیر مجموعه باشگاه‌های اکسیژن',
+  'Explore Organization Demo': 'مشاهده دموی پنل سازمانی باشگاه',
+  'Explore Solo Coach Demo': 'مشاهده دموی میز کار مربی',
+  'Switch to Club / Gym Login': 'ورود از پورتال باشگاه‌ها و سازمان‌ها ←',
+  'Switch to Solo Coach Login': 'ورود از پورتال مربیان مستقل ←',
+  'Welcome to Organization Portal': 'ورود به پورتال سازمانی انجام شد',
+  'Organization demo mode — explore multi-branch & multi-coach console': 'حالت دموی سازمانی — بررسی کنسول چند شعبه و چند مربی',
+  'Executive & staff command center': 'کنسول مدیریت ارشد و کادر مجموعه',
+  '14-day free trial · Multi-branch & multi-coach': '۱۴ روز آزمایشی رایگان · چند شعبه و چند مربی',
+  'Please enter gym name': 'لطفاً نام باشگاه یا مجموعه را وارد کنید',
+  'e.g. Oxygen Fitness Club': 'مثال: مجموعه ورزشی اکسیژن',
+  'ONE COACH. ONE WORKSPACE.': 'یک مربی. یک میز کار.',
+  'Club Plan': 'طرح باشگاه',
+  'No address registered': 'آدرسی ثبت نشده است',
+  'staff members': 'عضو کادر فنی',
+  'Anti-Poaching Athlete Transfer': 'انتقال شاگردان و حفظ مالکیت باشگاه',
+  'Copy Invite': 'کپی لینک دعوت',
+  'Filter Clients': 'فیلتر شاگردان',
+  'Remove Staff': 'حذف پرسنل',
+  'e.g. West Branch (Shahrak Gharb)': 'مثال: شعبه ۲ (شهرک غرب)',
+  'e.g. Dadman Blvd, Building 42': 'مثال: شهرک غرب، بلوار دادمان',
+  'e.g. 021-88334455': 'مثال: ۰۲۱-۸۸۳۳۴۴۵۵',
+  'Full Name': 'نام کامل',
+  'e.g. Sara Mohammadi': 'مثال: سارا محمدی',
+  'Assigned Branch': 'شعبه تخصیص‌یافته',
+  'e.g. Olympia Fitness Clubs': 'مثال: مجموعه ورزشی المپیا',
+  'e.g. Central HQ': 'مثال: شعبه مرکزی',
+  'Sign in': 'ورود',
+  'EXECUTIVE CONSOLE': 'کنسول مدیریت سازمان',
+  'Save Machine': 'ذخیره دستگاه',
+  'gym_owner': 'مالک باشگاه',
+  'head_coach': 'سرمربی',
+  'manager': 'مدیر شعبه',
+  'trainer': 'مربی اختصاصی',
+  'reception': 'پذیرش',
+  'Ali Rezaei': 'علی رضایی',
+  'Sara Ahmadi': 'سارا احمدی',
+  'Mohammad Karimi': 'محمد کریمی',
+  'Neda Hosseini': 'ندا حسینی',
+  'Reza Moradi': 'رضا مرادی',
+  'Amir Jafari': 'امیر جعفری',
+  'Maryam Sadeghi': 'مریم صادقی',
+  'Hamed Naderi': 'حامد نادری'
 });
 
 Object.assign(TR, {
@@ -914,7 +978,157 @@ Object.assign(TR, {
   'Clear Filter': 'Filtreyi Temizle',
   'Invite': 'Davet Et',
   'Our Club': 'Kulübümüz',
-  'Coach invite message copied ✓': 'Antrenör davet mesajı kopyalandı ✓'
+  'Coach invite message copied ✓': 'Antrenör davet mesajı kopyalandı ✓',
+  'Solo Coach': 'Bireysel Antrenör',
+  'Clubs & Organizations': 'Kulüpler ve Organizasyonlar',
+  'Solo Coach Portal': 'Bireysel Antrenör Portalı',
+  'Organization Portal': 'Organizasyon Portalı',
+  'Solo Coach Sign In': 'Bireysel Antrenör Girişi',
+  'Create Solo Coach Account': 'Bireysel Antrenör Hesabı Aç',
+  'Organization Sign In': 'Organizasyon Girişi',
+  'Register Gym / Club': 'Kulüp / Salon Kaydı',
+  'Gym / Club Name': 'Spor Salonu / Kulüp Adı',
+  'Manager / Owner Name': 'Yönetici / Kurucu Adı',
+  'Work Email': 'Kurumsal E-posta',
+  'Register Organization': 'Organizasyon Kaydı',
+  'Sign In to Organization': 'Organizasyona Giriş Yap',
+  'MULTI-COACH & MULTI-BRANCH ENTERPRISE': 'ÇOKLU ANTRENÖR & ÇOK ŞUBELİ KURUMSAL',
+  'ENTERPRISE & GYM COMMAND CENTER': 'KULÜP & ORGANİZASYON KOMUTA MERKEZİ',
+  'Run your fitness clubs & training staff with enterprise control.': 'Spor kulübünüzü, şubelerinizi ve antrenör kadronuzu kurumsal kontrolle yönetin.',
+  'Multi-branch & Staff management': 'Çoklu şube ve antrenör kadrosu yönetimi',
+  'Gym ownership of all client rosters & logs': 'Tüm danışan kayıtları kulüp mülkiyetindedir',
+  'Gym equipment QR tracking & maintenance': 'Ekipman QR takibi ve istasyon yönetimi',
+  'Executive analytics, revenue & oversight': 'Yönetici analitiği, gelir ve denetim',
+  '"CoachMint transformed how we manage our 3 branches and 12 coaches. Total clarity and enterprise control."': '"CoachMint 3 şubemizi ve 12 antrenörümüzü yönetme şeklimizi değiştirdi. Tam şeffaflık ve kurumsal kontrol."',
+  '— Kaveh M. · General Manager, Oxygen Fitness Clubs': '— Kaveh M. · Oxygen Fitness Kulüpleri Genel Müdürü',
+  'Explore Organization Demo': 'Organizasyon Demosunu İncele',
+  'Explore Solo Coach Demo': 'Bireysel Antrenör Demosunu İncele',
+  'Switch to Club / Gym Login': 'Kulüp / Organizasyon Girişine Geç ←',
+  'Switch to Solo Coach Login': 'Bireysel Antrenör Girişine Geç ←',
+  'Welcome to Organization Portal': 'Organizasyon portalına hoş geldiniz',
+  'Organization demo mode — explore multi-branch & multi-coach console': 'Organizasyon demo modu — çoklu şube ve antrenör konsolu',
+  'Executive & staff command center': 'Üst yönetim ve personel komuta merkezi',
+  '14-day free trial · Multi-branch & multi-coach': '14 günlük ücretsiz deneme · Çok şubeli ve çok antrenörlü',
+  'Please enter gym name': 'Lütfen kulüp / salon adını girin',
+  'e.g. Oxygen Fitness Club': 'Örn. Oxygen Fitness Club',
+  'ONE COACH. ONE WORKSPACE.': 'TEK ANTRENÖR. TEK ÇALIŞMA ALANI.',
+  'All Branches': 'Tüm Şubeler',
+  'Select Branch': 'Şube Seç',
+  'Gym Branches': 'Salon Şubeleri',
+  'HQ': 'Merkez',
+  'B2B Gym & Studio OS': 'B2B Spor Salonu & Stüdyo İşletim Sistemi',
+  'Multi-Branch': 'Çok Şubeli',
+  'Gym & Staff': 'Kulüp ve Personel',
+  'Manage branches, personal trainers, and athlete rosters under one centralized roof': 'Şubeleri, antrenörleri ve sporcu kadrolarını tek merkezden yönetin',
+  'Initialize Gym Organization': 'Kulüp Organizasyonunu Başlat',
+  'Upgrade your workspace to a multi-branch gym or fitness club. Add staff, allocate athlete seats, and manage anti-poaching athlete transfers with full data governance.': 'Çalışma alanınızı çok şubeli bir spor kulübüne yükseltin. Personel ekleyin, sporcu kotalarını belirleyin ve veri yönetişimiyle antrenör değişimlerini yönetin.',
+  'Create Gym Organization': 'Kulüp Organizasyonu Oluştur',
+  'Gym Owner': 'Kulüp Sahibi',
+  'Head Coach': 'Baş Antrenör',
+  'Manager': 'Müdür',
+  'Trainer': 'Antrenör',
+  'Reception': 'Resepsiyon',
+  'Studio Plan': 'Stüdyo Planı',
+  'Chain Plan': 'Zincir Plan',
+  'Enterprise Plan': 'Kurumsal Plan',
+  'Club Plan': 'Kulüp Planı',
+  'Gym Plan': 'Salon Planı',
+  'Multi-Branch & Anti-Poaching': 'Çoklu Şube ve Sporcu Koruma',
+  'Centralized governance, multi-branch athlete roster, and personal trainer management': 'Merkezi yönetişim, çok şubeli sporcu kadrosu ve antrenör yönetimi',
+  'Add Branch': 'Şube Ekle',
+  'Add Staff': 'Personel Ekle',
+  'Reassign Athletes': 'Sporcuları Yeniden Ata',
+  'Staff & Trainers': 'Personel ve Antrenörler',
+  'Trainers': 'Antrenörler',
+  'Club Athletes': 'Kulüp Sporcuları',
+  'Your Role': 'Rolünüz',
+  'Staff': 'Personel',
+  'Branches': 'Şubeler',
+  'Branch Telemetry & Occupancy': 'Şube Kapasite & Yoğunluk Takibi',
+  'Live capacity and staff distribution across all facilities': 'Tüm tesislerde anlık kapasite ve personel dağılımı',
+  'New Branch': 'Yeni Şube',
+  'No address registered': 'Kayıtlı adres yok',
+  'Athletes': 'Sporcular',
+  'Filter Roster to this Branch': 'Listeyi Bu Şubeye Göre Filtrele',
+  'Staff Roster & Load': 'Personel Kadrosu ve Sporcu Yükü',
+  'Assigned athlete rosters per personal trainer': 'Antrenör başına atanan sporcu listesi',
+  'View Roster': 'Kadroyu Gör',
+  'staff members': 'personel',
+  'Anti-Poaching Athlete Transfer': 'Sporcu Koruma & Kadro Transferi',
+  'Departing trainer? Transfer their full athlete roster in 1 click.': 'Ayrılan antrenör mü var? Tüm sporcu kadrosunu 1 tıkla yeni antrenöre aktarın.',
+  'Transfer': 'Transfer Et',
+  'Smart Equipment & QR Stickers': 'Akıllı Ekipmanlar ve QR Etiketler',
+  'machines registered · NFC deep links ready': 'kayıtlı makine · NFC derin bağlantıları hazır',
+  'Search staff by name or email…': 'Personeli isim veya e-posta ile ara…',
+  'Staff Role': 'Personel Rolü',
+  'Assigned Branches': 'Atanan Şubeler',
+  'Assigned Athletes': 'Atanan Sporcular',
+  'Copy Invite': 'Daveti Kopyala',
+  'Filter Clients': 'Danışanları Filtrele',
+  'Offboard & Transfer': 'İlişik Kes & Transfer Et',
+  'Remove Staff': 'Personeli Çıkar',
+  'No staff members found matching filter': 'Filtreye uygun personel bulunamadı',
+  'Headquarters': 'Genel Merkez',
+  'Branch': 'Şube',
+  'Staff on Site': 'Tesis Personeli',
+  'Anti-Poaching Protection & Client Transfer Engine': 'Sporcu Koruma ve Kadro Aktarım Motoru',
+  'All trainee workout logs, measurements, and history remain the exclusive property of the gym. If a coach resigns or changes branches, reassign their athletes in one click.': 'Tüm sporcu antrenman kayıtları, ölçümleri ve geçmişi kulübün mülkiyetindedir. Bir antrenör ayrıldığında veya şube değiştirdiğinde sporcularını tek tıkla yeni antrenöre aktarın.',
+  'Departing / Source Coach': 'Ayrılan / Kaynak Antrenör',
+  'All Coaches': 'Tüm Antrenörler',
+  'Target Coach': 'Hedef Antrenör',
+  'Target Branch': 'Hedef Şube',
+  'Athletes Selected for Transfer': 'Aktarılacak Seçili Sporcular',
+  'Select All': 'Tümünü Seç',
+  'No active athletes under selected coach': 'Seçili antrenör altında aktif sporcu bulunmuyor',
+  'Transfer Selected Athletes': 'Seçili Sporcuları Aktar',
+  'Branch Name': 'Şube Adı',
+  'e.g. West Branch (Shahrak Gharb)': 'Örn. Batı Şubesi',
+  'Address': 'Adres',
+  'e.g. Dadman Blvd, Building 42': 'Örn. Atatürk Cad. No: 42',
+  'e.g. 021-88334455': 'Örn. 0212 555 44 55',
+  'Designate as Headquarters (HQ)': 'Genel Merkez (HQ) Olarak Belirle',
+  'Full Name': 'Ad Soyad',
+  'e.g. Sara Mohammadi': 'Örn. Sara Mohammadi',
+  'Assigned Branch': 'Atanan Şube',
+  'Reassign Coach': 'Antrenörü Değiştir',
+  'Select Athlete': 'Sporcu Seç',
+  'Keep current branch': 'Mevcut şubeyi koru',
+  'Gym Name': 'Spor Salonu / Kulüp Adı',
+  'e.g. Olympia Fitness Clubs': 'Örn. Olympia Fitness Kulüpleri',
+  'Primary Branch Name': 'Ana Şube Adı',
+  'e.g. Central HQ': 'Örn. Merkez Şube',
+  'Are you sure you want to remove this staff member? Any assigned clients should be reassigned.': 'Bu personeli çıkarmak istediğinizden emin misiniz? Atanmış sporcular yeni antrenöre aktarılmalıdır.',
+  'Staff member removed ✓': 'Personel çıkarıldı ✓',
+  'Failed to remove staff': 'Personel çıkarma başarısız',
+  'Please enter a branch name': 'Lütfen bir şube adı girin',
+  'Branch added successfully ✓': 'Şube başarıyla eklendi ✓',
+  'Failed to add branch': 'Şube ekleme başarısız',
+  'Please enter name and email': 'Lütfen isim ve e-posta girin',
+  'Staff member added ✓': 'Personel başarıyla eklendi ✓',
+  'Failed to add staff': 'Personel ekleme başarısız',
+  'Please select coach and client': 'Lütfen antrenör ve sporcu seçin',
+  'Athletes reassigned successfully ✓': 'Sporcular başarıyla yeni antrenöre aktarıldı ✓',
+  'Please select at least one athlete to transfer': 'Lütfen aktarmak için en az bir sporcu seçin',
+  'Please select a target coach': 'Lütfen hedef antrenörü seçin',
+  'Please enter a gym name': 'Lütfen bir salon adı girin',
+  'Gym Organization created ✓': 'Kulüp organizasyonu oluşturuldu ✓',
+  'Failed to create gym organization': 'Kulüp organizasyonu oluşturulamadı',
+  'Smart Equipment Tags': 'Akıllı Ekipman Etiketleri',
+  'Machine Code': 'Makine Kodu',
+  'Machine Name': 'Makine Adı',
+  'Branch': 'Şube',
+  'Linked Exercise': 'Bağlı Egzersiz',
+  'Brand / Manufacturer': 'Marka / Üretici',
+  'Print / Save as PDF': 'Yazdır / PDF Olarak Kaydet',
+  'Seat & Pin Adjustments': 'Koltuk ve Pim Ayarları',
+  'Save Machine': 'Makineyi Kaydet',
+  'Sign in': 'Giriş yap',
+  'EXECUTIVE CONSOLE': 'YÖNETİCİ KONSOLU',
+  'gym_owner': 'Kulüp Sahibi',
+  'head_coach': 'Baş Antrenör',
+  'manager': 'Müdür',
+  'trainer': 'Antrenör',
+  'reception': 'Resepsiyon'
 });
 
 
@@ -1009,7 +1223,9 @@ Object.assign(TR, {
   'Left Arm': 'Sol Kol',
   'Trunk': 'Gövde',
   'Right Leg': 'Sağ Bacak',
-  'Left Leg': 'Sol Bacak'
+  'Left Leg': 'Sol Bacak',
+  'Balanced': 'Dengeli',
+  'Limb Symmetry': 'Uzuv Simetrisi'
 });
 
 function applyLang(){
@@ -2530,8 +2746,8 @@ const authSet=t=>{AUTH.token=t||'';try{t?localStorage.setItem('co-auth',t):local
    and profile, so the name chosen at signup never appeared anywhere (it WAS
    saved server-side — only the display was wrong). Falls back to the persona
    in demo mode. */
-const coachName=()=>(AUTH.coach&&AUTH.coach.name)||'Coach Soroush';
-const coachFirst=()=>coachName().trim().split(/\s+/)[0]||'Coach';
+const coachName=()=>(AUTH.coach&&AUTH.coach.name)||t('Coach Soroush');
+const coachFirst=()=>coachName().trim().split(/\s+/)[0]||t('Coach');
 const coachEmail=()=>(AUTH.coach&&AUTH.coach.email)||'soroush@coachos.app';
 let WS_OWNER=''; // coach display name carried inside the workspace payload
 /* v18.57 — WHO is the source of truth for the coach name?
@@ -2597,14 +2813,26 @@ async function authApi(path,opts){
   return {status:r.status,ok:r.ok,d};
 }
 async function authSignup(){
+  const isOrg = S.loginPortal === 'org';
   const name=($('su-name')?.value||'').trim();
+  const gymName=($('su-gym-name')?.value||'').trim();
   const email=($('su-email')?.value||'').trim();
   const pw=$('su-pass')?.value||'';
   const coupon=($('su-coupon')?.value||'').trim();
   if(!name||!email||pw.length<8){toast(t('Enter name, valid email, password 8+ chars'));return}
+  if(isOrg && !gymName){toast(t('Please enter gym name'));return}
   toast(t('Creating your account…'));
   try{
-    const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify({name,email,password:pw,coupon:coupon||undefined})});
+    const bodyPayload = {
+      name,
+      email,
+      password:pw,
+      coupon:coupon||undefined,
+      accountType: isOrg ? 'org' : 'coach',
+      portal: isOrg ? 'org' : 'coach',
+      orgName: isOrg ? gymName : undefined
+    };
+    const {status,ok,d}=await authApi('/api/auth/signup',{method:'POST',body:JSON.stringify(bodyPayload)});
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
     // The optional activation code (prefilled from the shop) is redeemed
@@ -2618,12 +2846,15 @@ async function authSignup(){
     cloudReset();adoptAccount(d.coach);
     await loadOrgMe();
     S.role='coach';
-    const isExecStaff = S.isGymOwner || (S.org && (S.org.ownerCoachId === d.coach.id || ['gym_owner', 'manager', 'head_coach'].includes(S.orgRole))) || isGymWorkspace();
-    if(isExecStaff || S.workspaceMode==='executive'){
+    if(isOrg){
       S.workspaceMode='executive';S.view='org';S.orgTab='overview';
       try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
       ONBOARD.done=true;
-    }else{S.view=ONBOARD.done?landingView():'dash';}
+    }else{
+      S.workspaceMode='coach';
+      try{localStorage.setItem('co-ws-mode','coach')}catch(e){}
+      S.view=ONBOARD.done?landingView():'dash';
+    }
     render();
     toast(d.redeemed?t('Plan activated ✓ — welcome to ')+planLbl(d.billing.plan)
       :d.redeemError?t(billErr({error:d.redeemError}))
@@ -2632,14 +2863,17 @@ async function authSignup(){
   }catch(e){toast(t('Could not reach server'))}
 }
 async function authLogin(){
+  const isOrg = S.loginPortal === 'org';
   const email=($('li-email')?.value||'').trim();
   const pw=$('li-pass')?.value||'';
   if(!email||!pw){toast(t('Enter email and password'));return}
   toast(t('Signing in…'));
   try{
-    // Login is email + password ONLY — activation codes are redeemed at
-    // signup (post-purchase) or manually in Settings → Account, never here.
-    const {status,ok,d}=await authApi('/api/auth/login',{method:'POST',body:JSON.stringify({email,password:pw})});
+    // Login with portal distinction: solo coach vs gym & organization
+    const {status,ok,d}=await authApi('/api/auth/login',{
+      method:'POST',
+      body:JSON.stringify({email,password:pw,portal:isOrg?'org':'coach'})
+    });
     if(!ok){toast(t(authErrMsg(d,status)));return}
     authSet(d.token);AUTH.coach=d.coach;AUTH.ws=d.workspace;
     AUTH.access=d.access;
@@ -2665,14 +2899,34 @@ async function authLogin(){
     }
     await loadOrgMe();
     S.role='coach';
-    const isExecStaff = S.isGymOwner || (S.org && (S.org.ownerCoachId === d.coach.id || ['gym_owner', 'manager', 'head_coach'].includes(S.orgRole))) || isGymWorkspace();
-    if(isExecStaff || S.workspaceMode==='executive'){
-      S.workspaceMode='executive';S.view='org';S.orgTab='overview';
+    if(isOrg){
+      S.workspaceMode='executive';
       try{localStorage.setItem('co-ws-mode','executive')}catch(e){}
+      if(!S.org && !isGymWorkspace()){
+        try{
+          const createRes = await authApi('/api/org/create', {
+            method:'POST',
+            body:JSON.stringify({name:(d.coach.name?`${d.coach.name} Gym`:'باشگاه ورزشی')})
+          });
+          if(createRes.ok && createRes.d && createRes.d.org){
+            S.org = createRes.d.org;
+            S.isGymOwner = true;
+            S.orgRole = 'gym_owner';
+          }
+        }catch(e){}
+      }
+      S.view='org';
+      S.orgTab='overview';
       ONBOARD.done=true;
-    }else{S.view=ONBOARD.done?landingView():'dash';}
-    render();
-    toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
+      render();
+      toast(t('Welcome to Organization Portal')+' ✓');
+    }else{
+      S.workspaceMode='coach';
+      try{localStorage.setItem('co-ws-mode','coach')}catch(e){}
+      S.view=ONBOARD.done?landingView():'dash';
+      render();
+      toast(t('Welcome back')+', '+d.coach.name.split(' ')[0]+' ✓');
+    }
     cloudEnsure();maybeOnboard();
   }catch(e){toast(t('Could not reach server'))}
 }
@@ -2737,14 +2991,32 @@ async function authMe(){
 }
 
 /* ================= GYM & MULTI-BRANCH ORGANIZATION ================= */
-const DEMO_ORG = {
+const DEMO_ORG_EN = {
   id: 'org_demo',
-  name: 'Olympia Fitness Clubs (زعفرانیه و شهرک غرب)',
+  name: 'Olympia Performance Clubs (Central & Westside)',
   plan: 'gym_chain',
   branches: [
-    { id: 'br_hq', name: 'شعبه مرکزی (زعفرانیه)', isHQ: true, address: 'زعفرانیه، خیابان آصف', phone: '021-22001122' },
-    { id: 'br_west', name: 'شعبه ۲ (شهرک غرب)', isHQ: false, address: 'شهرک غرب، بلوار دادمان', phone: '021-88334455' },
-    { id: 'br_vip', name: 'شعبه ۳ (VIP بانوان)', isHQ: false, address: 'فرمانیه، تقاطع کامرانیه', phone: '021-26112233' }
+    { id: 'br_hq', name: 'Central Branch (HQ)', isHQ: true, address: '104 Central Blvd, Downtown', phone: '+1 (555) 012-3456' },
+    { id: 'br_west', name: 'Branch 2 (Westside)', isHQ: false, address: '420 Westside Ave, Suite B', phone: '+1 (555) 012-7890' },
+    { id: 'br_vip', name: 'Branch 3 (VIP Studio)', isHQ: false, address: '88 Park Plaza, VIP Wing', phone: '+1 (555) 012-4411' }
+  ],
+  staff: [
+    { coachId: 'c_owner', name: 'Soroush Karimi', email: 'soroush@coachos.app', role: 'gym_owner', branches: ['*'] },
+    { coachId: 'c_head', name: 'Kaveh Khosravi', email: 'kaveh@coachos.app', role: 'head_coach', branches: ['*'] },
+    { coachId: 'c_trainer1', name: 'Sara Mohammadi', email: 'sara@coachos.app', role: 'trainer', branches: ['br_hq'] },
+    { coachId: 'c_trainer2', name: 'Reza Afshar', email: 'reza@coachos.app', role: 'trainer', branches: ['br_west'] },
+    { coachId: 'c_rec', name: 'Maryam Akbari', email: 'maryam@coachos.app', role: 'reception', branches: ['br_hq'] }
+  ]
+};
+
+const DEMO_ORG_FA = {
+  id: 'org_demo',
+  name: 'مجموعه ورزشی المپیا (زعفرانیه و شهرک غرب)',
+  plan: 'gym_chain',
+  branches: [
+    { id: 'br_hq', name: 'شعبه مرکزی (زعفرانیه)', isHQ: true, address: 'زعفرانیه، خیابان آصف', phone: '۰۲۱-۲۲۰۰۱۱۲۲' },
+    { id: 'br_west', name: 'شعبه ۲ (شهرک غرب)', isHQ: false, address: 'شهرک غرب، بلوار دادمان', phone: '۰۲۱-۸۸۳۳۴۴۵۵' },
+    { id: 'br_vip', name: 'شعبه ۳ (VIP بانوان)', isHQ: false, address: 'فرمانیه، تقاطع کامرانیه', phone: '۰۲۱-۲۶۱۱۲۲۳۳' }
   ],
   staff: [
     { coachId: 'c_owner', name: 'سروش کریمی', email: 'soroush@coachos.app', role: 'gym_owner', branches: ['*'] },
@@ -2755,13 +3027,37 @@ const DEMO_ORG = {
   ]
 };
 
+const DEMO_ORG_TR = {
+  id: 'org_demo',
+  name: 'Olympia Fitness Kulüpleri (Merkez ve Batı)',
+  plan: 'gym_chain',
+  branches: [
+    { id: 'br_hq', name: 'Merkez Şube (HQ)', isHQ: true, address: 'Merkez Cad. No: 104', phone: '0212 555 01 23' },
+    { id: 'br_west', name: '2. Şube (Batı)', isHQ: false, address: 'Batı Bulvarı No: 42', phone: '0212 555 01 78' },
+    { id: 'br_vip', name: '3. Şube (VIP Stüdyo)', isHQ: false, address: 'Park Plaza VIP Katı', phone: '0212 555 01 44' }
+  ],
+  staff: [
+    { coachId: 'c_owner', name: 'Soroush Karimi', email: 'soroush@coachos.app', role: 'gym_owner', branches: ['*'] },
+    { coachId: 'c_head', name: 'Kaveh Khosravi', email: 'kaveh@coachos.app', role: 'head_coach', branches: ['*'] },
+    { coachId: 'c_trainer1', name: 'Sara Mohammadi', email: 'sara@coachos.app', role: 'trainer', branches: ['br_hq'] },
+    { coachId: 'c_trainer2', name: 'Reza Afshar', email: 'reza@coachos.app', role: 'trainer', branches: ['br_west'] },
+    { coachId: 'c_rec', name: 'Maryam Akbari', email: 'maryam@coachos.app', role: 'reception', branches: ['br_hq'] }
+  ]
+};
+
+const getDemoOrg = (l = lang) => (l === 'fa' ? DEMO_ORG_FA : (l === 'tr' ? DEMO_ORG_TR : DEMO_ORG_EN));
+const DEMO_ORG = DEMO_ORG_EN;
+
 const isGymWorkspace = () => {
   if (S.org) return true;
   const p = AUTH.access?.plan || (AUTH.coach && AUTH.coach.plan);
   return ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(p) || !AUTH.token;
 };
 
-const currentOrg = () => S.org || (!AUTH.token ? DEMO_ORG : null);
+const currentOrg = () => {
+  if (S.org && S.org.id !== 'org_demo') return S.org;
+  return getDemoOrg(lang);
+};
 
 const branchNameOf = (brid) => {
   if (!brid || brid === 'all') return t('All Branches');
@@ -2779,7 +3075,7 @@ const coachNameOf = (cid) => {
 
 async function loadOrgMe() {
   if (!AUTH.token) {
-    S.org = DEMO_ORG;
+    S.org = getDemoOrg(lang);
     S.orgRole = 'gym_owner';
     S.isGymOwner = true;
     let savedMode = null;
@@ -2893,22 +3189,22 @@ function vOrg(){
     <div class="card stat-card" style="padding:16px">
       <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Active Branches')}</div>
       <div class="row" style="justify-content:space-between;align-items:baseline">
-        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${branches.length}</span>
-        <span class="bdg bdg-gray">${branches.filter(b=>b.isHQ).length} ${t('HQ')}</span>
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${nf(branches.length)}</span>
+        <span class="bdg bdg-gray">${nf(branches.filter(b=>b.isHQ).length)} ${t('HQ')}</span>
       </div>
     </div>
     <div class="card stat-card" style="padding:16px">
       <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Staff & Trainers')}</div>
       <div class="row" style="justify-content:space-between;align-items:baseline">
-        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${staff.length}</span>
-        <span class="bdg bdg-gray">${staff.filter(s=>s.role==='trainer').length} ${t('Trainers')}</span>
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${nf(staff.length)}</span>
+        <span class="bdg bdg-gray">${nf(staff.filter(s=>s.role==='trainer').length)} ${t('Trainers')}</span>
       </div>
     </div>
     <div class="card stat-card" style="padding:16px">
       <div class="muted" style="font-size:12px;margin-bottom:6px">${t('Club Athletes')}</div>
       <div class="row" style="justify-content:space-between;align-items:baseline">
-        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${totalAthletes}</span>
-        <span class="bdg bdg-lime">${CLIENTS.filter(c=>c.status==='Active').length} ${t('Active')}</span>
+        <span style="font-size:26px;font-weight:700;font-family:var(--font-mono)">${nf(totalAthletes)}</span>
+        <span class="bdg bdg-lime">${nf(CLIENTS.filter(c=>c.status==='Active').length)} ${t('Active')}</span>
       </div>
     </div>
     <div class="card stat-card" style="padding:16px">
@@ -2940,6 +3236,13 @@ function renderOrgOverviewTab(org){
   const branches = org.branches || [];
   const staff = org.staff || [];
   const machines = [...MACHINES, ...(org.machines || [])];
+  const roleLabels = {
+    gym_owner: t('Gym Owner'),
+    head_coach: t('Head Coach'),
+    manager: t('Manager'),
+    trainer: t('Trainer'),
+    reception: t('Reception')
+  };
 
   return `
   <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-bottom:20px" class="grid2">
@@ -2973,11 +3276,11 @@ function renderOrgOverviewTab(org){
             <div class="row" style="gap:12px;margin-inline-start:auto">
               <div style="text-align:center">
                 <div class="muted" style="font-size:10px">${t('Athletes')}</div>
-                <b style="font-size:13px">${bAthletes}</b>
+                <b style="font-size:13px">${nf(bAthletes)}</b>
               </div>
               <div style="text-align:center">
                 <div class="muted" style="font-size:10px">${t('Staff')}</div>
-                <b style="font-size:13px">${bCoaches}</b>
+                <b style="font-size:13px">${nf(bCoaches)}</b>
               </div>
               <button class="btn btn-outline btn-xs" data-act="set-branch-filter" data-brid="${esc(b.id)}" title="${t('Filter Roster to this Branch')}">
                 ${ic('users',11)} ${t('Roster')}
@@ -3006,12 +3309,12 @@ function renderOrgOverviewTab(org){
               ${av(s.name, 30, 2)}
               <div>
                 <div style="font-weight:600;font-size:12.5px">${esc(s.name)}</div>
-                <div class="muted" style="font-size:10.5px">${t(s.role)}</div>
+                <div class="muted" style="font-size:10.5px">${roleLabels[s.role] || t(s.role)}</div>
               </div>
             </div>
             <div class="row" style="gap:6px">
               <span class="bdg ${sAthletes > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:10.5px">
-                ${sAthletes} ${t('Athletes')}
+                ${nf(sAthletes)} ${t('Athletes')}
               </span>
               <button class="btn btn-ghost btn-xs" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('View Roster')}">
                 ${ic('users',11)}
@@ -3021,7 +3324,7 @@ function renderOrgOverviewTab(org){
         }).join('')}
         ${staff.length > 5 ? `
           <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:4px" data-act="org-tab" data-tab="staff">
-            ${t('View all')} ${staff.length} ${t('staff members')} →
+            ${t('View all')} ${nf(staff.length)} ${t('staff members')} ${lang==='fa'?'←':'→'}
           </button>` : ''}
       </div>
     </div>
@@ -3037,7 +3340,7 @@ function renderOrgOverviewTab(org){
         <b style="font-size:13px">${t('Anti-Poaching Athlete Transfer')}</b>
         <div class="muted" style="font-size:11.5px;margin-top:2px">${t('Departing trainer? Transfer their full athlete roster in 1 click.')}</div>
       </div>
-      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="reassign">${t('Transfer')} →</button>
+      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="reassign">${t('Transfer')} ${lang==='fa'?'←':'→'}</button>
     </div>
 
     <div class="card" style="padding:14px;display:flex;gap:12px;align-items:center">
@@ -3046,9 +3349,9 @@ function renderOrgOverviewTab(org){
       </div>
       <div style="flex:1">
         <b style="font-size:13px">${t('Smart Equipment & QR Stickers')}</b>
-        <div class="muted" style="font-size:11.5px;margin-top:2px">${machines.length} ${t('machines registered · NFC deep links ready')}</div>
+        <div class="muted" style="font-size:11.5px;margin-top:2px">${nf(machines.length)} ${t('machines registered · NFC deep links ready')}</div>
       </div>
-      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="machines">${t('Manage')} →</button>
+      <button class="btn btn-outline btn-sm" data-act="org-tab" data-tab="machines">${t('Manage')} ${lang==='fa'?'←':'→'}</button>
     </div>
   </div>`;
 }
@@ -3116,11 +3419,11 @@ function renderOrgStaffTab(org){
                   </div>
                 </div>
               </td>
-              <td>${roleBadges[s.role] || `<span class="bdg bdg-gray">${esc(s.role)}</span>`}</td>
+              <td>${roleBadges[s.role] || `<span class="bdg bdg-gray">${esc(t(s.role))}</span>`}</td>
               <td><div class="row" style="gap:4px;flex-wrap:wrap">${brNames}</div></td>
               <td>
                 <span class="bdg ${clientCount > 0 ? 'bdg-lime' : 'bdg-gray'}" style="font-size:11px">
-                  ${clientCount} ${t('Athletes')}
+                  ${nf(clientCount)} ${t('Athletes')}
                 </span>
               </td>
               <td style="text-align:end;white-space:nowrap">
@@ -3177,11 +3480,11 @@ function renderOrgBranchesTab(org){
         <div class="row" style="gap:14px;border-top:1px solid var(--line2);padding-top:10px;margin-top:auto">
           <div>
             <div class="muted" style="font-size:11px">${t('Active Athletes')}</div>
-            <div style="font-weight:700;font-size:14px">${branchAthletes}</div>
+            <div style="font-weight:700;font-size:14px">${nf(branchAthletes)}</div>
           </div>
           <div>
             <div class="muted" style="font-size:11px">${t('Staff on Site')}</div>
-            <div style="font-weight:700;font-size:14px">${branchCoaches}</div>
+            <div style="font-weight:700;font-size:14px">${nf(branchCoaches)}</div>
           </div>
           <button class="btn btn-outline btn-sm" style="margin-inline-start:auto" data-act="set-branch-filter" data-brid="${esc(b.id)}">
             ${ic('filter', 12)} ${t('View Roster')}
@@ -3222,10 +3525,10 @@ function renderOrgReassignTab(org){
       <div class="field" style="background:var(--card-sub);padding:12px;border-radius:10px;border:1px solid var(--line2)">
         <label class="lbl" style="color:var(--amber)">① ${t('Departing / Source Coach')}</label>
         <select class="inp" id="org-reassign-source-coach" onchange="S.reassignSourceCoach=this.value;render()">
-          <option value="all" ${srcCoach==='all'?'selected':''}>${t('All Coaches')} (${CLIENTS.length} ${t('Athletes')})</option>
+          <option value="all" ${srcCoach==='all'?'selected':''}>${t('All Coaches')} (${nf(CLIENTS.length)} ${t('Athletes')})</option>
           ${staff.map(s => {
             const count = CLIENTS.filter(c => c.assignedCoachId === s.coachId && c.status !== 'Archived').length;
-            return `<option value="${esc(s.coachId)}" ${srcCoach===s.coachId?'selected':''}>${esc(s.name)} (${count} ${t('Athletes')})</option>`;
+            return `<option value="${esc(s.coachId)}" ${srcCoach===s.coachId?'selected':''}>${esc(s.name)} (${nf(count)} ${t('Athletes')})</option>`;
           }).join('')}
         </select>
       </div>
@@ -3248,7 +3551,7 @@ function renderOrgReassignTab(org){
     </div>
 
     <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
-      <span class="lbl" style="margin:0;font-size:13px">${t('Athletes Selected for Transfer')} (${targetClients.length}):</span>
+      <span class="lbl" style="margin:0;font-size:13px">${t('Athletes Selected for Transfer')} (${nf(targetClients.length)}):</span>
       <button class="btn btn-ghost btn-sm" data-act="org-reassign-select-all">${ic('check',12)} ${t('Select All')}</button>
     </div>
 
@@ -3258,7 +3561,7 @@ function renderOrgReassignTab(org){
           <input type="checkbox" class="org-reassign-chk" value="${c.id}" checked>
           ${avC(c.name, 30)}
           <div style="flex:1">
-            <span style="font-weight:600;font-size:13px">${esc(c.name)}</span>
+            <span style="font-weight:600;font-size:13px">${esc(t(c.name))}</span>
             <span class="muted" style="font-size:11.5px;margin-inline-start:6px">(${esc(coachNameOf(c.assignedCoachId))} · ${esc(branchNameOf(c.branchId))})</span>
           </div>
           ${stBdg(c.status)}
@@ -4431,7 +4734,7 @@ async function cloudJoinCode(forced){ // client: connect with a connection code
 }
 
 /* ================= STATE & HELPERS ================= */
-const S={role:null,view:'login',loginRole:null,pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,calOff:0,
+const S={role:null,view:'login',loginRole:null,loginPortal:'coach',pickCid:1,cid:1,tab:'overview',ptab:'today',ctoday:'all',player:null,msgThread:null,joinCode:null,tplEdit:null,calReturn:false,wEdit:null,calOff:0,
 unInvalid:false,unT0:0,unOffline:false,unFetching:false,joinCid:null,
 mtab:'today',mview:'tabs',mClient:1,mcf:'All',mlogCid:null,msheet:false,mjump:false,macc:{},cEnergy:null,cSore:null,cSleep:null,
 cv:'list',calV:'Week',weekOff:0,selDay:2,calfType:'All',calfClient:'All',range:'3M',stab:'profile',nfilter:'All',pose:'Front',wname:'Push A — Ali Rezaei',wday:'Monday',wdur:'60 min',
@@ -5318,10 +5621,23 @@ function vLogin(){
   return coachLogin();
 }
 /* v18.43 — roleSelect() removed: the coach login IS the landing page now. */
-function coachLogin(){return `
+function coachLogin(){
+  const isOrg = S.loginPortal === 'org';
+  return `
 <div class="login">
+  ${isOrg ? `
+  <div class="login-left" style="background:linear-gradient(165deg,#0a1120 0%,#0f172a 50%,#090d16 100%);color:#fff;padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
+    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag" style="color:var(--accent);letter-spacing:.08em">${t('MULTI-COACH & MULTI-BRANCH ENTERPRISE')}</div></div></div></div>
+    <div style="position:relative;max-width:440px">
+      <div class="eyebrow" style="color:var(--accent)">${t('ENTERPRISE & GYM COMMAND CENTER')}</div>
+      <h2 style="font-size:32px;line-height:1.2;margin:14px 0 24px">${t('Run your fitness clubs & training staff with enterprise control.')}</h2>
+      <div class="lfeat">${['Multi-branch & Staff management','Gym ownership of all client rosters & logs','Gym equipment QR tracking & maintenance','Executive analytics, revenue & oversight'].map(f=>`<div>${ic('check',15)}<span>${t(f)}</span></div>`).join('')}</div>
+    </div>
+    <div class="lquote"><div>${t('"CoachMint transformed how we manage our 3 branches and 12 coaches. Total clarity and enterprise control."')}</div><div class="lq-a">${t('— Kaveh M. · General Manager, Oxygen Fitness Clubs')}</div></div>
+  </div>
+  ` : `
   <div class="login-left">
-    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div></div>
+    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">${t('ONE COACH. ONE WORKSPACE.')}</div></div></div></div>
     <div style="position:relative;max-width:430px">
       <div class="eyebrow">${t('PROFESSIONAL COACH WORKSPACE')}</div>
       <h2 style="font-size:34px;line-height:1.16;margin:14px 0 24px">${t('Run your coaching business like a pro.')}</h2>
@@ -5329,33 +5645,73 @@ function coachLogin(){return `
     </div>
     <div class="lquote"><div>${t('"CoachMint replaced four different tools for me. Everything about my clients finally lives in one place."')}</div><div class="lq-a">${t('— Arman T. · Online Coach, 63 clients')}</div></div>
   </div>
+  `}
   <div class="login-right"><form class="login-card" onsubmit="return false">
-    <a class="lnk" style="font-size:12.5px" data-act="client-entry">${ic('qr',13)} ${t('I have a connection code')}</a>
-    <h1 style="font-size:24px;margin-top:10px">${S.authMode==='signup'?t('Create coach account'):t('Coach sign in')}</h1>
-    <p class="muted" style="font-size:12px;margin:4px 0 20px">${S.authMode==='signup'?t('14-day free trial · no card required'):t('Welcome back to your workspace')}</p>
-    ${S.authMode==='signup'?`<label class="lbl">${t('Full name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:14px">`:''}
+    <!-- Portal Navigation Switcher -->
+    <div class="portal-nav" style="display:flex;background:var(--bg2);padding:4px;border-radius:12px;margin-bottom:14px;border:1px solid var(--line2);gap:4px">
+      <button type="button" class="btn btn-sm ${!isOrg?'btn-primary':'btn-ghost'}" style="flex:1;justify-content:center;font-size:12px;padding:8px 6px;border-radius:8px;font-weight:${!isOrg?'700':'500'};${!isOrg?'box-shadow:0 1px 3px rgba(0,0,0,0.12)':''}" data-act="set-portal" data-p="coach">
+        ${ic('user',14)} <span>${t('Solo Coach')}</span>
+      </button>
+      <button type="button" class="btn btn-sm ${isOrg?'btn-primary':'btn-ghost'}" style="flex:1;justify-content:center;font-size:12px;padding:8px 6px;border-radius:8px;font-weight:${isOrg?'700':'500'};${isOrg?'box-shadow:0 1px 3px rgba(0,0,0,0.12)':''}" data-act="set-portal" data-p="org">
+        ${ic('building',14)} <span>${t('Clubs & Organizations')}</span>
+      </button>
+    </div>
+
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span class="badge ${isOrg?'badge-accent':'badge-outline'}" style="font-size:11px;padding:3px 9px;border-radius:6px;font-weight:700">
+        ${isOrg ? (ic('building',12) + ' ' + t('Organization Portal')) : (ic('user',12) + ' ' + t('Solo Coach Portal'))}
+      </span>
+      <a class="lnk" style="font-size:12px" data-act="client-entry">${ic('qr',13)} ${t('I have a connection code')}</a>
+    </div>
+
+    <h1 style="font-size:23px;margin-top:4px">
+      ${isOrg
+        ? (S.authMode==='signup' ? t('Register Gym / Club') : t('Organization Sign In'))
+        : (S.authMode==='signup' ? t('Create coach account') : t('Coach sign in'))}
+    </h1>
+    <p class="muted" style="font-size:12px;margin:4px 0 18px">
+      ${isOrg
+        ? (S.authMode==='signup' ? t('14-day free trial · Multi-branch & multi-coach') : t('Executive & staff command center'))
+        : (S.authMode==='signup' ? t('14-day free trial · no card required') : t('Welcome back to your workspace'))}
+    </p>
+
     ${S.resetToken?`
     <div class="card" style="padding:12px 14px;margin-bottom:14px;border-color:var(--acc-line);background:var(--accent-soft)"><b style="font-size:13px">${t('Set a new password')}</b></div>
     <label class="lbl">${t('New Password')}</label><input class="inp" id="rs-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:14px">
     <label class="lbl">${t('Confirm')}</label><input class="inp" id="rs-pass2" type="password" autocomplete="new-password" style="margin-bottom:12px">
     <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="reset-do">${t('Update Password')} ${ic('arrowR',15)}</button>`
     :S.authMode==='signup'
-      ?`<label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
-    <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
-    <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — from your purchase')}</span></label><input class="inp" id="su-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
-    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
+      ?(isOrg
+        ?`<label class="lbl">${t('Manager / Owner Name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:12px">
+        <label class="lbl">${t('Gym / Club Name')}</label><input class="inp" id="su-gym-name" autocomplete="organization" placeholder="${t('e.g. Oxygen Fitness Club')}" style="margin-bottom:12px">
+        <label class="lbl">${t('Work Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="manager@gym.com" value="${esc(shopEmail())}" style="margin-bottom:12px">
+        <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
+        <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — from your purchase')}</span></label><input class="inp" id="su-coupon" value="${esc(shopCoupon())}" placeholder="CLUB-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px" data-act="signup">${t('Register Organization')} ${ic('arrowR',15)}</button>
         <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>
         <div class="row" style="justify-content:center;margin-top:10px"><span class="muted" style="font-size:12.5px">${t('Prefer to buy a plan first?')}</span>&nbsp;<a class="lnk" data-act="goto-shop">${t('See plans')}</a></div>`
-      :`<label class="lbl">${t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:14px">
-    <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
-    <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${t('Sign In')} ${ic('arrowR',15)}</button>
-        <div class="divider"><span>${t('or')}</span></div>
-        <button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>
-        <div class="row" style="justify-content:center;margin-top:20px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${t('Create account')}</a></div>`}
-    <div class="row" style="justify-content:center;margin-top:8px">${t('English')}</div>
+        :`<label class="lbl">${t('Full name')}</label><input class="inp" id="su-name" autocomplete="name" placeholder="${t('Your name')}" style="margin-bottom:12px">
+        <label class="lbl">${t('Email')}</label><input class="inp" id="su-email" type="email" autocomplete="email" placeholder="coach@studio.com" value="${esc(shopEmail())}" style="margin-bottom:12px">
+        <label class="lbl">${t('Password')}</label><input class="inp" id="su-pass" type="password" autocomplete="new-password" placeholder="${t('8+ characters')}" style="margin-bottom:12px">
+        <label class="lbl">${t('Activation code')} <span class="muted" style="font-weight:400;font-size:11px">· ${t('optional — from your purchase')}</span></label><input class="inp" id="su-coupon" value="${esc(shopCoupon())}" placeholder="PRO-XXXXXXXXXX" style="text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:16px" data-act="signup">${t('Create account')} ${ic('arrowR',15)}</button>
+        <div class="row" style="justify-content:center;margin-top:14px"><span class="muted" style="font-size:12.5px">${t('Have an account?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="login">${t('Sign in')}</a></div>
+        <div class="row" style="justify-content:center;margin-top:10px"><span class="muted" style="font-size:12.5px">${t('Prefer to buy a plan first?')}</span>&nbsp;<a class="lnk" data-act="goto-shop">${t('See plans')}</a></div>`
+      )
+      :`<label class="lbl">${isOrg ? t('Work Email') : t('Email')}</label><input class="inp" id="li-email" type="email" autocomplete="email" placeholder="${isOrg?'manager@gym.com':'coach@studio.com'}" value="${esc(shopEmail())}" style="margin-bottom:14px">
+      <label class="lbl">${t('Password')}</label><input class="inp" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" style="margin-bottom:12px">
+      <div class="lrow"><label class="chk"><input type="checkbox" checked>${t('Remember me')}</label><a class="lnk" data-act="forgot">${t('Forgot password?')}</a></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" data-act="login">${isOrg ? t('Sign In to Organization') : t('Sign In')} ${ic('arrowR',15)}</button>
+      <div class="divider"><span>${t('or')}</span></div>
+      ${isOrg
+        ?`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin-org">${ic('building',15)}&nbsp;${t('Explore Organization Demo')}</button>`
+        :`<button class="btn btn-outline" style="width:100%;justify-content:center" data-act="demo-signin">${ic('google',15)}&nbsp;${t('Explore the demo')}</button>`}
+      <div class="row" style="justify-content:center;margin-top:18px"><span class="muted" style="font-size:12.5px">${t('New to CoachMint?')}</span>&nbsp;<a class="lnk" data-act="auth-mode" data-m="signup">${isOrg ? t('Register Gym / Club') : t('Create account')}</a></div>
+      <div class="row" style="justify-content:center;margin-top:10px"><a class="lnk" style="font-size:12px" data-act="set-portal" data-p="${isOrg?'coach':'org'}">${isOrg ? t('Switch to Solo Coach Login') : t('Switch to Club / Gym Login')}</a></div>`}
+    <div class="row" style="justify-content:center;margin-top:14px">${langBtn('btn-ghost btn-sm')}</div>
   </form></div>
-</div>`}
+</div>`;
+}
 function clientPicker(){
   /* Personal-code device: only the bound profile is offered — the student can
      never land in another student's view. */
@@ -15461,7 +15817,7 @@ function shell(inner){
         <div class="brand-tag" style="color:var(--accent-text);font-weight:700;letter-spacing:.06em">${t('EXECUTIVE CONSOLE')}</div>
       </div>
     </div>` : `
-    <div class="brand" style="cursor:pointer" data-act="nav" data-view="dash"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">ONE COACH. ONE WORKSPACE.</div></div></div>`;
+    <div class="brand" style="cursor:pointer" data-act="nav" data-view="dash"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">${t('ONE COACH. ONE WORKSPACE.')}</div></div></div>`;
 
   const wsSwitcher = (hasOrg && isOwnerOrMgr) ? `
     <div style="margin:10px 14px 12px 14px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:3px;display:flex;gap:3px">
@@ -15488,11 +15844,11 @@ function shell(inner){
 
   const execQuotaBadge = isExec ? `
     <div class="hide-sm row" style="gap:8px;padding:4px 11px;background:var(--seg-bg);border:1px solid var(--line);border-radius:20px;font-size:11.5px;font-variant-numeric:tabular-nums" title="${t('Organization Resource Quotas')}">
-      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Branches')}">${ic('globe',12)} <b>${(org.branches||[]).length}</b>${org.quotas?.branches ? `/<span class="muted">${org.quotas.branches}</span>` : ''}</span>
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Branches')}">${ic('globe',12)} <b>${nf((org.branches||[]).length)}</b>${org.quotas?.branches ? `/<span class="muted">${nf(org.quotas.branches)}</span>` : ''}</span>
       <span style="color:var(--line)">|</span>
-      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Staff Members')}">${ic('users',12)} <b>${(org.staff||[]).length}</b>${org.quotas?.staff ? `/<span class="muted">${org.quotas.staff}</span>` : ''}</span>
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Staff Members')}">${ic('users',12)} <b>${nf((org.staff||[]).length)}</b>${org.quotas?.staff ? `/<span class="muted">${nf(org.quotas.staff)}</span>` : ''}</span>
       <span style="color:var(--line)">|</span>
-      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Athletes')}">${ic('user',12)} <b>${CLIENTS.filter(c=>c.status!=='Archived').length}</b>${org.quotas?.athletes ? `/<span class="muted">${org.quotas.athletes}</span>` : ''}</span>
+      <span style="display:inline-flex;align-items:center;gap:4px" title="${t('Active Athletes')}">${ic('user',12)} <b>${nf(CLIENTS.filter(c=>c.status!=='Archived').length)}</b>${org.quotas?.athletes ? `/<span class="muted">${nf(org.quotas.athletes)}</span>` : ''}</span>
     </div>` : '';
 
   const roleSubtitle = isExec
@@ -16382,7 +16738,7 @@ function renderOrgMachinesTab(org) {
     <div class="card" style="padding:18px;margin-bottom:16px">
       <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
         <div>
-          <b style="font-size:15px">${t('Smart Machines & QR Tags')} (${list.length})</b>
+          <b style="font-size:15px">${t('Smart Machines & QR Tags')} (${nf(list.length)})</b>
           <div class="muted" style="font-size:12px">${t('Smart Equipment Tags')} — NFC / QR automated athlete loading</div>
         </div>
         <div class="row" style="gap:8px">
@@ -16409,7 +16765,7 @@ function renderOrgMachinesTab(org) {
                 <td><span class="bdg bdg-lime" style="font-family:var(--font-mono)">${m.code}</span></td>
                 <td><b>${lang==='fa' ? (m.nameFa || m.name) : m.name}</b></td>
                 <td>${branchNameOf(m.branchId)}</td>
-                <td><span class="muted">${m.ex}</span></td>
+                <td><span class="muted">${t(m.ex)}</span></td>
                 <td>${m.brand}</td>
                 <td style="text-align:end">
                   <button class="btn btn-ghost btn-xs" data-act="preview-machine" data-id="${m.code}">${ic('scan',12)} ${t('Preview')}</button>
@@ -17748,6 +18104,7 @@ document.addEventListener('click',e=>{
          snap lang straight back to 'fa' the moment we set it to 'en' —
          which made the cycle button a one-way trip into Persian. */
       try{localStorage.setItem('co-lang',next);localStorage.setItem('coach-os-locale',next)}catch(e){}
+      if(S.org && S.org.id === 'org_demo') S.org = getDemoOrg(next);
       applyLang();render();
       toast(lang==='tr'?'Dil Türkçe olarak değiştirildi':(lang==='fa'?'زبان به فارسی تغییر کرد':'Language switched to English'));
       break;
@@ -17780,7 +18137,39 @@ document.addEventListener('click',e=>{
       try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}render();break}
     case 'join-code':cloudJoinCode();break;
     case 'exitdemo':case 'signout':case 'switch-role':clearInterval(restIv);S.player=null;S.msgThread=null;S.role=null;S.loginRole=null;S.view='login';S.authMode='login';S.joinCid=null;S.unInvalid=false;S.unT0=0;authLogout();try{localStorage.removeItem('co-join')}catch(e){}render();if(a!=='switch-role')toast(t('Signed out'));break;
-    case 'auth-mode':S.authMode=el.dataset.m==='signup'?'signup':'login';render();break;
+    case 'auth-mode':{
+      S.authMode=el.dataset.m==='signup'?'signup':'login';
+      try{
+        const h = (S.loginPortal==='org'?'#org-':'#coach-')+S.authMode;
+        history.replaceState(null,'',location.pathname+h);
+      }catch(e){}
+      render();
+      break;
+    }
+    case 'set-portal':{
+      const p = el.dataset.p==='org'?'org':'coach';
+      S.loginPortal = p;
+      try{localStorage.setItem('co-login-portal',p)}catch(e){}
+      try{
+        const h = (p==='org'?'#org-':'#coach-')+S.authMode;
+        history.replaceState(null,'',location.pathname+h);
+      }catch(e){}
+      render();
+      break;
+    }
+    case 'demo-signin-org':{
+      S.role='coach';
+      S.workspaceMode='executive';
+      S.view='org';
+      S.orgTab='overview';
+      S.org=DEMO_ORG;
+      S.isGymOwner=true;
+      S.orgRole='gym_owner';
+      render();
+      toast(t('Organization demo mode — explore multi-branch & multi-coach console'));
+      cloudEnsure();
+      break;
+    }
     case 'auth-goto-signup':S.role=null;S.loginRole='coach';S.authMode='signup';S.view='login';render();break;
     case 'goto-shop':try{window.open('/shop/index.html#pricing','_blank','noopener')}catch(e){location.href='/shop/index.html#pricing'}break;
     case 'signup':authSignup();break;
@@ -17903,7 +18292,7 @@ document.addEventListener('click',e=>{
       else render();break}
     case 'bill-redeem':billRedeem();break;
     case 'bill-request':billRequest(el.dataset.p);break;
-    case 'demo-signin':S.role='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
+    case 'demo-signin':S.role='coach';S.workspaceMode='coach';S.view='dash';render();toast(t('Demo mode — sign up to save online'));cloudEnsure();break;
     case 'signin':S.role='coach';S.view='dash';render();toast('Welcome back, Coach');cloudEnsure();break;
     /* v19.8 — ATHLETICS §11 dashboard filters */
     case 'ath-f':{const F=S.athF||(S.athF={ev:'all',ath:'all',ph:'all',dt:'week',st:'all'});
@@ -20015,8 +20404,25 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
       }catch(e){}
     }
   }
-  if(location.hash.includes('login')||location.hash.includes('signin')||sParams.get('auth')==='login'){
-    S.role=null;S.loginRole='coach';S.authMode='login';S.view='login';
+  // Portal separation: solo coach vs gym & organization
+  const pPath = location.pathname.toLowerCase();
+  const pHash = location.hash.toLowerCase();
+  const qPortal = (sParams.get('portal')||'').toLowerCase();
+  let detectedPortal = 'coach';
+  try{ detectedPortal = localStorage.getItem('co-login-portal') || 'coach'; }catch(e){}
+
+  if(pPath.includes('/org') || pPath.includes('/gym') || pPath.includes('/club') || pHash.includes('org') || pHash.includes('gym') || pHash.includes('club') || qPortal === 'org' || qPortal === 'gym'){
+    detectedPortal = 'org';
+  } else if(pPath.includes('/coach') || pHash.includes('coach') || qPortal === 'coach'){
+    detectedPortal = 'coach';
+  }
+  S.loginPortal = detectedPortal;
+  try{ localStorage.setItem('co-login-portal', detectedPortal); }catch(e){}
+
+  if(pHash.includes('login')||pHash.includes('signin')||sParams.get('auth')==='login'||pHash.includes('org')||pHash.includes('gym')||pHash.includes('coach')||pPath.includes('/login')||pPath.includes('/org')||pPath.includes('/gym')||pPath.includes('/coach')){
+    S.role=null;S.loginRole='coach';
+    S.authMode=(pHash.includes('signup')||sParams.get('auth')==='signup')?'signup':'login';
+    S.view='login';
     const emailMatch=location.hash.match(/email=([^&]+)/)||sParams.get('email');
     if(emailMatch){
       const em=typeof emailMatch==='string'?emailMatch:emailMatch[1];
@@ -20072,6 +20478,24 @@ window.addEventListener('resize',()=>{const n=isNarrow();if(n!==_narrow){_narrow
     }catch(e){}
   }
 })();
+window.addEventListener('hashchange',()=>{
+  const h=location.hash.toLowerCase();
+  if(S.view==='login'||!S.role){
+    if(h.includes('org')||h.includes('gym')||h.includes('club')){
+      S.loginPortal='org';
+      try{localStorage.setItem('co-login-portal','org')}catch(e){}
+      if(h.includes('signup'))S.authMode='signup';
+      else if(h.includes('login'))S.authMode='login';
+      render();
+    }else if(h.includes('coach')||h.includes('login')){
+      S.loginPortal='coach';
+      try{localStorage.setItem('co-login-portal','coach')}catch(e){}
+      if(h.includes('signup'))S.authMode='signup';
+      else if(h.includes('login'))S.authMode='login';
+      render();
+    }
+  }
+});
 loadPrefs();
 applyLang();
 applyAccent(PREFS.accent);

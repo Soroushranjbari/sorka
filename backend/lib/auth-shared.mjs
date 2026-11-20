@@ -4,7 +4,8 @@ import {
   store, j, normEmail, newId, newToken,
   hashPassword, verifyPassword,
   accessOf, ownerOf,
-  EMAIL_RE, TRIAL_DAYS, SESSION_TTL_MS
+  EMAIL_RE, TRIAL_DAYS, SESSION_TTL_MS,
+  createOrg
 } from './saas.mjs';
 import { randomBytes } from 'node:crypto';
 import { adminEmails, normCoupon, redeemForAccount } from './billing.mjs';
@@ -14,7 +15,7 @@ import { sendMail, welcomeMail } from './mail.mjs';
 export const RESET_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 export const publicCoach = (a) =>
-  a ? { id: a.id, email: a.email, name: a.name, plan: a.plan || 'trial', role: a.role || 'coach', phone: a.phone || '', bio: a.bio || '' } : null;
+  a ? { id: a.id, email: a.email, name: a.name, plan: a.plan || 'trial', role: a.role || 'coach', phone: a.phone || '', bio: a.bio || '', isOrg: !!a.isOrg } : null;
 
 export const publicWs = (w) =>
   w ? { id: w.id, code: w.code, plan: w.plan || 'trial', status: w.status || 'trial' } : null;
@@ -179,6 +180,8 @@ export async function signup(req, st) {
   // Optional activation code from the shop purchase (coach-os-coupon) — the
   // coach can land in the app with the plan ALREADY active, no Settings detour.
   const coupon = normCoupon(body?.coupon);
+  const orgName = String(body?.orgName || body?.gymName || '').trim().slice(0, 80);
+  const isOrg = body?.accountType === 'org' || body?.portal === 'org' || !!orgName;
   // The existence check + account/workspace creation must be atomic per
   // account: two concurrent signups with the same email could otherwise both
   // pass the check and create duplicate accounts (one acct-by-id orphaned).
@@ -190,14 +193,29 @@ export async function signup(req, st) {
     const acct = {
       id: newId('coach'), email, name,
       pass: hashPassword(password),
-      plan: 'trial', workspaceId: null,
+      plan: isOrg ? 'gym_studio' : 'trial', workspaceId: null,
       role: adminEmails().includes(email) ? 'admin' : 'coach',
       sub: null, trialEndsAt: now + TRIAL_DAYS * 86400000,
-      createdAt: now
+      createdAt: now,
+      isOrg: !!isOrg
     };
     await st.setJSON(`acct:${email}`, acct);
     await st.setJSON(`acct-by-id:${acct.id}`, { email });
     const ws = await ensureWorkspace(st, acct);
+    if (isOrg) {
+      try {
+        const gymTitle = orgName || (name ? `${name.trim()} (HQ)` : 'باشگاه ورزشی');
+        await createOrg(st, {
+          ownerCoachId: acct.id,
+          ownerEmail: acct.email,
+          name: gymTitle,
+          primaryBranchName: 'شعبه اصلی (مرکزی)',
+          planId: acct.plan
+        });
+      } catch (err) {
+        console.error('[auth] createOrg error on signup:', err);
+      }
+    }
     const token = await issueSession(st, acct);
     return { token, coach: publicCoach(acct), workspace: publicWs(ws), acct };
   });
@@ -257,7 +275,8 @@ export async function login(req, st) {
     ok: true, token: out.token,
     coach: out.coach,
     workspace: out.workspace,
-    access: accessOf(out.acct)
+    access: accessOf(out.acct),
+    portal: body?.portal || (out.acct?.isOrg ? 'org' : 'coach')
   });
 }
 
