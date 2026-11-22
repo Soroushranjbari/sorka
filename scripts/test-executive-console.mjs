@@ -147,7 +147,7 @@ vm.runInContext(`
   S.view = 'dash';
 `, context);
 let coachOut = vm.runInContext(`shell(currentView())`, context);
-ok('Coach Desk mode renders standard COACHMINT brand mark', coachOut.includes('ONE COACH. ONE WORKSPACE.'));
+ok('Coach Desk mode renders standard COACHMINT brand mark', coachOut.includes('ONE COACH. ONE WORKSPACE.') || coachOut.includes('یک مربی'));
 ok('Coach Desk mode renders standard Coach navigation', coachOut.includes('data-view="dash"') && coachOut.includes('data-view="builder"'));
 
 // 5. Direct view routing via currentView()

@@ -853,6 +853,14 @@ Object.assign(FA, {
   'machines registered · NFC deep links ready': 'دستگاه ثبت‌شده · آماده اسکن NFC/QR',
   'Please enter name and email': 'لطفاً نام و ایمیل را وارد کنید',
   'Please select coach and client': 'لطفاً مربی و شاگرد را انتخاب کنید',
+  'No address registered': 'آدرسی ثبت نشده است',
+  'staff members': 'عضو کادر فنی',
+  'Copy Invite': 'کپی دعوت‌نامه',
+  'Filter Clients': 'فیلتر شاگردان',
+  'Remove Staff': 'حذف کارمند',
+  'Linked Exercise': 'حرکت متصل',
+  'Brand / Manufacturer': 'برند / سازنده',
+  'Preview': 'پیش‌نمایش',
   'Please select at least one athlete to transfer': 'لطفاً حداقل یک شاگرد را جهت انتقال انتخاب کنید',
   'Please select a target coach': 'لطفاً مربی مقصد را انتخاب کنید',
   'Please enter a gym name': 'لطفاً نام باشگاه را وارد کنید',
@@ -3245,7 +3253,7 @@ function renderOrgOverviewTab(org){
   };
 
   return `
-  <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-bottom:20px" class="grid2">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:18px;margin-bottom:20px" class="grid2">
     <!-- Branch Telemetry Panel -->
     <div class="card" style="padding:18px">
       <div class="card-h" style="padding:0 0 12px 0;margin-bottom:14px;border-bottom:1px solid var(--line2)">
@@ -3520,7 +3528,7 @@ function renderOrgReassignTab(org){
     </div>
 
     <!-- 3-Step Anti-Poaching Wizard -->
-    <div class="fgrid" style="grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">
+    <div class="fgrid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin-bottom:18px">
       <!-- Step 1: Source Coach -->
       <div class="field" style="background:var(--card-sub);padding:12px;border-radius:10px;border:1px solid var(--line2)">
         <label class="lbl" style="color:var(--amber)">① ${t('Departing / Source Coach')}</label>
