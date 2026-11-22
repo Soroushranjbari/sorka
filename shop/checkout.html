@@ -43,6 +43,9 @@ h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;letter-spaci
 @media(max-width:760px){.grid{grid-template-columns:1fr}}
 .card{border:1px solid var(--line);border-radius:20px;padding:26px;background:rgba(255,255,255,.02)}
 .card h2{font-family:var(--disp);font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.checkout-portal-tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--bg2);padding:4px;border-radius:12px;border:1px solid var(--line2)}
+.btn-subtab{flex:1;background:none;border:none;color:var(--dim);font-family:inherit;font-size:12px;font-weight:700;padding:8px 12px;border-radius:8px;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-subtab.on{background:var(--acc);color:var(--acc-ink)}
 .plans{display:flex;flex-direction:column;gap:10px}
 .plan{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;transition:border-color .25s,background .25s}
 .plan:hover{border-color:var(--line2)}
@@ -281,6 +284,20 @@ html[dir="rtl"] .lang-opt{
     <div class="grid">
       <div class="card">
         <h2 id="t-plan">1 — Choose your plan</h2>
+        <div class="checkout-portal-tabs" id="portalTabs">
+          <button type="button" class="btn-subtab" id="subtab-coach" data-portal="coach">
+            <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span id="t-subtab-coach">Solo Coach</span>
+          </button>
+          <button type="button" class="btn-subtab" id="subtab-org" data-portal="org">
+            <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/></svg>
+            <span id="t-subtab-org">Gym &amp; Club</span>
+          </button>
+        </div>
+        <div class="field" id="gymNameField" style="display:none;margin-bottom:14px">
+          <label id="t-gym-lbl" for="cgymname">Gym / Club Name</label>
+          <input id="cgymname" type="text" placeholder="e.g. Oxygen Fitness Club">
+        </div>
         <div class="plans" id="plans"></div>
         <div class="field">
           <label id="t-name" for="cname">Full name</label>
@@ -396,6 +413,9 @@ const FA={
   'Create your free account':'ساخت حساب رایگان','14 days of full access — no credit card required.':'۱۴ روز دسترسی کامل — بدون نیاز به کارت بانکی.',
   'No payment needed — fill in your details and your 14-day free account is created instantly.':'پرداختی لازم نیست — مشخصاتتان را وارد کنید تا حسابتان با ۱۴ روز دسترسی رایگان فوراً ساخته شود.',
   'Password':'رمز عبور','Account created':'حساب ساخته شد',
+  'Solo Coach':'مربی تک‌نفره و مستقل',
+  'Gym & Club':'باشگاه و سازمان',
+  'Gym / Club Name':'نام باشگاه / مجموعه ورزشی',
   'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.':'آزمایش ۱۴ روزه رایگان شما فعال است — دسترسی کامل، تا ۵ شاگرد. برای شروع، اپ را باز کنید.',
   'This email already has an account — sign in instead.':'این ایمیل قبلاً ثبت شده — وارد حساب خود شوید.'
 };
@@ -449,18 +469,44 @@ const TR={
   'No payment needed — fill in your details and your 14-day free account is created instantly.':'Ödeme gerekmez — bilgilerinizi girin ve 14 günlük ücretsiz hesabınız anında oluşturulsun.',
   'Password':'Şifre',
   'Account created':'Hesap oluşturuldu',
+  'Solo Coach':'Bireysel Antrenör',
+  'Gym & Club':'Kulüp ve Organizasyon',
+  'Gym / Club Name':'Spor Kulübü / Salon Adı',
   'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.':'14 günlük ücretsiz denemeniz aktif — tam erişim, 5 danışana kadar. Antrenörlüğe başlamak için uygulamayı açın.',
   'This email already has an account — sign in instead.':'Bu e-posta zaten kayıtlı — bunun yerine giriş yapın.'
 };
 
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-let plan=PLANS[params.get('plan')]?params.get('plan'):'professional';
+const SOLO_PLANS=['trial','basic','professional'];
+const GYM_PLANS=['gym_studio','gym_chain','gym_enterprise','club'];
+let initialPlan=PLANS[params.get('plan')]?params.get('plan'):'professional';
+let currentPortal=params.get('portal') || (GYM_PLANS.includes(initialPlan)?'org':'coach');
+let plan=initialPlan;
 let lang='fa';try{lang=localStorage.getItem('coach-os-locale')||'fa'}catch(e){} if(!['fa','tr','en'].includes(lang)) lang='fa';
 const nf=v=>lang==='fa'?String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]):String(v);
 const money=v=>nf(v.toLocaleString('en-US'));
+const t=k=>lang==='tr'?(TR[k]??k):(lang==='fa'?(FA[k]??k):k);
+/* setT updates a t-* hook AND its cached data-k — the applyLang loop translates
+   dataset.k, so changing only textContent would be reverted on language toggle. */
+const setT=(el,key)=>{if(el){el.dataset.k=key;el.textContent=t(key)}};
+/* Button label: the trial is a signup (never a payment); paid plans switch on
+   whether the password field turns the purchase into purchase+signup. */
+const payLabel=()=>plan==='trial'?t('Start free trial'):($('cpass')&&$('cpass').value?t('Pay & create account'):t('Pay & get code'));
 function renderPlans(){
-  $('plans').innerHTML=Object.entries(PLANS).map(([id,p])=>`
+  const isGym = currentPortal === 'org';
+  const tabCoach = $('subtab-coach'), tabOrg = $('subtab-org');
+  if(tabCoach) tabCoach.classList.toggle('on', !isGym);
+  if(tabOrg) tabOrg.classList.toggle('on', isGym);
+  const gymField = $('gymNameField');
+  if (gymField) gymField.style.display = isGym ? 'block' : 'none';
+
+  const planList = Object.entries(PLANS).filter(([id]) => isGym ? GYM_PLANS.includes(id) : SOLO_PLANS.includes(id));
+  if (!planList.some(([id]) => id === plan)) {
+    plan = planList[0][0];
+  }
+
+  $('plans').innerHTML=planList.map(([id,p])=>`
     <div class="plan ${id===plan?'on':''}" data-plan="${id}" role="button" tabindex="0">
       <span class="dot"></span>
       <span class="nm"><b>${lang==='tr'?p.nameTr:(lang==='fa'?p.nameFa:p.name)}</b><span>${nf(p.max)} ${lang==='tr'?'danışan':(lang==='fa'?'شاگرد':'clients')}</span></span>
@@ -469,13 +515,8 @@ function renderPlans(){
   document.querySelectorAll('.plan').forEach(el=>el.addEventListener('click',()=>{plan=el.dataset.plan;renderPlans();renderSummary()}));
   renderSummary();
 }
-const t=k=>lang==='tr'?(TR[k]??k):(lang==='fa'?(FA[k]??k):k);
-/* setT updates a t-* hook AND its cached data-k — the applyLang loop translates
-   dataset.k, so changing only textContent would be reverted on language toggle. */
-const setT=(el,key)=>{el.dataset.k=key;el.textContent=t(key)};
-/* Button label: the trial is a signup (never a payment); paid plans switch on
-   whether the password field turns the purchase into purchase+signup. */
-const payLabel=()=>plan==='trial'?t('Start free trial'):($('cpass').value?t('Pay & create account'):t('Pay & get code'));
+$('subtab-coach')?.addEventListener('click', ()=>{ currentPortal='coach'; renderPlans(); });
+$('subtab-org')?.addEventListener('click', ()=>{ currentPortal='org'; renderPlans(); });
 function renderSummary(){
   const p=PLANS[plan],trial=plan==='trial';
   $('s-plan').textContent=lang==='tr'?p.nameTr:(lang==='fa'?p.nameFa:p.name);
@@ -604,7 +645,7 @@ $('payBtn').addEventListener('click',async()=>{
         localStorage.setItem('coach-os-shop-token',sd.token);
         localStorage.setItem('coach-os-email',email);
       }catch(e){}
-      $('appLink').href='/index.html#token='+encodeURIComponent(sd.token);
+      $('appLink').href='/index.html#token='+encodeURIComponent(sd.token)+'&portal=coach';
       if($('signInLink'))$('signInLink').style.display='none';
       // Done view without a code: a trial needs no activation — the session
       // token above already signs the new coach into the app.

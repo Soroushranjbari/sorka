@@ -948,10 +948,48 @@ html[dir="rtl"] .sc-head::after,html[dir="rtl"] #probHead::after,html[dir="rtl"]
 #s16{padding:140px 0}
 .bill-toggle{display:inline-flex;border:1px solid var(--line2);border-radius:99px;padding:4px;margin-top:34px}
 .tier-nav{display:inline-flex;gap:6px;margin:22px 0 6px;background:rgba(255,255,255,0.04);padding:4px;border-radius:99px;border:1px solid var(--line2)}
-.tier-tab{background:none;border:none;padding:9px 22px;border-radius:99px;font-size:13px;font-weight:700;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all .2s ease}
+.tier-tab{background:none;border:none;padding:9px 22px;border-radius:99px;font-size:13px;font-weight:700;letter-spacing:.05em;color:var(--mut);cursor:pointer;transition:all .2s ease;display:inline-flex;align-items:center;gap:6px}
 .tier-tab:hover{color:var(--txt)}
 .tier-tab.on{background:var(--acc);color:#0a0b0d}
-#pgrid-gym{grid-template-columns:repeat(3,1fr)}
+.tier-desc-wrap{margin-top:20px;max-width:960px;margin-inline:auto}
+.tier-portal-box{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  background:linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.015) 100%);
+  border:1px solid var(--line2);border-radius:18px;padding:16px 24px;margin-top:14px;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .3s ease;
+  text-align:start;
+}
+.tier-portal-box:hover{border-color:var(--acc-line);box-shadow:0 8px 32px -8px rgba(0,0,0,0.5)}
+.tier-portal-box.org-box{border-color:rgba(198,241,78,.3);background:linear-gradient(135deg, rgba(198,241,78,.07) 0%, rgba(255,255,255,.02) 100%)}
+.tier-portal-info{flex:1;min-width:260px}
+.portal-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;
+  font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(255,255,255,.08);color:var(--txt);border:1px solid var(--line);
+}
+.portal-badge.solo-badge{background:var(--acc-dim);color:var(--acc);border-color:var(--acc-line)}
+.portal-badge.org-badge{background:rgba(200,250,75,.15);color:var(--acc);border-color:var(--acc-line)}
+.tier-portal-title{font-size:14px;font-weight:700;color:var(--txt)}
+.tier-portal-sub{font-size:12.5px;color:var(--dim);line-height:1.5;margin-top:2px}
+.btn-portal{
+  padding:11px 20px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.06em;
+  white-space:nowrap;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:all .25s ease;
+}
+.btn-portal-solo{background:rgba(255,255,255,.08);color:var(--txt);border:1px solid var(--line2)}
+.btn-portal-solo:hover{background:var(--acc);color:#0a0b0d;border-color:var(--acc);transform:translateY(-1px)}
+.btn-portal-org{background:var(--acc);color:#0a0b0d}
+.btn-portal-org:hover{transform:translateY(-2px);box-shadow:0 8px 24px -4px var(--acc-line)}
+.pcard-sublink{
+  display:block;text-align:center;font-size:11.5px;color:var(--dim);margin-top:10px;
+  text-decoration:none;transition:color .2s;
+}
+.pcard-sublink:hover{color:var(--acc)}
+#pgrid-solo,#pgrid-gym{grid-template-columns:repeat(3,1fr)}
+.nav-portals{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.04);padding:3px;border-radius:99px;border:1px solid var(--line)}
+.nav-portal-pill{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;color:var(--mut);text-decoration:none;transition:all .2s ease}
+.nav-portal-pill:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-portal-pill.solo{color:var(--txt)}
+.nav-portal-pill.org{color:var(--acc);font-weight:700}
 .bill{padding:10px 22px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 .bill.on{background:var(--txt);color:#0a0b0d}
 .bill-note{font-size:12px;color:var(--dim);margin-top:12px}
@@ -1240,6 +1278,17 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     'Built to scale from a single boutique studio up to large 25+ branch franchise gym networks with custom data isolation, multi-location analytics, and SLA support.': 'Tek bir butik stüdyodan 25+ şubeli büyük franchise spor salonu zincirlerine kadar özel veri izolasyonu, çoklu lokasyon analizleri ve SLA garantisi ile ölçeklenir.',
     'Solo Coaches': 'Bireysel Antrenörler',
     'Gyms & Chains': 'Kulüpler ve Zincirler',
+    'Gyms & Organizations': 'Kulüpler ve Organizasyonlar',
+    'Already coaching on CoachMint?': 'Zaten CoachMint kullanıyor musunuz?',
+    'Direct access to your solo coach workspace, workout builder & client roster.': 'Bireysel antrenör masanıza, antrenman oluşturucuya ve danışan listenize doğrudan erişin.',
+    'Sign In to Solo Coach Desk': 'Bireysel Antrenör Girişi',
+    'Managing a club or invited as gym staff?': 'Kulüp yöneticisi veya antrenör müsünüz?',
+    'Direct access to multi-branch executive console, staff roster & club data governance.': 'Çok şubeli yönetici konsoluna, antrenör kadrosuna ve kulüp paneline doğrudan erişin.',
+    'Sign In to Executive Console': 'Yönetici Konsolu Girişi',
+    'Sign In to Solo Desk': 'Bireysel Giriş',
+    'Executive Console Sign In': 'Yönetici Girişi',
+    'Solo Coach Desk': 'Bireysel Koç Masası',
+    'Executive Console': 'Yönetici Konsolu',
     'Gym Studio': 'Spor Stüdyosu',
     'Gym Chain': 'Zincir Salon',
     'For single-location fitness studios.': 'Tek lokasyonlu butik fitness stüdyoları için.',
@@ -1381,6 +1430,17 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     'Built to scale from a single boutique studio up to large 25+ branch franchise gym networks with custom data isolation, multi-location analytics, and SLA support.':'طراحی‌شده برای مقیاس‌پذیری از استودیوهای خصوصی تا زنجیره‌های فرانچایز بزرگ ۲۵+ شعبه با تفکیک داده‌ها، تحلیل‌های آماری شعب و پشتیبانی اختصاصی.',
     'Solo Coaches':'مربیان مستقل',
     'Gyms & Chains':'باشگاه‌ها و شعب',
+    'Gyms & Organizations':'باشگاه‌ها و سازمان‌ها',
+    'Already coaching on CoachMint?':'از قبل حساب مربیگری دارید؟',
+    'Direct access to your solo coach workspace, workout builder & client roster.':'ورود مستقیم به میزکار مربیگری، طراحی تمرین و لیست شاگردان.',
+    'Sign In to Solo Coach Desk':'ورود به میزکار مربی تکی',
+    'Managing a club or invited as gym staff?':'مدیر یا کادر فنی باشگاه هستید؟',
+    'Direct access to multi-branch executive console, staff roster & club data governance.':'ورود مستقیم به کنسول مدیریت سازمانی، مربیان و رصد زنده شعب.',
+    'Sign In to Executive Console':'ورود به کنسول مدیریت باشگاه',
+    'Sign In to Solo Desk':'ورود مربی تکی',
+    'Executive Console Sign In':'ورود مدیریت باشگاه',
+    'Solo Coach Desk':'میزکار مربی تکی',
+    'Executive Console':'کنسول مدیریت ارشد',
     'Gym Studio':'استودیو ورزشی',
     'Gym Chain':'باشگاه زنجیره‌ای',
     'Enterprise':'سازمانی / اینترپرایز',
@@ -1567,7 +1627,10 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
   <nav class="nav-links"><a href="#product">Product</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/shop/account.html">Account</a></nav>
   <div class="nav-cta">
-    
+    <div class="nav-portals hide-sm">
+      <a href="/index.html#coach-login&portal=coach" class="nav-portal-pill solo" title="Solo Coach Desk">Solo Coach</a>
+      <a href="/index.html#org-login&portal=org&mode=executive&view=org" class="nav-portal-pill org" title="Executive Console">Club &amp; Gym</a>
+    </div>
     <div class="lang-picker" data-no-translate="true">
       <button id="langToggle" class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
         <svg class="globe-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/></svg>
@@ -1614,6 +1677,10 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <div id="menu">
   <button id="menuClose" aria-label="Close"><svg class="ic" style="width:22px;height:22px"><use href="#i-x"/></svg></button>
   <a href="#product">Product</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/shop/account.html">Account</a>
+  <div style="width:100%;max-width:240px;margin:8px 0;display:flex;flex-direction:column;gap:6px">
+    <a class="btn line" style="padding:10px;font-size:12px;justify-content:center" href="/index.html#coach-login&portal=coach">Sign In: Solo Coach Desk</a>
+    <a class="btn line" style="padding:10px;font-size:12px;justify-content:center;border-color:var(--acc-line);color:var(--acc)" href="/index.html#org-login&portal=org&mode=executive&view=org">Sign In: Club &amp; Gym</a>
+  </div>
   <div style="width:100%;max-width:240px;margin:4px 0">
     <div class="menu-lang-head">Language / زبان</div>
     <div class="menu-lang-pills">
@@ -2685,47 +2752,79 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
       <div class="bill-note">Billed monthly. Cancel anytime.</div>
 
       <div class="tier-nav" data-reveal>
-        <button class="tier-tab on" data-tab="solo">Solo Coaches</button>
-        <button class="tier-tab" data-tab="gym">Gyms &amp; Chains</button>
+        <button class="tier-tab on" data-tab="solo">
+          <svg class="ic" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="t-tier-solo">Solo Coaches</span>
+        </button>
+        <button class="tier-tab" data-tab="gym">
+          <svg class="ic" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="12" y1="18" x2="12" y2="18.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="12" y1="6" x2="12" y2="6.01"/></svg>
+          <span class="t-tier-gym">Gyms &amp; Organizations</span>
+        </button>
+      </div>
+
+      <!-- Path Separation & Fast Login Banners -->
+      <div class="tier-desc-wrap">
+        <div id="tier-desc-solo" class="tier-desc">
+          <div class="tier-portal-box">
+            <div class="tier-portal-info">
+              <div class="tier-portal-head">
+                <span class="portal-badge solo-badge">Solo Coach Desk</span>
+                <span class="tier-portal-title">Already coaching on CoachMint?</span>
+              </div>
+              <div class="tier-portal-sub">Direct access to your solo coach workspace, workout builder &amp; client roster.</div>
+            </div>
+            <a class="btn-portal btn-portal-solo" href="/index.html#coach-login&portal=coach">
+              <span>Sign In to Solo Coach Desk</span>
+              <svg class="ic" style="width:13px;height:13px"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div id="tier-desc-gym" class="tier-desc" style="display:none">
+          <div class="tier-portal-box org-box">
+            <div class="tier-portal-info">
+              <div class="tier-portal-head">
+                <span class="portal-badge org-badge">Executive Console</span>
+                <span class="tier-portal-title">Managing a club or invited as gym staff?</span>
+              </div>
+              <div class="tier-portal-sub">Direct access to multi-branch executive console, staff roster &amp; club data governance.</div>
+            </div>
+            <a class="btn-portal btn-portal-org" href="/index.html#org-login&portal=org&mode=executive&view=org">
+              <span>Sign In to Executive Console</span>
+              <svg class="ic" style="width:13px;height:13px"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Solo Coaches Grid -->
     <div class="pgrid" id="pgrid-solo">
       <div class="pcard" data-reveal>
         <h3>Free Trial</h3><p class="for">14 days · full access</p>
-        <!-- No currency glyph here: the three paid cards are priced in IRT, so a
-             "€" on the trial card mixed two currencies in one table. -->
         <div class="price"><span class="num" data-m="Free" data-y="Free">Free</span><span class="per">/ 14 days</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Every feature unlocked</li><li><svg class="ic"><use href="#i-check"/></svg>Up to 5 clients</li><li><svg class="ic"><use href="#i-check"/></svg>No credit card required</li></ul>
-        <!-- Was a naked link into the app: the visitor landed unregistered and
-             the trial only started if they happened to sign up there. Now the
-             trial goes through checkout like a purchase — the form registers
-             the coach and the 14-day trial account is created in one click. -->
-        <a class="btn acc" href="/shop/checkout.html?plan=trial" data-checkout="trial">Start Free</a>
+        <a class="btn acc" href="/shop/checkout.html?plan=trial&portal=coach" data-checkout="trial">Start Free</a>
+        <a class="pcard-sublink" href="/index.html#coach-login&portal=coach">Sign In to Solo Desk</a>
       </div>
       <div class="pcard" data-reveal style="transition-delay:.08s">
         <h3>Basic</h3><p class="for">For independent coaches.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="290,000" data-y="2,900,000">290,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 5 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Workout Builder</li><li><svg class="ic"><use href="#i-check"/></svg>Nutrition Planner</li><li><svg class="ic"><use href="#i-check"/></svg>Progress Tracking</li><li><svg class="ic"><use href="#i-check"/></svg>Calendar</li><li><svg class="ic"><use href="#i-check"/></svg>Templates</li><li><svg class="ic"><use href="#i-check"/></svg>Notes</li></ul>
-        <a class="btn ghost" href="/shop/checkout.html?plan=basic" data-checkout="basic">Buy Now</a>
+        <a class="btn ghost" href="/shop/checkout.html?plan=basic&portal=coach" data-checkout="basic">Buy Now</a>
+        <a class="pcard-sublink" href="/index.html#coach-login&portal=coach">Sign In to Solo Desk</a>
       </div>
       <div class="pcard rec" data-reveal style="transition-delay:.16s">
         <span class="rec-chip">Recommended</span>
         <h3>Professional</h3><p class="for">For professional coaches.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="790,000" data-y="7,900,000">790,000</span><span class="per">/ month</span></div>
         <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 30 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Everything in Basic</li><li><svg class="ic"><use href="#i-check"/></svg>Advanced templates</li><li><svg class="ic"><use href="#i-check"/></svg>Payment tracking</li><li><svg class="ic"><use href="#i-check"/></svg>Priority support</li></ul>
-        <a class="btn acc" href="/shop/checkout.html?plan=professional" data-checkout="professional">Buy Now</a>
+        <a class="btn acc" href="/shop/checkout.html?plan=professional&portal=coach" data-checkout="professional">Buy Now</a>
+        <a class="pcard-sublink" href="/index.html#coach-login&portal=coach">Sign In to Solo Desk</a>
       </div>
-      <div class="pcard" data-reveal style="transition-delay:.24s">
-        <h3>Club</h3><p class="for">For coaching teams and gyms.</p>
-        <div class="price"><span class="cur">IRT</span><span class="num" data-m="2,490,000" data-y="24,900,000">2,490,000</span><span class="per">/ month</span></div>
-        <ul><li><svg class="ic"><use href="#i-check"/></svg>Up to 200 clients</li><li><svg class="ic"><use href="#i-check"/></svg>Everything in Professional</li><li><svg class="ic"><use href="#i-check"/></svg>Team management</li><li><svg class="ic"><use href="#i-check"/></svg>Gym management</li><li><svg class="ic"><use href="#i-check"/></svg>Priority support</li></ul>
-        <!-- Was a mailto:"Talk to Sales" — but checkout.html fully supports the
-             club plan and the app's in-app Buy button already sends club buyers
-             here, so the website funnel now matches (self-serve checkout). -->
-        <a class="btn ghost" href="/shop/checkout.html?plan=club" data-checkout="club">Buy Now</a>
-      </div>
-
     </div>
+
+    <!-- Gyms & Organizations Grid -->
     <div class="pgrid" id="pgrid-gym" style="display:none">
       <div class="pcard" data-reveal>
         <h3>Gym Studio</h3><p class="for">For single-location fitness studios.</p>
@@ -2738,7 +2837,8 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
           <li><svg class="ic"><use href="#i-check"/></svg>Reception &amp; staff accounts</li>
           <li><svg class="ic"><use href="#i-check"/></svg>Centralized cloud data governance</li>
         </ul>
-        <a class="btn ghost" href="/shop/checkout.html?plan=gym_studio" data-checkout="gym_studio">Buy Studio</a>
+        <a class="btn ghost" href="/shop/checkout.html?plan=gym_studio&portal=org" data-checkout="gym_studio">Buy Studio</a>
+        <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
       </div>
       <div class="pcard rec" data-reveal style="transition-delay:.1s">
         <span class="rec-chip">Recommended</span>
@@ -2753,7 +2853,8 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
           <li><svg class="ic"><use href="#i-check"/></svg>Receptionist accounts (exempt from coach cap)</li>
           <li><svg class="ic"><use href="#i-check"/></svg>Priority onboarding &amp; support</li>
         </ul>
-        <a class="btn acc" href="/shop/checkout.html?plan=gym_chain" data-checkout="gym_chain">Buy Chain</a>
+        <a class="btn acc" href="/shop/checkout.html?plan=gym_chain&portal=org" data-checkout="gym_chain">Buy Chain</a>
+        <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
       </div>
       <div class="pcard" data-reveal style="transition-delay:.2s">
         <h3>Enterprise</h3><p class="for">For franchise gyms &amp; athletic academies.</p>
@@ -2766,7 +2867,8 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
           <li><svg class="ic"><use href="#i-check"/></svg>Custom data export &amp; integration</li>
           <li><svg class="ic"><use href="#i-check"/></svg>Dedicated account manager &amp; 99.9% SLA</li>
         </ul>
-        <a class="btn ghost" href="/shop/checkout.html?plan=gym_enterprise" data-checkout="gym_enterprise">Buy Enterprise</a>
+        <a class="btn ghost" href="/shop/checkout.html?plan=gym_enterprise&portal=org" data-checkout="gym_enterprise">Buy Enterprise</a>
+        <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
       </div>
     </div>
     <p class="pfoot" data-reveal>Prices shown are launch placeholders — final pricing to be confirmed.</p>
@@ -2872,9 +2974,14 @@ function boot(){
       tb.classList.add('on');
       var target = tb.getAttribute('data-tab');
       var solo = $('#pgrid-solo'), gym = $('#pgrid-gym');
+      var dSolo = $('#tier-desc-solo'), dGym = $('#tier-desc-gym');
       if (solo && gym) {
         solo.style.display = target === 'solo' ? 'grid' : 'none';
         gym.style.display = target === 'gym' ? 'grid' : 'none';
+      }
+      if (dSolo && dGym) {
+        dSolo.style.display = target === 'solo' ? 'block' : 'none';
+        dGym.style.display = target === 'gym' ? 'block' : 'none';
       }
     });
   });
