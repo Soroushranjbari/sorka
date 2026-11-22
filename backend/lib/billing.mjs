@@ -16,6 +16,7 @@ export const PLANS = {
   club:           { id: 'club',           name: 'Club',           tier: 'gym',  maxClients: 200, maxCoaches: 5,  maxBranches: 1, maxStorageMB: 10240 },
 
   // Gym & Multi-Branch Enterprise tiers
+  gym_trial:      { id: 'gym_trial',      name: 'Club Free Trial', tier: 'gym',  maxClients: 25,  maxCoaches: 3,  maxBranches: 1, maxStorageMB: 2048 },
   gym_studio:     { id: 'gym_studio',     name: 'Gym Studio',     tier: 'gym',  maxClients: 150, maxCoaches: 5,  maxBranches: 1, maxStorageMB: 10240 },
   gym_chain:      { id: 'gym_chain',      name: 'Gym Chain',      tier: 'gym',  maxClients: 600, maxCoaches: 20, maxBranches: 5, maxStorageMB: 30720 },
   gym_enterprise: { id: 'gym_enterprise', name: 'Enterprise',     tier: 'gym',  maxClients: 3000, maxCoaches: 100, maxBranches: 25, maxStorageMB: 102400 }

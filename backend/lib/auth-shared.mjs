@@ -181,7 +181,7 @@ export async function signup(req, st) {
   // coach can land in the app with the plan ALREADY active, no Settings detour.
   const coupon = normCoupon(body?.coupon);
   const orgName = String(body?.orgName || body?.gymName || '').trim().slice(0, 80);
-  const isOrg = body?.accountType === 'org' || body?.portal === 'org' || !!orgName;
+  const isOrg = body?.accountType === 'org' || body?.portal === 'org' || body?.plan === 'gym_trial' || !!orgName;
   // The existence check + account/workspace creation must be atomic per
   // account: two concurrent signups with the same email could otherwise both
   // pass the check and create duplicate accounts (one acct-by-id orphaned).
@@ -190,10 +190,11 @@ export async function signup(req, st) {
       return { err: j(409, { ok: false, error: 'email-taken' }) };
     }
     const now = Date.now();
+    const chosenPlan = isOrg ? (body?.plan === 'gym_trial' ? 'gym_trial' : 'gym_studio') : 'trial';
     const acct = {
       id: newId('coach'), email, name,
       pass: hashPassword(password),
-      plan: isOrg ? 'gym_studio' : 'trial', workspaceId: null,
+      plan: chosenPlan, workspaceId: null,
       role: adminEmails().includes(email) ? 'admin' : 'coach',
       sub: null, trialEndsAt: now + TRIAL_DAYS * 86400000,
       createdAt: now,

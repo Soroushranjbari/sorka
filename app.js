@@ -791,6 +791,7 @@ Object.assign(FA, {
   'Studio Plan': 'طرح استودیو',
   'Chain Plan': 'طرح زنجیره‌ای',
   'Enterprise Plan': 'طرح اینترپرایز',
+  'Club Free Trial (14 Days)': 'آزمایش رایگان باشگاه (۱۴ روز)',
   'Gym Plan': 'طرح باشگاه',
   'Create Gym Organization': 'ایجاد مجموعه ورزشی',
   'Initialize Gym Organization': 'راه‌اندازی باشگاه و شعب',
@@ -1039,6 +1040,7 @@ Object.assign(TR, {
   'Studio Plan': 'Stüdyo Planı',
   'Chain Plan': 'Zincir Plan',
   'Enterprise Plan': 'Kurumsal Plan',
+  'Club Free Trial (14 Days)': 'Kulüp Ücretsiz Deneme (14 Gün)',
   'Club Plan': 'Kulüp Planı',
   'Gym Plan': 'Salon Planı',
   'Multi-Branch & Anti-Poaching': 'Çoklu Şube ve Sporcu Koruma',
@@ -3077,7 +3079,7 @@ const DEMO_ORG = DEMO_ORG_EN;
 const isGymWorkspace = () => {
   if (S.org) return true;
   const p = AUTH.access?.plan || (AUTH.coach && AUTH.coach.plan);
-  return ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(p) || !AUTH.token;
+  return ['club', 'gym_trial', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(p) || !AUTH.token;
 };
 
 const currentOrg = () => {
@@ -3198,6 +3200,7 @@ function vOrg(){
   };
 
   const planName = {
+    gym_trial: t('Club Free Trial (14 Days)'),
     gym_studio: t('Studio Plan'),
     gym_chain: t('Chain Plan'),
     gym_enterprise: t('Enterprise Plan'),

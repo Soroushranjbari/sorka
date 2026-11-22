@@ -378,6 +378,7 @@ const PLANS={
   trial:{name:'Free Trial',nameFa:'آزمایشی رایگان',nameTr:'Ücretsiz Deneme',amount:0,max:5},
   basic:{name:'Basic',nameFa:'پایه',nameTr:'Temel',amount:290000,max:5},
   professional:{name:'Professional',nameFa:'حرفه‌ای',nameTr:'Profesyonel',amount:790000,max:30},
+  gym_trial:{name:'Club Free Trial',nameFa:'آزمایش رایگان باشگاه',nameTr:'Kulüp Ücretsiz Deneme',amount:0,max:25},
   club:{name:'Club',nameFa:'باشگاه',nameTr:'Kulüp',amount:2490000,max:200},
   gym_studio:{name:'Gym Studio',nameFa:'استودیو ورزشی (تک‌شعبه)',nameTr:'Spor Stüdyosu',amount:1890000,max:100},
   gym_chain:{name:'Gym Chain',nameFa:'باشگاه زنجیره‌ای (تا ۵ شعبه)',nameTr:'Zincir Kulüp',amount:4900000,max:600},
@@ -410,13 +411,18 @@ const FA={
   'Press Ctrl+C to copy':'برای کپی Ctrl+C را بزنید',
   'Demo mode: this code is NOT registered in CoachMint yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'حالت نمایشی: این کد هنوز در CoachMint ثبت نشده است. COACH_OS_URL و ADMIN_API_KEY را روی سرور تنظیم کنید و دوباره خرید کنید.',
   'Start free trial':'شروع آزمایش رایگان','14 days':'۱۴ روز','Free':'رایگان',
+  'Start free club trial':'شروع رایگان باشگاه',
   'Create your free account':'ساخت حساب رایگان','14 days of full access — no credit card required.':'۱۴ روز دسترسی کامل — بدون نیاز به کارت بانکی.',
+  'Create your free club account':'ساخت حساب رایگان باشگاه',
+  '14 days of full club management — no credit card required.':'۱۴ روز مدیریت کامل باشگاه — بدون نیاز به کارت بانکی.',
   'No payment needed — fill in your details and your 14-day free account is created instantly.':'پرداختی لازم نیست — مشخصاتتان را وارد کنید تا حسابتان با ۱۴ روز دسترسی رایگان فوراً ساخته شود.',
+  'No payment needed — enter your club details and your 14-day free executive account is created instantly.':'پرداختی لازم نیست — مشخصات باشگاه را وارد کنید تا حساب مدیریتی ۱۴ روزه رایگان فوراً ساخته شود.',
   'Password':'رمز عبور','Account created':'حساب ساخته شد',
   'Solo Coach':'مربی تک‌نفره و مستقل',
   'Gym & Club':'باشگاه و سازمان',
   'Gym / Club Name':'نام باشگاه / مجموعه ورزشی',
   'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.':'آزمایش ۱۴ روزه رایگان شما فعال است — دسترسی کامل، تا ۵ شاگرد. برای شروع، اپ را باز کنید.',
+  'Your 14-day free club trial is active — full executive console access. Open the app to start managing.':'آزمایش ۱۴ روزه رایگان باشگاه شما فعال است — دسترسی کامل به کنسول مدیریتی. برای شروع، اپ را باز کنید.',
   'This email already has an account — sign in instead.':'این ایمیل قبلاً ثبت شده — وارد حساب خود شوید.'
 };
 const TR={
@@ -462,24 +468,29 @@ const TR={
   'Press Ctrl+C to copy':'Kopyalamak için Ctrl+C tuşlarına basın',
   'Demo mode: this code is NOT registered in CoachMint yet. Configure COACH_OS_URL + ADMIN_API_KEY on the server, then buy again.':'Demo modu: bu kod henüz CoachMint\'e kaydedilmedi.',
   'Start free trial':'Ücretsiz denemeyi başlat',
+  'Start free club trial':'Ücretsiz kulüp denemesini başlat',
   '14 days':'14 gün',
   'Free':'Ücretsiz',
   'Create your free account':'Ücretsiz hesabınızı oluşturun',
+  'Create your free club account':'Ücretsiz kulüp hesabınızı oluşturun',
   '14 days of full access — no credit card required.':'14 gün tam erişim — kredi kartı gerekmez.',
+  '14 days of full club management — no credit card required.':'14 gün tam kulüp yönetimi — kredi kartı gerekmez.',
   'No payment needed — fill in your details and your 14-day free account is created instantly.':'Ödeme gerekmez — bilgilerinizi girin ve 14 günlük ücretsiz hesabınız anında oluşturulsun.',
+  'No payment needed — enter your club details and your 14-day free executive account is created instantly.':'Ödeme gerekmez — kulüp bilgilerinizi girin ve 14 günlük ücretsiz yönetici hesabınız anında oluşturulsun.',
   'Password':'Şifre',
   'Account created':'Hesap oluşturuldu',
   'Solo Coach':'Bireysel Antrenör',
   'Gym & Club':'Kulüp ve Organizasyon',
   'Gym / Club Name':'Spor Kulübü / Salon Adı',
   'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.':'14 günlük ücretsiz denemeniz aktif — tam erişim, 5 danışana kadar. Antrenörlüğe başlamak için uygulamayı açın.',
+  'Your 14-day free club trial is active — full executive console access. Open the app to start managing.':'14 günlük ücretsiz kulüp denemeniz aktif — tam yönetici konsolu erişimi. Yönetime başlamak için uygulamayı açın.',
   'This email already has an account — sign in instead.':'Bu e-posta zaten kayıtlı — bunun yerine giriş yapın.'
 };
 
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const SOLO_PLANS=['trial','basic','professional'];
-const GYM_PLANS=['gym_studio','gym_chain','gym_enterprise','club'];
+const GYM_PLANS=['gym_trial','gym_studio','gym_chain','gym_enterprise','club'];
 let initialPlan=PLANS[params.get('plan')]?params.get('plan'):'professional';
 let currentPortal=params.get('portal') || (GYM_PLANS.includes(initialPlan)?'org':'coach');
 let plan=initialPlan;
@@ -492,7 +503,8 @@ const t=k=>lang==='tr'?(TR[k]??k):(lang==='fa'?(FA[k]??k):k);
 const setT=(el,key)=>{if(el){el.dataset.k=key;el.textContent=t(key)}};
 /* Button label: the trial is a signup (never a payment); paid plans switch on
    whether the password field turns the purchase into purchase+signup. */
-const payLabel=()=>plan==='trial'?t('Start free trial'):($('cpass')&&$('cpass').value?t('Pay & create account'):t('Pay & get code'));
+const isTrialPlan=p=>p==='trial'||p==='gym_trial';
+const payLabel=()=>isTrialPlan(plan)?(plan==='gym_trial'?t('Start free club trial'):t('Start free trial')):($('cpass')&&$('cpass').value?t('Pay & create account'):t('Pay & get code'));
 function renderPlans(){
   const isGym = currentPortal === 'org';
   const tabCoach = $('subtab-coach'), tabOrg = $('subtab-org');
@@ -518,18 +530,19 @@ function renderPlans(){
 $('subtab-coach')?.addEventListener('click', ()=>{ currentPortal='coach'; renderPlans(); });
 $('subtab-org')?.addEventListener('click', ()=>{ currentPortal='org'; renderPlans(); });
 function renderSummary(){
-  const p=PLANS[plan],trial=plan==='trial';
+  const p=PLANS[plan],trial=isTrialPlan(plan),isGym=currentPortal==='org'||plan==='gym_trial';
   $('s-plan').textContent=lang==='tr'?p.nameTr:(lang==='fa'?p.nameFa:p.name);
   $('s-max').textContent=nf(p.max);
   $('s-total').textContent=p.amount?money(p.amount)+' IRT':t('Free');
   // The trial IS the signup: the password becomes required, the gateway note
   // and the coupon wording no longer apply, and the button says "start" not "pay".
   setT($('t-1m'),trial?'14 days':'1 month');
-  setT($('t-title'),trial?'Create your free account':'Complete your purchase');
-  setT($('t-sub'),trial?'14 days of full access — no credit card required.':'Pay securely, then receive your activation code instantly.');
+  setT($('t-title'),trial?(isGym?'Create your free club account':'Create your free account'):'Complete your purchase');
+  setT($('t-sub'),trial?(isGym?'14 days of full club management — no credit card required.':'14 days of full access — no credit card required.'):'Pay securely, then receive your activation code instantly.');
   setT($('t-pass'),trial?'Password':'Password (optional — creates your account)');
   setT($('t-sumnote'),trial
-    ?'No payment needed — fill in your details and your 14-day free account is created instantly.'
+    ?(isGym?'No payment needed — enter your club details and your 14-day free executive account is created instantly.'
+           :'No payment needed — fill in your details and your 14-day free account is created instantly.')
     :'The activation code is single-use and valid for 1 year. Enter a password to create your account with the plan already active — or leave it empty if you already have one and redeem the code later.');
   $('t-note').style.display=trial?'none':'';
   $('t-pay').textContent=payLabel();
@@ -619,19 +632,33 @@ $('payBtn').addEventListener('click',async()=>{
   // account IS what the trial creates, there is no code to redeem later.
   // Validate BEFORE "charging" so a typo never produces a paid order without
   // an account.
-  if(plan==='trial'?(!pw||pw.length<8):(pw&&pw.length<8)){showErr(t('Password must be at least 8 characters'));return}
+  if((plan==='trial'||plan==='gym_trial')?(!pw||pw.length<8):(pw&&pw.length<8)){showErr(t('Password must be at least 8 characters'));return}
   try{localStorage.setItem('coach-os-email',email)}catch(e){}
   const btn=$('payBtn');btn.classList.add('loading');btn.disabled=true;
   $('t-pay').textContent=t('Processing…');
   try{
-    /* FREE TRIAL (plan=trial): no payment, no coupon — the signup IS the
+    /* FREE TRIAL (plan=trial or gym_trial): no payment, no coupon — the signup IS the
        transaction. /shop/api/account/signup proxies the app's /api/auth/signup,
        which starts the 14-day trial server-side (TRIAL_DAYS). Same one-click
        shape as the paid flow: the visitor registers here and never lands in
        the app unregistered. A failure (e.g. email already registered) keeps
        the form up with a precise message — nothing was charged. */
-    if(plan==='trial'){
-      const sr=await fetch((API_BASE||'')+'/shop/api/account/signup',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name,email,password:pw})});
+    if(plan==='trial'||plan==='gym_trial'){
+      const isOrg = currentPortal === 'org' || plan === 'gym_trial';
+      const gymName = $('cgymname') ? $('cgymname').value.trim() : '';
+      const sr=await fetch((API_BASE||'')+'/shop/api/account/signup',{
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({
+          name,
+          email,
+          password:pw,
+          portal: isOrg ? 'org' : 'coach',
+          accountType: isOrg ? 'org' : 'solo',
+          gymName: gymName,
+          plan: plan
+        })
+      });
       const sd=await sr.json().catch(()=>null);
       if(!sr.ok||!sd||!sd.ok){
         const m={'bad-email':'Enter a valid email','bad-name':'Enter your full name','weak-password':'Password must be at least 8 characters'};
@@ -644,15 +671,26 @@ $('payBtn').addEventListener('click',async()=>{
         localStorage.setItem('co-auth',sd.token);
         localStorage.setItem('coach-os-shop-token',sd.token);
         localStorage.setItem('coach-os-email',email);
+        if(isOrg){
+          localStorage.setItem('co-ws-mode','executive');
+          localStorage.setItem('co-login-portal','org');
+        } else {
+          localStorage.setItem('co-login-portal','coach');
+        }
       }catch(e){}
-      $('appLink').href='/index.html#token='+encodeURIComponent(sd.token)+'&portal=coach';
+      const orgSuffix = isOrg ? '&view=org&mode=executive&portal=org' : '&portal=coach';
+      $('appLink').href='/index.html#token='+encodeURIComponent(sd.token)+orgSuffix;
       if($('signInLink'))$('signInLink').style.display='none';
       // Done view without a code: a trial needs no activation — the session
       // token above already signs the new coach into the app.
       $('t-code').style.display='none';$('code').style.display='none';$('copyBtn').style.display='none';
       $('steps').style.display='none';$('acct-ok').classList.remove('show');
       setT($('t-done'),'Account created');
-      setT($('t-donesub'),'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.');
+      if(isOrg){
+        setT($('t-donesub'),'Your 14-day free club trial is active — full executive console access. Open the app to start managing.');
+      } else {
+        setT($('t-donesub'),'Your 14-day free trial is active — full access, up to 5 clients. Open the app to start coaching.');
+      }
       $('form-view').style.display='none';
       $('done').classList.add('show');
       window.scrollTo({top:0});
@@ -694,7 +732,7 @@ $('payBtn').addEventListener('click',async()=>{
         }else if(sd&&sd.error==='email-taken'){acct='exists'}
       }catch(e){acct='none'}
     }
-    const isOrgPlan = ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);
+    const isOrgPlan = ['club', 'gym_trial', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);
     if(isOrgPlan){
       try{localStorage.setItem('co-ws-mode','executive');localStorage.setItem('co-login-portal','org');}catch(e){}
     } else {

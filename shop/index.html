@@ -984,7 +984,8 @@ html[dir="rtl"] .sc-head::after,html[dir="rtl"] #probHead::after,html[dir="rtl"]
   text-decoration:none;transition:color .2s;
 }
 .pcard-sublink:hover{color:var(--acc)}
-#pgrid-solo,#pgrid-gym{grid-template-columns:repeat(3,1fr)}
+#pgrid-solo{grid-template-columns:repeat(3,1fr)}
+#pgrid-gym{grid-template-columns:repeat(4,1fr)}
 .nav-portals{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.04);padding:3px;border-radius:99px;border:1px solid var(--line)}
 .nav-portal-pill{font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;color:var(--mut);text-decoration:none;transition:all .2s ease}
 .nav-portal-pill:hover{color:#fff;background:rgba(255,255,255,.08)}
@@ -1289,6 +1290,14 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     'Executive Console Sign In': 'Yönetici Girişi',
     'Solo Coach Desk': 'Bireysel Koç Masası',
     'Executive Console': 'Yönetici Konsolu',
+    'Club Free Trial': 'Kulüp Ücretsiz Deneme',
+    '14 days · full executive access': '14 gün · tam yönetici erişimi',
+    'Executive Console unlocked': 'Yönetici Konsolu tam erişimi',
+    '1 dedicated branch (HQ)': '1 özel şube (Merkez)',
+    'Up to 3 coaches & trainers': '3 antrenöre kadar',
+    'Up to 3 coaches &amp; trainers': '3 antrenöre kadar',
+    'Up to 25 active athletes': '25 aktif sporcuya kadar',
+    'Start Free Club': 'Ücretsiz Kulüp Başlat',
     'Gym Studio': 'Spor Stüdyosu',
     'Gym Chain': 'Zincir Salon',
     'For single-location fitness studios.': 'Tek lokasyonlu butik fitness stüdyoları için.',
@@ -1441,6 +1450,14 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     'Executive Console Sign In':'ورود مدیریت باشگاه',
     'Solo Coach Desk':'میزکار مربی تکی',
     'Executive Console':'کنسول مدیریت ارشد',
+    'Club Free Trial':'آزمایش رایگان باشگاه',
+    '14 days · full executive access':'۱۴ روز · دسترسی کامل مدیریتی',
+    'Executive Console unlocked':'دسترسی کامل به کنسول مدیریتی',
+    '1 dedicated branch (HQ)':'۱ شعبه اختصاصی (مرکزی)',
+    'Up to 3 coaches & trainers':'تا ۳ مربی و کادر ورزشی',
+    'Up to 3 coaches &amp; trainers':'تا ۳ مربی و کادر ورزشی',
+    'Up to 25 active athletes':'تا ۲۵ شاگرد فعال',
+    'Start Free Club':'شروع رایگان باشگاه',
     'Gym Studio':'استودیو ورزشی',
     'Gym Chain':'باشگاه زنجیره‌ای',
     'Enterprise':'سازمانی / اینترپرایز',
@@ -2827,6 +2844,20 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     <!-- Gyms & Organizations Grid -->
     <div class="pgrid" id="pgrid-gym" style="display:none">
       <div class="pcard" data-reveal>
+        <h3>Club Free Trial</h3><p class="for">14 days · full executive access</p>
+        <div class="price"><span class="num" data-m="Free" data-y="Free">Free</span><span class="per">/ 14 days</span></div>
+        <ul>
+          <li><svg class="ic"><use href="#i-check"/></svg>Executive Console unlocked</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>1 dedicated branch (HQ)</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 3 coaches &amp; trainers</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Up to 25 active athletes</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Anti-Poaching client transfer engine</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>No credit card required</li>
+        </ul>
+        <a class="btn acc" href="/shop/checkout.html?plan=gym_trial&portal=org" data-checkout="gym_trial">Start Free Club</a>
+        <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
+      </div>
+      <div class="pcard" data-reveal style="transition-delay:.08s">
         <h3>Gym Studio</h3><p class="for">For single-location fitness studios.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="1,890,000" data-y="18,900,000">1,890,000</span><span class="per">/ month</span></div>
         <ul>
@@ -2840,7 +2871,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <a class="btn ghost" href="/shop/checkout.html?plan=gym_studio&portal=org" data-checkout="gym_studio">Buy Studio</a>
         <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
       </div>
-      <div class="pcard rec" data-reveal style="transition-delay:.1s">
+      <div class="pcard rec" data-reveal style="transition-delay:.16s">
         <span class="rec-chip">Recommended</span>
         <h3>Gym Chain</h3><p class="for">For multi-branch fitness centers &amp; chains.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="4,900,000" data-y="49,000,000">4,900,000</span><span class="per">/ month</span></div>
@@ -2856,7 +2887,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <a class="btn acc" href="/shop/checkout.html?plan=gym_chain&portal=org" data-checkout="gym_chain">Buy Chain</a>
         <a class="pcard-sublink" href="/index.html#org-login&portal=org&mode=executive&view=org">Executive Console Sign In</a>
       </div>
-      <div class="pcard" data-reveal style="transition-delay:.2s">
+      <div class="pcard" data-reveal style="transition-delay:.24s">
         <h3>Enterprise</h3><p class="for">For franchise gyms &amp; athletic academies.</p>
         <div class="price"><span class="cur">IRT</span><span class="num" data-m="9,900,000" data-y="99,000,000">9,900,000</span><span class="per">/ month</span></div>
         <ul>

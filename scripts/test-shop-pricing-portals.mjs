@@ -30,9 +30,11 @@ assert.ok(!indexHtml.includes('data-checkout="club"'), 'Solo grid must not have 
 
 // 1.4 Gym Grid plans & checkout links
 assert.ok(indexHtml.includes('id="pgrid-gym"'), 'Must have pgrid-gym');
+assert.ok(indexHtml.includes('href="/shop/checkout.html?plan=gym_trial&portal=org"'), 'Club Free Trial checkout must include portal=org');
 assert.ok(indexHtml.includes('href="/shop/checkout.html?plan=gym_studio&portal=org"'), 'Gym Studio checkout must include portal=org');
 assert.ok(indexHtml.includes('href="/shop/checkout.html?plan=gym_chain&portal=org"'), 'Gym Chain checkout must include portal=org');
 assert.ok(indexHtml.includes('href="/shop/checkout.html?plan=gym_enterprise&portal=org"'), 'Gym Enterprise checkout must include portal=org');
+assert.ok(indexHtml.includes('Club Free Trial'), 'Must have Club Free Trial card');
 
 // 1.5 Card sublinks for direct sign-in
 assert.ok(indexHtml.includes('class="pcard-sublink"'), 'Cards must have sign-in sublinks');
@@ -66,11 +68,13 @@ assert.ok(chHtml.includes("const setT="), 'Checkout must have setT function defi
 assert.ok(chHtml.includes("const payLabel="), 'Checkout must have payLabel function defined');
 
 // 2.3 Portal routing on checkout completion
-assert.ok(chHtml.includes("const isOrgPlan = ['club', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);"), 'Must identify org plans');
+assert.ok(chHtml.includes("gym_trial:{"), 'Checkout PLANS must include gym_trial');
+assert.ok(chHtml.includes("const isOrgPlan = ['club', 'gym_trial', 'gym_studio', 'gym_chain', 'gym_enterprise'].includes(plan);"), 'Must identify org plans');
 assert.ok(chHtml.includes("const portalHash = isOrgPlan ? '#org-login' : '#coach-login';"), 'Must route to org-login vs coach-login');
 assert.ok(chHtml.includes("&portal=coach"), 'Trial redirect must include portal=coach');
 
 // 2.4 Checkout translations
+assert.ok(chHtml.includes("'Start free club trial':'شروع رایگان باشگاه'"), 'Checkout FA must translate Start free club trial');
 assert.ok(chHtml.includes("'Solo Coach':'مربی تک‌نفره و مستقل'"), 'Checkout FA must translate Solo Coach');
 assert.ok(chHtml.includes("'Gym & Club':'باشگاه و سازمان'"), 'Checkout FA must translate Gym & Club');
 assert.ok(chHtml.includes("'Gym / Club Name':'نام باشگاه / مجموعه ورزشی'"), 'Checkout FA must translate Gym / Club Name');

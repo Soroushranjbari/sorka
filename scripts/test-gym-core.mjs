@@ -31,6 +31,7 @@ function makeMockStore() {
 }
 
 console.log('== 1. Plans & Quota Checks ==');
+ok(isGymPlan('gym_trial') === true, 'gym_trial is a gym plan');
 ok(isGymPlan('gym_studio') === true, 'gym_studio is a gym plan');
 ok(isGymPlan('gym_chain') === true, 'gym_chain is a gym plan');
 ok(isGymPlan('gym_enterprise') === true, 'gym_enterprise is a gym plan');
