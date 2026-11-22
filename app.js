@@ -1208,7 +1208,16 @@ Object.assign(FA, {
   'Basal Metabolic Rate': 'متابولیسم پایه',
   'Muscle Growth': 'رشد عضلانی',
   'Fat Loss': 'کاهش چربی',
-  'Visceral Fat Change': 'تغییر چربی احشایی'
+  'Visceral Fat Change': 'تغییر چربی احشایی',
+  'Workout Programming': 'برنامه‌دهی تمرین',
+  'Nutrition Hub': 'سیستم تغذیه',
+  'Programming': 'برنامه‌دهی',
+  'Initial Password': 'کلمه عبور اولیه',
+  'Optional — default: Coach1234!': 'اختیاری — پیش‌فرض: Coach1234!',
+  'Full direct access granted to Workout Builder, Nutrition, and Solo Coach Desk tools.': 'دسترسی مستقیم و کامل به سیستم برنامه‌دهی تمرین، تغذیه و ابزارهای مربی تک‌نفره اعطا شد.',
+  'Coach registered with full programming & nutrition access ✓': 'مربی با دسترسی مستقیم به برنامه‌دهی و تغذیه ثبت شد ✓',
+  'Switched to Workout Programming': 'به بخش برنامه‌دهی تمرین منتقل شدید',
+  'Switched to Nutrition Hub': 'به بخش تغذیه منتقل شدید'
 });
 
 Object.assign(TR, {
@@ -1233,7 +1242,16 @@ Object.assign(TR, {
   'Right Leg': 'Sağ Bacak',
   'Left Leg': 'Sol Bacak',
   'Balanced': 'Dengeli',
-  'Limb Symmetry': 'Uzuv Simetrisi'
+  'Limb Symmetry': 'Uzuv Simetrisi',
+  'Workout Programming': 'Antrenman Programlama',
+  'Nutrition Hub': 'Beslenme Merkezi',
+  'Programming': 'Programlama',
+  'Initial Password': 'İlk Şifre',
+  'Optional — default: Coach1234!': 'İsteğe bağlı — varsayılan: Coach1234!',
+  'Full direct access granted to Workout Builder, Nutrition, and Solo Coach Desk tools.': 'Antrenman Programlama, Beslenme ve Bireysel Koç Araçlarına doğrudan tam erişim tanımlandı.',
+  'Coach registered with full programming & nutrition access ✓': 'Antrenör tam programlama ve beslenme erişimiyle kaydedildi ✓',
+  'Switched to Workout Programming': 'Antrenman Programlama ekranına geçildi',
+  'Switched to Nutrition Hub': 'Beslenme Merkezi ekranına geçildi'
 });
 
 function applyLang(){
@@ -3109,6 +3127,14 @@ async function loadOrgMe() {
         S.workspaceMode = 'coach';
         try { localStorage.setItem('co-ws-mode', 'coach'); } catch (e) {}
       }
+      if (d.org.workspaceCode && !d.isOwner) {
+        let targetPref = null;
+        try { targetPref = localStorage.getItem('co-ws-target'); } catch (e) {}
+        if (targetPref !== 'personal' && CLOUD.code !== d.org.workspaceCode) {
+          CLOUD.code = d.org.workspaceCode;
+          try { localStorage.setItem('co-ws', d.org.workspaceCode); } catch (e) {}
+        }
+      }
       if (S.role) render();
     } else {
       S.org = null;
@@ -3435,8 +3461,14 @@ function renderOrgStaffTab(org){
                 </span>
               </td>
               <td style="text-align:end;white-space:nowrap">
-                <button class="btn btn-ghost btn-sm" data-act="copy-staff-invite" data-email="${esc(s.email)}" data-name="${esc(s.name)}" title="${t('Copy Invite')}">
+                <button class="btn btn-ghost btn-sm" data-act="copy-staff-invite" data-email="${esc(s.email)}" data-name="${esc(s.name)}" data-pass="${esc(s.initialPass || 'Coach1234!')}" title="${t('Copy Invite')}">
                   ${ic('copy',13)} ${t('Invite')}
+                </button>
+                <button class="btn btn-ghost btn-sm" data-act="org-open-coach-programming" data-cid="${esc(s.coachId)}" data-cname="${esc(s.name)}" title="${t('Workout Programming')}">
+                  ${ic('dumbbell',13)} ${t('Programming')}
+                </button>
+                <button class="btn btn-ghost btn-sm" data-act="org-open-coach-nutrition" data-cid="${esc(s.coachId)}" title="${t('Nutrition')}">
+                  ${ic('utensils',13)} ${t('Nutrition')}
                 </button>
                 <button class="btn btn-ghost btn-sm" data-act="set-coach-filter" data-cid="${esc(s.coachId)}" title="${t('Filter Clients')}">
                   ${ic('users',13)} ${t('Roster')}
@@ -3654,6 +3686,13 @@ function orgAddStaffModal(){
         </select>
       </div>
     </div>
+    <div class="field" style="margin-bottom:12px">
+      <label class="lbl">${t('Initial Password')}</label>
+      <input class="inp" id="nost-pass" type="text" placeholder="${t('Optional — default: Coach1234!')}">
+    </div>
+    <div class="card" style="padding:10px 14px;background:var(--card-sub);border-color:var(--acc-line);font-size:12px;display:flex;align-items:center;gap:8px">
+      ${ic('check', 14)} <span>${t('Full direct access granted to Workout Builder, Nutrition, and Solo Coach Desk tools.')}</span>
+    </div>
   </div>
   <div class="modal-f">
     <button class="btn btn-ghost" data-act="modal-x">${t('Cancel')}</button>
@@ -3799,6 +3838,7 @@ async function handleOrgBranchSubmit(){
 async function handleOrgStaffSubmit(){
   const name = ($('nost-name')?.value || '').trim();
   const email = ($('nost-email')?.value || '').trim();
+  const password = ($('nost-pass')?.value || '').trim();
   const role = $('nost-role')?.value || 'trainer';
   const branchId = $('nost-branch')?.value || 'all';
   if(!name || !email){ toast(t('Please enter name and email')); return; }
@@ -3808,11 +3848,11 @@ async function handleOrgStaffSubmit(){
   const branches = branchId === 'all' ? ['*'] : [branchId];
 
   if(!AUTH.token){
-    const newStaff = { coachId: 'c_' + Date.now(), name, email, role, branches };
+    const newStaff = { coachId: 'c_' + Date.now(), name, email, role, branches, initialPass: password || 'Coach1234!' };
     org.staff = org.staff || [];
     org.staff.push(newStaff);
     closeModal();
-    toast(t('Staff member added ✓'));
+    toast(t('Coach registered with full programming & nutrition access ✓'));
     render();
     return;
   }
@@ -3820,13 +3860,14 @@ async function handleOrgStaffSubmit(){
   try {
     const { ok, d, err } = await authApi('/api/org/staff', {
       method: 'POST',
-      body: JSON.stringify({ name, email, role, branches })
+      body: JSON.stringify({ name, email, role, branches, password })
     });
     if(ok && d && d.staff){
       org.staff = org.staff || [];
+      if (d.initialPass) d.staff.initialPass = d.initialPass;
       org.staff.push(d.staff);
       closeModal();
-      toast(t('Staff member added ✓'));
+      toast(t('Coach registered with full programming & nutrition access ✓'));
       render();
     } else {
       toast(err || t('Failed to add staff'));
@@ -4633,7 +4674,13 @@ async function cloudEnsure(){ // coach: attach the OWN workspace (auth) or legac
     // Phase-1: a signed-in coach owns exactly one workspace — adopt it.
     if(AUTH.token&&!AUTH.coach){await authMe()}
     if(AUTH.coach&&AUTH.ws&&AUTH.ws.code){
-      CLOUD.code=AUTH.ws.code;
+      let targetCode = AUTH.ws.code;
+      if(S.org && S.org.workspaceCode && !S.isGymOwner){
+        let targetPref = null;
+        try { targetPref = localStorage.getItem('co-ws-target'); } catch (e) {}
+        if(targetPref !== 'personal') targetCode = S.org.workspaceCode;
+      }
+      CLOUD.code=targetCode;
       const out=await cloudFetch(CLOUD.code);
       if(out&&out.ok){
         CLOUD.rev=out.rev||0;
@@ -15803,6 +15850,8 @@ function shell(inner){
     ],
     governance: [
       ['clients', 'Club Master Roster', 'users'],
+      ['builder', 'Workout Programming', 'dumbbell'],
+      ['nutrition', 'Nutrition Hub', 'utensils'],
       ['org-reassign', 'Anti-Poaching Transfer', 'refresh'],
       ['org-machines', 'Smart Equipment & QR', 'dumbbell']
     ],
@@ -18076,15 +18125,31 @@ document.addEventListener('click',e=>{
     case 'org-reassign-modal': orgReassignModal(el.dataset.cid ? +el.dataset.cid : null); break;
     case 'org-create-modal': orgCreateModal(); break;
     case 'org-remove-staff': orgRemoveStaff(el.dataset.coachid); break;
+    case 'org-open-coach-programming': {
+      S.coachFilter = el.dataset.cid || 'all';
+      S.view = 'builder';
+      render();
+      toast(t('Switched to Workout Programming'));
+      break;
+    }
+    case 'org-open-coach-nutrition': {
+      S.coachFilter = el.dataset.cid || 'all';
+      S.view = 'nutrition';
+      render();
+      toast(t('Switched to Nutrition Hub'));
+      break;
+    }
     case 'copy-staff-invite': {
       const name = el.dataset.name || t('Coach');
       const email = el.dataset.email || '';
+      const pass = el.dataset.pass || 'Coach1234!';
       const org = currentOrg();
       const orgName = org?.name || t('Our Club');
       const appUrl = (typeof location !== 'undefined' ? (location.origin + location.pathname) : 'https://coachos.app');
+      const directLoginUrl = `${appUrl}#login?email=${encodeURIComponent(email)}&portal=coach`;
       const msg = lang === 'fa'
-        ? `سلام ${name} عزیز،\nشما به عنوان مربی در «${orgName}» به سامانه CoachMint دعوت شدید.\nجهت ورود به میزکار و داشبورد مربیگری خود، با ایمیل ${email} از لینک زیر وارد شوید:\n${appUrl}`
-        : `Hi ${name},\nYou have been invited as a coach to ${orgName}.\nAccess your coaching dashboard by logging in with ${email} at:\n${appUrl}`;
+        ? `سلام ${name} عزیز،\nحساب مربیگری شما در «${orgName}» با دسترسی مستقیم و کامل به سیستم برنامه‌دهی تمرین، تغذیه و میزکار مربی فعال شد.\nایمیل ورود: ${email}\nکلمه عبور: ${pass}\nورود مستقیم به پنل مربی:\n${directLoginUrl}`
+        : `Hi ${name},\nYour coaching account for ${orgName} has been activated with full access to Workout Builder, Nutrition, and Solo Coach Desk.\nLogin Email: ${email}\nPassword: ${pass}\nDirect Access:\n${directLoginUrl}`;
       if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(msg).then(() => toast(t('Coach invite message copied ✓'))).catch(() => toast(msg));
       } else {
@@ -20617,6 +20682,11 @@ if(S.joinCode)freshWorkspace();
     let join=null;try{join=JSON.parse(localStorage.getItem('co-join')||'null')}catch(e){}
     // A signed-in coach always syncs their OWN workspace — never a stale code.
     let code=(AUTH.coach&&AUTH.ws&&AUTH.ws.code)?AUTH.ws.code:'';
+    if(S.org && S.org.workspaceCode && !S.isGymOwner){
+      let targetPref = null;
+      try { targetPref = localStorage.getItem('co-ws-target'); } catch (e) {}
+      if(targetPref !== 'personal') code = S.org.workspaceCode;
+    }
     /* v18.54 — the QR's WORKSPACE wins over any stale local memory (co-ws /
        co-legacy-ws from previous joins): a scanning student must fetch THEIR
        workspace first, never merge an old one and short-circuit to errors. */

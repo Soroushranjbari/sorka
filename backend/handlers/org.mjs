@@ -8,10 +8,11 @@
 //   POST   /api/org/machine    (Bearer, { code, name, branchId, ex, brand, adjustments, cues }) -> { ok, machine, org }
 //   DELETE /api/org/machine    (Bearer, { machineId }) -> { ok, org }
 import {
-  store, j, bearerOf, sessionOf, accountById, normEmail,
+  store, j, bearerOf, sessionOf, accountById, normEmail, hashPassword,
   createOrg, getOrg, getOrgByCoach, addOrgBranch, addOrgStaff, removeOrgStaff, reassignOrgClients,
   addOrgMachine, removeOrgMachine
 } from '../lib/saas.mjs';
+import { ensureWorkspace } from '../lib/auth-shared.mjs';
 import { PLANS, isGymPlan } from '../lib/billing.mjs';
 import { readJsonCapped, tooLarge, badJson, rateLimit, ipOf, tooMany, secure } from '../lib/guard.mjs';
 
@@ -57,6 +58,11 @@ export default async function handle(req) {
       return j(200, { ok: true, org: null, isGym: isGymPlan(acct.plan), plan: acct.plan });
     }
     const { org, staffRecord } = orgData;
+    const ownerAcct = await accountById(st, org.ownerCoachId);
+    let ownerWs = null;
+    if (ownerAcct && ownerAcct.workspaceId) {
+      ownerWs = await st.get(`ws:${ownerAcct.workspaceId}`, { type: 'json' });
+    }
     return j(200, {
       ok: true,
       org: {
@@ -66,6 +72,8 @@ export default async function handle(req) {
         branches: org.branches || [],
         staff: org.staff || [],
         machines: org.machines || [],
+        workspaceCode: ownerWs?.code || null,
+        workspaceId: ownerWs?.id || null,
         createdAt: org.createdAt
       },
       role: staffRecord.role || 'gym_owner',
@@ -136,9 +144,39 @@ export default async function handle(req) {
     const email = normEmail(data?.email);
     if (!email) return j(400, { ok: false, error: 'email-required' });
 
-    // Look up existing coach account if present, or assign temporary coachId
-    const targetAcct = await st.get(`acct:${email}`, { type: 'json' });
-    const targetCoachId = targetAcct?.id || data?.coachId || `coach_${Date.now().toString(36)}`;
+    // Look up existing coach account if present, or auto-provision full coach account
+    let targetAcct = await st.get(`acct:${email}`, { type: 'json' });
+    const initialPass = data?.password ? String(data.password).trim() : 'Coach1234!';
+    let targetCoachId = targetAcct?.id;
+    let newlyProvisioned = false;
+
+    if (!targetAcct) {
+      const now = Date.now();
+      targetCoachId = `coach_${Date.now().toString(36)}`;
+      targetAcct = {
+        id: targetCoachId,
+        email,
+        name: String(data?.name || email.split('@')[0]).trim(),
+        pass: hashPassword(initialPass),
+        plan: 'gym_staff',
+        workspaceId: null,
+        role: 'coach',
+        sub: { status: 'active', orgId: org.id },
+        trialEndsAt: now + 365 * 86400000,
+        createdAt: now,
+        isOrg: false
+      };
+      await st.setJSON(`acct:${email}`, targetAcct);
+      await st.setJSON(`acct-by-id:${targetAcct.id}`, { email });
+      await ensureWorkspace(st, targetAcct);
+      newlyProvisioned = true;
+    } else {
+      if (targetAcct.plan === 'trial' || !targetAcct.plan) {
+        targetAcct.plan = 'gym_staff';
+        targetAcct.sub = { status: 'active', orgId: org.id };
+        await st.setJSON(`acct:${email}`, targetAcct);
+      }
+    }
 
     const res = await addOrgStaff(st, org.id, {
       coachId: targetCoachId,
@@ -149,7 +187,14 @@ export default async function handle(req) {
     }, plan.maxCoaches || 5);
 
     if (!res.ok) return j(400, res);
-    return j(200, { ok: true, staffMember: res.staffMember, staff: res.staffMember, org: res.org });
+    return j(200, {
+      ok: true,
+      staffMember: res.staffMember,
+      staff: res.staffMember,
+      org: res.org,
+      newlyProvisioned,
+      initialPass: newlyProvisioned ? initialPass : undefined
+    });
   }
 
   // 5. DELETE /api/org/staff

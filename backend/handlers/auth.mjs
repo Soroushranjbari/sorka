@@ -2,7 +2,7 @@
 import {
   store, j, normCode, bearerOf,
   sessionOf, accountById, accessOf, ownerOf,
-  CODE_RE, newId
+  CODE_RE, newId, getOrgByCoach
 } from '../lib/saas.mjs';
 import {
   signup, login, publicWs, importLegacy,
@@ -37,6 +37,12 @@ async function me(req, st) {
   if (!s) return j(401, { ok: false, error: 'unauthorized' });
   const acct = await accountById(st, s.coachId);
   if (!acct) return j(401, { ok: false, error: 'unauthorized' });
+  const orgData = await getOrgByCoach(st, s.coachId, acct.email);
+  if (orgData && orgData.org && (acct.plan === 'trial' || !acct.plan)) {
+    acct.plan = 'gym_staff';
+    acct.sub = { status: 'active', orgId: orgData.org.id };
+    await st.setJSON(`acct:${acct.email}`, acct);
+  }
   const ws = acct.workspaceId ? await st.get(`ws:${acct.workspaceId}`, { type: 'json' }) : null;
   return j(200, { ok: true, coach: acct && { id: acct.id, email: acct.email, name: acct.name, plan: acct.plan || 'trial', role: acct.role || 'coach', phone: acct.phone || '', bio: acct.bio || '', isOrg: !!acct.isOrg }, workspace: publicWs(ws), access: accessOf(acct) });
 }
