@@ -46,7 +46,7 @@ export async function sendMail({ to, subject, html }) {
 const SHELL = (titleFa, bodyEn, bodyFa, cta) => `
 <div style="font-family:Tahoma,'Segoe UI',Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px;direction:ltr">
   <div style="text-align:center;padding-bottom:18px;border-bottom:2px solid #B5E048">
-    <span style="font-size:22px;font-weight:800;color:#161C04;letter-spacing:2px">COACH<span style="color:#7BA912">MINT</span></span>
+    <span style="font-size:22px;font-weight:800;color:#161C04;letter-spacing:2px">FORMA<span style="color:#7BA912">DOCK</span></span>
   </div>
   <div style="padding:22px 4px;font-size:14.5px;line-height:1.9;color:#24292F">
     <p style="margin:0 0 14px">${bodyEn}</p>
@@ -54,7 +54,7 @@ const SHELL = (titleFa, bodyEn, bodyFa, cta) => `
     ${cta || ''}
   </div>
   <div style="border-top:1px solid #E5E7EB;padding-top:14px;font-size:11.5px;color:#9CA3AF;text-align:center">
-    CoachMint — One coach. One workspace. · <span dir="rtl">یک مربی، یک فضای کاری</span>
+    FormaDock — Hybrid Athletic OS &amp; Gym Hub · <span dir="rtl">سیستم‌عامل جامع ورزشی، باشگاهی و مربیگری</span>
   </div>
 </div>`;
 

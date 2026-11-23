@@ -1,13 +1,15 @@
 {
-  "name": "CoachMint — Coach & Client Workspace",
-  "short_name": "CoachMint",
+  "name": "FormaDock — Hybrid Athletic OS & Gym Hub",
+  "short_name": "FormaDock",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#F6F6F4",
+  "background_color": "#090C10",
   "theme_color": "#12151B",
-  "description": "One workspace for every client — workouts, nutrition, progress and messages.",
+  "description": "Hybrid Athletic OS & Gym Hub — workouts, nutrition, smart gym, check-in, and member progress.",
   "icons": [
+    { "src": "icons/formadock-mark.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "icons/formadock-app-icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable" },
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]

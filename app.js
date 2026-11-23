@@ -81,7 +81,7 @@ const lucideSvg=name=>{
 const ic=(n,s=16)=>{
   const inner=P[n]||lucideSvg(LUCIDE_ALIAS[n])||lucideSvg(n);
   return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`};
-const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="currentColor"/></svg>`;
+const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M40 14h68c2.5 0 4 2.5 2.5 4.7L98 42c-1.2 2-3.2 3-5.5 3H40V14z M40 52h42c2.5 0 4.5 1.5 5.5 3.5l5.5 9c1.2 2-.2 4.5-2.5 4.5H40V52z M16 16c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v68c0 2-2 4-4 4H18c-1.1 0-2-.9-2-2V16z M16 74h32c2 0 4 2 4 4v6c0 2-2 4-4 4H16V74z" fill="currentColor"/></svg>`;
 
 /* ================= I18N ================= */
 let lang='en';
@@ -5685,17 +5685,17 @@ function coachLogin(){
 <div class="login">
   ${isOrg ? `
   <div class="login-left" style="background:linear-gradient(165deg,#0a1120 0%,#0f172a 50%,#090d16 100%);color:#fff;padding:56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
-    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag" style="color:var(--accent);letter-spacing:.08em">${t('MULTI-COACH & MULTI-BRANCH ENTERPRISE')}</div></div></div></div>
+    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">FORMADOCK</div><div class="brand-tag" style="color:var(--accent);letter-spacing:.08em">${t('MULTI-COACH & MULTI-BRANCH ENTERPRISE')}</div></div></div></div>
     <div style="position:relative;max-width:440px">
       <div class="eyebrow" style="color:var(--accent)">${t('ENTERPRISE & GYM COMMAND CENTER')}</div>
       <h2 style="font-size:32px;line-height:1.2;margin:14px 0 24px">${t('Run your fitness clubs & training staff with enterprise control.')}</h2>
       <div class="lfeat">${['Multi-branch & Staff management','Gym ownership of all client rosters & logs','Gym equipment QR tracking & maintenance','Executive analytics, revenue & oversight'].map(f=>`<div>${ic('check',15)}<span>${t(f)}</span></div>`).join('')}</div>
     </div>
-    <div class="lquote"><div>${t('"CoachMint transformed how we manage our 3 branches and 12 coaches. Total clarity and enterprise control."')}</div><div class="lq-a">${t('— Kaveh M. · General Manager, Oxygen Fitness Clubs')}</div></div>
+    <div class="lquote"><div>${t('"FormaDock transformed how we manage our 3 branches and 12 coaches. Total clarity and enterprise control."')}</div><div class="lq-a">${t('— Kaveh M. · General Manager, Oxygen Fitness Clubs')}</div></div>
   </div>
   ` : `
   <div class="login-left">
-    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">${t('ONE COACH. ONE WORKSPACE.')}</div></div></div></div>
+    <div style="position:relative"><div class="row" style="gap:11px;align-items:flex-start"><div class="brand-mark">${CM(20)}</div><div><div class="brand-name">FORMADOCK</div><div class="brand-tag">${t('ONE COACH. ONE WORKSPACE.')}</div></div></div></div>
     <div style="position:relative;max-width:430px">
       <div class="eyebrow">${t('PROFESSIONAL COACH WORKSPACE')}</div>
       <h2 style="font-size:34px;line-height:1.16;margin:14px 0 24px">${t('Run your coaching business like a pro.')}</h2>
@@ -5893,7 +5893,7 @@ function vUnlock(){
     ?(st==='loading'?t('Checking code…'):st==='invalid'?(S.unOffline?t('Cannot reach the server'):t('Code not found')):st==='multi'?t('Personal code needed'):t('Connect with your code first'))
     :t('Hold the dumbbell to lift');
   return `<div class="unlock" id="un-scene">
-    <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">COACHMINT</div><div class="brand-tag" style="color:#7A8291">ONE COACH. ONE WORKSPACE.</div></div></div>
+    <div style="position:absolute;top:18px;inset-inline-start:18px;display:flex;align-items:center;gap:10px;z-index:2"><div class="brand-mark" style="background:rgba(200,240,75,.12);border:1px solid rgba(200,240,75,.35);color:var(--accent)">${CM(18)}</div><div><div class="brand-name" style="color:#F5F6F8">FORMADOCK</div><div class="brand-tag" style="color:#7A8291">HYBRID ATHLETIC OS &amp; GYM HUB</div></div></div>
     <div style="position:absolute;top:18px;inset-inline-end:18px;z-index:2">${langBtn('btn-outline btn-sm')}</div>
     <div class="un-stage">
       <div class="un-glow"></div><div class="un-grid"></div>${dots}
@@ -5909,7 +5909,7 @@ function vUnlock(){
         <g class="un-plate ri"><rect x="144" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="150" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
         <g class="un-plate lo"><rect x="8" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="13" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
         <g class="un-plate ro"><rect x="182" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="187" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
-        <g transform="translate(97.2 57.5) scale(.13)"><path d="M36 6L116 6 94 30 56 30 44 50 56 70 94 70 116 94 4 94Z" fill="var(--accent)"/></g>
+        <g transform="translate(97.2 57.5) scale(.13)"><path d="M40 14h68c2.5 0 4 2.5 2.5 4.7L98 42c-1.2 2-3.2 3-5.5 3H40V14z M40 52h42c2.5 0 4.5 1.5 5.5 3.5l5.5 9c1.2 2-.2 4.5-2.5 4.5H40V52z M16 16c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v68c0 2-2 4-4 4H18c-1.1 0-2-.9-2-2V16z M16 74h32c2 0 4 2 4 4v6c0 2-2 4-4 4H16V74z" fill="var(--accent)"/></g>
       </svg></div>
       </div>
       <div class="un-shock"></div>
@@ -15874,11 +15874,11 @@ function shell(inner){
     <div class="brand" style="cursor:pointer" data-act="nav" data-view="org-overview">
       <div class="brand-mark" style="background:var(--accent);color:#fff;border-radius:10px">${ic('building',18)}</div>
       <div style="min-width:0;overflow:hidden">
-        <div class="brand-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(org.name)}">${esc(org.name || 'COACHMINT')}</div>
+        <div class="brand-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${esc(org.name)}">${esc(org.name || 'FORMADOCK')}</div>
         <div class="brand-tag" style="color:var(--accent-text);font-weight:700;letter-spacing:.06em">${t('EXECUTIVE CONSOLE')}</div>
       </div>
     </div>` : `
-    <div class="brand" style="cursor:pointer" data-act="nav" data-view="dash"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">COACHMINT</div><div class="brand-tag">${t('ONE COACH. ONE WORKSPACE.')}</div></div></div>`;
+    <div class="brand" style="cursor:pointer" data-act="nav" data-view="dash"><div class="brand-mark">${CM(19)}</div><div><div class="brand-name">FORMADOCK</div><div class="brand-tag">${t('HYBRID ATHLETIC OS & GYM HUB')}</div></div></div>`;
 
   const wsSwitcher = (hasOrg && isOwnerOrMgr) ? `
     <div style="margin:10px 14px 12px 14px;background:var(--seg-bg);border:1px solid var(--line);border-radius:10px;padding:3px;display:flex;gap:3px">
