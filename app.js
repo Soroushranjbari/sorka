@@ -81,7 +81,7 @@ const lucideSvg=name=>{
 const ic=(n,s=16)=>{
   const inner=P[n]||lucideSvg(LUCIDE_ALIAS[n])||lucideSvg(n);
   return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`};
-const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M40 14h68c2.5 0 4 2.5 2.5 4.7L98 42c-1.2 2-3.2 3-5.5 3H40V14z M40 52h42c2.5 0 4.5 1.5 5.5 3.5l5.5 9c1.2 2-.2 4.5-2.5 4.5H40V52z M16 16c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v68c0 2-2 4-4 4H18c-1.1 0-2-.9-2-2V16z M16 74h32c2 0 4 2 4 4v6c0 2-2 4-4 4H16V74z" fill="currentColor"/></svg>`;
+const CM=(s=18)=>`<svg width="${s}" height="${Math.round(s*100/120)}" viewBox="0 0 120 100" fill="none" style="display:block" aria-hidden="true"><path d="M20 18c0-2.2 1.8-4 4-4h78c2.8 0 4.8 2.8 3.4 5.4L88.2 43.5c-1.1 2-3.1 3.3-5.6 3.3H38v6.2h44c2.8 0 4.8 2.8 3.4 5.4L75.2 77.5c-1.1 2-3.1 3.3-5.6 3.3H38V84c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4V18z" fill="currentColor"/></svg>`;
 
 /* ================= I18N ================= */
 let lang='en';
@@ -5909,7 +5909,7 @@ function vUnlock(){
         <g class="un-plate ri"><rect x="144" y="22" width="24" height="84" rx="10" fill="url(#unplate)" stroke="rgba(200,240,75,.65)" stroke-width="2"/><rect x="150" y="32" width="12" height="64" rx="6" fill="rgba(200,240,75,.12)"/></g>
         <g class="un-plate lo"><rect x="8" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="13" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
         <g class="un-plate ro"><rect x="182" y="30" width="20" height="68" rx="9" fill="url(#unplate)" stroke="rgba(200,240,75,.5)" stroke-width="2"/><rect x="187" y="38" width="10" height="52" rx="5" fill="rgba(200,240,75,.10)"/></g>
-        <g transform="translate(97.2 57.5) scale(.13)"><path d="M40 14h68c2.5 0 4 2.5 2.5 4.7L98 42c-1.2 2-3.2 3-5.5 3H40V14z M40 52h42c2.5 0 4.5 1.5 5.5 3.5l5.5 9c1.2 2-.2 4.5-2.5 4.5H40V52z M16 16c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v68c0 2-2 4-4 4H18c-1.1 0-2-.9-2-2V16z M16 74h32c2 0 4 2 4 4v6c0 2-2 4-4 4H16V74z" fill="var(--accent)"/></g>
+        <g transform="translate(97.2 57.5) scale(.13)"><path d="M20 18c0-2.2 1.8-4 4-4h78c2.8 0 4.8 2.8 3.4 5.4L88.2 43.5c-1.1 2-3.1 3.3-5.6 3.3H38v6.2h44c2.8 0 4.8 2.8 3.4 5.4L75.2 77.5c-1.1 2-3.1 3.3-5.6 3.3H38V84c0 2.2-1.8 4-4 4H24c-2.2 0-4-1.8-4-4V18z" fill="var(--accent)"/></g>
       </svg></div>
       </div>
       <div class="un-shock"></div>
