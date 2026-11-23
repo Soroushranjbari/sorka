@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FormaDock — Brand Identity & Vector Logo Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #090C10;
+  --surface: #121620;
+  --card: #181E2C;
+  --border: #263147;
+  --accent: #C8F04B;
+  --accent-glow: rgba(200, 240, 75, 0.25);
+  --text: #F3F5F9;
+  --text-muted: #8E9AB0;
+  --font-fa: 'Vazirmatn', sans-serif;
+  --font-display: 'Oxanium', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-fa);
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(200, 240, 75, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 40%);
+}
+.container { max-width: 1000px; margin: 0 auto; }
+header { text-align: center; margin-bottom: 40px; }
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(200, 240, 75, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(200, 240, 75, 0.3);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+h1 { font-family: var(--font-display); font-size: 38px; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; }
+h1 span { color: var(--accent); }
+p.sub { color: var(--text-muted); font-size: 16px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.card-title {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.preview-box {
+  background: #0B0E14;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.preview-box.light {
+  background: #EAEAE4;
+  border-color: #CBD5E1;
+}
+.preview-box.light text.light-invert {
+  fill: #0F172A !important;
+}
+
+.icon-showcase {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+.app-icon-preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 26px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+  transition: transform 0.2s ease;
+}
+.app-icon-preview:hover { transform: scale(1.05); }
+
+.palette { display: flex; gap: 12px; margin-top: 10px; }
+.swatch {
+  flex: 1;
+  height: 60px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.c-lime { background: #C8F04B; color: #0E1502; }
+.c-dark { background: #090C10; color: #F3F5F9; border: 1px solid var(--border); }
+.c-card { background: #181E2C; color: #F3F5F9; }
+.c-titanium { background: #E2E8F0; color: #0F172A; }
+
+.concept-box {
+  background: rgba(200, 240, 75, 0.04);
+  border: 1px solid rgba(200, 240, 75, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+}
+.concept-box h3 { color: var(--accent); margin-bottom: 12px; font-size: 18px; }
+.concept-box p { color: var(--text-muted); line-height: 1.8; font-size: 14.5px; }
+.files-list { margin-top: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.files-list li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="badge">BRAND IDENTITY & VECTOR DESIGN</div>
+    <h1><span>FORMA</span>DOCK</h1>
+    <p class="sub">هویت بصری و طراحی لوگوی رسمی سیستم‌عامل جامع ورزشی، باشگاهی و مربیگری</p>
+  </header>
+
+  <div class="grid">
+    <!-- Horizontal Primary Logo -->
+    <div class="card" style="grid-column: span 2;">
+      <div class="card-title">لوگوی اصلی افقی (Full Horizontal Logo) — تم تیره</div>
+      <div class="preview-box">
+        <img src="formadock-logo.svg" alt="FormaDock Logo" style="max-width: 100%; height: auto;">
+      </div>
+      <p style="font-size:13px; color:var(--text-muted);">مناسب برای هدر وب‌سایت، پنل مدیریت باشگاه، اسلایدها و ارائه‌های شرکتی.</p>
+    </div>
+
+    <!-- App Icon / Mobile PWA -->
+    <div class="card">
+      <div class="card-title">آیکون اپلیکیشن (App Icon / PWA)</div>
+      <div class="preview-box">
+        <div class="icon-showcase">
+          <img src="formadock-app-icon.svg" class="app-icon-preview" alt="FormaDock App Icon">
+          <img src="formadock-app-icon.svg" style="width:64px; height:64px; border-radius:15px; box-shadow: 0 8px 20px rgba(0,0,0,0.4);" alt="FormaDock App Icon 64px">
+          <img src="formadock-app-icon.svg" style="width:36px; height:36px; border-radius:8px;" alt="FormaDock App Icon 36px">
+        </div>
+      </div>
+      <p style="font-size:13px; color:var(--text-muted);">بهینه‌شده برای آیکون گوشی شاگرد، فاویکون مرورگر و استورها.</p>
+    </div>
+
+    <!-- Standalone Mark -->
+    <div class="card">
+      <div class="card-title">نماد تکی (Monogram Mark)</div>
+      <div class="preview-box">
+        <img src="formadock-mark.svg" style="width:120px; height:120px;" alt="FormaDock Mark">
+      </div>
+      <p style="font-size:13px; color:var(--text-muted);">مونوگرام ترکیبی F + Dock برای لودینگ‌ها، گیت ورود QR و مهر رسمی.</p>
+    </div>
+  </div>
+
+  <!-- Color Palette -->
+  <div class="card" style="margin-bottom: 24px;">
+    <div class="card-title">پالت رنگی امضا (Brand Color Palette)</div>
+    <div class="palette">
+      <div class="swatch c-lime">#C8F04B<br>Electric Lime</div>
+      <div class="swatch c-dark">#090C10<br>Obsidian Core</div>
+      <div class="swatch c-card">#181E2C<br>Deep Navy</div>
+      <div class="swatch c-titanium">#E2E8F0<br>Titanium</div>
+    </div>
+  </div>
+
+  <!-- Design Philosophy -->
+  <div class="concept-box">
+    <h3>فلسفه و هندسه طراحی لوگوی FormaDock</h3>
+    <p>
+      این نشان از سه بخش مهندسی‌شده تشکیل شده است که هم‌زمان دو مفهوم کلیدی را تداعی می‌کنند:<br>
+      <strong>۱. بال سرعت و انرژی (بالای نشانه):</strong> با شیب تند و رنگ سبز نئونی (#C8F04B)، نماد انرژی جنبشی، ارتقای فرم بدنی ورزشکار و شتاب رو به جلو است.<br>
+      <strong>۲. هسته اتصال و داک (مرکز نشانه):</strong> نماد اتصال بی‌اصطکاک شاگرد، مربی و باشگاه با یک روزنه ارتباطی دیجیتال.<br>
+      <strong>۳. ستون تیتانیومی پایدار (سمت چپ نشانه):</strong> نماد ثبات، مدیریت ساختاریافته باشگاه و قدرت زیرساختی پلتفرم.<br>
+      ترکیب این سه عنصر در نگاه اول حرف <strong>F</strong> (مخفف Forma) و در فرم کلی یک <strong>Dock</strong> (ایستگاه اتصال ورزشی) مقتدر را می‌سازد.
+    </p>
+    <ul class="files-list">
+      <li>📁 فایل لوگوی کامل: icons/formadock-logo.svg</li>
+      <li>📁 فایل نماد مونوگرام: icons/formadock-mark.svg</li>
+      <li>📁 فایل آیکون اپلیکیشن (PWA / iOS / Android): icons/formadock-app-icon.svg</li>
+      <li>📁 صفحه پیش‌نمایش زنده: icons/preview.html</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

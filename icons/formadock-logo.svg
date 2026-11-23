@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" width="440" height="100" fill="none">
+  <defs>
+    <!-- Neon Lime Gradient -->
+    <linearGradient id="logoNeonLime" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2FF6F"/>
+      <stop offset="50%" stop-color="#C8F04B"/>
+      <stop offset="100%" stop-color="#9BC81C"/>
+    </linearGradient>
+
+    <!-- Titanium Spine Gradient -->
+    <linearGradient id="logoTitanium" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#E2E8F0"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+
+    <!-- Ambient Glow Filter -->
+    <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- ================= LOGOMARK (X: 10..95) ================= -->
+  <g transform="translate(10, 10) scale(0.8)">
+    <!-- Glow -->
+    <circle cx="56" cy="48" r="40" fill="#C8F04B" fill-opacity="0.12"/>
+    
+    <!-- Top Velocity Wing (Forma) -->
+    <path d="M38 16 L96 16 C98.5 16 100 18.5 98.6 20.7 L86 41 C84.8 42.8 82.8 44 80.6 44 L38 44 Z" 
+          fill="url(#logoNeonLime)" filter="url(#logoGlow)"/>
+
+    <!-- Middle Docking Node -->
+    <path d="M38 51 L74 51 C76.2 51 78.2 52.2 79.4 54 L85.2 63.5 C86.4 65.3 85.1 67.8 83 67.8 L38 67.8 Z" 
+          fill="url(#logoNeonLime)"/>
+    <circle cx="62" cy="59.4" r="3" fill="#090C10"/>
+
+    <!-- Vertical Spine Base -->
+    <path d="M18 18 C18 16.9 18.9 16 20 16 L32 16 C33.1 16 34 16.9 34 18 L34 86 C34 88.2 32.2 90 30 90 L20 90 C18.9 90 18 89.1 18 88 Z" 
+          fill="url(#logoTitanium)"/>
+
+    <!-- Dock Ground Anchor -->
+    <path d="M18 76 L50 76 C52.2 76 54 77.8 54 80 L54 86 C54 88.2 52.2 90 50 90 L18 90 Z" 
+          fill="#1E293B" stroke="#334155" stroke-width="1.5"/>
+    <circle cx="44" cy="83" r="2.5" fill="#C8F04B"/>
+  </g>
+
+  <!-- ================= TYPOGRAPHY (X: 115..) ================= -->
+  <!-- "FORMA" in Geometric Titanium White -->
+  <text x="112" y="58" 
+        font-family="'Oxanium', 'Inter', -apple-system, sans-serif" 
+        font-weight="800" 
+        font-size="36" 
+        letter-spacing="2" 
+        fill="#F8FAFC">FORMA</text>
+
+  <!-- "DOCK" in Neon Lime Accent -->
+  <text x="268" y="58" 
+        font-family="'Oxanium', 'Inter', -apple-system, sans-serif" 
+        font-weight="800" 
+        font-size="36" 
+        letter-spacing="2" 
+        fill="url(#logoNeonLime)">DOCK</text>
+
+  <!-- Divider Line -->
+  <line x1="114" y1="69" x2="410" y2="69" stroke="#263147" stroke-width="1.5"/>
+
+  <!-- Subtitle / Tagline -->
+  <text x="114" y="82" 
+        font-family="'Inter', -apple-system, sans-serif" 
+        font-weight="600" 
+        font-size="10.5" 
+        letter-spacing="3.5" 
+        fill="#8E9AB0">HYBRID ATHLETIC OS &amp; GYM HUB</text>
+</svg>

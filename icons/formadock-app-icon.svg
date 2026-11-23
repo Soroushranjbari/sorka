@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <!-- App Icon Rounded Corner Mask -->
+    <clipPath id="squircle">
+      <rect width="512" height="512" rx="115" ry="115"/>
+    </clipPath>
+
+    <!-- Deep Metallic Canvas Gradient -->
+    <radialGradient id="iconBg" cx="50%" cy="30%" r="85%">
+      <stop offset="0%" stop-color="#18202F"/>
+      <stop offset="50%" stop-color="#0E131C"/>
+      <stop offset="100%" stop-color="#07090D"/>
+    </radialGradient>
+
+    <!-- Ambient Neon Spotlight -->
+    <radialGradient id="neonSpot" cx="58%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#C8F04B" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C8F04B" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Intense Lime Gradient -->
+    <linearGradient id="limeWing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2FF9E"/>
+      <stop offset="45%" stop-color="#C8F04B"/>
+      <stop offset="100%" stop-color="#88B810"/>
+    </linearGradient>
+
+    <!-- Premium Silver Titanium -->
+    <linearGradient id="silverSpine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="65%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="neonAura" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base with Clip -->
+  <g clip-path="url(#squircle)">
+    <!-- Base Background -->
+    <rect width="512" height="512" fill="url(#iconBg)"/>
+
+    <!-- Subtle Technical Background Grid Lines -->
+    <line x1="0" y1="128" x2="512" y2="128" stroke="#1E293B" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="0" y1="256" x2="512" y2="256" stroke="#1E293B" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="0" y1="384" x2="512" y2="384" stroke="#1E293B" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="128" y1="0" x2="128" y2="512" stroke="#1E293B" stroke-opacity="0.3" stroke-width="1"/>
+    <line x1="256" y1="0" x2="256" y2="512" stroke="#1E293B" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="384" y1="0" x2="384" y2="512" stroke="#1E293B" stroke-opacity="0.3" stroke-width="1"/>
+
+    <!-- Ambient Glow -->
+    <circle cx="290" cy="220" r="190" fill="url(#neonSpot)"/>
+
+    <!-- Inner Border Highlight -->
+    <rect x="2" y="2" width="508" height="508" rx="113" ry="113" 
+          fill="none" stroke="#334155" stroke-opacity="0.4" stroke-width="2"/>
+
+    <!-- ================= LOGO ICON ================= -->
+    <g transform="translate(46, 40) scale(3.5)" filter="url(#softShadow)">
+      <!-- Top Dynamic Wing (Forma Velocity) -->
+      <path d="M40 20 L98 20 C100.5 20 102 22.5 100.6 24.7 L88 45 C86.8 46.8 84.8 48 82.6 48 L40 48 Z" 
+            fill="url(#limeWing)" filter="url(#neonAura)"/>
+
+      <!-- Middle Docking Connector -->
+      <path d="M40 55 L76 55 C78.2 55 80.2 56.2 81.4 58 L87.2 67.5 C88.4 69.3 87.1 71.8 85 71.8 L40 71.8 Z" 
+            fill="url(#limeWing)"/>
+      <circle cx="64" cy="63.4" r="3.2" fill="#0A0E15"/>
+
+      <!-- Vertical Spine Base -->
+      <path d="M20 22 C20 20.9 20.9 20 22 20 L34 20 C35.1 20 36 20.9 36 22 L36 90 C36 92.2 34.2 94 32 94 L22 94 C20.9 94 20 93.1 20 92 Z" 
+            fill="url(#silverSpine)"/>
+
+      <!-- Ground Base Dock Anchor -->
+      <path d="M20 80 L52 80 C54.2 80 56 81.8 56 84 L56 90 C56 92.2 54.2 94 52 94 L20 94 Z" 
+            fill="#1E283A" stroke="#374763" stroke-width="1.5"/>
+      <circle cx="46" cy="87" r="2.8" fill="#C8F04B"/>
+    </g>
+  </g>
+</svg>
