@@ -93,11 +93,11 @@ section[id]{scroll-margin-top:70px}
 #nav{position:fixed;inset:0 0 auto;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:15px 28px;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
 #nav.scrolled{background:rgba(7,8,10,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo .mark{width:21px;height:21px;color:#fff}
+.logo .mark{width:22px;height:22px;color:var(--acc)}
 .logo .wm{font-size:13px}
 /* v19.15 — the wordmark was hidden because .logo-image used to BE a full
    wordmark PNG. That PNG is the retired Coach OS lockup, so the header showed   the old brand and no text. The mark is inline now (same glyph the app, the   app favicon and /shop/account.html use), so COACHMINT can show again. */
-.l-mark{width:min(520px,82vw);height:auto;object-fit:contain;filter:none}
+.l-mark{width:min(580px,88vw);height:auto;object-fit:contain;filter:drop-shadow(0 12px 40px rgba(0,0,0,0.6))}
 .l-word,.l-tag{display:none}
 .nav-links{display:flex;gap:30px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
 .nav-links a:hover{color:var(--txt)}
@@ -1586,7 +1586,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     var tr=locale==='tr';
     root.lang=locale;
     root.dir=fa?'rtl':'ltr';
-    document.title=fa?'CoachMint — سیستم‌عامل مربی‌ها و باشگاه‌ها':(tr?'CoachMint — Antrenör ve Salonlar İçin İşletim Sistemi':'CoachMint — The Operating System for Fitness Coaches & Gyms');
+    document.title=fa?'FormaDock — سیستم‌عامل مربی‌ها و باشگاه‌ها':(tr?'FormaDock — Antrenör ve Salonlar İçin İşletim Sistemi':'FormaDock — The Operating System for Fitness Coaches & Gyms');
     var metaDesc=document.querySelector('meta[name="description"]');
     if(metaDesc){
       metaDesc.setAttribute('content',fa?'یک فضای کاری برای مدیریت مشتری‌ها، تمرین‌ها، تغذیه و پیشرفت.':(tr?'Danışanları, antrenmanları, beslenmeyi ve gelişimi yönetmek için tek çalışma alanı.':'One coach. One workspace. Monitor clients, workouts, nutrition, measurements, progress and your calendar — without switching tools.'));
@@ -1631,17 +1631,17 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <div id="loader" aria-hidden="true">
   <div class="l-inner">
     <div class="l-row">
-      <img class="l-mark" src="assets/coach-os-logo-transparent.png" alt="CoachMint">
-      <div class="l-word">COACHMINT</div>
+      <img class="l-mark" src="assets/formadock-logo-transparent.png" alt="FormaDock">
+      <div class="l-word">FORMADOCK</div>
     </div>
-    <div class="l-tag">ONE COACH. ONE WORKSPACE.</div>
+    <div class="l-tag">HYBRID ATHLETIC OS &amp; GYM HUB</div>
     <div class="l-bar"><i></i></div>
     <div class="l-status">INITIALIZING WORKSPACE</div>
   </div>
 </div>
 
 <header id="nav">
-  <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
+  <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">FORMA<span style="color:var(--acc)">DOCK</span></span></a>
   <nav class="nav-links"><a href="#product">Product</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/shop/account.html">Account</a></nav>
   <div class="nav-cta">
     <div class="nav-portals hide-sm">
@@ -1713,12 +1713,12 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   <div class="pin">
     <div class="hero-glow"></div><div class="vig"></div>
     <div id="heroExit">
-      <span class="fx-in"><span class="hp" data-hp="6"><span class="eyebrow hero-eyebrow">CoachMint — The operating system for coaches &amp; gyms</span></span></span>
+      <span class="fx-in"><span class="hp" data-hp="6"><span class="eyebrow hero-eyebrow">FormaDock — Hybrid Athletic OS &amp; Gym Hub</span></span></span>
       <span class="fx-in"><span class="hp" data-hp="16"><h1 class="display">Everything your<br>coaching business needs.<br><span class="l2">In one workspace.</span></h1></span></span>
       <span class="fx-in"><span class="hp" data-hp="26"><p class="hero-sub">Clients, workouts, nutrition, progress, schedules — monitor everything your athletes do, without switching between five different tools.</p></span></span>
       <span class="fx-in"><span class="hp" data-hp="36"><div class="hero-ctas">
         <a class="btn acc" href="#pricing">Start Free<svg class="ic" style="width:14px;height:14px"><use href="#i-arrow"/></svg></a>
-        <a class="btn ghost" href="#product">Explore CoachMint</a>
+        <a class="btn ghost" href="#product">Explore FormaDock</a>
       </div></span></span>
     </div>
     <div id="scrollHint"><i></i>Scroll</div>
@@ -1771,7 +1771,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
               <div class="curl"><svg class="ic"><use href="#i-search"/></svg>app.coachmint.io/dashboard</div><span style="width:44px"></span></div>
             <div class="app">
               <aside class="app-side">
-                <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></div>
+                <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">FORMA<span style="color:var(--acc)">DOCK</span></span></div>
                 <div class="side-label">Workspace</div>
                 <nav class="side-nav" id="sideMain">
                   <a class="active" data-nav="0"><svg class="ic"><use href="#i-grid"/></svg>Dashboard</a>
@@ -1921,7 +1921,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <div id="bStage">
           <div id="osFrame">
             <div class="of-side">
-              <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></div>
+              <div class="app-logo"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">FORMA<span style="color:var(--acc)">DOCK</span></span></div>
               <div class="of-it">Dashboard</div><div class="of-it">Clients</div><div class="of-it on">Workouts</div>
               <div class="of-it">Nutrition</div><div class="of-it">Progress</div><div class="of-it">Calendar</div>
             </div>
@@ -2917,7 +2917,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
         <a class="btn acc" href="#pricing">Start Free<svg class="ic" style="width:14px;height:14px"><use href="#i-arrow"/></svg></a>
         <a class="btn ghost" href="#product">Explore the Product</a>
       </div>
-      <div class="f-brand"><svg class="mark"><use href="#i-mark"/></svg><span><b>CoachMint</b> — One coach. One workspace.</span></div>
+      <div class="f-brand"><svg class="mark"><use href="#i-mark"/></svg><span><b>FormaDock</b> — Hybrid Athletic OS &amp; Gym Hub</span></div>
     </div>
   </div>
 </section>
@@ -2926,8 +2926,8 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
   <div class="wrap">
     <div class="f-grid">
       <div class="f-brand2">
-        <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">COACHMINT</span></a>
-        <p>The operating system for fitness coaches and gyms. One coach. One workspace.</p>
+        <a class="logo" href="#top"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><span class="wm">FORMA<span style="color:var(--acc)">DOCK</span></span></a>
+        <p>The operating system for fitness coaches and gyms. Hybrid Athletic OS &amp; Gym Hub.</p>
       </div>
       <div class="f-col"><b>Product</b><a href="#product">Dashboard</a><a href="#product">Workouts</a><a href="#product">Nutrition</a><a href="#product">Progress</a><a href="#pricing">Pricing</a></div>
       <!-- These four used href="#", which just jumped the visitor back to the
@@ -2936,7 +2936,7 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
       <div class="f-col"><b>Company</b><a href="#s14">Manifesto</a><span class="f-soon" title="Coming soon">Careers</span><a href="mailto:hello@coachmint.io">Contact</a></div>
       <div class="f-col"><b>Legal</b><span class="f-soon" title="Coming soon">Privacy</span><span class="f-soon" title="Coming soon">Terms</span><span class="f-soon" title="Coming soon">Imprint</span></div>
     </div>
-    <div class="f-bottom"><span>© 2026 CoachMint. All rights reserved.</span><span>Made for coaches who mean business.</span></div>
+    <div class="f-bottom"><span>© 2026 FormaDock. All rights reserved.</span><span>Made for coaches and gyms who mean business.</span></div>
   </div>
 </footer>
 
