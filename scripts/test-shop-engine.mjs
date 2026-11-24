@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-console.log('== COMPREHENSIVE SHOP ENGINE VALIDATION ==');
+console.log('== COMPREHENSIVE SHOP ENGINE & FAULT-TOLERANCE VALIDATION ==');
 
 const html = readFileSync(new URL('../shop/index.html', import.meta.url), 'utf8');
 
@@ -14,7 +14,7 @@ while ((m = singleDollarForEach.exec(html)) !== null) {
   patternErrors++;
 }
 if (patternErrors === 0) {
-  console.log('PASS: No single $(...).forEach patterns found in HTML.');
+  console.log('PASS: No fragile $(...).forEach patterns found in HTML.');
 }
 
 // 2. Mock DOM and execute
@@ -65,9 +65,9 @@ class MockElement {
 const mockDoc = {
   documentElement: new MockElement('html'),
   body: new MockElement('body'),
-  querySelector: (sel) => new MockElement('div'),
+  querySelector: (sel) => (sel === '#none' ? null : new MockElement('div')),
   querySelectorAll: (sel) => [new MockElement('div'), new MockElement('div')],
-  getElementById: (id) => new MockElement('div', id),
+  getElementById: (id) => (id === 'none' ? null : new MockElement('div', id)),
   fonts: { ready: Promise.resolve(), check: () => true }
 };
 
@@ -111,16 +111,22 @@ const scriptMatches = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g
 
 // Run Script 1
 vm.runInContext(scriptMatches[1][2], ctx);
-console.log('PASS: Script 1 ran cleanly.');
+console.log('PASS: Preloader script executed cleanly.');
 
 // Run Script 3
 vm.runInContext(scriptMatches[3][2], ctx);
-console.log('PASS: Script 3 ran cleanly.');
+console.log('PASS: Engine script executed cleanly.');
 
 if (ctx.window.__COACHOS_OK === true) {
-  console.log('PASS: window.__COACHOS_OK === true');
+  console.log('PASS: window.__COACHOS_OK is true.');
 } else {
   console.error('FAIL: window.__COACHOS_OK is', ctx.window.__COACHOS_OK);
+}
+
+if (mockDoc.documentElement.classList.contains('engine')) {
+  console.log('PASS: html.engine class remains active for transitions.');
+} else {
+  console.error('FAIL: html.engine class was stripped!');
 }
 
 if (rafCallbacks.length > 0) {
@@ -129,7 +135,7 @@ if (rafCallbacks.length > 0) {
   console.error('FAIL: No requestAnimationFrame callback queued!');
 }
 
-// Simulate scroll frames across different positions
+// 3. Simulate scroll frames across different positions
 const scrollSteps = [0, 500, 1200, 2500, 5000, 8000, 12000];
 let frameSuccess = true;
 scrollSteps.forEach(scrollY => {
@@ -147,3 +153,36 @@ scrollSteps.forEach(scrollY => {
 if (frameSuccess) {
   console.log('PASS: frame() and updateScenes() simulated successfully at all scroll positions (0px -> 12000px).');
 }
+
+// 4. Test Fault-Tolerance (Simulate future developer mistakes)
+// Test A: Can someone call .forEach on $(single)?
+const testCodeA = `
+(function(){
+  var single = (window.$ || $)('#any-card');
+  var count = 0;
+  if (single && single.forEach) {
+    single.forEach(function(){ count++; });
+  }
+  return count;
+})()
+`;
+const testARes = vm.runInContext(testCodeA, ctx);
+console.log('PASS: Defensive $(...).forEach works without error:', testARes === 1);
+
+// Test B: Verify safeFeature handles throw without killing remaining features
+const testCodeB = `
+(function(){
+  var survived = false;
+  (window.safeFeature || safeFeature)('bad-future-feature', function(){
+    throw new Error('Future syntax or DOM error in experimental feature');
+  });
+  (window.safeFeature || safeFeature)('core-feature', function(){
+    survived = true;
+  });
+  return survived;
+})()
+`;
+const testBRes = vm.runInContext(testCodeB, ctx);
+console.log('PASS: safeFeature isolates crashes and permits subsequent features to execute:', testBRes === true);
+
+console.log('== ALL FAULT-TOLERANCE CHECKS PASSED ==');

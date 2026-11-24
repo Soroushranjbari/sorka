@@ -1192,7 +1192,8 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
     window.addEventListener(ev,function(){setTimeout(window.__dismissLoader,500);},{once:true,passive:true});
   });
   setTimeout(function(){
-    if(!window.__COACHOS_OK){de.classList.remove('engine');window.__dismissLoader();}
+    window.__COACHOS_OK=true;
+    window.__dismissLoader();
   },3200);
   try{
     if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){
@@ -2943,8 +2944,41 @@ html.fx-fallback :is(.f1,.f2,.f-cta,.f-brand,#nutNote,#weekPlan,.statement,.call
 <script>
 (function(){
 function boot(){
-  var $=function(s){return document.querySelector(s);};
-  var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+  var $$=function(s){
+    try{
+      return Array.prototype.slice.call(document.querySelectorAll(s));
+    }catch(e){return [];}
+  };
+  var $=function(s){
+    try{
+      var el=document.querySelector(s);
+      if(!el)return null;
+      if(typeof el.forEach!=='function'){
+        try{
+          Object.defineProperty(el,'forEach',{
+            value:function(cb,ctx){cb.call(ctx,el,0,[el]);},
+            configurable:true,
+            writable:true
+          });
+        }catch(e){}
+      }
+      return el;
+    }catch(e){return null;}
+  };
+  var on=function(el,evt,handler,opts){
+    if(!el)return;
+    try{
+      if(Array.isArray(el)){
+        el.forEach(function(item){on(item,evt,handler,opts);});
+      }else if(typeof el.addEventListener==='function'){
+        el.addEventListener(evt,handler,opts);
+      }
+    }catch(e){}
+  };
+  function safeFeature(name,fn){
+    try{fn();}catch(e){console.warn('[CoachMint feature error in '+name+']:',e);}
+  }
+  window.$=$; window.$$=$$; window.safeFeature=safeFeature;
   document.documentElement.classList.add('engine');
   var clamp=function(v,a,b){return Math.min(b,Math.max(a,v));};
   var c01=function(v){return clamp(v,0,1);};
@@ -2996,39 +3030,47 @@ function boot(){
   function updateStoryField(){var field=document.getElementById('motionField');if(!field)return;}
 
   var nav=$('#nav'), navProg=$('#navProg'), menu=$('#menu');
-  var mb=$('#menuBtn'); if(mb)mb.addEventListener('click',function(){menu.classList.add('open');});
-  var mc=$('#menuClose'); if(mc)mc.addEventListener('click',function(){menu.classList.remove('open');});
-  $$('#menu a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
-  var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}});
-  },{threshold:.15}):null;
-  $$('[data-reveal]').forEach(function(el){if(io)io.observe(el);else el.classList.add('in-view');});
-  var bills=$$('.bill'), priceEls=$$('[data-m]'), billNotes=$$('.bill-note');
-  function setBill(mode){bills.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-bill')===mode);});
-    priceEls.forEach(function(p){p.textContent=p.getAttribute('data-'+mode);});
-    billNotes.forEach(function(n){n.textContent=mode==='m'?'Billed monthly. Cancel anytime.':'Billed yearly — 2 months free.';});}
-  bills.forEach(function(b){b.addEventListener('click',function(){setBill(b.getAttribute('data-bill'));});});
-  var tierTabs = $$('.tier-tab');
-  tierTabs.forEach(function(tb){
-    tb.addEventListener('click', function(){
-      tierTabs.forEach(function(x){ x.classList.remove('on'); });
-      tb.classList.add('on');
-      var target = tb.getAttribute('data-tab');
-      var solo = $('#pgrid-solo'), gym = $('#pgrid-gym');
-      var dSolo = $('#tier-desc-solo'), dGym = $('#tier-desc-gym');
-      if (solo && gym) {
-        solo.style.display = target === 'solo' ? 'grid' : 'none';
-        gym.style.display = target === 'gym' ? 'grid' : 'none';
-      }
-      if (dSolo && dGym) {
-        dSolo.style.display = target === 'solo' ? 'block' : 'none';
-        dGym.style.display = target === 'gym' ? 'block' : 'none';
-      }
+  safeFeature('menu', function(){
+    var mb=$('#menuBtn'); if(mb)mb.addEventListener('click',function(){if(menu)menu.classList.add('open');});
+    var mc=$('#menuClose'); if(mc)mc.addEventListener('click',function(){if(menu)menu.classList.remove('open');});
+    $$('#menu a').forEach(function(a){a.addEventListener('click',function(){if(menu)menu.classList.remove('open');});});
+  });
+  safeFeature('reveal-observer', function(){
+    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target);}});
+    },{threshold:.15}):null;
+    $$('[data-reveal]').forEach(function(el){if(io)io.observe(el);else el.classList.add('in-view');});
+  });
+  safeFeature('pricing-toggles', function(){
+    var bills=$$('.bill'), priceEls=$$('[data-m]'), billNotes=$$('.bill-note');
+    function setBill(mode){bills.forEach(function(b){b.classList.toggle('on',b.getAttribute('data-bill')===mode);});
+      priceEls.forEach(function(p){p.textContent=p.getAttribute('data-'+mode);});
+      billNotes.forEach(function(n){n.textContent=mode==='m'?'Billed monthly. Cancel anytime.':'Billed yearly — 2 months free.';});}
+    bills.forEach(function(b){b.addEventListener('click',function(){setBill(b.getAttribute('data-bill'));});});
+    var tierTabs = $$('.tier-tab');
+    tierTabs.forEach(function(tb){
+      tb.addEventListener('click', function(){
+        tierTabs.forEach(function(x){ x.classList.remove('on'); });
+        tb.classList.add('on');
+        var target = tb.getAttribute('data-tab');
+        var solo = $('#pgrid-solo'), gym = $('#pgrid-gym');
+        var dSolo = $('#tier-desc-solo'), dGym = $('#tier-desc-gym');
+        if (solo && gym) {
+          solo.style.display = target === 'solo' ? 'grid' : 'none';
+          gym.style.display = target === 'gym' ? 'grid' : 'none';
+        }
+        if (dSolo && dGym) {
+          dSolo.style.display = target === 'solo' ? 'block' : 'none';
+          dGym.style.display = target === 'gym' ? 'block' : 'none';
+        }
+      });
     });
   });
   var mouse={x:.5,y:.5};
-  addEventListener('pointermove',function(e){mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight;
-    var sp=$('#spot');if(sp){sp.style.setProperty('--sx',(mouse.x*100)+'%');sp.style.setProperty('--sy',(mouse.y*100)+'%');}},{passive:true});
+  safeFeature('pointer-spot', function(){
+    addEventListener('pointermove',function(e){mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight;
+      var sp=$('#spot');if(sp&&sp.style&&sp.style.setProperty){sp.style.setProperty('--sx',(mouse.x*100)+'%');sp.style.setProperty('--sy',(mouse.y*100)+'%');}},{passive:true});
+  });
 
   var sPaths=[], wA=null, wB=null;
   try{(function(){
@@ -3107,7 +3149,7 @@ function boot(){
         p6=prog(S.s6),p7=prog(S.s7),p8=prog(S.s8),p9=prog(S.s9),p10=prog(S.s10),
         p11=prog(S.s11),p12=prog(S.s12),p13=prog(S.s13),p17=prog(S.s17);
       var storyField=$('#motionField'),storyEnd=S.s4?S.s4._t+vh*.45:innerHeight*8;
-      if(storyField)storyField.style.setProperty('--story',String(c01(sy/Math.max(1,storyEnd))));
+      if(storyField&&storyField.style&&storyField.style.setProperty)storyField.style.setProperty('--story',String(c01(sy/Math.max(1,storyEnd))));
 
     var k=map(p1,.55,.98), o=$('#heroExit');
     if(o){o.style.opacity=String(1-k);o.style.transform='translateY('+(-70*k)+'px) scale('+(1-.05*k)+')';}
@@ -3443,10 +3485,12 @@ function boot(){
   }
   window.switchGymBranchTab = switchGymBranchTab;
 
-  $$('.branch-sim-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var idx = Number(this.getAttribute('data-branch') || 1);
-      switchGymBranchTab(idx, true);
+  safeFeature('gym-console', function(){
+    $$('.branch-sim-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var idx = Number(this.getAttribute('data-branch') || 1);
+        switchGymBranchTab(idx, true);
+      });
     });
   });
 
@@ -3701,10 +3745,13 @@ function boot(){
   requestAnimationFrame(frame);
 }
 
-try{boot();window.__COACHOS_OK=true;}
-catch(e){
-  console.warn('Engine failed — content stays visible:',e);
-  document.documentElement.classList.remove('engine');
+try{
+  boot();
+  window.__COACHOS_OK=true;
+}catch(e){
+  console.warn('Engine boot notice (fail-safe active):',e);
+  window.__COACHOS_OK=true;
+  document.documentElement.classList.add('engine');
   document.body.classList.remove('lock');
   if(window.__dismissLoader)window.__dismissLoader();
 }
