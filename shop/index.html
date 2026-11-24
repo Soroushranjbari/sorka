@@ -2976,13 +2976,23 @@ function boot(){
       vh=innerHeight;
       var r1=S.s1?S.s1.getBoundingClientRect():null;
       var vs=r1?Math.max(0,-r1.top):window.scrollY;
-      for(var id in S){var s=S[id];s._t=s.getBoundingClientRect().top+vs;s._h=s.offsetHeight;}
+      for(var id in S){var s=S[id];s._t=s.getBoundingClientRect().top+vs;s._h=s.offsetHeight;s._hasPin=!!s.querySelector('.pin');}
       var vp=$('#hViewport'), tr=$('#hTrack');
       if(vp&&tr&&!isMobile())tourMax=Math.max(0,tr.scrollWidth-vp.clientWidth+30);else tourMax=0;
       setupSVGs();
     }catch(e){}
   }
-  function prog(s){if(!s||s._h===undefined)return 0;var d=s._h-vh;if(!(d>0))return sy>=s._t-1?1:0;return c01((sy-s._t)/d);}
+  function prog(s){
+    if(!s||s._h===undefined)return 0;
+    if(!s._hasPin){
+      var total=s._h+vh;
+      if(!(total>0))return 0;
+      return c01((sy-(s._t-vh))/total);
+    }
+    var d=s._h-vh;
+    if(!(d>0))return sy>=s._t-1?1:0;
+    return c01((sy-s._t)/d);
+  }
   function updateStoryField(){var field=document.getElementById('motionField');if(!field)return;}
 
   var nav=$('#nav'), navProg=$('#navProg'), menu=$('#menu');
@@ -3433,7 +3443,7 @@ function boot(){
   }
   window.switchGymBranchTab = switchGymBranchTab;
 
-  $('.branch-sim-tab').forEach(function(tab) {
+  $$('.branch-sim-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       var idx = Number(this.getAttribute('data-branch') || 1);
       switchGymBranchTab(idx, true);
@@ -3443,6 +3453,7 @@ function boot(){
   var GL=null;
   function initGL(){
     var canvas=$('#canvas');
+    if(!canvas)return Promise.resolve();
     var CDNS=['https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js',
               'https://unpkg.com/three@0.160.0/build/three.module.js'];
     function importFirst(list){
@@ -3609,6 +3620,7 @@ function boot(){
       if(navProg){var docH=((S.s17?S.s17._t+S.s17._h:0)||document.documentElement.scrollHeight)-vh;
         navProg.style.width=(c01(sy/Math.max(1,docH))*100)+'%';}
       updateScenes(now/1000);
+      try{updateGL(now/1000,dt);}catch(e){}
     }catch(e){if(!warned){console.warn('scene error (suppressed):',e);warned=true;}}
   }
 
@@ -3685,6 +3697,7 @@ function boot(){
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
   addEventListener('load',measure);
   setTimeout(measure,1000);
+  try{initGL();}catch(e){console.warn('initGL error:',e);}
   requestAnimationFrame(frame);
 }
 
