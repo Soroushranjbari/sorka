@@ -242,10 +242,10 @@ ok('app.js boots into sandbox with all FC symbols', true);
 // 4. Movement Patterns Catalog
 console.log('\n-- 4. Form Check Patterns Catalog (FPATTERNS) --');
 const patterns = vm.runInContext('FPATTERNS', context);
-ok('FPATTERNS exists and contains 11 movement patterns', Array.isArray(patterns) && patterns.length === 11);
+ok('FPATTERNS exists and contains 12 movement patterns', Array.isArray(patterns) && patterns.length === 12);
 
 const expectedIds = [
-  'auto', 'squat', 'hinge', 'pushup', 'press', 'curl',
+  'auto', 'body_scan', 'squat', 'hinge', 'pushup', 'press', 'curl',
   'lunge', 'lateral_raise', 'plank', 'posture_front', 'posture_side'
 ];
 for (const id of expectedIds) {
@@ -632,6 +632,96 @@ vm.runInContext(`
 `, context);
 const hubHtml = vm.runInContext("vClientEnduranceHub(1)", context);
 ok('Endurance Hub renders the Injury Risk Heatmap card', hubHtml.includes('Injury Risk Heatmap') && hubHtml.includes('fc-injury-card'));
+
+// 12. Sports-Medical Body & Anthropometry Scanner (Leanness / Adiposity / Posture)
+console.log('\n-- 12. Sports-Medical Body & Anthropometry Scanner --');
+const bodyScanPat = vm.runInContext("FPATTERNS.find(x => x.id === 'body_scan')", context);
+ok('FPATTERNS includes Medical Body Scan (AI) pattern with posture + bodyScan flags', !!(bodyScanPat && bodyScanPat.bodyScan && bodyScanPat.posture));
+
+// Helper to synthesize a realistic segmentation mask + 33 landmarks
+vm.runInContext(`
+  function makeBodyMaskTest(w, h, waistHalfFrac, hipHalfFrac, chestHalfFrac) {
+    const buf = new Uint8Array(w * h);
+    const midX = Math.floor(w * 0.5);
+    const headTop = Math.floor(h * 0.08);
+    const shY = Math.floor(h * 0.22);
+    const hipY = Math.floor(h * 0.50);
+    const ankY = Math.floor(h * 0.90);
+    for (let y = headTop; y <= ankY; y++) {
+      let halfW = Math.floor(w * 0.04);
+      if (y >= shY && y <= hipY) {
+        const t = (y - shY) / Math.max(1, hipY - shY);
+        const f = t < 0.60
+          ? (chestHalfFrac + (waistHalfFrac - chestHalfFrac) * (t / 0.60))
+          : (waistHalfFrac + (hipHalfFrac - waistHalfFrac) * ((t - 0.60) / 0.40));
+        halfW = Math.round(w * f);
+      } else if (y > hipY) {
+        halfW = Math.round(w * hipHalfFrac * 0.85);
+      }
+      for (let x = Math.max(0, midX - halfW); x <= Math.min(w - 1, midX + halfW); x++) {
+        buf[y * w + x] = 255;
+      }
+    }
+    const lm = Array.from({length: 33}, () => ({x: 0.5, y: 0.5, z: 0, v: 0.95, visibility: 0.95}));
+    lm[0]  = {x: 0.50, y: 0.12, z: 0, v: 0.99, visibility: 0.99};
+    lm[11] = {x: 0.35, y: 0.22, z: 0, v: 0.99, visibility: 0.99};
+    lm[12] = {x: 0.65, y: 0.22, z: 0, v: 0.99, visibility: 0.99};
+    lm[23] = {x: 0.43, y: 0.50, z: 0, v: 0.99, visibility: 0.99};
+    lm[24] = {x: 0.57, y: 0.50, z: 0, v: 0.99, visibility: 0.99};
+    lm[27] = {x: 0.45, y: 0.90, z: 0, v: 0.99, visibility: 0.99};
+    lm[28] = {x: 0.55, y: 0.90, z: 0, v: 0.99, visibility: 0.99};
+    return { mask: { width: w, height: h, getAsUint8Array: () => buf }, lm };
+  }
+`, context);
+
+// 12.1 Athletic / Muscular silhouette
+const athleticScan = vm.runInContext(`
+  const aTest = makeBodyMaskTest(160, 240, 0.090, 0.115, 0.125);
+  var athleticScan = fcAnalyzeBodyMask(aTest.mask, aTest.lm, { h: 178, weight: 78, gender: 'Male' });
+  athleticScan;
+`, context);
+ok('Athletic silhouette yields valid waist, WHtR, V-Taper & RFM body fat %',
+  athleticScan && athleticScan.waistCm > 60 && athleticScan.whtr > 0.35 && athleticScan.whtr < 0.50 && athleticScan.vTaper > 1.3 && athleticScan.estBodyFat > 6 && athleticScan.estBodyFat < 24,
+  JSON.stringify(athleticScan));
+ok('Athletic silhouette classified as Athletic / Muscular',
+  athleticScan && athleticScan.status === 'Athletic / Muscular', JSON.stringify({bf:athleticScan?.estBodyFat,vt:athleticScan?.vTaper,whtr:athleticScan?.whtr,bmi:athleticScan?.bmi,status:athleticScan?.status}));
+
+// 12.2 High Adiposity / Visceral Risk silhouette
+const highFatScan = vm.runInContext(`
+  const oTest = makeBodyMaskTest(160, 240, 0.155, 0.150, 0.155);
+  var highFatScan = fcAnalyzeBodyMask(oTest.mask, oTest.lm, { h: 175, weight: 105, gender: 'Male' });
+  highFatScan;
+`, context);
+ok('High adiposity silhouette detects elevated WHtR >= 0.55 and High Adiposity / Visceral Risk status',
+  highFatScan && highFatScan.whtr >= 0.55 && highFatScan.status === 'High Adiposity / Visceral Risk' && highFatScan.statusTone === 'red');
+
+// 12.3 Underweight / Very Lean silhouette
+const leanScan = vm.runInContext(`
+  const lTest = makeBodyMaskTest(160, 240, 0.068, 0.088, 0.095);
+  var leanScan = fcAnalyzeBodyMask(lTest.mask, lTest.lm, { h: 180, weight: 56, gender: 'Male' });
+  leanScan;
+`, context);
+ok('Very lean silhouette detects Underweight / Lean status',
+  leanScan && leanScan.status === 'Underweight / Lean' && leanScan.statusTone === 'blue');
+
+// 12.4 Median stabilization & AI Sports-Medical report in EN / FA / TR
+const finalBodyScan = vm.runInContext(`
+  fcFinalizeBodyScan([athleticScan, athleticScan, highFatScan]);
+`, context);
+ok('fcFinalizeBodyScan stabilizes samples using median (resistant to outlier frame)',
+  finalBodyScan && finalBodyScan.waistCm === athleticScan.waistCm && finalBodyScan.samplesCount === 3);
+
+const bodyAiFa = vm.runInContext(`lang = 'fa'; fcGenerateBodyScanAI(athleticScan, [], 96);`, context);
+const bodyAiTr = vm.runInContext(`lang = 'tr'; fcGenerateBodyScanAI(athleticScan, [], 96);`, context);
+ok('Sports-Medical AI report renders in Persian and Turkish',
+  bodyAiFa.includes('ترکیب بدنی') && bodyAiFa.includes('تجویز ورزشی-پزشکی') && bodyAiTr.includes('Vücut Kompozisyonu'));
+
+// 12.5 Translations check for new scanner labels
+for (const lbl of ['Medical Body Scan (AI)', 'Sports-Medical Body Scan', 'Est. Body Fat', 'Underweight / Lean', 'High Adiposity / Visceral Risk']) {
+  const faV = vm.runInContext(`lang = 'fa'; t('${lbl}')`, context);
+  const trV = vm.runInContext(`lang = 'tr'; t('${lbl}')`, context);
+  ok(`Body Scan translation [${lbl}]: FA="${faV}", TR="${trV}"`, faV !== lbl && trV !== lbl);
+}
 
 console.log(`\n========================================`);
 console.log(`CAMERA FORM CHECK TEST RESULTS: ${pass} pass, ${fail} fail`);
