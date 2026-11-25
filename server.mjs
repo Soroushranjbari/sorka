@@ -202,6 +202,7 @@ async function serveStatic(req, res, url) {
   try { p = decodeURIComponent(url.pathname); }
   catch { res.statusCode = 400; res.end('bad request'); return; }
   if (p === '/') p = '/index.html';
+  if (p === '/app.js') p = '/client/app.js';
   // The shop landing page lives under /shop with a long filename — make /shop
   // and /shop/ resolve to it so links stay short.
   if (p === '/shop' || p === '/shop/') p = '/shop/index.html';

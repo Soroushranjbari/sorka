@@ -119,7 +119,7 @@ async function run() {
   pass('Coach writes workout programs & nutrition plans into workspace with full permissions');
 
   // 7. Verify UI elements in app.js
-  const appJs = fs.readFileSync('app.js', 'utf8');
+  const appJs = fs.readFileSync('client/app.js', 'utf8');
   assert.ok(appJs.includes('nost-pass'), 'Initial password field in orgAddStaffModal');
   assert.ok(appJs.includes('Full direct access granted to Workout Builder, Nutrition'), 'Full access notice in orgAddStaffModal');
   assert.ok(appJs.includes('org-open-coach-programming'), 'Direct programming action button in staff table');

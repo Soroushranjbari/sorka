@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-const code = readFileSync('app.js', 'utf8');
+const code = readFileSync('client/app.js', 'utf8');
 
 const checks = [
   ['clientSport helper', code.includes('const clientSport =')],

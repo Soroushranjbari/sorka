@@ -484,7 +484,7 @@ try {
   const KNOWN = ['/api/auth/', '/api/billing/', '/api/data', '/api/ai/', '/api/push/',
     '/api/export/', '/api/media', '/api/chat/', '/api/health', '/api/strava/', '/api/org/',
     '/shop/api/checkout', '/shop/api/account/'];
-  for (const f of ['../app.js', '../shop/account.html', '../shop/checkout.html']) {
+  for (const f of ['../client/app.js', '../shop/account.html', '../shop/checkout.html']) {
     let src = '';
     try { src = readFileSync(new URL(f, import.meta.url), 'utf8'); } catch { continue; }
     const missing = new Set();

@@ -1,4 +1,4 @@
-const CACHE = 'co-os-v20-03';
+const CACHE = 'co-os-v20-04';
 
 /* v18.22 — Web Push: show the OS notification and focus/open the app. */
 self.addEventListener('push', e => {
@@ -25,7 +25,7 @@ self.addEventListener('notificationclick', e => {
 // index.html). It must be precached or an offline first load gets a shell
 // with no logic. Same-origin assets are cache-first, so it also stops being
 // re-downloaded on every navigation.
-const ASSETS = ['./', './index.html', './app.js', './manifest.json', './vendor/lucide/lucide.min.js'];
+const ASSETS = ['./', './index.html', './client/app.js', './manifest.json', './vendor/lucide/lucide.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));

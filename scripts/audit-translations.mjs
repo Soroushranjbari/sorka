@@ -1,7 +1,7 @@
 import fs from 'fs';
 import vm from 'vm';
 
-const content = fs.readFileSync('app.js', 'utf8');
+const content = fs.readFileSync('client/app.js', 'utf8');
 const lines = content.split('\n');
 
 const checkSections = [

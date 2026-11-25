@@ -211,7 +211,7 @@ ok(warmups[2].kg === 120 && warmups[2].pct === '100%', 'Working set at 100% targ
 
 
 console.log('\n== 5. App Shell & I18N Parity ==');
-const appJs = fs.readFileSync('app.js', 'utf8');
+const appJs = fs.readFileSync('client/app.js', 'utf8');
 
 ok(appJs.includes('openMachineScannerModal'), 'app.js includes openMachineScannerModal');
 ok(appJs.includes('openMachineHudModal'), 'app.js includes openMachineHudModal');

@@ -147,7 +147,7 @@ async function runMasterTest() {
 
   const st = store();
   const ts = Date.now();
-  const appJs = readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+  const appJs = readFileSync(new URL('../client/app.js', import.meta.url), 'utf8');
   const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
   // ====================================================================

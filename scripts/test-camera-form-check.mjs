@@ -47,7 +47,7 @@ ok('Server handles .task MIME application/octet-stream', serverJs.includes("'.ta
 // 3. App Shell Environment Mock Setup
 console.log('\n-- 3. In-Memory Browser & Camera Environment Boot --');
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const appJs = readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+const appJs = readFileSync(new URL('../client/app.js', import.meta.url), 'utf8');
 
 class MockElement {
   constructor(tag, id = '') {

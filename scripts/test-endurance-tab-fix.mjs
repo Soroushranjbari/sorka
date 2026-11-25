@@ -1,7 +1,7 @@
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
 
-const code = readFileSync('app.js', 'utf8');
+const code = readFileSync('client/app.js', 'utf8');
 
 class MockAudio {
   play() {}

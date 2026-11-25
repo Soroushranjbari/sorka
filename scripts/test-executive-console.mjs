@@ -11,7 +11,7 @@ const ok = (name, cond, extra) => {
 console.log('== B2B EXECUTIVE CONSOLE TEST SUITE ==');
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const appJs = readFileSync(new URL('../app.js', import.meta.url), 'utf8');
+const appJs = readFileSync(new URL('../client/app.js', import.meta.url), 'utf8');
 
 class MockElement {
   constructor(tag, id = '') {
