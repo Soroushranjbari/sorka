@@ -202,7 +202,8 @@ async function serveStatic(req, res, url) {
   let p;
   try { p = decodeURIComponent(url.pathname); }
   catch { res.statusCode = 400; res.end('bad request'); return; }
-  if (p === '/') p = '/index.html';
+  if (p === '/') p = '/shop/index.html';
+  if (p === '/app' || p === '/app/') p = '/index.html';
   if (p === '/app.js') p = '/client/app.js';
   // The shop landing page lives under /shop with a long filename — make /shop
   // and /shop/ resolve to it so links stay short.
@@ -247,7 +248,7 @@ async function serveStatic(req, res, url) {
     // vercel.json set Cache-Control for these paths on Vercel).
     // Keyed off the RESOLVED file, not url.pathname — otherwise a request to "/"
     // (which maps to index.html) skipped the no-cache header entirely.
-    if (['index.html', 'sw.js', 'manifest.json'].includes(rel)) {
+    if (['index.html', 'shop/index.html', 'sw.js', 'manifest.json'].includes(rel)) {
       res.setHeader('cache-control', 'public, max-age=0, must-revalidate');
     }
     res.end(req.method === 'HEAD' ? undefined : body);

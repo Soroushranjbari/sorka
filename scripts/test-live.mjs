@@ -97,9 +97,12 @@ try {
   ok('Health reports ok: true', h.d?.ok === true);
   ok('Health reports sqlite backend', h.d?.backend === 'sqlite');
 
-  const shell = await req('/');
-  ok('GET / -> 200 HTML', shell.status === 200 && (shell.headers.get('content-type') || '').includes('text/html'));
-  ok('App shell contains CoachMint title & script', shell.text.includes('CoachMint') && shell.text.includes('app.js'));
+  const landing = await req('/');
+  ok('GET / -> 200 HTML (shop)', landing.status === 200 && (landing.headers.get('content-type') || '').includes('text/html'));
+
+  const shell = await req('/app');
+  ok('GET /app -> 200 HTML', shell.status === 200 && (shell.headers.get('content-type') || '').includes('text/html'));
+  ok('App shell contains CoachMint/FormaDock title & script', /CoachMint|FormaDock/.test(shell.text) && shell.text.includes('app.js'));
   ok('App shell has no-cache policy', /no-cache|max-age=0/.test(shell.headers.get('cache-control') || ''));
   ok('App shell sets Content-Security-Policy', !!shell.headers.get('content-security-policy'));
 

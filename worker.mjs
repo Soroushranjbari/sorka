@@ -74,8 +74,8 @@ async function serveRewrittenAsset(request, env, targetPath, { csp = null, noCac
   return secure(out);
 }
 
-const SPA_APP_PATHS = new Set(['/org', '/gym', '/club', '/coach', '/login']);
-const SPA_APP_PREFIXES = ['/org/', '/gym/', '/club/', '/coach/'];
+const SPA_APP_PATHS = new Set(['/app', '/org', '/gym', '/club', '/coach', '/login']);
+const SPA_APP_PREFIXES = ['/app/', '/org/', '/gym/', '/club/', '/coach/'];
 
 export default {
   async fetch(request, env) {
@@ -117,7 +117,7 @@ export default {
       if (pathname === '/app.js') {
         return await serveRewrittenAsset(request, env, '/client/app.js', { csp: CSP, noCache: true });
       }
-      if (pathname === '/shop' || pathname === '/shop/') {
+      if (pathname === '/' || pathname === '/shop' || pathname === '/shop/') {
         return await serveRewrittenAsset(request, env, '/shop/index.html', { csp: CSP_SHOP, noCache: true });
       }
       if (SPA_APP_PATHS.has(pathname) || SPA_APP_PREFIXES.some((p) => pathname.startsWith(p))) {

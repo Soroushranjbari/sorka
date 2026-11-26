@@ -515,9 +515,11 @@ try {
     ok(`blocked ${p} -> 404`, r.status === 404, r.status);
   }
   const shell = await fetch(`${BASE}/`);
-  ok('GET / -> 200 app shell', shell.status === 200, shell.status);
+  ok('GET / -> 200 shop landing', shell.status === 200, shell.status);
   ok('GET / has no-cache header', /no-cache|max-age=0/.test(shell.headers.get('cache-control') || ''), shell.headers.get('cache-control'));
   ok('GET / has a CSP header', !!shell.headers.get('content-security-policy'));
+  const appShell = await fetch(`${BASE}/app`);
+  ok('GET /app -> 200 app shell', appShell.status === 200, appShell.status);
   const sw = await fetch(`${BASE}/sw.js`);
   ok('GET /sw.js -> 200', sw.status === 200, sw.status);
 } catch (e) {

@@ -13,8 +13,11 @@
     "directory": ".",
     "binding": "ASSETS",
     "run_worker_first": [
+      "/",
       "/api/*",
       "/shop/api/*",
+      "/app",
+      "/app/*",
       "/app.js",
       "/shop",
       "/shop/",

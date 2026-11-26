@@ -104,6 +104,13 @@ try {
   ok('GET /app.js rewrites to /client/app.js -> 200', appJsRes.status === 200 && lastAssetUrl === '/client/app.js?v=20.04');
   ok('GET /app.js sets CSP header', !!appJsRes.headers.get('content-security-policy'));
 
+  const rootRes = await call('/');
+  ok('GET / rewrites to /shop/index.html -> 200', rootRes.status === 200 && lastAssetUrl === '/shop/index.html');
+  ok('GET / sets CSP header', !!rootRes.headers.get('content-security-policy'));
+
+  const appRes = await call('/app');
+  ok('GET /app rewrites to /index.html -> 200', appRes.status === 200 && lastAssetUrl === '/index.html');
+
   const shopRes = await call('/shop');
   ok('GET /shop rewrites to /shop/index.html -> 200', shopRes.status === 200 && lastAssetUrl === '/shop/index.html');
   ok('GET /shop sets CSP header', !!shopRes.headers.get('content-security-policy'));
