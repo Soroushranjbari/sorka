@@ -25,16 +25,72 @@ export const SQLITE_PATH = (process.env.SQLITE_PATH || '').trim()
   || (process.env.VERCEL ? '/tmp/coach-os.sqlite.db' : './data/sqlite.db');
 
 export const BACKEND = DATABASE_URL ? 'postgres' : 'sqlite';
-export const isPostgres = () => BACKEND === 'postgres';
-const isSqlite = () => BACKEND === 'sqlite';
+export const isPostgres = () => !isD1() && BACKEND === 'postgres';
+const isSqlite = () => !isD1() && BACKEND === 'sqlite';
+
+/* ---------- Cloudflare D1 primitives (table: kv) ---------- */
+let _d1 = null;
+let _d1InitFor = null;
+let _d1InitPromise = null;
+
+/** Attach Cloudflare Workers D1 binding (`env.DB`) at request start. */
+export function setD1Database(d1) {
+  if (d1 && _d1 !== d1) {
+    _d1 = d1;
+    _d1InitFor = null;
+    _d1InitPromise = null;
+  }
+}
+const getD1 = () => _d1 || globalThis.__COACH_OS_D1__ || null;
+export const isD1 = () => !!getD1();
+
+async function ensureD1(d1) {
+  if (_d1InitFor === d1 && _d1InitPromise) return _d1InitPromise;
+  _d1InitFor = d1;
+  _d1InitPromise = d1.prepare(`
+    create table if not exists kv (
+      key text primary key,
+      value text not null,
+      updated_at text not null default (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+    )
+  `).run().catch((err) => {
+    _d1InitFor = null;
+    _d1InitPromise = null;
+    throw err;
+  });
+  return _d1InitPromise;
+}
+
+async function d1Get(fullKey) {
+  const d1 = getD1();
+  await ensureD1(d1);
+  const row = await d1.prepare('select value from kv where key = ? limit 1').bind(fullKey).first();
+  if (!row || row.value === undefined || row.value === null) return null;
+  try { return JSON.parse(row.value); } catch { return row.value; }
+}
+
+async function d1Set(fullKey, value) {
+  const d1 = getD1();
+  await ensureD1(d1);
+  await d1.prepare(
+    `insert into kv (key, value) values (?, ?)
+     on conflict (key) do update set value = excluded.value, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ','now')`
+  ).bind(fullKey, JSON.stringify(value ?? null)).run();
+}
+
+async function d1Del(fullKey) {
+  const d1 = getD1();
+  await ensureD1(d1);
+  await d1.prepare('delete from kv where key = ?').bind(fullKey).run();
+}
 
 /* ---------- SQLite primitives (table: kv) ---------- */
-const _require = createRequire(import.meta.url);
 let _db = null;
 function db() {
   if (_db) return _db;
   let Database;
   try {
+    const _require = createRequire(import.meta.url);
     const mod = _require('better-sqlite3'); // CJS package — resolve via createRequire
     Database = mod.default || mod;
   } catch {
@@ -265,6 +321,7 @@ function cbOk() {
  *  immediate resilient fallback on every write and read, storage is never down
  *  unless SQLite itself cannot be initialized on disk. */
 export const kvDown = () => {
+  if (isD1()) return false;
   try {
     db();
     return false;
@@ -282,6 +339,7 @@ export function kv(ns) {
   const prefix = `${ns}:`;
   return {
     async get(key /* , opts */) {
+      if (isD1()) return d1Get(prefix + key);
       if (isSqlite()) return sqlGet(prefix + key);
       // If Postgres circuit is open, serve immediately from local SQLite:
       if (!cbAllow()) {
@@ -302,6 +360,7 @@ export function kv(ns) {
       }
     },
     async setJSON(key, val) {
+      if (isD1()) return d1Set(prefix + key, val);
       // 1. Dual persistence: ALWAYS save to SQLite first.
       try { sqlSet(prefix + key, val); } catch (e) {}
 
@@ -315,6 +374,7 @@ export function kv(ns) {
       }
     },
     async delete(key) {
+      if (isD1()) return d1Del(prefix + key);
       try { sqlDel(prefix + key); } catch {}
       if (isSqlite()) return;
       if (!cbAllow()) return;
@@ -335,6 +395,18 @@ export function kv(ns) {
  * reported outside production.
  */
 export function dbInfo() {
+  if (isD1()) {
+    return {
+      backend: 'd1',
+      d1Configured: true,
+      sqliteConfigured: false,
+      sqlitePath: null,
+      postgresConfigured: false,
+      postgresHost: null,
+      postgresOk: true,
+      lastDbError: null
+    };
+  }
   const isProd = (process.env.NODE_ENV || '').toLowerCase() === 'production';
   let host = null;
   if (DATABASE_URL && !isProd) {

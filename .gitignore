@@ -62,3 +62,6 @@ shop/COACH-OS-The-Operating-System-for-Fitness-Coaches*
 
 # local UI screenshot artifacts used while reviewing a build
 _shots/
+
+# Cloudflare Wrangler local build/state directory
+.wrangler/

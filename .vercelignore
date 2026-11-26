@@ -1,4 +1,9 @@
 server.mjs
+worker.mjs
+wrangler.jsonc
+_headers
+.assetsignore
+.wrangler/
 data/
 scripts/
 design/

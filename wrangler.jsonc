@@ -1,0 +1,55 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "formadock",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
+  "alias": {
+    "pg": "./backend/lib/cf-noop.mjs",
+    "better-sqlite3": "./backend/lib/cf-noop.mjs"
+  },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*",
+      "/shop/api/*",
+      "/app.js",
+      "/shop",
+      "/shop/",
+      "/org",
+      "/org/*",
+      "/gym",
+      "/gym/*",
+      "/club",
+      "/club/*",
+      "/coach",
+      "/coach/*",
+      "/login",
+      "/data/*",
+      "/backend/*",
+      "/scripts/*",
+      "/db/*",
+      "/design/*",
+      "/plans/*",
+      "/node_modules/*",
+      "/_shots/*",
+      "/server.mjs",
+      "/worker.mjs",
+      "/wrangler.jsonc",
+      "/vercel.json",
+      "/middleware.js",
+      "/package.json",
+      "/package-lock.json",
+      "/_headers"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "formadock-db",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

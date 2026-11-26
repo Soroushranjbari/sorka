@@ -44,16 +44,20 @@ export function newToken() {
   return 'co_' + randomBytes(24).toString('hex');
 }
 
+export const PBKDF2_ITERATIONS = 100000;
+
 export function hashPassword(password) {
   const salt = randomBytes(16).toString('hex');
-  const hash = pbkdf2Sync(String(password), salt, 120000, 32, 'sha256').toString('hex');
-  return { salt, hash };
+  const iter = PBKDF2_ITERATIONS;
+  const hash = pbkdf2Sync(String(password), salt, iter, 32, 'sha256').toString('hex');
+  return { salt, hash, iter };
 }
 
 export function verifyPassword(password, rec) {
   try {
     if (!rec || !rec.salt || !rec.hash) return false;
-    const h = pbkdf2Sync(String(password), rec.salt, 120000, 32, 'sha256');
+    const iter = Math.max(1000, Number(rec.iter) || 120000);
+    const h = pbkdf2Sync(String(password), rec.salt, iter, 32, 'sha256');
     const ref = Buffer.from(rec.hash, 'hex');
     if (h.length !== ref.length) return false;
     return timingSafeEqual(h, ref);

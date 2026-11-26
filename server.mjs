@@ -173,8 +173,9 @@ const MIME = {
    can simply GET /data/prod-secrets.txt. */
 const DENY_DIRS = ['data/', 'db/', 'scripts/', 'backend/', 'node_modules/', 'api/', 'design/', '.kilo/', '_shots/'];
 const DENY_FILES = new Set([
-  'server.mjs', 'vercel.json', 'middleware.js', 'package.json', 'package-lock.json',
-  '.env', '.env.example', '.gitignore', 'skills-lock.json'
+  'server.mjs', 'worker.mjs', 'wrangler.jsonc', 'vercel.json', 'middleware.js',
+  'package.json', 'package-lock.json', '.env', '.env.example', '.gitignore',
+  'skills-lock.json', '_headers'
 ]);
 const DENY_EXT = ['.env', '.md', '.db', '.sqlite', '.sqlite3', '.wal', '.shm', '.log', '.key', '.pem', '.cjs'];
 

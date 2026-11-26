@@ -15,7 +15,8 @@ export const config = {
     '/design/:path*', '/plans/:path*', '/db/:path*', '/node_modules/:path*',
     '/_shots/:path*', '/.agents/:path*', '/.continue/:path*', '/.superdesign/:path*',
     '/.cursor/:path*', '/.vscode/:path*',
-    '/server.mjs', '/package.json', '/package-lock.json', '/vercel.json',
+    '/server.mjs', '/worker.mjs', '/wrangler.jsonc', '/_headers', '/.assetsignore',
+    '/package.json', '/package-lock.json', '/vercel.json',
     '/middleware.js', '/CLAUDE.md', '/.windsurfrules', '/skills-lock.json',
     '/.env', '/.env.example', '/.env.dump.txt', '/.gitignore', '/DEPLOY.md', '/SELFHOST.md',
     '/ROTATION-RUNBOOK.md'
