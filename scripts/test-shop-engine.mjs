@@ -107,7 +107,8 @@ const ctx = vm.createContext({
   history: mockWindow.history
 });
 
-const scriptMatches = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+const scriptMatches = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+  .filter((m) => !/type\s*=\s*["']application\/ld\+json["']/i.test(m[1]));
 
 // Run Script 1
 vm.runInContext(scriptMatches[1][2], ctx);

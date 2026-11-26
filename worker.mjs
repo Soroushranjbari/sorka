@@ -107,6 +107,19 @@ export default {
         if (clean === '/api/health') return await healthHandler(apiReq);
         if (clean === '/shop/api/checkout') return await shopCheckout(apiReq);
         if (clean === '/shop/api/account' || pathname.startsWith('/shop/api/account/')) return await shopAccount(apiReq);
+        if (clean === '/shop/api/tracking-config') {
+          const envVal = (k) => (typeof process !== 'undefined' && process.env && process.env[k] ? String(process.env[k]).trim() : '');
+          return secure(new Response(JSON.stringify({
+            ok: true,
+            ga4Id: envVal('GA4_MEASUREMENT_ID'),
+            adsId: envVal('GOOGLE_ADS_ID'),
+            adsPurchaseLabel: envVal('GOOGLE_ADS_PURCHASE_LABEL'),
+            metaPixelId: envVal('META_PIXEL_ID')
+          }), {
+            status: 200,
+            headers: { 'content-type': 'application/json', 'cache-control': 'public, max-age=300' }
+          }));
+        }
         return json(404, { ok: false, error: 'not-found' });
       }
 

@@ -6,6 +6,7 @@
 <title>Checkout — FormaDock</title>
 <meta name="description" content="Complete your FormaDock purchase and get your activation code.">
 <link rel="icon" type="image/svg+xml" href="../icons/formadock-mark.svg">
+<script src="/shop/tracking.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap">
@@ -678,6 +679,7 @@ $('payBtn').addEventListener('click',async()=>{
           localStorage.setItem('co-login-portal','coach');
         }
       }catch(e){}
+      if(window.fdTrack)window.fdTrack('sign_up',{plan_id:plan,method:'trial'});
       const orgSuffix = isOrg ? '&view=org&mode=executive&portal=org' : '&portal=coach';
       $('appLink').href='/index.html#token='+encodeURIComponent(sd.token)+orgSuffix;
       if($('signInLink'))$('signInLink').style.display='none';
@@ -700,9 +702,11 @@ $('payBtn').addEventListener('click',async()=>{
     /* PRODUCTION: redirect to the gateway here; the coupon is issued in the
        payment callback (server-side, see shop/api/checkout.mjs). Demo: call
        the checkout API directly to simulate a successful payment. */
-    const r=await fetch((API_BASE||'')+'/shop/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({planId:plan,email,name,phone})});
+    if(window.fdTrack)window.fdTrack('begin_checkout',{plan_id:plan});
+    const r=await fetch((API_BASE||'')+'/shop/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({planId:plan,email,name,phone,attribution:window.fdAttribution?window.fdAttribution():undefined})});
     const d=await r.json().catch(()=>null);
     if(!r.ok||!d||!d.ok)throw new Error(d&&d.error||'failed');
+    if(window.fdTrack)window.fdTrack('purchase',{transaction_id:d.ref,plan_id:plan,currency:'IRR'});
     $('code').textContent=d.coupons[0];
     try{localStorage.setItem('coach-os-coupon',d.coupons[0])}catch(e){}
     // ONE-STEP signup: a filled password creates the account WITH the code in
@@ -729,6 +733,7 @@ $('payBtn').addEventListener('click',async()=>{
             localStorage.setItem('coach-os-shop-token',sd.token);
             localStorage.setItem('coach-os-email',email);
           }catch(e){}
+          if(window.fdTrack)window.fdTrack('sign_up',{plan_id:plan,method:'checkout'});
         }else if(sd&&sd.error==='email-taken'){acct='exists'}
       }catch(e){acct='none'}
     }

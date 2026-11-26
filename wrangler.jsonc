@@ -1,10 +1,17 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "formadock",
+  "name": "sorka",
   "main": "worker.mjs",
   "compatibility_date": "2026-04-01",
   "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
   "keep_vars": true,
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
   "alias": {
     "pg": "./backend/lib/cf-noop.mjs",
     "better-sqlite3": "./backend/lib/cf-noop.mjs"

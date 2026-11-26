@@ -158,10 +158,11 @@ export const CSP =
 // (still locked-down) policy. Mirrored for /shop/* in vercel.json's headers
 // and in server.mjs (CSP_SHOP) for self-hosted runs.
 export const CSP_SHOP =
-  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; " +
+  "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com https://connect.facebook.net; " +
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
   "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; " +
-  "img-src 'self' data: blob:; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; " +
+  "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com; " +
+  "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.facebook.com; " +
   "media-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'";
 
 export const SECURITY_HEADERS = {

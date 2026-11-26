@@ -160,15 +160,25 @@ export default async (req) => {
     }[planId] || planId;
     couponMail(body?.name, email, out.coupons[0], planLabel, COACH_OS_URL).catch(() => {});
   }
-  // Record the order (buyer specs + coupon) for the account page & support.
+  // Record the order (buyer specs + coupon + UTM attribution) for the account page & support.
   try {
+    const rawAttr = body?.attribution && typeof body.attribution === 'object' ? body.attribution : null;
+    let attribution = null;
+    if (rawAttr) {
+      const cleanAttr = {};
+      for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'ttclid', 'referrer', 'landing']) {
+        const v = typeof rawAttr[k] === 'string' ? rawAttr[k].trim().slice(0, 120) : '';
+        if (v) cleanAttr[k] = v;
+      }
+      if (Object.keys(cleanAttr).length) attribution = cleanAttr;
+    }
     const order = {
       ref: pay.ref, email,
       name: String(body?.name || '').trim().slice(0, 80),
       phone: String(body?.phone || '').replace(/[^\d+]/g, '').slice(0, 16),
       planId, amount: PRICES[planId], currency: 'IRT',
       coupon: out.coupons[0], durationDays: 30, status: out.demo ? 'demo' : 'paid',
-      demo: !!out.demo, createdAt: Date.now()
+      demo: !!out.demo, ...(attribution ? { attribution } : {}), createdAt: Date.now()
     };
     await orders.setJSON(`order:${pay.ref}`, order);
     const idx = (await orders.get(`idx:${email}`, { type: 'json' })) || [];
