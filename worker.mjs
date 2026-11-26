@@ -114,6 +114,44 @@ export default {
         return new Response('Not found', { status: 404, headers: { 'cache-control': 'no-store' } });
       }
 
+      if (pathname === '/robots.txt') {
+        const txt = [
+          'User-agent: *',
+          'Allow: /',
+          'Allow: /app',
+          'Allow: /shop',
+          'Disallow: /api/',
+          'Disallow: /shop/api/',
+          'Disallow: /shop/account.html',
+          'Disallow: /shop/checkout.html',
+          `Sitemap: ${u.origin}/sitemap.xml`,
+          ''
+        ].join('\n');
+        return secure(new Response(txt, {
+          status: 200,
+          headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=3600' }
+        }));
+      }
+      if (pathname === '/sitemap.xml') {
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${u.origin}/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${u.origin}/app</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+`;
+        return secure(new Response(xml, {
+          status: 200,
+          headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' }
+        }));
+      }
       if (pathname === '/app.js') {
         return await serveRewrittenAsset(request, env, '/client/app.js', { csp: CSP, noCache: true });
       }

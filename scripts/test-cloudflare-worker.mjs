@@ -118,6 +118,14 @@ try {
   const orgRes = await call('/org/dashboard');
   ok('GET /org/dashboard rewrites to /index.html -> 200', orgRes.status === 200 && lastAssetUrl === '/index.html');
 
+  const robotsRes = await call('/robots.txt');
+  const robotsTxt = await robotsRes.text();
+  ok('GET /robots.txt -> 200 with dynamic Sitemap URL', robotsRes.status === 200 && robotsTxt.includes('Sitemap: https://formadock.example/sitemap.xml'), robotsTxt);
+
+  const sitemapRes = await call('/sitemap.xml');
+  const sitemapXml = await sitemapRes.text();
+  ok('GET /sitemap.xml -> 200 with canonical origin URLs', sitemapRes.status === 200 && sitemapXml.includes('<loc>https://formadock.example/</loc>') && sitemapXml.includes('<loc>https://formadock.example/app</loc>'), sitemapXml);
+
   const wellKnownRes = await call('/.well-known/assetlinks.json');
   ok('GET /.well-known/assetlinks.json allowed -> 200', wellKnownRes.status === 200);
 
