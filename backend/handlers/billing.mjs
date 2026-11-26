@@ -120,14 +120,14 @@ async function requestPay(req, st) {
   const planId = String(body?.planId || 'professional');
   if (!PLANS[planId] || planId === 'trial') return j(400, { ok: false, error: 'bad-plan' });
   const payId = newPayId();
-  const pr = { basic: 290000, professional: 790000, club: 2490000 }[planId] || 0;
+  const pr = { basic: 5, professional: 14, club: 45, gym_studio: 35, gym_chain: 85, gym_enterprise: 170 }[planId] || 0;
   await st.setJSON(`pay:${payId}`, {
-    id: payId, coachId: acct.id, planId, amount: pr, currency: 'IRT',
+    id: payId, coachId: acct.id, planId, amount: pr, currency: 'USD',
     provider: 'manual', tracking: '', status: 'pending',
     startsAt: null, endsAt: null, createdAt: Date.now()
   });
   await pushIdx(st, 'index:payments', payId);
-  return j(200, { ok: true, payment: { id: payId, planId, amount: pr, currency: 'IRT', status: 'pending' } });
+  return j(200, { ok: true, payment: { id: payId, planId, amount: pr, currency: 'USD', status: 'pending' } });
 }
 
 async function adminOverview(req, st) {

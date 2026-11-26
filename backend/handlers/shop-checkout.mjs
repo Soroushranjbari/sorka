@@ -22,12 +22,12 @@ import { normCoupon } from '../lib/billing.mjs';
 const COACH_OS_URL = (process.env.COACH_OS_URL || '').replace(/\/+$/, '');
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || '';
 const PRICES = {
-  basic: 290000,
-  professional: 790000,
-  club: 2490000,
-  gym_studio: 1890000,
-  gym_chain: 4900000,
-  gym_enterprise: 9900000
+  basic: 5,
+  professional: 14,
+  club: 45,
+  gym_studio: 35,
+  gym_chain: 85,
+  gym_enterprise: 170
 };
 /* Checkout bodies are tiny (plan id + contact fields) — 16 KB is generous. */
 const MAX_BYTES = 16_000;
@@ -176,7 +176,7 @@ export default async (req) => {
       ref: pay.ref, email,
       name: String(body?.name || '').trim().slice(0, 80),
       phone: String(body?.phone || '').replace(/[^\d+]/g, '').slice(0, 16),
-      planId, amount: PRICES[planId], currency: 'IRT',
+      planId, amount: PRICES[planId], currency: 'USD',
       coupon: out.coupons[0], durationDays: 30, status: out.demo ? 'demo' : 'paid',
       demo: !!out.demo, ...(attribution ? { attribution } : {}), createdAt: Date.now()
     };

@@ -494,7 +494,8 @@ function renderOrders(orders){
     const td=()=>{const x=document.createElement('td');tr.appendChild(x);return x};
     td().textContent=new Date(o.createdAt).toLocaleDateString(lang==='fa'?'fa-IR':'en-US');
     td().textContent=planName(o.planId);
-    td().textContent=`${nf((o.amount||0).toLocaleString('en-US'))} IRT`;
+    const cur=o.currency||'USD';
+    td().textContent=cur==='USD'?`$${nf((o.amount||0).toLocaleString('en-US'))} USD`:`${nf((o.amount||0).toLocaleString('en-US'))} ${cur}`;
     const code=td();code.className='code';code.textContent=o.coupon||'—';
     tb.appendChild(tr);
   });

@@ -377,13 +377,13 @@ const PLANS={
      checkout form becomes a pure signup (no payment, no coupon) and the
      14-day trial is started server-side by /api/auth/signup (TRIAL_DAYS). */
   trial:{name:'Free Trial',nameFa:'آزمایشی رایگان',nameTr:'Ücretsiz Deneme',amount:0,max:5},
-  basic:{name:'Basic',nameFa:'پایه',nameTr:'Temel',amount:290000,max:5},
-  professional:{name:'Professional',nameFa:'حرفه‌ای',nameTr:'Profesyonel',amount:790000,max:30},
+  basic:{name:'Basic',nameFa:'پایه',nameTr:'Temel',amount:5,max:5},
+  professional:{name:'Professional',nameFa:'حرفه‌ای',nameTr:'Profesyonel',amount:14,max:30},
   gym_trial:{name:'Club Free Trial',nameFa:'آزمایش رایگان باشگاه',nameTr:'Kulüp Ücretsiz Deneme',amount:0,max:25},
-  club:{name:'Club',nameFa:'باشگاه',nameTr:'Kulüp',amount:2490000,max:200},
-  gym_studio:{name:'Gym Studio',nameFa:'استودیو ورزشی (تک‌شعبه)',nameTr:'Spor Stüdyosu',amount:1890000,max:100},
-  gym_chain:{name:'Gym Chain',nameFa:'باشگاه زنجیره‌ای (تا ۵ شعبه)',nameTr:'Zincir Kulüp',amount:4900000,max:600},
-  gym_enterprise:{name:'Enterprise',nameFa:'سازمانی و زنجیره‌ای بزرگ',nameTr:'Kurumsal',amount:9900000,max:3000}
+  club:{name:'Club',nameFa:'باشگاه',nameTr:'Kulüp',amount:45,max:200},
+  gym_studio:{name:'Gym Studio',nameFa:'استودیو ورزشی (تک‌شعبه)',nameTr:'Spor Stüdyosu',amount:35,max:100},
+  gym_chain:{name:'Gym Chain',nameFa:'باشگاه زنجیره‌ای (تا ۵ شعبه)',nameTr:'Zincir Kulüp',amount:85,max:600},
+  gym_enterprise:{name:'Enterprise',nameFa:'سازمانی و زنجیره‌ای بزرگ',nameTr:'Kurumsal',amount:170,max:3000}
 };
 const FA={
   'Complete your purchase':'تکمیل خرید','Pay securely, then receive your activation code instantly.':'پرداخت امن، سپس کد فعال‌سازی بلافاصله دریافت می‌شود.',
@@ -523,7 +523,7 @@ function renderPlans(){
     <div class="plan ${id===plan?'on':''}" data-plan="${id}" role="button" tabindex="0">
       <span class="dot"></span>
       <span class="nm"><b>${lang==='tr'?p.nameTr:(lang==='fa'?p.nameFa:p.name)}</b><span>${nf(p.max)} ${lang==='tr'?'danışan':(lang==='fa'?'شاگرد':'clients')}</span></span>
-      <span class="pr"><b>${p.amount?money(p.amount):t('Free')}</b><span>${p.amount?nf('IRT')+' / '+t('month'):t('14 days')}</span></span>
+      <span class="pr"><b>${p.amount?'$'+money(p.amount):t('Free')}</b><span>${p.amount?nf('USD')+' / '+t('month'):t('14 days')}</span></span>
     </div>`).join('');
   document.querySelectorAll('.plan').forEach(el=>el.addEventListener('click',()=>{plan=el.dataset.plan;renderPlans();renderSummary()}));
   renderSummary();
@@ -534,7 +534,7 @@ function renderSummary(){
   const p=PLANS[plan],trial=isTrialPlan(plan),isGym=currentPortal==='org'||plan==='gym_trial';
   $('s-plan').textContent=lang==='tr'?p.nameTr:(lang==='fa'?p.nameFa:p.name);
   $('s-max').textContent=nf(p.max);
-  $('s-total').textContent=p.amount?money(p.amount)+' IRT':t('Free');
+  $('s-total').textContent=p.amount?'$'+money(p.amount)+' USD':t('Free');
   // The trial IS the signup: the password becomes required, the gateway note
   // and the coupon wording no longer apply, and the button says "start" not "pay".
   setT($('t-1m'),trial?'14 days':'1 month');
